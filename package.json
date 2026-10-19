@@ -1,0 +1,20 @@
+{
+  "name": "chasa",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "차사(Chasa) 단계 0 프로토타입 - 그림 없이 때리는 손맛 검증용",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.186.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
+  }
+}
