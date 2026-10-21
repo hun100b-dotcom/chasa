@@ -12,6 +12,27 @@
 //   - 시간: 초(s).  0.1 = 0.1초
 //   - 프레임: 1프레임 = 약 1/60초 (히트스톱만 프레임 단위로 적는다. 게임업계 관례)
 //   - 각도: 도(°)
+//
+// ★ "이렇게 느껴진다" → "이 값을 바꾼다" 빠른 찾기표 ★
+//   (값 이름은 이 파일 안에서 그대로 검색하면 나온다. COMBO는 1·2·3타 각각 따로 있다.)
+//
+//   묵직함 / 타격 순간의 멈칫      COMBO[n].hitStopFrames, PULL.HITSTOP_FRAMES, FEEL.KILL_BONUS_FRAMES
+//   화면 흔들림 세기(맞을 때)      COMBO[n].shake, PULL.SHAKE, PULL.ARRIVE_SHAKE, FEEL.SHAKE_MAX_OFFSET(전체 크기)
+//   화면 흔들림이 오래 가나         FEEL.SHAKE_DECAY (클수록 금방 멈춤)
+//   적이 날아가는 거리              COMBO[n].knockback, ENEMY.KNOCKBACK_FRICTION, FEEL.KNOCKBACK_TANGENT_MIX
+//   적이 멍해있는 시간              COMBO[n].stun, PULL.STUN
+//   휘두르는 속도 / 후딜            COMBO[n].windup(선딜), swing(휘두름), recover(후딜), COMBO_RESET_TIME(콤보 이음 여유)
+//   맞는 범위(사거리·각도)          COMBO[n].reach, sweepDeg, HIT_PADDING(판정 후함)
+//   공격하며 앞으로 밀고 들어감     COMBO[n].lunge
+//   견인이 느리다/빠르다            PULL.DRAG_SPEED, PULL.THROW_TIME, PULL.RETRACT_TIME
+//   견인이 닿는 거리 / 끌려와 멈춤  PULL.RANGE, PULL.STOP_DISTANCE
+//   견인 연타 간격                  PULL.COOLDOWN
+//   사슬 잔상이 길다/짧다/진하다    TRAIL.LIFETIME, TRAIL.ALPHA, TRAIL.FADE_POWER
+//   데미지 숫자 크기·튀는 정도      NUMBER.FONT_BASE/FONT_PER_DAMAGE/FONT_MAX, POP_SPEED_*, GRAVITY, POP_SCALE
+//   적 숫자·속도·체력               ENEMY.COUNT, SPEED, MAX_HP
+//   적 부활 간격                    ENEMY.RESPAWN_DELAY
+//   캐릭터 이동 속도                PLAYER.MOVE_SPEED
+//   화면 확대/축소, 각도            CAMERA.VIEW_HEIGHT, PITCH_DEG, YAW_DEG
 // ============================================================================
 
 // ---------------------------------------------------------------------------
@@ -220,7 +241,7 @@ export const NUMBER = {
   FONT_BASE: 22,
   FONT_PER_DAMAGE: 0.9,
   FONT_MAX: 60,
-  /** 색: 일반 / 강타(3타) / 견인 / 처치 */
+  /** 숫자 색: 일반(1·2타) / 강타(3타) / 견인 */
   COLOR_NORMAL: '#ffffff',
   COLOR_HEAVY: '#ffd23f',
   COLOR_PULL: '#7fd8ff',
