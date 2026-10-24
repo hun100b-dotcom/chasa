@@ -44,3 +44,5 @@
 [처결 이펙트 메시 9종] fx/fx_{tendo_pillar,tendo_ring,pahon_shards_a/b/c,stain_decal,wait_ring_fresh/day/old}.glb (22~272삼각형, 발광 재질만, 투명·애니메이션은 코드). 생성: tools/art3d/fx.py
 
 [2막 검은여울 키트 11종] blackrapids/br_{rapids,deep,shore,stone_bridge,ferry_dock,willow_a,willow_b,reed_field,herb_rack,med_sign,jars}.glb (48~412삼각형). 타일 8×8m, 물 윗면 z0.18/풀 윗면 z0.3. 나루터에 Light_ferry_dock. 의원 집=한옥 키트 'uiwon'(=기와집 8×4m)+약초 건조대·깃대·항아리. 생성: tools/art3d/blackrapids.py
+
+[필드 5×5 v2: 검은여울 이어 붙임] layouts/field_5x5.json에 추가: 서쪽 칸(x 72~96m)에 남북 강(br_shore/br_rapids/br_deep, 물 폭 16m, y 272~640m), 돌다리 2토막(필드 (80,452),(88,452)), 나루터(92.4,548), 의원 집(52,468, buildings 조각 목록), 버드나무·갈대밭, 마을 길에서 갈라진 '검은여울 가는 길'. tiles의 'br_*'는 assets3d/blackrapids/, structures[]는 모델 직접 배치, props의 'br_*'도 blackrapids. file_dirs 참고.
