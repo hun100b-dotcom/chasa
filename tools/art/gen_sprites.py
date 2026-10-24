@@ -62,8 +62,8 @@ def shadow(cx, cy, rx, ry, op=.55):
 # 1) 주인공 (256×256, 발 기준 (128, 232)). 좌우 한쪽만 그리고 Unity에서 flipX
 # =========================================================
 def chasa(pose, name=None, tilt=0, bob=0, hit=False):
-    W = 448 if pose == "swing" else (320 if pose.startswith("bang") else 256)
-    bang = pose.startswith('bang')
+    bang = pose.startswith(('bang', 'bell', 'tri', 'brush'))   # 머리 위/앞으로 뻗는 무기는 캔버스를 키운다
+    W = 448 if pose == "swing" else (320 if bang else 256)
     H = 300 if bang else 256          # 육모방망이는 머리 위로 올라가므로 캔버스를 키운다
     up = 44 if bang else 0            # 키운 만큼 그림을 아래로 밀어 발 기준 위치를 유지한다
     ox, oy, s = 128, 53 + up, .5          # 몸통 좌표계: 목 중앙이 (0,0), .5배로 줄여 쓴다
@@ -79,6 +79,16 @@ def chasa(pose, name=None, tilt=0, bob=0, hit=False):
         "bang1": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L118,20 L160,-14 L130,-40 L88,0 Z"/>'),
         "bang2": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L130,70 L214,120 L190,152 L110,108 Z"/>'),
         "bang3": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L112,126 L176,208 L150,232 L88,170 Z"/>'),
+        # 요령(방울): 1 치켜들기 → 2 흔들기 → 3 내려 울리기. 삼지창: 1 뒤로 당기기 → 2 찌르기 → 3 거두기. 붓: 1 들기 → 2 긋기 → 3 털기
+        "bell1": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L118,20 L160,-14 L130,-40 L88,0 Z"/>'),
+        "bell2": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L130,40 L196,10 L176,-22 L112,6 Z"/>'),
+        "bell3": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L112,126 L176,208 L150,232 L88,170 Z"/>'),
+        "tri1":  ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L86,100 L70,160 L36,150 L40,96 Z"/>'),
+        "tri2":  ('<path d="M34,40 L120,40 L240,0 L248,48 L120,92 Z"/><path d="M-34,40 L-110,90 L-96,140 L-60,120 Z"/>'),
+        "tri3":  ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L110,110 L150,150 L126,176 L84,130 Z"/>'),
+        "brush1": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L110,10 L150,-30 L124,-54 L84,-14 Z"/>'),
+        "brush2": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L130,60 L214,100 L196,134 L112,98 Z"/>'),
+        "brush3": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L118,70 L190,50 L204,84 L122,112 Z"/>'),
     }[pose]
     shapes += f'<g id="arms">{arms}</g>'
     g = f'<g transform="rotate({tilt} {ox} {232+up}) translate({ox},{oy + bob}) scale({s})">'
@@ -95,6 +105,22 @@ def chasa(pose, name=None, tilt=0, bob=0, hit=False):
         g += (f'<g transform="translate({cx_},{cy_}) rotate({rot})"><path d="M-14,-140 L14,-140 L16,40 L-16,40 Z" fill="#6B4A2E"/>'
               f'<path d="M-14,-140 L-4,-140 L-4,40 L-16,40 Z" fill="#8A6038"/><rect x="-18" y="-120" width="36" height="14" fill="#3A3A48"/><rect x="-18" y="-40" width="36" height="14" fill="#3A3A48"/>'
               f'<path d="M-14,-140 L14,-140" stroke="{GOLD}" stroke-width="5"/></g>')
+    WP = {  # 포즈: (손 위치 x, y, 회전)
+        "bell1": (146, -34, 15), "bell2": (190, -2, 55), "bell3": (166, 226, 180),
+        "tri1": (70, 140, 105), "tri2": (170, 24, 90), "tri3": (140, 150, 135),
+        "brush1": (140, -64, 20), "brush2": (206, 116, 120), "brush3": (198, 78, 70)}
+    wp = WP.get(pose)
+    if wp:
+        wx, wy, wr = wp
+        if pose.startswith("bell"):   # 요령: 놋쇠 손잡이 + 종 모양 몸통 + 매달린 추
+            g += (f'<g transform="translate({wx},{wy}) rotate({wr})"><rect x="-6" y="-70" width="12" height="70" fill="#8A6A22"/><path d="M-34,0 Q-36,50 -46,70 L46,70 Q36,50 34,0 Z" fill="{GOLD}"/>'
+                  f'<path d="M-34,0 Q-36,50 -46,70 L-30,70 Q-24,40 -24,0 Z" fill="#F0D88A" opacity=".7"/><circle cx="0" cy="76" r="9" fill="#6B4E14"/></g>')
+        elif pose.startswith("tri"):  # 삼지창: 긴 자루 + 세 갈래 날(가운데가 가장 길다)
+            g += (f'<g transform="translate({wx},{wy}) rotate({wr})"><rect x="-5" y="-60" width="10" height="210" fill="#6B4A2E"/><rect x="-14" y="-70" width="28" height="14" fill="#3A3A48"/>'
+                  f'<path d="M-24,-70 L-24,-120 L-14,-70 Z M-6,-70 L0,-170 L6,-70 Z M14,-70 L24,-120 L24,-70 Z" fill="{CHAIN}" stroke="#fff" stroke-width="1.5"/></g>')
+        else:                          # 명부 붓: 대 + 먹 머금은 큰 붓끝 + 늘어진 한지 두루마리 끈
+            g += (f'<g transform="translate({wx},{wy}) rotate({wr})"><rect x="-6" y="-10" width="12" height="150" fill="#6B4A2E"/><rect x="-10" y="-20" width="20" height="12" fill="{GOLD}"/>'
+                  f'<path d="M-12,-20 Q0,-90 12,-20 Z" fill="#0A0A12" stroke="{MEMORY}" stroke-width="2"/></g>')
     if pose == "bang3":   # 땅 찍기: 붉은 충격파 고리(반경 3m)
         g += f'<ellipse cx="60" cy="355" rx="190" ry="60" fill="none" stroke="{RED}" stroke-width="10" opacity=".8"/><ellipse cx="60" cy="355" rx="190" ry="60" fill="{RED}" opacity=".12"/>'
     if pose == "cast":
@@ -369,7 +395,7 @@ def main():
     chasa("idle", "chasa_walk_a", tilt=-4, bob=-3)    # 걷기 2프레임: 몸을 좌우로 기울이며 위아래로 흔든다
     chasa("idle", "chasa_walk_b", tilt=4, bob=0)
     chasa("idle", "chasa_hit", tilt=-9, bob=2, hit=True)
-    for b_ in ("bang1", "bang2", "bang3"):
+    for b_ in ("bang1", "bang2", "bang3", "bell1", "bell2", "bell3", "tri1", "tri2", "tri3", "brush1", "brush2", "brush3"):
         chasa(b_, f"chasa_{b_}")
     import gen_sprites2
     gen_sprites2.run()

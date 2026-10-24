@@ -95,6 +95,96 @@
    "note": "주인공 · 정면, 좌우는 flipX"
   },
   {
+   "file": "characters/chasa_bell1.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bell2.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bell3.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_tri1.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_tri2.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_tri3.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_brush1.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_brush2.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_brush3.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
    "file": "fx/fx_call_0.png",
    "w": 512,
    "h": 256,
@@ -1053,6 +1143,96 @@
    "ppu": 128,
    "tint": false,
    "note": "② 검은여울 역병 사망자 · 오래된 혼 · 무릎 꿇음 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "fx/fx_bell_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 요령 타격 · 소리 고리 반경 약 3m(제안)"
+  },
+  {
+   "file": "fx/fx_trident_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 삼지창 타격 · 직선 관통(제안 폭 3칸)"
+  },
+  {
+   "file": "fx/fx_brush_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)"
+  },
+  {
+   "file": "fx/fx_bell_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 요령 타격 · 소리 고리 반경 약 3m(제안)"
+  },
+  {
+   "file": "fx/fx_trident_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 삼지창 타격 · 직선 관통(제안 폭 3칸)"
+  },
+  {
+   "file": "fx/fx_brush_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)"
+  },
+  {
+   "file": "fx/fx_bell_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 요령 타격 · 소리 고리 반경 약 3m(제안)"
+  },
+  {
+   "file": "fx/fx_trident_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 삼지창 타격 · 직선 관통(제안 폭 3칸)"
+  },
+  {
+   "file": "fx/fx_brush_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)"
   },
   {
    "file": "hud/gauge_frame_r2.png",

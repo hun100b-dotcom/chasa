@@ -1,5 +1,5 @@
 {
- "count": 127,
+ "count": 145,
  "rule": "작품명 0개, HEX 직접 명시, 변수 1개씩, 첫 승인 이미지를 레퍼런스로 고정",
  "items": [
   {
@@ -154,6 +154,159 @@
    "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
    "reference": "characters/chasa_idle.png",
    "change_only": "포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_bell1.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, raising the handbell above the shoulder, weapon: a brass handbell (yoryeong) held up in the right hand. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_bell2.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, shaking the handbell sideways at arm length, weapon: a brass handbell (yoryeong) held up in the right hand. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_bell3.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, ringing the handbell downward at waist height, weapon: a brass handbell (yoryeong) held up in the right hand. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_tri1.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, pulling the trident back beside the hip, tip forward, weapon: a long wooden trident (samjichang) with three pale blue #BFE8FF prongs. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_tri2.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, thrusting the trident straight forward at arm length, weapon: a long wooden trident (samjichang) with three pale blue #BFE8FF prongs. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_tri3.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, drawing the trident back down to the side, weapon: a long wooden trident (samjichang) with three pale blue #BFE8FF prongs. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_brush1.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, raising the brush above the shoulder, weapon: a large registry brush (myeongbu-but) with an ink-soaked black tip and violet #C9B0FF glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_brush2.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, sweeping the brush across in a wide diagonal arc, weapon: a large registry brush (myeongbu-but) with an ink-soaked black tip and violet #C9B0FF glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
+  },
+  {
+   "file": "characters/chasa_brush3.png",
+   "size": [
+    320,
+    300
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.4,
+    0.92
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, flicking the brush so ink drops fly, weapon: a large registry brush (myeongbu-but) with an ink-soaked black tip and violet #C9B0FF glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 320x300 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "무기·포즈만 변경"
   },
   {
    "file": "fx/fx_call_0.png",
@@ -1786,6 +1939,159 @@
    "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
    "reference": "enemies/soul_old_kneel.png",
    "change_only": "역병 표식만 추가"
+  },
+  {
+   "file": "fx/fx_bell_0.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 1 of 3: expanding golden concentric sound rings lying flat on the ground in 2:1 isometric perspective, white center glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "fx/fx_trident_0.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 1 of 3: three parallel pale blue #BFE8FF thrust streaks with a white chevron tip, side-on, flat vector glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "fx/fx_brush_0.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 1 of 3: a single bold black ink brush stroke arc with violet #C9B0FF glow edges and a few ink droplets. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "fx/fx_bell_1.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 2 of 3: expanding golden concentric sound rings lying flat on the ground in 2:1 isometric perspective, white center glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "fx/fx_bell_0.png",
+   "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "fx/fx_trident_1.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 2 of 3: three parallel pale blue #BFE8FF thrust streaks with a white chevron tip, side-on, flat vector glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "fx/fx_trident_0.png",
+   "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "fx/fx_brush_1.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 2 of 3: a single bold black ink brush stroke arc with violet #C9B0FF glow edges and a few ink droplets. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "fx/fx_brush_0.png",
+   "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "fx/fx_bell_2.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 3 of 3: expanding golden concentric sound rings lying flat on the ground in 2:1 isometric perspective, white center glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "fx/fx_bell_0.png",
+   "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "fx/fx_trident_2.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 3 of 3: three parallel pale blue #BFE8FF thrust streaks with a white chevron tip, side-on, flat vector glow. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "fx/fx_trident_0.png",
+   "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "fx/fx_brush_2.png",
+   "size": [
+    512,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "game effect sprite frame 3 of 3: a single bold black ink brush stroke arc with violet #C9B0FF glow edges and a few ink droplets. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "fx/fx_brush_0.png",
+   "change_only": "프레임 진행만 변경"
   },
   {
    "file": "hud/gauge_frame_r2.png",

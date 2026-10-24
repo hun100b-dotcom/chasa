@@ -46,3 +46,8 @@
 - enemies/soul_{fresh,day,old}[_kneel]_r3 : 번호 패 + 녹슨 화살(번호 병사). _r4 : 석탄 가루 + 목패(광부). 크기·피벗은 기본 혼과 동일.
 - hud/{gauge_frame,panel_hanji,timer_ring_bg}_r3(녹슨 적동 #B0704F) / _r4(놋쇠 #B8A26A). 코드는 지역에 따라 Sprite만 교체.
 - 타일·소품 실루엣: assets/concepts/P2-043 (도형 초안, 최종 타일 PNG는 시연판 이후 단계).
+
+## 무기 3계열 (요령·삼지창·명부 붓) — 총 145종
+- characters/chasa_{bell,tri,brush}{1,2,3}.png : 예비동작 → 타격 → 마무리 3프레임. 캔버스 320×300, 피벗은 육모방망이와 동일(발 기준). 좌우는 flipX.
+- fx/fx_{bell,trident,brush}_{0,1,2}.png : 512×256, 중심 = 공격 기준점. 요령=소리 고리(반경 약 3m), 삼지창=전방 직선 관통, 붓=먹 한 획 부채꼴. 범위 수치는 제안(밸런스 확정 전).
+- 성장 UI 시안: assets/ui/growth_*_{pc,phone}.svg (장비 7칸·도술 3갈래·능력·조합). 슬롯 7종과 능력치 목록은 제안, 기획 확정 후 수정.

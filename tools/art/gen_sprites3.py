@@ -75,11 +75,47 @@ def hud_region_n(region, col, accent_note):
     sv("timer_ring_bg" + sfx, 128, 128, f'<circle cx="64" cy="64" r="54" fill="none" stroke="#0A1022" stroke-width="12" opacity=".85"/><circle cx="64" cy="64" r="60" fill="none" stroke="{col}" stroke-width="2" opacity=".7"/><circle cx="64" cy="64" r="48" fill="none" stroke="{col}" stroke-width="2" opacity=".4"/>', note=f"{accent_note} 처결 타이머 링 배경")
 
 
+def fx_weapons():
+    """무기 3계열 타격 이펙트(각 3프레임, 512×256, 중심=공격 기준점 (256,128)). 쿼터뷰라 바닥 타원 위에 눕혀 그린다."""
+    import math
+    W, H, CX, CY = 512, 256, 256, 128
+    wrap = lambda b, d="": f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}"><defs>{d}<filter id="b3"><feGaussianBlur stdDeviation="3"/></filter></defs>{b}</svg>'
+    for f in range(3):
+        # 요령: 번지는 소리 고리(금색 → 흰색), 바깥으로 갈수록 얇고 흐려진다
+        r0 = [70, 130, 200][f]; b = ""
+        for k in range(3):
+            r = r0 - k * 34
+            if r > 10: b += f'<ellipse cx="{CX}" cy="{CY}" rx="{r}" ry="{r/2}" fill="none" stroke="{GOLD}" stroke-width="{[8,5,3][f]}" opacity="{[.95,.7,.45][k]*[1,.85,.6][f]}"/>'
+        b += f'<ellipse cx="{CX}" cy="{CY}" rx="{r0*.5}" ry="{r0*.25}" fill="#fff" opacity="{[.5,.3,.1][f]}" filter="url(#b3)"/>'
+        for i in range(8):
+            t = i / 8 * 2 * math.pi
+            b += f'<circle cx="{CX+r0*.9*math.cos(t):.0f}" cy="{CY+r0*.45*math.sin(t):.0f}" r="3" fill="#FFF3C4" opacity=".8"/>'
+        add("fx", f"fx_bell_{f}", W, H, wrap(b), (.5, .5), "무기 요령 타격 · 소리 고리 반경 약 3m(제안)")
+        # 삼지창: 앞으로 뻗는 세 줄기 찌르기 선(가운데가 가장 김)
+        L = [150, 230, 190][f]; b = ""
+        for dy, ln in [(-26, .7), (0, 1), (26, .7)]:
+            b += f'<path d="M{CX-60},{CY+dy} L{CX-60+L*ln},{CY+dy+dy*.2}" stroke="{CHAIN}" stroke-width="{[10,14,8][f]}" stroke-linecap="round" opacity=".9"/><path d="M{CX-60},{CY+dy} L{CX-60+L*ln},{CY+dy+dy*.2}" stroke="#fff" stroke-width="3" opacity=".7"/>'
+        b += f'<path d="M{CX-60+L},{CY-34} L{CX-60+L+34},{CY} L{CX-60+L},{CY+34}" fill="none" stroke="#fff" stroke-width="4" opacity="{[.4,.9,.5][f]}"/>'
+        add("fx", f"fx_trident_{f}", W, H, wrap(b), (.5, .5), "무기 삼지창 타격 · 직선 관통(제안 폭 3칸)")
+        # 명부 붓: 먹 한 획(굵었다 가늘어지는 호) + 먹 방울, 가장자리 기억색
+        a = [.45, 1, 1][f]; b = ""
+        path = f"M{CX-180},{CY+50} Q{CX-40},{CY-70} {CX+190},{CY+10}"
+        b += f'<path d="{path}" stroke="{MEMORY_}" stroke-width="{[14,30,20][f]}" fill="none" stroke-linecap="round" opacity="{.5*a}" filter="url(#b3)"/>'
+        b += f'<path d="{path}" stroke="#0A0A12" stroke-width="{[8,22,14][f]}" fill="none" stroke-linecap="round" opacity="{a}" stroke-dasharray="{[260,520,520][f]} 600"/>'
+        for i in range(5 if f else 2):
+            b += f'<circle cx="{CX+60+i*34}" cy="{CY-30+((i*37)%50)}" r="{3+(i%3)*2}" fill="#0A0A12" stroke="{MEMORY_}" stroke-width="1.5"/>'
+        add("fx", f"fx_brush_{f}", W, H, wrap(b), (.5, .5), "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)")
+
+
+MEMORY_ = "#C9B0FF"; CHAIN = "#BFE8FF"
+
+
 def run(manifest, src):
     global SRC, MAN
     SRC, MAN = src, manifest
     for k in range(3):
         plague(k, False); plague(k, True)
+    fx_weapons()
     hud_region()
     for r in (3, 4):
         for k in range(3):

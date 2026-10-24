@@ -112,6 +112,20 @@ for r, col, nm in [(3, "#B0704F rust", "rusty red"), (4, "#B8A26A brass", "brass
                  "timer_ring_bg": f"a circular timer ring background with thin {nm} {col} outer line on dark navy"}.items():
         add(f"hud/{k}_r{r}", f"flat UI asset: {d}", f"hud/{k}", "지역 색만 변경")
 
+# 무기 3계열 — 주인공 고정 5요소 유지, 포즈와 무기만 변경 (기준 = chasa_idle)
+WPN = {"bell": ("a brass handbell (yoryeong) held up in the right hand", ["raising the handbell above the shoulder", "shaking the handbell sideways at arm length", "ringing the handbell downward at waist height"]),
+       "tri": ("a long wooden trident (samjichang) with three pale blue #BFE8FF prongs", ["pulling the trident back beside the hip, tip forward", "thrusting the trident straight forward at arm length", "drawing the trident back down to the side"]),
+       "brush": ("a large registry brush (myeongbu-but) with an ink-soaked black tip and violet #C9B0FF glow", ["raising the brush above the shoulder", "sweeping the brush across in a wide diagonal arc", "flicking the brush so ink drops fly"])}
+for w, (desc, poses) in WPN.items():
+    for i, pz in enumerate(poses, 1):
+        add(f"characters/chasa_{w}{i}", f"{CHASA}, {pz}, weapon: {desc}", "characters/chasa_idle", "무기·포즈만 변경")
+FXW = {"fx_bell": "expanding golden concentric sound rings lying flat on the ground in 2:1 isometric perspective, white center glow",
+       "fx_trident": "three parallel pale blue #BFE8FF thrust streaks with a white chevron tip, side-on, flat vector glow",
+       "fx_brush": "a single bold black ink brush stroke arc with violet #C9B0FF glow edges and a few ink droplets"}
+for k, d in FXW.items():
+    for f in range(3):
+        add(f"fx/{k}_{f}", f"game effect sprite frame {f+1} of 3: {d}", f"fx/{k}_0" if f else "", "프레임 진행만 변경")
+
 pack = []; missing = []
 for m in man:
     key = m["file"][:-4]
