@@ -569,4 +569,55 @@ public class CoreTests
         l.ResetHp();
         Assert.AreEqual(Balance.PLAYER_MAX_HP + 20, l.Hp);
     }
+
+    // ---- M6: 한 판 통합 시나리오 (화면 없이 규칙만으로 처음부터 끝까지) ----
+    [Test]
+    public void FullNight_Scenario_ReturnsWithBossAndGear()
+    {
+        var ledger = new Ledger(); var night = new NightRun(); var eq = new Equipment();
+        var rnd = new System.Random(3);
+        // 무명 혼 몫-1마리 천도 → 이름혼 등장 → 이름혼 천도(몫 완성)
+        for (int i = 0; i < Balance.NIGHT_QUOTA - 1; i++)
+        {
+            var s = new Soul(SoulKind.Fresh);
+            Assert.IsTrue(s.TakeHit(1000));
+            Assert.IsTrue(s.BeginSending());
+            int before = ledger.Neok; ledger.CompleteTendo(); night.RecordTendo(ledger.Neok - before); s.Finish();
+            var it = Loot.Roll(() => (float)rnd.NextDouble(), false); if (it != null) eq.TryEquip(it);
+        }
+        Assert.IsTrue(night.TakeNamedSpawn());
+        var named = Soul.Named("Bak Dolsoe", SoulKind.Fresh, Balance.NAMED_MAEDHIM);
+        Assert.IsTrue(named.TakeHit(1000)); Assert.IsTrue(named.BeginSending());
+        int b2 = ledger.Neok; ledger.CompleteTendo(); night.RecordTendo(ledger.Neok - b2); named.Finish();
+        Assert.IsTrue(night.QuotaDone);
+        // 보스: 단서 없이는 천도 불가 → 단서 3개 후 천도
+        var boss = Soul.MakeBossS1();
+        Assert.IsTrue(boss.TakeHit(Balance.BOSS_S1_MAEDHIM));
+        Assert.IsFalse(boss.CanTendoWith(night.Clues));
+        for (int i = 0; i < 3; i++) night.PickClue();
+        Assert.IsTrue(boss.CanTendoWith(night.Clues));
+        Assert.IsTrue(boss.BeginSending());
+        night.RecordBoss(ledger.CompleteBossTendo()); boss.Finish();
+        // 귀환
+        night.Tick(Balance.NIGHT_DURATION * 0.6f);
+        Assert.IsTrue(night.TryReturn(1f));
+        Assert.AreEqual(NightPhase.Returned, night.Phase);
+        Assert.AreEqual(0, night.LostNeok);
+        Assert.AreEqual(night.KeptNeok + night.ExtraNeok, night.FinalNeok);
+        Assert.Greater(night.ExtraNeok, 0, "보스 보상이 추가 수확분으로 남는다");
+    }
+
+    [Test]
+    public void FullNight_Scenario_DawnLosesBossReward()
+    {
+        var ledger = new Ledger(); var night = new NightRun();
+        for (int i = 0; i < Balance.NIGHT_QUOTA; i++) { int b = ledger.Neok; ledger.CompleteTendo(); night.RecordTendo(ledger.Neok - b); }
+        for (int i = 0; i < 3; i++) night.PickClue();
+        night.RecordBoss(ledger.CompleteBossTendo());
+        night.Tick(Balance.NIGHT_DURATION + 1f);
+        Assert.AreEqual(NightPhase.Dawn, night.Phase);
+        Assert.AreEqual(night.KeptNeok, night.FinalNeok, "몫은 보존");
+        Assert.AreEqual(Balance.BOSS_S1_NEOK, night.LostNeok, "보스 보상은 흩어진다");
+        Assert.Greater(ledger.Neok, night.FinalNeok, "장부엔 쌓였지만 확정 수확은 줄어든다(결과 화면 표시 기준)");
+    }
 }

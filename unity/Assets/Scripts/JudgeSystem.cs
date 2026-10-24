@@ -27,6 +27,7 @@ public class JudgeSystem : MonoBehaviour
     readonly List<GameObject> stainViews = new List<GameObject>();
 
     Enemy castTarget;
+    bool settled;                        // 밤 결과를 장부에 이미 반영했나
     float enemySpawnPause;               // 보스 천도 직후 잡몹 스폰 정지 남은 시간
     readonly List<Vector3> cluePos = new List<Vector3>();   // 아직 안 주운 단서 위치
     readonly List<GameObject> clueViews = new List<GameObject>();
@@ -284,7 +285,7 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>쓰러진 뒤 한 판을 처음부터. 체력·적·얼룩을 되돌리고 장부(수확)는 결과 화면(M5)에서 다룬다</summary>
-    void RestartNight() { night = new NightRun(); ResetRound(); }
+    void RestartNight() { night = new NightRun(); settled = false; ResetRound(); }
 
     void ResetRound()
     {
@@ -306,6 +307,8 @@ public class JudgeSystem : MonoBehaviour
         HandleKeys();
         if (night.Over)
         {
+            // 한 번만 정산: 동이 터서 끝났으면 흩어진 추가 수확분(넋)을 장부에서 뺀다. 몫과 성장(기억·품계)은 그대로.
+            if (!settled) { settled = true; ledger.Neok = Mathf.Max(0, ledger.Neok - night.LostNeok); }
             // 결과 화면: 아무 때나 R/E 가 아닌 Space(또는 터치 버튼)로 다시 시작
             if (Input.GetKeyDown(KeyCode.Space)) RestartNight();
             return;
@@ -465,10 +468,13 @@ public class JudgeSystem : MonoBehaviour
             var m = new GUIStyle(h) { fontSize = 22 };
             bool ok = night.Phase == NightPhase.Returned;
             GUI.Label(new Rect(0, Screen.height * 0.25f, Screen.width, 50), ok ? "NIGHT COMPLETE" : "DAWN BROKE", h);
-            GUI.Label(new Rect(0, Screen.height * 0.25f + 60, Screen.width, 120),
+            GUI.Label(new Rect(0, Screen.height * 0.25f + 60, Screen.width, 190),
                 "SENT " + night.Sent + "   NEOK KEPT " + night.FinalNeok + (night.LostNeok > 0 ? "   LOST " + night.LostNeok : "") +
-                "\nCOIN " + ledger.Coin + "   KARMA " + ledger.Karma, m);
-            if (GUI.Button(new Rect(Screen.width / 2f - 90, Screen.height * 0.25f + 190, 180, 70), "AGAIN (Space)")) RestartNight();
+                "\nCOIN " + ledger.Coin + "   KARMA " + ledger.Karma + "   MEMORY " + ledger.Memory +
+                "\nBOSS " + (night.BossDone ? "DONE" : "-") + "   CLUES " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED +
+                "   GEAR W:" + GearName(Slot.Weapon) + " R:" + GearName(Slot.Robe) + " C:" + GearName(Slot.Charm) +
+                (night.Phase == NightPhase.Returned ? "" : "\n(the quota's share is kept; extra harvest scattered)"), m);
+            if (GUI.Button(new Rect(Screen.width / 2f - 90, Screen.height * 0.25f + 260, 180, 70), "AGAIN (Space)")) RestartNight();
             return;
         }
         if (Casting)
