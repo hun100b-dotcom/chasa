@@ -760,4 +760,213 @@ public class CoreTests
         }
         finally { Loot.AllTilts = false; }
     }
+
+    // ---- 낮 (기획서 부록 B) ----------------------------------------------------------------
+    static DayRun NewDay()
+    {
+        var d = new DayRun(false);
+        d.Spots.Add(new ClueSpot { Id = "listen", Verb = ClueVerb.Eavesdrop, Kind = SpotKind.BossClue, HumanSpeech = true });
+        d.Spots.Add(new ClueSpot { Id = "watch", Verb = ClueVerb.Watch, Kind = SpotKind.BossClue, HumanSpeech = false });
+        d.Spots.Add(new ClueSpot { Id = "touch", Verb = ClueVerb.Touch, Kind = SpotKind.BossClue });
+        d.Spots.Add(new ClueSpot { Id = "house", Verb = ClueVerb.Watch, Kind = SpotKind.NamedHouse });
+        d.Spots.Add(new ClueSpot { Id = "rumor", Verb = ClueVerb.Eavesdrop, Kind = SpotKind.Rumor, HumanSpeech = true });
+        return d;
+    }
+
+    static bool Finish(DayRun d, ClueSpot s, int karma)
+    {
+        var a = d.Begin(s, karma);
+        if (a == null) return false;
+        Assert.IsTrue(a.Tick(a.Need + 0.01f, 0f));
+        d.Complete(a);
+        return true;
+    }
+
+    [Test]
+    public void 낮_눈금은_세개_동사_성공마다_하나씩_줄고_다_쓰면_해질녘()
+    {
+        var d = NewDay();
+        Assert.AreEqual(3, d.TicksLeft);
+        Finish(d, d.Spots[0], 0); Assert.AreEqual(2, d.TicksLeft);
+        Finish(d, d.Spots[1], 0); Assert.AreEqual(1, d.TicksLeft);
+        Assert.AreEqual(DayPhase.Day, d.Phase);
+        Finish(d, d.Spots[2], 0); Assert.AreEqual(0, d.TicksLeft);
+        Assert.AreEqual(DayPhase.Dusk, d.Phase);
+        Assert.AreEqual(3, d.BossClues);
+        Assert.IsNull(d.Begin(d.Spots[3], 0), "눈금이 없으면 제사 집을 못 본다");
+    }
+
+    [Test]
+    public void 낮_엿듣기는_원밖으로_나가면_처음부터_눈금도_안_줄어든다()
+    {
+        var d = NewDay();
+        var a = d.Begin(d.Spots[0], 0);
+        a.Tick(4f, 1f);
+        Assert.AreEqual(4f, a.Progress, 1e-4f);
+        a.Tick(0.1f, Balance.EAVESDROP_RADIUS + 0.5f);          // 원 밖
+        Assert.AreEqual(0f, a.Progress, 1e-4f, "끊기면 처음부터");
+        Assert.IsFalse(a.Tick(5.9f, 1f), "6초 못 채움");
+        Assert.AreEqual(3, d.TicksLeft, "성공 전에는 눈금이 줄지 않는다");
+    }
+
+    [Test]
+    public void 낮_만져보기는_끊기지_않고_멈출_뿐()
+    {
+        var d = NewDay();
+        var a = d.Begin(d.Spots[2], 0);
+        a.Tick(1f, 0.5f);
+        a.Tick(1f, 99f);   // 멀어져도
+        Assert.AreEqual(1f, a.Progress, 1e-4f);
+    }
+
+    [Test]
+    public void 낮_업이_귀를_닫는다_10반쪽_30보스엿듣기닫힘_60소문닫힘_내려가면_다시_열림()
+    {
+        var d = NewDay();
+        Assert.AreEqual(3.0f, DayRun.EarRadius(0));
+        Assert.AreEqual(2.0f, DayRun.EarRadius(10), "업 10: 원이 2m로");
+        Assert.IsTrue(d.Begin(d.Spots[0], 10).Half, "업 10: 사람 말 단서는 반쪽");
+        Assert.IsFalse(d.Begin(d.Spots[1], 10).Half, "사람 말이 없는 지켜보기는 그대로");
+        Assert.AreEqual(SpotAccess.Closed, d.Access(d.Spots[0], 30), "업 30: 보스 엿듣기 닫힘");
+        Assert.AreEqual(SpotAccess.Open, d.Access(d.Spots[4], 30), "업 30: 마을 소문은 아직");
+        Assert.AreEqual(SpotAccess.Open, d.Access(d.Spots[1], 30), "보스 지켜보기는 열림");
+        Assert.AreEqual(SpotAccess.Closed, d.Access(d.Spots[4], 60), "업 60: 소문도 닫힘");
+        Assert.AreEqual(SpotAccess.Open, d.Access(d.Spots[0], 28), "업이 내려가면 다시 열림");
+    }
+
+    [Test]
+    public void 낮_반쪽_단서도_한개로_세고_보스천도는_세개부터()
+    {
+        var d = NewDay();
+        Finish(d, d.Spots[0], 10);
+        Assert.AreEqual(1, d.BossClues); Assert.AreEqual(1, d.HalfClues);
+        Assert.AreEqual(3, d.TotalBossClues(2));
+    }
+
+    [Test]
+    public void 낮_제사집을_지켜보면_이름혼이_명부에_오르지만_보스단서는_늘지_않는다()
+    {
+        var d = NewDay();
+        Finish(d, d.Spots[3], 0);
+        Assert.IsTrue(d.NamedHouseWatched);
+        Assert.AreEqual(0, d.BossClues);
+        Assert.AreEqual(2, d.TicksLeft, "눈금은 같이 쓴다 — 보스냐 이름혼이냐");
+    }
+
+    [Test]
+    public void 낮_장례는_눈금0_70초_건너뛸수있고_할것없는_낮은_짧아진다()
+    {
+        var d = new DayRun(true);
+        Assert.IsFalse(d.NothingToDo(0), "장례가 있으면 할 것이 있다");
+        Assert.IsFalse(d.WatchFuneral(69f));
+        Assert.IsTrue(d.WatchFuneral(1f));
+        Assert.AreEqual(3, d.TicksLeft, "장례는 눈금을 쓰지 않는다");
+        Assert.IsTrue(d.NothingToDo(0), "열린 자리도 남은 장례도 없다");
+        var d2 = new DayRun(true); d2.SkipFuneral();
+        Assert.IsTrue(d2.NothingToDo(0));
+        var d3 = NewDay(); foreach (var sp in d3.Spots) sp.Done = true;
+        Assert.IsTrue(d3.NothingToDo(0));
+    }
+
+    [Test]
+    public void 낮_업_60이면_소문과_보스엿듣기가_닫혀_할것이_줄어든다()
+    {
+        var d = new DayRun(false);
+        d.Spots.Add(new ClueSpot { Id = "a", Verb = ClueVerb.Eavesdrop, Kind = SpotKind.Rumor });
+        d.Spots.Add(new ClueSpot { Id = "b", Verb = ClueVerb.Eavesdrop, Kind = SpotKind.BossClue });
+        Assert.IsFalse(d.NothingToDo(0));
+        Assert.IsTrue(d.NothingToDo(60));
+    }
+
+    [Test]
+    public void 낮_해넘기기는_눈금이_남아도_해질녘()
+    {
+        var d = NewDay(); d.SkipToDusk();
+        Assert.AreEqual(DayPhase.Dusk, d.Phase);
+        Assert.IsNull(d.Begin(d.Spots[0], 0));
+    }
+
+    // ---- 서낭당 시설 -------------------------------------------------------------------------
+    [Test]
+    public void 공물상_가격과_한밤_한도_회복약()
+    {
+        var l = new Ledger { Coin = 15 * 5 + 14 }; var p = new Pack();
+        for (int i = 0; i < 5; i++) Assert.IsTrue(Shrine.Buy(ShopItem.HealPotion, l, p));
+        Assert.IsFalse(Shrine.Buy(ShopItem.HealPotion, l, p), "한 밤 5개까지");
+        Assert.AreEqual(14, l.Coin);
+        l.Coin = 100;
+        Assert.IsTrue(Shrine.Buy(ShopItem.DawnCharm, l, p)); Assert.AreEqual(60, l.Coin);
+        Assert.IsFalse(Shrine.Buy(ShopItem.DawnCharm, l, p), "새벽 부적은 한 밤 1장");
+        Assert.IsTrue(Shrine.Buy(ShopItem.CleanseCharm, l, p)); Assert.AreEqual(30, l.Coin);
+    }
+
+    [Test]
+    public void 공물상_회복약은_생명_40퍼센트_엽전으로_넋은_못_산다()
+    {
+        var l = new Ledger { Coin = 15 }; var p = new Pack();
+        Shrine.Buy(ShopItem.HealPotion, l, p);
+        l.Hp = 10;
+        Assert.IsTrue(Shrine.UseHeal(l, p));
+        Assert.AreEqual(10 + (int)System.Math.Round(l.MaxHp * 0.4f), l.Hp);
+        int neok = l.Neok, mem = l.Memory;
+        Shrine.Buy(ShopItem.HealPotion, l, p);
+        Assert.AreEqual(neok, l.Neok); Assert.AreEqual(mem, l.Memory);
+    }
+
+    [Test]
+    public void 손보기_다시굴리기_비용은_20씩_오르고_200이_상한_기울기와_이름물건은_불가()
+    {
+        Assert.AreEqual(20, Shrine.RerollCost(0));
+        Assert.AreEqual(40, Shrine.RerollCost(1));
+        Assert.AreEqual(200, Shrine.RerollCost(9));
+        Assert.AreEqual(200, Shrine.RerollCost(30));
+        var rnd = new System.Random(3);
+        var it = new ItemDef { Slot = Slot.Robe, Rarity = Rarity.Crafted };
+        it.Options.Add(new OptionRoll(Opt.DamagePct, 0.05f)); it.Options.Add(new OptionRoll(Opt.HpFlat, 8f));
+        var l = new Ledger { Coin = 100 };
+        Assert.IsTrue(Shrine.Reroll(it, 0, l, () => (float)rnd.NextDouble()));
+        Assert.AreEqual(80, l.Coin); Assert.AreEqual(1, it.Rerolls);
+        Assert.AreNotEqual(Opt.DamagePct, it.Options[0].Kind, "다른 종류로 굴러야 한다");
+        Assert.AreEqual(Opt.HpFlat, it.Options[1].Kind, "다른 옵션은 그대로");
+        Assert.AreEqual(2, new System.Collections.Generic.HashSet<Opt> { it.Options[0].Kind, it.Options[1].Kind }.Count, "옵션 종류 중복 없음");
+        Assert.IsFalse(Shrine.CanReroll(new ItemDef { Gradient = true, Options = { new OptionRoll(Opt.DamagePct, 0.2f) } }));
+        Assert.IsFalse(Shrine.CanReroll(ItemDef.MoonflowerBell()));
+        l.Coin = 10;
+        Assert.IsFalse(Shrine.Reroll(it, 0, l, () => 0.5f), "엽전이 모자라면 안 된다");
+    }
+
+    [Test]
+    public void 손보기_매듭올리기_비용과_옵션칸_늘어남_귀한위는_불가()
+    {
+        var rnd = new System.Random(5);
+        var it = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Common };
+        it.Options.Add(new OptionRoll(Opt.DamagePct, 0.03f));
+        var l = new Ledger { Coin = 60 + 180, Ore = 3 + 10 };
+        Assert.IsTrue(Shrine.Upgrade(it, l, () => (float)rnd.NextDouble()));
+        Assert.AreEqual(Rarity.Crafted, it.Rarity); Assert.AreEqual(2, it.Options.Count);
+        Assert.AreEqual(0.03f * 0.8f / 0.5f, it.Options[0].Value, 1e-5f, "범위가 새 등급 것으로");
+        Assert.AreEqual(180, l.Coin); Assert.AreEqual(10, l.Ore);
+        Assert.IsTrue(Shrine.Upgrade(it, l, () => (float)rnd.NextDouble()));
+        Assert.AreEqual(Rarity.Rare, it.Rarity); Assert.AreEqual(3, it.Options.Count);
+        Assert.AreEqual(0, l.Coin); Assert.AreEqual(0, l.Ore);
+        Assert.IsFalse(Shrine.CanUpgrade(it), "귀한 위로는 못 올린다");
+        Assert.IsFalse(Shrine.CanUpgrade(ItemDef.MoonflowerBell()));
+        var poor = new Ledger { Coin = 59, Ore = 3 };
+        Assert.IsFalse(Shrine.Upgrade(new ItemDef { Rarity = Rarity.Common }, poor, () => 0.1f));
+    }
+
+    [Test]
+    public void 손보기_풀기는_공짜_광석_1_3_8_홈뚫기_80_240_최대2()
+    {
+        var l = new Ledger();
+        Assert.IsTrue(Shrine.Dismantle(new ItemDef { Rarity = Rarity.Common }, l)); Assert.AreEqual(1, l.Ore);
+        Assert.IsTrue(Shrine.Dismantle(new ItemDef { Rarity = Rarity.Crafted }, l)); Assert.AreEqual(4, l.Ore);
+        Assert.IsTrue(Shrine.Dismantle(new ItemDef { Rarity = Rarity.Rare }, l)); Assert.AreEqual(12, l.Ore);
+        Assert.IsFalse(Shrine.Dismantle(ItemDef.MoonflowerBell(), l), "이름 있는 물건은 못 푼다");
+        var it = new ItemDef { Rarity = Rarity.Common };
+        l.Coin = 80 + 240 + 1000;
+        Assert.IsTrue(Shrine.Socket(it, l)); Assert.AreEqual(1000 + 240, l.Coin);
+        Assert.IsTrue(Shrine.Socket(it, l)); Assert.AreEqual(1000, l.Coin);
+        Assert.IsFalse(Shrine.Socket(it, l), "최대 2개");
+    }
 }

@@ -1090,5 +1090,133 @@
  "WAIT_FLOOR": {
   "value": 0.5,
   "note": "(시연판 임시) 기획 growth.json 기울기: 처결 대기 시간 최소(초). 검은 술을 겹쳐도 이 밑으로 안 줄어듦(QA 제안)"
+ },
+ "DAY_TICKS": {
+  "value": 3,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 해 그림자 눈금 개수. 단서 동사 한 번 성공마다 1 줄어듦"
+ },
+ "EAVESDROP_RADIUS": {
+  "value": 3.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 엿듣기 원 반경(m)"
+ },
+ "EAVESDROP_RADIUS_EAR": {
+  "value": 2.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 업 10 이상일 때 엿듣기 원 반경(m)"
+ },
+ "EAVESDROP_TIME": {
+  "value": 6.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 엿듣기: 원 안에 머무는 시간(초)"
+ },
+ "WATCH_TIME": {
+  "value": 15.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 지켜보기: 장면 길이(초, 기획 10~20 가운데)"
+ },
+ "WATCH_RADIUS": {
+  "value": 4.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 지켜보기: 장면을 볼 수 있는 거리(m, QA 확인 필요 임시)"
+ },
+ "TOUCH_TIME": {
+  "value": 2.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 만져 보기: 유품 길게 누르는 시간(초)"
+ },
+ "TOUCH_RADIUS": {
+  "value": 1.5,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 만져 보기: 유품에 닿는 거리(m, QA 확인 필요 임시)"
+ },
+ "FUNERAL_TIME": {
+  "value": 70.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 장례 목격 길이(초, 건너뛸 수 있음)"
+ },
+ "EMPTY_DAY_TIME": {
+  "value": 5.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 할 것이 없는 낮: '들을 것이 없다' 표시 후 해 질 녘으로 넘어가는 시간(초)"
+ },
+ "KARMA_EAR_HALF": {
+  "value": 10,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 업 이상이면 사람 말 단서가 반쪽 문장으로 기록되고 엿듣기 원이 좁아짐"
+ },
+ "KARMA_EAR_BOSS_CLOSED": {
+  "value": 30,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 업 이상이면 보스 엿듣기 단서 닫힘"
+ },
+ "KARMA_EAR_ALL_CLOSED": {
+  "value": 60,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 업 이상이면 보스와 상관없는 마을 소문까지 닫힘"
+ },
+ "SHOP_HEAL_PRICE": {
+  "value": 15,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 공물상 회복약 엽전"
+ },
+ "SHOP_HEAL_MAX": {
+  "value": 5,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 회복약 한 밤 소지 한도"
+ },
+ "SHOP_HEAL_RATIO": {
+  "value": 0.4,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 회복약 생명 회복 비율"
+ },
+ "SHOP_DAWN_PRICE": {
+  "value": 40,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 새벽 부적 엽전(동트기 경고가 일찍 옴)"
+ },
+ "SHOP_DAWN_EARLY": {
+  "value": 30.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 새벽 부적: 경고가 일찍 오는 시간(초)"
+ },
+ "SHOP_CLEANSE_PRICE": {
+  "value": 30,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 씻김 부적 엽전(얼룩 하나 지움, 업은 그대로)"
+ },
+ "REROLL_BASE": {
+  "value": 20,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 다시 굴리기 첫 비용(엽전)"
+ },
+ "REROLL_STEP": {
+  "value": 20,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 다시 굴리기: 같은 물건에 할 때마다 늘어나는 비용"
+ },
+ "REROLL_MAX": {
+  "value": 200,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 다시 굴리기 비용 상한"
+ },
+ "UPGRADE_COIN_1": {
+  "value": 60,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 흔한→손본 엽전"
+ },
+ "UPGRADE_ORE_1": {
+  "value": 3,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 흔한→손본 광석"
+ },
+ "UPGRADE_COIN_2": {
+  "value": 180,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 손본→귀한 엽전"
+ },
+ "UPGRADE_ORE_2": {
+  "value": 10,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 손본→귀한 광석"
+ },
+ "DISMANTLE_ORE_COMMON": {
+  "value": 1,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 풀기: 흔한 장비가 주는 광석"
+ },
+ "DISMANTLE_ORE_CRAFTED": {
+  "value": 3,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 풀기: 손본 장비가 주는 광석"
+ },
+ "DISMANTLE_ORE_RARE": {
+  "value": 8,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 풀기: 귀한 장비가 주는 광석"
+ },
+ "SOCKET_COST_1": {
+  "value": 80,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 홈 뚫기 첫째 엽전"
+ },
+ "SOCKET_COST_2": {
+  "value": 240,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 홈 뚫기 둘째 엽전"
+ },
+ "SOCKET_MAX": {
+  "value": 2,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 장비 한 개의 인 홈 최대 수"
  }
 }

@@ -174,6 +174,8 @@ namespace Chasa.Core
         public bool Named;                                   // 이름 있는 물건(월화의 방울)
         public bool Gradient;                                // 기울기 옵션 포함 (귀한 등급에만)
         public string TiltId;                                // 어떤 기울기인가 (TiltDef.Id)
+        public int Rerolls;                                  // 다시 굴린 횟수 (비용이 오른다)
+        public int Sockets;                                  // 뚫은 인 홈 수 (최대 SOCKET_MAX)
         public List<OptionRoll> Options = new List<OptionRoll>();
 
         /// <summary>시연판의 이름 있는 물건: 파혼 반경 +m (노리개)</summary>
@@ -349,6 +351,18 @@ namespace Chasa.Core
             return it;
         }
 
+        /// <summary>일반 옵션 하나를 새로 굴린다. exclude 에 든 종류는 피한다 (다시 굴리기·매듭 올리기용)</summary>
+        public static OptionRoll RollOption(Func<float> rand, Rarity r, ICollection<Opt> exclude)
+        {
+            var pool = new List<Opt> { Opt.DamagePct, Opt.AttackSpeedPct, Opt.CastReducePct, Opt.PahonAreaPct, Opt.PahonDamagePct, Opt.HpFlat, Opt.MoveSpeedPct, Opt.CoinPct };
+            if (exclude != null) pool.RemoveAll(o => exclude.Contains(o));
+            var kind = pool[(int)(rand() * pool.Count) % pool.Count];
+            return new OptionRoll(kind, RollValue(kind, r));
+        }
+
+        /// <summary>등급별 옵션 크기 배율 (흔한 0.5 / 손본 0.8 / 귀한 1.1)</summary>
+        public static float TierFactor(Rarity r) { return r == Rarity.Common ? 0.5f : r == Rarity.Crafted ? 0.8f : 1.1f; }
+
         // 옵션 기본값(등급 1.0 배 기준). 기획팀 JSON 이 SetBase 로 덮어쓸 수 있다
         static readonly Dictionary<Opt, float> BaseValue = new Dictionary<Opt, float>
         {
@@ -369,7 +383,7 @@ namespace Chasa.Core
         /// <summary>옵션 하나의 값. 등급이 높을수록 크다 (임시값)</summary>
         static float RollValue(Opt k, Rarity r)
         {
-            float t = r == Rarity.Common ? 0.5f : r == Rarity.Crafted ? 0.8f : 1.1f;
+            float t = TierFactor(r);
             float v = GetBase(k) * t;
             return k == Opt.HpFlat ? (float)Math.Round(v) : v;
         }

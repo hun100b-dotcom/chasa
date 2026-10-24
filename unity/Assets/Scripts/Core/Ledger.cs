@@ -9,6 +9,7 @@ namespace Chasa.Core
         public int Neok;          // 넋 (천도 보상)
         public int Memory;        // 기억 조각 (천도 보상)
         public int Coin;          // 엽전 (파혼 보상)
+        public int Ore;           // 광석 (장비를 풀면 얻고, 매듭 올리기에 쓴다)
         public int Karma;         // 업 (파혼하면 쌓이고, 천도 2회마다 1씩 줄어든다)
         public int TendoTotal;    // 지금까지 천도한 횟수 (업 감쇠 계산용)
         public int TendoStreak;   // 연속 천도 횟수
