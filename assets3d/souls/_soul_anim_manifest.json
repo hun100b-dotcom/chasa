@@ -1,0 +1,234 @@
+{
+ "fps": 60,
+ "clips": [
+  {
+   "name": "Float",
+   "frames": 91,
+   "length_sec": 1.5,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "Windup",
+   "frames": 34,
+   "length_sec": 0.55,
+   "loop": false,
+   "events": {
+    "flash": 21,
+    "end_pose_held": true
+   }
+  },
+  {
+   "name": "Attack",
+   "frames": 19,
+   "length_sec": 0.3,
+   "loop": false,
+   "events": {
+    "hit": 5
+   }
+  },
+  {
+   "name": "Kneel",
+   "frames": 37,
+   "length_sec": 0.6,
+   "loop": false,
+   "events": {
+    "end_pose_held": true
+   }
+  }
+ ],
+ "files": [
+  {
+   "file": "soul_fresh.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 28
+  },
+  {
+   "file": "soul_day.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 31
+  },
+  {
+   "file": "soul_old.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 32
+  },
+  {
+   "file": "soul_lump.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 45
+  },
+  {
+   "file": "soul_fresh_yeoksa.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 44
+  },
+  {
+   "file": "soul_day_yeoksa.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 47
+  },
+  {
+   "file": "soul_old_yeoksa.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 48
+  },
+  {
+   "file": "soul_lump_yeoksa.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 61
+  },
+  {
+   "file": "soul_fresh_bungjae.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 39
+  },
+  {
+   "file": "soul_day_bungjae.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 42
+  },
+  {
+   "file": "soul_old_bungjae.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 43
+  },
+  {
+   "file": "soul_lump_bungjae.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 56
+  },
+  {
+   "file": "soul_fresh_soegol.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 40
+  },
+  {
+   "file": "soul_day_soegol.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 43
+  },
+  {
+   "file": "soul_old_soegol.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 44
+  },
+  {
+   "file": "soul_lump_soegol.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 57
+  }
+ ]
+}

@@ -31,3 +31,10 @@
   동선: 마을 → 동쪽 보릿들(밭 칸) → 북쪽 물막이 골(개울 + 양쪽 벼랑 +2m) → 동북 폐당집 터(+2m 고지, 남쪽 비탈 한 칸이 입구).
   비탈 모서리 rot는 추정값(QA에서 어긋나면 ±90 보정). 굴 입구는 서쪽 벼랑 비탈 한 칸이 길로 바뀐 자리.
 - 생성: tools/art3d/kit_buildings.py(집 설명서) → solgogae.py(마을) / field_layout.py(필드, 파이썬만으로 실행)
+
+[애니메이션 v1 — 60fps, 뼈대(스킨)+동작을 GLB에 함께 담음]
+정정: 이전 hero_chasa.glb·boss_naru.glb는 내보낼 때 뼈대가 빠져 정지 모델이었다(아마추어를 선택하지 않은 탓). 지금은 tools/art3d/anim.py의 export_rig()가 아마추어와 메시를 함께 내보내고 verify()가 파일을 다시 열어 스킨·관절·동작 수를 센다.
+- characters/hero_chasa.glb: 관절 16, 동작 9 = Idle(96f 반복) Walk(36f 반복) Attack(1타 22f, 명중 f10=45%) Attack2(22f) Attack3(회전 50f, 명중 f14~28) Dodge(19f, 무적 f2~15) Hit(18f) Cast(천도 60f, 버티기 f14~46) Pahon(25f, 터짐 f8). 상세 _hero_anim_manifest.json
+- souls/soul_*.glb 16종: 관절 2(Root, Body), 동작 4 = Float(90f 반복) Windup(33f=0.55초, 번쩍 f21) Attack(18f, 명중 f5) Kneel(36f, 끝 자세 유지)
+- boss/boss_naru.glb: 관절 8, 동작 3 = Idle(96f 반복) Windup(66f) Swing(42f, 명중 f8)
+회전·이동은 제자리(루트 모션 없음). 이동거리(피하기 3.2m 등)는 코드가 맡는다. 철삭 사슬은 영웅 오른손의 감긴 사슬 모델만 있고 늘어나는 사슬은 코드 이펙트.

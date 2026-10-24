@@ -1,0 +1,43 @@
+{
+ "fps": 60,
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 97,
+   "length_sec": 1.6,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "Windup",
+   "frames": 67,
+   "length_sec": 1.1,
+   "loop": false,
+   "events": {
+    "flash": 54,
+    "end_pose_held": true
+   }
+  },
+  {
+   "name": "Swing",
+   "frames": 43,
+   "length_sec": 0.7,
+   "loop": false,
+   "events": {
+    "hit": 8,
+    "swing_end": 14
+   }
+  }
+ ],
+ "verify": {
+  "file": "boss_naru.glb",
+  "skins": 1,
+  "joints": 8,
+  "animations": [
+   "Idle",
+   "Windup",
+   "Swing"
+  ],
+  "size_kb": 97
+ }
+}

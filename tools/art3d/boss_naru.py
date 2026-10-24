@@ -6,8 +6,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 from lib3d import *
 from characters import to_group, rig
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets3d")
-BONES = [("Root", None, (0, 0, 0), (0, 0, 0.2)), ("Boat", "Root", (0, 0, 0.1), (0, -1.0, 0.2)), ("Hips", "Boat", (0.3, 0, 0.5), (0.3, 0, 1.0)), ("Chest", "Hips", (0.3, 0, 1.0), (0.3, 0, 1.4)),
-         ("Head", "Chest", (0.3, 0, 1.4), (0.3, 0, 1.9)), ("UpperArm.L", "Chest", (0.55, 0, 1.3), (0.9, 0.1, 0.9)), ("UpperArm.R", "Chest", (0.05, 0, 1.3), (-0.3, -0.1, 0.9)), ("Pole", "UpperArm.R", (0.05, 0, 1.0), (0.05, -0.8, 0.0))]
+BONES = [  # 뼈 위치를 실제 모델에 맞춤(영감은 배 뒤쪽 y=0.9에 서 있다). 오른팔 아래에 삿대 뼈가 붙어 팔과 함께 돈다.
+    ("Root", None, (0, 0, 0), (0, 0, 0.2)), ("Boat", "Root", (0, 0, 0.1), (0, -1.0, 0.2)), ("Hips", "Boat", (0, 0.9, 0.5), (0, 0.9, 1.0)), ("Chest", "Hips", (0, 0.9, 1.0), (0, 0.9, 1.4)),
+    ("Head", "Chest", (0, 0.9, 1.4), (0, 0.9, 1.9)), ("UpperArm.L", "Chest", (0.22, 0.9, 1.4), (0.42, 0.7, 0.95)), ("UpperArm.R", "Chest", (-0.22, 0.9, 1.4), (-0.4, 0.4, 1.05)),
+    ("Pole", "UpperArm.R", (-0.22, 0.9, 1.4), (-0.5, -0.1, 0.0))]
 
 def naru(attack=False):
     # 좌표: 뱃머리가 -Y(블렌더), 배 길이는 Y축. 영감은 배 가운데보다 뒤쪽(+Y)에 서서 삿대를 짚는다.

@@ -1,0 +1,109 @@
+{
+ "fps": 60,
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 97,
+   "length_sec": 1.6,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "Walk",
+   "frames": 37,
+   "length_sec": 0.6,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "Attack",
+   "frames": 23,
+   "length_sec": 0.367,
+   "loop": false,
+   "events": {
+    "hit": 10,
+    "windup_end": 5,
+    "swing_end": 14
+   }
+  },
+  {
+   "name": "Attack2",
+   "frames": 23,
+   "length_sec": 0.367,
+   "loop": false,
+   "events": {
+    "hit": 10,
+    "windup_end": 5,
+    "swing_end": 14
+   }
+  },
+  {
+   "name": "Attack3",
+   "frames": 51,
+   "length_sec": 0.833,
+   "loop": false,
+   "events": {
+    "hit_start": 14,
+    "hit_end": 28,
+    "windup_end": 10,
+    "swing_end": 28
+   }
+  },
+  {
+   "name": "Dodge",
+   "frames": 20,
+   "length_sec": 0.317,
+   "loop": false,
+   "events": {
+    "iframe_start": 2,
+    "iframe_end": 15
+   }
+  },
+  {
+   "name": "Hit",
+   "frames": 19,
+   "length_sec": 0.3,
+   "loop": false,
+   "events": {
+    "impact": 3
+   }
+  },
+  {
+   "name": "Cast",
+   "frames": 61,
+   "length_sec": 1.0,
+   "loop": false,
+   "events": {
+    "hold_start": 14,
+    "hold_end": 46
+   }
+  },
+  {
+   "name": "Pahon",
+   "frames": 26,
+   "length_sec": 0.417,
+   "loop": false,
+   "events": {
+    "hit": 8,
+    "recover_dodge_from": 10
+   }
+  }
+ ],
+ "verify": {
+  "file": "hero_chasa.glb",
+  "skins": 1,
+  "joints": 16,
+  "animations": [
+   "Idle",
+   "Walk",
+   "Attack",
+   "Attack2",
+   "Attack3",
+   "Dodge",
+   "Hit",
+   "Cast",
+   "Pahon"
+  ],
+  "size_kb": 166
+ }
+}
