@@ -50,7 +50,7 @@ public class DemoScript : MonoBehaviour
                 if (e == null) { stage = 1; stageT = 0f; break; }
                 // 0.45초마다 다시 명령 → 달려가서 1타, 2타, 3타가 이어진다(입력 버퍼)
                 if (t >= nextAttack) { player.CommandAttack(e); nextAttack = t + 0.45f; }
-                foreach (var k in enemies.list) if (k != null && k.alive && k.kneeling && judge.CanTendoNow(k) && Vector3.Distance(k.Pos, player.Pos) < 6f) { stage = 1; stageT = 0f; walkT = 0f; break; }   // 가까이 무릎 꿇은 혼이 있을 때만 천도로(멀리 있는 혼을 쫓다 일어서는 일 방지)
+                foreach (var k in enemies.list) if (k != null && k.kneeling && judge.CanTendoNow(k) && Vector3.Distance(k.Pos, player.Pos) < 6f) { stage = 1; stageT = 0f; walkT = 0f; break; }   // 가까이 무릎 꿇은 혼이 있을 때만 천도로(멀리 있는 혼을 쫓다 일어서는 일 방지)
                 if (stageT > 14f) { stage = 1; stageT = 0f; }   // 안전장치: 너무 오래 걸리면 다음으로
                 break;
             }
@@ -60,7 +60,7 @@ public class DemoScript : MonoBehaviour
                 Enemy k = null; float kd = 999f;
                 foreach (var e in enemies.list)
                 {
-                    if (e == null || !e.alive || !e.kneeling || !judge.CanTendoNow(e)) continue;   // 덩어리·보스처럼 천도 못 하는 혼은 거른다
+                    if (e == null || !e.kneeling || !judge.CanTendoNow(e)) continue;   // (무릎 꿇은 혼은 alive 가 아니다 — alive 는 '싸우는 중'만)   // 덩어리·보스처럼 천도 못 하는 혼은 거른다
                     float d = Vector3.Distance(e.Pos, player.Pos);
                     if (d < kd) { kd = d; k = e; }
                 }
@@ -81,7 +81,7 @@ public class DemoScript : MonoBehaviour
                 break;
             case 3:
                 // 다음 혼이 남아 있으면 처음부터 다시(영상 30초 동안 여러 마리를 상대하게)
-                if (stageT > 0.8f && Nearest() != null) { stage = 0; stageT = 0f; }
+                if (stageT > 0.8f) { stage = Nearest() != null ? 0 : 1; stageT = 0f; walkT = 0f; }   // 서 있는 혼이 있으면 때리기, 모두 무릎 꿇었으면 천도부터
                 break;
         }
     }
