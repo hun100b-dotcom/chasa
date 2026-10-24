@@ -95,7 +95,108 @@ PER_CHAPTER_LIMITS = {"얼굴이 돌아왔다": 1, "그의 혼불로 왔다": 1,
 # 보여 준 뒤 뜻을 풀어 말하는 문장(독자가 스스로 알아챌 몫을 빼앗는다). 경고만.
 EXPLAIN_PATTERNS = [r"다는 것은 [^.\n]{0,30}(?:것|뜻)이었다", r"(?:이번이|그것이) 처음이었다", r"그래도 알았다"]
 LONG_SENT = 30            # 이보다 긴 문장(띄어쓰기 포함 글자 수)을 '긴 문장'으로 센다
-LONG_SHARE_MIN = 0.15     # 긴 문장이 이 비율보다 적으면 리듬이 한 가지로 굳는다(1~20장은 7.9%)
+LONG_SHARE_MIN = 0.25     # 긴 문장이 이 비율보다 적으면 리듬이 한 가지로 굳는다(1~20장은 7.9%)
+                          # 2026-10-25 04:14 오너 지적("~다 ~다 ~다") 뒤 15% → 25%로 올림
+
+# ── 문장 끝 리듬(2026-10-25 04:14 KST 오너 지적: "~다 ~다 ~다 이게 뭐냐") ───────────────
+# 왜: 1·2부 서술 문장의 85%가 '~다'로 끝났고(프롤로그 96%), 같은 끝이 최장 51문장 연달아 섰다.
+#     그런데도 점검기는 문장 끝을 한 번도 세지 않았다. 그래서 이제 센다.
+# 한국어 과거 서술이 '~다'로 끝나는 것 자체는 자연스럽다. 귀에 걸리는 것은
+#     (1) 같은 '꼴'(예: ~었다.)이 비슷한 길이로 줄지어 서는 것,
+#     (2) 꼴이 달라도 '~다'만 길게 이어지는 것이다.
+#     그래서 끝 모양을 꼴(아래 ending_form)로 나눠 (1)을 오류로, (2)를 길이 기준으로 잡는다.
+# 고치는 법(SKILL.md §3-1): 어미 앞부분 바꾸기(었다/ㄴ다/있었다/것이었다/터였다),
+#     체언·부사로 끊기, 도치, 문장 길이 크게 바꾸기, 쉼표·연결 어미로 잇기, 대화 넣기.
+#     '~했지.' '~인가.' 같은 어색한 어미를 숫자 맞추려고 넣지 않는다(목표는 리듬).
+FORM_RUN_MAX = 2          # 같은 꼴은 두 번까지만 연달아. 셋째부터 오류
+DA_RUN_MAX = 4            # '~다'(꼴 무관)는 네 문장까지만 연달아. 다섯째부터 오류
+DA_SHARE_WARN = 0.80      # 서술 문장 가운데 '~다' 끝이 이 비율을 넘으면 경고
+                          # (75%로 시작했다가 80%로 내림: '~다' 5연속 금지만으로도 다섯에 하나는
+                          #  '~다'가 아닌 끝이 생긴다. 그보다 더 밀면 조각 문장이 새 버릇이 된다)
+FRAG_SHARE_WARN = 0.30    # 거꾸로 '~다'가 아닌 끝(조각 문장·물음·도치)이 이 비율을 넘어도 경고.
+                          # 왜: '~다'를 피하려고 "챙 넓은 검은 갓." 같은 조각을 남발하면
+                          #     그것도 기계가 쓴 티(시처럼 뚝뚝 끊기는 문장)가 난다
+
+
+def ending_form(sentence: str) -> str:
+    """문장 끝 '꼴'을 고른다. 귀에 같은 소리로 들리는 끝끼리 한 꼴로 묶는다.
+    - '다 아님'      : 체언·부사·도치·물음·말줄임·소리말 따위로 끝남
+    - '있었다/없었다' : 있음·없음의 과거(있었다, 없었다, 남아 있었다…)
+    - '~이었다'      : 체언+지정 과거(것이었다, 터였다, 뿐이었다, 갓이었다…)
+    - '~었다'        : 그 밖의 과거(갔다, 보았다, 내려앉았다, 않았다…) — 받침 ㅆ 바로 뒤 '다'
+    - '~ㄴ다'        : 현재(간다, 본다, 먹는다)
+    - '~이다'        : 체언+지정 현재(것이다, 때문이다)
+    - '~다(그 밖)'    : 형용사·있다류 현재(차갑다, 같다, 있다, 없다)"""
+    t = re.sub(r"[\s\"”’'」』)\]]+$", "", sentence)
+    t = re.sub(r"[.?!…~]+$", "", t)
+    if not t.endswith("다"):
+        return "다 아님"
+    last = t.split()[-1] if t.split() else t
+    if re.search(r"(?:있|없)었다$", last):
+        return "있었다/없었다"
+    if re.search(r"(?:이었다|것이었다|터였다|뿐이었다|셈이었다|참이었다|때였다|무렵이었다)$", last):
+        return "~이었다"
+    if re.search(r"(?:있다|없다|겠다)$", last):
+        return "~다(그 밖)"
+    if re.search(r"이다$", last):
+        return "~이다"
+    prev = t[-2] if len(t) >= 2 else ""
+    if "가" <= prev <= "힣":
+        jong = (ord(prev) - 0xAC00) % 28
+        if jong == 20:            # 받침 ㅆ → 과거
+            return "~었다"
+        if jong == 4 or prev == "는":   # 받침 ㄴ 또는 '는' → 현재 동사
+            return "~ㄴ다"
+    return "~다(그 밖)"
+
+
+def narration_flow(text: str):
+    """읽는 순서대로 (종류, 문장)을 늘어놓는다. 대화 문단·쪽지·장면 구분은 흐름을 끊는 표지로 넣는다.
+    문단이 바뀌어도 서술이 이어지면 귀에는 이어서 들리므로 끊지 않는다."""
+    out = []
+    for para in re.split(r"\n\s*\n", text):
+        p = para.strip()
+        if not p or p.startswith("#"):
+            continue
+        if p.startswith("---"):
+            out.append(("끊김", ""))
+            continue
+        if p.startswith(">"):
+            out.append(("쪽지", p))
+            continue
+        if p[0] in "\"“'‘「":
+            out.append(("대화", p))
+            continue
+        p = p.replace("*", "")
+        for s in re.split(r"(?<=[.?!…])\s+", p):
+            s = s.strip()
+            if s:
+                out.append(("서술", s))
+    return out
+
+
+def ending_rhythm(text: str) -> dict:
+    """같은 꼴 3연속 자리, '~다' 최장 연속, '~다' 비율을 센다."""
+    flow = narration_flow(text)
+    nar = [s for k, s in flow if k == "서술"]
+    da = [s for s in nar if ending_form(s) != "다 아님"]
+    form_hits, da_hits = [], []
+    prev_form, form_run, da_run, da_max = None, 0, 0, 0
+    for kind, s in flow:
+        if kind != "서술":
+            prev_form, form_run, da_run = None, 0, 0
+            continue
+        f = ending_form(s)
+        form_run = form_run + 1 if f == prev_form else 1
+        prev_form = f
+        if f != "다 아님" and form_run > FORM_RUN_MAX:
+            form_hits.append(f"[{f}] …{s[-24:]}")
+        da_run = da_run + 1 if f != "다 아님" else 0
+        da_max = max(da_max, da_run)
+        if da_run == DA_RUN_MAX + 1:
+            da_hits.append(f"…{s[-24:]}")
+    return {"서술 문장": len(nar), "~다 비율": len(da) / max(1, len(nar)), "~다 최장 연속": da_max,
+            "같은 꼴 3연속": form_hits, "~다 5연속": da_hits}
 DIALOGUE_MIN = 8          # 따옴표로 시작하는 문단(산 사람의 말) 최소. 혼자만 나오는 장이면 경고를 무시해도 된다
 
 
@@ -268,6 +369,23 @@ def check_file(path: str) -> dict:
     if dlg < DIALOGUE_MIN:
         res["warnings"].append(f"대화 문단 {dlg}개 — 산 사람의 말이 {DIALOGUE_MIN}문단은 있어야 책이 숨을 쉰다(혼자만 나오는 장이면 무시)")
     res["counts"]["문장 버릇"] = style
+
+    # 9) 문장 끝 리듬(2026-10-25 오너 지적). 같은 꼴 3연속·'~다' 5연속은 오류, '~다' 비율은 경고.
+    rh = ending_rhythm(text)
+    res["counts"]["문장 끝"] = {"서술 문장": rh["서술 문장"], "~다 비율": f"{rh['~다 비율']:.0%}",
+                             "~다 최장 연속": rh["~다 최장 연속"], "같은 꼴 3연속": len(rh["같은 꼴 3연속"]),
+                             "~다 5연속": len(rh["~다 5연속"])}
+    if rh["같은 꼴 3연속"]:
+        res["errors"].append(f"같은 꼴 문장 끝이 세 번 연달아 ×{len(rh['같은 꼴 3연속'])}"
+                             f"(셋째 문장 끝을 바꾼다): {rh['같은 꼴 3연속'][:4]}")
+    if rh["~다 5연속"]:
+        res["errors"].append(f"'~다'로 끝나는 서술이 다섯 문장 이상 이어짐 ×{len(rh['~다 5연속'])}"
+                             f"(먼저 두 문장을 이음말로 잇고, 안 되면 대화·체언으로 끊는다): {rh['~다 5연속'][:4]}")
+    if rh["~다 비율"] > DA_SHARE_WARN:
+        res["warnings"].append(f"서술 문장의 {rh['~다 비율']:.0%}가 '~다'로 끝남 — {DA_SHARE_WARN:.0%} 아래로")
+    elif 1 - rh["~다 비율"] > FRAG_SHARE_WARN:
+        res["warnings"].append(f"'~다'가 아닌 끝(조각 문장·물음·도치)이 {1 - rh['~다 비율']:.0%} — "
+                               f"{FRAG_SHARE_WARN:.0%} 넘으면 조각 문장이 새 버릇이 된다. 몇 개는 앞 문장에 붙인다")
     return res
 
 
@@ -280,6 +398,7 @@ def main(paths):
         print(f"  분량: {r['counts']['글자(공백 포함)']:,}자(공백 포함) / {r['counts']['글자(공백 제외)']:,}자(공백 제외)")
         print(f"  오감(소리·냄새·촉감): {r['counts']['오감']}")
         print(f"  문장 버릇: {r['counts']['문장 버릇']}")
+        print(f"  문장 끝: {r['counts']['문장 끝']}")
         if r["counts"]["반복"]:
             print(f"  반복 구문: {r['counts']['반복']}")
         bucket = total_repeat.setdefault(r["part"], {})
