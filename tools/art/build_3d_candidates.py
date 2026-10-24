@@ -5,21 +5,16 @@ IMG = "/mnt/project-files/art/3d-candidates"
 OUT = "/tmp/claude-0/-home-claude-chasa/180ef1c7-c519-55c2-b260-5b5ae388dc6b/scratchpad/3d_candidates.html"
 # id, 구역, 이름, 쓸 곳, 라이선스, 가격, 적합도(1~5), 내용, 주의, 링크
 C = [
-("q-ubc","동이·인물","Universal Base Characters (Quaternius)","동이 몸체, 마을 사람","CC0","무료(표준판)",3,"남녀 기본 몸 6종 + 머리 20종, 휴머노이드 뼈대, 약 1.3만 면. FBX·glTF·OBJ.","흑립·도포는 들어 있지 않아 직접 만들거나 색 입힌 의상으로 대체해야 함.","https://quaternius.com/packs/universalbasecharacters.html"),
-("q-mco","동이·인물","Modular Character Outfits – Fantasy (Quaternius)","동이 도포 대용 의상(검게 재색칠)","CC0","무료(표준판)",2,"의상 12벌(조각 62개), 벌마다 색 3종. 위 기본 몸과 호환.","서양 판타지 의상. 갓·도포는 없어 형태는 따로 제작 필요.","https://quaternius.com/packs/modularcharacteroutfitsfantasy.html"),
+("q-ubc","동이·인물","Universal Base Characters (Quaternius)","동이 몸 규격(뼈대) 확인용 임시 대역","CC0","무료(표준판)",3,"남녀 기본 몸 6종 + 머리 20종, 휴머노이드 뼈대, 약 1.3만 면. FBX·glTF·OBJ.","흑립·도포는 들어 있지 않아 직접 만들거나 색 입힌 의상으로 대체해야 함.","https://quaternius.com/packs/universalbasecharacters.html"),
 ("q-ual","애니메이션","Universal Animation Library (Quaternius)","동이·사람형 적의 걷기·뛰기·죽기 동작","CC0","무료(표준판)",4,"동작 120개 이상, 8방향 이동·달리기·죽음·감정표현. 위 기본 몸과 호환.","근접 공격·피격 동작 포함 여부는 페이지에 명시되지 않음(받아서 확인 필요).","https://quaternius.com/packs/universalanimationlibrary.html"),
 ("mixamo","애니메이션","Mixamo (Adobe)","동이 콤보·구르기·피격 동작 보강","Adobe 약관(로열티 없는 상업 이용)","무료(Adobe 로그인)",4,"사람형 캐릭터와 동작 수천 개, 자동 뼈대 입히기. 게임 제작에 쓸 수 있다고 Adobe FAQ에 적혀 있음.","CC0가 아니라 Adobe 약관. 원본 파일을 공개 저장소에 올리면 안 됨(비공개 전환 후 사용).","https://www.mixamo.com/"),
 ("q-um","혼·보스","Ultimate Monsters (Quaternius)","잡귀·혼 바탕 몸체 50종(움직임 포함)","CC0","무료",4,"괴물 50종, 모두 애니메이션 포함. FBX·OBJ·Blend·glTF.","귀엽거나 서양식 몬스터가 많아 실루엣을 고르고 색·뿔·가면으로 한국 귀신 느낌을 입혀야 함.","https://quaternius.com/packs/ultimatemonsters.html"),
 ("q-best","혼·보스","Bestiary – Dungeon Monsters Kit (Quaternius)","보스급 사람형 괴물 7종(무기 포함)","Quaternius 라이선스(상업 이용 가능, CC0 아님)","무료(표준판)",3,"괴물 7종 × 색 3종, 휴머노이드 뼈대. 위 동작 라이브러리와 호환.","동작이 포함되는지 불명확. CC0가 아니므로 라이선스 문구 확인 필요.","https://quaternius.com/packs/bestiarydungeonmonsterskit.html"),
 ("k-grave","혼·보스","Graveyard Kit (Kenney)","저승·무덤·귀신 분위기 지형과 소품 90점","CC0","무료",4,"무덤·비석·울타리·관·유령 등 90점, 한 팀의 통일된 낮은 면 스타일.","서양 묘지 모양. 비석·봉분 형태는 한국식으로 바꿔 쓰거나 색만 활용.","https://kenney.nl/assets/graveyard-kit"),
-("q-mvm","마을·건물","Medieval Village MegaKit (Quaternius)","솔고개 마을의 벽·바닥·계단 조립 부품","CC0","무료(표준판), 전체는 유료",2,"조립식 부품 300개 이상(벽·지붕·문·창·덩굴), 질감 포함.","중세 유럽 모양이라 한옥 지붕선이 없음. 구조 부품으로만 쓰고 지붕·창살은 따로 필요.","https://quaternius.com/packs/medievalvillagemegakit.html"),
-("k-town","마을·건물","Fantasy Town Kit (Kenney)","마을 골격·울타리·우물·수레","CC0","무료",2,"마을 부품 160점, 색 변형 포함.","서양 판타지 마을. 한옥 느낌은 없음.","https://kenney.nl/assets/fantasy-town-kit"),
 ("u-voxel","마을·건물","Voxel Korean Traditional Village Pack (Haka, Unity 에셋 스토어)","한옥 마을 전체(유일한 한국 전통 후보)","Unity 에셋 스토어 약관","$19.99(유료)",3,"한국 전통 마을 팩, 6장 스크린샷, 7.4MB, Unity 2019.3 이상.","복셀(네모 블록) 스타일이라 다른 후보와 모양이 안 맞음. 유료이고 공개 저장소 노출 금지. 품목 목록이 페이지에 없음.","https://assetstore.unity.com/packages/3d/environments/voxel-korean-traditional-village-pack-166808"),
 ("k-dung","마을·건물","Modular Dungeon Kit (Kenney)","명부전·지하 통로 조립 부품 40점","CC0","무료",3,"벽·바닥·계단 등 던전 부품 40점, 변형 2종.","서양 던전 느낌. 붉은 기둥·등불로 색을 바꾸면 명부전 용도로 가능.","https://kenney.nl/assets/modular-dungeon-kit"),
 ("q-ruins","마을·건물","Ultimate Modular Ruins (Quaternius)","폐당집·무너진 절터","CC0","무료",3,"폐허·던전 조립 부품 90개, 애니메이션 캐릭터와 소품 포함.","서양 유적 모양. 돌담·기단 부품으로 활용.","https://quaternius.com/packs/ultimatemodularruins.html"),
 ("q-snm","지형·자연","Stylized Nature MegaKit (Quaternius)","솔고개 숲·보릿들 풀밭·바위","CC0","무료(표준판)",4,"나무 40종, 풀·꽃 35종, 바위 27종 등 116개, 질감 포함.","소나무는 전용 모델이 없을 수 있어 가까운 나무를 골라 써야 함.","https://quaternius.com/packs/stylizednaturemegakit.html"),
-("q-props","소품·이펙트","Fantasy Props MegaKit (Quaternius)","장터·집 안 소품 211개(무기·도구·상자·가구)","CC0","무료(표준판)",3,"무기·도구·채소·물약·시장 가판·상자·책 등 211개.","서양 소품이 대부분. 항아리·바구니·등불 위주로 골라 씀.","https://quaternius.com/packs/fantasypropsmegakit.html"),
-("itch-asia","소품·이펙트","Asian Market Assets (annis15, itch.io)","장터 가판·항아리·우산","페이지에 명시 없음(무료 에셋이라고만 표기)","무료",2,"시장 구조물, 의자, 탁자, 우산, 항아리 3종 등. FBX, 질감 3장.","일본풍 소품(다루마·타이야키 포함). 라이선스가 적혀 있지 않아 쓰기 전에 작가 확인 필요.","https://annis15.itch.io/asianmarketassets"),
 ]
 SEC = ["동이·인물","애니메이션","혼·보스","마을·건물","지형·자연","소품·이펙트"]
 def img(i):
