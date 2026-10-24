@@ -1007,4 +1007,25 @@ public class CoreTests
         Assert.AreEqual(2.6f, Balance.ENEMY_ATTACK_INTERVAL, 1e-4f);
         Assert.AreEqual(2, Balance.FIRST_NIGHT_HEAL);
     }
+
+    // ---------- 임시 효과음 합성 ----------
+    [Test]
+    public void 효과음_모든_id가_만들어지고_최대_크기가_마이너스1dB_이하()
+    {
+        foreach (var id in SfxSynth.Ids)
+        {
+            var b = SfxSynth.Render(id);
+            Assert.IsNotNull(b, id);
+            Assert.Greater(b.Length, SfxSynth.Rate / 50, id + " 너무 짧음");
+            Assert.LessOrEqual(SfxSynth.PeakDb(b), -1f, id + " 소리가 너무 큼(찢어짐)");
+            Assert.Greater(SfxSynth.PeakDb(b), -40f, id + " 소리가 거의 안 남");
+        }
+    }
+
+    [Test]
+    public void 효과음_같은_id는_항상_같은_소리()
+    {
+        var a = SfxSynth.Render("sfx.hit.chain"); var b = SfxSynth.Render("sfx.hit.chain");
+        CollectionAssert.AreEqual(a, b);
+    }
 }

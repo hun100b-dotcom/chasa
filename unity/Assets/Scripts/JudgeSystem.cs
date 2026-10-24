@@ -137,6 +137,7 @@ public class JudgeSystem : MonoBehaviour
             numbers.Spawn(o.HeadPosition, pahonDmg, "heavy");
         }
         feel.HitStop(Balance.PAHON_HITSTOP_FRAMES);
+        Sfx.Play("sfx.pahon.burst");
         feel.AddShake(Balance.PAHON_SHAKE);
         feel.AddZoom(1f);                       // 파혼: 확 다가가는 쿵
         flashColor = new Color(0.55f, 0.05f, 0.08f); flashA = 0.55f;   // 붉은 번쩍임(깨뜨림)
@@ -170,6 +171,7 @@ public class JudgeSystem : MonoBehaviour
         }
         chainLeft = lo.stats.ChainWindow;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
+        Sfx.Play("sfx.tendo.done");
         feel.AddZoom(-0.7f);                    // 천도 완료: 숨을 내쉬듯 화면이 살짝 멀어졌다 돌아온다
         flashColor = new Color(0.85f, 0.8f, 1f); flashA = 0.5f;        // 흰 보랏빛 번쩍임(보냄)
         EndCast();
@@ -186,6 +188,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>맺힘 0 → 장비 드롭 판정 1회(처결 방식과 무관). 사나운 적은 귀한 확정</summary>
     void OnEnemyKneel(Enemy e)
     {
+        Sfx.Play("sfx.kneel");   // 무릎 꿇는 소리 = '지금 고를 때'
         // 검은 술: 무릎 꿇은 혼의 대기 시간이 짧아진다 (덩어리는 제외, 최소 WAIT_FLOOR)
         if (!e.soul.Boss && e.soul.State == SoulState.Kneel)
         {
@@ -298,6 +301,7 @@ public class JudgeSystem : MonoBehaviour
             if (new Vector2(player.Pos.x - p.x, player.Pos.z - p.z).magnitude > Balance.CLUE_PICK_RADIUS) continue;
             night.PickClue();
             Destroy(clueViews[i]); clueViews.RemoveAt(i); cluePos.RemoveAt(i);
+            Sfx.Play("sfx.clue");
             Say("단서 " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED);
         }
     }
@@ -310,6 +314,7 @@ public class JudgeSystem : MonoBehaviour
         // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
         int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult)) : by.damage;
         sinceHit = 0f;
+        Sfx.Play("sfx.player.hurt");
         int dealt = godMode ? 0 : ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
         feel.AddShake(0.35f);

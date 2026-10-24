@@ -402,6 +402,7 @@ public class Player : MonoBehaviour
         bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun);
         // 손맛 5요소: 맞은 놈만 굳기(국소 히트스톱) · 처치/마지막 타격만 전체 정지 · 흔들림 · 줌 펀치 · 맞은 방향 카메라 밀림
         bool last = a.step == Steps.Length;
+        Sfx.Play(killed || last ? "sfx.hit.heavy" : "sfx.hit.chain");   // 타격음은 히트스톱과 같은 순간에
         if (killed || last) feel.HitStop(cfg.hitStopFrames + (killed ? Config.FEEL_KILL_BONUS_FRAMES : 0));
         else e.Freeze(cfg.hitStopFrames * Config.FEEL_FRAME_TIME * 1.5f);   // 일반 타격은 국소 정지(조금 더 길게 — 전체 정지보다 덜 거슬리니까)
         feel.AddShake(cfg.shake + (killed ? Config.FEEL_KILL_BONUS_SHAKE : 0f));
@@ -464,7 +465,7 @@ public class Player : MonoBehaviour
             facing = Mathf.Atan2(target.Pos.z - Pos.z, target.Pos.x - Pos.x);
             if (!target.pulled)
             {
-                if (dt > 0f && target.alive) { feel.HitStop(2); feel.AddShake(Config.PULL_ARRIVE_SHAKE); } // 도착 '쿵'
+                if (dt > 0f && target.alive) { feel.HitStop(2); feel.AddShake(Config.PULL_ARRIVE_SHAKE); Sfx.Play("sfx.hit.heavy"); } // 도착 '쿵'
                 r.from = head; r.phase = "retract"; r.t = 0f;
             }
             return;

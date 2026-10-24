@@ -183,7 +183,9 @@ public class Enemy : MonoBehaviour
             float dist = new Vector2(playerPos.x - Pos.x, playerPos.z - Pos.z).magnitude;
             // 예비동작 중에는 멈춰 서서 '곧 때린다'는 신호를 준다 (피할 시간)
             if (canAct && !atk.Winding) Chase(dt, playerPos);
+            bool wasWind = atk.Winding;
             if (atk.Tick(dt, dist, canAct)) onHitPlayer?.Invoke();
+            if (atk.Winding && !wasWind) Sfx.Play("sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
             mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)
                                     : baseColor;
