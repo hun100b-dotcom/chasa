@@ -26,7 +26,7 @@ public struct ComboStep
 public static class Config
 {
     // 1) 카메라
-    public const float CAMERA_PITCH_DEG = 45f;
+    public const float CAMERA_PITCH_DEG = 30f;   // 시연판: 아트팀 그림이 진짜 2:1 등각 기준이라 45° → 30° (되돌리기: 45)
     public const float CAMERA_YAW_DEG = 45f;
     public const float CAMERA_VIEW_HEIGHT = 16f;
     public const float CAMERA_FOLLOW_SMOOTHNESS = 8f;
