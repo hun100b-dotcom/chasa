@@ -44,16 +44,16 @@ def clips():
     C = {}
     C["Idle"] = (idle_keys(), "BEZIER", True, None)
     C["Walk"] = (walk_keys(), "BEZIER", True, None)
-    # 1타 횡베기: 오른쪽 뒤로 젖힘(f5) → 왼쪽 앞으로 휘두름(f14) → 복귀(f22)
-    C["Attack"] = ([(0, {}), (5, slash(-25, -32, -10, 6, 0.04)), (10, slash(55, 4, 2, 6, -0.06)), (14, slash(95, 38, 14, 4, -0.1)), (22, {})], "LINEAR", False, {"hit": 10, "windup_end": 5, "swing_end": 14})
-    # 2타 역횡베기: 왼쪽에서 오른쪽으로 되받아침
-    C["Attack2"] = ([(0, {}), (5, slash(105, 38, 14, 6, -0.04)), (10, slash(40, 0, 0, 6, -0.06)), (14, slash(-20, -35, -12, 4, -0.1)), (22, {})], "LINEAR", False, {"hit": 10, "windup_end": 5, "swing_end": 14})
-    # 3타 회전 후려치기: 웅크려 젖힘(10f) → 한 바퀴 회전(18f) → 긴 후딜(22f)
-    spin = lambda rz: {"Root": {"r": (0, 0, rz)}}
-    def s3(rz, arm=70, ch=0, dz=-0.05):
-        d = slash(arm, ch, 0, 10, -0.05, dz=dz); d.update(spin(rz)); return d
-    C["Attack3"] = ([(0, {}), (10, {**slash(-45, -55, -20, 14, 0.06, dz=-0.07), **spin(0)}), (14.5, s3(90)), (19, s3(180)), (23.5, s3(270)), (28, s3(360, 80, 8)), (36, {"Root": {"r": (0, 0, 360)}, "Chest": {"r": (4, 0, 0)}, "UpperArm.R": {"r": (0, 20, 0)}}),
-                     (50, {"Root": {"r": (0, 0, 360)}})], "LINEAR", False, {"hit_start": 14, "hit_end": 28, "windup_end": 10, "swing_end": 28})
+    # 세 타를 확연히 다르게(코드팀 요청 1): 1타=오른발 내딛고 몸통을 크게 비틀어 횡베기, 2타=왼발 내딛고 반대로 되받기, 3타=두 팔 머리 위로 들어 내려찍는 오버헤드.
+    step_l = {"UpperLeg.L": {"r": (-38, 0, 0)}, "LowerLeg.L": {"r": (14, 0, 0)}, "UpperLeg.R": {"r": (22, 0, 0)}, "LowerLeg.R": {"r": (24, 0, 0)}, "Foot.R": {"r": (-20, 0, 0)}}
+    step_r = {"UpperLeg.R": {"r": (-38, 0, 0)}, "LowerLeg.R": {"r": (14, 0, 0)}, "UpperLeg.L": {"r": (22, 0, 0)}, "LowerLeg.L": {"r": (24, 0, 0)}, "Foot.L": {"r": (-20, 0, 0)}}
+    def S(arm, ch, hp, lean, sh, legs, **kw): return slash(arm, ch, hp, lean, sh, extra=legs, **kw)
+    C["Attack"] = ([(0, {}), (5, S(-30, -62, -28, 10, 0.10, {"UpperLeg.R": {"r": (14, 0, 0)}, "LowerLeg.R": {"r": (22, 0, 0)}})), (10, S(55, 38, 22, 14, -0.2, step_l)), (14, S(95, 58, 32, 10, -0.24, step_l)), (22, {})], "LINEAR", False, {"hit": 10, "windup_end": 5, "swing_end": 14})
+    C["Attack2"] = ([(0, {}), (5, S(110, 62, 30, 10, 0.10, {"UpperLeg.L": {"r": (14, 0, 0)}, "LowerLeg.L": {"r": (22, 0, 0)}})), (10, S(40, -36, -24, 14, -0.2, step_r)), (14, S(-28, -58, -34, 10, -0.24, step_r)), (22, {})], "LINEAR", False, {"hit": 10, "windup_end": 5, "swing_end": 14})
+    both = lambda rx: {"UpperArm.R": {"r": (rx, 0, 0)}, "UpperArm.L": {"r": (rx, 0, 0)}}
+    up = {**both(-165), "Chest": {"r": (-24, 0, 0)}, "Head": {"r": (10, 0, 0)}, "Hips": {"r": (-8, 0, 0), "l": (0, 0.1, -0.06)}, "UpperLeg.L": {"r": (10, 0, 0)}, "LowerLeg.L": {"r": (20, 0, 0)}, "UpperLeg.R": {"r": (10, 0, 0)}, "LowerLeg.R": {"r": (20, 0, 0)}}
+    slam = {**both(-35), "Chest": {"r": (42, 0, 0)}, "Head": {"r": (-14, 0, 0)}, "Hips": {"r": (18, 0, 0), "l": (0, -0.22, -0.12)}, "UpperLeg.L": {"r": (-44, 0, 0)}, "LowerLeg.L": {"r": (18, 0, 0)}, "UpperLeg.R": {"r": (24, 0, 0)}, "LowerLeg.R": {"r": (30, 0, 0)}}
+    C["Attack3"] = ([(0, {}), (10, up), (14, {**slam, **both(-80)}), (15, slam), (28, slam), (38, {}), (50, {})], "LINEAR", False, {"hit_start": 14, "hit_end": 28, "windup_end": 10, "swing_end": 15})
     # 피하기: 앞으로 낮게 파고듦(무적 2~15f)
     lunge = {"Chest": {"r": (32, 0, 0)}, "Head": {"r": (-18, 0, 0)}, "Hips": {"r": (14, 0, 0), "l": (0, -0.12, 0)}, "UpperLeg.L": {"r": (-38, 0, 0)}, "LowerLeg.L": {"r": (10, 0, 0)}, "UpperLeg.R": {"r": (30, 0, 0)}, "LowerLeg.R": {"r": (30, 0, 0)},
              "UpperArm.L": {"r": (40, -10, 0)}, "UpperArm.R": {"r": (44, 10, 0)}}

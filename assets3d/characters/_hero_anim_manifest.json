@@ -46,7 +46,7 @@
     "hit_start": 14,
     "hit_end": 28,
     "windup_end": 10,
-    "swing_end": 28
+    "swing_end": 15
    }
   },
   {
@@ -104,6 +104,6 @@
    "Cast",
    "Pahon"
   ],
-  "size_kb": 158
+  "size_kb": 169
  }
 }

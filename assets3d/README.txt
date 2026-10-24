@@ -56,3 +56,5 @@
 [렌더 컷] previews/scene_{gate,village,barley,bridge,naru,tendo}_final.jpg(후처리: 위쪽 푸른 안개+비네팅, tools/art3d/scene_post.py). 갤러리 같은 링크 갱신.
 
 [오래된 혼 색 변경 #A5472E → #665659] 채도를 낮춘 먼지색 자주갈색, 발광 0.5→0.2. 이유: 따뜻한 등불 아래서 붉은 주황으로 읽혀 파혼 주황(#E8683A)과 혼동. 혼 16종·처결 대기 고리(old)·보스 조각 재생성. 확인 렌더: previews/soul_old_check.png(주황 등불 아래 오래된·해 넘긴·갓 죽은 혼 + 파혼 주황 구슬 나란히).
+
+[주인공 개선(코드팀 요청 3건)] ①공격 3타를 확연히 다르게: Attack=왼발 내딛고 몸통 크게 비틀어 횡베기, Attack2=오른발 내딛고 반대 방향, Attack3=두 팔 머리 위로 들었다 내려찍는 오버헤드(회전 제거). 명중 프레임 유지(Attack/Attack2 hit f10, Attack3 hit_start 14~28). ②붉은 띠를 굵게(높이 0.16) + 앞으로 폭0.16·길이0.7 끝 두 가닥 + 금 매듭. ③앞면 표식: 갓 앞 금 장식판+붉은 술, 가슴 금 매듭. 미리보기 previews/anim_hero_*.png 재생성.
