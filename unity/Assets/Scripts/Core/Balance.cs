@@ -321,4 +321,6 @@ public static class Balance
     public const float ZONE_SIZE_M = 128.0f;  // 구역 한 칸 한 변(m). 기획 확정(10-24): 128×128m, 3×3 로딩. 마을(28×36m)은 0번 구역 안쪽에 들어간다
     public const float ZONE_HYSTERESIS_M = 6.0f;  // 구역 경계에서 '현재 구역'이 바뀌기 전 여유(m). 경계에서 켜졌다 꺼졌다 반복하지 않게
     public const int ZONE_LOAD_PROPS_PER_FRAME = 6;  // 구역을 불러올 때 한 프레임에 세우는 소품 수(웹은 쓰레드가 없어 나눠서 해야 끊기지 않음)
+    public const float CAMERA_LOOKAHEAD_M = 2.5f;  // (시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게
+    public const float CAMERA_DEADZONE_M = 0.6f;  // (시연판 임시) 카메라 중심에서 이 반경(m) 안에서는 카메라가 안 움직임. 0이면 끔. 잔떨림·멀미 감소
 }

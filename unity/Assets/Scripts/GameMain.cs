@@ -20,6 +20,7 @@ public class GameMain : MonoBehaviour
     ClickMarker marker;
     JudgeSystem judge;
     Vector3 focus, offset;
+    Vector3 camPrevPlayer, ahead;   // 카메라 앞쪽 보기용: 지난 프레임 플레이어 위치, 현재 앞쪽 치우침
     bool holdingMove;
 
     /// <summary>씬에 아무것도 없어도 게임이 켜지면 자동으로 이 오브젝트를 만든다</summary>
@@ -139,7 +140,17 @@ public class GameMain : MonoBehaviour
     void UpdateCamera(float dt)
     {
         float k = 1f - Mathf.Exp(-Config.CAMERA_FOLLOW_SMOOTHNESS * dt); // 프레임레이트와 무관한 부드러운 추적
-        focus = Vector3.Lerp(focus, new Vector3(player.Pos.x, 0, player.Pos.z), k);
+        // 목표점 = 플레이어 + 걷는 방향 앞쪽(look-ahead). 멈추면 앞쪽 보기는 서서히 0으로 돌아온다
+        var vel = (player.Pos - camPrevPlayer) / Mathf.Max(0.0001f, dt); camPrevPlayer = player.Pos;
+        vel.y = 0f;
+        var wantAhead = vel.sqrMagnitude > 0.25f ? vel.normalized * Balance.CAMERA_LOOKAHEAD_M : Vector3.zero;
+        ahead = Vector3.Lerp(ahead, wantAhead, 1f - Mathf.Exp(-3f * dt));   // 천천히 따라가야 방향을 바꿀 때 화면이 휙 돌지 않는다
+        var goal = new Vector3(player.Pos.x, 0, player.Pos.z) + ahead;
+        // 데드존: 목표가 카메라 중심에서 이 반경 안이면 움직이지 않는다 (작은 흔들림에 화면이 같이 떨리지 않게)
+        var d = goal - focus; d.y = 0f;
+        if (d.magnitude > Balance.CAMERA_DEADZONE_M) goal = focus + d.normalized * (d.magnitude - Balance.CAMERA_DEADZONE_M);
+        else goal = focus;
+        focus = Vector3.Lerp(focus, goal, k);
         cam.transform.position = focus + offset;
         cam.transform.LookAt(focus);
         var s = feel.GetShakeOffset(); // 화면 기준 오른쪽/위쪽으로 밀어 평행하게 떨림
