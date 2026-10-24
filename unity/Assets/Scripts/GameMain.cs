@@ -32,6 +32,8 @@ public class GameMain : MonoBehaviour
         Application.targetFrameRate = 60;
         // 구역을 이어 붙인 넓은 필드: 설정값 또는 주소에 ?zones 가 있으면 켠다 (꺼져 있으면 마을 한 곳 = 기존 동작)
         World.Enabled = Balance.WORLD_ZONES || Application.absoluteURL.Contains("zones");
+        var url = Application.absoluteURL;
+        UiRoot.Enabled = Balance.UI_TOOLKIT || url.Contains("?ui") || url.Contains("&ui");   // 주소에 ?ui 가 있으면 UI Toolkit HUD ("build" 같은 글자에 걸리지 않게 ? 와 & 를 붙여 본다)
         GrowthData.Load();   // 기획팀 도술·옵션 JSON 덮어쓰기(있을 때만)
         BuildStage();
         enemies.SpawnAll(Vector3.zero);
@@ -47,6 +49,7 @@ public class GameMain : MonoBehaviour
         // 밤 분위기: 어둠 막 + 등불 (화면 위에 덮는 방식이라 그림 재질을 바꿀 필요가 없다)
         var atmo = gameObject.AddComponent<Atmosphere>();
         if (World.Enabled) { var zm = gameObject.AddComponent<ZoneManager>(); zm.player = player; }   // 걸어가면 둘레 구역을 켜고 끈다
+        if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)
         Sfx.Create(judge);   // 효과음 재생기
         atmo.cam = cam; atmo.judge = judge; atmo.player = player; atmo.enemies = enemies;
     }

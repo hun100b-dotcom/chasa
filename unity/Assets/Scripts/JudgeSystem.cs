@@ -43,6 +43,7 @@ public class JudgeSystem : MonoBehaviour
     bool played;                         // 첫 입력이 있었나 (그 전엔 적이 공격하지 않는다: 로딩 중 죽는 것 방지)
     public bool NightOver { get { return night.Over; } }
     bool debugKeys;
+    public UiRoot ui;   // 있으면 장부·체력 글자는 UI Toolkit 이 그린다(IMGUI 는 그 줄을 건너뜀)
     float overT;   // 결과 화면이 뜬 지 얼마나 됐나(초)
     DayScreen dayScreen;                 // 낮 화면과 낮에 쌓이는 것(단서·소모품)
     bool inDay;                          // 지금 낮 화면인가
@@ -528,6 +529,19 @@ public class JudgeSystem : MonoBehaviour
     }
 
     // ===== 화면 ====================================================================
+    /// <summary>화면에 보일 값을 모아(HudState) 새 화면(UI Toolkit)에 넘긴다</summary>
+    void LateUpdate()
+    {
+        if (ui == null) return;
+        var h = ui.Hud;
+        h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.ChainBonus = chainLeft > 0f;
+        h.Hp = ledger.Hp; h.MaxHp = ledger.MaxHp; h.Heal = dayScreen.Pack.Heal;
+        h.SecondsLeft = Mathf.CeilToInt(night.TimeLeft); h.Sent = night.Sent; h.Quota = Balance.NIGHT_QUOTA;
+        h.Clues = night.Clues; h.CluesNeeded = Balance.BOSS_CLUES_REQUIRED;
+        h.BossDone = night.BossDone; h.QuotaDone = night.QuotaDone; h.Warning = night.Warning;
+        ui.Refresh(!inDay && !night.Over && !CharacterPanel.Open);
+    }
+
     void OnGUI()
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
@@ -582,13 +596,16 @@ public class JudgeSystem : MonoBehaviour
         // (3) 장부(넋·기억·엽전·업)와 안내
         var small = new GUIStyle(GUI.skin.label) { fontSize = 16 };
         small.normal.textColor = new Color(1, 1, 1, 0.9f);
-        GUI.Label(new Rect(12, 30, 700, 24),
-            "넋 " + ledger.Neok + "   기억 " + ledger.Memory + "   엽전 " + ledger.Coin +
-            "   업 " + ledger.Karma + " (" + CoreRules.KarmaTier(ledger.Karma) + "단계)" +
-            (chainLeft > 0f ? "   연쇄!" : ""), small);
-        GUI.Label(new Rect(12, 74, 700, 24), "체력 " + ledger.Hp + " / " + ledger.MaxHp + "   회복약 " + dayScreen.Pack.Heal + " (H)" +
-            (Demo.Weapons ? "   무기 " + lo.Def.Name + " (Tab)" + (lo.Def.HasQuake ? "  Q 땅울림" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") : "") +
-            (Demo.Gear ? "   능력치 점수 " + StatPoints.Earned(ledger.Neok) : ""), small);
+        if (ui == null)
+        {
+            GUI.Label(new Rect(12, 30, 700, 24),
+                "넋 " + ledger.Neok + "   기억 " + ledger.Memory + "   엽전 " + ledger.Coin +
+                "   업 " + ledger.Karma + " (" + CoreRules.KarmaTier(ledger.Karma) + "단계)" +
+                (chainLeft > 0f ? "   연쇄!" : ""), small);
+            GUI.Label(new Rect(12, 74, 700, 24), "체력 " + ledger.Hp + " / " + ledger.MaxHp + "   회복약 " + dayScreen.Pack.Heal + " (H)" +
+                (Demo.Weapons ? "   무기 " + lo.Def.Name + " (Tab)" + (lo.Def.HasQuake ? "  Q 땅울림" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") : "") +
+                (Demo.Gear ? "   능력치 점수 " + StatPoints.Earned(ledger.Neok) : ""), small);
+        }
         // 시연판 기본 구성에서는 도술·장비 표시를 숨긴다 (기능은 DEMO_* 로 켜면 그대로 나온다)
         if (Demo.Skills)
         {
@@ -604,10 +621,13 @@ public class JudgeSystem : MonoBehaviour
             // 장비 아이콘 세 칸 (그림이 있을 때만): 등급 테두리 + 칸별 아이콘
             for (int si = 0; si < 3; si++) DrawGearIcon((Slot)si, new Rect(12 + si * 56, 190, 52, 52));
         }
-        GUI.Label(new Rect(12, 52, 700, 24), "E: 천도(넋을 보냄)   R: 파혼(넋을 깸)", small);
-        GUI.Label(new Rect(12, 96, 700, 24),
-            "밤 " + Mathf.CeilToInt(night.TimeLeft) + "초   천도 " + night.Sent + "/" + Balance.NIGHT_QUOTA +
-            "   단서 " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED + (night.BossDone ? "   나루 영감 끝" : "") + (night.QuotaDone ? "  (당집으로 돌아가라!)" : "") + (night.Warning ? "   동이 튼다!" : ""), small);
+        if (ui == null) GUI.Label(new Rect(12, 52, 700, 24), "E: 천도(넋을 보냄)   R: 파혼(넋을 깸)", small);
+        if (ui == null)
+        {
+            GUI.Label(new Rect(12, 96, 700, 24),
+                "밤 " + Mathf.CeilToInt(night.TimeLeft) + "초   천도 " + night.Sent + "/" + Balance.NIGHT_QUOTA +
+                "   단서 " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED + (night.BossDone ? "   나루 영감 끝" : "") + (night.QuotaDone ? "  (당집으로 돌아가라!)" : "") + (night.Warning ? "   동이 튼다!" : ""), small);
+        }
         if (night.Over)
         {
             GUI.color = new Color(0, 0, 0, 0.75f); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white;

@@ -21,6 +21,13 @@ public static class Ko
         if (font != null && GUI.skin.font != font) GUI.skin.font = font;
     }
 
+    /// <summary>한글 글꼴(UI Toolkit 글자도 같은 글꼴을 쓰도록 꺼내 준다)</summary>
+    public static Font GetFont()
+    {
+        if (!loaded) { loaded = true; font = Resources.Load<Font>("Fonts/NotoSansKR-Subset"); }
+        return font;
+    }
+
     /// <summary>장비 칸 이름</summary>
     public static string SlotName(Slot s)
     {

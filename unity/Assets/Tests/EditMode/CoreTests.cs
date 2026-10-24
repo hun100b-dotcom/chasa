@@ -1125,4 +1125,20 @@ public class CoreTests
         Assert.IsFalse(DodgeRules.CanCancelToAction(0.1f));
         Assert.IsTrue(DodgeRules.CanCancelToAction(0.25f));
     }
+
+    // ---------- HUD 값 묶음 ----------
+    [Test]
+    public void HUD_글자는_값에서_만들어지고_체력_비율은_0에서_1_사이()
+    {
+        var h = new HudState { Neok = 5, Memory = 2, Coin = 7, Karma = 12, Hp = 30, MaxHp = 100, Heal = 2, SecondsLeft = 300, Sent = 1, Quota = 3, Clues = 1, CluesNeeded = 3 };
+        StringAssert.Contains("넋 5", h.LedgerLine());
+        StringAssert.Contains("업 12 (1단계)", h.LedgerLine());
+        StringAssert.Contains("체력 30 / 100", h.VitalLine());
+        StringAssert.Contains("천도 1/3", h.NightLine());
+        Assert.AreEqual(0.3f, h.HpRatio, 1e-4f);
+        h.Hp = -5; Assert.AreEqual(0f, h.HpRatio);
+        h.Hp = 999; Assert.AreEqual(1f, h.HpRatio);
+        h.Hp = 10; Assert.IsTrue(h.HpLow);
+        h.Warning = true; StringAssert.Contains("동이 튼다", h.NightLine());
+    }
 }

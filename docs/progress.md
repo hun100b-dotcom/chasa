@@ -197,3 +197,8 @@
 - 검증용 N 키(?debug): 가장 가까운 산 적을 바로 공격 → 콤보·피하기 후딜 잠금을 클릭 타이밍 없이 검사.
 - 구역 경계에서 54~85ms 프레임 1번: 땅 메시를 한 번에 만드는 비용. 다음에 땅을 줄 단위로 나눠 만든다.
 - 구역 땅을 8줄씩 프레임에 나눠 깔기(ZONE_LOAD_ROWS_PER_FRAME 8), 구역을 끌 때 메시·재질도 지워 메모리 누수 방지.
+
+## [코드] UI Toolkit U0·U1 (장부·체력 HUD)
+- Core/HudState.cs(값 묶음 + 글자 규칙, 테스트 1개: Core 92개 통과), UiRoot.cs(코드로 만든 UI Toolkit: PanelSettings 1280x720 기준, hud-root·ledger-note·vitals, 마우스 안 가로챔, 한글 글꼴 FontDefinition.FromFont).
+- 켜는 법: 주소 끝 ?ui (또는 UI_TOOLKIT=true). 꺼져 있으면 IMGUI. 켜면 IMGUI 장부·체력·밤·안내 줄은 건너뜀.
+- PC 에디터 단계 필요 없음(코드 생성). 미확인: Unity 6.3 WebGL 에서 빈 테마(ThemeStyleSheet 인스턴스)로 정상 표시되는지, 한글 글꼴 표시 — PC 스크린샷 필요.
