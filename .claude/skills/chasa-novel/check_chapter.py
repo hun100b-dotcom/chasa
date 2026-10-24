@@ -6,7 +6,10 @@
 왜 만들었나:
   지난 원고에는 오타, 반복 구문("시야가 돌아왔다" 등), 본문 속 게임 메모가 많았다.
   사람 눈으로만 고르면 놓치므로, 장을 하나 쓸 때마다 이 스크립트로 기계적인 실수를 먼저 거른다.
-  (문장의 맛은 사람이 본다. 이 도구는 '틀린 것'만 찾는다.)
+  (문장의 맛은 사람이 본다. 이 도구는 '틀린 것'과 '너무 자주 나오는 꼴'만 찾는다.)
+  2026-10-25 중간 점검 뒤로는 'AI 티'로 읽히던 문장 버릇(부정-정정, 명사 끝맺음, 셋 맞춤,
+  풀어 말하기, 장마다 되풀이되던 구절)과 긴 문장 비율·대화 문단 수도 센다.
+  1~20장은 아직 이 기준 이전에 쓴 원고라 버릇 오류가 나온다 — 퇴고 때 고칠 목록으로 쓴다.
 
 쓰는 법:
   python3 check_chapter.py 장파일.md [장파일2.md ...]
@@ -75,6 +78,61 @@ EMOTION_WORDS = [
 # 번역투 표지(남발 금지). 숫자는 장 하나 상한.
 TRANSLATIONESE = {"에 의해": 0, "을 가지고 있었다": 0, "를 가지고 있었다": 0, "하는 중이었다": 1,
                   "하기 시작했다": 3, "마치 ": 3}
+
+# ── 문장 버릇(2026-10-25 중간 점검) ─────────────────────────────────────────
+# 왜: 1~20장을 세어 보니 문장 하나하나는 괜찮은데 같은 '꼴'이 장마다 쌓여
+#     기계가 쓴 리듬(AI 티)으로 읽혔다. 꼴마다 장 하나에 쓸 수 있는 개수를 정해 둔다.
+#     (1~20장 평균: 부정-정정 약 9번, 명사 끝맺음 약 13번 → 절반 아래로)
+STYLE_LIMITS = {
+    # "A가 아니라 B", "A가 아니었다. B였다" — 아니라고 한 뒤 고쳐 말하는 버릇
+    "부정-정정": (r"(?:이|가) 아니라|아니었다\.", 4),
+    # "무엇을 세는 손이었다." 처럼 행동을 명사 하나로 묶어 정리하는 버릇
+    "명사 끝맺음": (r"[가-힣]+ (?:손|발|자리|소리|냄새|얼굴|등|눈|빛|사람|몸|목소리|길|날|밤|물)(?:이었다|였다)\.", 6),
+}
+# 장을 넘어 되풀이되던 구절(1~20장에서 13~16개 장에 나옴). 장 하나 상한.
+PER_CHAPTER_LIMITS = {"얼굴이 돌아왔다": 1, "그의 혼불로 왔다": 1, "한 번 더": 2, "숨 한 번": 2,
+                      "그는 사슬을 냈다": 1, "오히려": 1}
+# 보여 준 뒤 뜻을 풀어 말하는 문장(독자가 스스로 알아챌 몫을 빼앗는다). 경고만.
+EXPLAIN_PATTERNS = [r"다는 것은 [^.\n]{0,30}(?:것|뜻)이었다", r"(?:이번이|그것이) 처음이었다", r"그래도 알았다"]
+LONG_SENT = 30            # 이보다 긴 문장(띄어쓰기 포함 글자 수)을 '긴 문장'으로 센다
+LONG_SHARE_MIN = 0.15     # 긴 문장이 이 비율보다 적으면 리듬이 한 가지로 굳는다(1~20장은 7.9%)
+DIALOGUE_MIN = 8          # 따옴표로 시작하는 문단(산 사람의 말) 최소. 혼자만 나오는 장이면 경고를 무시해도 된다
+
+
+def sentences(text: str):
+    """본문을 문장 단위로 자른다(쪽지 인용 '>' 줄과 기울임 별표는 뺀다)."""
+    out = []
+    for para in text.splitlines():
+        para = para.strip()
+        if not para or para == "---" or para.startswith("#") or para.startswith(">"):
+            continue
+        para = para.replace("*", "")
+        for s in re.split(r"(?<=[.?!…])\s+|(?<=[.?!][\"”’])\s+", para):
+            s = s.strip()
+            if s:
+                out.append(s)
+    return out
+
+
+def triads(text: str):
+    """같은 꼴 문장 셋이 나란히 선 곳을 찾는다(셋 맞춤).
+    기준: 한 문단 안에서 이웃한 세 문장의 마지막 어절이 같고(예: '들었다.'),
+    세 문장 모두 앞쪽에 '~은/는/에는' 같은 주제 표지가 있다."""
+    found = []
+    for para in text.splitlines():
+        para = para.strip()
+        if not para or para.startswith((">", "#", "---")):
+            continue
+        ss = [s.strip() for s in re.split(r"(?<=[.?!])\s+", para.replace("*", "")) if s.strip()]
+        for i in range(len(ss) - 2):
+            three = ss[i:i + 3]
+            tails = {s.split()[-1] for s in three}
+            if len(tails) != 1 or next(iter(tails)) in ("있었다.", "없었다.", "않았다."):
+                continue
+            if all(re.search(r"[가-힣](?:은|는|에는|에게는) ", s[: max(8, len(s) // 2)]) for s in three):
+                found.append(" / ".join(x[:18] + "…" for x in three))
+    return found
+
 
 # 오감 어림 지표(정확하지 않다. 0이면 그 감각을 잊었다는 신호로만 본다)
 SENSE = {
@@ -179,6 +237,37 @@ def check_file(path: str) -> dict:
     c = body.count("그녀")
     if c > 3:
         res["warnings"].append(f"'그녀' ×{c} — 당할미·아낙·아이·이름으로 바꿀 수 있나")
+
+    # 8) 문장 버릇(AI 티). 상한을 넘으면 오류 — 고쳐 쓴 뒤 다시 돌린다.
+    style = {}
+    for name, (pat, lim) in STYLE_LIMITS.items():
+        n = len(re.findall(pat, body))
+        style[name] = n
+        if n > lim:
+            res["errors"].append(f"문장 버릇 '{name}' ×{n} (장 하나 상한 {lim})")
+    for ph, lim in PER_CHAPTER_LIMITS.items():
+        n = body.count(ph)
+        if n > lim:
+            res["errors"].append(f"장마다 되풀이되던 구절 '{ph}' ×{n} (장 하나 상한 {lim})")
+    tri = triads(text)
+    style["셋 맞춤"] = len(tri)
+    if len(tri) > 1:
+        res["warnings"].append(f"같은 꼴 문장 셋 나란히 ×{len(tri)} — 가장 센 하나만 남길 수 있나: {tri[:2]}")
+    for pat in EXPLAIN_PATTERNS:
+        for m in re.finditer(pat, body):
+            res["warnings"].append(f"보여 준 뒤 풀어 말하기?: …{body[max(0, m.start() - 10): m.end()]}…")
+    ss = sentences(text)
+    if ss:
+        long_share = sum(1 for s in ss if len(s) > LONG_SENT) / len(ss)
+        style["긴 문장 비율"] = f"{long_share:.0%}"
+        if long_share < LONG_SHARE_MIN:
+            res["errors"].append(f"{LONG_SENT}자 넘는 문장이 {long_share:.0%} — {LONG_SHARE_MIN:.0%} 이상이어야 리듬이 산다"
+                                 "(물·기억·행렬·장례 장면을 길게 흐르게)")
+    dlg = sum(1 for line in text.splitlines() if line.strip().startswith(("\"", "“")))
+    style["대화 문단"] = dlg
+    if dlg < DIALOGUE_MIN:
+        res["warnings"].append(f"대화 문단 {dlg}개 — 산 사람의 말이 {DIALOGUE_MIN}문단은 있어야 책이 숨을 쉰다(혼자만 나오는 장이면 무시)")
+    res["counts"]["문장 버릇"] = style
     return res
 
 
@@ -190,6 +279,7 @@ def main(paths):
         print(f"\n■ {r['file']}")
         print(f"  분량: {r['counts']['글자(공백 포함)']:,}자(공백 포함) / {r['counts']['글자(공백 제외)']:,}자(공백 제외)")
         print(f"  오감(소리·냄새·촉감): {r['counts']['오감']}")
+        print(f"  문장 버릇: {r['counts']['문장 버릇']}")
         if r["counts"]["반복"]:
             print(f"  반복 구문: {r['counts']['반복']}")
         bucket = total_repeat.setdefault(r["part"], {})
