@@ -152,10 +152,21 @@ public class FieldManager : MonoBehaviour
         foreach (var it in items)
         {
             if (root == null) yield break;
-            Place(root.transform, it.n, it.x, 0f, it.z, it.r);   // 높이는 평평(위 설명)
+            Place(root.transform, it.n, it.x, HeightOf(it), it.z, it.r);
             if (++n % ItemsPerFrame == 0) yield return null;
         }
         loading.Remove(key);
+    }
+
+    /// <summary>
+    /// 놓을 높이. 땅 타일과 '고지(+2m) 위 소품'은 땅을 평평하게 두니 0 으로 내리고,
+    /// 한옥 조각(기단 위 벽 0.5 · 지붕 2.9 · 용마루 4.5)은 아트팀이 정한 높이를 그대로 쓴다(안 그러면 지붕이 바닥에 깔림).
+    /// </summary>
+    static float HeightOf(Item it)
+    {
+        if (it.t == 1) return 0f;                              // 땅 타일(고지 포함) 평평
+        if (it.n.StartsWith("hanok_")) return it.y;            // 집 조각은 쌓는 높이 그대로
+        return it.y >= 1.5f ? it.y - 2f : it.y;                // 고지(+2m) 위 나무·돌은 평평해진 땅에 맞춰 내림
     }
 
     /// <summary>모델 하나를 세운다. 재질은 모델 안의 색을 따서 우리 무광 재질로(같은 색은 하나를 나눠 써서 GPU 가 묶어 그린다)</summary>
