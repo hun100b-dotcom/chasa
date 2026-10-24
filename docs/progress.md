@@ -60,3 +60,6 @@
 
 ## 2026-10-24 수치 원본을 data/balance.json 으로 (코드)
 - `tools/sync_balance.py`(--import/--check), `data/balance.json`(129개), `unity/Assets/Scripts/Balance.cs`(생성). 스모크 테스트 통과. 한계: 색·배열은 미이전, ScriptableObject 가져오기는 Unity 설치 후.
+
+## 2026-10-24 P1-044 4·5막 🔴 수치 균형 검증 (QA)
+- `docs/BALANCE-ACT45.md`, `tools/balance_sim_act45.py`. 핵심: 풀어내기 기준 R/S ≥ 0.6, 눈금 +1/+0.5/+10, B-19 버티기 −10%/회, B-14 안전 칸 상한 6·낙인 +0.5초/8초. 서사 합의 후 data/balance.json 반영 예정.
