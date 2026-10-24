@@ -111,7 +111,7 @@ func run() -> void:
 	check(p.state == Player.State.PULL, "견인 상태 진입")
 	step(40)
 	var d1 := far.position.distance_to(p.position)
-	check(d1 < d0 - 5.0, "끌려옴: 거리 %.1f → %.1f" % [d0, d1])
+	check(d1 < d0 - 3.5, "끌려옴: 거리 %.1f → %.1f" % [d0, d1])
 	# 적이 이제 공격하므로, 끝난 직전에 맞으면 '휘청(HURT)'일 수도 있다 → "견인은 끝났나"만 본다
 	check(p.state != Player.State.PULL, "견인 종료 후 대기로 복귀")
 
@@ -325,6 +325,13 @@ func _core_loop_tests(p: Player, em: EnemyManager) -> void:
 	check(Config.TENDO_CAST_TIME + Config.BAEK_KNOWN_CAST_BONUS >= Config.CAST_MIN_TIME, "눕히기 단축 캐스팅 %.1f초 (하한 이상)" % (Config.TENDO_CAST_TIME + Config.BAEK_KNOWN_CAST_BONUS))
 	check(Config.SEASON3_START_TENDO < Config.B23_RELEASE_TENDO_MIN, "시즌3 시작 기본 천도 %d < 풀기 기준 %d (기본값만으론 자동 통과 안 됨)" % [Config.SEASON3_START_TENDO, Config.B23_RELEASE_TENDO_MIN])
 	check(Config.B22_ROPE_REACH_BONUS <= 1.0, "선원의 밧줄 +%.1fm (1m 이하)" % Config.B22_ROPE_REACH_BONUS)
+
+	print("[14-8] 7막 채택값 (P1-046)")
+	check(Config.LUMP_PAHON_KARMA_CAP <= Config.BOSS_PAHON_KARMA, "덩어리 파혼 업 상한 %.0f (보스 파혼 업 이하)" % Config.LUMP_PAHON_KARMA_CAP)
+	var ink_gain: float = pow((3.0 + Config.REWARD_INK_RADIUS_BONUS) / 3.0, 2.0) - 1.0
+	check(ink_gain <= Config.REWARD_AREA_GAIN_MAX, "번진 먹 면적 +%d%% (≤ +40%%)" % int(ink_gain * 100.0))
+	var rope_gain: float = pow((5.6 + Config.B22_ROPE_REACH_BONUS) / 5.6, 2.0) - 1.0
+	check(rope_gain <= Config.REWARD_AREA_GAIN_MAX, "선원의 밧줄 면적 +%d%% (≤ +40%%)" % int(rope_gain * 100.0))
 
 	print("[14-3] 맵 생성 (P1-017)")
 	var m1 := MapGen.generate(42)

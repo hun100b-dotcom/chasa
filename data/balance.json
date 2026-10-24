@@ -686,5 +686,89 @@
  "SEASON3_START_TENDO": {
   "value": 120,
   "note": "시즌 3부터 시작하는 사람의 누적 천도 기본값"
+ },
+ "BAEK_SKIP_RATIO_DEFAULT": {
+  "value": 0.5,
+  "note": "시즌 3부터 시작한 기본 상태에서 7막 백이 비켜서는 비율"
+ },
+ "BAEK_NUMBER_CAST_BONUS": {
+  "value": 0.5,
+  "note": "이름 대신 목패 번호로 눕히기: 캐스팅 +0.5초"
+ },
+ "CHAIN_BREAK_ATTACK_BONUS": {
+  "value": 0.1,
+  "note": "6막 끊기판(B판): 7막 적 공격력만 +10% (얼룩·소환에는 적용 안 함)"
+ },
+ "CHAIN_BREAK_LUMP_EXTRA": {
+  "value": 1,
+  "note": "6막 끊기판: 덩어리 백 +1몸"
+ },
+ "LUMP_VISIBLE_BODIES_MAX": {
+  "value": 12,
+  "note": "덩어리 백 화면 동시 표시 상한 (나머지는 덩어리 안에)"
+ },
+ "LUMP_PAHON_KARMA_PER_BODY": {
+  "value": 0.1,
+  "note": "덩어리 백 파혼 업: 몸당 (일반 덩어리 포함)"
+ },
+ "LUMP_PAHON_KARMA_CAP": {
+  "value": 3.0,
+  "note": "덩어리 하나당 업 상한 (몸당 +1이면 40몸에 업 +40 폭주)"
+ },
+ "B25_BAEK_PAHON_HEAL": {
+  "value": 0.03,
+  "note": "B-25 백 1몸 깨뜨릴 때 칠성 맺힘 회복"
+ },
+ "B25_BAEK_PAHON_HEAL_CAP": {
+  "value": 0.25,
+  "note": "B-25 칠성 회복 총량 상한"
+ },
+ "FOG_SLOW": {
+  "value": 0.2,
+  "note": "B-26 역병 안개 이동 둔화 (원념 얼룩과 같은 값)"
+ },
+ "B27_COLD_DPS_RATIO": {
+  "value": 0.02,
+  "note": "B-27 추위: 서 있을 때만 초당 최대 체력 비율"
+ },
+ "B27_SHADOW_SHRINK_TIME": {
+  "value": 120.0,
+  "note": "B-27 성문 그림자가 무대 반경 100%→50%로 줄어드는 시간(초)"
+ },
+ "B27_SHADOW_SLOW_MULT": {
+  "value": 0.6,
+  "note": "시즌 1 ⑥ 장례를 본 경우 그림자 속도 배율 (더 느림)"
+ },
+ "B27_KNEEL_WAIT": {
+  "value": 10.0,
+  "note": "B-27 처결 대기(초). 다른 보스 7초"
+ },
+ "REWARD_FLAG_SCARE_TIME": {
+  "value": 1.5,
+  "note": "두 편의 깃대 조각: 주변 잡몹 겁먹음(초)"
+ },
+ "REWARD_FLAG_SCARE_COOLDOWN": {
+  "value": 12.0,
+  "note": "깃대 조각 재발동 대기(초)"
+ },
+ "REWARD_ORE_MULT": {
+  "value": 3.0,
+  "note": "광맥 한 줄: 일반 보스 재료의 배수"
+ },
+ "REWARD_LIME_SLOW": {
+  "value": 0.3,
+  "note": "석회 주머니: 폭발 뒤 잡몹 둔화 비율 (2초)"
+ },
+ "REWARD_LIME_SLOW_TIME": {
+  "value": 2.0,
+  "note": ""
+ },
+ "REWARD_INK_RADIUS_BONUS": {
+  "value": 0.5,
+  "note": "번진 먹: 파혼 폭발 반경 +0.5m (서사 제안 +1m는 면적 +78%). 6막 매듭 조각과는 큰 쪽만"
+ },
+ "REWARD_AREA_GAIN_MAX": {
+  "value": 0.4,
+  "note": "장비 보상 공통 기준: 타격·폭발 면적 증가 ≤ +40%"
  }
 }

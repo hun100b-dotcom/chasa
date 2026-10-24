@@ -269,3 +269,26 @@ const BAEK_PAHON_KARMA := 1           # 백 깨뜨리기 업 (보스 백은 BOSS
 const B23_RELEASE_BAEK_MIN := 20      # B-23 풀기 조건: 이번 막 눕힌 백 수 이상 (백 36마리의 55%)
 const B23_RELEASE_TENDO_MIN := 300    # 또는 시즌 1·2 누적 천도 수 이상
 const SEASON3_START_TENDO := 120      # 시즌 3부터 시작하는 사람의 누적 천도 기본값
+
+# --- 7막(땅 밑의 몸) 수치 (docs/BALANCE-ACT7.md, 서사팀 동의 완료 2026-10-24). 🔴 PD 확정 대기 ---
+const BAEK_SKIP_RATIO_DEFAULT := 0.5  # 시즌 3부터 시작한 기본 상태에서 7막 백이 비켜서는 비율
+const BAEK_NUMBER_CAST_BONUS := 0.5   # 이름 대신 목패 번호로 눕히기: 캐스팅 +0.5초
+const CHAIN_BREAK_ATTACK_BONUS := 0.1 # 6막 끊기판(B판): 7막 적 공격력만 +10% (얼룩·소환에는 적용 안 함)
+const CHAIN_BREAK_LUMP_EXTRA := 1     # 6막 끊기판: 덩어리 백 +1몸
+const LUMP_VISIBLE_BODIES_MAX := 12   # 덩어리 백 화면 동시 표시 상한 (나머지는 덩어리 안에)
+const LUMP_PAHON_KARMA_PER_BODY := 0.1 # 덩어리 백 파혼 업: 몸당 (일반 덩어리 포함)
+const LUMP_PAHON_KARMA_CAP := 3.0     # 덩어리 하나당 업 상한 (몸당 +1이면 40몸에 업 +40 폭주)
+const B25_BAEK_PAHON_HEAL := 0.03     # B-25 백 1몸 깨뜨릴 때 칠성 맺힘 회복
+const B25_BAEK_PAHON_HEAL_CAP := 0.25 # B-25 칠성 회복 총량 상한
+const FOG_SLOW := 0.2                 # B-26 역병 안개 이동 둔화 (원념 얼룩과 같은 값)
+const B27_COLD_DPS_RATIO := 0.02      # B-27 추위: 서 있을 때만 초당 최대 체력 비율
+const B27_SHADOW_SHRINK_TIME := 120.0 # B-27 성문 그림자가 무대 반경 100%→50%로 줄어드는 시간(초)
+const B27_SHADOW_SLOW_MULT := 0.6     # 시즌 1 ⑥ 장례를 본 경우 그림자 속도 배율 (더 느림)
+const B27_KNEEL_WAIT := 10.0          # B-27 처결 대기(초). 다른 보스 7초
+const REWARD_FLAG_SCARE_TIME := 1.5   # 두 편의 깃대 조각: 주변 잡몹 겁먹음(초)
+const REWARD_FLAG_SCARE_COOLDOWN := 12.0 # 깃대 조각 재발동 대기(초)
+const REWARD_ORE_MULT := 3.0          # 광맥 한 줄: 일반 보스 재료의 배수
+const REWARD_LIME_SLOW := 0.3         # 석회 주머니: 폭발 뒤 잡몹 둔화 비율 (2초)
+const REWARD_LIME_SLOW_TIME := 2.0
+const REWARD_INK_RADIUS_BONUS := 0.5  # 번진 먹: 파혼 폭발 반경 +0.5m (서사 제안 +1m는 면적 +78%). 6막 매듭 조각과는 큰 쪽만
+const REWARD_AREA_GAIN_MAX := 0.4    # 장비 보상 공통 기준: 타격·폭발 면적 증가 ≤ +40%
