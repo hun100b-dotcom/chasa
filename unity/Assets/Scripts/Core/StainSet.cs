@@ -13,6 +13,15 @@ namespace Chasa.Core
 
         public int Count { get { return _items.Count; } }
 
+        /// <summary>화면에 그릴 때 쓰는 읽기 전용 목록 (x, z, 남은 시간 비율 0~1)</summary>
+        public List<float[]> Snapshot()
+        {
+            var list = new List<float[]>();
+            foreach (var it in _items)
+                list.Add(new[] { it.X, it.Z, 1f - it.Age / Balance.STAIN_DURATION });
+            return list;
+        }
+
         /// <summary>
         /// 얼룩 하나 추가. 겹친 얼룩(중심 거리 < 반경×2)이 3개 이상이 되면 그것들을 지우고 가운데 지점을 돌려준다.
         /// 소환이 아니면 false.

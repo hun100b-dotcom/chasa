@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     public DamageNumbers numbers;
     public ChainVisual chain;
 
+    public bool locked;               // 천도 캐스팅 중엔 움직이지도 휘두르지도 못한다 (무방비 = 위험)
+    public float speedMult = 1f;      // 원념 얼룩 위면 0.8 (이동속도 -20%). JudgeSystem 이 매 프레임 넣어 준다
     public float facing;              // 바닥 평면 각도 (0 = +x)
     public State state = State.Free;
     Vector3? moveTarget;
@@ -62,6 +64,7 @@ public class Player : MonoBehaviour
     // ===== 명령 (입력 쪽에서 호출) ================================================
     public void CommandMove(Vector3 point)
     {
+        if (locked) return;
         moveTarget = new Vector3(Mathf.Clamp(point.x, -Config.ARENA_HALF_SIZE, Config.ARENA_HALF_SIZE), 0,
                                  Mathf.Clamp(point.z, -Config.ARENA_HALF_SIZE, Config.ARENA_HALF_SIZE));
         chaseTarget = null;
@@ -70,6 +73,7 @@ public class Player : MonoBehaviour
 
     public void CommandAttack(Enemy e)
     {
+        if (locked) return;
         if (state == State.Attack) { hasBuffered = true; buffered = e; bufferedAim = null; } // 다음 타 예약
         else if (state == State.Free) { chaseTarget = e; moveTarget = null; }
     }
@@ -77,12 +81,14 @@ public class Player : MonoBehaviour
     /// <summary>키보드(Space) 제자리 휘두르기: 달려가지 않고 그 자리에서 aim 방향으로 콤보</summary>
     public void CommandSwing(Vector3 aim)
     {
+        if (locked) return;
         if (state == State.Attack) { hasBuffered = true; buffered = null; bufferedAim = aim; }
         else if (state == State.Free) { moveTarget = null; chaseTarget = null; StartAttack(null, comboTimer > 0f, aim); }
     }
 
     public void CommandPull(Enemy e, Vector3 aim)
     {
+        if (locked) return;
         if (pullCooldown > 0f) return;
         bool canCancel = state == State.Attack && atk != null && atk.phase == "recover"; // 후딜은 견인으로 끊을 수 있다
         if (state != State.Free && !canCancel) return;
@@ -95,7 +101,7 @@ public class Player : MonoBehaviour
         pullCooldown = Mathf.Max(0f, pullCooldown - dt);
         switch (state)
         {
-            case State.Free: TickFree(dt); break;
+            case State.Free: if (!locked) TickFree(dt); break;
             case State.Attack: TickAttack(dt); break;
             case State.Pull: TickPull(dt); break;
         }
@@ -138,7 +144,7 @@ public class Player : MonoBehaviour
         var d = new Vector2(target.x - Pos.x, target.z - Pos.z);
         float dist = d.magnitude;
         if (dist < 1e-5f) return;
-        float step = Mathf.Min(dist, Config.PLAYER_MOVE_SPEED * dt);
+        float step = Mathf.Min(dist, Config.PLAYER_MOVE_SPEED * speedMult * dt);
         Pos += new Vector3(d.x / dist, 0, d.y / dist) * step;
         ClampToArena();
     }

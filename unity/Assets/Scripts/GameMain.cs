@@ -17,6 +17,7 @@ public class GameMain : MonoBehaviour
     readonly EnemyManager enemies = new EnemyManager();
     DamageNumbers numbers;
     ClickMarker marker;
+    JudgeSystem judge;
     Vector3 focus, offset;
     bool holdingMove;
     bool touchUI;
@@ -37,6 +38,9 @@ public class GameMain : MonoBehaviour
         player.enemies = enemies; player.feel = feel; player.numbers = numbers;
         player.chain = ChainVisual.Create();
         touchUI = Input.touchSupported; // 폰이면 화면 기술 버튼을 띄운다
+        // 처결(천도·파혼): 규칙은 Core, 화면 연결은 JudgeSystem
+        judge = gameObject.AddComponent<JudgeSystem>();
+        judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
     }
 
     // -------------------------------------------------------------------------
@@ -50,6 +54,7 @@ public class GameMain : MonoBehaviour
         bool frozen = feel.Tick(realDt);
         float dt = frozen ? 0f : realDt;
         player.Tick(dt);
+        judge.Tick(dt, realDt);
         enemies.Tick(dt, player.Pos, Config.PLAYER_RADIUS);
         numbers.Tick(realDt);
         marker.Tick(realDt);
@@ -196,7 +201,7 @@ public class GameMain : MonoBehaviour
         Enemy best = null; float bestD = Config.PULL_RANGE;
         foreach (var e in enemies.list)
         {
-            if (!e.alive) continue;
+            if (!e.alive) continue;   // 견인은 싸우는 적만
             float d = Vector3.Distance(e.Pos, player.Pos);
             if (d <= bestD) { bestD = d; best = e; }
         }

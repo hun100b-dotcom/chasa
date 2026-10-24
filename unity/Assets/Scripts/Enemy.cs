@@ -3,6 +3,7 @@
 // AI는 "플레이어 쪽으로 걸어온다"가 전부. 이 단계의 목적은 때리는 맛이다.
 // =============================================================================
 using System.Collections.Generic;
+using Chasa.Core;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -10,14 +11,20 @@ public class Enemy : MonoBehaviour
     public float radius = Config.ENEMY_RADIUS;
     public float height = Config.ENEMY_HEIGHT;
     public Vector3 vel;            // 넉백 속도 (맞으면 크게, 마찰로 줄어듦)
-    public int hp = Config.ENEMY_MAX_HP;
-    public bool alive = true;
+    // 처결 상태는 엔진과 무관한 Core 의 Soul 이 가진다 (맺힘·무릎·천도 캐스팅·떠남). 여기는 몸과 화면만 맡는다.
+    public Soul soul = new Soul(SoulKind.Fresh);
+    public bool alive => soul.State == SoulState.Active;        // 싸우는 중
+    public bool kneeling => soul.State == SoulState.Kneel;       // 처결 대기 중 (천도·파혼 선택 가능)
+    public bool sending => soul.State == SoulState.Sending;      // 천도 캐스팅 받는 중
+    public bool gone => soul.State == SoulState.Gone;            // 떠났거나 터짐
+    public bool extra;                                           // 얼룩 3개로 소환된 추가 적 (한 번 처리하면 사라짐)
     public float stun;             // 남은 기절 시간
     public bool pulled;            // 견인으로 끌려오는 중
     public bool respawnReady;
 
     float speed, flash, deathT, spawnT, pulledT;
     Material mat;
+    public bool capsuleShape;
 
     public Vector3 Pos { get => transform.position; set => transform.position = value; }
 
@@ -25,6 +32,8 @@ public class Enemy : MonoBehaviour
     {
         var root = new GameObject(capsule ? "Enemy(capsule)" : "Enemy(box)");
         var e = root.AddComponent<Enemy>();
+        e.capsuleShape = capsule;
+        e.soul = new Soul(RandomKind());
         e.speed = Config.ENEMY_SPEED * (1f + Random.Range(-Config.ENEMY_SPEED_VARIANCE, Config.ENEMY_SPEED_VARIANCE));
         // 도형 두 종류로 "다른 적"처럼 보이게 (에셋 없이 구분하는 가장 싼 방법)
         var body = GameObject.CreatePrimitive(capsule ? PrimitiveType.Capsule : PrimitiveType.Cube);
@@ -33,44 +42,88 @@ public class Enemy : MonoBehaviour
         if (capsule) body.transform.localScale = new Vector3(e.radius * 1.7f, e.height / 2f, e.radius * 1.7f); // 기본 캡슐: 지름1·키2
         else body.transform.localScale = new Vector3(e.radius * 1.9f, e.height, e.radius * 1.9f);
         body.transform.localPosition = new Vector3(0, e.height / 2f, 0); // 발바닥이 바닥에
-        e.mat = U.Flashable(capsule ? Config.Hex(0xd9534f) : Config.Hex(0xc2692f));
+        e.mat = U.Flashable(KindColor(e.soul.Kind));
         body.GetComponent<Renderer>().sharedMaterial = e.mat;
         root.transform.position = at;
         return e;
     }
 
+    /// <summary>혼 종류를 무작위로. 덩어리는 드물게 (LUMP_SPAWN_CHANCE)</summary>
+    static SoulKind RandomKind()
+    {
+        if (Random.value < Balance.LUMP_SPAWN_CHANCE) return SoulKind.Lump;
+        return (SoulKind)Random.Range(0, 3);
+    }
+
+    /// <summary>혼 종류별 색. 색은 아트팀 팔레트(ChasaPalette)에서만 가져온다: 갓 죽은=청백, 해 넘긴=금, 오래된=주황, 덩어리=보라</summary>
+    public static Color KindColor(SoulKind k)
+    {
+        switch (k)
+        {
+            case SoulKind.Fresh: return ChasaPalette.SoulFresh;
+            case SoulKind.Year: return ChasaPalette.SoulDay;
+            case SoulKind.Old: return ChasaPalette.SoulOld;
+            default: return ChasaPalette.SoulMass;
+        }
+    }
+
     public Vector3 HeadPosition => new Vector3(Pos.x, height + 0.3f, Pos.z);
 
-    /// <summary>한 대 맞음. 이번 타격으로 죽으면 true</summary>
+    /// <summary>한 대 맞음. 맺힘이 깎이고, 0이 되면 죽는 게 아니라 무릎을 꿇는다(true)</summary>
     public bool TakeHit(int damage, Vector3 dir, float knockback, float stunTime)
     {
-        hp -= damage;
+        if (!alive) return false;
         flash = 1f;
         stun = Mathf.Max(stun, stunTime);
         pulled = false;                 // 끌려오던 중 맞으면 견인 취소
         vel = dir * knockback;          // '덮어쓰기': 연타해도 무한히 빨라지지 않는다
-        if (hp <= 0)
+        if (soul.TakeHit(damage))
         {
-            alive = false; deathT = 0f; respawnReady = false;
-            vel *= Config.ENEMY_KILL_KNOCKBACK_MULT;
+            vel *= 0.5f;                // 무릎 꿇으며 조금만 미끄러진다
             return true;
         }
         return false;
+    }
+
+    /// <summary>천도·파혼으로 떠남. 몸은 쪼그라들어 사라진다</summary>
+    public void Finish()
+    {
+        soul.Finish();
+        deathT = 0f; respawnReady = false; vel = Vector3.zero;
     }
 
     public void StartPulled() { pulled = true; pulledT = 0f; vel = Vector3.zero; }
 
     public void Respawn(Vector3 at)
     {
-        hp = Config.ENEMY_MAX_HP; alive = true; respawnReady = false;
+        soul = new Soul(RandomKind()); respawnReady = false;
         stun = 0f; pulled = false; flash = 0f; spawnT = 0f; vel = Vector3.zero;
         Pos = at;
+        mat.color = KindColor(soul.Kind);
         ApplyVisual();
+    }
+
+    /// <summary>얼룩 3개가 겹쳐 소환된 사나운 적 (P-010, P-011)</summary>
+    public void MakeFierce()
+    {
+        extra = true;
+        soul = new Soul(SoulKind.Fresh, true);
+        mat.color = new Color(0.48f, 0.06f, 0.11f);
     }
 
     public void Tick(float dt, Vector3 playerPos)
     {
-        if (!alive) { TickDead(dt); return; }
+        if (gone) { TickDead(dt); return; }
+        if (!alive)
+        {
+            // 무릎 꿇음 / 천도 캐스팅 중: 가만히 미끄러지다 멈춘다. 대기 시간이 흐르다가 다 되면 다시 일어선다
+            Pos += vel * dt;
+            vel *= Mathf.Exp(-Config.ENEMY_KNOCKBACK_FRICTION * dt);
+            soul.Tick(dt);
+            if (alive) { stun = soul.Stun; flash = 1f; }
+            ClampToArena(); ApplyVisual();
+            return;
+        }
         spawnT += dt;
         flash = Mathf.Max(0f, flash - dt / Config.ENEMY_FLASH_TIME);
         if (pulled) TickPulled(dt, playerPos);
@@ -133,17 +186,18 @@ public class Enemy : MonoBehaviour
         mat.SetColor("_EmissionColor", Color.white * (flash * 0.9f));
         // 등장 팝인(0→1) 또는 죽은 뒤 쪼그라듦(1→0)
         float b = U.EaseOutQuad(Mathf.Clamp01(spawnT / Config.ENEMY_SPAWN_POP_TIME));
-        if (!alive) b = 1f - Mathf.Clamp01((deathT - Config.ENEMY_DEATH_HOLD) / Config.ENEMY_DEATH_SHRINK);
+        if (gone) b = 1f - Mathf.Clamp01((deathT - Config.ENEMY_DEATH_HOLD) / Config.ENEMY_DEATH_SHRINK);
+        float kneel = alive || gone ? 1f : 0.62f;   // 무릎 꿇으면 키가 줄어든다(눈으로 '처결 대기'를 알아보게)
         // 맞은 순간: 옆으로 넓어지고 키가 줄어드는 찌그러짐 (무게감)
         float sx = 1f + Config.ENEMY_SQUASH * flash;
         float sy = 1f - Config.ENEMY_SQUASH * 0.8f * flash;
-        transform.localScale = new Vector3(Mathf.Max(0.001f, b * sx), Mathf.Max(0.001f, b * sy), Mathf.Max(0.001f, b * sx));
+        transform.localScale = new Vector3(Mathf.Max(0.001f, b * sx), Mathf.Max(0.001f, b * sy * kneel), Mathf.Max(0.001f, b * sx));
     }
 
     /// <summary>마우스 광선이 몸통(세로 원기둥으로 근사)을 지나가나?</summary>
     public bool RayHitsBody(Ray ray)
     {
-        if (!alive) return false;
+        if (gone) return false;
         var center = Pos + new Vector3(0, height / 2f, 0);
         float t = Vector3.Dot(center - ray.origin, ray.direction);
         var closest = ray.origin + ray.direction * t;
@@ -155,6 +209,28 @@ public class Enemy : MonoBehaviour
 public class EnemyManager
 {
     public readonly List<Enemy> list = new List<Enemy>();
+
+    /// <summary>원념 얼룩 3개가 겹친 자리에서 사나운 적이 솟아난다</summary>
+    public Enemy SpawnFierce(Vector3 at)
+    {
+        var e = Enemy.Create(true, at);
+        e.MakeFierce();
+        list.Add(e);
+        return e;
+    }
+
+    /// <summary>처결 대기 중인 혼 중 pos 에서 가장 가까운 것 (사거리 안)</summary>
+    public Enemy NearestKneeling(Vector3 pos, float range)
+    {
+        Enemy best = null; float bestD = range;
+        foreach (var e in list)
+        {
+            if (!e.kneeling) continue;
+            float d = new Vector2(e.Pos.x - pos.x, e.Pos.z - pos.z).magnitude;
+            if (d <= bestD) { bestD = d; best = e; }
+        }
+        return best;
+    }
 
     public void SpawnAll(Vector3 playerPos)
     {
@@ -171,13 +247,19 @@ public class EnemyManager
 
     public void Tick(float dt, Vector3 playerPos, float playerRadius)
     {
+        var toRemove = new List<Enemy>();
         foreach (var e in list)
         {
             e.Tick(dt, playerPos);
-            if (!e.alive && e.respawnReady) e.Respawn(SpawnPoint(playerPos, Random.value * U.TAU));
+            if (e.gone && e.respawnReady)
+            {
+                if (e.extra) { toRemove.Add(e); continue; }   // 소환된 적은 한 번 처리하면 끝 (계속 늘어나지 않게)
+                e.Respawn(SpawnPoint(playerPos, Random.value * U.TAU));
+            }
         }
+        foreach (var e in toRemove) { list.Remove(e); Object.Destroy(e.gameObject); }
         if (dt <= 0f) return; // 히트스톱 중엔 밀어내기도 멈춘다
-        var alive = list.FindAll(x => x.alive);
+        var alive = list.FindAll(x => !x.gone);   // 무릎 꿇은 혼도 몸은 있으니 서로 겹치지 않게 밀어낸다
         for (int i = 0; i < alive.Count; i++)
         {
             var a = alive[i];
@@ -210,7 +292,7 @@ public class EnemyManager
         Enemy best = null; float bestD = nearRadius;
         foreach (var e in list)
         {
-            if (!e.alive) continue;
+            if (e.gone) continue;
             float d = new Vector2(e.Pos.x - ground.Value.x, e.Pos.z - ground.Value.z).magnitude;
             if (d <= bestD) { bestD = d; best = e; }
         }
