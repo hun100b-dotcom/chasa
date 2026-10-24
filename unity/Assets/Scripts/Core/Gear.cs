@@ -42,6 +42,19 @@ namespace Chasa.Core
         public string Name;
         public float Cooldown;
 
+        /// <summary>기획팀 JSON 이 이름·재사용 시간을 덮어쓸 때 (GrowthData 로더가 부른다). 모르는 id 면 false</summary>
+        public static bool Override(string id, string name, float cooldown)
+        {
+            foreach (var s in All)
+                if (s.Id.ToString() == id)
+                {
+                    if (!string.IsNullOrEmpty(name)) s.Name = name;
+                    if (cooldown > 0f) s.Cooldown = cooldown;
+                    return true;
+                }
+            return false;
+        }
+
         public static readonly SkillDef[] All =
         {
             new SkillDef { Id = SkillId.HoldCall, Name = "Hold Call", Cooldown = Balance.SKILL_HOLD_COOLDOWN },
@@ -125,6 +138,19 @@ namespace Chasa.Core
         public float PahonDamageMult { get { return 1f + Math.Min(PahonDamagePct, Balance.CAP_PAHON_DAMAGE_PCT); } }
         public float MoveSpeedMult { get { return 1f + Math.Min(MoveSpeedPct, Balance.CAP_MOVE_SPEED_PCT); } }
         public float CoinMult { get { return 1f + Math.Min(CoinPct, Balance.CAP_COIN_PCT); } }
+        /// <summary>
+        /// 빌드가 천도 쪽(-1)인지 파혼 쪽(+1)인지. 캐릭터 창의 기울기 막대. 천도 점수 = 캐스팅 단축(상한 대비),
+        /// 파혼 점수 = 파혼 피해·반경(상한 대비) 평균. 둘이 같으면 0.
+        /// </summary>
+        public float Tilt(float weaponPahonLean = 0f)
+        {
+            float tendo = Clamp(CastReducePct / Balance.CAP_CAST_REDUCE_PCT, -1f, 1f);
+            float pahon = (Clamp(PahonDamagePct / Balance.CAP_PAHON_DAMAGE_PCT, 0f, 1f) + Clamp(PahonAreaPct / Balance.CAP_PAHON_AREA_PCT, 0f, 1f)) * 0.5f + weaponPahonLean;
+            return Clamp(pahon - tendo, -1f, 1f);
+        }
+
+        static float Clamp(float v, float lo, float hi) { return Math.Max(lo, Math.Min(hi, v)); }
+
         public int MaxHp { get { return Balance.PLAYER_MAX_HP + HpFlat; } }
 
         /// <summary>
@@ -226,21 +252,29 @@ namespace Chasa.Core
             return it;
         }
 
+        // 옵션 기본값(등급 1.0 배 기준). 기획팀 JSON 이 SetBase 로 덮어쓸 수 있다
+        static readonly Dictionary<Opt, float> BaseValue = new Dictionary<Opt, float>
+        {
+            { Opt.DamagePct, 0.06f }, { Opt.AttackSpeedPct, 0.04f }, { Opt.CastReducePct, 0.05f }, { Opt.PahonAreaPct, 0.08f },
+            { Opt.PahonDamagePct, 0.08f }, { Opt.HpFlat, 10f }, { Opt.MoveSpeedPct, 0.04f }, { Opt.CoinPct, 0.08f }
+        };
+
+        public static bool SetBase(string kind, float value)
+        {
+            Opt k;
+            if (!Enum.TryParse(kind, out k) || !BaseValue.ContainsKey(k)) return false;
+            BaseValue[k] = value;
+            return true;
+        }
+
+        public static float GetBase(Opt k) { float v; return BaseValue.TryGetValue(k, out v) ? v : 0f; }
+
         /// <summary>옵션 하나의 값. 등급이 높을수록 크다 (임시값)</summary>
         static float RollValue(Opt k, Rarity r)
         {
             float t = r == Rarity.Common ? 0.5f : r == Rarity.Crafted ? 0.8f : 1.1f;
-            switch (k)
-            {
-                case Opt.DamagePct: return 0.06f * t;
-                case Opt.AttackSpeedPct: return 0.04f * t;
-                case Opt.CastReducePct: return 0.05f * t;
-                case Opt.PahonAreaPct: return 0.08f * t;
-                case Opt.PahonDamagePct: return 0.08f * t;
-                case Opt.HpFlat: return (float)Math.Round(10 * t);
-                case Opt.MoveSpeedPct: return 0.04f * t;
-                default: return 0.08f * t;
-            }
+            float v = GetBase(k) * t;
+            return k == Opt.HpFlat ? (float)Math.Round(v) : v;
         }
     }
 

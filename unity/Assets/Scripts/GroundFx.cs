@@ -41,6 +41,35 @@ public class GroundFx : MonoBehaviour
         fx.Apply(0, 1f);
     }
 
+    /// <summary>사라지지 않는 땅 그림 한 장(원념 얼룩 등). 부르는 쪽이 위치·크기(localScale)를 직접 바꾼다. 그림이 없으면 null</summary>
+    public static GameObject Persistent(Vector3 center, float radius, string texName)
+    {
+        var tex = SpriteLib.Texture(texName);
+        if (tex == null) return null;
+        var go = new GameObject("GroundPic");
+        go.transform.position = center;
+        float h = radius * 1.4142f * 0.5f;
+        var mesh = new Mesh();
+        mesh.SetVertices(new[] { new Vector3(-h, 0, -h), new Vector3(-h, 0, h), new Vector3(h, 0, h), new Vector3(h, 0, -h) });
+        mesh.SetUVs(0, new[] { new Vector2(0.5f, 1f), new Vector2(1f, 0.5f), new Vector2(0.5f, 0f), new Vector2(0f, 0.5f) });
+        mesh.SetTriangles(new[] { 0, 1, 2, 0, 2, 3 }, 0);
+        mesh.RecalculateBounds();
+        go.AddComponent<MeshFilter>().sharedMesh = mesh;
+        var mr = go.AddComponent<MeshRenderer>();
+        if (baseMat == null)
+        {
+            var tmp = new GameObject("tmp"); var sr = tmp.AddComponent<SpriteRenderer>();
+            baseMat = sr.sharedMaterial; Destroy(tmp);
+        }
+        mr.sharedMaterial = baseMat;
+        mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        mr.receiveShadows = false;
+        var pb = new MaterialPropertyBlock();
+        pb.SetTexture("_MainTex", tex);
+        mr.SetPropertyBlock(pb);
+        return go;
+    }
+
     void Apply(int frame, float alpha)
     {
         var tex = SpriteLib.Texture(prefix + frame);

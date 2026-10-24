@@ -652,4 +652,28 @@ public class CoreTests
         Assert.AreEqual(35, n2.FinalCoin);
         Assert.AreEqual(0, n2.LostCoin);
     }
+
+    [Test]
+    public void Gear_TiltBarLeansWithBuild()
+    {
+        Assert.AreEqual(0f, new GearStats().Tilt(), 0.001f);
+        Assert.Less(new GearStats { CastReducePct = 0.3f }.Tilt(), -0.9f, "천도 빌드는 왼쪽(-)");
+        Assert.Greater(new GearStats { PahonDamagePct = 0.5f, PahonAreaPct = 0.4f }.Tilt(), 0.9f, "파혼 빌드는 오른쪽(+)");
+    }
+
+    [Test]
+    public void Data_OverridesApply()
+    {
+        string oldName = SkillDef.All[1].Name; float oldCd = SkillDef.All[1].Cooldown;
+        Assert.IsTrue(SkillDef.Override("Bind", "Tie Up", 7f));
+        Assert.AreEqual("Tie Up", SkillDef.All[1].Name);
+        Assert.AreEqual(7f, SkillDef.All[1].Cooldown);
+        Assert.IsFalse(SkillDef.Override("NoSuch", "x", 1f));
+        SkillDef.Override("Bind", oldName, oldCd);   // 다른 테스트에 영향이 없게 되돌린다
+        float oldBase = Loot.GetBase(Opt.DamagePct);
+        Assert.IsTrue(Loot.SetBase("DamagePct", 0.1f));
+        Assert.AreEqual(0.1f, Loot.GetBase(Opt.DamagePct));
+        Assert.IsFalse(Loot.SetBase("PahonRadiusM", 1f), "이름 있는 물건 전용 옵션은 굴림 값이 아니다");
+        Loot.SetBase("DamagePct", oldBase);
+    }
 }

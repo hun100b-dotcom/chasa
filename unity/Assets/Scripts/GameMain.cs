@@ -30,6 +30,7 @@ public class GameMain : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        GrowthData.Load();   // 기획팀 도술·옵션 JSON 덮어쓰기(있을 때만)
         BuildStage();
         enemies.SpawnAll(Vector3.zero);
         numbers = gameObject.AddComponent<DamageNumbers>();
@@ -50,6 +51,7 @@ public class GameMain : MonoBehaviour
     // -------------------------------------------------------------------------
     void Update()
     {
+        if (CharacterPanel.Open) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
         HandleInput();
         float realDt = Mathf.Min(0.05f, Time.unscaledDeltaTime);
         bool frozen = feel.Tick(realDt);

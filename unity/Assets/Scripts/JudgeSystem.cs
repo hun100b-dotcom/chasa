@@ -19,6 +19,7 @@ public class JudgeSystem : MonoBehaviour
     public DamageNumbers numbers;
     public Camera cam;
 
+    CharacterPanel panel;
     Loadout lo => player.loadout;                // 든 무기·도술·장비 (Player 가 소유)
     public readonly Ledger ledger = new Ledger();
     public NightRun night = new NightRun();   // 하룻밤 한 판의 뼈대(시간·몫·귀환) — 규칙은 Core
@@ -46,12 +47,15 @@ public class JudgeSystem : MonoBehaviour
         shrineView.GetComponent<Renderer>().sharedMaterial = U.Matte(ChasaPalette.CheondoGlow);
         shrineView.transform.position = new Vector3(0, 0.015f, 0);
         shrineView.transform.localScale = new Vector3(Balance.SHRINE_RADIUS * 2f, 0.01f, Balance.SHRINE_RADIUS * 2f);
+        panel = gameObject.AddComponent<CharacterPanel>();   // C 키 캐릭터 창(장비·도술·능력치)
+        panel.judge = this;
         enemies.onPlayerHit = OnPlayerHit;
         enemies.onEnemyKneel = OnEnemyKneel;
         SetupNight();   // 적 공격이 명중하면 체력 처리로 연결
         touchUI = Input.touchSupported;
         debugKeys = Application.isEditor || Application.absoluteURL.Contains("debug");
         white = new Texture2D(1, 1); white.SetPixel(0, 0, Color.white); white.Apply();
+        panel.white = white;
         // 가운데는 투명, 가장자리로 갈수록 진해지는 둥근 가림막 (시야가 좁아지는 연출)
         const int n = 128;
         vignette = new Texture2D(n, n, TextureFormat.RGBA32, false);
@@ -173,6 +177,7 @@ public class JudgeSystem : MonoBehaviour
         }
         else lo.lastDrop = "DROP (worse, left): " + txt;
         lo.lastDropT = 5f;
+        TimedSprite.Spawn("fx/loot_" + (it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common"), e.Pos, 3f);   // 드롭 빛줄기
     }
 
     /// <summary>도술 1·2·3. 쿨다운 중이거나 무릎 꿇은 혼이 없는 등 효과가 없으면 쿨다운을 쓰지 않는다</summary>
@@ -309,6 +314,7 @@ public class JudgeSystem : MonoBehaviour
     // ===== 매 프레임 ===============================================================
     public void Tick(float dt, float realDt)
     {
+        if (CharacterPanel.Open) return;   // 캐릭터 창이 열려 있으면 세계가 멈춘다
         HandleKeys();
         if (night.Over)
         {
@@ -375,12 +381,18 @@ public class JudgeSystem : MonoBehaviour
     void UpdateStainViews()
     {
         var snap = stains.Snapshot();
+        bool art = SpriteLib.Texture("fx/stain_0") != null;   // 아트 얼룩 그림이 있으면 그것으로, 없으면 색 원기둥으로
         while (stainViews.Count < snap.Count)
         {
-            // 납작한 원기둥으로 웅덩이를 만든다. 색은 아트팀 팔레트의 '원념 얼룩'
-            var go = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-            Destroy(go.GetComponent<Collider>());
-            go.GetComponent<Renderer>().sharedMaterial = U.Matte(ChasaPalette.WonnyeomStain);
+            GameObject go;
+            if (art) go = GroundFx.Persistent(Vector3.zero, Balance.STAIN_RADIUS, "fx/stain_0");
+            else
+            {
+                // 납작한 원기둥으로 웅덩이를 만든다. 색은 아트팀 팔레트의 '원념 얼룩'
+                go = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                Destroy(go.GetComponent<Collider>());
+                go.GetComponent<Renderer>().sharedMaterial = U.Matte(ChasaPalette.WonnyeomStain);
+            }
             stainViews.Add(go);
         }
         while (stainViews.Count > snap.Count) { Destroy(stainViews[stainViews.Count - 1]); stainViews.RemoveAt(stainViews.Count - 1); }
@@ -388,9 +400,18 @@ public class JudgeSystem : MonoBehaviour
         {
             float life = snap[i][2];
             float fade = Mathf.Clamp01(life * Balance.STAIN_DURATION / 2f);   // 마지막 2초 동안 줄어들며 사라진다(언제 없어지는지 보이게)
-            float d = Balance.STAIN_RADIUS * 2f * fade;
-            stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f, snap[i][1]);
-            stainViews[i].transform.localScale = new Vector3(d, 0.01f, d);
+            if (art)
+            {
+                // 그림 얼룩은 같은 크기에서 점점 작아진다 (그림 쿼드의 기본 크기는 반경 STAIN_RADIUS 기준)
+                stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f, snap[i][1]);
+                stainViews[i].transform.localScale = new Vector3(fade, 1f, fade);
+            }
+            else
+            {
+                float d = Balance.STAIN_RADIUS * 2f * fade;
+                stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f, snap[i][1]);
+                stainViews[i].transform.localScale = new Vector3(d, 0.01f, d);
+            }
         }
     }
 
@@ -522,6 +543,7 @@ public class JudgeSystem : MonoBehaviour
             for (int i = 0; i < 3; i++)
                 if (GUI.Button(new Rect(24 + i * 94, Screen.height - 206, 86, 80), (i + 1) + "\n" + SkillDef.All[i].Name, bs)) UseSkill(i);
             if (GUI.Button(new Rect(24 + 3 * 94, Screen.height - 206, 86, 80), "SWAP", bs)) player.CommandSwap();
+            if (GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "MENU", bs)) panel.Toggle();
             if (lo.Def.HasQuake && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "QUAKE", bs)) player.CommandQuake();
         }
     }

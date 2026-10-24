@@ -1,0 +1,10 @@
+{
+  "skills": [
+    { "id": "HoldCall", "name": "Hold Call", "cooldown": 12 },
+    { "id": "Bind", "name": "Bind", "cooldown": 10 },
+    { "id": "StainBurst", "name": "Burst", "cooldown": 9 }
+  ],
+  "optionBase": [
+    { "kind": "DamagePct", "base": 0.06 }
+  ]
+}
