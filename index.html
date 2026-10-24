@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>차사 엔진 비교</title>
+  <style>
+    /* 폰에서 엄지로 누르기 좋게 큰 버튼 두 개만 둔 비교용 첫 화면 */
+    :root { --bg: #14161c; --fg: #e8ecf3; --muted: #9aa3b2; --card: #1f232c; --line: #2f3542; --accent: #ff9a2e; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--fg);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+    main { width: 100%; max-width: 440px; }
+    h1 { font-size: 22px; margin: 0 0 6px; }
+    p { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0 0 20px; }
+    a.card { display: block; text-decoration: none; color: var(--fg); background: var(--card);
+      border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px; margin-bottom: 12px; }
+    a.card:active { border-color: var(--accent); }
+    .t { font-size: 18px; font-weight: 700; }
+    .s { color: var(--muted); font-size: 13px; margin-top: 4px; }
+    ul { color: var(--muted); font-size: 13px; line-height: 1.7; padding-left: 18px; margin: 18px 0 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>차사 · 엔진 손맛 비교</h1>
+    <p>같은 숫자로 만든 같은 시험판입니다. 엔진만 다릅니다.<br />번갈아 눌러보고 손맛·부드러움·로딩 속도를 비교해 주세요.</p>
+    <a class="card" href="./three/"><div class="t">① 지금 버전 (Three.js)</div><div class="s">웹 전용 · 가벼움</div></a>
+    <a class="card" href="./godot/"><div class="t">② Godot 버전</div><div class="s">PC·폰 앱까지 가능 · 첫 로딩이 조금 김</div></a>
+    <ul>
+      <li>탭/좌클릭: 이동, 적을 누르면 철삭 3타 콤보</li>
+      <li>우클릭: 견인 (PC에서만, 폰은 아직 없음)</li>
+      <li>뒤로 가기로 이 화면에 돌아옵니다</li>
+    </ul>
+  </main>
+</body>
+</html>
