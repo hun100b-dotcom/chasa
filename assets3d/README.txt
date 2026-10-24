@@ -42,3 +42,5 @@
 [무기 5종] weapons/weapon_{chain,bangmang,yoryeong,samjichang,myeongbu}.glb (110~436삼각형). 원점=쥐는 곳, 긴 방향=glTF +Y. 소켓은 weapons/_weapons_manifest.json(Hand.R 머리 위치에 원점, X축 +90°로 눕혀 앞을 향하게). 생성: tools/art3d/weapons.py
 
 [처결 이펙트 메시 9종] fx/fx_{tendo_pillar,tendo_ring,pahon_shards_a/b/c,stain_decal,wait_ring_fresh/day/old}.glb (22~272삼각형, 발광 재질만, 투명·애니메이션은 코드). 생성: tools/art3d/fx.py
+
+[2막 검은여울 키트 11종] blackrapids/br_{rapids,deep,shore,stone_bridge,ferry_dock,willow_a,willow_b,reed_field,herb_rack,med_sign,jars}.glb (48~412삼각형). 타일 8×8m, 물 윗면 z0.18/풀 윗면 z0.3. 나루터에 Light_ferry_dock. 의원 집=한옥 키트 'uiwon'(=기와집 8×4m)+약초 건조대·깃대·항아리. 생성: tools/art3d/blackrapids.py

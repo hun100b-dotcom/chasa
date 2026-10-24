@@ -41,8 +41,8 @@ def choga8():
     P += [("choga_roof_straight", 0, 2, ZR, 0), ("choga_roof_hip_end", 2, 2, ZR, 0), ("choga_roof_hip_end", -2, 2, ZR, 180), ("chimney", 5.6, 4.3, 0, 0)]
     return _shift(P)
 
-RECIPES = {"giwa8": giwa8, "choga4": choga4, "choga8": choga8}
-FOOTPRINT = {"giwa8": (9, 5), "choga4": (5, 5), "choga8": (9, 5)}   # 겹침 검사용(가로, 세로, 기단 포함)
+RECIPES = {"uiwon": giwa8, "giwa8": giwa8, "choga4": choga4, "choga8": choga8}
+FOOTPRINT = {"uiwon": (9, 5), "giwa8": (9, 5), "choga4": (5, 5), "choga8": (9, 5)}   # 겹침 검사용(가로, 세로, 기단 포함)
 
 def place_building(kind, x, y, rot=0, gate=True):
     """집을 세계 좌표 (x,y), 방향 rot(반시계 도)로 옮긴 조각 목록을 돌려준다. 초가는 앞마당에 사립문을 단다."""
