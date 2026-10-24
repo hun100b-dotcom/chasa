@@ -19,6 +19,7 @@ public class JudgeSystem : MonoBehaviour
     public DamageNumbers numbers;
     public Camera cam;
 
+    Loadout lo => player.loadout;                // 든 무기·도술·장비 (Player 가 소유)
     public readonly Ledger ledger = new Ledger();
     public NightRun night = new NightRun();   // 하룻밤 한 판의 뼈대(시간·몫·귀환) — 규칙은 Core
     GameObject shrineView;                      // 서낭당 표시(바닥 원)
@@ -45,6 +46,7 @@ public class JudgeSystem : MonoBehaviour
         shrineView.transform.position = new Vector3(0, 0.015f, 0);
         shrineView.transform.localScale = new Vector3(Balance.SHRINE_RADIUS * 2f, 0.01f, Balance.SHRINE_RADIUS * 2f);
         enemies.onPlayerHit = OnPlayerHit;
+        enemies.onEnemyKneel = OnEnemyKneel;
         SetupNight();   // 적 공격이 명중하면 체력 처리로 연결
         touchUI = Input.touchSupported;
         debugKeys = Application.isEditor || Application.absoluteURL.Contains("debug");
@@ -75,7 +77,7 @@ public class JudgeSystem : MonoBehaviour
         if (!e.soul.BeginSending()) return;
         castTarget = e;
         castT = 0f;
-        castTotal = e.soul.Boss ? Balance.BOSS_TENDO_CAST_TIME : CoreRules.CastTime(chainLeft > 0f);   // 연속 천도면 0.8초, 보스는 2.0초
+        castTotal = e.soul.Boss ? Balance.BOSS_TENDO_CAST_TIME : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult);   // 연속 천도면 0.8초, 보스는 2.0초
         player.locked = true;
         player.facing = Mathf.Atan2(e.Pos.z - player.Pos.z, e.Pos.x - player.Pos.x);
     }
@@ -94,17 +96,25 @@ public class JudgeSystem : MonoBehaviour
         var at = e.Pos;
         e.Finish();
         ledger.DoPahon(e.soul.Boss);
-        if (e.soul.Boss) { night.BossDone = true; Say("BOSS SHATTERED"); }
+        ledger.Coin += Mathf.RoundToInt((e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN) * (lo.stats.CoinMult - 1f));   // 엽전 장비 보너스
+        if (e.soul.Boss)
+        {
+            night.BossDone = true; Say("BOSS SHATTERED");
+            // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
+            if (lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "NAMED: Moonflower Bell (pahon radius +)"; lo.lastDropT = 6f; }
+        }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
-        float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION;
+        float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
+        float radius = lo.stats.PahonRadius(Balance.PAHON_RADIUS);   // 업 쪽 장비: 파혼 반경 (상한 안)
+        int pahonDmg = Mathf.RoundToInt(Balance.PAHON_DAMAGE * lo.Def.PahonDamageMult * lo.stats.PahonDamageMult);
         foreach (var o in enemies.list)
         {
             if (o == e || !o.alive) continue;
             var d = new Vector3(o.Pos.x - at.x, 0, o.Pos.z - at.z);
-            if (d.magnitude > Balance.PAHON_RADIUS + o.radius) continue;
+            if (d.magnitude > radius + o.radius) continue;
             var dir = d.magnitude > 0.01f ? d.normalized : Vector3.right;
-            o.TakeHit(Balance.PAHON_DAMAGE, dir, kb, 0.3f);
-            numbers.Spawn(o.HeadPosition, Balance.PAHON_DAMAGE, "heavy");
+            o.TakeHit(pahonDmg, dir, kb, 0.3f);
+            numbers.Spawn(o.HeadPosition, pahonDmg, "heavy");
         }
         feel.HitStop(Balance.PAHON_HITSTOP_FRAMES);
         feel.AddShake(Balance.PAHON_SHAKE);
@@ -144,6 +154,74 @@ public class JudgeSystem : MonoBehaviour
         castTarget = null;
         castT = 0f;
         player.locked = false;
+    }
+
+    // ===== M4.5: 장비 드롭·도술 ========================================================
+    /// <summary>맺힘 0 → 장비 드롭 판정 1회(처결 방식과 무관). 사나운 적은 귀한 확정</summary>
+    void OnEnemyKneel(Enemy e)
+    {
+        var it = Loot.Roll(() => Random.value, e.soul.Fierce);
+        if (it == null) return;
+        string txt = Loadout.Describe(it);
+        if (lo.Equip(it))
+        {
+            ledger.SetMaxHp(lo.stats.MaxHp);
+            lo.lastDrop = "DROP+EQUIP: " + txt;
+        }
+        else lo.lastDrop = "DROP (worse, left): " + txt;
+        lo.lastDropT = 5f;
+    }
+
+    /// <summary>도술 1·2·3. 쿨다운 중이거나 무릎 꿇은 혼이 없는 등 효과가 없으면 쿨다운을 쓰지 않는다</summary>
+    public void UseSkill(int slot)
+    {
+        if (night.Over || ledger.Dead || Casting || !lo.skills.Ready(slot)) return;
+        switch (slot)
+        {
+            case 0: // 붙잡아 부르기: 무릎 꿇은 혼 대기 +3초, 서 있는 적 0.8초 멈칫
+            {
+                int n = 0;
+                foreach (var e in enemies.list)
+                {
+                    if (new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > Balance.SKILL_HOLD_RADIUS) continue;
+                    if (e.kneeling) { e.soul.WaitLeft += Balance.SKILL_HOLD_WAIT_BONUS; e.soul.WaitTotal += Balance.SKILL_HOLD_WAIT_BONUS; n++; }
+                    else if (e.alive) { e.stun = Mathf.Max(e.stun, Balance.SKILL_HOLD_STUN); e.atk.Interrupt(); n++; }
+                }
+                if (n == 0) { Say("NOTHING IN RANGE"); return; }
+                Say("HOLD CALL");
+                break;
+            }
+            case 1: // 휘감기: 반경 4m 서 있는 적 1.5초 묶기
+            {
+                int n = 0;
+                foreach (var e in enemies.list)
+                {
+                    if (!e.alive || new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > Balance.SKILL_BIND_RADIUS + e.radius) continue;
+                    e.stun = Mathf.Max(e.stun, Balance.SKILL_BIND_STUN); e.atk.Interrupt(); e.vel = Vector3.zero; n++;
+                }
+                if (n == 0) { Say("NOTHING IN RANGE"); return; }
+                Say("BIND");
+                break;
+            }
+            default: // 터뜨리기: 가까운 얼룩 하나를 터뜨려 지운다(업 그대로), 반경 2.5m 맺힘 40
+            {
+                float sx, sz;
+                if (!stains.RemoveNearest(player.Pos.x, player.Pos.z, Balance.SKILL_BURST_FIND_RANGE, out sx, out sz)) { Say("NO STAIN"); return; }
+                foreach (var e in enemies.list)
+                {
+                    if (!e.alive) continue;
+                    var d = new Vector3(e.Pos.x - sx, 0, e.Pos.z - sz);
+                    if (d.magnitude > Balance.SKILL_BURST_RADIUS + e.radius) continue;
+                    int dmg = Mathf.RoundToInt(Balance.SKILL_BURST_DAMAGE * lo.stats.DamageMult);
+                    e.TakeHit(dmg, d.magnitude > 0.01f ? d.normalized : Vector3.right, 10f, 0.3f);
+                    numbers.Spawn(e.HeadPosition, dmg, "heavy");
+                }
+                feel.AddShake(0.5f); feel.HitStop(3);
+                Say("BURST");
+                break;
+            }
+        }
+        lo.skills.TryUse(slot);   // 효과가 있었을 때만 쿨다운을 쓴다
     }
 
     // ===== M4: 이름혼·보스·단서 ======================================================
@@ -262,6 +340,10 @@ public class JudgeSystem : MonoBehaviour
     void HandleKeys()
     {
         if (Input.GetKeyDown(KeyCode.E)) CommandTendo();
+        if (Input.GetKeyDown(KeyCode.Alpha1)) UseSkill(0);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) UseSkill(1);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) UseSkill(2);
+        if (Input.GetKeyDown(KeyCode.Tab)) player.CommandSwap();
         if (Input.GetKeyDown(KeyCode.R)) CommandPahon();
         // 검사용: 주소 끝에 ?debug 를 붙여 연 경우에만 K 키로 가장 가까운 적을 바로 무릎 꿇린다
         // (자동 화면 확인에서 '무릎 꿇은 혼' 장면을 안정적으로 만들기 위해. 일반 플레이엔 영향 없음)
@@ -302,6 +384,12 @@ public class JudgeSystem : MonoBehaviour
             stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f, snap[i][1]);
             stainViews[i].transform.localScale = new Vector3(d, 0.01f, d);
         }
+    }
+
+    string GearName(Slot s)
+    {
+        var it = lo.gear.Get(s);
+        return it == null ? "-" : (it.Named ? it.Name : it.Rarity.ToString()) + "/" + it.Options.Count;
     }
 
     // ===== 화면 ====================================================================
@@ -358,7 +446,14 @@ public class JudgeSystem : MonoBehaviour
             "NEOK " + ledger.Neok + "   MEMORY " + ledger.Memory + "   COIN " + ledger.Coin +
             "   KARMA " + ledger.Karma + " (tier " + CoreRules.KarmaTier(ledger.Karma) + ")" +
             (chainLeft > 0f ? "   CHAIN!" : ""), small);
-        GUI.Label(new Rect(12, 74, 700, 24), "HP " + ledger.Hp + " / " + Balance.PLAYER_MAX_HP, small);
+        GUI.Label(new Rect(12, 74, 700, 24), "HP " + ledger.Hp + " / " + ledger.MaxHp + "   WEAPON " + lo.Def.Name + " (Tab)" +
+            (lo.Def.HasQuake ? "  Q quake" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") + "   STAT PTS " + StatPoints.Earned(ledger.Neok), small);
+        string sk = "";
+        for (int i = 0; i < 3; i++)
+            sk += (i + 1) + ":" + SkillDef.All[i].Name + (lo.skills.Ready(i) ? "" : "(" + Mathf.CeilToInt(lo.skills.Left[i]) + "s)") + "   ";
+        GUI.Label(new Rect(12, 118, 800, 24), sk, small);
+        GUI.Label(new Rect(12, 140, 900, 24), "GEAR  W:" + GearName(Slot.Weapon) + "  R:" + GearName(Slot.Robe) + "  C:" + GearName(Slot.Charm), small);
+        if (lo.lastDropT > 0f) GUI.Label(new Rect(12, 162, 900, 24), lo.lastDrop, small);
         GUI.Label(new Rect(12, 52, 700, 24), "E: send (cheondo)   R: shatter (pahon)", small);
         GUI.Label(new Rect(12, 96, 700, 24),
             "NIGHT " + Mathf.CeilToInt(night.TimeLeft) + "s   SENT " + night.Sent + "/" + Balance.NIGHT_QUOTA +
@@ -396,6 +491,11 @@ public class JudgeSystem : MonoBehaviour
             var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
             if (GUI.Button(new Rect(24, Screen.height - 110, 110, 90), "SEND", bs)) CommandTendo();
             if (GUI.Button(new Rect(148, Screen.height - 110, 130, 90), "SHATTER", bs)) CommandPahon();
+            // 도술 세 칸과 무기 바꾸기 (위쪽 줄)
+            for (int i = 0; i < 3; i++)
+                if (GUI.Button(new Rect(24 + i * 94, Screen.height - 206, 86, 80), (i + 1) + "\n" + SkillDef.All[i].Name, bs)) UseSkill(i);
+            if (GUI.Button(new Rect(24 + 3 * 94, Screen.height - 206, 86, 80), "SWAP", bs)) player.CommandSwap();
+            if (lo.Def.HasQuake && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "QUAKE", bs)) player.CommandQuake();
         }
     }
 }

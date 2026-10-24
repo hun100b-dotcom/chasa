@@ -66,6 +66,25 @@ namespace Chasa.Core
             }
         }
 
+        /// <summary>
+        /// (x,z) 에서 range 안의 가장 가까운 얼룩 하나를 지우고 그 중심을 돌려준다 (도술 '터뜨리기').
+        /// 얼룩을 지우는 유일한 방법이며, 업은 건드리지 않는다. 없으면 false.
+        /// </summary>
+        public bool RemoveNearest(float x, float z, float range, out float outX, out float outZ)
+        {
+            Stain best = null; float bestD = range;
+            foreach (var it in _items)
+            {
+                float d = (float)System.Math.Sqrt((it.X - x) * (it.X - x) + (it.Z - z) * (it.Z - z));
+                if (d <= bestD) { bestD = d; best = it; }
+            }
+            outX = outZ = 0f;
+            if (best == null) return false;
+            outX = best.X; outZ = best.Z;
+            _items.Remove(best);
+            return true;
+        }
+
         public void Clear() { _items.Clear(); }
     }
 }

@@ -6,6 +6,7 @@
 // =============================================================================
 using System.Collections.Generic;
 using UnityEngine;
+using Chasa.Core;
 
 public class Player : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class Player : MonoBehaviour
     public DamageNumbers numbers;
     public ChainVisual chain;
 
+    public Loadout loadout = new Loadout();   // 든 무기·도술 쿨다운·장비 (JudgeSystem 이 장비 드롭을 넣어 준다)
+    ComboStep[] Steps => WeaponTable.Steps(loadout.weapon);   // 지금 든 무기의 콤보 표
+    bool Busy => locked || loadout.swapLeft > 0f;             // 천도 캐스팅 중이거나 무기를 바꿔 드는 중
     public bool locked;               // 천도 캐스팅 중엔 움직이지도 휘두르지도 못한다 (무방비 = 위험)
     public float speedMult = 1f;      // 원념 얼룩 위면 0.8 (이동속도 -20%). JudgeSystem 이 매 프레임 넣어 준다
     public float invulnT;             // 맞은 직후 무적 시간(연속 피해 방지). 0이면 맞을 수 있다
@@ -65,7 +69,7 @@ public class Player : MonoBehaviour
     // ===== 명령 (입력 쪽에서 호출) ================================================
     public void CommandMove(Vector3 point)
     {
-        if (locked) return;
+        if (Busy) return;
         moveTarget = new Vector3(Mathf.Clamp(point.x, -Config.ARENA_HALF_SIZE, Config.ARENA_HALF_SIZE), 0,
                                  Mathf.Clamp(point.z, -Config.ARENA_HALF_SIZE, Config.ARENA_HALF_SIZE));
         chaseTarget = null;
@@ -74,7 +78,7 @@ public class Player : MonoBehaviour
 
     public void CommandAttack(Enemy e)
     {
-        if (locked) return;
+        if (Busy) return;
         if (state == State.Attack) { hasBuffered = true; buffered = e; bufferedAim = null; } // 다음 타 예약
         else if (state == State.Free) { chaseTarget = e; moveTarget = null; }
     }
@@ -82,14 +86,48 @@ public class Player : MonoBehaviour
     /// <summary>키보드(Space) 제자리 휘두르기: 달려가지 않고 그 자리에서 aim 방향으로 콤보</summary>
     public void CommandSwing(Vector3 aim)
     {
-        if (locked) return;
+        if (Busy) return;
         if (state == State.Attack) { hasBuffered = true; buffered = null; bufferedAim = aim; }
         else if (state == State.Free) { moveTarget = null; chaseTarget = null; StartAttack(null, comboTimer > 0f, aim); }
     }
 
+    /// <summary>Tab: 무기를 바꿔 든다(0.5초 동안 이동·공격 불가). 자유 상태에서만</summary>
+    public void CommandSwap()
+    {
+        if (Busy || state != State.Free) return;
+        loadout.weapon = loadout.weapon == WeaponId.Chain ? WeaponId.Mace : WeaponId.Chain;
+        loadout.swapLeft = Balance.WEAPON_SWAP_TIME;
+        comboStep = 0; comboTimer = 0f; moveTarget = null; chaseTarget = null;
+    }
+
+    /// <summary>
+    /// 육모방망이 Q '땅울림': 반경 안에 서 있는 적에게 맺힘 피해 + 기절.
+    /// 기절은 서 있는 적에게만 걸리고, 무릎 꿇은 혼의 처결 대기 시간과는 무관하다 (기획 확정).
+    /// 무릎 꿇은 혼은 맞지 않는다 — 처결을 기다리는 혼을 부수면 안 되니까.
+    /// </summary>
+    public bool CommandQuake()
+    {
+        if (Busy || state != State.Free || !loadout.Def.HasQuake || loadout.quakeCd > 0f) return false;
+        loadout.quakeCd = Balance.MACE_QUAKE_COOLDOWN;
+        moveTarget = null; chaseTarget = null;
+        foreach (var e in enemies.list)
+        {
+            if (!e.alive) continue;
+            var d = new Vector3(e.Pos.x - Pos.x, 0, e.Pos.z - Pos.z);
+            if (d.magnitude > Balance.MACE_QUAKE_RADIUS + e.radius) continue;
+            var dir = d.magnitude > 0.01f ? d.normalized : Vector3.right;
+            int dmg = Mathf.RoundToInt(Balance.MACE_QUAKE_DAMAGE * loadout.stats.DamageMult);
+            e.TakeHit(dmg, dir, 0f, Balance.MACE_QUAKE_STUN);
+            numbers.Spawn(e.HeadPosition, dmg, "heavy");
+        }
+        feel.HitStop(4);
+        feel.AddShake(0.8f);
+        return true;
+    }
+
     public void CommandPull(Enemy e, Vector3 aim)
     {
-        if (locked) return;
+        if (Busy) return;
         if (pullCooldown > 0f) return;
         bool canCancel = state == State.Attack && atk != null && atk.phase == "recover"; // 후딜은 견인으로 끊을 수 있다
         if (state != State.Free && !canCancel) return;
@@ -120,10 +158,11 @@ public class Player : MonoBehaviour
     public void Tick(float dt)
     {
         invulnT = Mathf.Max(0f, invulnT - dt);
+        loadout.Tick(dt);
         pullCooldown = Mathf.Max(0f, pullCooldown - dt);
         switch (state)
         {
-            case State.Free: if (!locked) TickFree(dt); break;
+            case State.Free: if (!Busy) TickFree(dt); break;
             case State.Attack: TickAttack(dt); break;
             case State.Pull: TickPull(dt); break;
         }
@@ -166,7 +205,7 @@ public class Player : MonoBehaviour
         var d = new Vector2(target.x - Pos.x, target.z - Pos.z);
         float dist = d.magnitude;
         if (dist < 1e-5f) return;
-        float step = Mathf.Min(dist, Config.PLAYER_MOVE_SPEED * speedMult * dt);
+        float step = Mathf.Min(dist, Config.PLAYER_MOVE_SPEED * speedMult * loadout.stats.MoveSpeedMult * dt);
         Pos += new Vector3(d.x / dist, 0, d.y / dist) * step;
         ClampToArena();
     }
@@ -184,9 +223,9 @@ public class Player : MonoBehaviour
     // ===== 철삭 3타 콤보 ===========================================================
     void StartAttack(Enemy target, bool continueCombo, Vector3? aim)
     {
-        int step = continueCombo ? (comboStep % Config.COMBO.Length) + 1 : 1;
+        int step = continueCombo ? (comboStep % Steps.Length) + 1 : 1;
         comboStep = step;
-        var cfg = Config.COMBO[step - 1];
+        var cfg = Steps[step - 1];
         if (target != null && target.alive) facing = Mathf.Atan2(target.Pos.z - Pos.z, target.Pos.x - Pos.x);
         else if (aim.HasValue) facing = Mathf.Atan2(aim.Value.z - Pos.z, aim.Value.x - Pos.x);
         float start = facing - cfg.dir * cfg.startOffsetDeg * Mathf.Deg2Rad;
@@ -199,7 +238,7 @@ public class Player : MonoBehaviour
     void TickAttack(float dt)
     {
         var a = atk; var cfg = a.cfg;
-        a.t += dt;
+        a.t += dt * loadout.stats.AttackSpeedMult;   // 장비의 공격 속도 보너스: 시간이 더 빨리 흐르는 셈
         var hand = Hand;
         if (a.phase == "windup")
         {
@@ -247,13 +286,13 @@ public class Player : MonoBehaviour
         {
             var next = buffered; var nextAim = bufferedAim;
             hasBuffered = false; bufferedAim = null;
-            if (finished >= Config.COMBO.Length) comboStep = 0; // 3타 끝이면 다음은 1타
+            if (finished >= Steps.Length) comboStep = 0; // 3타 끝이면 다음은 1타
             StartAttack(next, true, nextAim);
             return;
         }
         state = State.Free;
         chain.gameObject.SetActive(false);
-        if (finished >= Config.COMBO.Length) { comboStep = 0; comboTimer = 0f; }
+        if (finished >= Steps.Length) { comboStep = 0; comboTimer = 0f; }
         else comboTimer = Config.COMBO_RESET_TIME;
     }
 
@@ -278,11 +317,11 @@ public class Player : MonoBehaviour
         var cfg = a.cfg;
         float mix = Config.FEEL_KNOCKBACK_TANGENT_MIX * cfg.dir; // 바깥 + 휘두른 방향(접선) → 쓸려 날아감
         var dir = new Vector3(rx - rz * mix, 0, rz + rx * mix).normalized;
-        int dmg = Mathf.Max(1, Mathf.RoundToInt(cfg.damage * (1f + Random.Range(-Config.DAMAGE_VARIANCE, Config.DAMAGE_VARIANCE))));
+        int dmg = Mathf.Max(1, Mathf.RoundToInt(cfg.damage * loadout.stats.DamageMult * (1f + Random.Range(-Config.DAMAGE_VARIANCE, Config.DAMAGE_VARIANCE))));
         bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun);
         feel.HitStop(cfg.hitStopFrames + (killed ? Config.FEEL_KILL_BONUS_FRAMES : 0));
         feel.AddShake(cfg.shake + (killed ? Config.FEEL_KILL_BONUS_SHAKE : 0f));
-        numbers.Spawn(e.HeadPosition, dmg, a.step == Config.COMBO.Length ? "heavy" : "normal");
+        numbers.Spawn(e.HeadPosition, dmg, a.step == Steps.Length ? "heavy" : "normal");
     }
 
     void RecordTrail(AttackRun a, Vector3 hand, float prev, float cur, float radius, float y)

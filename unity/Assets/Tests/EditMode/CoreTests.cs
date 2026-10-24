@@ -546,4 +546,27 @@ public class CoreTests
         var st = eq.Stats();
         Assert.AreEqual(Balance.MOONFLOWER_BELL_PAHON_RADIUS, st.PahonRadiusM, 0.001f);
     }
+
+    [Test]
+    public void Stain_RemoveNearest_RemovesOnlyOneWithoutKarma()
+    {
+        var st = new StainSet(); float cx, cz;
+        st.Add(0f, 0f, out cx, out cz); st.Add(10f, 0f, out cx, out cz);
+        float ox, oz;
+        Assert.IsTrue(st.RemoveNearest(1f, 0f, 3f, out ox, out oz));
+        Assert.AreEqual(0f, ox, 0.001f);
+        Assert.AreEqual(1, st.Count);
+        Assert.IsFalse(st.RemoveNearest(1f, 0f, 3f, out ox, out oz), "범위 밖은 못 지운다");
+    }
+
+    [Test]
+    public void Ledger_MaxHpGrowsRaisesHp()
+    {
+        var l = new Ledger();
+        l.TakeDamage(30);
+        l.SetMaxHp(Balance.PLAYER_MAX_HP + 20);
+        Assert.AreEqual(Balance.PLAYER_MAX_HP - 30 + 20, l.Hp);
+        l.ResetHp();
+        Assert.AreEqual(Balance.PLAYER_MAX_HP + 20, l.Hp);
+    }
 }

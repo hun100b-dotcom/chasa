@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
     public bool extra;                                           // 얼룩 3개로 소환된 추가 적 (한 번 처리하면 사라짐)
     public float stun;             // 남은 기절 시간
     public AttackClock atk = new AttackClock();   // 공격 시계(쿨다운·예비동작) — 규칙은 Core에 있다
+    public System.Action onKneel;                  // 맺힘 0 이 되어 무릎 꿇는 순간 한 번 불린다 (장비 드롭 판정용)
+    bool dropRolled;                               // 이 혼 한 명당 드롭은 한 번만 (대기 초과로 다시 일어섰다 쓰러져도 재굴림 없음)
     public System.Action onHitPlayer;             // 공격이 명중하면 불린다 (EnemyManager가 플레이어 피해로 연결)
     public bool pulled;            // 견인으로 끌려오는 중
     public bool respawnReady;
@@ -87,6 +89,7 @@ public class Enemy : MonoBehaviour
         vel = dir * knockback;          // '덮어쓰기': 연타해도 무한히 빨라지지 않는다
         if (soul.TakeHit(damage))
         {
+            if (!dropRolled) { dropRolled = true; onKneel?.Invoke(); }
             vel *= 0.5f;                // 무릎 꿇으며 조금만 미끄러진다
             return true;
         }
@@ -104,7 +107,7 @@ public class Enemy : MonoBehaviour
 
     public void Respawn(Vector3 at)
     {
-        soul = new Soul(RandomKind()); respawnReady = false;
+        soul = new Soul(RandomKind()); respawnReady = false; dropRolled = false;
         stun = 0f; pulled = false; flash = 0f; spawnT = 0f; vel = Vector3.zero;
         Pos = at;
         baseColor = KindColor(soul.Kind);
@@ -248,6 +251,7 @@ public class EnemyManager
 {
     public readonly List<Enemy> list = new List<Enemy>();
     public bool spawnPaused;                    // true 면 잡몹이 다시 일어서듯 새로 나오지 않는다 (보스 천도 보호)
+    public System.Action<Enemy> onEnemyKneel;   // 어느 적이 무릎 꿇었나 (JudgeSystem 이 장비 드롭 굴림)
     public System.Action<Enemy> onPlayerHit;   // 어느 적의 공격이 명중했는지 (JudgeSystem/GameMain이 체력 처리)
 
     /// <summary>원념 얼룩 3개가 겹친 자리에서 사나운 적이 솟아난다</summary>
@@ -256,6 +260,7 @@ public class EnemyManager
         var e = Enemy.Create(true, at);
         e.MakeFierce();
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        e.onKneel = () => onEnemyKneel?.Invoke(e);
         list.Add(e);
         return e;
     }
@@ -265,6 +270,7 @@ public class EnemyManager
         var e = Enemy.Create(false, at);
         e.MakeNamed(name);
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        e.onKneel = () => onEnemyKneel?.Invoke(e);
         list.Add(e);
         return e;
     }
@@ -274,6 +280,7 @@ public class EnemyManager
         var e = Enemy.Create(true, at, 1.6f);
         e.MakeBoss();
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        e.onKneel = () => onEnemyKneel?.Invoke(e);
         list.Add(e);
         return e;
     }
@@ -297,6 +304,7 @@ public class EnemyManager
         {
             var e = Enemy.Create(i % 2 == 0, SpawnPoint(playerPos, (float)i / Config.ENEMY_COUNT * U.TAU + 0.4f));
             e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        e.onKneel = () => onEnemyKneel?.Invoke(e);
             list.Add(e);
         }
     }

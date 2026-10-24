@@ -1,0 +1,40 @@
+// =============================================================================
+// Loadout.cs — 플레이어가 지금 들고 낀 것: 든 무기, 도술 쿨다운, 장비. (규칙은 Core/Gear.cs)
+// 왜 한 곳에? Player·JudgeSystem·화면 글자가 모두 같은 장비 합계를 읽어야 서로 값이 어긋나지 않는다.
+// =============================================================================
+using Chasa.Core;
+
+public class Loadout
+{
+    public WeaponId weapon = WeaponId.Chain;
+    public float swapLeft;                                  // 바꿔 들기 남은 시간(이동·공격 불가)
+    public float quakeCd;                                   // 땅울림 재사용 남은 시간
+    public readonly SkillBar skills = new SkillBar();
+    public readonly Equipment gear = new Equipment();
+    public GearStats stats = new GearStats();               // 장비 합계(장착이 바뀔 때만 다시 계산)
+    public string lastDrop = "";                            // 가장 최근 드롭 안내 글자
+    public float lastDropT;
+
+    public WeaponDef Def { get { return WeaponDef.Get(weapon); } }
+
+    public void Tick(float dt)
+    {
+        swapLeft = System.Math.Max(0f, swapLeft - dt);
+        quakeCd = System.Math.Max(0f, quakeCd - dt);
+        lastDropT -= dt;
+        skills.Tick(dt);
+    }
+
+    /// <summary>새 물건을 비교해 장착. 장착했으면 합계를 다시 계산하고 true</summary>
+    public bool Equip(ItemDef it)
+    {
+        if (!gear.TryEquip(it)) return false;
+        stats = gear.Stats();
+        return true;
+    }
+
+    public static string Describe(ItemDef it)
+    {
+        return it.Rarity + " " + it.Slot + (it.Named ? " [" + it.Name + "]" : "") + " (" + it.Options.Count + " opts" + (it.Gradient ? ", tilt" : "") + ")";
+    }
+}

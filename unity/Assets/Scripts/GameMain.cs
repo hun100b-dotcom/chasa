@@ -132,9 +132,9 @@ public class GameMain : MonoBehaviour
     void HandleInput()
     {
         Vector3 mouse = Input.mousePosition;
-        if (Input.GetKeyDown(KeyCode.Q)) SkillPull(mouse);   // Q: 커서 근처 적 견인
+        if (Input.GetKeyDown(KeyCode.Q)) { if (player.loadout.Def.HasQuake) player.CommandQuake(); else SkillPull(mouse); }   // Q: 철삭=견인 / 육모방망이=땅울림
         if (Input.GetKeyDown(KeyCode.Space)) SkillSwing(mouse); // Space: 제자리 휘두르기
-        if (Input.GetMouseButtonDown(1)) SkillPull(mouse);   // 우클릭도 견인
+        if (Input.GetMouseButtonDown(1) && !player.loadout.Def.HasQuake) SkillPull(mouse);   // 우클릭도 견인(철삭일 때)
 
         if (Input.GetMouseButtonDown(0) && !OverTouchButtons(mouse))
         {
