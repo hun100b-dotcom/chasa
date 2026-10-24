@@ -88,5 +88,8 @@ if __name__ == "__main__":
             anim.sheet(arm, c["name"], fr, os.path.join(OUT, "previews", f"anim_hero_{c['name']}"))
     path = os.path.join(OUT, "characters", "hero_chasa.glb")
     anim.export_rig(arm, path)
+    # 사슬 감김은 몸통에서 떼어 따로 내보낸다(원점=오른손 위치)
+    from characters import chain_wrap
+    reset(); co = join("hero_chain_wrap", chain_wrap()); export(co, os.path.join(OUT, "characters", "hero_chain_wrap.glb"))
     v = anim.verify(path); print(v)
     json.dump({"fps": anim.FPS, "clips": man, "verify": v}, open(os.path.join(OUT, "characters", "_hero_anim_manifest.json"), "w"), ensure_ascii=False, indent=1)

@@ -46,3 +46,7 @@
 [2막 검은여울 키트 11종] blackrapids/br_{rapids,deep,shore,stone_bridge,ferry_dock,willow_a,willow_b,reed_field,herb_rack,med_sign,jars}.glb (48~412삼각형). 타일 8×8m, 물 윗면 z0.18/풀 윗면 z0.3. 나루터에 Light_ferry_dock. 의원 집=한옥 키트 'uiwon'(=기와집 8×4m)+약초 건조대·깃대·항아리. 생성: tools/art3d/blackrapids.py
 
 [필드 5×5 v2: 검은여울 이어 붙임] layouts/field_5x5.json에 추가: 서쪽 칸(x 72~96m)에 남북 강(br_shore/br_rapids/br_deep, 물 폭 16m, y 272~640m), 돌다리 2토막(필드 (80,452),(88,452)), 나루터(92.4,548), 의원 집(52,468, buildings 조각 목록), 버드나무·갈대밭, 마을 길에서 갈라진 '검은여울 가는 길'. tiles의 'br_*'는 assets3d/blackrapids/, structures[]는 모델 직접 배치, props의 'br_*'도 blackrapids. file_dirs 참고.
+
+[주인공 사슬 주먹 분리] characters/hero_chasa.glb(몸통만, 사슬 없음, 스킨 1·뼈 16·동작 9) + characters/hero_chain_wrap.glb(사슬 감긴 주먹 7.5KB, 코일 6+고리 4). 붙이는 법: hero_chain_wrap을 Hand.R 뼈의 자식으로 위치(0,0,0). 무기 장착 중이면 weapon_chain.glb로 대체 가능. 생성: tools/art3d/characters.py(chain_wrap), hero_anim.py
+
+[밤 장면 렌더] previews/scene_*.png — tools/art3d/field_scene.py가 field_5x5.json+마을 배치표를 실제 3D로 조립(달빛 해 1.3, 등롱 점광, 50° 직교 카메라). 고친 것: 바닥 상자와 타일 윗면이 같은 높이라 길 옆이 검게 깨짐 → 바닥 상자를 0.28로 낮춤. 월드 안개(볼륨)는 장면 전체를 검게 먹어 끄고 후처리 안개로 대체.

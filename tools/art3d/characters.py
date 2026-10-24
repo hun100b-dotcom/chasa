@@ -13,7 +13,8 @@ def to_group(objs, bone):
         vg.add(list(range(len(o.data.vertices))), 1.0, "REPLACE")
     return objs
 
-def hero():
+def hero(chain=False):
+    """chain=True면 오른손에 사슬을 감은 옛 모양. 기본은 사슬 없는 주먹(사슬은 chain_wrap()로 따로 내보냄)."""
     parts = []
     A = 0.5   # 팔이 벌어진 각도(라디안): A자 자세
     # 몸통 계열
@@ -39,7 +40,7 @@ def hero():
         parts += to_group([cyl(f"sleeve_{side}", 0.07, 0.18, 0.58, tuple(sh), "cloth", 8, rot=(0, theta, 0))], f"UpperArm.{side}")
         hand = sh + d * 0.6
         hp = [sphere(f"hand_{side}", 0.06, tuple(hand), "face", 5, 4)]
-        if side == "R":   # 오른손에 철삭을 감는다
+        if side == "R" and chain:   # 오른손에 철삭을 감는다
             for i in range(6):
                 a = i / 6 * math.tau
                 hp.append(box(f"chain{i}", (0.05, 0.05, 0.025), (hand.x + math.cos(a) * 0.1, hand.y + math.sin(a) * 0.1, hand.z + 0.02), "chain", rot=(0, 0, a + 0.8)))
@@ -77,6 +78,16 @@ def rig(mesh, bones=None):
     mesh.parent = ao
     m = mesh.modifiers.new("Armature", "ARMATURE"); m.object = ao
     return ao
+
+def chain_wrap():
+    """영웅 오른손에 감겨 있던 사슬(감은 고리 6 + 늘어진 고리 4)을 손 위치 기준(0,0,0)으로 따로 만든 것. 소켓: Hand.R 머리 위치."""
+    hand = Vector((0, 0, 0)); p = []
+    for i in range(6):
+        a = i / 6 * math.tau
+        p.append(box(f"chain{i}", (0.05, 0.05, 0.025), (math.cos(a) * 0.1, math.sin(a) * 0.1, 0.02), "chain", rot=(0, 0, a + 0.8)))
+    for i in range(4):
+        p.append(box(f"link{i}", (0.045, 0.02, 0.07), (-0.05, -0.04, -0.1 - i * 0.075), "chain", rot=(0, 0, 0.0 if i % 2 else 0.9)))
+    return p
 
 def souls():
     S = {}
