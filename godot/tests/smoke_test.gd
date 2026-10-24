@@ -296,6 +296,18 @@ func _core_loop_tests(p: Player, em: EnemyManager) -> void:
 	step(3)
 	check(p.state != Player.State.CAST and l.kneeling, "천도 거부, 계속 대기")
 
+	print("[14-2] 업 단계 (P1-015)")
+	var kk := p.karma
+	p.karma = 9
+	check(p.karma_tier() == 0 and p.reward_mult() == 1.0, "업 9 = K-001, 보상 그대로")
+	p.karma = 10
+	check(p.karma_tier() == 1, "업 10 = K-002")
+	p.karma = 30
+	check(p.karma_tier() == 2 and absf(p.reward_mult() - 0.9) < 0.001, "업 30 = K-003, 보상 x0.9")
+	p.karma = 60
+	check(p.karma_tier() == 3, "업 60 = K-004")
+	p.karma = kk
+
 	print("[15] 체력 0 → 판 다시 시작")
 	_reset_player(p)
 	p.hp = 1

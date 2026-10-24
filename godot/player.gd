@@ -460,6 +460,18 @@ func _start_tendo(e: Enemy) -> void:
 	# 사슬을 혼에 걸어둔다 (붙잡고 있다는 표시)
 	chain.visible = true
 
+func karma_tier() -> int:
+	# 업 단계: 0 = K-001(0~9), 1 = K-002, 2 = K-003, 3 = K-004 (P1-015)
+	# 왜 숫자 단계로 따로 뽑나? 낮 단서 난이도·보상 감소 등 나중 시스템이 "지금 몇 단계냐"만 물으면 되게.
+	if karma >= Config.KARMA_TIER_3: return 3
+	if karma >= Config.KARMA_TIER_2: return 2
+	if karma >= Config.KARMA_TIER_1: return 1
+	return 0
+
+func reward_mult() -> float:
+	# 보상 배율. K-003(30+)부터 -10%. 천도 보상(넋)에 곱한다
+	return 1.0 - Config.KARMA_REWARD_PENALTY if karma_tier() >= 2 else 1.0
+
 func cast_ratio() -> float:
 	# 시야 연출용: 캐스팅 중이면 1, 아니면 0
 	return 1.0 if state == State.CAST else 0.0
@@ -478,11 +490,12 @@ func _tick_cast(dt: float) -> void:
 	_set_straight_chain(hand, head, 0.15)
 	if cast_t >= cast_total:
 		e.finish("tendo")
-		neok += Config.TENDO_NEOK
+		var gain := roundi(Config.TENDO_NEOK * reward_mult())
+		neok += gain
 		memory += Config.TENDO_MEMORY
 		tendo_streak += 1
 		tendo_chain_left = Config.TENDO_CHAIN_WINDOW
-		numbers.spawn_text(e.get_head_position(), "+%d NEOK" % Config.TENDO_NEOK, Config.MEMORY_TINT)
+		numbers.spawn_text(e.get_head_position(), "+%d NEOK" % gain, Config.MEMORY_TINT)
 		feel.add_shake(0.15)
 		_end_cast()
 

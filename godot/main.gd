@@ -441,7 +441,7 @@ func _add_hud() -> void:
 
 func _update_hud() -> void:
 	_hp_fill.size.x = 176.0 * float(player.hp) / float(Config.PLAYER_MAX_HP)
-	var t := "HP %d   Neok %d   Memory %d   Coin %d   Karma %d" % [player.hp, player.neok, player.memory, player.coin, player.karma]
+	var t := "HP %d   Neok %d   Memory %d   Coin %d   Karma %d (tier %d)" % [player.hp, player.neok, player.memory, player.coin, player.karma, player.karma_tier()]
 	if player.tendo_chain_left > 0.0:
 		t += "   CHAIN x%d (%.1fs)" % [player.tendo_streak, player.tendo_chain_left]
 	_hud.text = t

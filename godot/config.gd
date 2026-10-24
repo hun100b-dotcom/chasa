@@ -174,7 +174,14 @@ const FIERCE_MULT := 1.5              # P-011 사나운 적: 맺힘·공격력 +
 const PAHON_HITSTOP_FRAMES := 4       # (임시) 폭발 순간 정지
 const PAHON_SHAKE := 0.8              # (임시) 폭발 흔들림
 
+# --- 업(Karma) 누적 효과 (1-5, P1-015) ---
+const KARMA_TIER_1 := 10              # K-002 시작 (10~29): 마을 주민 반응 변화. 🔴수치 미정 → 지금은 단계 표시만
+const KARMA_TIER_2 := 30              # K-003 시작 (30~59): 명부(=넋) 보상 -10%
+const KARMA_TIER_3 := 60              # K-004 시작 (60+): 🔴설계 공백. 지금은 효과 없음(미구현)
+const KARMA_REWARD_PENALTY := 0.10    # K-003 🔴수치 미정(스펙은 -10%만 적혀 있음)
+
 # --- 시야 (밤) ---
+
 const VISION_BASE_RATIO := 0.62       # (임시) 평소 시야 반경 = 화면 세로 × 이 값 (밤이라 가장자리가 어둡다)
 const VISION_EDGE_SOFT := 0.35        # (임시) 시야 경계 번짐 정도
 const MEMORY_TINT := Color("c9a46a")  # (임시) 천도 중 가장자리를 물들이는 '생전 기억' 색 (P1-034 연출 스터디 전 임시)
