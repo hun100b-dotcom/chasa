@@ -31,6 +31,8 @@ public class GameMain : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         // 구역을 이어 붙인 넓은 필드: 설정값 또는 주소에 ?zones 가 있으면 켠다 (꺼져 있으면 마을 한 곳 = 기존 동작)
+        if (DemoScript.Wanted()) Random.InitState(7);   // 비교 영상용: 같은 장면이 매번 똑같이(난수 씨앗 고정)
+        View3D.Init();   // 주소의 ?v=3d / ?cam=a|b|c 를 읽는다
         World.Enabled = Balance.WORLD_ZONES || Application.absoluteURL.Contains("zones");
         var url = Application.absoluteURL;
         UiRoot.Enabled = Balance.UI_TOOLKIT || url.Contains("?ui") || url.Contains("&ui");   // 주소에 ?ui 가 있으면 UI Toolkit HUD ("build" 같은 글자에 걸리지 않게 ? 와 & 를 붙여 본다)
@@ -46,12 +48,22 @@ public class GameMain : MonoBehaviour
         // 처결(천도·파혼): 규칙은 Core, 화면 연결은 JudgeSystem
         judge = gameObject.AddComponent<JudgeSystem>();
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
-        // 밤 분위기: 어둠 막 + 등불 (화면 위에 덮는 방식이라 그림 재질을 바꿀 필요가 없다)
-        var atmo = gameObject.AddComponent<Atmosphere>();
+        if (View3D.On)
+        {
+            // 새 화면: 진짜 조명(등불·혼불·달빛). 화면 위 어둠 막은 필요 없다
+            var nl = gameObject.AddComponent<NightLights>();
+            nl.player = player; nl.judge = judge; nl.enemies = enemies;
+        }
+        else
+        {
+            // 옛 화면 밤 분위기: 어둠 막 + 등불 (화면 위에 덮는 방식이라 그림 재질을 바꿀 필요가 없다)
+            var atmo = gameObject.AddComponent<Atmosphere>();
+            atmo.cam = cam; atmo.judge = judge; atmo.player = player; atmo.enemies = enemies;
+        }
         if (World.Enabled) { var zm = gameObject.AddComponent<ZoneManager>(); zm.player = player; }   // 걸어가면 둘레 구역을 켜고 끈다
         if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)
         Sfx.Create(judge);   // 효과음 재생기
-        atmo.cam = cam; atmo.judge = judge; atmo.player = player; atmo.enemies = enemies;
+        if (DemoScript.Wanted()) { var ds = gameObject.AddComponent<DemoScript>(); ds.player = player; ds.enemies = enemies; ds.judge = judge; }   // ?demo=1 자동 연출
     }
 
     // -------------------------------------------------------------------------
@@ -81,12 +93,24 @@ public class GameMain : MonoBehaviour
         // 직교 카메라: 멀어도 작아지지 않음 = 원근감 없는 쿼터뷰
         cam = new GameObject("Camera").AddComponent<Camera>();
         cam.gameObject.tag = "MainCamera";   // 그림(빌보드)이 Camera.main 으로 카메라를 찾는다
-        cam.orthographic = true;
-        cam.orthographicSize = Config.CAMERA_VIEW_HEIGHT / 2f; // 유니티는 '세로 절반' 값을 받는다
         cam.nearClipPlane = 0.1f; cam.farClipPlane = 300f;
         cam.clearFlags = CameraClearFlags.SolidColor;
-        cam.backgroundColor = Config.Hex(0x14161c);
-        float pitch = Config.CAMERA_PITCH_DEG * Mathf.Deg2Rad, yaw = Config.CAMERA_YAW_DEG * Mathf.Deg2Rad, dist = 60f;
+        float pitch, yaw = Config.CAMERA_YAW_DEG * Mathf.Deg2Rad, dist;
+        if (View3D.On)
+        {
+            // 새 화면: 원근 카메라. 가까이서 깊게 내려다봐서 캐릭터가 크게 보이고 입체감이 난다
+            cam.orthographic = false;
+            cam.fieldOfView = View3D.Cam.Fov;
+            cam.backgroundColor = View3D.FogColor;
+            pitch = View3D.Cam.PitchDeg * Mathf.Deg2Rad; dist = View3D.Distance;
+        }
+        else
+        {
+            cam.orthographic = true;
+            cam.orthographicSize = Config.CAMERA_VIEW_HEIGHT / 2f; // 유니티는 '세로 절반' 값을 받는다
+            cam.backgroundColor = Config.Hex(0x14161c);
+            pitch = Config.CAMERA_PITCH_DEG * Mathf.Deg2Rad; dist = 60f;
+        }
         offset = new Vector3(Mathf.Cos(yaw) * Mathf.Cos(pitch), Mathf.Sin(pitch), Mathf.Sin(yaw) * Mathf.Cos(pitch)) * dist;
 
         // 조명: 은은한 전체 조명 + 그림자 만드는 햇빛 (밝기는 다른 판과 눈으로 맞춤)
@@ -98,6 +122,7 @@ public class GameMain : MonoBehaviour
         sun.shadows = LightShadows.Soft;
         sun.transform.rotation = Quaternion.LookRotation(-new Vector3(14, 30, 8));
         QualitySettings.shadowDistance = 60f;
+        if (View3D.On) NightLights.SetupAtmosphere(sun);   // 새 화면: 달빛·푸른 환경광·안개
 
         // 바닥: 맵 경계(Core/MapLayout)에 맞춘 직사각형. 그림 타일이 깔리면 이 판은 뒤에 숨는다
         float sizeX = MapLayout.MaxX - MapLayout.MinX, sizeZ = MapLayout.MaxZ - MapLayout.MinZ;
@@ -154,15 +179,16 @@ public class GameMain : MonoBehaviour
         if (d.magnitude > Balance.CAMERA_DEADZONE_M) goal = focus + d.normalized * (d.magnitude - Balance.CAMERA_DEADZONE_M);
         else goal = focus;
         focus = Vector3.Lerp(focus, goal, k);
-        cam.transform.position = focus + offset;
-        cam.transform.LookAt(focus);
+        // 줌(타격 펀치·천도 캐스팅)은 직교에선 화면 크기, 원근에선 카메라 거리로 만든다
+        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f;
+        cam.transform.position = focus + (View3D.On ? offset * (1f - zoomIn) : offset);
+        cam.transform.LookAt(View3D.On ? focus + Vector3.up * 0.9f : focus);   // 3D 에선 발밑이 아니라 가슴께를 본다
         cam.transform.Rotate(0f, 0f, feel.GetShakeRoll(), Space.Self);   // 충격이 클 때만 화면이 살짝 기울었다 돌아온다
         var s = feel.GetShakeOffset(); // 화면 기준 오른쪽/위쪽으로 밀어 평행하게 떨림
         cam.transform.position += cam.transform.right * s.x + cam.transform.up * s.y;
         cam.transform.position += feel.Kick;   // 맞은 방향으로 툭 밀렸다 돌아오는 카메라
         // 줌: 타격 펀치(최대 6%) + 천도 캐스팅 중 서서히 다가감(최대 9%) — 화면 크기(orthographicSize)를 줄이면 다가간 것
-        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f;
-        cam.orthographicSize = Config.CAMERA_VIEW_HEIGHT / 2f * (1f - zoomIn);
+        if (!View3D.On) cam.orthographicSize = Config.CAMERA_VIEW_HEIGHT / 2f * (1f - zoomIn);
     }
 
     // ---- 입력: 마우스 = 이동·대상 / 키보드 = 기술 (PD 피드백 반영) --------------------

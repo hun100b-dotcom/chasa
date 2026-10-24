@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
         nose.transform.localPosition = new Vector3(0, 1.35f, Config.PLAYER_RADIUS * 0.9f);
         nose.GetComponent<Renderer>().sharedMaterial = U.Matte(Config.Hex(0xffe066));
         p.bodyShapes = new[] { body.GetComponent<Renderer>(), nose.GetComponent<Renderer>() };
-        p.spr = ActorSprite.Create(go.transform, null);
+        p.spr = ActorSprite.Create(go.transform, null, true);
         p.spr.transform.localPosition = Vector3.zero;
         return p;
     }
@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
         if (moved > 0.001f) walkT += dt; else walkT = 0f;
         string n = "characters/chasa_idle";
         bool mace = loadout.weapon == WeaponId.Mace;
-        if (state == State.Dodge) n = "characters/chasa_walk_a";       // 피하는 중(전용 그림이 오기 전엔 걷는 그림)
+        if (state == State.Dodge) n = View3D.On ? "characters/chasa_dodge" : "characters/chasa_walk_a";       // 피하는 중(전용 그림이 오기 전엔 걷는 그림)
         else if (invulnT > 0.35f) n = "characters/chasa_hit";                 // 막 맞음
         else if (locked) n = "characters/chasa_cast";                    // 천도 시전
         else if (state == State.Attack && atk != null) n = mace ? "characters/chasa_bang" + Mathf.Clamp(atk.step, 1, 3) : "characters/chasa_swing";

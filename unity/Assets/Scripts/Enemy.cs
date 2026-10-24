@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
         else body.transform.localScale = new Vector3(e.radius * 1.9f, e.height, e.radius * 1.9f);
         body.transform.localPosition = new Vector3(0, e.height / 2f, 0); // 발바닥이 바닥에
         e.bodyRenderer = body.GetComponent<Renderer>();
-        e.spr = ActorSprite.Create(root.transform, null);
+        e.spr = ActorSprite.Create(root.transform, null, true);
         e.baseColor = KindColor(e.soul.Kind);
         e.mat = U.Flashable(e.baseColor);
         body.GetComponent<Renderer>().sharedMaterial = e.mat;
@@ -271,7 +271,7 @@ public class Enemy : MonoBehaviour
         // 등장 팝인(0→1) 또는 죽은 뒤 쪼그라듦(1→0)
         float b = U.EaseOutQuad(Mathf.Clamp01(spawnT / Config.ENEMY_SPAWN_POP_TIME));
         if (gone) b = 1f - Mathf.Clamp01((deathT - Config.ENEMY_DEATH_HOLD) / Config.ENEMY_DEATH_SHRINK);
-        float kneel = alive || gone ? 1f : 0.62f;   // 무릎 꿇으면 키가 줄어든다(눈으로 '처결 대기'를 알아보게)
+        float kneel = alive || gone ? 1f : (View3D.On ? 0.92f : 0.62f);   // 3D 인형은 무릎 꿇는 자세가 따로 있어 덜 찌그러뜨린다   // 무릎 꿇으면 키가 줄어든다(눈으로 '처결 대기'를 알아보게)
         // 맞은 순간: 옆으로 넓어지고 키가 줄어드는 찌그러짐 (무게감)
         float sx = 1f + Config.ENEMY_SQUASH * flash;
         float sy = 1f - Config.ENEMY_SQUASH * 0.8f * flash;

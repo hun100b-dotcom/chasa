@@ -13,6 +13,19 @@ public static class MapView
     static readonly Color HouseWall = new Color(0.30f, 0.26f, 0.23f);
     static readonly Color HouseRoof = new Color(0.12f, 0.12f, 0.15f);
 
+    /// <summary>새 화면의 땅 색 (타일 종류 + 무늬 a/b). 어두운 밤 색이라 조명이 닿는 곳만 드러난다</summary>
+    static Color GroundColor3D(string key)
+    {
+        Color c;
+        if (key.StartsWith("dirt")) c = new Color(0.27f, 0.21f, 0.15f);
+        else if (key.StartsWith("stone")) c = new Color(0.26f, 0.26f, 0.29f);
+        else if (key.StartsWith("yard")) c = new Color(0.23f, 0.20f, 0.15f);
+        else if (key.StartsWith("paddy")) c = new Color(0.14f, 0.22f, 0.18f);
+        else if (key.StartsWith("stepping")) c = new Color(0.20f, 0.23f, 0.26f);
+        else c = new Color(0.13f, 0.20f, 0.13f);   // 풀
+        return key.EndsWith("_b") ? c * 0.88f : c;
+    }
+
     // MapData.Ground 의 글자 → 타일 그림 이름
     static string TileName(char c)
     {
@@ -53,6 +66,7 @@ public static class MapView
             // 그림 폭은 배치표 칸 수 × 칸 길이 × 1.4(등각 화면에서 1m 칸의 폭) 정도로 맞춘다
             float widthM = p.W * Balance.MAP_CELL_SIZE * 1.1f + 0.8f;
             if (p.Sprite.EndsWith("seonang_tree")) widthM = 5.5f;
+            if (View3D.On) { Props3D.Build(root, p.Sprite, x, z, widthM); continue; }   // 새 화면: 3D 소품 대역
             if (!SpriteProp(root, p.Sprite, new Vector3(x, 0, z), widthM))
                 FallbackShape(root, p.Sprite, x, z, widthM);
         }
@@ -68,6 +82,7 @@ public static class MapView
     /// <summary>땅 그림(타일)이 전부 있는가. 하나라도 없으면 반쪽짜리 땅을 막으려고 통째로 포기한다</summary>
     public static bool GroundArtAvailable()
     {
+        if (View3D.On) return true;   // 새 화면은 그림 타일 대신 색 타일(조명을 받는다)을 쓴다
         foreach (var k in new[] { "grass", "dirt_road", "stone_path", "paddy", "yard", "stepping_stones" })
             if (SpriteLib.Texture("tiles/tile_" + k + "_a") == null) return false;
         return true;
@@ -100,7 +115,7 @@ public static class MapView
             }
         foreach (var key in verts.Keys)
         {
-            var tex = SpriteLib.Texture("tiles/tile_" + key) ?? SpriteLib.Texture("tiles/tile_" + key.Replace("_b", "_a"));
+            var tex = View3D.On ? null : (SpriteLib.Texture("tiles/tile_" + key) ?? SpriteLib.Texture("tiles/tile_" + key.Replace("_b", "_a")));
             var mesh = new Mesh();
             mesh.SetVertices(verts[key]); mesh.SetUVs(0, uvs[key]); mesh.SetTriangles(tris[key], 0);
             mesh.RecalculateNormals(); mesh.RecalculateBounds();
@@ -109,7 +124,7 @@ public static class MapView
             go.AddComponent<MeshFilter>().sharedMesh = mesh;
             var mr = go.AddComponent<MeshRenderer>();
             var mat = U.Matte(Color.white);
-            mat.mainTexture = tex;
+            if (View3D.On) mat.color = GroundColor3D(key); else mat.mainTexture = tex;
             mr.sharedMaterial = mat;
             mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             mr.receiveShadows = false;
@@ -147,6 +162,7 @@ public static class MapView
     public static void BuildZoneProp(GameObject root, ZoneProp p)
     {
         float widthM = p.W * Balance.MAP_CELL_SIZE * 1.1f + 0.8f;
+        if (View3D.On) { Props3D.Build(root, p.Sprite, p.X, p.Z, widthM); return; }
         if (!SpriteProp(root, p.Sprite, new Vector3(p.X, 0, p.Z), widthM)) FallbackShape(root, p.Sprite, p.X, p.Z, widthM);
     }
 

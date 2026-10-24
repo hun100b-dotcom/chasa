@@ -9,15 +9,17 @@ public class ActorSprite : MonoBehaviour
 {
     public Camera cam;
     SpriteRenderer sr;
+    ActorModel model;                  // 새 화면(?v=3d)에서는 그림 대신 3D 대역 인형을 쓴다
     public const float Lift = 0.16f;   // 발 아래 9% 가 땅 아래로 내려가 깊이 검사에 잘리는 것을 막는 높이(m)
 
-    public static ActorSprite Create(Transform parent, Camera cam)
+    public static ActorSprite Create(Transform parent, Camera cam, bool actor = false)
     {
         var go = new GameObject("Sprite");
         go.transform.SetParent(parent, false);
         var a = go.AddComponent<ActorSprite>();
         a.sr = go.AddComponent<SpriteRenderer>();
         a.cam = cam;   // null 이면 Camera.main 을 쓴다
+        if (View3D.On && actor) a.model = ActorModel.Create(parent);   // 인형은 그림판과 달리 카메라를 향해 돌지 않아서 부모 밑에 따로 둔다
         go.transform.localPosition = Vector3.up * Lift;   // 그림 판 아랫부분이 땅 속으로 잘리지 않게 살짝 띄운다
         return a;
     }
@@ -25,6 +27,12 @@ public class ActorSprite : MonoBehaviour
     /// <summary>스프라이트를 바꾼다. 없으면(null) 숨기고 false — 부르는 쪽이 색 도형으로 대신한다</summary>
     public bool Show(string name, Vector3 facingDir, Color? tint = null)
     {
+        if (model != null)
+        {
+            sr.enabled = false;
+            model.Show(name, facingDir, tint ?? Color.white);
+            return true;   // 부르는 쪽이 색 도형을 숨기도록 '그림이 있다'고 알린다
+        }
         var s = SpriteLib.Get(name);
         sr.enabled = s != null;
         if (s == null) return false;
@@ -37,11 +45,11 @@ public class ActorSprite : MonoBehaviour
 
     Camera Cam { get { if (cam == null) cam = Camera.main; return cam; } }
 
-    public void Hide() { sr.enabled = false; }
+    public void Hide() { sr.enabled = false; if (model != null) model.gameObject.SetActive(false); }
 
     void LateUpdate()
     {
         var c = Cam;
-        if (c != null) transform.rotation = c.transform.rotation;   // 부모가 돌아도 항상 화면을 정면으로
+        if (c != null && model == null) transform.rotation = c.transform.rotation;   // 부모가 돌아도 항상 화면을 정면으로
     }
 }

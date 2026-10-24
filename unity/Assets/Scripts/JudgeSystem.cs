@@ -37,7 +37,7 @@ public class JudgeSystem : MonoBehaviour
     float visionP;                       // 0(평소) ~ 1(캐스팅 중): 시야 축소·기억색 정도. 0.2초에 걸쳐 부드럽게 변한다
     string toast = ""; float toastT;     // 화면 안내 글자(영문: 기본 글꼴에 한글이 없다)
     Texture2D white, vignette;
-    bool godMode;                        // ?debug 검증용: 체력이 줄지 않는다
+    public bool godMode;                        // ?debug 검증용: 체력이 줄지 않는다
     Color flashColor; float flashA;        // 화면 전체 번쩍임(파혼=붉음, 천도=흰 보라). 점점 사라진다
     float sinceHit = 99f;                // 마지막으로 맞은 뒤 지난 시간(초) — 체력 회복 시작 판단
     bool played;                         // 첫 입력이 있었나 (그 전엔 적이 공격하지 않는다: 로딩 중 죽는 것 방지)
@@ -82,6 +82,9 @@ public class JudgeSystem : MonoBehaviour
     }
 
     public bool Casting => castTarget != null;
+
+    /// <summary>첫 입력이 있었던 것으로 친다(자동 연출·검증용). 이 전엔 적이 공격하지 않는다</summary>
+    public void StartPlaying() { if (!played) { played = true; enemies.graceT = Balance.NIGHT_GRACE; } }
 
     // ===== 명령 ====================================================================
     public void CommandTendo()
