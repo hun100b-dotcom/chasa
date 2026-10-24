@@ -60,3 +60,5 @@
 [주인공 개선(코드팀 요청 3건)] ①공격 3타를 확연히 다르게: Attack=왼발 내딛고 몸통 크게 비틀어 횡베기, Attack2=오른발 내딛고 반대 방향, Attack3=두 팔 머리 위로 들었다 내려찍는 오버헤드(회전 제거). 명중 프레임 유지(Attack/Attack2 hit f10, Attack3 hit_start 14~28). ②붉은 띠를 굵게(높이 0.16) + 앞으로 폭0.16·길이0.7 끝 두 가닥 + 금 매듭. ③앞면 표식: 갓 앞 금 장식판+붉은 술, 가슴 금 매듭. 미리보기 previews/anim_hero_*.png 재생성.
 
 [재질 조각 분리 자동화] 뼈대 있는 GLB(주인공·혼 16·나루 영감)는 내보낸 뒤 tools/glb_split_prims.py(코드팀 도구)를 자동 통과(tools/art3d/anim.py split_prims). 조각마다 메시가 따로라 유니티 glTFast가 읽는다. 보스 b02~b14 등 다른 뼈대 파일은 아직 미적용.
+
+[코드팀 요청 3건 반영] ①숲·덤불·바위 보강: props 625→1205개(북서 숲 260·서쪽 숲 130·보릿들 둘레 130·마을~보릿들 길가 60 추가; 청크(1,1) 206·(1,2) 155·(0,1) 136개). ②나룻배 br_ferry_boat.glb(212삼각형, 길이 약 6.1m 남북, 이물=-Y, 장대·선미 등불 Light_ferry_boat, 바닥 z=0.1이라 z=0에 놓으면 물에 8cm 잠김). structures: 나루터 곁 (84.6,553), 보스 자리 곁 (410,303). 참고: 보스 boss_naru.glb 안에도 배가 따로 있다. 불빛 목록 28개. ③비탈 기준 방향을 terrain/_tiles_manifest.json의 orientation_notes에 명시(slope_straight는 북이 높음, corner_out은 북동 꼭짓점만 높음, corner_in은 남서 꼭짓점만 낮음; rot는 반시계).

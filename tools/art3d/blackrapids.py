@@ -64,6 +64,19 @@ def dock():
           cyl("lampPole", 0.05, 0.05, 1.8, (-1.0, -0.6, 0.5), "wood_dark", 5), box("lampArm", (0.4, 0.05, 0.05), (-0.8, -0.6, 2.25), "wood_dark"), sphere("lamp", 0.14, (-0.6, -0.6, 2.1), mat("gold", 1.6), 6, 4)]
     return p
 
+def ferry_boat():
+    """나룻배: 길이 약 6.1m(남북=Y), 폭 1.5m, 낮은 선체. 이물(뱃머리)은 -Y 쪽. 선체 바닥 z=0.1 → 그대로 z=0에 놓으면 물(0.18)에 8cm 잠긴다.
+    왜: 보스 나루 영감 모델 안의 배와 별개로, 빈 배를 나루터·개울에 놓을 수 있게 한다. 장대와 선미 등불(Light_ 표시) 포함."""
+    p = [box("floor", (1.2, 4.4, 0.08), (0, 0, 0.14), "wood_dark")]
+    for sx in (-1, 1):
+        p.append(box(f"side{sx}", (0.1, 4.4, 0.36), (sx * 0.62, 0, 0.3), "wood"))
+        p.append(box(f"bowside{sx}", (0.1, 0.9, 0.34), (sx * 0.38, -2.5, 0.33), "wood", rot=(0, 0, sx * 0.55)))
+        p.append(box(f"sternside{sx}", (0.1, 0.8, 0.3), (sx * 0.5, 2.5, 0.31), "wood", rot=(0, 0, -sx * 0.4)))
+    p += [box("bow", (0.2, 0.5, 0.4), (0, -2.9, 0.38), "wood", rot=(-0.35, 0, 0)), box("stern", (1.1, 0.12, 0.34), (0, 2.88, 0.3), "wood")]
+    for i, y in enumerate((-1.0, 0.4, 1.7)): p.append(box(f"seat{i}", (1.3, 0.28, 0.06), (0, y, 0.44), "wood_dark"))
+    p += [cyl("pole", 0.04, 0.04, 3.0, (0.45, 1.6, 0.5), "wood", 5, rot=(1.45, 0, 0)), cyl("lampPost", 0.04, 0.04, 1.1, (0.5, 2.7, 0.3), "wood_dark", 5), sphere("lamp", 0.12, (0.5, 2.7, 1.45), mat("gold", 1.4), 6, 4)]
+    return p
+
 def willow(var):
     r = rnd(20 + var); h = 3.8 + var * 0.7
     p = [cyl("trunk", 0.28, 0.17, h * 0.55, (0, 0, 0), "bark", 6), cyl("limb1", 0.12, 0.07, 1.2, (0.1, 0, h * 0.45), "bark", 5, rot=(0.0, 0.7, 0)), cyl("limb2", 0.12, 0.07, 1.2, (-0.1, 0, h * 0.45), "bark", 5, rot=(0.0, -0.7, 0))]
@@ -99,12 +112,13 @@ def jars():
         p += [sphere(f"jar{i}", 0.25 * s, (x, y, 0.3 * s), "jar", 7, 5, (1, 1, 1.15)), cyl(f"lid{i}", 0.12 * s, 0.1 * s, 0.07, (x, y, 0.52 * s), "wood_dark", 6)]
     return p
 
-KIT = [("br_rapids", rapids, "여울 타일 8×8m(서→동 흐름, 물 윗면 z0.18)"), ("br_deep", deep, "깊은 물 타일 8×8m"), ("br_shore", shore, "물가 타일(남쪽=풀 둑, 북쪽=물)"), ("br_road_pad", road_pad, "둑 위 길 조각 4×3.2m(다리 양끝에 이어 붙임, 중심 원점)"), ("br_stone_bridge", bridge, "돌다리 8×2.4m(동서), 상판 z0.88"),
+KIT = [("br_rapids", rapids, "여울 타일 8×8m(서→동 흐름, 물 윗면 z0.18)"), ("br_deep", deep, "깊은 물 타일 8×8m"), ("br_shore", shore, "물가 타일(남쪽=풀 둑, 북쪽=물)"), ("br_ferry_boat", ferry_boat, "나룻배 6.1m(남북, 이물=-Y), 장대·선미 등불(Light_), 물에 놓을 땐 z=0(바닥이 0.1 떠 있어 물 0.18에 8cm 잠김)"), ("br_road_pad", road_pad, "둑 위 길 조각 4×3.2m(다리 양끝에 이어 붙임, 중심 원점)"), ("br_stone_bridge", bridge, "돌다리 8×2.4m(동서), 상판 z0.88"),
        ("br_ferry_dock", dock, "나루터 부두(앞=-Y가 물 쪽, 등불 위치 Light_ 표시)"), ("br_willow_a", lambda: willow(0), "버드나무 키 약 3.8m"), ("br_willow_b", lambda: willow(1), "버드나무 키 약 4.5m"),
        ("br_reed_field", reeds, "갈대밭 8×8m"), ("br_herb_rack", herb_rack, "의원집 약초 건조대"), ("br_med_sign", med_sign, "약방 깃대"), ("br_jars", jars, "약 항아리 세 개")]
 
 def make(key, fn):
     reset(); o = join(key, fn())
+    if key == "br_ferry_boat": light_empty(o, "Light_ferry_boat", (0.5, 2.7, 1.45), "#FFB066", intensity=0.7, range_m=6.0, flicker=True)
     if key == "br_ferry_dock": light_empty(o, "Light_ferry_dock", (-0.6, -0.6, 2.1), "#FFB066", intensity=1.0, range_m=8.0, flicker=True)
     return o
 

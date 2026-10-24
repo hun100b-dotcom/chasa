@@ -14,6 +14,26 @@
    "tag": "br_ferry_dock"
   },
   {
+   "x": 85.1,
+   "y": 555.7,
+   "z": 1.45,
+   "color": "#FFB066",
+   "intensity": 0.7,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "br_ferry_boat"
+  },
+  {
+   "x": 410.5,
+   "y": 305.7,
+   "z": 1.45,
+   "color": "#FFB066",
+   "intensity": 0.7,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "br_ferry_boat"
+  },
+  {
    "x": 105.4,
    "y": 450.8,
    "z": 1.95,

@@ -105,7 +105,12 @@ def export_all():
         reset(); o, label, note = build_piece(key); lo, hi = bounds(o)
         rep.append({"name": f"terrain_{key}", "label": label, "note": note, "tris": tris(o), "size_m": [round(hi.x - lo.x, 2), round(hi.y - lo.y, 2), round(hi.z - lo.z, 2)], "min_z": round(lo.z, 3)})
         export(o, os.path.join(OUT, "terrain", f"terrain_{key}.glb"))
-    json.dump({"tile_m": T, "thickness_m": TH, "cell_128m_holds": "16 x 16 tiles", "front": "-Y(내보내면 +Z)", "tiles": rep}, open(os.path.join(OUT, "terrain", "_tiles_manifest.json"), "w"), ensure_ascii=False, indent=1)
+    ORIENT = {"좌표": "블렌더(x=동, y=북, z=위). rot=위에서 볼 때 반시계 도(°). 아래는 rot 0 기준. u=서→동 0..1, v=남→북 0..1, 높이=0.3+2.0×h(u,v)",
+          "tile_slope_straight": "h=v. 남쪽 가장자리 0.3m, 북쪽 가장자리 2.3m. 북쪽이 높다(오르막은 +Y). rot 90이면 서쪽이 높다.",
+          "tile_slope_corner_out": "h=min(u,v). 서쪽·남쪽 가장자리는 전부 0.3m(낮음). 북쪽 가장자리는 서→동으로, 동쪽 가장자리는 남→북으로 오르고 북동 꼭짓점이 2.3m로 가장 높다. 즉 북동 꼭짓점이 뾰족 솟은 모서리. rot 90이면 북서 꼭짓점이 최고.",
+          "tile_slope_corner_in": "h=max(u,v). 남서 꼭짓점만 0.3m(가장 낮음), 북쪽·동쪽 가장자리는 전부 2.3m. 즉 북동 두 면이 높은 고지에 맞닿은 오목 모서리. rot 90이면 북서쪽 두 면이 높다.",
+          "tile_cliff_wall": "벽은 북쪽 가장자리에 선다(위가 북). 고지 2m는 벽 북쪽 타일이 맡는다."}
+    json.dump({"orientation_notes": ORIENT, "tile_m": T, "thickness_m": TH, "cell_128m_holds": "16 x 16 tiles", "front": "-Y(내보내면 +Z)", "tiles": rep}, open(os.path.join(OUT, "terrain", "_tiles_manifest.json"), "w"), ensure_ascii=False, indent=1)
     return rep
 
 def place(key, x, y, z=0, rot=0):
