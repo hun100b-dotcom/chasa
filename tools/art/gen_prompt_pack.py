@@ -101,6 +101,17 @@ for k, d in {"gauge_frame_r2": "a horizontal gauge frame with pale lime #C8C3A0 
              "night_bar_r2": "a horizontal night-time progress bar gradient from overcast grey-blue #5A6B8C to deep navy #0F1729 to dawn blue #3A5A7C, pale lime frame"}.items():
     add(f"hud/{k}", f"flat UI asset: {d}", f"hud/{k[:-3]}", "지역 색만 변경")
 
+# ③ 붉은재 / ④ 쇳골 변형 — 기본 혼 그림에 지역 표식만 추가
+for st, base, nm in [("fresh", "soul_fresh", "freshly dead"), ("day", "soul_day", "day-old"), ("old", "soul_old", "old")]:
+    for suf, kn in [("", ""), ("_kneel", "kneeling ")]:
+        add(f"enemies/{base}{suf}_r3", f"the same {kn}{nm} soul wearing a small paper number tag on the chest and a rusty arrow stuck in the side, no flags, no national symbols", f"enemies/{base}{suf}", "번호 패·화살만 추가")
+        add(f"enemies/{base}{suf}_r4", f"the same {kn}{nm} soul speckled with black coal dust and a small wooden miner number tag hanging at the chest", f"enemies/{base}{suf}", "석탄 가루·목패만 추가")
+for r, col, nm in [(3, "#B0704F rust", "rusty red"), (4, "#B8A26A brass", "brass")]:
+    for k, d in {"gauge_frame": f"a horizontal gauge frame with {nm} {col} border, empty inside, nine-slice friendly",
+                 "panel_hanji": f"a square UI panel with {nm} {col} border and corner brackets, dark navy #16213E fill, nine-slice friendly",
+                 "timer_ring_bg": f"a circular timer ring background with thin {nm} {col} outer line on dark navy"}.items():
+        add(f"hud/{k}_r{r}", f"flat UI asset: {d}", f"hud/{k}", "지역 색만 변경")
+
 pack = []; missing = []
 for m in man:
     key = m["file"][:-4]

@@ -1093,6 +1093,186 @@
    "ppu": 128,
    "tint": false,
    "note": "② 하룻밤 시간 바(해 질 녘이 붉지 않고 흐린 회청 — 비·안개 읍성)"
+  },
+  {
+   "file": "enemies/soul_fresh_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 갓 죽은"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 갓 죽은 · 무릎"
+  },
+  {
+   "file": "enemies/soul_day_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 해 넘긴"
+  },
+  {
+   "file": "enemies/soul_day_kneel_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 해 넘긴 · 무릎"
+  },
+  {
+   "file": "enemies/soul_old_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 오래된"
+  },
+  {
+   "file": "enemies/soul_old_kneel_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 오래된 · 무릎"
+  },
+  {
+   "file": "enemies/soul_fresh_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 갓 죽은"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 갓 죽은 · 무릎"
+  },
+  {
+   "file": "enemies/soul_day_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 해 넘긴"
+  },
+  {
+   "file": "enemies/soul_day_kneel_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 해 넘긴 · 무릎"
+  },
+  {
+   "file": "enemies/soul_old_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 오래된"
+  },
+  {
+   "file": "enemies/soul_old_kneel_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 오래된 · 무릎"
+  },
+  {
+   "file": "hud/gauge_frame_r3.png",
+   "w": 192,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 게이지 틀 · 9-slice 12px"
+  },
+  {
+   "file": "hud/panel_hanji_r3.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 패널 · 9-slice 24px"
+  },
+  {
+   "file": "hud/timer_ring_bg_r3.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 처결 타이머 링 배경"
+  },
+  {
+   "file": "hud/gauge_frame_r4.png",
+   "w": 192,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 게이지 틀 · 9-slice 12px"
+  },
+  {
+   "file": "hud/panel_hanji_r4.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 패널 · 9-slice 24px"
+  },
+  {
+   "file": "hud/timer_ring_bg_r4.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 처결 타이머 링 배경"
   }
  ]
 }

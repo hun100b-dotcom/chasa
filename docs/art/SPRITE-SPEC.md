@@ -41,3 +41,8 @@
 | enemies/soul_{fresh,day,old}_plague, ..._kneel_plague | 역병 사망자 혼. 기본 혼과 같은 크기·피벗, 석회 반점 + 지워진 이름 먹줄. 단계 색은 그대로라 처결 시간(10/7/4초) 판별 유지 |
 | hud/gauge_frame_r2, panel_hanji_r2, timer_ring_bg_r2, night_bar_r2 | 지역 HUD 변형. 솔고개 것과 같은 크기·9-slice, 테두리만 석회색. 코드는 지역에 따라 Sprite만 교체 |
 덩어리 혼은 지역 변형 없이 그대로 쓴다(보라 + 붉은 점선 고리의 판별성 우선).
+
+## ③ 붉은재 · ④ 쇳골 변형 (gen_sprites3.py, 총 127종)
+- enemies/soul_{fresh,day,old}[_kneel]_r3 : 번호 패 + 녹슨 화살(번호 병사). _r4 : 석탄 가루 + 목패(광부). 크기·피벗은 기본 혼과 동일.
+- hud/{gauge_frame,panel_hanji,timer_ring_bg}_r3(녹슨 적동 #B0704F) / _r4(놋쇠 #B8A26A). 코드는 지역에 따라 Sprite만 교체.
+- 타일·소품 실루엣: assets/concepts/P2-043 (도형 초안, 최종 타일 PNG는 시연판 이후 단계).
