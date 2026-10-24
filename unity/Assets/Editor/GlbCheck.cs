@@ -14,10 +14,14 @@ public static class GlbCheck
 {
     public static void Run()
     {
-        foreach (var guid in AssetDatabase.FindAssets("", new[] { "Assets/Resources/Models/Art" }))
+        foreach (var guid in AssetDatabase.FindAssets("", new[] { "Assets/Resources/Models/Art", "Assets/Resources/Models/Hero" }))
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
             if (!(path.EndsWith(".glb") || path.EndsWith(".obj"))) continue;
+            // 모델 안 움직임(AnimationClip): 이름·길이·legacy 여부. legacy(옛 Animation 컴포넌트 전용)면 Playables 로 못 튼다
+            var clipList = AssetDatabase.LoadAllAssetsAtPath(path).OfType<AnimationClip>().Where(c => !c.name.StartsWith("__preview__"))
+                .Select(c => c.name + "(" + c.length.ToString("0.000") + "s, legacy=" + c.legacy + ", loop=" + c.isLooping + ")").ToArray();
+            if (clipList.Length > 0) Debug.Log("[GlbCheck] " + path + " | clips " + clipList.Length + ": " + string.Join(", ", clipList));
             // Resources 기준 이름(확장자 없이)으로 게임과 똑같이 읽어 본다
             string res = path.Substring("Assets/Resources/".Length);
             res = res.Substring(0, res.LastIndexOf('.'));
@@ -36,6 +40,15 @@ public static class GlbCheck
                       " | size(m) " + b.size.x.ToString("0.00") + "x" + b.size.y.ToString("0.00") + "x" + b.size.z.ToString("0.00") +
                       " | minY " + b.min.y.ToString("0.00") + " | renderers " + rs.Length + " skinned " + skinned + " bones " + bones +
                       " | animator " + animator + " | shaders " + string.Join(", ", shaders));
+            // 뼈대가 있으면: 뼈 이름과, 발끝 뼈가 엉덩이보다 어느 쪽(+z/-z)에 있는지로 정면을 짐작한다
+            foreach (var s in inst.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                Debug.Log("[GlbCheck]   뼈 " + s.bones.Length + ": " + string.Join(", ", s.bones.Where(x => x != null).Select(x => x.name)));
+                var hip = s.bones.FirstOrDefault(x => x != null && x.name.ToLower().Contains("hip")) ?? s.rootBone;
+                foreach (var x in s.bones.Where(x => x != null && (x.name.ToLower().Contains("toe") || x.name.ToLower().Contains("foot") || x.name.ToLower().Contains("head") || x.name.ToLower().Contains("hand"))))
+                    Debug.Log("[GlbCheck]   " + x.name + " 위치 " + x.position.ToString("F3") + (hip != null ? " (엉덩이 대비 " + (x.position - hip.position).ToString("F3") + ")" : ""));
+                Debug.Log("[GlbCheck]   메시 bounds " + s.bounds.min.ToString("F3") + " ~ " + s.bounds.max.ToString("F3"));
+            }
             // 재질마다 색이 어느 속성 이름에 들어 있는지(Props3D 가 색을 꺼낼 수 있는지) 찍는다
             foreach (var m in rs.SelectMany(r => r.sharedMaterials).Where(m => m != null).Take(3))
             {
