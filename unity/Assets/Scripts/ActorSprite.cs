@@ -9,6 +9,7 @@ public class ActorSprite : MonoBehaviour
 {
     public Camera cam;
     SpriteRenderer sr;
+    public const float Lift = 0.16f;   // 발 아래 9% 가 땅 아래로 내려가 깊이 검사에 잘리는 것을 막는 높이(m)
 
     public static ActorSprite Create(Transform parent, Camera cam)
     {
@@ -17,6 +18,7 @@ public class ActorSprite : MonoBehaviour
         var a = go.AddComponent<ActorSprite>();
         a.sr = go.AddComponent<SpriteRenderer>();
         a.cam = cam;   // null 이면 Camera.main 을 쓴다
+        go.transform.localPosition = Vector3.up * Lift;   // 그림 판 아랫부분이 땅 속으로 잘리지 않게 살짝 띄운다
         return a;
     }
 

@@ -191,6 +191,7 @@ public class JudgeSystem : MonoBehaviour
                     else if (e.alive) { e.stun = Mathf.Max(e.stun, Balance.SKILL_HOLD_STUN); e.atk.Interrupt(); n++; }
                 }
                 if (n == 0) { Say("NOTHING IN RANGE"); return; }
+                GroundFx.Play(player.Pos, Balance.SKILL_HOLD_RADIUS, "fx/fx_call_", 3, 0.7f);
                 Say("HOLD CALL");
                 break;
             }
@@ -203,6 +204,7 @@ public class JudgeSystem : MonoBehaviour
                     e.stun = Mathf.Max(e.stun, Balance.SKILL_BIND_STUN); e.atk.Interrupt(); e.vel = Vector3.zero; n++;
                 }
                 if (n == 0) { Say("NOTHING IN RANGE"); return; }
+                GroundFx.Play(player.Pos, Balance.SKILL_BIND_RADIUS, "fx/fx_bind_", 3, 0.6f);
                 Say("BIND");
                 break;
             }
@@ -220,6 +222,7 @@ public class JudgeSystem : MonoBehaviour
                     numbers.Spawn(e.HeadPosition, dmg, "heavy");
                 }
                 feel.AddShake(0.5f); feel.HitStop(3);
+                GroundFx.Play(new Vector3(sx, 0, sz), Balance.SKILL_BURST_RADIUS, "fx/fx_burst_", 3, 0.5f);
                 Say("BURST");
                 break;
             }
@@ -391,6 +394,20 @@ public class JudgeSystem : MonoBehaviour
         }
     }
 
+    /// <summary>장비 한 칸의 아이콘과 등급 테두리. 비어 있으면 칸만 어둡게</summary>
+    void DrawGearIcon(Slot s, Rect r)
+    {
+        var it = lo.gear.Get(s);
+        GUI.color = new Color(0, 0, 0, 0.45f); GUI.DrawTexture(r, white); GUI.color = Color.white;
+        if (it == null) return;
+        string rar = it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common";
+        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + (s == Slot.Weapon ? "weapon" : s == Slot.Robe ? "dopo" : "noriga") + "_" + rar;
+        var tex = SpriteLib.Texture("icons/" + icon);
+        var frame = SpriteLib.Texture("icons/frame_" + rar);
+        if (tex != null) GUI.DrawTexture(r, tex);
+        if (frame != null) GUI.DrawTexture(r, frame);
+    }
+
     string GearName(Slot s)
     {
         var it = lo.gear.Get(s);
@@ -459,6 +476,8 @@ public class JudgeSystem : MonoBehaviour
         GUI.Label(new Rect(12, 118, 800, 24), sk, small);
         GUI.Label(new Rect(12, 140, 900, 24), "GEAR  W:" + GearName(Slot.Weapon) + "  R:" + GearName(Slot.Robe) + "  C:" + GearName(Slot.Charm), small);
         if (lo.lastDropT > 0f) GUI.Label(new Rect(12, 162, 900, 24), lo.lastDrop, small);
+        // 장비 아이콘 세 칸 (그림이 있을 때만): 등급 테두리 + 칸별 아이콘
+        for (int si = 0; si < 3; si++) DrawGearIcon((Slot)si, new Rect(12 + si * 56, 190, 52, 52));
         GUI.Label(new Rect(12, 52, 700, 24), "E: send (cheondo)   R: shatter (pahon)", small);
         GUI.Label(new Rect(12, 96, 700, 24),
             "NIGHT " + Mathf.CeilToInt(night.TimeLeft) + "s   SENT " + night.Sent + "/" + Balance.NIGHT_QUOTA +

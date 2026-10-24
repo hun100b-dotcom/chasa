@@ -115,7 +115,7 @@ public static class MapView
         var s = SpriteLib.Get(name);
         if (s == null) return false;
         var a = ActorSprite.Create(root.transform, null);
-        a.transform.position = pos;
+        a.transform.position = pos + Vector3.up * ActorSprite.Lift;
         a.Show(name, Vector3.right);
         float natural = s.rect.width / s.pixelsPerUnit;               // 그림 원래 폭(m)
         a.transform.localScale = Vector3.one * (widthM / Mathf.Max(0.1f, natural));
