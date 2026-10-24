@@ -280,6 +280,8 @@ public class Enemy : MonoBehaviour
 public class EnemyManager
 {
     public readonly List<Enemy> list = new List<Enemy>();
+    public float graceT;                        // 밤 시작 유예: 이 시간 동안 적은 공격 준비를 시작하지 않는다
+    public bool holdFire;                       // 첫 입력 전(로딩 중)에는 공격하지 않는다
     public bool spawnPaused;                    // true 면 잡몹이 다시 일어서듯 새로 나오지 않는다 (보스 천도 보호)
     public System.Action<Enemy> onEnemyKneel;   // 어느 적이 무릎 꿇었나 (JudgeSystem 이 장비 드롭 굴림)
     public System.Action<Enemy> onPlayerHit;   // 어느 적의 공격이 명중했는지 (JudgeSystem/GameMain이 체력 처리)
@@ -350,8 +352,11 @@ public class EnemyManager
     public void Tick(float dt, Vector3 playerPos, float playerRadius)
     {
         var toRemove = new List<Enemy>();
+        graceT = Mathf.Max(0f, graceT - dt);
+        bool hold = holdFire || graceT > 0f;
         foreach (var e in list)
         {
+            if (hold && e.alive) { e.atk.Interrupt(); e.atk.Cooldown = Balance.ENEMY_ATTACK_INTERVAL; }   // 유예 중엔 공격 시계를 계속 되감는다
             e.Tick(dt, playerPos);
             if (e.gone && e.respawnReady)
             {

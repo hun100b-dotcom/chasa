@@ -36,7 +36,9 @@ public class JudgeSystem : MonoBehaviour
     float visionP;                       // 0(평소) ~ 1(캐스팅 중): 시야 축소·기억색 정도. 0.2초에 걸쳐 부드럽게 변한다
     string toast = ""; float toastT;     // 화면 안내 글자(영문: 기본 글꼴에 한글이 없다)
     Texture2D white, vignette;
-    bool touchUI;
+    bool godMode;                        // ?debug 검증용: 체력이 줄지 않는다
+    bool played;                         // 첫 입력이 있었나 (그 전엔 적이 공격하지 않는다: 로딩 중 죽는 것 방지)
+    public bool NightOver { get { return night.Over; } }
     bool debugKeys;
     DayScreen dayScreen;                 // 낮 화면과 낮에 쌓이는 것(단서·소모품)
     bool inDay;                          // 지금 낮 화면인가
@@ -57,7 +59,6 @@ public class JudgeSystem : MonoBehaviour
         enemies.onEnemyKneel = OnEnemyKneel;
         dayScreen = new DayScreen(ledger, lo);
         SetupNight();   // 적 공격이 명중하면 체력 처리로 연결
-        touchUI = Input.touchSupported;
         debugKeys = Application.isEditor || Application.absoluteURL.Contains("debug");
         white = new Texture2D(1, 1); white.SetPixel(0, 0, Color.white); white.Apply();
         panel.white = white;
@@ -298,7 +299,7 @@ public class JudgeSystem : MonoBehaviour
         if (ledger.Dead || night.Over || !player.Hurt()) return;
         // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
         int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult)) : by.damage;
-        int dealt = ledger.TakeDamage(incoming);
+        int dealt = godMode ? 0 : ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
         feel.AddShake(0.35f);
         feel.HitStop(3);
@@ -315,6 +316,7 @@ public class JudgeSystem : MonoBehaviour
     void RestartNight()
     {
         night = new NightRun(); settled = false; ResetRound();
+        toastT = 0f; played = true; enemies.graceT = Balance.NIGHT_GRACE;   // 지난 밤 안내 지우기(QA B3), 새 밤 유예(QA B1)
         night.Clues = dayScreen.BossCluesHave;   // 낮에 얻은 단서는 사라지지 않고 밤으로 이어진다
         if (dayScreen.Pack.Dawn > 0) { dayScreen.Pack.Dawn--; night.WarnTime += Balance.SHOP_DAWN_EARLY; }   // 새벽 부적: 경고가 일찍
     }
@@ -344,6 +346,7 @@ public class JudgeSystem : MonoBehaviour
     // ===== 매 프레임 ===============================================================
     public void Tick(float dt, float realDt)
     {
+        toastT -= realDt;   // 안내 글자는 창이 열려 있어도 사라진다(QA B3)
         if (CharacterPanel.Open) return;   // 캐릭터 창이 열려 있으면 세계가 멈춘다
         if (inDay)
         {
@@ -351,7 +354,9 @@ public class JudgeSystem : MonoBehaviour
             if (dayScreen.WantsNight) { inDay = false; RestartNight(); }   // 해 넘기기 → 새 밤
             return;
         }
-        HandleKeys();
+        if (!played && (Input.anyKeyDown || Input.GetMouseButtonDown(0) || Input.touchCount > 0)) { played = true; enemies.graceT = Balance.NIGHT_GRACE; }
+        enemies.holdFire = !played;
+        if (!night.Over) HandleKeys();   // 결과 화면에서는 무기 교체·공격 키가 먹지 않는다(QA B4)
         if (night.Over)
         {
             // 한 번만 정산: 동이 터서 끝났으면 흩어진 추가 수확분(넋)을 장부에서 뺀다. 몫과 성장(기억·품계)은 그대로.
@@ -370,7 +375,6 @@ public class JudgeSystem : MonoBehaviour
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
         if (night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");
         chainLeft = Mathf.Max(0f, chainLeft - dt);
-        toastT -= realDt;
         stains.Tick(dt);
         player.speedMult = stains.IsOnStain(player.Pos.x, player.Pos.z) ? 1f - Balance.STAIN_SLOW : 1f;   // 얼룩 위: -20%
 
@@ -408,6 +412,8 @@ public class JudgeSystem : MonoBehaviour
         // 검사용(?debug): 7/8/9 로 등에 멘 무기를 요령방울/삼지창/붓으로 바꿔 Tab 으로 꺼내 본다
         if (debugKeys)
         {
+            if (Input.GetKeyDown(KeyCode.G)) godMode = !godMode;   // 검증용 불사
+            if (Input.GetKeyDown(KeyCode.J)) player.Pos = new Vector3(MapLayout.BossX - 3f, 0, MapLayout.BossZ);   // 검증용: 보스 곁으로
             if (Input.GetKeyDown(KeyCode.Alpha7)) lo.other = WeaponId.Bell;
             if (Input.GetKeyDown(KeyCode.Alpha8)) lo.other = WeaponId.Trident;
             if (Input.GetKeyDown(KeyCode.Alpha9)) lo.other = WeaponId.Brush;
@@ -493,6 +499,7 @@ public class JudgeSystem : MonoBehaviour
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (white == null) return;
+        if (CharacterPanel.Open) return;   // 캐릭터 창이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)
         if (visionP > 0.001f)
@@ -590,14 +597,15 @@ public class JudgeSystem : MonoBehaviour
             GUI.Label(new Rect(0, Screen.height * 0.28f, Screen.width, 40), toast, big);
         }
         // (4) 터치 버튼 (폰에는 키보드가 없다)
-        if (touchUI)
+        if (Ko.TouchUI)
         {
             var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
+            var sbs = new GUIStyle(bs) { fontSize = 13, wordWrap = true };   // 도술 이름이 길어 작은 글씨로
             if (GUI.Button(new Rect(24, Screen.height - 110, 110, 90), "천도", bs)) CommandTendo();
             if (GUI.Button(new Rect(148, Screen.height - 110, 130, 90), "파혼", bs)) CommandPahon();
             // 도술 세 칸과 무기 바꾸기 (위쪽 줄)
             for (int i = 0; i < 3; i++)
-                if (GUI.Button(new Rect(24 + i * 94, Screen.height - 206, 86, 80), (i + 1) + "\n" + SkillDef.All[i].Name, bs)) UseSkill(i);
+                if (GUI.Button(new Rect(24 + i * 94, Screen.height - 206, 86, 80), (i + 1) + "\n" + SkillDef.All[i].Name, sbs)) UseSkill(i);
             if (GUI.Button(new Rect(24 + 3 * 94, Screen.height - 206, 86, 80), "교체", bs)) player.CommandSwap();
             if (GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "메뉴", bs)) panel.Toggle();
             if (lo.Def.HasQuake && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "땅울림", bs)) player.CommandQuake();

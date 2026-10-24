@@ -21,7 +21,6 @@ public class GameMain : MonoBehaviour
     JudgeSystem judge;
     Vector3 focus, offset;
     bool holdingMove;
-    bool touchUI;
 
     /// <summary>씬에 아무것도 없어도 게임이 켜지면 자동으로 이 오브젝트를 만든다</summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -39,7 +38,6 @@ public class GameMain : MonoBehaviour
         player = Player.Create();
         player.enemies = enemies; player.feel = feel; player.numbers = numbers;
         player.chain = ChainVisual.Create();
-        touchUI = Input.touchSupported; // 폰이면 화면 기술 버튼을 띄운다
         // 처결(천도·파혼): 규칙은 Core, 화면 연결은 JudgeSystem
         judge = gameObject.AddComponent<JudgeSystem>();
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
@@ -51,9 +49,10 @@ public class GameMain : MonoBehaviour
     // -------------------------------------------------------------------------
     void Update()
     {
+        if (Input.touchCount > 0) Ko.TouchUI = true;   // 실제로 터치가 들어오면 화면 버튼을 띄운다
         if (CharacterPanel.Open) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
         if (judge.InDay) { judge.Tick(0f, Mathf.Min(0.05f, Time.unscaledDeltaTime)); return; }   // 낮 화면: 세계는 멈추고 낮 화면만 흐른다
-        HandleInput();
+        if (!judge.NightOver) HandleInput();   // 결과 화면에서는 조작이 먹지 않는다(QA B4)
         float realDt = Mathf.Min(0.05f, Time.unscaledDeltaTime);
         bool frozen = feel.Tick(realDt);
         float dt = frozen ? 0f : realDt;
@@ -193,7 +192,7 @@ public class GameMain : MonoBehaviour
 
     bool OverTouchButtons(Vector3 mouse)
     {
-        if (!touchUI) return false;
+        if (!Ko.TouchUI) return false;
         var p = new Vector2(mouse.x, Screen.height - mouse.y);
         return PullBtn.Contains(p) || SwingBtn.Contains(p);
     }
@@ -201,11 +200,11 @@ public class GameMain : MonoBehaviour
     void OnGUI()
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
-        if (judge.InDay) return;   // 낮 화면에서는 밤의 안내·버튼을 그리지 않는다
+        if (judge.InDay || CharacterPanel.Open || judge.NightOver) return;   // 낮 화면·캐릭터 창에서는 밤의 안내·버튼을 그리지 않는다
         var hint = new GUIStyle(GUI.skin.label) { fontSize = 14 };
         hint.normal.textColor = new Color(1, 1, 1, 0.55f);
         GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 휘두르기   C: 캐릭터 창", hint);
-        if (!touchUI) return;
+        if (!Ko.TouchUI) return;
         var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
         if (GUI.Button(PullBtn, "끌기", bs)) { var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); }
         if (GUI.Button(SwingBtn, "휘두르기", bs)) { var e = Nearest(); player.CommandSwing(e != null ? e.Pos : player.Pos + U.Dir(player.facing)); }

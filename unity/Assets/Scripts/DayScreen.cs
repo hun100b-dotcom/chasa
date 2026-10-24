@@ -188,7 +188,7 @@ public class DayScreen
             GUI.enabled = true; y += 44;
             if (GUI.Button(new Rect(x, y, w / 2f - 4, 40), "풀기(광석 " + Shrine.OreFor(cur.Rarity) + ")", btn) && Shrine.Dismantle(cur, ledger))
             { lo.gear.Remove((Slot)selSlot); lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); msg = "장비를 풀었다"; }
-            GUI.enabled = cur.Sockets < Balance.SOCKET_MAX;
+            GUI.enabled = cur.Sockets < Balance.SOCKET_MAX && ledger.Coin >= (cur.Sockets == 0 ? Balance.SOCKET_COST_1 : Balance.SOCKET_COST_2);
             if (GUI.Button(new Rect(x + w / 2f, y, w / 2f, 40), "홈 뚫기  엽전 " + (cur.Sockets == 0 ? Balance.SOCKET_COST_1 : Balance.SOCKET_COST_2), btn))
                 msg = Shrine.Socket(cur, ledger) ? "인 홈을 뚫었다" : "엽전이 모자라다";
             GUI.enabled = true; y += 48;

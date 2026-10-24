@@ -307,4 +307,5 @@ public static class Balance
     public const int SOCKET_COST_1 = 80;  // (시연판 임시) 기획서 부록 B 낮: 홈 뚫기 첫째 엽전
     public const int SOCKET_COST_2 = 240;  // (시연판 임시) 기획서 부록 B 낮: 홈 뚫기 둘째 엽전
     public const int SOCKET_MAX = 2;  // (시연판 임시) 기획서 부록 B 낮: 장비 한 개의 인 홈 최대 수
+    public const float NIGHT_GRACE = 4.0f;  // (QA 버그 B1) 밤 시작·첫 입력 뒤 이 시간 동안 적이 공격 준비를 시작하지 않는다(그 뒤 첫 공격은 ENEMY_ATTACK_INTERVAL 뒤). 서낭당에서 가만히 서 있다 죽는 것 방지
 }

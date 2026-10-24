@@ -26,6 +26,7 @@ public class CharacterPanel : MonoBehaviour
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (!Open || judge == null || judge.player == null) return;
+        GUI.depth = -100;   // 가장 위에 그린다(낮을수록 위) — 밤 화면 글자와 겹치지 않게(QA B2)
         var lo = judge.player.loadout;
         float w = Mathf.Min(Screen.width - 24f, 640f), h = Mathf.Min(Screen.height - 24f, 440f);
         var box = new Rect((Screen.width - w) / 2f, (Screen.height - h) / 2f, w, h);
@@ -84,7 +85,7 @@ public class CharacterPanel : MonoBehaviour
         {
             case Opt.DamagePct: return "피해 " + Pct(o.Value);
             case Opt.AttackSpeedPct: return "공격 속도 " + Pct(o.Value);
-            case Opt.CastReducePct: return "천도 시전 " + Pct(-o.Value);   // 단축이 +이므로 시간은 반대 부호로 보여 준다
+            case Opt.CastReducePct: return "천도 시전 시간 " + Pct(-o.Value);   // 단축이 +이므로 시간은 반대 부호로 보여 준다
             case Opt.PahonAreaPct: return "파혼 범위 " + Pct(o.Value);
             case Opt.PahonDamagePct: return "파혼 피해 " + Pct(o.Value);
             case Opt.HpFlat: return "체력 +" + (int)o.Value;

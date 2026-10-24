@@ -9,6 +9,8 @@ using Chasa.Core;
 /// </summary>
 public static class Ko
 {
+    /// <summary>화면을 실제로 터치했을 때만 true — Chrome 은 PC 에서도 touchSupported 가 true 라서 터치 입력이 한 번 들어와야 버튼을 띄운다</summary>
+    public static bool TouchUI;
     static Font font;
     static bool loaded;
 
