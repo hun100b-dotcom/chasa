@@ -77,3 +77,9 @@
 - `field-f-seonang-south.png`·`field-f-seonang-northwest.png` 서낭당 / `field-boss-spot.png` 보스 자리(개울 위) / `field-highland-slope.png` 고지 비탈(평평하게 펴짐)
 - `field-walk-tour.png` — 시작→마을→북서쪽 걷기 15컷
 - (b~f 위치 사진은 PC 에서만 쓴 임시 시작 위치 지정으로 찍음. 코드는 커밋하지 않음)
+
+## 2026-10-25 07:15 KST — 필드 수정 확인 (5450fa6·578f8f4·150f1a5) + 데이터 갱신 (0ff87d6)
+- `field-fix-village-roofs.png` 마을 집 지붕이 제자리(초가·기와) / `field-fix-roof-fade-1·2.png` 주인공이 집 뒤에 있으면 그 집 지붕이 사라짐
+- `field-fix-doctor-house.png` 의원 집 기와지붕 / `field-fix-doctor-roof-fade.png` 의원 집 뒤 / `field-fix-grass-tones.png` 풀밭 색 4단계
+- `field-fix2-forest-nw·west·north.png` 숲 자리(아직 듬성듬성) / `field-fix2-barley-edge.png` 보릿들 둘레
+- `field-fix2-boss-boat.png` 보스 자리 옆 나룻배(보스와 약 15m 떨어짐) / `field-fix2-ferry-boat.png` 나루터 배 / `field-fix2-north-empty.png` 북쪽 빈 땅
