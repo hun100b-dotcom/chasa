@@ -43,3 +43,8 @@ Godot 시험판(`godot/`)은 **규칙·수치 검증 기준**으로 보존한다
 2. 렌더 파이프라인(URP) 확정 → P1-031 팔레트 토큰.
 3. 입력 추상화 설계 → P1-016 (이제 엔진이 정해져 진행 가능).
 4. CI 라이선스 방식 확인.
+
+## 수치 원본 (2026-10-24 추가)
+- 원본: `data/balance.json` (엔진 무관, 129개 숫자·참/거짓 상수와 한 줄 설명). 색·배열(콤보 표 등)은 아직 엔진 쪽(`godot/config.gd`)에 남아 있다.
+- 반영: `python3 tools/sync_balance.py` → `godot/config.gd` 값 갱신 + `unity/Assets/Scripts/Balance.cs` 자동 생성. `--check`는 어긋남만 검사.
+- 지금 Unity는 `Balance.cs`(컴파일 시점 상수)로 읽는다. ScriptableObject(편집기에서 값 조절) 가져오기는 Unity 에디터 설치 후 후속 작업. 기존 `unity/.../Config.cs`는 옛 값이라 `Balance`로 점차 교체한다.

@@ -57,3 +57,6 @@
 
 ## 2026-10-24 P1-043 후속: 3막 값 config 반영 (코드)
 - 물 혼 -0.5초(하한 0.5초), 별명 혼 -0.5초, 밀물 20초, B-10 선원 -5%/명, B-12 물 혼 -3%/마리, 모든 보스 천도 후 스폰 정지. 서사 합의 규칙: 밀물에 가라앉은 물 혼은 다음 썰물 밤 난파 여울에 다시 떠오름(횟수 제한 없음, 도감 100% 가능). 스모크 테스트 [14-5] 통과.
+
+## 2026-10-24 수치 원본을 data/balance.json 으로 (코드)
+- `tools/sync_balance.py`(--import/--check), `data/balance.json`(129개), `unity/Assets/Scripts/Balance.cs`(생성). 스모크 테스트 통과. 한계: 색·배열은 미이전, ScriptableObject 가져오기는 Unity 설치 후.

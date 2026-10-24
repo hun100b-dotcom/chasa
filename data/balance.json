@@ -1,0 +1,518 @@
+{
+ "CAMERA_PITCH_DEG": {
+  "value": 45.0,
+  "note": "내려다보는 각도"
+ },
+ "CAMERA_YAW_DEG": {
+  "value": 45.0,
+  "note": "좌우 회전각 (45 = 마름모 쿼터뷰)"
+ },
+ "CAMERA_VIEW_HEIGHT": {
+  "value": 16.0,
+  "note": "화면 세로로 보이는 월드 길이 (작을수록 확대)"
+ },
+ "CAMERA_FOLLOW_SMOOTHNESS": {
+  "value": 8.0,
+  "note": "카메라가 따라가는 부드러움"
+ },
+ "ARENA_HALF_SIZE": {
+  "value": 14.0,
+  "note": "28 x 28 정사각형 바닥"
+ },
+ "PLAYER_MOVE_SPEED": {
+  "value": 9.0,
+  "note": ""
+ },
+ "PLAYER_RADIUS": {
+  "value": 0.5,
+  "note": ""
+ },
+ "PLAYER_TURN_SPEED": {
+  "value": 22.0,
+  "note": "몸 돌리는 속도(라디안/초)"
+ },
+ "PLAYER_HAND_HEIGHT": {
+  "value": 1.0,
+  "note": "사슬이 시작되는 손 높이"
+ },
+ "PLAYER_ARRIVE_DISTANCE": {
+  "value": 0.15,
+  "note": ""
+ },
+ "COMBO_RESET_TIME": {
+  "value": 0.6,
+  "note": "콤보 이음 허용 시간"
+ },
+ "ATTACK_START_RANGE": {
+  "value": 3.6,
+  "note": "이 거리 안이면 휘두르기 시작(멀면 달려감)"
+ },
+ "DAMAGE_VARIANCE": {
+  "value": 0.1,
+  "note": "데미지 ±10%"
+ },
+ "HIT_PADDING": {
+  "value": 0.25,
+  "note": "판정 후함"
+ },
+ "PULL_RANGE": {
+  "value": 13.0,
+  "note": ""
+ },
+ "PULL_THROW_TIME": {
+  "value": 0.12,
+  "note": ""
+ },
+ "PULL_DRAG_SPEED": {
+  "value": 42.0,
+  "note": ""
+ },
+ "PULL_STOP_DISTANCE": {
+  "value": 2.0,
+  "note": ""
+ },
+ "PULL_RETRACT_TIME": {
+  "value": 0.14,
+  "note": ""
+ },
+ "PULL_DAMAGE": {
+  "value": 8,
+  "note": ""
+ },
+ "PULL_HITSTOP_FRAMES": {
+  "value": 3,
+  "note": ""
+ },
+ "PULL_SHAKE": {
+  "value": 0.5,
+  "note": ""
+ },
+ "PULL_ARRIVE_SHAKE": {
+  "value": 0.4,
+  "note": ""
+ },
+ "PULL_STUN": {
+  "value": 0.8,
+  "note": ""
+ },
+ "PULL_COOLDOWN": {
+  "value": 0.5,
+  "note": ""
+ },
+ "PULL_PICK_RADIUS": {
+  "value": 3.0,
+  "note": ""
+ },
+ "FEEL_SHAKE_MAX_OFFSET": {
+  "value": 0.28,
+  "note": "PD 피드백(10-24) \"흔들림이 너무 심함\" → 0.55에서 절반으로"
+ },
+ "FEEL_SHAKE_DECAY": {
+  "value": 5.0,
+  "note": "흔들림이 더 빨리 가라앉게 (3.8 → 5.0)"
+ },
+ "FEEL_KILL_BONUS_FRAMES": {
+  "value": 2,
+  "note": ""
+ },
+ "FEEL_KILL_BONUS_SHAKE": {
+  "value": 0.3,
+  "note": ""
+ },
+ "FEEL_KNOCKBACK_TANGENT_MIX": {
+  "value": 0.35,
+  "note": ""
+ },
+ "CHAIN_SEGMENTS": {
+  "value": 18,
+  "note": ""
+ },
+ "TRAIL_LIFETIME": {
+  "value": 0.26,
+  "note": ""
+ },
+ "TRAIL_ALPHA": {
+  "value": 0.85,
+  "note": ""
+ },
+ "TRAIL_FADE_POWER": {
+  "value": 1.6,
+  "note": ""
+ },
+ "TRAIL_SUBSTEPS": {
+  "value": 4,
+  "note": ""
+ },
+ "TRAIL_INNER_RATIO": {
+  "value": 0.45,
+  "note": ""
+ },
+ "TRAIL_MAX_SAMPLES": {
+  "value": 120,
+  "note": ""
+ },
+ "NUMBER_LIFETIME": {
+  "value": 0.85,
+  "note": ""
+ },
+ "NUMBER_FADE_TIME": {
+  "value": 0.3,
+  "note": ""
+ },
+ "NUMBER_POP_SPEED_MIN": {
+  "value": 300.0,
+  "note": ""
+ },
+ "NUMBER_POP_SPEED_MAX": {
+  "value": 420.0,
+  "note": ""
+ },
+ "NUMBER_SPREAD_SPEED": {
+  "value": 110.0,
+  "note": ""
+ },
+ "NUMBER_GRAVITY": {
+  "value": 1100.0,
+  "note": ""
+ },
+ "NUMBER_POP_SCALE": {
+  "value": 1.9,
+  "note": ""
+ },
+ "NUMBER_POP_TIME": {
+  "value": 0.14,
+  "note": ""
+ },
+ "NUMBER_FONT_BASE": {
+  "value": 22.0,
+  "note": ""
+ },
+ "NUMBER_FONT_PER_DAMAGE": {
+  "value": 0.9,
+  "note": ""
+ },
+ "NUMBER_FONT_MAX": {
+  "value": 60.0,
+  "note": ""
+ },
+ "ENEMY_COUNT": {
+  "value": 5,
+  "note": "4 → 5: \"네모들에 둘러싸인 채\" 압박을 만들려고 1마리 늘림(임시)"
+ },
+ "ENEMY_RADIUS": {
+  "value": 0.6,
+  "note": ""
+ },
+ "ENEMY_HEIGHT": {
+  "value": 1.8,
+  "note": ""
+ },
+ "ENEMY_SPEED": {
+  "value": 2.8,
+  "note": ""
+ },
+ "ENEMY_SPEED_VARIANCE": {
+  "value": 0.2,
+  "note": ""
+ },
+ "ENEMY_STOP_DISTANCE": {
+  "value": 1.7,
+  "note": ""
+ },
+ "ENEMY_KNOCKBACK_FRICTION": {
+  "value": 5.5,
+  "note": ""
+ },
+ "ENEMY_FLASH_TIME": {
+  "value": 0.14,
+  "note": ""
+ },
+ "ENEMY_SQUASH": {
+  "value": 0.25,
+  "note": ""
+ },
+ "ENEMY_KILL_KNOCKBACK_MULT": {
+  "value": 1.5,
+  "note": ""
+ },
+ "ENEMY_DEATH_HOLD": {
+  "value": 0.25,
+  "note": ""
+ },
+ "ENEMY_DEATH_SHRINK": {
+  "value": 0.3,
+  "note": ""
+ },
+ "ENEMY_RESPAWN_DELAY": {
+  "value": 1.6,
+  "note": ""
+ },
+ "ENEMY_SPAWN_DISTANCE": {
+  "value": 11.0,
+  "note": ""
+ },
+ "ENEMY_SPAWN_POP_TIME": {
+  "value": 0.3,
+  "note": ""
+ },
+ "ENEMY_PICK_RADIUS": {
+  "value": 1.0,
+  "note": ""
+ },
+ "CLICK_MARKER_LIFETIME": {
+  "value": 0.45,
+  "note": ""
+ },
+ "MAEDHIM_NORMAL": {
+  "value": 100,
+  "note": "E-001 맺힘(일반 적). 체력 대신 깎이고 0이면 처결 대기"
+ },
+ "MAEDHIM_LUMP": {
+  "value": 400,
+  "note": "E-002 맺힘(덩어리)"
+ },
+ "ENEMY_ATTACK_DAMAGE": {
+  "value": 12,
+  "note": "E-003 적 공격력"
+ },
+ "ENEMY_ATTACK_INTERVAL": {
+  "value": 2.0,
+  "note": "E-004 적 공격 주기"
+ },
+ "ENEMY_ATTACK_WINDUP": {
+  "value": 0.4,
+  "note": "E-005 예비동작(피할 수 있는 신호 시간)"
+ },
+ "ENEMY_HIT_STAGGER": {
+  "value": 0.15,
+  "note": "E-006 적 피격 경직 (콤보 stun 값이 더 크면 그쪽이 적용)"
+ },
+ "PLAYER_HIT_STAGGER": {
+  "value": 0.3,
+  "note": "E-007 플레이어 피격 경직"
+ },
+ "ENEMY_ATTACK_RANGE": {
+  "value": 2.2,
+  "note": "(임시 해석) 공격 거리. 다가와 멈추는 거리(1.7)보다 살짝 길게"
+ },
+ "ENEMY_ATTACK_DODGE_MARGIN": {
+  "value": 0.3,
+  "note": "(임시 해석) 예비동작 끝에 이만큼 더 멀어지면 피한 것"
+ },
+ "PLAYER_MAX_HP": {
+  "value": 100,
+  "note": "(임시 해석) 스펙에 없음. 적 공격력 12 기준 9번 맞으면 쓰러짐"
+ },
+ "LUMP_SPAWN_CHANCE": {
+  "value": 0.15,
+  "note": "(임시 해석) 새 적이 덩어리일 확률"
+ },
+ "WAIT_FRESH": {
+  "value": 10.0,
+  "note": "W-001 갓 죽은 혼"
+ },
+ "WAIT_YEAR": {
+  "value": 7.0,
+  "note": "W-002 해 넘긴 혼"
+ },
+ "WAIT_OLD": {
+  "value": 4.0,
+  "note": "W-003 오래된 혼"
+ },
+ "WAIT_LUMP": {
+  "value": 4.0,
+  "note": "W-004 덩어리: 스펙상 \"대기 없음·천도 불가\". (임시 해석) 4초 동안 파혼만 받는다"
+ },
+ "WAIT_TIMEOUT_RECOVER": {
+  "value": 0.5,
+  "note": "W-005 🔴공백. (임시 해석) 시간 초과 시 맺힘 50%로 다시 일어선다"
+ },
+ "TENDO_CAST_TIME": {
+  "value": 1.5,
+  "note": "T-001"
+ },
+ "TENDO_CHAIN_CAST_TIME": {
+  "value": 0.8,
+  "note": "T-002 연속 천도 캐스팅"
+ },
+ "TENDO_CHAIN_WINDOW": {
+  "value": 5.0,
+  "note": "T-003 이 안에 다음 천도를 시작하면 단축 유지"
+ },
+ "TENDO_VISION_RATIO": {
+  "value": 0.6,
+  "note": "T-004 시야 반경 60%"
+ },
+ "TENDO_VISION_BLEND": {
+  "value": 0.2,
+  "note": "T-005 시야 전환 시간"
+ },
+ "TENDO_NEOK": {
+  "value": 10,
+  "note": "T-006 넋"
+ },
+ "TENDO_MEMORY": {
+  "value": 1,
+  "note": "T-007 기억 조각"
+ },
+ "TENDO_CANCEL_ON_HIT": {
+  "value": true,
+  "note": "T-008 🔴공백. (임시 해석) 캐스팅 중 맞으면 중단(대상은 계속 대기)"
+ },
+ "TENDO_HOLD_TIME": {
+  "value": 0.3,
+  "note": "(임시 해석) 이만큼 누르고 있으면 '길게 누름' = 천도"
+ },
+ "JUDGE_RANGE": {
+  "value": 2.8,
+  "note": "(임시 해석) 처결하려면 이 거리 안. 멀면 먼저 걸어간다"
+ },
+ "PAHON_RADIUS": {
+  "value": 3.0,
+  "note": "P-002 폭발 반경"
+ },
+ "PAHON_DAMAGE": {
+  "value": 35,
+  "note": "P-003 주변 적 맺힘 피해"
+ },
+ "PAHON_KNOCKBACK_DIST": {
+  "value": 2.5,
+  "note": "P-004 넉백 거리(m). 속도 = 거리 × 마찰(5.5)로 환산"
+ },
+ "PAHON_COIN": {
+  "value": 5,
+  "note": "P-005 엽전"
+ },
+ "PAHON_KARMA": {
+  "value": 1,
+  "note": "P-006 업 누적"
+ },
+ "STAIN_RADIUS": {
+  "value": 2.0,
+  "note": "P-007 원념 얼룩 반경"
+ },
+ "STAIN_DURATION": {
+  "value": 15.0,
+  "note": "P-008 지속"
+ },
+ "STAIN_SLOW": {
+  "value": 0.2,
+  "note": "P-009 위를 밟으면 이동속도 -20%"
+ },
+ "STAIN_SUMMON_COUNT": {
+  "value": 3,
+  "note": "P-010 3개가 겹치면 사나운 적 소환"
+ },
+ "FIERCE_MULT": {
+  "value": 1.5,
+  "note": "P-011 사나운 적: 맺힘·공격력 +50%"
+ },
+ "PAHON_HITSTOP_FRAMES": {
+  "value": 4,
+  "note": "(임시) 폭발 순간 정지"
+ },
+ "PAHON_SHAKE": {
+  "value": 0.8,
+  "note": "(임시) 폭발 흔들림"
+ },
+ "KARMA_TIER_1": {
+  "value": 10,
+  "note": "K-002 시작 (10~29): 마을 주민 반응 변화. 🔴수치 미정 → 지금은 단계 표시만"
+ },
+ "KARMA_TIER_2": {
+  "value": 30,
+  "note": "K-003 시작 (30~59): 명부(=넋) 보상 -10%"
+ },
+ "KARMA_TIER_3": {
+  "value": 60,
+  "note": "K-004 시작 (60+): 🔴설계 공백. 지금은 효과 없음(미구현)"
+ },
+ "KARMA_REWARD_PENALTY": {
+  "value": 0.1,
+  "note": "K-003 🔴수치 미정(스펙은 -10%만 적혀 있음)"
+ },
+ "VISION_BASE_RATIO": {
+  "value": 0.62,
+  "note": "(임시) 평소 시야 반경 = 화면 세로 × 이 값 (밤이라 가장자리가 어둡다)"
+ },
+ "VISION_EDGE_SOFT": {
+  "value": 0.35,
+  "note": "(임시) 시야 경계 번짐 정도"
+ },
+ "MAP_ZONE_RADIUS": {
+  "value": 18.0,
+  "note": "구역 하나의 반경(m)"
+ },
+ "MAP_REWARD_PER_RING": {
+  "value": 0.25,
+  "note": "한 고리 멀어질 때마다 보상 +25%"
+ },
+ "MAP_LUMP_BASE": {
+  "value": 0.05,
+  "note": "덩어리 혼 확률 기본. 바깥 고리일수록 +5%"
+ },
+ "MAP_LUMP_PER_RING": {
+  "value": 0.05,
+  "note": ""
+ },
+ "MAP_MIN_SOUL_GAP": {
+  "value": 3.0,
+  "note": "혼끼리 최소 간격(m)"
+ },
+ "SEAL_FADED_CAST_BONUS": {
+  "value": 0.25,
+  "note": "명부 인이 흐린 이름의 혼: 천도 캐스팅 +0.25초"
+ },
+ "SEAL_MISSING_CAST_BONUS": {
+  "value": 0.5,
+  "note": "인이 없는 이름의 혼: +0.5초"
+ },
+ "BOSS_TENDO_CAST_TIME": {
+  "value": 2.0,
+  "note": "보스 천도 캐스팅. 서사 제안 2.5초는 잡몹 2마리면 항상 지는 선택이라 2.0으로 낮춤"
+ },
+ "BOSS_CAST_ADD_PAUSE": {
+  "value": 2.0,
+  "note": "보스 천도 캐스팅 시작 후 이 시간 동안 잡몹 스폰 정지 (캐스팅이 '고행'만 되지 않게)"
+ },
+ "BOSS_PAHON_KARMA": {
+  "value": 3,
+  "note": "보스 파혼 업 (일반 파혼 3회분). 업 단계 경계(10, 30)를 넘길 땐 경고 필요"
+ },
+ "SHORTCUT_RETURN_CUT": {
+  "value": 0.175,
+  "note": "1호 보스 천도 보상: 귀환 거리 단축. 서사 제안 -40%는 과함 → 중간값 -17.5%"
+ },
+ "BOSS_CLUES_REQUIRED": {
+  "value": 3,
+  "note": "N-005 보스 천도에 필요한 낮 단서 수. B-1 확정: 2개 이하면 천도 불가(파혼만). 4초 캐스팅 완화안(b)은 플레이테스트 후 재검토"
+ },
+ "CAST_MIN_TIME": {
+  "value": 0.5,
+  "note": "어떤 보정을 받아도 천도 캐스팅은 이보다 짧아지지 않는다(연쇄 악용 방지)"
+ },
+ "WATER_SOUL_CAST_BONUS": {
+  "value": -0.5,
+  "note": "물 혼: 천도 캐스팅 -0.5초 (서사 제안 -1초는 물 혼을 무조건 천도로 만들어 완화)"
+ },
+ "WATER_TIDE_WINDOW": {
+  "value": 20.0,
+  "note": "밀물 신호 뒤 이 시간 안에 못 붙잡으면 그 밤엔 가라앉아 사라진다"
+ },
+ "NAMED_SOUL_CAST_BONUS": {
+  "value": -0.5,
+  "note": "낮에 별명을 들은 무적 혼: 천도 캐스팅 -0.5초 (하한 CAST_MIN_TIME)"
+ },
+ "B10_CREW_TENDO_BOSS_CUT": {
+  "value": 0.05,
+  "note": "B-10 선원 천도 1명당 선장 맺힘 -5% (서사 제안 -10%는 천도 정답화)"
+ },
+ "B12_WATER_TENDO_BOSS_CUT": {
+  "value": 0.03,
+  "note": "B-12 3페이즈 물 혼 천도 1마리당 흑월 맺힘 -3%"
+ },
+ "BOSS_ADD_PAUSE_ALL_BOSSES": {
+  "value": true,
+  "note": "천도 직후 2초 스폰 정지(BOSS_CAST_ADD_PAUSE)를 B-09~B-12 포함 모든 보스에 적용"
+ }
+}

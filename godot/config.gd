@@ -178,7 +178,7 @@ const PAHON_SHAKE := 0.8              # (임시) 폭발 흔들림
 const KARMA_TIER_1 := 10              # K-002 시작 (10~29): 마을 주민 반응 변화. 🔴수치 미정 → 지금은 단계 표시만
 const KARMA_TIER_2 := 30              # K-003 시작 (30~59): 명부(=넋) 보상 -10%
 const KARMA_TIER_3 := 60              # K-004 시작 (60+): 🔴설계 공백. 지금은 효과 없음(미구현)
-const KARMA_REWARD_PENALTY := 0.10    # K-003 🔴수치 미정(스펙은 -10%만 적혀 있음)
+const KARMA_REWARD_PENALTY := 0.1    # K-003 🔴수치 미정(스펙은 -10%만 적혀 있음)
 
 # --- 시야 (밤) ---
 
