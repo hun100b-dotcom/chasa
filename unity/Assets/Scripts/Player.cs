@@ -400,8 +400,13 @@ public class Player : MonoBehaviour
         var dir = new Vector3(rx - rz * mix, 0, rz + rx * mix).normalized;
         int dmg = Mathf.Max(1, Mathf.RoundToInt(cfg.damage * loadout.stats.DamageMult * (1f + Random.Range(-Config.DAMAGE_VARIANCE, Config.DAMAGE_VARIANCE))));
         bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun);
-        feel.HitStop(cfg.hitStopFrames + (killed ? Config.FEEL_KILL_BONUS_FRAMES : 0));
+        // 손맛 5요소: 맞은 놈만 굳기(국소 히트스톱) · 처치/마지막 타격만 전체 정지 · 흔들림 · 줌 펀치 · 맞은 방향 카메라 밀림
+        bool last = a.step == Steps.Length;
+        if (killed || last) feel.HitStop(cfg.hitStopFrames + (killed ? Config.FEEL_KILL_BONUS_FRAMES : 0));
+        else e.Freeze(cfg.hitStopFrames * Config.FEEL_FRAME_TIME * 1.5f);   // 일반 타격은 국소 정지(조금 더 길게 — 전체 정지보다 덜 거슬리니까)
         feel.AddShake(cfg.shake + (killed ? Config.FEEL_KILL_BONUS_SHAKE : 0f));
+        feel.AddZoom(killed ? 0.9f : last ? 0.6f : 0.25f + 0.35f * cfg.shake);
+        feel.AddKick(dir, killed ? 0.35f : 0.12f + 0.12f * cfg.shake);
         numbers.Spawn(e.HeadPosition, dmg, a.step == Steps.Length ? "heavy" : "normal");
     }
 

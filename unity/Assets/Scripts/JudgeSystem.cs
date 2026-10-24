@@ -33,10 +33,12 @@ public class JudgeSystem : MonoBehaviour
     readonly List<Vector3> cluePos = new List<Vector3>();   // 아직 안 주운 단서 위치
     readonly List<GameObject> clueViews = new List<GameObject>();
     float castT, castTotal, chainLeft;
+    public float CastZoom { get { return visionP; } }   // 카메라가 캐스팅 중 다가가는 정도(0~1)
     float visionP;                       // 0(평소) ~ 1(캐스팅 중): 시야 축소·기억색 정도. 0.2초에 걸쳐 부드럽게 변한다
     string toast = ""; float toastT;     // 화면 안내 글자(영문: 기본 글꼴에 한글이 없다)
     Texture2D white, vignette;
     bool godMode;                        // ?debug 검증용: 체력이 줄지 않는다
+    Color flashColor; float flashA;        // 화면 전체 번쩍임(파혼=붉음, 천도=흰 보라). 점점 사라진다
     float sinceHit = 99f;                // 마지막으로 맞은 뒤 지난 시간(초) — 체력 회복 시작 판단
     bool played;                         // 첫 입력이 있었나 (그 전엔 적이 공격하지 않는다: 로딩 중 죽는 것 방지)
     public bool NightOver { get { return night.Over; } }
@@ -136,6 +138,8 @@ public class JudgeSystem : MonoBehaviour
         }
         feel.HitStop(Balance.PAHON_HITSTOP_FRAMES);
         feel.AddShake(Balance.PAHON_SHAKE);
+        feel.AddZoom(1f);                       // 파혼: 확 다가가는 쿵
+        flashColor = new Color(0.55f, 0.05f, 0.08f); flashA = 0.55f;   // 붉은 번쩍임(깨뜨림)
         // 원념 얼룩: 3개가 겹치면 그 자리에서 사나운 적이 솟는다
         float cx, cz;
         if (stains.Add(at.x, at.z, out cx, out cz))
@@ -166,6 +170,8 @@ public class JudgeSystem : MonoBehaviour
         }
         chainLeft = lo.stats.ChainWindow;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
+        feel.AddZoom(-0.7f);                    // 천도 완료: 숨을 내쉬듯 화면이 살짝 멀어졌다 돌아온다
+        flashColor = new Color(0.85f, 0.8f, 1f); flashA = 0.5f;        // 흰 보랏빛 번쩍임(보냄)
         EndCast();
     }
 
@@ -381,6 +387,7 @@ public class JudgeSystem : MonoBehaviour
         if (night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");
         chainLeft = Mathf.Max(0f, chainLeft - dt);
         stains.Tick(dt);
+        flashA = Mathf.Max(0f, flashA - realDt * 2.2f);
         sinceHit += dt;
         ledger.Regen(dt, toShrine <= Balance.SHRINE_RADIUS, sinceHit);   // 서낭당 안: 빠른 회복 / 밖: 맞지 않으면 천천히
         player.speedMult = stains.IsOnStain(player.Pos.x, player.Pos.z) ? 1f - Balance.STAIN_SLOW : 1f;   // 얼룩 위: -20%
@@ -508,6 +515,8 @@ public class JudgeSystem : MonoBehaviour
         if (white == null) return;
         if (CharacterPanel.Open) return;   // 캐릭터 창이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
+        // (0) 화면 번쩍임: 천도/파혼 순간의 색
+        if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)
         if (visionP > 0.001f)
         {

@@ -137,6 +137,10 @@ public class GameMain : MonoBehaviour
         cam.transform.LookAt(focus);
         var s = feel.GetShakeOffset(); // 화면 기준 오른쪽/위쪽으로 밀어 평행하게 떨림
         cam.transform.position += cam.transform.right * s.x + cam.transform.up * s.y;
+        cam.transform.position += feel.Kick;   // 맞은 방향으로 툭 밀렸다 돌아오는 카메라
+        // 줌: 타격 펀치(최대 6%) + 천도 캐스팅 중 서서히 다가감(최대 9%) — 화면 크기(orthographicSize)를 줄이면 다가간 것
+        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f;
+        cam.orthographicSize = Config.CAMERA_VIEW_HEIGHT / 2f * (1f - zoomIn);
     }
 
     // ---- 입력: 마우스 = 이동·대상 / 키보드 = 기술 (PD 피드백 반영) --------------------

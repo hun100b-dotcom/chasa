@@ -148,10 +148,19 @@ public class Enemy : MonoBehaviour
         mat.color = baseColor;
     }
 
+    float freezeT;                      // 맞은 순간 이 적만 멈추는 시간(국소 히트스톱)
+
+    /// <summary>
+    /// 이 적만 잠깐 멈춘다 — 전체 정지 대신 '맞은 놈만 굳는' 히트스톱. 다른 적과 플레이어는 계속 움직여 여러 마리를 칠 때 끊기지 않는다.
+    /// 멈춘 동안 번쩍임(flash)이 유지되고, 풀리면 쌓인 넉백 속도로 날아간다.
+    /// </summary>
+    public void Freeze(float seconds) { freezeT = Mathf.Max(freezeT, seconds); }
+
     public void Tick(float dt, Vector3 playerPos)
     {
         lastPlayerPos = playerPos;
         if (gone) { TickDead(dt); return; }
+        if (freezeT > 0f && alive) { freezeT -= dt; flash = 1f; ApplyVisual(); return; }
         if (!alive)
         {
             // 무릎 꿇음 / 천도 캐스팅 중: 가만히 미끄러지다 멈춘다. 대기 시간이 흐르다가 다 되면 다시 일어선다
