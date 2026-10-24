@@ -22,14 +22,14 @@ public static class Balance
     public const float PULL_STOP_DISTANCE = 2.0f;
     public const float PULL_RETRACT_TIME = 0.14f;
     public const int PULL_DAMAGE = 8;
-    public const int PULL_HITSTOP_FRAMES = 3;
-    public const float PULL_SHAKE = 0.5f;
+    public const int PULL_HITSTOP_FRAMES = 4;  // (기획 타격감 분석 10-24, 임시) 견인 명중 정지 [3→4]
+    public const float PULL_SHAKE = 0.25f;  // (기획 타격감 분석 10-24, 임시) 견인 충격값(trauma) [0.5→0.25]
     public const float PULL_ARRIVE_SHAKE = 0.4f;
     public const float PULL_STUN = 0.8f;
     public const float PULL_COOLDOWN = 0.5f;
     public const float PULL_PICK_RADIUS = 3.0f;
     public const float FEEL_SHAKE_MAX_OFFSET = 0.28f;  // PD 피드백(10-24) "흔들림이 너무 심함" → 0.55에서 절반으로
-    public const float FEEL_SHAKE_DECAY = 5.0f;  // 흔들림이 더 빨리 가라앉게 (3.8 → 5.0)
+    public const float FEEL_SHAKE_DECAY = 1.6f;  // (기획 타격감 분석 10-24, 임시) 충격값이 초당 줄어드는 양. 제곱 모델이라 체감은 0.3초 안팎 [5.0→1.6]
     public const int FEEL_KILL_BONUS_FRAMES = 2;
     public const float FEEL_KILL_BONUS_SHAKE = 0.3f;
     public const float FEEL_KNOCKBACK_TANGENT_MIX = 0.35f;
@@ -104,8 +104,8 @@ public static class Balance
     public const float STAIN_SLOW = 0.2f;  // P-009 위를 밟으면 이동속도 -20%
     public const int STAIN_SUMMON_COUNT = 3;  // P-010 3개가 겹치면 사나운 적 소환
     public const float FIERCE_MULT = 1.5f;  // P-011 사나운 적: 맺힘·공격력 +50%
-    public const int PAHON_HITSTOP_FRAMES = 4;  // (임시) 폭발 순간 정지
-    public const float PAHON_SHAKE = 0.8f;  // (임시) 폭발 흔들림
+    public const int PAHON_HITSTOP_FRAMES = 8;  // (기획 타격감 분석 10-24, 임시) 파혼 정지: 게임에서 가장 큰 정지 [4→8]
+    public const float PAHON_SHAKE = 0.65f;  // (기획 타격감 분석 10-24, 임시) 파혼 충격값 [0.8→0.65]
     public const int KARMA_TIER_1 = 10;  // K-002 시작 (10~29): 마을 주민 반응 변화. 🔴수치 미정 → 지금은 단계 표시만
     public const int KARMA_TIER_2 = 30;  // K-003 시작 (30~59): 명부(=넋) 보상 -10%
     public const int KARMA_TIER_3 = 60;  // K-004 시작 (60+): 🔴설계 공백. 지금은 효과 없음(미구현)
@@ -323,4 +323,9 @@ public static class Balance
     public const int ZONE_LOAD_PROPS_PER_FRAME = 6;  // 구역을 불러올 때 한 프레임에 세우는 소품 수(웹은 쓰레드가 없어 나눠서 해야 끊기지 않음)
     public const float CAMERA_LOOKAHEAD_M = 2.5f;  // (시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게
     public const float CAMERA_DEADZONE_M = 0.6f;  // (시연판 임시) 카메라 중심에서 이 반경(m) 안에서는 카메라가 안 움직임. 0이면 끔. 잔떨림·멀미 감소
+    public const float SHAKE_MAX_ROLL_DEG = 1.2f;  // (기획 타격감 분석 10-24, 임시) 흔들림 최대 화면 기울기(도). 위치보다 덜 어지럽고 묵직함
+    public const float SHAKE_NOISE_FREQ = 22.0f;  // (기획 타격감 분석 10-24, 임시) 흔들림 빈도(Hz). 매 프레임 무작위 대신 펄린 노이즈 → 지글거림 제거
+    public const float SHAKE_MOBILE_MULT = 0.7f;  // (기획 타격감 분석 10-24, 임시) 폰 화면은 흔들림 70%
+    public const int HITSTOP_CAP_FRAMES = 10;  // (기획 타격감 분석 10-24, 임시) 어떤 경우에도 이 이상 멈추지 않음
+    public const float TRAUMA_PLAYER_HIT = 0.3f;  // (기획 타격감 분석 10-24, 임시) 차사가 맞았을 때 충격값 [0.35→0.3]
 }

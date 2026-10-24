@@ -55,8 +55,8 @@ const PULL_DRAG_SPEED := 42.0
 const PULL_STOP_DISTANCE := 2.0
 const PULL_RETRACT_TIME := 0.14
 const PULL_DAMAGE := 8
-const PULL_HITSTOP_FRAMES := 3
-const PULL_SHAKE := 0.5
+const PULL_HITSTOP_FRAMES := 4
+const PULL_SHAKE := 0.25
 const PULL_ARRIVE_SHAKE := 0.4
 const PULL_STUN := 0.8
 const PULL_COOLDOWN := 0.5
@@ -65,7 +65,7 @@ const PULL_PICK_RADIUS := 3.0
 # --- 6) 타격감 ------------------------------------------------------------------
 const FEEL_FRAME_TIME := 1.0 / 60.0
 const FEEL_SHAKE_MAX_OFFSET := 0.28   # PD 피드백(10-24) "흔들림이 너무 심함" → 0.55에서 절반으로
-const FEEL_SHAKE_DECAY := 5.0         # 흔들림이 더 빨리 가라앉게 (3.8 → 5.0)
+const FEEL_SHAKE_DECAY := 1.6         # 흔들림이 더 빨리 가라앉게 (3.8 → 5.0)
 const FEEL_KILL_BONUS_FRAMES := 2
 const FEEL_KILL_BONUS_SHAKE := 0.3
 const FEEL_KNOCKBACK_TANGENT_MIX := 0.35
@@ -171,8 +171,8 @@ const STAIN_DURATION := 15.0          # P-008 지속
 const STAIN_SLOW := 0.2               # P-009 위를 밟으면 이동속도 -20%
 const STAIN_SUMMON_COUNT := 3         # P-010 3개가 겹치면 사나운 적 소환
 const FIERCE_MULT := 1.5              # P-011 사나운 적: 맺힘·공격력 +50%
-const PAHON_HITSTOP_FRAMES := 4       # (임시) 폭발 순간 정지
-const PAHON_SHAKE := 0.8              # (임시) 폭발 흔들림
+const PAHON_HITSTOP_FRAMES := 8       # (임시) 폭발 순간 정지
+const PAHON_SHAKE := 0.65              # (임시) 폭발 흔들림
 
 # --- 업(Karma) 누적 효과 (1-5, P1-015) ---
 const KARMA_TIER_1 := 10              # K-002 시작 (10~29): 마을 주민 반응 변화. 🔴수치 미정 → 지금은 단계 표시만

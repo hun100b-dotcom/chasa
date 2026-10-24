@@ -45,11 +45,11 @@ public static class Config
     public static readonly ComboStep[] COMBO =
     {
         new ComboStep { name = "1타 (횡베기)", damage = 12, reach = 4.6f, sweepDeg = 150f, startOffsetDeg = 75f, dir = 1,
-            windup = 0.09f, swing = 0.15f, recover = 0.13f, hitStopFrames = 2, shake = 0.35f, knockback = 9f, stun = 0.28f, lunge = 0.9f },
+            windup = 0.09f, swing = 0.15f, recover = 0.13f, hitStopFrames = 3, shake = 0.18f, knockback = 9f, stun = 0.28f, lunge = 0.9f },
         new ComboStep { name = "2타 (역횡베기)", damage = 14, reach = 4.6f, sweepDeg = 150f, startOffsetDeg = 75f, dir = -1,
-            windup = 0.08f, swing = 0.15f, recover = 0.13f, hitStopFrames = 2, shake = 0.45f, knockback = 10f, stun = 0.3f, lunge = 0.9f },
+            windup = 0.08f, swing = 0.15f, recover = 0.13f, hitStopFrames = 3, shake = 0.22f, knockback = 10f, stun = 0.3f, lunge = 0.9f },
         new ComboStep { name = "3타 (회전 후려치기)", damage = 30, reach = 5.6f, sweepDeg = 360f, startOffsetDeg = 35f, dir = 1,
-            windup = 0.16f, swing = 0.3f, recover = 0.36f, hitStopFrames = 4, shake = 1.0f, knockback = 24f, stun = 0.65f, lunge = 0f },
+            windup = 0.16f, swing = 0.3f, recover = 0.36f, hitStopFrames = 6, shake = 0.45f, knockback = 24f, stun = 0.65f, lunge = 0f },
     };
     public const float COMBO_RESET_TIME = 0.6f;
     public const float ATTACK_START_RANGE = 3.6f;
@@ -63,8 +63,8 @@ public static class Config
     public const float PULL_STOP_DISTANCE = 2.0f;
     public const float PULL_RETRACT_TIME = 0.14f;
     public const int PULL_DAMAGE = 8;
-    public const int PULL_HITSTOP_FRAMES = 3;
-    public const float PULL_SHAKE = 0.5f;
+    public const int PULL_HITSTOP_FRAMES = 4;
+    public const float PULL_SHAKE = 0.25f;
     public const float PULL_ARRIVE_SHAKE = 0.4f;
     public const float PULL_STUN = 0.8f;
     public const float PULL_COOLDOWN = 0.5f;
@@ -73,7 +73,7 @@ public static class Config
     // 6) 타격감 (흔들림은 PD 피드백으로 절반: 0.55 → 0.28, 감쇠 3.8 → 5.0)
     public const float FEEL_FRAME_TIME = 1f / 60f;
     public const float FEEL_SHAKE_MAX_OFFSET = 0.28f;
-    public const float FEEL_SHAKE_DECAY = 5.0f;
+    public const float FEEL_SHAKE_DECAY = 1.6f;
     public const int FEEL_KILL_BONUS_FRAMES = 2;
     public const float FEEL_KILL_BONUS_SHAKE = 0.3f;
     public const float FEEL_KNOCKBACK_TANGENT_MIX = 0.35f;

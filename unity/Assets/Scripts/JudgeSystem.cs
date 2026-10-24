@@ -317,7 +317,7 @@ public class JudgeSystem : MonoBehaviour
         Sfx.Play("sfx.player.hurt");
         int dealt = godMode ? 0 : ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
-        feel.AddShake(0.35f);
+        feel.AddShake(Balance.TRAUMA_PLAYER_HIT);
         feel.HitStop(3);
         if (Casting)
         {

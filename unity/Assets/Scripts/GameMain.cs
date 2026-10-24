@@ -153,6 +153,7 @@ public class GameMain : MonoBehaviour
         focus = Vector3.Lerp(focus, goal, k);
         cam.transform.position = focus + offset;
         cam.transform.LookAt(focus);
+        cam.transform.Rotate(0f, 0f, feel.GetShakeRoll(), Space.Self);   // 충격이 클 때만 화면이 살짝 기울었다 돌아온다
         var s = feel.GetShakeOffset(); // 화면 기준 오른쪽/위쪽으로 밀어 평행하게 떨림
         cam.transform.position += cam.transform.right * s.x + cam.transform.up * s.y;
         cam.transform.position += feel.Kick;   // 맞은 방향으로 툭 밀렸다 돌아오는 카메라
