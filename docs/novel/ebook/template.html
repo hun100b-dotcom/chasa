@@ -1,4 +1,4 @@
-<title>차사 1부 솔고개</title>
+<title>{{DOC_TITLE}}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,7 +93,7 @@ button { font: inherit; color: inherit; }
   font-family: var(--f-display); line-height: 1.05; text-align: center;
 }
 .cover .seal {
-  position: absolute; right: 30px; bottom: 30px; width: 30px; height: 62px; font-size: 13px; padding: 4px 0;
+  position: absolute; right: 30px; bottom: 30px; width: 30px; min-height: 62px; font-size: 13px; padding: 5px 0;
   writing-mode: vertical-rl; white-space: nowrap; letter-spacing: .02em;
 }
 /* 세로쓰기 안의 숫자는 눕지 않게 세운다 */
@@ -132,6 +132,13 @@ button { font: inherit; color: inherit; }
 .t-label { display: block; font-family: var(--f-ui); font-size: 12px; color: var(--ink-soft); }
 .t-title { display: block; font-size: 17px; line-height: 1.4; word-break: keep-all; }
 .t-side { font-family: var(--f-ui); font-size: 12px; color: var(--ink-soft); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.toc li.toc-part {
+  border-bottom: 1px solid var(--rule); padding: 22px 2px 8px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+}
+.toc li.toc-part:first-child { padding-top: 10px; }
+.toc .tp-num { font-family: var(--f-ui); font-size: 12px; letter-spacing: .2em; color: var(--ink-soft); }
+.toc .tp-name { font-family: var(--f-display); font-size: 19px; letter-spacing: .12em; }
+.toc .tp-side { margin-left: auto; font-family: var(--f-ui); font-size: 12px; color: var(--ink-soft); }
 .note-small { width: min(100%, 34rem); font-family: var(--f-ui); font-size: 12px; color: var(--ink-soft); margin: 0; line-height: 1.6; }
 
 /* ───────── 읽기 화면 (화면 전체를 덮는 한 장) ───────── */
@@ -178,6 +185,16 @@ button { font: inherit; color: inherit; }
   font-family: var(--f-ui); font-size: 14px; cursor: pointer; border-radius: 4px; min-height: 44px;
 }
 .ch-end .fin { font-family: var(--f-display); font-size: 1.15em; margin: 1.6em 0 0; text-indent: 0; letter-spacing: .1em; }
+.ch-end .wip { font-family: var(--f-ui); font-size: 13px; color: var(--ink-soft); margin: .7em 0 0; text-indent: 0; }
+/* 부 표제지: 새 부의 첫 장 앞에 한 쪽을 통째로 쓴다(넘겨 읽기에서는 높이를 한 쪽 높이와 똑같이 맞춰 다음 글이 다음 쪽에서 시작한다) */
+.part-open { text-align: center; padding-top: 22vh; margin: 0; box-sizing: border-box; break-inside: avoid; }
+.reader[data-mode="page"] .part-open { height: var(--ph, auto); overflow: hidden; }
+.reader[data-mode="scroll"] .part-open { padding-bottom: 12vh; }
+.flow .part-open p { text-indent: 0; margin: 0; }
+.part-open .po-num { font-family: var(--f-ui); font-size: 13px; letter-spacing: .4em; color: var(--ink-soft); }
+.part-open .po-name { font-family: var(--f-display); font-size: 2.4em; letter-spacing: .24em; margin-top: 14px !important; }
+.part-open .po-rule { display: block; width: 36px; height: 2px; background: var(--seal); margin: 26px auto 0; }
+.part-open .po-epi { font-size: .95em; color: var(--ink-soft); margin-top: 26px !important; }
 
 /* 화면 가운데를 누르면 나오는 막대 */
 .bar {
@@ -236,12 +253,12 @@ button { font: inherit; color: inherit; }
   <section class="cover" aria-label="표지">
     <span class="soulfire" aria-hidden="true"></span>
     <p class="cover-epi">물소리가 먼저 있었다.</p>
-    <p class="cover-sub">제<span class="tcu">1</span>부 솔고개</p>
+    <p class="cover-sub">{{COVER_SUB}}</p>
     <h1 class="cover-title">차사</h1>
-    <span class="seal" aria-hidden="true">솔고개</span>
+    <span class="seal" aria-hidden="true">{{COVER_SEAL}}</span>
   </section>
 
-  <p class="meta">장편소설 · 1부 「솔고개」 · 프롤로그와 열네 장 · 약 {{TOTAL_MAN}}만 자 · 다 읽는 데 {{TOTAL_TIME}}</p>
+  <p class="meta">{{META}}</p>
 
   <div class="cta">
     <button type="button" class="btn primary" id="resume" hidden>이어 읽기<small id="resume-where"></small></button>
@@ -380,14 +397,33 @@ button { font: inherit; color: inherit; }
   /* ───── 장 하나를 읽기 화면에 깐다 ───── */
   function renderChapter(i) {
     var c = CH[i];
-    var html = '<header class="ch-head"><p class="part">제1부 솔고개</p>' +
+    var opener = "";
+    if (c.first && c.pi > 0) {
+      var P = BOOK.parts[c.pi];
+      opener = '<section class="part-open" aria-label="' + P.num + ' ' + P.name + '"><p class="po-num">' + P.num + '</p>' +
+        '<p class="po-name">' + P.name + '</p><span class="po-rule" aria-hidden="true"></span>' +
+        (P.epi ? '<p class="po-epi">' + P.epi + '</p>' : '') + '</section>';
+    }
+    var html = opener + '<header class="ch-head"><p class="part">' + c.part + '</p>' +
       '<span class="seal" aria-hidden="true">' + c.mark + '</span>' +
       '<h1><span class="sr">' + c.label + ' </span>' + c.title + '</h1></header>' + c.html;
     var end = '<footer class="ch-end"><span class="seal" aria-hidden="true"></span>';
+    var P = BOOK.parts[c.pi];
     if (i < CH.length - 1) {
-      end += '<button type="button" class="next" data-go="' + (i + 1) + '">다음: ' + CH[i + 1].label + ' 「' + CH[i + 1].title + '」 ›</button>';
+      var n = CH[i + 1];
+      if (n.pi !== c.pi) {
+        var NP = BOOK.parts[n.pi];
+        end += '<p class="fin">' + P.short + ' 「' + P.name + '」 끝</p>';
+        end += '<button type="button" class="next" data-go="' + (i + 1) + '">다음: ' + NP.short + ' 「' + NP.name + '」 · ' + n.label + ' 「' + n.title + '」 ›</button>';
+      } else {
+        end += '<button type="button" class="next" data-go="' + (i + 1) + '">다음: ' + n.label + ' 「' + n.title + '」 ›</button>';
+      }
+    } else if (P.written < P.planned) {
+      end += '<p class="fin">' + P.short + ' 「' + P.name + '」은 여기까지 썼습니다</p>';
+      end += '<p class="wip">남은 ' + (P.planned - P.written) + '장은 다 쓰는 대로 이 책 뒤에 이어 붙습니다.</p>';
+      end += '<button type="button" class="next" data-go="toc">목차로 돌아가기</button>';
     } else {
-      end += '<p class="fin">1부 「솔고개」 끝</p><button type="button" class="next" data-go="toc">목차로 돌아가기</button>';
+      end += '<p class="fin">' + P.short + ' 「' + P.name + '」 끝</p><button type="button" class="next" data-go="toc">목차로 돌아가기</button>';
     }
     end += "</footer>";
     flow.innerHTML = html + end;
@@ -407,6 +443,7 @@ button { font: inherit; color: inherit; }
     var G = padL + padR;                           /* 쪽 사이 간격 = 양옆 여백의 합 → 옆 쪽이 화면에 비치지 않는다 */
     flow.style.width = W + "px";
     flow.style.height = H + "px";
+    flow.style.setProperty("--ph", H + "px");
     flow.style.columnWidth = W + "px";
     flow.style.columnGap = G + "px";
     cur.step = W + G;
@@ -416,6 +453,7 @@ button { font: inherit; color: inherit; }
   }
   function clearLayout() {
     flow.style.width = flow.style.height = flow.style.columnWidth = flow.style.columnGap = "";
+    flow.style.removeProperty("--ph");
   }
 
   function fracNow() {
@@ -480,7 +518,7 @@ button { font: inherit; color: inherit; }
     if (S.mode !== "page") return;
     if (cur.page < cur.pages - 1) { cur.page++; show(true); }
     else if (cur.ch < CH.length - 1) { openChapter(cur.ch + 1, 0); }
-    else { toast("1부 끝입니다"); }
+    else { toast(BOOK.endToast || "여기까지입니다"); }
   }
   function prev() {
     if (S.mode !== "page") return;
