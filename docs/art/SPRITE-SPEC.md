@@ -27,3 +27,10 @@
 | icons | 장비 아이콘 3칸(weapon·dopo·noriga) × 3등급(common·crafted·rare) + 이름 있는 물건 월화의 방울, 등급 테두리 frame_common(미색)·crafted(청록)·rare(금빛)·named(주홍) |
 
 맵 배치 시안: `assets/maps/solgogae_village_layout.json`(코드팀이 읽어 배치) + `solgogae_village_preview.png`(확인용). 다시 뽑기: `python3 tools/art/compose_map.py`.
+
+## 카메라 30° 기준 (2026-10-24, 코드팀 질문 대응)
+- 타일 128×64px(2:1)은 "수평선 위 30° 내려다봄"일 때 정확히 맞는다. Unity: 카메라 Projection=Orthographic, 회전 X=30, Y=45. (X=45면 마름모가 약 1.4:1로 보여 타일과 어긋난다.)
+- 타일 맞물림: Isometric Tilemap Cell Size (1, 0.5), 타일 PPU 128. 바닥 타일은 가장자리까지 꽉 채워 틈이 없게 그렸다(투명 모서리만 마름모 바깥).
+- 30°는 앞 물체가 뒤를 더 가리므로 소품 높이 상한: 일반 소품 ≤ 2.5칸(약 160px), 성벽·약장 등 큰 것은 투명도 페이드(앞에 플레이어가 가려질 때 알파 0.5)를 코드팀이 적용.
+- 캐릭터·소품은 이미 2:1 기준으로 그려져 있어 그림 수정은 필요 없다. 피벗 변환은 Unity pivotY = 1 − manifest.pivotY.
+- 검은여울 지형 바닥색은 palette-tokens.json `검은여울_지형`. 혼 대비 검사 통과값만 사용.

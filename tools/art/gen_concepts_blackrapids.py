@@ -8,7 +8,7 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets", "concepts")
 BG, DEEP, TEAL, HANJI, RED, GOLD, INK = "#0F1729", "#16213E", "#4FA8A0", "#F3E7D3", "#E85C41", "#D4A94E", "#2A2A38"
 CHAIN, CHEON, VIOLET, STAIN = "#BFE8FF", "#5FE3C0", "#C9B0FF", "#7B4FD6"
 # --- 검은여울 전용 제안색 (오너 승인 전까지 '제안') ---
-LIME, WET, ASH = "#C8C3A0", "#3A4457", "#5A5A63"   # 석회/젖은 돌/재
+LIME, WET, ASH = "#C8C3A0", "#3A4457", "#40404A"   # 석회/젖은 돌/재
 
 def diamond(cx, cy, fill, w=64, h=32, stroke=BG):
     return f'<path d="M{cx},{cy-h} L{cx+w},{cy} L{cx},{cy+h} L{cx-w},{cy} Z" fill="{fill}" stroke="{stroke}" stroke-width="1"/>'
@@ -27,7 +27,7 @@ def tiles_props():
              ("동헌 박석", "#4A4F5E", "관아 터 · 네모 석판이 가지런함", "slab"),
              ("그을린 바닥", "#2F2D33", "불탄 문서함 주변, 재가 흩어짐", "ash"),
              ("역병막 멍석", "#8A7B58", "짚 멍석. 석회 가루가 뿌려져 하얗다", "straw"),
-             ("석회 선", LIME, "막 둘레에 그은 하얀 줄 = 들어가면 안 되는 선", "lime"),
+             ("석회 선", "#4A4F5E", "바닥은 박석, 위에 하얀 선 데칼만 (대면적 금지)", "lime"),
              ("무덤골 잔디", "#2F4535", "이름 없는 봉분 사이 마른 풀", "grass"),
              ("검은 물", "#1D2C47", "여울 가장자리. 걸으면 느려지는 칸(제안)", "water")]
     for i, (name, c, desc, kind) in enumerate(tiles):
@@ -42,7 +42,7 @@ def tiles_props():
         elif kind == "straw":
             o.append(f'<path d="M-44,0 L-12,-16 M-26,10 L12,-8 M0,18 L40,-2" stroke="#6B5E40" stroke-width="3"/><circle cx="-6" cy="2" r="10" fill="{LIME}" opacity=".35"/>')
         elif kind == "lime":
-            o.append(f'<path d="M-52,6 L52,-6" stroke="{BG}" stroke-width="1" opacity=".4"/>')
+            o.append(f'<path d="M-52,6 L52,-6" stroke="{LIME}" stroke-width="5" stroke-linecap="round"/>')
         elif kind == "grass":
             o.append(f'<path d="M-30,6 l4,-10 M-6,-6 l4,-10 M20,8 l4,-10 M30,-2 l3,-8" stroke="#5E7A4C" stroke-width="2"/>')
         elif kind == "water":
@@ -77,7 +77,7 @@ def tiles_props():
         g.append('</g>')
         o += g
         o += [t(cx, cy+58, f"{name}  ({fp})", HANJI, 13, bold=True)]
-    o += [t(24, 1505, "※ 검정 실루엣만으로 구별되는지가 합격선. 구역 전용 제안색(석회 #C8C3A0 · 젖은 돌 #3A4457 · 재 #5A5A63)은 오너 승인 전 palette-tokens.json 에 넣지 않는다.", TEAL, 12, "start"), '</svg>']
+    o += [t(24, 1505, "※ 검정 실루엣만으로 구별되는지가 합격선. 구역 전용 색(젖은 돌 #3A4457 · 재 #40404A · 석회 데칼 #C8C3A0)은 혼 대비 검사 통과로 palette-tokens.json 에 확정.", TEAL, 12, "start"), '</svg>']
     return "".join(o)
 
 # ---------- 2. 보스 B-03 서 의원 ----------

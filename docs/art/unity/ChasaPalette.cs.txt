@@ -45,4 +45,10 @@ public static class ChasaPalette
     public static readonly Color PahonBurst = Hex("#E8683A");
     /// <summary>파혼 / 원념_얼룩</summary>
     public static readonly Color WonnyeomStain = Hex("#7B4FD6");
+
+    // ② 검은여울 읍성 지형색 (혼 대비 ≥3:1 검사 통과, 석회는 선·가루 데칼만)
+    public static readonly Color WetStone = Hex("#3A4457");
+    public static readonly Color Ash = Hex("#40404A");
+    public static readonly Color LimeDecal = Hex("#C8C3A0");
 }
+
