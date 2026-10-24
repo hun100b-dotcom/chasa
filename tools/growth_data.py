@@ -311,7 +311,7 @@ AFFIXES = [
 TILTS = [
     dict(id="tilt_dmg_cast", name="피 묻은 매듭", plus="맺힘 피해 +20%", minus="천도 캐스팅 +10%(느려짐)", lean="파혼", demo=True, qa="검증 통과(경계 변화 없음)"),
     dict(id="tilt_neok_coin", name="향 내음", plus="천도 넋 +25%", minus="파혼 엽전 −50%", lean="천도", demo=False, qa="다음 단계 검증"),
-    dict(id="tilt_radius_wait", name="검은 술", plus="파혼 반경 +0.3m", minus="처결 대기 시간 −0.5초(덩어리 외)", lean="파혼", demo=False, qa="미검증"),
+    dict(id="tilt_radius_wait", name="검은 술", desc="갓끈 끝의 장식 끈", plus="파혼 반경 +0.3m", minus="처결 대기 시간 −0.5초(덩어리 외)", lean="파혼", demo=False, qa="미검증"),
     dict(id="tilt_window_dmg", name="젖은 소매", plus="연속 천도 창 +1.5초", minus="맺힘 피해 −10%", lean="천도", demo=False, qa="미검증"),
     dict(id="tilt_kb_vision", name="깨진 거울", plus="파혼 넉백 +30%", minus="천도 중 최저 시야 −5%p(55%)", lean="파혼", demo=False, qa="미검증 — 시야 하한 55% 허용 여부"),
     dict(id="tilt_castdr_aspd", name="상복 자락", plus="천도 중 받는 피해 −20%", minus="공격 속도 −8%", lean="천도", demo=False, qa="미검증"),
@@ -351,16 +351,18 @@ NAMED_S1 = [
          unique="전설 무기. 견인한 적이 무릎 꿇으면 대기 시간 +2초. 대신 F9(나의 정체)는 영영 없다", memory_from="B-12",
          memory="횃불을 진 젊은이가 물에 뛰어들었다. 숨이 끊기기 전에 이름을 불러 주지 못했다."),
     # 아래는 기획 제안: 이미 서사에 나오는 물건(단서·소품)을 '먼 구역 숨은 자리'에서 줍는 이름 있는 물건으로 쓰자는 안
-    dict(id="named_naru_pole", name="칼금 새긴 삿대", slot="무기(삼지창)", boss="① 물막이 골 먼 여울 숨은 자리", status="proposal",
+    dict(id="named_naru_pole", name="칼금 새긴 삿대", slot="무기(삼지창)", boss="① 물막이 골 먼 여울 갈대 속 (B-01 처결 뒤)", status="after_boss",
          unique="찌르기 사거리 +1m, 물 위(얕은 여울)에서 이동 둔화 없음", memory_from="B-01",
+         desc="열두 번째 금은 반만 새겨져 있다. (B-01 낮 단서 D-2와 같은 물건이라 처결 전에는 나오지 않는다)",
          memory="나루에 검은 갓이 서 있었다. 물에서 건져 낸 혼을 하나씩 깨뜨리고 있었다. 울면서."),
-    dict(id="named_seo_brush", name="씻은 붓", slot="무기(명부 붓)", boss="② 역병막 약장 맨 아래 칸", status="proposal",
-         unique="인이 흐린 이름(seal faded)의 천도 가산 +0.25초를 없앤다", memory_from="B-03",
+    dict(id="named_seo_brush", name="씻은 붓", slot="무기(명부 붓)", boss="② 역병막 약장 맨 아래 칸 (B-03 처결 뒤)", status="after_boss",
+         unique="인이 흐린 이름의 천도 가산 +0.25초를 없앤다", memory_from="B-03",
          memory="이름을 지울 때마다 붓을 씻었다. 물이 검어질수록, 지운 이름은 내 손에 남았다."),
-    dict(id="named_dangmi_fan", name="살 부러진 부채", slot="노리개", boss="① 서낭당(당할미, 2막 이후)", status="proposal",
-         unique="붙잡아 부르기 반경 +1.5m", memory_from="없음(당할미는 살아 있는 사람)",
-         memory="(설명 칸: 당할미가 펼쳐 보던 부채. 굿을 끝내지 못한 집에서 가져왔다)"),
-    dict(id="named_chilseong_tag", name="열넷 목패", slot="노리개", boss="④ 무너진 막장 깊은 곳", status="proposal",
+    # 살 부러진 부채(당할미의 물건, B-02 낮 단서)는 서사 판정으로 교체: 차사는 산 사람의 물건을 가져갈 수 없다
+    dict(id="named_ok_sinkal", name="옥이의 신칼", slot="노리개", boss="① 폐당집 굿상 머리 (B-02 처결 뒤)", status="after_boss",
+         unique="붙잡아 부르기 반경 +1.5m", memory_from="S-014 옥이(신딸)",
+         memory="(기억 한 줄은 서사팀 S-014 데이터를 따른다)"),
+    dict(id="named_chilseong_tag", name="열넷 목패", slot="노리개", boss="④ 무너진 막장 입구 (B-07 처결 뒤)", status="after_boss",
          unique="숫자 혼(인 없음) 천도 캐스팅 가산 +0.5초 → +0.25초", memory_from="B-07",
          memory="하나, 둘… 열셋. 다 나갔다. 하나가 모자란다."),
     dict(id="named_lamp_oil", name="등잔 기름", slot="소모품(이름 있는 물건 아님)", boss="B-09 망부석 아낙 파혼", status="canon",
@@ -530,7 +532,7 @@ def md_part(part):
         L.append("| 이름 | 올라가는 쪽 | 내려가는 쪽 | 기울기 | QA |")
         L.append("|---|---|---|---|---|")
         for t in TILTS:
-            L.append("| %s%s | %s | %s | %s | %s |" % ("★" if t["demo"] else "", t["name"], t["plus"], t["minus"], t["lean"], t["qa"]))
+            L.append("| %s%s | %s | %s | %s | %s |" % ("★" if t["demo"] else "", t["name"] + ("(%s)" % t["desc"] if t.get("desc") else ""), t["plus"], t["minus"], t["lean"], t["qa"]))
         L.append("")
         L.append("만들지 않는 옵션: " + " / ".join(FORBIDDEN_AFFIXES) + ".")
         L.append("")
@@ -541,12 +543,12 @@ def md_part(part):
         for s in SETS:
             L.append("| %s (%s) | %s | %s | %s | %s |" % (s["name"], s["lean"], "·".join(s["pieces"]), s["bonus"]["2"], s["bonus"]["3"], s["bonus"]["4"]))
         L.append("")
-        L.append("**시즌 1 이름 있는 물건.** 확정은 서사 문서에 이미 있는 보상이고, 제안은 서사에 나오는 소품을 먼 구역 숨은 자리의 물건으로 쓰자는 기획 안이다(서사 확인 대기). 설명 칸의 기억 한 줄은 서사 데이터의 기억 칸을 그대로 쓴다.")
+        L.append("**시즌 1 이름 있는 물건.** 확정은 서사 문서에 이미 있는 보상이다. ‘처결 뒤’는 보스의 소품을 숨은 자리 보상으로 쓴 것으로, 그 보스를 처결한 뒤(천도든 파혼이든)에만 나온다. 그래야 낮 단서와 겹치지 않고 어느 쪽 선택도 손해가 없다(서사팀 확인). 설명 칸의 기억 한 줄은 서사 데이터의 기억 칸을 그대로 쓴다.")
         L.append("")
         L.append("| 물건 | 칸 | 얻는 곳 | 고유 효과 | 상태 |")
         L.append("|---|---|---|---|---|")
         for n in NAMED_S1:
-            L.append("| %s | %s | %s | %s | %s |" % (n["name"], n["slot"], n["boss"], n["unique"], "확정" if n["status"] == "canon" else "제안"))
+            L.append("| %s | %s | %s | %s | %s |" % (n["name"], n["slot"], n["boss"], n["unique"], {"canon": "확정", "after_boss": "확정(처결 뒤)"}.get(n["status"], "제안")))
         L.append("")
         L.append("장비가 아닌 시즌 1 보스 파혼 보상: " + NON_ITEM_REWARDS_S1 + ".")
     elif part == 4:
