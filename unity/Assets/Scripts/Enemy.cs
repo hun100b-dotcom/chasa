@@ -192,8 +192,10 @@ public class Enemy : MonoBehaviour
 
     void ClampToArena()
     {
-        float lim = Config.ARENA_HALF_SIZE - radius;
-        Pos = new Vector3(Mathf.Clamp(Pos.x, -lim, lim), Pos.y, Mathf.Clamp(Pos.z, -lim, lim));
+        // 맵 경계 + 집·장승 같은 막힌 곳 밖으로 밀어낸다 (규칙은 Core 의 MapLayout)
+        float x = Pos.x, z = Pos.z;
+        Chasa.Core.MapLayout.PushOut(ref x, ref z, radius);
+        Pos = new Vector3(x, Pos.y, z);
     }
 
     void ApplyVisual()

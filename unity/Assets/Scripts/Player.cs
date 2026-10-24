@@ -173,8 +173,10 @@ public class Player : MonoBehaviour
 
     void ClampToArena()
     {
-        float lim = Config.ARENA_HALF_SIZE - Config.PLAYER_RADIUS;
-        Pos = new Vector3(Mathf.Clamp(Pos.x, -lim, lim), 0, Mathf.Clamp(Pos.z, -lim, lim));
+        // 맵 경계 + 막힌 곳(집·장승)에서 미끄러지듯 밀려난다
+        float x = Pos.x, z = Pos.z;
+        Chasa.Core.MapLayout.PushOut(ref x, ref z, Config.PLAYER_RADIUS);
+        Pos = new Vector3(x, 0, z);
     }
 
     Vector3 Hand => new Vector3(Pos.x, Config.PLAYER_HAND_HEIGHT, Pos.z);

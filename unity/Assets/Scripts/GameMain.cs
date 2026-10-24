@@ -114,6 +114,8 @@ public class GameMain : MonoBehaviour
         var lr = lines.AddComponent<MeshRenderer>();
         lr.sharedMaterial = U.VertexColor();
         lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+        MapView.Build(transform);   // 솔고개 마을(집·장승·길) — 막힌 곳 규칙은 Core/MapLayout
     }
 
     void UpdateCamera(float dt)

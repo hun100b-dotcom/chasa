@@ -388,4 +388,34 @@ public class CoreTests
         n.Tick(Balance.NIGHT_DURATION - Balance.NIGHT_WARN_TIME + 1f);
         Assert.IsTrue(n.Warning);
     }
+
+    // ---- M3: 솔고개 지형 ----
+    [Test]
+    public void Map_PushOutMovesBodyOutOfHouse()
+    {
+        var h = MapLayout.Blockers.Find(b => b.Kind == "house");
+        float x = h.X, z = h.Z + 0.1f;   // 집 한가운데
+        MapLayout.PushOut(ref x, ref z, 0.5f);
+        float d = (float)System.Math.Sqrt((x - h.X) * (x - h.X) + (z - h.Z) * (z - h.Z));
+        Assert.GreaterOrEqual(d, h.R + 0.5f - 0.01f);
+    }
+
+    [Test]
+    public void Map_BoundaryClamped()
+    {
+        float x = 999f, z = -999f;
+        MapLayout.PushOut(ref x, ref z, 0.5f);
+        Assert.AreEqual(MapLayout.HalfSize - 0.5f, x, 0.001f);
+        Assert.AreEqual(-(MapLayout.HalfSize - 0.5f), z, 0.001f);
+    }
+
+    [Test]
+    public void Map_ShrineStartIsFree_AndGateOpen()
+    {
+        Assert.IsFalse(MapLayout.IsBlocked(0f, 0f, 0.5f), "출발점이 막히면 안 된다");
+        // 장승 한 쌍 사이(귀환 반경 가장자리)는 몸이 지나갈 만큼 열려 있어야 한다
+        Assert.IsFalse(MapLayout.IsBlocked(Balance.SHRINE_RADIUS, 0f, 0.5f));
+        // 길(z=0)은 마을 어귀까지 막힘 없음
+        for (float x = 0f; x <= 25f; x += 1f) Assert.IsFalse(MapLayout.IsBlocked(x, 0f, 0.5f), "길이 막힘 x=" + x);
+    }
 }
