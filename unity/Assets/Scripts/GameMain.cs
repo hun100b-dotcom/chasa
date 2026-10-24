@@ -41,6 +41,9 @@ public class GameMain : MonoBehaviour
         // 처결(천도·파혼): 규칙은 Core, 화면 연결은 JudgeSystem
         judge = gameObject.AddComponent<JudgeSystem>();
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
+        // 밤 분위기: 어둠 막 + 등불 (화면 위에 덮는 방식이라 그림 재질을 바꿀 필요가 없다)
+        var atmo = gameObject.AddComponent<Atmosphere>();
+        atmo.cam = cam; atmo.judge = judge; atmo.player = player; atmo.enemies = enemies;
     }
 
     // -------------------------------------------------------------------------
