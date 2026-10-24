@@ -33,7 +33,7 @@ AGES = [
     dict(id="old", name="오래된 혼", wait=4.0, maedhim=100, memory="조각 한 줄"),
 ]
 LUMP = dict(id="lump", name="덩어리", wait=4.0, maedhim=400, tendo=False,
-            note="천도 불가, 파혼만. 파혼하면 엉켜 있던 이름 목록이 잠깐 보인다")
+            note="파혼만 된다. 파혼하면 엉켜 있던 이름 목록이 잠깐 보인다")
 
 # 특수 표지(tag): 나이와 따로 붙는다. 갓 죽은 물 혼, 오래된 숫자 혼처럼 겹칠 수 있다.
 TAGS = {
