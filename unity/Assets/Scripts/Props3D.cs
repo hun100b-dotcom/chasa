@@ -52,6 +52,25 @@ public static class Props3D
         var t = g.transform;
         float w = widthM;
 
+        // 모델 슬롯: models.json 의 props 줄에 이 소품이 있으면 그 모델을 세운다 (없으면 아래 도형 대역)
+        var row = ModelCatalog.Prop(sprite);
+        if (row != null)
+        {
+            var prefab = Resources.Load<GameObject>(row.path);
+            if (prefab != null)
+            {
+                var inst = Object.Instantiate(prefab, t);
+                inst.transform.localPosition = Vector3.zero; inst.transform.localScale = Vector3.one * row.scale;
+                var tex = string.IsNullOrEmpty(row.texture) ? null : Resources.Load<Texture2D>(row.texture);
+                foreach (var r in inst.GetComponentsInChildren<Renderer>())
+                {
+                    var m = U.Matte(Color.white); if (tex != null) m.mainTexture = tex;
+                    r.sharedMaterial = m;
+                }
+                return;
+            }
+        }
+
         if (sprite.EndsWith("seonang_tree"))
         {
             // 서낭나무: 굵은 줄기 + 겹친 잎덩이 + 금줄(붉은 띠)

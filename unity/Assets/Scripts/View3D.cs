@@ -34,7 +34,8 @@ public static class View3D
     public static void Init()
     {
         string url = (Application.absoluteURL ?? "").ToLowerInvariant();
-        On = url.Contains("v=3d");
+        // 오너 결정(10-24): 3D 가 본 화면. 주소에 v=2d 가 있을 때만 옛 2D 화면(정리 대상), v=3d 는 명시적으로 3D
+        On = url.Contains("v=2d") ? false : url.Contains("v=3d") ? true : Balance.VIEW_3D_DEFAULT;
         Cam = Variants[0];
         foreach (var v in Variants) if (url.Contains("cam=" + v.Id)) Cam = v;
     }

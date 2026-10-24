@@ -40,33 +40,25 @@ public class ActorModel : MonoBehaviour
     readonly List<AnimationClip> heroClips = new List<AnimationClip>();
     AnimationClipPlayable[] heroPlayables;
     int heroCur = -1; float heroT;
-    const string HeroPath = "Models/Hero/character-male-a";
-    const float HeroScale = 2.7f;            // Kenney 미니 캐릭터는 키 0.67m → 1.8m 로
+    ModelCatalog.ActorRow heroRow;           // models.json 의 이 배우 줄
 
-    // 동작 → 모델에 들어 있는 움직임 이름. 맞음(Hit) 전용 움직임이 없어 고개 젓기로 대신한다
-    static string ClipFor(Pose p)
+    static string ClipName(ModelCatalog.ActorRow row, Pose p)
     {
-        switch (p)
-        {
-            case Pose.Walk: return "walk";
-            case Pose.Attack: return "attack-melee-right";
-            case Pose.Hit: return "emote-no";
-            case Pose.Cast: return "pick-up";
-            case Pose.Kneel: return "crouch";
-            case Pose.Dodge: return "sprint";
-            default: return "idle";
-        }
+        if (row.clips != null) foreach (var c in row.clips) if (c.pose == p.ToString()) return c.clip;
+        return null;
     }
 
-    bool TryBuildHero()
+    bool TryBuildHero(string key)
     {
-        var prefab = Resources.Load<GameObject>(HeroPath);
+        heroRow = ModelCatalog.Actor(key);
+        if (heroRow == null) return false;
+        var prefab = Resources.Load<GameObject>(heroRow.path);
         if (prefab == null) return false;
         hero = Instantiate(prefab, modelRoot.transform);
         hero.transform.localPosition = Vector3.zero; hero.transform.localRotation = Quaternion.identity;
-        hero.transform.localScale = Vector3.one * HeroScale;
+        hero.transform.localScale = Vector3.one * heroRow.scale;
         // 재질은 가져오지 않았으므로(색 팔레트는 코드에서) 색 지도(colormap) 한 장을 입힌 무광 재질을 만든다
-        var tex = Resources.Load<Texture2D>("Models/Hero/colormap");
+        var tex = string.IsNullOrEmpty(heroRow.texture) ? null : Resources.Load<Texture2D>(heroRow.texture);
         var rl = new List<Material>();
         foreach (var r in hero.GetComponentsInChildren<Renderer>())
         {
@@ -80,7 +72,7 @@ public class ActorModel : MonoBehaviour
         // 움직임: 컨트롤러 없이 코드로 재생(Playables = 움직임 조각을 섞는 유니티 기능). 상태가 바뀌면 부드럽게 섞어 넘긴다
         var anim = hero.GetComponentInChildren<Animator>();
         if (anim == null) anim = hero.AddComponent<Animator>();
-        var all = Resources.LoadAll<AnimationClip>(HeroPath);
+        var all = Resources.LoadAll<AnimationClip>(heroRow.path);
         var byName = new Dictionary<string, AnimationClip>();
         foreach (var c in all) if (!c.name.StartsWith("__")) byName[c.name] = c;
         graph = PlayableGraph.Create("Hero");
@@ -91,7 +83,8 @@ public class ActorModel : MonoBehaviour
         heroPlayables = new AnimationClipPlayable[order.Length];
         for (int i = 0; i < order.Length; i++)
         {
-            AnimationClip clip; if (!byName.TryGetValue(ClipFor(order[i]), out clip) && !byName.TryGetValue("idle", out clip)) continue;
+            AnimationClip clip; var cn = ClipName(heroRow, order[i]);
+            if ((cn == null || !byName.TryGetValue(cn, out clip)) && !byName.TryGetValue(ClipName(heroRow, Pose.Idle) ?? "idle", out clip)) continue;
             heroPlayables[i] = AnimationClipPlayable.Create(graph, clip);
             graph.Connect(heroPlayables[i], 0, mixer, i);
             mixer.SetInputWeight(i, i == 0 ? 1f : 0f);
@@ -120,7 +113,8 @@ public class ActorModel : MonoBehaviour
             if (!pl.IsValid()) continue;
             float len = pl.GetAnimationClip().length;
             // 반복 동작(서기·걷기·무릎 꿇음 자세)은 돌고, 한 번짜리(공격·맞음·천도)는 처음부터 한 번
-            bool loop = i == heroInput[Pose.Idle] || i == heroInput[Pose.Walk] || i == heroInput[Pose.Kneel] || i == heroInput[Pose.Dodge];
+            bool loop = false;
+            foreach (var kv in heroInput) if (kv.Value == i && heroRow.loop != null && System.Array.IndexOf(heroRow.loop, kv.Key.ToString()) >= 0) loop = true;
             if (i == idx) pl.SetTime(loop ? heroT % Mathf.Max(0.01f, len) : Mathf.Min(heroT, len - 0.001f));
         }
         graph.Evaluate(0f);
@@ -192,7 +186,7 @@ public class ActorModel : MonoBehaviour
         if (modelRoot != null) Destroy(modelRoot);
         modelRoot = new GameObject("Model_" + sp.key);
         modelRoot.transform.SetParent(transform, false);
-        if (sp.key == "dongi" && TryBuildHero()) { modelRoot.transform.localRotation = Quaternion.Euler(0, yaw, 0); return; }   // 슬롯에 진짜 모델이 있으면 그걸 쓴다
+        if (TryBuildHero(sp.key)) { modelRoot.transform.localRotation = Quaternion.Euler(0, yaw, 0); return; }   // 슬롯에 진짜 모델이 있으면 그걸 쓴다
         var rl = new System.Collections.Generic.List<Renderer>();
         var ml = new System.Collections.Generic.List<Material>();
         var cl = new System.Collections.Generic.List<Color>();
