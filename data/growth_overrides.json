@@ -1,0 +1,54 @@
+{
+  "_설명": "tools/growth_data.py가 만든 파일. 직접 고치지 말고 생성기를 고친다. base = 흔한 등급 범위 가운데 값.",
+  "skills": [
+    {
+      "id": "HoldCall",
+      "name": "붙잡아 부르기",
+      "cooldown": 12
+    },
+    {
+      "id": "Bind",
+      "name": "휘감기",
+      "cooldown": 10
+    },
+    {
+      "id": "StainBurst",
+      "name": "터뜨리기",
+      "cooldown": 9
+    }
+  ],
+  "optionBase": [
+    {
+      "kind": "DamagePct",
+      "base": 0.04
+    },
+    {
+      "kind": "AttackSpeedPct",
+      "base": 0.025
+    },
+    {
+      "kind": "HpFlat",
+      "base": 10.0
+    },
+    {
+      "kind": "MoveSpeedPct",
+      "base": 0.025
+    },
+    {
+      "kind": "CastReducePct",
+      "base": 0.025
+    },
+    {
+      "kind": "PahonAreaPct",
+      "base": 0.0506
+    },
+    {
+      "kind": "PahonDamagePct",
+      "base": 0.05
+    },
+    {
+      "kind": "CoinPct",
+      "base": 0.05
+    }
+  ]
+}

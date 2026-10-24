@@ -1,0 +1,464 @@
+{
+  "_설명": "tools/route_s1.py가 만든 파일. 직접 고치지 말고 생성기를 고친다. 단위는 걸음 초(9m/s).",
+  "move_speed": 9.0,
+  "night_len": {
+    "1": 900,
+    "2": 1050,
+    "3": 1200
+  },
+  "first_night": 480,
+  "ring": {
+    "reward_per_ring": 0.25,
+    "lump_base": 0.05,
+    "lump_per_ring": 0.05,
+    "lump_cap": 0.25
+  },
+  "travel_rewards": {
+    "B-01": {
+      "kind": "shortcut",
+      "name": "나루 지름길",
+      "cut": 0.175,
+      "status": "확정",
+      "note": "물막이 골 강을 건너는 길. 물막이 골과 그 하류(⑤ 갯마을 강둑길)에 적용"
+    },
+    "B-02": {
+      "kind": "shelter",
+      "name": "폐당집 쉼터",
+      "status": "확정(서사)",
+      "note": "동트기 전 여기에 닿아도 귀환 성공"
+    },
+    "B-06": {
+      "kind": "shelter",
+      "name": "산성 쉼터",
+      "status": "확정(서사)",
+      "note": "③ 붉은재의 귀환 지점"
+    },
+    "B-07": {
+      "kind": "shortcut",
+      "name": "갱도 지름길",
+      "cut": 0.15,
+      "status": "확정(서사 10-24)",
+      "note": "④ 막장에서 ⑤ 포구로 이어지는 굴. ⑤로 가는 두 번째 길(B-01을 파혼해도 ⑤가 멀지 않게)"
+    },
+    "B-10": {
+      "kind": "link",
+      "name": "난파 여울 지름길",
+      "status": "확정(서사)",
+      "note": "썰물을 기다리지 않고 ⑤↔⑥을 오간다. 서낭당 귀환은 줄지 않고, 한 밤에 두 관할을 돌 수 있게 된다"
+    }
+  },
+  "zones": [
+    {
+      "jurisdiction": "①",
+      "zone": "솔고개 마을",
+      "ring": 1,
+      "act": 1,
+      "one_way_sec": 30,
+      "one_way_m": 270,
+      "best_return_sec": 30,
+      "walk_share_base": 0.067,
+      "walk_share_best": 0.067,
+      "reward_mult": 1.0,
+      "lump_chance": 0.05,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "①",
+      "zone": "보릿들",
+      "ring": 1,
+      "act": 1,
+      "one_way_sec": 40,
+      "one_way_m": 360,
+      "best_return_sec": 30,
+      "walk_share_base": 0.089,
+      "walk_share_best": 0.078,
+      "reward_mult": 1.0,
+      "lump_chance": 0.05,
+      "shelters": {
+        "B-02": 30
+      },
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "①",
+      "zone": "물막이 골",
+      "ring": 2,
+      "act": 1,
+      "one_way_sec": 70,
+      "one_way_m": 630,
+      "best_return_sec": 25,
+      "walk_share_base": 0.156,
+      "walk_share_best": 0.106,
+      "reward_mult": 1.25,
+      "lump_chance": 0.1,
+      "shelters": {
+        "B-02": 25
+      },
+      "shortcuts": [
+        "B-01"
+      ],
+      "boss": "B-01 나루 영감"
+    },
+    {
+      "jurisdiction": "①",
+      "zone": "폐당집",
+      "ring": 2,
+      "act": 1,
+      "one_way_sec": 80,
+      "one_way_m": 720,
+      "best_return_sec": 0,
+      "walk_share_base": 0.178,
+      "walk_share_best": 0.089,
+      "reward_mult": 1.25,
+      "lump_chance": 0.1,
+      "shelters": {
+        "B-02": 0
+      },
+      "shortcuts": [],
+      "boss": "B-02 월화"
+    },
+    {
+      "jurisdiction": "②",
+      "zone": "장터거리",
+      "ring": 1,
+      "act": 1,
+      "one_way_sec": 45,
+      "one_way_m": 405,
+      "best_return_sec": 45,
+      "walk_share_base": 0.1,
+      "walk_share_best": 0.1,
+      "reward_mult": 1.0,
+      "lump_chance": 0.05,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "②",
+      "zone": "동헌 터",
+      "ring": 2,
+      "act": 1,
+      "one_way_sec": 70,
+      "one_way_m": 630,
+      "best_return_sec": 70,
+      "walk_share_base": 0.156,
+      "walk_share_best": 0.156,
+      "reward_mult": 1.25,
+      "lump_chance": 0.1,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "②",
+      "zone": "역병막",
+      "ring": 2,
+      "act": 1,
+      "one_way_sec": 85,
+      "one_way_m": 765,
+      "best_return_sec": 85,
+      "walk_share_base": 0.189,
+      "walk_share_best": 0.189,
+      "reward_mult": 1.25,
+      "lump_chance": 0.1,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": "B-03 서 의원"
+    },
+    {
+      "jurisdiction": "②",
+      "zone": "무덤골",
+      "ring": 3,
+      "act": 1,
+      "one_way_sec": 105,
+      "one_way_m": 945,
+      "best_return_sec": 105,
+      "walk_share_base": 0.233,
+      "walk_share_best": 0.233,
+      "reward_mult": 1.5,
+      "lump_chance": 0.15,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": "흑월 1차(처결 없음)"
+    },
+    {
+      "jurisdiction": "③",
+      "zone": "무너진 산성",
+      "ring": 3,
+      "act": 2,
+      "one_way_sec": 125,
+      "one_way_m": 1125,
+      "best_return_sec": 0,
+      "walk_share_base": 0.238,
+      "walk_share_best": 0.119,
+      "reward_mult": 1.5,
+      "lump_chance": 0.15,
+      "shelters": {
+        "B-06": 0
+      },
+      "shortcuts": [],
+      "boss": "B-05 기수 대돌"
+    },
+    {
+      "jurisdiction": "③",
+      "zone": "화살골",
+      "ring": 3,
+      "act": 2,
+      "one_way_sec": 135,
+      "one_way_m": 1215,
+      "best_return_sec": 25,
+      "walk_share_base": 0.257,
+      "walk_share_best": 0.152,
+      "reward_mult": 1.5,
+      "lump_chance": 0.15,
+      "shelters": {
+        "B-06": 25
+      },
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "③",
+      "zone": "군막 터",
+      "ring": 4,
+      "act": 2,
+      "one_way_sec": 155,
+      "one_way_m": 1395,
+      "best_return_sec": 30,
+      "walk_share_base": 0.295,
+      "walk_share_best": 0.176,
+      "reward_mult": 1.75,
+      "lump_chance": 0.2,
+      "shelters": {
+        "B-06": 30
+      },
+      "shortcuts": [],
+      "boss": "B-06 이름 없는 장수"
+    },
+    {
+      "jurisdiction": "③",
+      "zone": "큰 무덤",
+      "ring": 4,
+      "act": 2,
+      "one_way_sec": 165,
+      "one_way_m": 1485,
+      "best_return_sec": 40,
+      "walk_share_base": 0.314,
+      "walk_share_best": 0.195,
+      "reward_mult": 1.75,
+      "lump_chance": 0.2,
+      "shelters": {
+        "B-06": 40
+      },
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "④",
+      "zone": "광부촌",
+      "ring": 3,
+      "act": 2,
+      "one_way_sec": 120,
+      "one_way_m": 1080,
+      "best_return_sec": 120,
+      "walk_share_base": 0.229,
+      "walk_share_best": 0.229,
+      "reward_mult": 1.5,
+      "lump_chance": 0.15,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": "B-08 장부꾼 염씨"
+    },
+    {
+      "jurisdiction": "④",
+      "zone": "선탄장",
+      "ring": 3,
+      "act": 2,
+      "one_way_sec": 135,
+      "one_way_m": 1215,
+      "best_return_sec": 135,
+      "walk_share_base": 0.257,
+      "walk_share_best": 0.257,
+      "reward_mult": 1.5,
+      "lump_chance": 0.15,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "④",
+      "zone": "큰 갱도",
+      "ring": 4,
+      "act": 2,
+      "one_way_sec": 160,
+      "one_way_m": 1440,
+      "best_return_sec": 160,
+      "walk_share_base": 0.305,
+      "walk_share_best": 0.305,
+      "reward_mult": 1.75,
+      "lump_chance": 0.2,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "④",
+      "zone": "무너진 막장",
+      "ring": 4,
+      "act": 2,
+      "one_way_sec": 180,
+      "one_way_m": 1620,
+      "best_return_sec": 180,
+      "walk_share_base": 0.343,
+      "walk_share_best": 0.343,
+      "reward_mult": 1.75,
+      "lump_chance": 0.2,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": "B-07 갱도 반장 칠성"
+    },
+    {
+      "jurisdiction": "⑤",
+      "zone": "포구",
+      "ring": 5,
+      "act": 3,
+      "one_way_sec": 215,
+      "one_way_m": 1935,
+      "best_return_sec": 177,
+      "walk_share_base": 0.358,
+      "walk_share_best": 0.327,
+      "reward_mult": 2.0,
+      "lump_chance": 0.25,
+      "shelters": {},
+      "shortcuts": [
+        "B-01",
+        "B-07"
+      ],
+      "boss": null
+    },
+    {
+      "jurisdiction": "⑤",
+      "zone": "소금밭",
+      "ring": 5,
+      "act": 3,
+      "one_way_sec": 225,
+      "one_way_m": 2025,
+      "best_return_sec": 186,
+      "walk_share_base": 0.375,
+      "walk_share_best": 0.343,
+      "reward_mult": 2.0,
+      "lump_chance": 0.25,
+      "shelters": {},
+      "shortcuts": [
+        "B-01",
+        "B-07"
+      ],
+      "boss": null
+    },
+    {
+      "jurisdiction": "⑤",
+      "zone": "망부석 곶",
+      "ring": 5,
+      "act": 3,
+      "one_way_sec": 245,
+      "one_way_m": 2205,
+      "best_return_sec": 202,
+      "walk_share_base": 0.408,
+      "walk_share_best": 0.372,
+      "reward_mult": 2.0,
+      "lump_chance": 0.25,
+      "shelters": {},
+      "shortcuts": [
+        "B-01",
+        "B-07"
+      ],
+      "boss": "B-09 망부석 아낙"
+    },
+    {
+      "jurisdiction": "⑤",
+      "zone": "난파 여울",
+      "ring": 6,
+      "act": 3,
+      "one_way_sec": 265,
+      "one_way_m": 2385,
+      "best_return_sec": 219,
+      "walk_share_base": 0.442,
+      "walk_share_best": 0.403,
+      "reward_mult": 2.25,
+      "lump_chance": 0.25,
+      "shelters": {},
+      "shortcuts": [
+        "B-01",
+        "B-07"
+      ],
+      "boss": "B-10 만선호 선장"
+    },
+    {
+      "jurisdiction": "⑥",
+      "zone": "저잣거리",
+      "ring": 5,
+      "act": 3,
+      "one_way_sec": 205,
+      "one_way_m": 1845,
+      "best_return_sec": 205,
+      "walk_share_base": 0.342,
+      "walk_share_best": 0.342,
+      "reward_mult": 2.0,
+      "lump_chance": 0.25,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "⑥",
+      "zone": "큰 다리 밑",
+      "ring": 5,
+      "act": 3,
+      "one_way_sec": 220,
+      "one_way_m": 1980,
+      "best_return_sec": 220,
+      "walk_share_base": 0.367,
+      "walk_share_best": 0.367,
+      "reward_mult": 2.0,
+      "lump_chance": 0.25,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": "B-11 다리 밑 왕초"
+    },
+    {
+      "jurisdiction": "⑥",
+      "zone": "빈민 움막촌",
+      "ring": 6,
+      "act": 3,
+      "one_way_sec": 240,
+      "one_way_m": 2160,
+      "best_return_sec": 240,
+      "walk_share_base": 0.4,
+      "walk_share_best": 0.4,
+      "reward_mult": 2.25,
+      "lump_chance": 0.25,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": null
+    },
+    {
+      "jurisdiction": "⑥",
+      "zone": "성문 밖",
+      "ring": 6,
+      "act": 3,
+      "one_way_sec": 260,
+      "one_way_m": 2340,
+      "best_return_sec": 260,
+      "walk_share_base": 0.433,
+      "walk_share_best": 0.433,
+      "reward_mult": 2.25,
+      "lump_chance": 0.25,
+      "shelters": {},
+      "shortcuts": [],
+      "boss": "B-12 흑월 2차"
+    }
+  ]
+}

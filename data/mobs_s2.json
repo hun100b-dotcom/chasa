@@ -1,0 +1,508 @@
+{
+ "_설명": "tools/mobs_s2.py가 만든 파일. 직접 고치지 말고 생성기를 고친다.",
+ "ages": [
+  {
+   "id": "fresh",
+   "name": "갓 죽은 혼",
+   "wait": 10.0,
+   "maedhim": 100,
+   "memory": "또렷한 한 줄(최근 목격담)"
+  },
+  {
+   "id": "year",
+   "name": "해 넘긴 혼",
+   "wait": 7.0,
+   "maedhim": 100,
+   "memory": "흐린 한 줄"
+  },
+  {
+   "id": "old",
+   "name": "오래된 혼",
+   "wait": 4.0,
+   "maedhim": 100,
+   "memory": "조각 한 줄"
+  }
+ ],
+ "lump": {
+  "id": "lump",
+  "name": "덩어리",
+  "wait": 4.0,
+  "maedhim": 400,
+  "tendo": false,
+  "note": "파혼만 된다. 파혼하면 엉켜 있던 이름 목록이 잠깐 보인다"
+ },
+ "lump_base": 0.1,
+ "lump_pool": 0.15,
+ "tags": {
+  "line": {
+   "kind": "obstacle",
+   "name": "줄 선 혼",
+   "rule": "배를 기다리며 줄에 선 혼. 싸우지 않는다(장애물). 실수로 때리면 그 혼이 줄을 떠나 돌아선 혼이 된다. 업 30 이상이면 등을 돌리고 엿듣기를 막는다",
+   "source": "서사 ACT4 §1·B-13"
+  },
+  "turned": {
+   "kind": "enemy",
+   "name": "돌아선 혼",
+   "rule": "줄에서 지쳐 돌아선 혼. 천도하면 줄로 돌아간다(넋은 일반의 40%, 기억은 '기다림' 한 줄)",
+   "source": "서사 ACT4 · QA 채택(TURNED_SOUL_NEOK_RATIO 0.4)"
+  },
+  "number": {
+   "kind": "enemy",
+   "name": "숫자 혼",
+   "rule": "이름 대신 번호로 적힌 혼. ⑦에서는 시즌 1과 같다(천도 캐스팅 +0.5초). ⑧ 숫자 마당에서는 기본 천도 불가(파혼만). 시즌 1에서 그 혼의 고향 관할 이름을 되찾아 줬다면(B-05·B-08·B-11 천도) 번호 옆에 이름이 떠 바로 천도된다. B-15를 천도하면 전원 이름 회복",
+   "source": "서사 ACT4 §0 · 비율은 기획 제안"
+  },
+  "sealless": {
+   "kind": "enemy",
+   "name": "인 없는 혼",
+   "rule": "아홉째 인이 없어 아무도 데리러 오지 않은 혼. 천도 캐스팅 +0.5초. 천도하면 그 혼의 기억이 주변 반경 8m의 지도를 그린다(B-17 천도 뒤 12m). 파혼한 자리는 빈 종이로 남는다",
+   "source": "서사 ACT5 · QA 채택(SEAL_MISSING_CAST_BONUS, MEMORY_MAP_RADIUS)"
+  },
+  "fragment": {
+   "kind": "enemy",
+   "name": "이름 조각",
+   "rule": "깨진 이름의 조각. 하나로는 천도할 수 없다. 같은 색 조각 셋을 사슬로 모아 한 이름으로 이으면 천도된다(보상 3배). 4막·⑨에서 주운 이름 쪽지는 조각 하나로 친다. 조각을 그냥 파혼하면 빠르지만 물막이 눈금이 오른다",
+   "source": "서사 ACT5 · QA 채택(NAME_JOIN_REWARD_MULT 3)"
+  },
+  "old_chasa": {
+   "kind": "enemy",
+   "name": "옛 차사 혼",
+   "rule": "이름을 끝내 못 찾고 흩어진 옛 차사. 녹슨 사슬로 나를 끌어당긴다(예고 0.8초, 직선 8m). 맺힘 150. 천도하면 '이름을 부르기만 하면 됐던 시절'의 기억 한 줄. B-19를 천도하면 이름을 되찾고 더는 싸우지 않는다",
+   "source": "서사 ACT5 사슬 무덤 · 사슬·수치는 기획 제안"
+  }
+ },
+ "old_chasa_hp": 150,
+ "inkkeeper_notes": 18,
+ "rules": [
+  {
+   "name": "물막이 눈금",
+   "rule": "⑦~⑩에서 파혼할 때마다 하류의 큰 물막이(B-20)가 커진다. 일반 파혼 +1, 보스 파혼 +10. 화면 구석에 늘 보인다",
+   "source": "QA 채택(DAM_TICK_PAHON 1, DAM_TICK_BOSS_PAHON 10)"
+  },
+  {
+   "name": "이름 줍기",
+   "rule": "파혼할 때 흩어지는 가루 속에 이름 쪽지 한 장이 2.0초 떠오른다. 사슬로 낚으면 '이름만 남은 기억'을 얻고 그 파혼의 물막이 눈금이 절반만 오른다",
+   "source": "QA 채택(NAME_PICKUP_WINDOW 2.0, DAM_TICK_PICKUP_FACTOR 0.5)"
+  },
+  {
+   "name": "주운 쪽지의 쓰임",
+   "rule": "주운 이름 쪽지는 ⑩에서 이름 조각 하나로 치고, B-20 풀어내기 조건(기억한 이름 ÷ 물막이 크기 ≥ 0.6)의 '기억한 이름'에 더해진다",
+   "source": "서사 ACT5 · QA 채택(RELEASE_RATIO_MIN 0.6)"
+  },
+  {
+   "name": "먹지기의 쪽지",
+   "rule": "이름 줍기를 놓친 사람을 위해 ⑨ 먹지기의 흔적 근처에 그가 대신 주운 쪽지 18장(구역당 4~5장). 4막에서 성실히 주웠다면 같은 자리에서 '너도 주웠구나' 쪽지만 나온다(보상 중복 없음)",
+   "source": "서사 ACT5(qa 합의 10-24) · 개수는 QA 확인 요청"
+  },
+  {
+   "name": "⑨ 기억 지도",
+   "rule": "⑨는 지도가 빈 종이다. 천도할 때마다 그 자리 반경 8m가 그려진다. 지도가 비어 있는 동안 ⑨ 안 걸음은 1.2배(헤맴)",
+   "source": "서사 ACT5 · QA 채택 · 헤맴 배율은 부록 C-2"
+  }
+ ],
+ "fierce_s1": [
+  {
+   "id": "X1",
+   "name": "얼룩 셋",
+   "when": "원념 얼룩 3개가 겹치면 그 자리에서 1마리",
+   "status": "QA 채택(P-010)",
+   "why": "파혼의 대가가 세계 안에서 보인다(덩어리 = 파혼이 만든 것)"
+  },
+  {
+   "id": "X2",
+   "name": "흐르는 얼룩",
+   "when": "물 혼이 있는 구역(보릿들·물막이 골·⑤)에서는 얼룩이 초당 0.5m씩 물 낮은 쪽으로 흘러 모인다. 그래서 X1이 더 자주 생긴다. 이렇게 생긴 사나운 적은 '큰물귀신' 모습",
+   "status": "서사 BOSS-01(큰물 단계) 확장 · 제안",
+   "why": "물가에서 파혼하면 얼룩이 한곳에 모인다는 것을 몸으로 배운다"
+  },
+  {
+   "id": "X3",
+   "name": "놓친 혼",
+   "when": "한 밤에 처결 대기를 3번 넘기면, 그 뒤로 대기를 넘긴 혼은 맺힘 50%로 일어나는 대신 사나운 적으로 일어난다",
+   "status": "제안",
+   "why": "고르지 않는 것도 선택이다. 천도도 파혼도 안 하고 미루면 값을 치른다"
+  },
+  {
+   "id": "X4",
+   "name": "업의 그늘",
+   "when": "업 30 이상이면 새로 일어나는 적 중 3%, 업 60 이상이면 6%가 사나운 적",
+   "status": "제안",
+   "why": "파혼 습관이 밤의 위험으로 돌아온다. 숫자가 아니라 무서운 적으로 느껴진다"
+  }
+ ],
+ "fierce_s2": [
+  {
+   "id": "X5",
+   "name": "물막이 역류",
+   "when": "물막이 눈금이 50·100·150을 넘는 순간, 그 밤 지금 구역에 가루 귀신(사나운 적) 1마리. 같은 문턱은 한 번만",
+   "status": "제안",
+   "why": "파혼의 값이 B-20까지 미뤄지지 않고 지금 밤에도 한 번씩 얼굴을 내민다"
+  },
+  {
+   "id": "X6",
+   "name": "빈 종이",
+   "when": "⑨에서 지도가 그려지지 않은 칸에서 일어나는 적의 5%가 사나운 적",
+   "status": "제안",
+   "why": "천도로 길을 그린 땅은 안전하고, 파혼만 한 땅은 다음 밤에도 위험하다"
+  },
+  {
+   "id": "X7",
+   "name": "흩어진 색",
+   "when": "⑩에서 같은 색 이름 조각 하나를 파혼하면, 남은 두 조각이 엉겨 사나운 적 1마리가 된다",
+   "status": "제안",
+   "why": "잇기를 시작했다가 깨뜨리면 대가가 바로 온다. 이을지 깰지를 조각마다 고르게 한다"
+  }
+ ],
+ "fierce_mult": 1.5,
+ "boss_effects": [
+  {
+   "when": "B-13 천도",
+   "where": "⑦",
+   "effect": "줄이 한 칸 움직인다. 돌아선 혼 −10%p(줄로 돌아간 몫)"
+  },
+  {
+   "when": "B-14 파혼",
+   "where": "⑦",
+   "effect": "주운 쪽지 수만큼 줄 끝에 희미한 혼이 다시 선다(줄 선 혼 +). 0장이면 아무도 안 선다"
+  },
+  {
+   "when": "B-15 천도",
+   "where": "⑧ · 모든 관할",
+   "effect": "숫자 마당 혼 전원 이름 회복(천도 가능). 이후 어느 관할에서든 숫자 혼의 천도 가산 +0.5초가 사라진다"
+  },
+  {
+   "when": "B-17 천도",
+   "where": "⑨",
+   "effect": "기억 지도 반경 8m → 12m. 빈 고을이 쉼터"
+  },
+  {
+   "when": "B-18 천도",
+   "where": "⑨",
+   "effect": "아홉째 인 회복: 인 없는 혼이 보통 혼이 된다(+0.5초 사라짐), 지도가 한꺼번에 그려지고 ⑨에 새벽 틈이 생긴다"
+  },
+  {
+   "when": "B-19 천도",
+   "where": "⑩ 사슬 무덤",
+   "effect": "옛 차사 혼이 이름을 되찾아 더는 싸우지 않는다(처결 대기 상태로 선다)"
+  }
+ ],
+ "zones": [
+  {
+   "jurisdiction": "⑦",
+   "zone": "갈대늪",
+   "ring": 6,
+   "act": 4,
+   "boss": null,
+   "mix": {
+    "fresh": 0.045,
+    "year": 0.225,
+    "old": 0.63,
+    "lump": 0.1
+   },
+   "tags": {
+    "turned": 0.5
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "은빛 갈대에 가루가 걸린 강가. 오래된 혼과 돌아선 혼"
+  },
+  {
+   "jurisdiction": "⑦",
+   "zone": "빈 나루 마을",
+   "ring": 6,
+   "act": 4,
+   "boss": "B-13 줄의 맨 앞 노인",
+   "mix": {
+    "fresh": 0.18,
+    "year": 0.45,
+    "old": 0.27,
+    "lump": 0.1
+   },
+   "tags": {
+    "turned": 0.4
+   },
+   "line_souls": 24,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "강가의 줄. 줄 선 혼(장애물) 사이로 돌아선 혼이 떠돈다"
+  },
+  {
+   "jurisdiction": "⑦",
+   "zone": "먹물 여울",
+   "ring": 7,
+   "act": 4,
+   "boss": null,
+   "mix": {
+    "fresh": 0.045,
+    "year": 0.27,
+    "old": 0.585,
+    "lump": 0.1
+   },
+   "tags": {
+    "number": 0.4
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "관아에서 버린 먹물이 섞여 흐른다. 숫자 혼이 떠내려온다"
+  },
+  {
+   "jurisdiction": "⑦",
+   "zone": "물안개 둑",
+   "ring": 7,
+   "act": 4,
+   "boss": "B-14 돌아선 혼들의 덩어리",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.225,
+    "old": 0.525,
+    "lump": 0.25
+   },
+   "tags": {
+    "turned": 0.3
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "이름 수천이 들리는 둑. 덩어리가 많다(B-14)"
+  },
+  {
+   "jurisdiction": "⑧",
+   "zone": "서리 숙사",
+   "ring": 7,
+   "act": 4,
+   "boss": null,
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.54,
+    "old": 0.36,
+    "lump": 0.1
+   },
+   "tags": {},
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "서리들의 행랑. 신참 서리 혼(해 넘긴)이 많다. 서리들은 차사를 보지만 말을 걸지 않는다"
+  },
+  {
+   "jurisdiction": "⑧",
+   "zone": "먹방",
+   "ring": 7,
+   "act": 4,
+   "boss": "B-16 벼루지기",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.18,
+    "old": 0.72,
+    "lump": 0.1
+   },
+   "tags": {},
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "천도된 기억을 가는 작업장. 오래된 혼"
+  },
+  {
+   "jurisdiction": "⑧",
+   "zone": "문서 창고",
+   "ring": 8,
+   "act": 4,
+   "boss": "B-15 숫자를 처음 쓴 서리",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.18,
+    "old": 0.72,
+    "lump": 0.1
+   },
+   "tags": {
+    "number": 0.2
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "끝없는 서가. 오래된 혼, 번호 사본 사이의 숫자 혼"
+  },
+  {
+   "jurisdiction": "⑧",
+   "zone": "숫자 마당",
+   "ring": 8,
+   "act": 4,
+   "boss": null,
+   "mix": {
+    "fresh": 0.075,
+    "year": 0.3,
+    "old": 0.375,
+    "lump": 0.25
+   },
+   "tags": {
+    "number": 1.0
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "번호순으로 선 혼들. 전원 숫자 혼, 덩어리가 고인다"
+  },
+  {
+   "jurisdiction": "⑨",
+   "zone": "빈 고을",
+   "ring": 8,
+   "act": 5,
+   "boss": null,
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.18,
+    "old": 0.72,
+    "lump": 0.1
+   },
+   "tags": {
+    "sealless": 1.0
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "문패 없는 솔고개. 인 없는 혼(대부분 오래된)"
+  },
+  {
+   "jurisdiction": "⑨",
+   "zone": "아홉째 문",
+   "ring": 8,
+   "act": 5,
+   "boss": "B-17 아홉째 문지기",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.225,
+    "old": 0.525,
+    "lump": 0.25
+   },
+   "tags": {
+    "sealless": 1.0
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "문 앞에 몰린 혼과 덩어리"
+  },
+  {
+   "jurisdiction": "⑨",
+   "zone": "도장 없는 장터",
+   "ring": 8,
+   "act": 5,
+   "boss": null,
+   "mix": {
+    "fresh": 0.09,
+    "year": 0.27,
+    "old": 0.54,
+    "lump": 0.1
+   },
+   "tags": {
+    "sealless": 1.0
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "서로 '어이'라고만 부르는 장. 인 없는 혼"
+  },
+  {
+   "jurisdiction": "⑨",
+   "zone": "인장 굴",
+   "ring": 8,
+   "act": 5,
+   "boss": "B-18 인을 훔친 혼",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.18,
+    "old": 0.72,
+    "lump": 0.1
+   },
+   "tags": {
+    "sealless": 1.0
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "B-18의 굴. 이마가 짓무른 인 없는 혼"
+  },
+  {
+   "jurisdiction": "⑩",
+   "zone": "처음 마을",
+   "ring": 8,
+   "act": 5,
+   "boss": null,
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.09,
+    "old": 0.81,
+    "lump": 0.1
+   },
+   "tags": {
+    "fragment": 0.6
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "늘 같은 새벽빛. 이름 조각과 오래된 혼"
+  },
+  {
+   "jurisdiction": "⑩",
+   "zone": "사슬 무덤",
+   "ring": 8,
+   "act": 5,
+   "boss": null,
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.09,
+    "old": 0.81,
+    "lump": 0.1
+   },
+   "tags": {
+    "old_chasa": 0.4,
+    "fragment": 0.4
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "녹슨 사슬이 비석처럼. 옛 차사 혼과 이름 조각"
+  },
+  {
+   "jurisdiction": "⑩",
+   "zone": "우물터",
+   "ring": 8,
+   "act": 5,
+   "boss": "B-19 첫 차사",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.09,
+    "old": 0.81,
+    "lump": 0.1
+   },
+   "tags": {
+    "fragment": 0.5
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "B-19의 우물. 이름 조각"
+  },
+  {
+   "jurisdiction": "⑩",
+   "zone": "물막이 바닥",
+   "ring": 8,
+   "act": 5,
+   "boss": "B-20 큰 물막이",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.075,
+    "old": 0.675,
+    "lump": 0.25
+   },
+   "tags": {
+    "fragment": 0.7
+   },
+   "line_souls": 0,
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "모든 관할의 깨진 이름이 고인 곳. 이름 조각과 덩어리"
+  }
+ ]
+}

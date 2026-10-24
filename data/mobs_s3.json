@@ -1,0 +1,494 @@
+{
+ "_설명": "tools/mobs_s3.py가 만든 파일. 직접 고치지 말고 생성기를 고친다.",
+ "baek": {
+  "name": "백",
+  "wait": 7.0,
+  "maedhim": 100,
+  "cast": 2.0,
+  "memory": "감각 한 줄(생각이 아니라 몸의 느낌. 예: '발이 시렸다')",
+  "note": "원념의 실(검은 물줄기)에 묶여 누워 있다. 실을 끊으면(전투) 무릎 꿇고, 이름을 불러 눕힌다"
+ },
+ "lump_baek": {
+  "name": "덩어리 백",
+  "maedhim_per_body": 100,
+  "visible_max": 12,
+  "note": "한 구덩이에 함께 묻힌 몸들. 아는 이름을 부르면(1초) 한 몸씩 떨어져 무릎 꿇는다. 모르는 몸은 깨뜨려 떼어 낸다"
+ },
+ "thread": {
+  "name": "원념의 실",
+  "maedhim": 60,
+  "wait": 0,
+  "note": "백도 혼도 아니다. 실이 끌어올린 '물에 엉킨 손'·'흙 손' 같은 것. 쓰러뜨리면 사라지고 처결도 업도 없다"
+ },
+ "tags": {
+  "tide": {
+   "kind": "enemy",
+   "name": "물때 백",
+   "rule": "⑤ 바다의 몸. 밀물 신호 뒤 20초 안에 눕히지 못하면 모래에 다시 묻혀 그 밤엔 사라진다. 다음 썰물 밤에 다시 드러난다(영영 잃지 않음)",
+   "source": "서사 ACT6 · QA 채택(BAEK_TIDE_WINDOW 20)"
+  },
+  "pair": {
+   "kind": "enemy",
+   "name": "줄 밑 백",
+   "rule": "⑦ 줄 선 혼의 몸. 눕히면 바로 위 줄에서 그 혼의 발목 실이 풀려 말려 올라간다(위아래가 한 화면에 움직인다). 장례를 받은 사람(박돌쇠)의 백은 없다 — 빈자리로 보인다",
+   "source": "서사 ACT6 §3"
+  },
+  "number": {
+   "kind": "enemy",
+   "name": "목패 백",
+   "rule": "④ 갱의 몸. 이름을 모르면 목패 번호로 눕힌다(캐스팅 +0.5초, 이튿날 목패에 번호가 새겨진다 — 반쪽). 시즌 1 B-08을 천도했으면 전원 이름으로",
+   "source": "서사 ACT7 · QA 채택(BAEK_NUMBER_CAST_BONUS 0.5)"
+  },
+  "nickname": {
+   "kind": "enemy",
+   "name": "무적 백",
+   "rule": "⑥ 이름을 가져 본 적 없는 몸. 별명도 이름이다. 시즌 1 B-11을 천도했으면 별명으로 눕힌다(캐스팅 정상, 이튿날 팻말에 별명). 왕초의 백은 아이를 업고 있어 둘을 함께 눕혀야 한다",
+   "source": "서사 ACT7 §4"
+  },
+  "worker": {
+   "kind": "enemy",
+   "name": "일꾼 백",
+   "rule": "⑧~⑩ 저승 일꾼(서리·부엌 할미)의 몸. 눕히면 위층에서 그 일꾼이 일을 놓고 줄에 선다(저승이 조금씩 빈다)",
+   "source": "서사 ACT8(F65)"
+  },
+  "waiting": {
+   "kind": "guard",
+   "name": "아랫목 백",
+   "rule": "⑨ 오지 않는 차사를 기다리며 자기 집 아랫목에 누운 몸. B-29 할미가 눕기 전에는 '할머니 차례가 먼저'라며 눕지 않고 방을 지킨다(싸우지 않는 장애물, 깨뜨리기만 된다). B-29를 눕히면 전원 캐스팅 −0.5초",
+   "source": "서사 ACT8 B-29 · 해석은 기획(확인 요청)"
+  },
+  "chasa": {
+   "kind": "enemy",
+   "name": "차사의 백",
+   "rule": "⑩ 사슬 무덤의 사슬마다 아래에 묶인 옛 차사의 몸. 눕히면 위의 사슬이 땅에서 빠져 녹슨 채 쓰러진다 — 무덤이 하나씩 끝난다. 맺힘 150(시즌 2 옛 차사 혼과 같음)",
+   "source": "서사 ACT8(F68) · 맺힘은 기획 제안"
+  }
+ },
+ "rules": [
+  {
+   "name": "눕히기",
+   "rule": "실을 끊어 무릎 꿇은 백의 이름을 불러 눕힌다. 캐스팅 2.0초. 그 사람의 혼을 시즌 1·2에서 천도했으면 −0.5초, 파혼했으면 +0.5초, 번호로 부르면 +0.5초(하한 0.5초). 눕힐 때마다 저편 나룻불이 하나 는다",
+   "source": "서사 ACT6 · QA 채택(BAEK_*_CAST_BONUS)"
+  },
+  {
+   "name": "깨뜨리기",
+   "rule": "즉시. 큰 폭발로 주변 정리. 업 +1. 그 백의 혼은 ⑦ 줄에서 돌아선다(영영 저편에 못 닿는다)",
+   "source": "서사 ACT6 · QA 채택(BAEK_PAHON_KARMA 1)"
+  },
+  {
+   "name": "주인 없는 백",
+   "rule": "시즌 1·2에서 그 사람의 혼을 파혼했으면 이름 실이 끊겨 있다. 눕히려면 낮 단서 1개(거꾸로 장례)를 먼저 찾는다. 단서 없이도 깨뜨리기는 된다",
+   "source": "서사 ACT6"
+  },
+  {
+   "name": "비켜서는 백(7·8막)",
+   "rule": "시즌 1·2에서 그 사람의 혼을 천도했으면 다가가면 스스로 일어나 비켜선다. 싸움 없이 바로 눕히고, 그 자리에 굴이 열려 아래층 지름길이 된다. 시즌 3부터 시작한 기본 상태는 약 절반",
+   "source": "서사 ACT7 · QA 채택(BAEK_SKIP_RATIO_DEFAULT 0.5)"
+  },
+  {
+   "name": "덩어리 백(7막)",
+   "rule": "아는 이름을 부를 때마다(1초) 한 몸씩 떨어진다. 화면엔 12몸까지, 나머지는 덩어리 안. 모르는 몸을 깨뜨려 떼어 내면 몸당 업 +0.1, 덩어리 하나당 상한 +3",
+   "source": "QA 채택(LUMP_VISIBLE_BODIES_MAX, LUMP_PAHON_KARMA_*)"
+  },
+  {
+   "name": "6막 끊기판의 값",
+   "rule": "6막을 B-23 끊기로 끝냈으면 7막 적 공격력 +10%(얼룩·소환엔 적용 안 함), 덩어리 백 +1몸",
+   "source": "QA 채택(CHAIN_BREAK_*)"
+  },
+  {
+   "name": "둔화 합산",
+   "rule": "앙금·웅덩이·안개 등 이동 둔화는 겹쳐도 −35%에서 멈춘다",
+   "source": "QA 채택(SLOW_STACK_MAX)"
+  }
+ ],
+ "boss_effects": [
+  {
+   "when": "시즌 1 B-02(월화) 천도 / 파혼",
+   "where": "① 둑 밑",
+   "effect": "열한 몸의 이마에 이름이 또렷 → 낮 단서 없이 바로 눕힘 / 파혼이면 이름이 흐려 +0.5초"
+  },
+  {
+   "when": "시즌 1 B-08 천도",
+   "where": "④",
+   "effect": "장부 뒷장의 열네 이름 → 목패 백 전원 이름으로 눕힘(번호 +0.5초 없음)"
+  },
+  {
+   "when": "시즌 1 B-11 천도",
+   "where": "⑥",
+   "effect": "무적 백을 별명으로 눕힘. 팻말에 별명이 새겨진다"
+  },
+  {
+   "when": "B-23 끊기",
+   "where": "7막 전체",
+   "effect": "적 공격력 +10%, 덩어리 백 +1몸"
+  },
+  {
+   "when": "B-29 눕히기",
+   "where": "⑨",
+   "effect": "아랫목 백이 눕기 시작한다. ⑨ 남은 백 전원 캐스팅 −0.5초"
+  },
+  {
+   "when": "시즌 2 ⑧~⑩ 천도",
+   "where": "8막",
+   "effect": "그 혼의 백은 비켜선다(7막 규칙 그대로)"
+  }
+ ],
+ "fierce_s3": [
+  {
+   "id": "X8",
+   "name": "물에 잠긴 밤",
+   "when": "물 차오름 경고(30초 전) 뒤에도 아래층에 남아 있으면, 차오르는 물에서 사나운 적 1마리가 일어난다(한 밤에 한 번)",
+   "status": "제안",
+   "why": "\"오늘 밤 얼마나 깊이\"(기둥 3)의 욕심에 값이 붙는다. 손실 50%보다 먼저 보이는 경고"
+  },
+  {
+   "id": "X9",
+   "name": "굳은 덩어리",
+   "when": "덩어리 백 하나에서 모르는 몸을 깨뜨려 6몸 넘게 떼어 내면, 남은 덩어리가 사나운 적으로 굳는다(맺힘·공격 +50%)",
+   "status": "제안",
+   "why": "이름을 모아 오는 대신 깨뜨려 떼어 내는 길이 빠르기만 하지 않게 한다. 업 상한 +3만으로는 손에 잡히는 대가가 약하다"
+  }
+ ],
+ "fierce_mult": 1.5,
+ "zones": [
+  {
+   "jurisdiction": "①",
+   "zone": "둑 밑",
+   "act": 6,
+   "ring": 9,
+   "boss": null,
+   "mix": {
+    "baek": 0.8,
+    "lump_baek": 0.0,
+    "thread": 0.2
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "큰물 밤 둑에서 쓸려 간 사람들. 가운데 팔을 엮은 열한 몸(시즌 1 월화를 천도했으면 바로, 파혼했으면 +0.5초)과 열두째 빈자리"
+  },
+  {
+   "jurisdiction": "①",
+   "zone": "소 밑",
+   "act": 6,
+   "ring": 9,
+   "boss": "B-21 마지막 손님(윤 영감의 백)",
+   "mix": {
+    "baek": 0.6,
+    "lump_baek": 0.0,
+    "thread": 0.4
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "나룻배와 함께 가라앉은 사람들. 실이 '물에 엉킨 손'을 많이 끌어올린다"
+  },
+  {
+   "jurisdiction": "⑤",
+   "zone": "난파 여울 바닥",
+   "act": 6,
+   "ring": 9,
+   "boss": null,
+   "mix": {
+    "baek": 0.75,
+    "lump_baek": 0.0,
+    "thread": 0.25
+   },
+   "tags": {
+    "tide": 1.0
+   },
+   "concurrent": 10,
+   "why": "바다에서 돌아오지 못한 어부·해녀. 전원 물때를 따른다"
+  },
+  {
+   "jurisdiction": "⑤",
+   "zone": "곶 밑 바다굴",
+   "act": 6,
+   "ring": 9,
+   "boss": "B-22 줄에 묶인 일곱",
+   "mix": {
+    "baek": 0.7,
+    "lump_baek": 0.0,
+    "thread": 0.3
+   },
+   "tags": {
+    "tide": 1.0
+   },
+   "concurrent": 10,
+   "why": "썰물에만 열리는 굴(B-22)"
+  },
+  {
+   "jurisdiction": "⑦",
+   "zone": "줄 밑",
+   "act": 6,
+   "ring": 9,
+   "boss": null,
+   "mix": {
+    "baek": 0.85,
+    "lump_baek": 0.0,
+    "thread": 0.15
+   },
+   "tags": {
+    "pair": 1.0
+   },
+   "concurrent": 10,
+   "why": "줄 선 혼들의 몸. 모든 관할에서 흘러와 모였다"
+  },
+  {
+   "jurisdiction": "⑦",
+   "zone": "닻 여울",
+   "act": 6,
+   "ring": 9,
+   "boss": "B-23 물 밑 매듭",
+   "mix": {
+    "baek": 0.4,
+    "lump_baek": 0.0,
+    "thread": 0.6
+   },
+   "tags": {
+    "pair": 1.0
+   },
+   "concurrent": 10,
+   "why": "매듭(B-23) 둘레. 실이 많다"
+  },
+  {
+   "jurisdiction": "③",
+   "zone": "큰 무덤 속",
+   "act": 7,
+   "ring": 10,
+   "boss": "B-24 한 구덩이의 두 진",
+   "mix": {
+    "baek": 0.4,
+    "lump_baek": 0.4,
+    "thread": 0.2
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "두 편이 한 구덩이에. 덩어리 백이 많다"
+  },
+  {
+   "jurisdiction": "③",
+   "zone": "화살골 뿌리 밑",
+   "act": 7,
+   "ring": 10,
+   "boss": null,
+   "mix": {
+    "baek": 0.7,
+    "lump_baek": 0.1,
+    "thread": 0.2
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "건너편 병사들이 흩어져 묻힌 곳"
+  },
+  {
+   "jurisdiction": "④",
+   "zone": "물 찬 갱도",
+   "act": 7,
+   "ring": 10,
+   "boss": null,
+   "mix": {
+    "baek": 0.75,
+    "lump_baek": 0.05,
+    "thread": 0.2
+   },
+   "tags": {
+    "number": 0.6
+   },
+   "concurrent": 10,
+   "why": "갱에서 죽은 광부들. 목패 번호가 많다"
+  },
+  {
+   "jurisdiction": "④",
+   "zone": "막힌 막장 안쪽",
+   "act": 7,
+   "ring": 10,
+   "boss": "B-25 반장 칠성의 백",
+   "mix": {
+    "baek": 0.8,
+    "lump_baek": 0.0,
+    "thread": 0.2
+   },
+   "tags": {
+    "number": 1.0
+   },
+   "concurrent": 10,
+   "why": "막장의 열셋(B-25). 전원 목패"
+  },
+  {
+   "jurisdiction": "②",
+   "zone": "석회 구덩이",
+   "act": 7,
+   "ring": 10,
+   "boss": "B-26 두 겹 구덩이",
+   "mix": {
+    "baek": 0.3,
+    "lump_baek": 0.5,
+    "thread": 0.2
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "역병 두 겹(B-26). 덩어리 백이 가장 많다"
+  },
+  {
+   "jurisdiction": "②",
+   "zone": "역병막 마루 밑",
+   "act": 7,
+   "ring": 10,
+   "boss": null,
+   "mix": {
+    "baek": 0.8,
+    "lump_baek": 0.0,
+    "thread": 0.2
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "마루 밑으로 기어든 간병하던 사람들과 아이들"
+  },
+  {
+   "jurisdiction": "⑥",
+   "zone": "성문 밖 구덩이",
+   "act": 7,
+   "ring": 10,
+   "boss": "B-27 서생 이명의 백",
+   "mix": {
+    "baek": 0.5,
+    "lump_baek": 0.3,
+    "thread": 0.2
+   },
+   "tags": {
+    "nickname": 0.6
+   },
+   "concurrent": 10,
+   "why": "무연고 겹겹(B-27). 맨 위 겹에 아이를 업은 왕초"
+  },
+  {
+   "jurisdiction": "⑥",
+   "zone": "다리 기초 밑",
+   "act": 7,
+   "ring": 10,
+   "boss": null,
+   "mix": {
+    "baek": 0.8,
+    "lump_baek": 0.0,
+    "thread": 0.2
+   },
+   "tags": {
+    "nickname": 0.5
+   },
+   "concurrent": 10,
+   "why": "다리를 놓다 깔린 석수와 떠돌이. 이미 누운 백 하나(S-259)는 건드릴 수 없고 기억만 읽힌다"
+  },
+  {
+   "jurisdiction": "⑧",
+   "zone": "숙사 밑",
+   "act": 8,
+   "ring": 11,
+   "boss": null,
+   "mix": {
+    "baek": 0.8,
+    "lump_baek": 0.0,
+    "thread": 0.2
+   },
+   "tags": {
+    "worker": 0.9
+   },
+   "concurrent": 10,
+   "why": "일하다 잠든 자세의 서리·부엌 할미"
+  },
+  {
+   "jurisdiction": "⑧",
+   "zone": "먹 앙금",
+   "act": 8,
+   "ring": 11,
+   "boss": "B-28 벼루 밑의 손",
+   "mix": {
+    "baek": 0.7,
+    "lump_baek": 0.0,
+    "thread": 0.3
+   },
+   "tags": {
+    "worker": 0.8
+   },
+   "concurrent": 10,
+   "why": "먹방 일꾼·벼루지기(B-28). 앙금에서 실이 많이 솟는다"
+  },
+  {
+   "jurisdiction": "⑨",
+   "zone": "아랫목",
+   "act": 8,
+   "ring": 11,
+   "boss": "B-29 백 년의 사잣밥 할미",
+   "mix": {
+    "baek": 0.85,
+    "lump_baek": 0.0,
+    "thread": 0.15
+   },
+   "tags": {
+    "waiting": 1.0
+   },
+   "concurrent": 10,
+   "why": "집집마다 아랫목에 누운 몸과 머리맡의 밥상(B-29)"
+  },
+  {
+   "jurisdiction": "⑨",
+   "zone": "인장 굴 바닥",
+   "act": 8,
+   "ring": 11,
+   "boss": null,
+   "mix": {
+    "baek": 0.7,
+    "lump_baek": 0.0,
+    "thread": 0.3
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "굴 사람들과 인을 훔친 혼의 몸"
+  },
+  {
+   "jurisdiction": "⑩",
+   "zone": "사슬 무덤 밑",
+   "act": 8,
+   "ring": 11,
+   "boss": null,
+   "mix": {
+    "baek": 0.7,
+    "lump_baek": 0.0,
+    "thread": 0.3
+   },
+   "tags": {
+    "chasa": 0.8
+   },
+   "concurrent": 10,
+   "why": "꽂힌 사슬마다 아래에 차사의 몸"
+  },
+  {
+   "jurisdiction": "⑩",
+   "zone": "첫 우물 밑",
+   "act": 8,
+   "ring": 11,
+   "boss": "B-30 첫 우물(어미의 백)",
+   "mix": {
+    "baek": 0.7,
+    "lump_baek": 0.0,
+    "thread": 0.3
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "처음 마을 사람들(B-30)"
+  },
+  {
+   "jurisdiction": "①",
+   "zone": "물막이 골 소 가장 깊은 곳",
+   "act": 8,
+   "ring": 11,
+   "boss": "B-31 나의 백",
+   "mix": {
+    "baek": 0.0,
+    "lump_baek": 0.0,
+    "thread": 1.0
+   },
+   "tags": {},
+   "concurrent": 10,
+   "why": "B-31 무대. 백은 나의 백 하나뿐이고, 실만 솟는다"
+  }
+ ]
+}

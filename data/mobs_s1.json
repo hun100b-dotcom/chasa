@@ -1,0 +1,569 @@
+{
+ "_설명": "tools/mobs_s1.py가 만든 파일. 직접 고치지 말고 생성기를 고친다.",
+ "ages": [
+  {
+   "id": "fresh",
+   "name": "갓 죽은 혼",
+   "wait": 10.0,
+   "maedhim": 100,
+   "memory": "또렷한 한 줄(최근 목격담)"
+  },
+  {
+   "id": "year",
+   "name": "해 넘긴 혼",
+   "wait": 7.0,
+   "maedhim": 100,
+   "memory": "흐린 한 줄"
+  },
+  {
+   "id": "old",
+   "name": "오래된 혼",
+   "wait": 4.0,
+   "maedhim": 100,
+   "memory": "조각 한 줄"
+  }
+ ],
+ "lump": {
+  "id": "lump",
+  "name": "덩어리",
+  "wait": 4.0,
+  "maedhim": 400,
+  "tendo": false,
+  "note": "파혼만 된다. 파혼하면 엉켜 있던 이름 목록이 잠깐 보인다"
+ },
+ "tags": {
+  "water": {
+   "name": "물 혼",
+   "rule": "물가에서 일어난다. 천도 캐스팅 −0.5초. 밀물 신호 뒤 20초 안에 못 붙잡으면 그 밤엔 가라앉아 사라진다",
+   "source": "QA 채택(WATER_SOUL_CAST_BONUS, WATER_TIDE_WINDOW)"
+  },
+  "number": {
+   "name": "숫자 혼",
+   "rule": "명부에 번호로만 적혔다(인 없음). 천도 캐스팅 +0.5초, 기억은 짧은 한 줄. B-08을 천도하면 ④의 숫자 혼은 이름을 되찾는다(인 흐림 +0.25초)",
+   "source": "QA 채택(SEAL_MISSING_CAST_BONUS) · 서사 ACT2"
+  },
+  "soldier": {
+   "name": "병사 혼",
+   "rule": "셋이 한 대열로 함께 일어난다. B-05 처결 전에는 병사 혼의 20%가 '번호 병사'(맺힘·공격 +30%)",
+   "source": "서사 ACT2(B-05 번호 병사) · 기획 제안(대열·20%)"
+  },
+  "miner": {
+   "name": "광부 혼",
+   "rule": "둘씩 일어난다. 등불을 들고 있어 쓰러지면 2초 동안 주변 시야가 밝아진다(갱도 구역의 어둠을 덜어 줌)",
+   "source": "기획 제안"
+  },
+  "homeless": {
+   "name": "무적 혼",
+   "rule": "호적에 오른 적이 없어 명부에 처음부터 이름이 없다(인 없음 +0.5초). 낮에 별명을 들은 혼은 −0.5초(하한 0.5초). B-11을 천도하면 ⑥ 무적 혼 전원이 별명으로 천도 가능",
+   "source": "QA 채택(NAMED_SOUL_CAST_BONUS) · 서사 ACT3"
+  }
+ },
+ "fierce": [
+  {
+   "id": "X1",
+   "name": "얼룩 셋",
+   "when": "원념 얼룩 3개가 겹치면 그 자리에서 1마리",
+   "status": "QA 채택(P-010)",
+   "why": "파혼의 대가가 세계 안에서 보인다(덩어리 = 파혼이 만든 것)"
+  },
+  {
+   "id": "X2",
+   "name": "흐르는 얼룩",
+   "when": "물 혼이 있는 구역(보릿들·물막이 골·⑤)에서는 얼룩이 초당 0.5m씩 물 낮은 쪽으로 흘러 모인다. 그래서 X1이 더 자주 생긴다. 이렇게 생긴 사나운 적은 '큰물귀신' 모습",
+   "status": "서사 BOSS-01(큰물 단계) 확장 · 제안",
+   "why": "물가에서 파혼하면 얼룩이 한곳에 모인다는 것을 몸으로 배운다"
+  },
+  {
+   "id": "X3",
+   "name": "놓친 혼",
+   "when": "한 밤에 처결 대기를 3번 넘기면, 그 뒤로 대기를 넘긴 혼은 맺힘 50%로 일어나는 대신 사나운 적으로 일어난다",
+   "status": "제안",
+   "why": "고르지 않는 것도 선택이다. 천도도 파혼도 안 하고 미루면 값을 치른다"
+  },
+  {
+   "id": "X4",
+   "name": "업의 그늘",
+   "when": "업 30 이상이면 새로 일어나는 적 중 3%, 업 60 이상이면 6%가 사나운 적",
+   "status": "제안",
+   "why": "파혼 습관이 밤의 위험으로 돌아온다. 숫자가 아니라 무서운 적으로 느껴진다"
+  }
+ ],
+ "fierce_mult": 1.5,
+ "boss_effects": [
+  {
+   "when": "B-01 파혼",
+   "where": "물막이 골",
+   "effect": "덩어리 +10%p (큰 얼룩 지대)"
+  },
+  {
+   "when": "B-03 천도",
+   "where": "②",
+   "effect": "이름혼 인 없음 → 흐림 (+0.5초 → +0.25초)"
+  },
+  {
+   "when": "B-05 천도",
+   "where": "③",
+   "effect": "덩어리 −10%p, 번호 병사 0%"
+  },
+  {
+   "when": "B-08 천도",
+   "where": "④",
+   "effect": "숫자 혼이 이름을 되찾음 (+0.5초 → +0.25초, 긴 기억)"
+  },
+  {
+   "when": "B-11 천도",
+   "where": "⑥",
+   "effect": "무적 혼 전원 별명으로 천도 (−0.5초)"
+  }
+ ],
+ "zones": [
+  {
+   "jurisdiction": "①",
+   "zone": "솔고개 마을",
+   "ring": 1,
+   "act": 1,
+   "boss": null,
+   "mix": {
+    "fresh": 0.665,
+    "year": 0.237,
+    "old": 0.048,
+    "lump": 0.05
+   },
+   "tags": {},
+   "concurrent": 5,
+   "named_souls": 6,
+   "why": "요즘 상여가 자주 나가는 마을. 첫 밤의 무대라 대기가 긴 갓 죽은 혼이 대부분"
+  },
+  {
+   "jurisdiction": "①",
+   "zone": "보릿들",
+   "ring": 1,
+   "act": 1,
+   "boss": null,
+   "mix": {
+    "fresh": 0.237,
+    "year": 0.57,
+    "old": 0.142,
+    "lump": 0.05
+   },
+   "tags": {
+    "water": 0.15
+   },
+   "concurrent": 5,
+   "named_souls": 6,
+   "why": "몇 해 전 큰물이 난 논밭. 해 넘긴 혼 위주, 둑 쪽에 물 혼"
+  },
+  {
+   "jurisdiction": "①",
+   "zone": "물막이 골",
+   "ring": 2,
+   "act": 1,
+   "boss": "B-01 나루 영감",
+   "mix": {
+    "fresh": 0.09,
+    "year": 0.45,
+    "old": 0.36,
+    "lump": 0.1
+   },
+   "tags": {
+    "water": 0.4
+   },
+   "concurrent": 6,
+   "named_souls": 6,
+   "why": "옛 나루. 큰물 밤에 떠내려간 사람들. 물 혼이 많다"
+  },
+  {
+   "jurisdiction": "①",
+   "zone": "폐당집",
+   "ring": 2,
+   "act": 1,
+   "boss": "B-02 월화",
+   "mix": {
+    "fresh": 0.043,
+    "year": 0.212,
+    "old": 0.595,
+    "lump": 0.15
+   },
+   "tags": {},
+   "concurrent": 6,
+   "named_souls": 6,
+   "why": "오래전부터 파혼된 파편이 모이는 곳(WORLD-BIBLE). 오래된 혼과 덩어리"
+  },
+  {
+   "jurisdiction": "②",
+   "zone": "장터거리",
+   "ring": 1,
+   "act": 1,
+   "boss": null,
+   "mix": {
+    "fresh": 0.57,
+    "year": 0.285,
+    "old": 0.095,
+    "lump": 0.05
+   },
+   "tags": {},
+   "concurrent": 5,
+   "named_souls": 6,
+   "why": "사람 많은 장터. 역병을 '고뿔'이라 한 사이 죽은 이들"
+  },
+  {
+   "jurisdiction": "②",
+   "zone": "동헌 터",
+   "ring": 2,
+   "act": 1,
+   "boss": null,
+   "mix": {
+    "fresh": 0.27,
+    "year": 0.45,
+    "old": 0.18,
+    "lump": 0.1
+   },
+   "tags": {},
+   "concurrent": 6,
+   "named_souls": 6,
+   "why": "관아 터. 명단을 지운 곳이라 해 넘긴 혼이 맴돈다"
+  },
+  {
+   "jurisdiction": "②",
+   "zone": "역병막",
+   "ring": 2,
+   "act": 1,
+   "boss": "B-03 서 의원",
+   "mix": {
+    "fresh": 0.27,
+    "year": 0.45,
+    "old": 0.18,
+    "lump": 0.1
+   },
+   "tags": {},
+   "concurrent": 6,
+   "named_souls": 6,
+   "why": "역병은 몇 해 전 여름에 돌았고, 지금은 해마다 '고뿔'로 몇 명씩 죽는다(서사 확정 10-24). 해 넘긴 혼이 더 많다"
+  },
+  {
+   "jurisdiction": "②",
+   "zone": "무덤골",
+   "ring": 3,
+   "act": 1,
+   "boss": "흑월 1차(처결 없음)",
+   "mix": {
+    "fresh": 0.085,
+    "year": 0.34,
+    "old": 0.425,
+    "lump": 0.15
+   },
+   "tags": {},
+   "concurrent": 7,
+   "named_souls": 6,
+   "why": "새 무덤과 사십 년 된 무덤이 섞인 골"
+  },
+  {
+   "jurisdiction": "③",
+   "zone": "무너진 산성",
+   "ring": 3,
+   "act": 2,
+   "boss": "B-05 기수 대돌",
+   "mix": {
+    "fresh": 0.34,
+    "year": 0.425,
+    "old": 0.085,
+    "lump": 0.15
+   },
+   "tags": {
+    "soldier": 0.3
+   },
+   "concurrent": 7,
+   "named_souls": 6,
+   "why": "아랫마을(산 사람)과 성터가 겹친다. 마을 혼과 병사 혼이 반반"
+  },
+  {
+   "jurisdiction": "③",
+   "zone": "화살골",
+   "ring": 3,
+   "act": 2,
+   "boss": null,
+   "mix": {
+    "fresh": 0.085,
+    "year": 0.425,
+    "old": 0.34,
+    "lump": 0.15
+   },
+   "tags": {
+    "soldier": 0.6
+   },
+   "concurrent": 7,
+   "named_souls": 6,
+   "why": "밤마다 번호 부르는 소리. 병사 혼이 많다"
+  },
+  {
+   "jurisdiction": "③",
+   "zone": "군막 터",
+   "ring": 4,
+   "act": 2,
+   "boss": "B-06 이름 없는 장수",
+   "mix": {
+    "fresh": 0.04,
+    "year": 0.2,
+    "old": 0.56,
+    "lump": 0.2
+   },
+   "tags": {
+    "soldier": 0.7
+   },
+   "concurrent": 8,
+   "named_souls": 6,
+   "why": "진법도만 남은 평지. 오래된 병사 혼"
+  },
+  {
+   "jurisdiction": "③",
+   "zone": "큰 무덤",
+   "ring": 4,
+   "act": 2,
+   "boss": null,
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.15,
+    "old": 0.6,
+    "lump": 0.25
+   },
+   "tags": {
+    "soldier": 0.5
+   },
+   "concurrent": 8,
+   "named_souls": 6,
+   "why": "서른일곱이 한 구덩이에. 덩어리가 많다"
+  },
+  {
+   "jurisdiction": "④",
+   "zone": "광부촌",
+   "ring": 3,
+   "act": 2,
+   "boss": "B-08 장부꾼 염씨",
+   "mix": {
+    "fresh": 0.425,
+    "year": 0.34,
+    "old": 0.085,
+    "lump": 0.15
+   },
+   "tags": {
+    "miner": 0.4,
+    "number": 0.15
+   },
+   "concurrent": 7,
+   "named_souls": 6,
+   "why": "목패 걸이 마을. 돌아오지 않은 광부"
+  },
+  {
+   "jurisdiction": "④",
+   "zone": "선탄장",
+   "ring": 3,
+   "act": 2,
+   "boss": null,
+   "mix": {
+    "fresh": 0.425,
+    "year": 0.34,
+    "old": 0.085,
+    "lump": 0.15
+   },
+   "tags": {
+    "miner": 0.2,
+    "number": 0.15
+   },
+   "concurrent": 7,
+   "named_souls": 6,
+   "why": "석탄 고르는 아낙들. 광부보다 마을 혼이 많다"
+  },
+  {
+   "jurisdiction": "④",
+   "zone": "큰 갱도",
+   "ring": 4,
+   "act": 2,
+   "boss": null,
+   "mix": {
+    "fresh": 0.08,
+    "year": 0.4,
+    "old": 0.32,
+    "lump": 0.2
+   },
+   "tags": {
+    "miner": 0.6,
+    "number": 0.25
+   },
+   "concurrent": 8,
+   "named_souls": 6,
+   "why": "끝없는 어둠. 해 넘긴 광부 혼"
+  },
+  {
+   "jurisdiction": "④",
+   "zone": "무너진 막장",
+   "ring": 4,
+   "act": 2,
+   "boss": "B-07 갱도 반장 칠성",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.24,
+    "old": 0.56,
+    "lump": 0.2
+   },
+   "tags": {
+    "miner": 0.5,
+    "number": 0.5
+   },
+   "concurrent": 8,
+   "named_souls": 6,
+   "why": "'13 나감'. 숫자 혼이 절반"
+  },
+  {
+   "jurisdiction": "⑤",
+   "zone": "포구",
+   "ring": 5,
+   "act": 3,
+   "boss": null,
+   "mix": {
+    "fresh": 0.375,
+    "year": 0.3,
+    "old": 0.075,
+    "lump": 0.25
+   },
+   "tags": {
+    "water": 0.25
+   },
+   "concurrent": 9,
+   "named_souls": 6,
+   "why": "선창과 객주. 바다에서 돌아오지 않은 사람들"
+  },
+  {
+   "jurisdiction": "⑤",
+   "zone": "소금밭",
+   "ring": 5,
+   "act": 3,
+   "boss": null,
+   "mix": {
+    "fresh": 0.375,
+    "year": 0.075,
+    "old": 0.3,
+    "lump": 0.25
+   },
+   "tags": {
+    "water": 0.15
+   },
+   "concurrent": 9,
+   "named_souls": 6,
+   "why": "소금 더미가 혼불처럼 빛나 헷갈린다(시야)"
+  },
+  {
+   "jurisdiction": "⑤",
+   "zone": "망부석 곶",
+   "ring": 5,
+   "act": 3,
+   "boss": "B-09 망부석 아낙",
+   "mix": {
+    "fresh": 0.3,
+    "year": 0.375,
+    "old": 0.075,
+    "lump": 0.25
+   },
+   "tags": {
+    "water": 0.35
+   },
+   "concurrent": 9,
+   "named_souls": 6,
+   "why": "헛묘 마흔둘. 몸 없는 무덤"
+  },
+  {
+   "jurisdiction": "⑤",
+   "zone": "난파 여울",
+   "ring": 6,
+   "act": 3,
+   "boss": "B-10 만선호 선장",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.375,
+    "old": 0.375,
+    "lump": 0.25
+   },
+   "tags": {
+    "water": 0.6
+   },
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "썰물 때만 바닥이 드러나는 여울. 물 혼이 가장 많다"
+  },
+  {
+   "jurisdiction": "⑥",
+   "zone": "저잣거리",
+   "ring": 5,
+   "act": 3,
+   "boss": null,
+   "mix": {
+    "fresh": 0.375,
+    "year": 0.3,
+    "old": 0.075,
+    "lump": 0.25
+   },
+   "tags": {
+    "homeless": 0.3
+   },
+   "concurrent": 9,
+   "named_souls": 6,
+   "why": "등불이 많아 혼불이 잘 안 보인다(시야 대비 낮음)"
+  },
+  {
+   "jurisdiction": "⑥",
+   "zone": "큰 다리 밑",
+   "ring": 5,
+   "act": 3,
+   "boss": "B-11 다리 밑 왕초",
+   "mix": {
+    "fresh": 0.3,
+    "year": 0.375,
+    "old": 0.075,
+    "lump": 0.25
+   },
+   "tags": {
+    "homeless": 0.6
+   },
+   "concurrent": 9,
+   "named_souls": 6,
+   "why": "다리 밑 움막. 무적 혼이 가장 많다"
+  },
+  {
+   "jurisdiction": "⑥",
+   "zone": "빈민 움막촌",
+   "ring": 6,
+   "act": 3,
+   "boss": null,
+   "mix": {
+    "fresh": 0.15,
+    "year": 0.45,
+    "old": 0.15,
+    "lump": 0.25
+   },
+   "tags": {
+    "homeless": 0.5
+   },
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "검은여울에서 올라온 사람들의 자식들"
+  },
+  {
+   "jurisdiction": "⑥",
+   "zone": "성문 밖",
+   "ring": 6,
+   "act": 3,
+   "boss": "B-12 흑월 2차",
+   "mix": {
+    "fresh": 0.0,
+    "year": 0.225,
+    "old": 0.525,
+    "lump": 0.25
+   },
+   "tags": {
+    "homeless": 0.3
+   },
+   "concurrent": 10,
+   "named_souls": 6,
+   "why": "팻말 없는 구덩이 무덤. 덩어리가 많다"
+  }
+ ]
+}
