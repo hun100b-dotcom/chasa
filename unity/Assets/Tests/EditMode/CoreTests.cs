@@ -389,7 +389,7 @@ public class CoreTests
         Assert.IsTrue(n.Warning);
     }
 
-    // ---- M3: 솔고개 지형 ----
+    // ---- M3: 솔고개 지형 (아트 배치표 기반) ----
     [Test]
     public void Map_PushOutMovesBodyOutOfHouse()
     {
@@ -405,18 +405,32 @@ public class CoreTests
     {
         float x = 999f, z = -999f;
         MapLayout.PushOut(ref x, ref z, 0.5f);
-        Assert.AreEqual(MapLayout.HalfSize - 0.5f, x, 0.001f);
-        Assert.AreEqual(-(MapLayout.HalfSize - 0.5f), z, 0.001f);
+        Assert.AreEqual(MapLayout.MaxX - 0.5f, x, 0.001f);
+        Assert.AreEqual(MapLayout.MinZ + 0.5f, z, 0.001f);
     }
 
     [Test]
-    public void Map_ShrineStartIsFree_AndGateOpen()
+    public void Map_StartIsFree_AndStoryPlacesReachable()
     {
         Assert.IsFalse(MapLayout.IsBlocked(0f, 0f, 0.5f), "출발점이 막히면 안 된다");
-        // 장승 한 쌍 사이(귀환 반경 가장자리)는 몸이 지나갈 만큼 열려 있어야 한다
-        Assert.IsFalse(MapLayout.IsBlocked(Balance.SHRINE_RADIUS, 0f, 0.5f));
-        // 길(z=0)은 마을 어귀까지 막힘 없음
-        for (float x = 0f; x <= 25f; x += 1f) Assert.IsFalse(MapLayout.IsBlocked(x, 0f, 0.5f), "길이 막힘 x=" + x);
+        Assert.IsFalse(MapLayout.IsBlocked(MapLayout.BossX, MapLayout.BossZ, 1.0f), "보스 자리가 막힘");
+        Assert.IsFalse(MapLayout.IsBlocked(MapLayout.NamedX, MapLayout.NamedZ, 0.6f), "이름혼 자리가 막힘");
+        Assert.IsTrue(MapLayout.Reachable(MapLayout.BossX, MapLayout.BossZ, 0.6f), "보스까지 길이 없다");
+        Assert.IsTrue(MapLayout.Reachable(MapLayout.NamedX, MapLayout.NamedZ, 0.6f), "이름혼 자리까지 길이 없다");
+        foreach (var c in MapLayout.ClueCells)
+        {
+            float x = MapLayout.WorldX(c[1]), z = MapLayout.WorldZ(c[0]);
+            Assert.IsFalse(MapLayout.IsBlocked(x, z, 0.6f), "단서 자리가 막힘 " + c[0] + "," + c[1]);
+            Assert.IsTrue(MapLayout.Reachable(x, z, 0.6f), "단서까지 길이 없다 " + c[0] + "," + c[1]);
+        }
+    }
+
+    [Test]
+    public void Map_DataMatchesGrid()
+    {
+        Assert.AreEqual(MapData.Rows, MapData.Ground.Length);
+        foreach (var row in MapData.Ground) Assert.AreEqual(MapData.Cols, row.Length);
+        Assert.Greater(MapLayout.Blockers.Count, 5);
     }
 
     // ---- M4: 이름혼·보스·단서 ----
@@ -619,5 +633,23 @@ public class CoreTests
         Assert.AreEqual(night.KeptNeok, night.FinalNeok, "몫은 보존");
         Assert.AreEqual(Balance.BOSS_S1_NEOK, night.LostNeok, "보스 보상은 흩어진다");
         Assert.Greater(ledger.Neok, night.FinalNeok, "장부엔 쌓였지만 확정 수확은 줄어든다(결과 화면 표시 기준)");
+    }
+
+    [Test]
+    public void Night_CoinAfterQuotaScatters_AtDawn()
+    {
+        var n = new NightRun();
+        n.RecordCoin(5);                                   // 몫 전: 보존
+        for (int i = 0; i < Balance.NIGHT_QUOTA; i++) n.RecordTendo(10);
+        n.RecordCoin(5); n.RecordCoin(30);                 // 몫 뒤: 명부 밖
+        n.Tick(Balance.NIGHT_DURATION + 1f);
+        Assert.AreEqual(5, n.FinalCoin);
+        Assert.AreEqual(35, n.LostCoin);
+        var n2 = new NightRun();
+        for (int i = 0; i < Balance.NIGHT_QUOTA; i++) n2.RecordTendo(10);
+        n2.RecordCoin(35);
+        Assert.IsTrue(n2.TryReturn(0f));
+        Assert.AreEqual(35, n2.FinalCoin);
+        Assert.AreEqual(0, n2.LostCoin);
     }
 }

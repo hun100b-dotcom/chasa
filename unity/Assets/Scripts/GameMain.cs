@@ -7,6 +7,7 @@
 //   기본이라 AI가 직접 다루기 어렵다. 그래서 씬은 비워 두고 게임이 켜질 때 코드로 전부 만든다.
 // =============================================================================
 using UnityEngine;
+using Chasa.Core;
 
 public class GameMain : MonoBehaviour
 {
@@ -85,25 +86,31 @@ public class GameMain : MonoBehaviour
         sun.transform.rotation = Quaternion.LookRotation(-new Vector3(14, 30, 8));
         QualitySettings.shadowDistance = 60f;
 
-        // 바닥
-        float size = Config.ARENA_HALF_SIZE * 2f;
+        // 바닥: 맵 경계(Core/MapLayout)에 맞춘 직사각형. 그림 타일이 깔리면 이 판은 뒤에 숨는다
+        float sizeX = MapLayout.MaxX - MapLayout.MinX, sizeZ = MapLayout.MaxZ - MapLayout.MinZ;
         var floor = GameObject.CreatePrimitive(PrimitiveType.Plane); // 기본 판: 10 x 10
         Destroy(floor.GetComponent<Collider>());
-        floor.transform.localScale = new Vector3(size / 10f, 1, size / 10f);
+        floor.transform.position = new Vector3(MapLayout.CenterX, 0f, MapLayout.CenterZ);
+        floor.transform.localScale = new Vector3(sizeX / 10f, 1, sizeZ / 10f);
         floor.GetComponent<Renderer>().sharedMaterial = U.Matte(Config.Hex(0x2b303b));
 
-        // 격자(2칸 간격, 가운데 밝게) + 붉은 테두리 — 선 메쉬 하나로
+        // 격자(2칸 간격) + 붉은 테두리 — 선 메쉬 하나로 (그림 지형이 있으면 꺼진다)
         var verts = new System.Collections.Generic.List<Vector3>();
         var cols = new System.Collections.Generic.List<Color>();
-        float h = Config.ARENA_HALF_SIZE;
-        for (float x = -h; x <= h + 0.001f; x += 2f)
+        float x0 = MapLayout.MinX, x1 = MapLayout.MaxX, z0 = MapLayout.MinZ, z1 = MapLayout.MaxZ;
+        for (float x = Mathf.Ceil(x0 / 2f) * 2f; x <= x1 + 0.001f; x += 2f)
         {
             var c = Mathf.Abs(x) < 0.001f ? Config.Hex(0x4a5262) : Config.Hex(0x383e4b);
-            verts.Add(new Vector3(x, 0.01f, -h)); verts.Add(new Vector3(x, 0.01f, h));
-            verts.Add(new Vector3(-h, 0.01f, x)); verts.Add(new Vector3(h, 0.01f, x));
-            for (int k = 0; k < 4; k++) cols.Add(c);
+            verts.Add(new Vector3(x, 0.01f, z0)); verts.Add(new Vector3(x, 0.01f, z1));
+            cols.Add(c); cols.Add(c);
         }
-        var corners = new[] { new Vector3(-h, 0.02f, -h), new Vector3(h, 0.02f, -h), new Vector3(h, 0.02f, h), new Vector3(-h, 0.02f, h) };
+        for (float z = Mathf.Ceil(z0 / 2f) * 2f; z <= z1 + 0.001f; z += 2f)
+        {
+            var c = Mathf.Abs(z) < 0.001f ? Config.Hex(0x4a5262) : Config.Hex(0x383e4b);
+            verts.Add(new Vector3(x0, 0.01f, z)); verts.Add(new Vector3(x1, 0.01f, z));
+            cols.Add(c); cols.Add(c);
+        }
+        var corners = new[] { new Vector3(x0, 0.02f, z0), new Vector3(x1, 0.02f, z0), new Vector3(x1, 0.02f, z1), new Vector3(x0, 0.02f, z1) };
         for (int i = 0; i < 4; i++) { verts.Add(corners[i]); verts.Add(corners[(i + 1) % 4]); cols.Add(Config.Hex(0x9b3b3b)); cols.Add(Config.Hex(0x9b3b3b)); }
         var idx = new int[verts.Count];
         for (int i = 0; i < idx.Length; i++) idx[i] = i;

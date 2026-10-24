@@ -262,4 +262,5 @@ public static class Balance
     public const float B03_WAVE_GAP = 1.2f;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 연속 파동 간격(초). 안전 칸이 파동마다 바뀌어 이동을 강제
     public const float B03_WEAK_TIME = 3.0f;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 약점 노출(초). 철삭 초당 36 기준 창 1번에 108 피해
     public const int B03_BOSS_MAEDHIM = 800;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 보스 맺힘. 약점 창 약 8번 필요(철삭·방망이 동일). S1 시연 보스는 1200으로 12번이라 B-03이 더 짧게 느껴지도록 낮춤
+    public const float MAP_CELL_SIZE = 2.0f;  // (시연판 임시) 아트 배치표 한 칸의 실제 길이(m). 1이면 아트 비율 그대로 18×14m로 너무 좁아 2로 키움
 }

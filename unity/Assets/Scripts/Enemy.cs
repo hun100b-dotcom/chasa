@@ -341,9 +341,10 @@ public class EnemyManager
 
     Vector3 SpawnPoint(Vector3 c, float angle)
     {
-        float lim = Config.ARENA_HALF_SIZE - 1f;
-        return new Vector3(Mathf.Clamp(c.x + Mathf.Cos(angle) * Config.ENEMY_SPAWN_DISTANCE, -lim, lim), 0,
-                           Mathf.Clamp(c.z + Mathf.Sin(angle) * Config.ENEMY_SPAWN_DISTANCE, -lim, lim));
+        // 플레이어 둘레 고리 위에서 태어나되, 맵 밖이거나 집 안이면 밀려난다
+        float x = c.x + Mathf.Cos(angle) * Config.ENEMY_SPAWN_DISTANCE, z = c.z + Mathf.Sin(angle) * Config.ENEMY_SPAWN_DISTANCE;
+        MapLayout.PushOut(ref x, ref z, Config.ENEMY_RADIUS + 1f);
+        return new Vector3(x, 0, z);
     }
 
     public void Tick(float dt, Vector3 playerPos, float playerRadius)

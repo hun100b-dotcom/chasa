@@ -32,7 +32,7 @@ public static class Config
     public const float CAMERA_FOLLOW_SMOOTHNESS = 8f;
 
     // 2) 맵
-    public const float ARENA_HALF_SIZE = Chasa.Core.MapLayout.HalfSize;   // 솔고개 맵 크기는 Core 의 MapLayout 이 원본(충돌 규칙과 같은 값이어야 해서)
+    // (바닥 크기는 Core/MapLayout 의 MinX~MaxX, MinZ~MaxZ 가 원본 — 아트 배치표에서 나온다)
 
     // 3) 플레이어
     public const float PLAYER_MOVE_SPEED = 9f;

@@ -96,8 +96,10 @@ public class JudgeSystem : MonoBehaviour
     {
         var at = e.Pos;
         e.Finish();
+        int coinBefore = ledger.Coin;
         ledger.DoPahon(e.soul.Boss);
         ledger.Coin += Mathf.RoundToInt((e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN) * (lo.stats.CoinMult - 1f));   // 엽전 장비 보너스
+        night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         if (e.soul.Boss)
         {
             night.BossDone = true; Say("BOSS SHATTERED");
@@ -229,7 +231,7 @@ public class JudgeSystem : MonoBehaviour
     void SpawnNamedSoul()
     {
         // 플레이어 앞쪽 7m 에서 나타난다 (길 위, 집 밖)
-        var at = new Vector3(player.Pos.x + 7f, 0, 0f);
+        var at = new Vector3(MapLayout.NamedX, 0, MapLayout.NamedZ);   // 아트 배치표가 정한 자리
         enemies.SpawnNamed(at, "Bak Dolsoe");
         Say("A NAME ON THE LIST...");
     }
@@ -237,13 +239,13 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>한 판 시작: 마을 어귀에 보스, 마을 곳곳에 단서 3개</summary>
     void SetupNight()
     {
-        enemies.SpawnBoss(new Vector3(24f, 0, 0f));
+        enemies.SpawnBoss(new Vector3(MapLayout.BossX, 0, MapLayout.BossZ));
         cluePos.Clear();
         foreach (var v in clueViews) Destroy(v);
         clueViews.Clear();
-        var spots = new[] { new Vector3(12f, 0, -3.2f), new Vector3(18f, 0, 3.4f), new Vector3(-9f, 0, 7f) };
-        foreach (var p in spots)
+        foreach (var cell in MapLayout.ClueCells)
         {
+            var p = new Vector3(MapLayout.WorldX(cell[1]), 0, MapLayout.WorldZ(cell[0]));
             cluePos.Add(p);
             var g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Destroy(g.GetComponent<Collider>());
@@ -308,7 +310,7 @@ public class JudgeSystem : MonoBehaviour
         if (night.Over)
         {
             // 한 번만 정산: 동이 터서 끝났으면 흩어진 추가 수확분(넋)을 장부에서 뺀다. 몫과 성장(기억·품계)은 그대로.
-            if (!settled) { settled = true; ledger.Neok = Mathf.Max(0, ledger.Neok - night.LostNeok); }
+            if (!settled) { settled = true; ledger.Neok = Mathf.Max(0, ledger.Neok - night.LostNeok); ledger.Coin = Mathf.Max(0, ledger.Coin - night.LostCoin); }
             // 결과 화면: 아무 때나 R/E 가 아닌 Space(또는 터치 버튼)로 다시 시작
             if (Input.GetKeyDown(KeyCode.Space)) RestartNight();
             return;
@@ -469,7 +471,7 @@ public class JudgeSystem : MonoBehaviour
             bool ok = night.Phase == NightPhase.Returned;
             GUI.Label(new Rect(0, Screen.height * 0.25f, Screen.width, 50), ok ? "NIGHT COMPLETE" : "DAWN BROKE", h);
             GUI.Label(new Rect(0, Screen.height * 0.25f + 60, Screen.width, 190),
-                "SENT " + night.Sent + "   NEOK KEPT " + night.FinalNeok + (night.LostNeok > 0 ? "   LOST " + night.LostNeok : "") +
+                "SENT " + night.Sent + "   NEOK KEPT " + night.FinalNeok + (night.LostNeok > 0 ? "   LOST " + night.LostNeok : "") + (night.LostCoin > 0 ? "   COIN LOST " + night.LostCoin : "") +
                 "\nCOIN " + ledger.Coin + "   KARMA " + ledger.Karma + "   MEMORY " + ledger.Memory +
                 "\nBOSS " + (night.BossDone ? "DONE" : "-") + "   CLUES " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED +
                 "   GEAR W:" + GearName(Slot.Weapon) + " R:" + GearName(Slot.Robe) + " C:" + GearName(Slot.Charm) +

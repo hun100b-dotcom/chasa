@@ -16,6 +16,8 @@ namespace Chasa.Core
         public int KeptNeok;       // 명부 몫으로 확정된 넋(실패해도 보존)
         public int ExtraNeok;      // 추가 수확분 넋(실패하면 잃음)
 
+        public int KeptCoin;       // 명부 몫을 채우기 전에 번 엽전(실패해도 보존)
+        public int ExtraCoin;      // 몫을 채운 뒤에 번 엽전 = 명부 밖 엽전(동이 트면 흩어짐)
         public int Clues;          // 주운 낮 단서 수 (보스 천도 조건)
         public bool NamedSpawned;  // 이름혼(박돌쇠)이 이미 나왔나
         public bool BossDone;      // 보스를 처결했나
@@ -31,6 +33,13 @@ namespace Chasa.Core
             if (Over || NamedSpawned || Sent < Balance.NIGHT_QUOTA - 1) return false;
             NamedSpawned = true;
             return true;
+        }
+
+        /// <summary>파혼으로 번 엽전을 쌓는다. 몫(천도 NIGHT_QUOTA 개)을 채우기 전 것은 몫, 이후 것은 명부 밖(추가 수확분)</summary>
+        public void RecordCoin(int coin)
+        {
+            if (Over) return;
+            if (QuotaDone) ExtraCoin += coin; else KeptCoin += coin;
         }
 
         /// <summary>보스 처결 보상은 몫이 아니라 '추가 수확분'이다 (동이 트면 잃는다 — 어디까지 갈 것인가의 위험)</summary>
@@ -72,6 +81,8 @@ namespace Chasa.Core
 
         /// <summary>결과로 확정되는 넋: 성공이면 전부, 실패(동이 틈)면 명부 몫만</summary>
         public int FinalNeok => Phase == NightPhase.Returned ? KeptNeok + ExtraNeok : KeptNeok;
+        public int FinalCoin => Phase == NightPhase.Returned ? KeptCoin + ExtraCoin : KeptCoin;
+        public int LostCoin => Phase == NightPhase.Dawn ? ExtraCoin : 0;
         public int LostNeok => Phase == NightPhase.Dawn ? ExtraNeok : 0;
     }
 }

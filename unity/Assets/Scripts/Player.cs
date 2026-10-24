@@ -93,8 +93,9 @@ public class Player : MonoBehaviour
     public void CommandMove(Vector3 point)
     {
         if (Busy) return;
-        moveTarget = new Vector3(Mathf.Clamp(point.x, -Config.ARENA_HALF_SIZE, Config.ARENA_HALF_SIZE), 0,
-                                 Mathf.Clamp(point.z, -Config.ARENA_HALF_SIZE, Config.ARENA_HALF_SIZE));
+        float tx = point.x, tz = point.z;
+        MapLayout.ClampPoint(ref tx, ref tz);   // 맵 밖을 눌러도 맵 안쪽 끝으로
+        moveTarget = new Vector3(tx, 0, tz);
         chaseTarget = null;
         hasBuffered = false; // 이동을 지시하면 눌러둔 다음 타는 취소
     }
