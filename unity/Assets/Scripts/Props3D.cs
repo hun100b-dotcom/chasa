@@ -64,8 +64,18 @@ public static class Props3D
                 var tex = string.IsNullOrEmpty(row.texture) ? null : Resources.Load<Texture2D>(row.texture);
                 foreach (var r in inst.GetComponentsInChildren<Renderer>())
                 {
-                    var m = U.Matte(Color.white); if (tex != null) m.mainTexture = tex;
-                    r.sharedMaterial = m;
+                    if (tex != null)
+                    {
+                        var m = U.Matte(Color.white); m.mainTexture = tex;   // 색 지도 한 장 쓰는 모델(켄니 등)
+                        r.sharedMaterial = m;
+                    }
+                    else
+                    {
+                        // 색 지도가 없는 모델(아트팀 소품): 모델 재질마다 색만 따서 우리 무광 재질로 바꾼다(밤 조명에 맞추려고)
+                        var src = r.sharedMaterials; var dst = new Material[src.Length];
+                        for (int i = 0; i < src.Length; i++) dst[i] = U.Matte(src[i] != null ? src[i].color : Color.gray);
+                        r.sharedMaterials = dst;
+                    }
                 }
                 return;
             }

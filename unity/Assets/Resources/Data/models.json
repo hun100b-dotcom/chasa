@@ -1,6 +1,6 @@
 {
   "_설명": "3D 모델 슬롯 표. 여기만 고치면 아트팀·승인된 무료 에셋을 코드 수정 없이 바꿔 끼울 수 있다. 표에 없는 것은 코드로 만든 도형 대역이 대신한다.",
-  "_규칙": "path 는 Resources 기준(확장자 없이). scale = 모델 크기 배율(키 1.8m 가 되도록). texture 는 색 지도 한 장(재질은 가져오지 않으므로). clips 는 '동작 → 모델 안의 움직임 이름'. loop 는 반복 재생할 동작.",
+  "_규칙": "path 는 Resources 기준(확장자 없이). scale = 모델 크기 배율(키 1.8m 가 되도록). texture 는 색 지도 한 장(재질은 가져오지 않으므로). clips 는 '동작 → 모델 안의 움직임 이름'. loop 는 반복 재생할 동작. props 의 texture 가 비어 있으면 모델 안의 재질 색을 그대로 쓴다(아트팀 OBJ/GLB 변환 모델). 아트팀 직접 제작 소품(Models/Art)이 켄니 대역을 대체함(10-25).",
   "actors": [
     {
       "key": "dongi",
@@ -8,20 +8,91 @@
       "scale": 2.7,
       "texture": "Models/Hero/colormap",
       "clips": [
-        { "pose": "Idle", "clip": "idle" },
-        { "pose": "Walk", "clip": "walk" },
-        { "pose": "Attack", "clip": "attack-melee-right" },
-        { "pose": "Hit", "clip": "emote-no" },
-        { "pose": "Cast", "clip": "pick-up" },
-        { "pose": "Kneel", "clip": "crouch" },
-        { "pose": "Dodge", "clip": "sprint" }
+        {
+          "pose": "Idle",
+          "clip": "idle"
+        },
+        {
+          "pose": "Walk",
+          "clip": "walk"
+        },
+        {
+          "pose": "Attack",
+          "clip": "attack-melee-right"
+        },
+        {
+          "pose": "Hit",
+          "clip": "emote-no"
+        },
+        {
+          "pose": "Cast",
+          "clip": "pick-up"
+        },
+        {
+          "pose": "Kneel",
+          "clip": "crouch"
+        },
+        {
+          "pose": "Dodge",
+          "clip": "sprint"
+        }
       ],
-      "loop": [ "Idle", "Walk", "Kneel", "Dodge" ]
+      "loop": [
+        "Idle",
+        "Walk",
+        "Kneel",
+        "Dodge"
+      ]
     }
   ],
   "props": [
-    { "sprite": "jars", "path": "Models/Props/survival-barrel", "scale": 2.4, "texture": "Models/Props/survival-colormap" },
-    { "sprite": "stone_wall", "path": "Models/Props/town-wall-broken", "scale": 2.0, "texture": "Models/Props/town-colormap" },
-    { "sprite": "cairn", "path": "Models/Props/town-rock-large", "scale": 1.6, "texture": "Models/Props/town-colormap" }
+    {
+      "sprite": "choga",
+      "path": "Models/Art/prop_choga",
+      "scale": 1.0,
+      "texture": ""
+    },
+    {
+      "sprite": "giwa",
+      "path": "Models/Art/prop_giwa",
+      "scale": 1.0,
+      "texture": ""
+    },
+    {
+      "sprite": "jangseung",
+      "path": "Models/Art/prop_jangseung",
+      "scale": 1.0,
+      "texture": ""
+    },
+    {
+      "sprite": "sotdae",
+      "path": "Models/Art/prop_sotdae",
+      "scale": 1.0,
+      "texture": ""
+    },
+    {
+      "sprite": "well",
+      "path": "Models/Art/prop_umul",
+      "scale": 1.0,
+      "texture": ""
+    },
+    {
+      "sprite": "sangyeo",
+      "path": "Models/Art/prop_sangyeo",
+      "scale": 1.0,
+      "texture": ""
+    },
+    {
+      "sprite": "jars",
+      "path": "Models/Art/prop_jangdok",
+      "scale": 1.0,
+      "texture": ""
+    },
+    {
+      "sprite": "stone_wall",
+      "path": "Models/Art/prop_dolddam",
+      "scale": 1.0,
+      "texture": ""
+    }
   ]
 }

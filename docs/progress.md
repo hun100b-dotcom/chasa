@@ -233,3 +233,8 @@
 - 후딜 60% 지나면 이동 입력으로 끝동작 끊기(`MOVE_CANCEL_RECOVER`, DodgeRules.CanCancelRecoverToMove + 시험 1개).
 - 파혼 끝동작 0.25초 잠금(`PAHON_RECOVER`, Player.actLock).
 - 임시 효과음은 이미 10종(sfx_synth) 있어 요구 8종 충족. 남은 것: 3D 동작 타격 순간 맞추기, 아래쪽 기술 줄·획득 알림 UI, 30초 영상.
+
+## [코드] 아트팀 3D 소품 연결 (2026-10-25 KST)
+- 아트팀 GLB 10종을 `tools/glb_to_obj.py` 로 OBJ+MTL 변환해 `Resources/Models/Art/` 에 넣음(유니티가 GLB 를 기본으로 못 읽음; glTFast 패키지 없이 가려는 선택). 재질 색은 모델에서 따서 무광 재질로 입힘.
+- `models.json` 소품 8줄을 아트팀 모델로 교체(켄니 소품 대체): 초가·기와·장승·솟대·우물·상여·장독(항아리 자리)·돌담.
+- 아직: 주인공 hero_chasa.glb(뼈대, 동작 클립 없음 → OBJ 불가, FBX/glTFast 필요) · 혼 4종(발광) · 솔고개 46개 배치(마을 31×50m 라 현재 18×14칸 마을보다 큼 → 충돌·혼 자리·단서 자리 재설계 필요).
