@@ -119,7 +119,7 @@ public class JudgeSystem : MonoBehaviour
         {
             night.BossDone = true; Say("나루 영감을 깨뜨렸다");
             // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
-            if (lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
+            if (Demo.Gear && lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
         }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
         float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult * lo.stats.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
@@ -186,6 +186,7 @@ public class JudgeSystem : MonoBehaviour
             e.soul.WaitTotal = lo.stats.AdjustWait(e.soul.WaitTotal, e.soul.Kind == SoulKind.Lump);
             e.soul.WaitLeft = e.soul.WaitTotal;
         }
+        if (!Demo.Gear) return;   // 시연판 기본 구성: 장비 드롭 없음
         var it = Loot.Roll(() => Random.value, e.soul.Fierce);
         if (it == null) return;
         string txt = Loadout.Describe(it);
@@ -202,7 +203,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>도술 1·2·3. 쿨다운 중이거나 무릎 꿇은 혼이 없는 등 효과가 없으면 쿨다운을 쓰지 않는다</summary>
     public void UseSkill(int slot)
     {
-        if (night.Over || ledger.Dead || Casting || !lo.skills.Ready(slot)) return;
+        if (!Demo.Skills || night.Over || ledger.Dead || Casting || !lo.skills.Ready(slot)) return;
         switch (slot)
         {
             case 0: // 붙잡아 부르기: 무릎 꿇은 혼 대기 +3초, 서 있는 적 0.8초 멈칫
@@ -368,7 +369,7 @@ public class JudgeSystem : MonoBehaviour
                 ledger.Neok = Mathf.Max(0, ledger.Neok - night.LostNeok); ledger.Coin = Mathf.Max(0, ledger.Coin - night.LostCoin); }
             // 결과 화면: 아무 때나 R/E 가 아닌 Space(또는 터치 버튼)로 다시 시작
             if (Input.GetKeyDown(KeyCode.Space)) RestartNight();
-            if (Input.GetKeyDown(KeyCode.D)) StartDay();
+            if (Demo.Day && Input.GetKeyDown(KeyCode.D)) StartDay();
             return;
         }
         night.Tick(dt);
@@ -557,16 +558,24 @@ public class JudgeSystem : MonoBehaviour
             "넋 " + ledger.Neok + "   기억 " + ledger.Memory + "   엽전 " + ledger.Coin +
             "   업 " + ledger.Karma + " (" + CoreRules.KarmaTier(ledger.Karma) + "단계)" +
             (chainLeft > 0f ? "   연쇄!" : ""), small);
-        GUI.Label(new Rect(12, 74, 700, 24), "체력 " + ledger.Hp + " / " + ledger.MaxHp + "   회복약 " + dayScreen.Pack.Heal + " (H)   무기 " + lo.Def.Name + " (Tab)" +
-            (lo.Def.HasQuake ? "  Q 땅울림" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") + "   능력치 점수 " + StatPoints.Earned(ledger.Neok), small);
-        string sk = "";
-        for (int i = 0; i < 3; i++)
-            sk += (i + 1) + ":" + SkillDef.All[i].Name + (lo.skills.Ready(i) ? "" : "(" + Mathf.CeilToInt(lo.skills.Left[i]) + "s)") + "   ";
-        GUI.Label(new Rect(12, 118, 800, 24), sk, small);
-        GUI.Label(new Rect(12, 140, 900, 24), "장비  무기:" + GearName(Slot.Weapon) + "  도포:" + GearName(Slot.Robe) + "  노리개:" + GearName(Slot.Charm), small);
-        if (lo.lastDropT > 0f) GUI.Label(new Rect(12, 162, 900, 24), lo.lastDrop, small);
-        // 장비 아이콘 세 칸 (그림이 있을 때만): 등급 테두리 + 칸별 아이콘
-        for (int si = 0; si < 3; si++) DrawGearIcon((Slot)si, new Rect(12 + si * 56, 190, 52, 52));
+        GUI.Label(new Rect(12, 74, 700, 24), "체력 " + ledger.Hp + " / " + ledger.MaxHp + "   회복약 " + dayScreen.Pack.Heal + " (H)" +
+            (Demo.Weapons ? "   무기 " + lo.Def.Name + " (Tab)" + (lo.Def.HasQuake ? "  Q 땅울림" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") : "") +
+            (Demo.Gear ? "   능력치 점수 " + StatPoints.Earned(ledger.Neok) : ""), small);
+        // 시연판 기본 구성에서는 도술·장비 표시를 숨긴다 (기능은 DEMO_* 로 켜면 그대로 나온다)
+        if (Demo.Skills)
+        {
+            string sk = "";
+            for (int i = 0; i < 3; i++)
+                sk += (i + 1) + ":" + SkillDef.All[i].Name + (lo.skills.Ready(i) ? "" : "(" + Mathf.CeilToInt(lo.skills.Left[i]) + "s)") + "   ";
+            GUI.Label(new Rect(12, 118, 800, 24), sk, small);
+        }
+        if (Demo.Gear)
+        {
+            GUI.Label(new Rect(12, 140, 900, 24), "장비  무기:" + GearName(Slot.Weapon) + "  도포:" + GearName(Slot.Robe) + "  노리개:" + GearName(Slot.Charm), small);
+            if (lo.lastDropT > 0f) GUI.Label(new Rect(12, 162, 900, 24), lo.lastDrop, small);
+            // 장비 아이콘 세 칸 (그림이 있을 때만): 등급 테두리 + 칸별 아이콘
+            for (int si = 0; si < 3; si++) DrawGearIcon((Slot)si, new Rect(12 + si * 56, 190, 52, 52));
+        }
         GUI.Label(new Rect(12, 52, 700, 24), "E: 천도(넋을 보냄)   R: 파혼(넋을 깸)", small);
         GUI.Label(new Rect(12, 96, 700, 24),
             "밤 " + Mathf.CeilToInt(night.TimeLeft) + "초   천도 " + night.Sent + "/" + Balance.NIGHT_QUOTA +
@@ -584,8 +593,12 @@ public class JudgeSystem : MonoBehaviour
                 "\n나루 영감 " + (night.BossDone ? "끝" : "-") + "   단서 " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED +
                 "   장비 무기:" + GearName(Slot.Weapon) + " 도포:" + GearName(Slot.Robe) + " 노리개:" + GearName(Slot.Charm) +
                 (night.Phase == NightPhase.Returned ? "" : "\n(몫만큼은 지켰고, 그 너머의 수확은 흩어졌다)"), m);
-            if (GUI.Button(new Rect(Screen.width / 2f - 200, Screen.height * 0.25f + 260, 190, 70), "낮으로 (D)")) StartDay();
-            if (GUI.Button(new Rect(Screen.width / 2f + 10, Screen.height * 0.25f + 260, 190, 70), "다시 (Space)")) RestartNight();
+            if (Demo.Day)
+            {
+                if (GUI.Button(new Rect(Screen.width / 2f - 200, Screen.height * 0.25f + 260, 190, 70), "낮으로 (D)")) StartDay();
+                if (GUI.Button(new Rect(Screen.width / 2f + 10, Screen.height * 0.25f + 260, 190, 70), "다시 (Space)")) RestartNight();
+            }
+            else if (GUI.Button(new Rect(Screen.width / 2f - 90, Screen.height * 0.25f + 260, 180, 70), "다시 (Space)")) RestartNight();
             return;
         }
         if (Casting)
@@ -609,12 +622,13 @@ public class JudgeSystem : MonoBehaviour
             var sbs = new GUIStyle(bs) { fontSize = 13, wordWrap = true };   // 도술 이름이 길어 작은 글씨로
             if (GUI.Button(new Rect(24, Screen.height - 110, 110, 90), "천도", bs)) CommandTendo();
             if (GUI.Button(new Rect(148, Screen.height - 110, 130, 90), "파혼", bs)) CommandPahon();
-            // 도술 세 칸과 무기 바꾸기 (위쪽 줄)
-            for (int i = 0; i < 3; i++)
-                if (GUI.Button(new Rect(24 + i * 94, Screen.height - 206, 86, 80), (i + 1) + "\n" + SkillDef.All[i].Name, sbs)) UseSkill(i);
-            if (GUI.Button(new Rect(24 + 3 * 94, Screen.height - 206, 86, 80), "교체", bs)) player.CommandSwap();
-            if (GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "메뉴", bs)) panel.Toggle();
-            if (lo.Def.HasQuake && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "땅울림", bs)) player.CommandQuake();
+            // 도술 세 칸과 무기 바꾸기 (위쪽 줄) — 시연판 기본 구성에서는 숨김
+            if (Demo.Skills)
+                for (int i = 0; i < 3; i++)
+                    if (GUI.Button(new Rect(24 + i * 94, Screen.height - 206, 86, 80), (i + 1) + "\n" + SkillDef.All[i].Name, sbs)) UseSkill(i);
+            if (Demo.Weapons && GUI.Button(new Rect(24 + 3 * 94, Screen.height - 206, 86, 80), "교체", bs)) player.CommandSwap();
+            if (Demo.Panel && GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "메뉴", bs)) panel.Toggle();
+            if (Demo.Weapons && lo.Def.HasQuake && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "땅울림", bs)) player.CommandQuake();
         }
     }
 }

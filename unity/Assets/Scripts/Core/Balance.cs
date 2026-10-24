@@ -312,4 +312,9 @@ public static class Balance
     public const float REGEN_PER_SEC = 2.0f;  // (QA M6 조정) 첫 밤 생존: 맞지 않는 동안 초당 체력 회복
     public const float SHRINE_HEAL_PER_SEC = 12.0f;  // (QA M6 조정) 첫 밤 생존: 서낭당 원 안에서 초당 체력 회복(맞은 직후에도). 서낭당 = 안전한 쉼터
     public const int FIRST_NIGHT_HEAL = 2;  // (QA M6 조정) 첫 밤 생존: 첫 밤 시작 때 당할미가 쥐여 주는 회복약 수(H 키)
+    public const bool DEMO_WEAPONS = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: Tab 무기 교체(육모방망이 등) 켜기 true
+    public const bool DEMO_SKILLS = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 도술 1/2/3 켜기 true
+    public const bool DEMO_GEAR = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 장비 드롭·장착·월화 방울 켜기 true
+    public const bool DEMO_DAY = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 낮 화면·서낭당 켜기 true
+    public const bool DEMO_PANEL = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: C 캐릭터 창 켜기 true
 }

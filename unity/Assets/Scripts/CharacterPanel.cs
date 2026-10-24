@@ -14,11 +14,11 @@ public class CharacterPanel : MonoBehaviour
     int tab;                                 // 0 장비 1 도술 2 능력치
     static readonly string[] TabNames = { "장비", "도술", "능력치" };
 
-    public void Toggle() { Open = !Open; }
+    public void Toggle() { if (Demo.Panel) Open = !Open; }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C)) Toggle();
+        if (Input.GetKeyDown(KeyCode.C)) Toggle();   // Demo.Panel 이 꺼져 있으면 Toggle 이 무시한다
         if (Open && Input.GetKeyDown(KeyCode.Escape)) Open = false;
     }
 

@@ -203,7 +203,7 @@ public class GameMain : MonoBehaviour
         if (judge.InDay || CharacterPanel.Open || judge.NightOver) return;   // 낮 화면·캐릭터 창에서는 밤의 안내·버튼을 그리지 않는다
         var hint = new GUIStyle(GUI.skin.label) { fontSize = 14 };
         hint.normal.textColor = new Color(1, 1, 1, 0.55f);
-        GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 휘두르기   C: 캐릭터 창", hint);
+        GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 휘두르기" + (Demo.Panel ? "   C: 캐릭터 창" : ""), hint);
         if (!Ko.TouchUI) return;
         var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
         if (GUI.Button(PullBtn, "끌기", bs)) { var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); }

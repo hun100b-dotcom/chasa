@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
     /// <summary>Tab: 무기를 바꿔 든다(0.5초 동안 이동·공격 불가). 자유 상태에서만</summary>
     public void CommandSwap()
     {
-        if (Busy || state != State.Free) return;
+        if (!Demo.Weapons || Busy || state != State.Free) return;   // 시연판 기본 구성은 철삭 하나
         var next = loadout.other; loadout.other = loadout.weapon; loadout.weapon = next;   // 든 것과 멘 것을 맞바꾼다
         loadout.swapLeft = Balance.WEAPON_SWAP_TIME;
         comboStep = 0; comboTimer = 0f; moveTarget = null; chaseTarget = null;
