@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620" font-family="sans-serif">
+  <!-- P1-030 주인공 실루엣 + 일본 사신 대비표 (도형 기반 콘셉트, 에셋 아님). 색은 ART-DIRECTION §2 팔레트 -->
+  <rect width="900" height="620" fill="#16213E"/>
+  <rect x="0" y="540" width="900" height="80" fill="#0F1729"/>
+  <text x="30" y="40" fill="#F3E7D3" font-size="22" font-weight="bold">P1-030 차사 실루엣 확정 시트 (초안)</text>
+  <text x="30" y="64" fill="#4FA8A0" font-size="13">핵심: 넓은 수평 챙(흑립) + 흐르는 도포 자락 + 붉은 띠 + 철삭 + 혼불 → "한국"이 실루엣만으로 읽힌다</text>
+
+  <!-- ===== 왼쪽: 한국 차사 (우리) ===== -->
+  <text x="170" y="86" fill="#5FE3C0" font-size="16" font-weight="bold" text-anchor="middle">✅ 한국 차사 (우리)</text>
+  <g transform="translate(170,0)">
+    <!-- 도포: 넓은 소매 + 긴 뒷자락 -->
+    <path d="M-34,205 L34,205 L70,330 L110,440 L50,520 L-60,520 L-120,440 L-70,330 Z" fill="#000"/>
+    <path d="M-34,205 L-120,300 L-135,360 L-90,350 L-62,300 Z" fill="#000"/>
+    <path d="M34,205 L110,285 L170,330 L150,368 L88,330 Z" fill="#000"/>
+    <!-- 흑립: 넓은 원형 챙 + 높은 원통 -->
+    <ellipse cx="0" cy="168" rx="92" ry="17" fill="#000"/>
+    <path d="M-30,168 L-26,112 Q0,96 26,112 L30,168 Z" fill="#000"/>
+    <!-- 붉은 띠 -->
+    <path d="M-48,300 L48,300 L52,322 L-52,322 Z" fill="#E85C41"/>
+    <path d="M30,322 L40,380 L24,380 Z" fill="#E85C41"/>
+    <!-- 철삭: 손에서 늘어지는 사슬 -->
+    <g fill="none" stroke="#F3E7D3" stroke-width="3">
+      <path d="M165,350 Q190,420 150,470 Q120,505 140,525" stroke-dasharray="9 4"/>
+    </g>
+    <!-- 혼불: 어깨 옆을 따라다니는 청록 불꽃 -->
+    <path d="M-120,250 q-14,-28 0,-50 q14,22 0,50" fill="#5FE3C0"/>
+    <circle cx="-120" cy="250" r="26" fill="#5FE3C0" opacity="0.18"/>
+  </g>
+  <text x="170" y="565" fill="#F3E7D3" font-size="12" text-anchor="middle">가로로 넓다 · 챙이 원 · 자락이 흐름</text>
+
+  <!-- ===== 오른쪽: 일본 사신 (금지 참고용) ===== -->
+  <text x="520" y="86" fill="#E85C41" font-size="16" font-weight="bold" text-anchor="middle">❌ 일본 사신 (닮으면 안 됨)</text>
+  <g transform="translate(520,0)" opacity="0.85">
+    <path d="M0,130 L-55,300 L-80,520 L80,520 L55,300 Z" fill="#000"/>
+    <path d="M0,118 Q-30,128 -24,168 L24,168 Q30,128 0,118 Z" fill="#000"/>
+    <circle cx="0" cy="150" r="14" fill="#2a2a38"/>
+    <!-- 낫 -->
+    <path d="M85,150 L85,500" stroke="#555" stroke-width="5"/>
+    <path d="M85,150 Q150,120 150,185" fill="none" stroke="#999" stroke-width="7"/>
+  </g>
+  <text x="520" y="565" fill="#F3E7D3" font-size="12" text-anchor="middle">세로로 긴 삼각형 · 후드 · 낫의 곡선</text>
+
+  <!-- ===== 대비표 ===== -->
+  <g font-size="12" fill="#F3E7D3">
+    <rect x="690" y="90" width="200" height="440" rx="6" fill="#0F1729" stroke="#4FA8A0"/>
+    <text x="700" y="112" font-weight="bold" fill="#D4A94E">대비표</text>
+    <text x="700" y="140">머리</text><text x="700" y="156" fill="#5FE3C0">흑립(넓은 원형 챙)</text><text x="700" y="172" fill="#E85C41">후드·해골 ✗</text>
+    <text x="700" y="204">옷</text><text x="700" y="220" fill="#5FE3C0">도포(넓은 소매·뒷자락)</text><text x="700" y="236" fill="#E85C41">기모노·찢긴 로브 ✗</text>
+    <text x="700" y="268">무기</text><text x="700" y="284" fill="#5FE3C0">철삭(쇠사슬)</text><text x="700" y="300" fill="#E85C41">낫 ✗</text>
+    <text x="700" y="332">실루엣</text><text x="700" y="348" fill="#5FE3C0">수평 챙 + 흐르는 자락</text><text x="700" y="364" fill="#E85C41">세로 삼각형 + 낫 ✗</text>
+    <text x="700" y="396">색 포인트</text><text x="700" y="412" fill="#5FE3C0">붉은 띠 (#E85C41)</text><text x="700" y="428" fill="#E85C41">없음/보라 ✗</text>
+    <text x="700" y="468" fill="#4FA8A0">검사: 몸 전체를 검게</text><text x="700" y="484" fill="#4FA8A0">칠해도 한국이 읽혀야</text><text x="700" y="500" fill="#4FA8A0">합격 (왼쪽 그림이 그 상태)</text>
+  </g>
+</svg>
