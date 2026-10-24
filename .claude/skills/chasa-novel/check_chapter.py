@@ -10,7 +10,8 @@
 
 쓰는 법:
   python3 check_chapter.py 장파일.md [장파일2.md ...]
-  여러 파일을 주면 파일별 결과 + 전체 합계(반복 구문 상한은 1부 전체 기준)를 함께 보여 준다.
+  여러 파일을 주면 파일별 결과 + 부(part)별 합계(반복 구문 상한은 부 하나 전체 기준)를 함께 보여 준다.
+  파일 경로에 part2가 들어 있으면 2부 규칙(아직 나오면 안 되는 말 목록)을 쓴다. 그 밖에는 1부 규칙.
 """
 
 import difflib
@@ -88,11 +89,26 @@ def strip_md(text: str) -> str:
     return "\n".join(lines)
 
 
+def part_of(path: str) -> str:
+    """파일 경로로 몇 부 원고인지 고른다(docs/novel/part2/... → 'part2'). 모르면 1부로 본다."""
+    m = re.search(r"part(\d+)", path.replace("\\", "/"))
+    return f"part{m.group(1)}" if m else "part1"
+
+
+def not_yet_lines(part: str):
+    """그 부에서 아직 나오면 안 되는 말 목록. 예전 파일 형식(not_in_part1)도 읽는다."""
+    table = CANON.get("not_yet")
+    if table:
+        return table.get(part, table.get("part1", []))
+    return CANON.get("not_in_part1", [])
+
+
 def check_file(path: str) -> dict:
     """장 파일 하나를 점검해 결과를 사전으로 돌려준다."""
     text = open(path, encoding="utf-8").read()
+    part = part_of(path)
     body = strip_md(text)
-    res = {"file": os.path.basename(path), "errors": [], "warnings": [], "counts": {}}
+    res = {"file": os.path.basename(path), "part": part, "errors": [], "warnings": [], "counts": {}}
 
     # 1) 분량: 공백 포함 글자 수와 공백 뺀 글자 수
     res["counts"]["글자(공백 포함)"] = len(body.replace("\n", ""))
@@ -121,10 +137,14 @@ def check_file(path: str) -> dict:
         if wrong in text:
             res["errors"].append(f"오타: '{wrong}' → '{right}'")
 
-    # 4) 1부에 나오면 안 되는 대사(흑월 대사 등)
-    for w in CANON.get("not_in_part1", []):
+    # 4) 이 부에 아직 나오면 안 되는 대사(흑월 대사·뒤 시즌 쪽지 등)
+    for w in not_yet_lines(part):
         if w in text:
-            res["errors"].append(f"1부에 아직 나오면 안 되는 대사: '{w}'")
+            res["errors"].append(f"{part[-1]}부에 아직 나오면 안 되는 말: '{w}'")
+    # 4-0) 흑월의 본명은 시즌 1·2 원고에 쓰지 않는다(서사팀 확정). '이명'이 낱말로 보이면 알린다.
+    for m in re.finditer(r"(?<![가-힣])이명(?![가-힣])", body):
+        around = body[max(0, m.start() - 6): m.end() + 6].replace("\n", " ")
+        res["warnings"].append(f"'이명'이 보인다(흑월 본명 누설인지 확인): …{around}…")
 
     # 4-1) 주인공 이름 보호: '동이'는 "동이 트다" 꼴로만 써야 한다(결말 장치).
     #      "동이야", "동이는", "동이가" 처럼 사람 이름으로 쓰인 곳을 찾는다.
@@ -158,7 +178,7 @@ def check_file(path: str) -> dict:
 
 
 def main(paths):
-    total_repeat = {}
+    total_repeat = {}   # {부: {구문: 횟수}}
     n_err = 0
     for p in paths:
         r = check_file(p)
@@ -167,21 +187,23 @@ def main(paths):
         print(f"  오감(소리·냄새·촉감): {r['counts']['오감']}")
         if r["counts"]["반복"]:
             print(f"  반복 구문: {r['counts']['반복']}")
+        bucket = total_repeat.setdefault(r["part"], {})
         for k, v in r["counts"]["반복"].items():
-            total_repeat[k] = total_repeat.get(k, 0) + v
+            bucket[k] = bucket.get(k, 0) + v
         for e in r["errors"]:
             print(f"  ✗ {e}")
         for w in r["warnings"]:
             print(f"  △ {w}")
         n_err += len(r["errors"])
     if len(paths) > 1:
-        print("\n■ 전체 합계(반복 구문 상한은 1부 전체 기준)")
-        for k, v in total_repeat.items():
-            lim = REPEAT_LIMITS[k]
-            mark = "✗" if v > lim else "○"
-            print(f"  {mark} '{k}' ×{v} (상한 {lim})")
-            if v > lim:
-                n_err += 1
+        for part, bucket in sorted(total_repeat.items()):
+            print(f"\n■ {part[-1]}부 합계(반복 구문 상한은 부 하나 전체 기준)")
+            for k, v in bucket.items():
+                lim = REPEAT_LIMITS[k]
+                mark = "✗" if v > lim else "○"
+                print(f"  {mark} '{k}' ×{v} (상한 {lim})")
+                if v > lim:
+                    n_err += 1
     print(f"\n오류 {n_err}개" + (" — 고친 뒤 다시 돌린다." if n_err else " — 통과."))
     return 1 if n_err else 0
 
