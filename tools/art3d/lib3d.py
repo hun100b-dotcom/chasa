@@ -12,7 +12,7 @@ PAL = {  # 팔레트 토큰(docs/art/palette-tokens.json)을 3D용으로 옮긴 
     "pillar": "#7A3F2C", "mud": "#C9B38A", "thatch": "#B89A55", "stone": "#8A8A82", "stone_dark": "#666660",
     "jar": "#7A4A2E", "leaf": "#3F6B4E", "leaf_dark": "#2F5440", "bark": "#5A3E2A", "water": "#2B3A66",
     "soul_fresh": "#BFE8FF", "soul_day": "#FFCC55", "soul_old": "#A5472E", "soul_lump": "#9A5CFF",
-    "ground": "#6F7B5B", "slope_top": "#9CC25F", "slope_side": "#5A4630", "slope_line": "#3E5A2C", "cliff_light": "#B4B2BC", "cliff_dark": "#4E5264", "robe": "#586080", "sagat": "#8A7448", "old_skin": "#B58E70", "hull": "#3B3F52", "beard": "#D8D0C0", "hat": "#14141F", "face": "#0A0A12", "cloth": "#232338", "road": "#A8946B", "skin": "#D9B79B", "blue_cloth": "#3E64B0", "yellow_cloth": "#E8C15A",
+    "ground": "#6F7B5B", "dead": "#6B5E50", "reed_top": "#8A6B4A", "silver": "#D8D0C0", "pine": "#2F5A44", "pine_light": "#3F7455", "zelkova": "#6E9B4F", "zelkova_dark": "#4F7A3B", "bamboo": "#6F9A4A", "bamboo_leaf": "#4F7F3A", "reed": "#B4A66A", "berry": "#B53A4A", "iron": "#3A3A44", "slope_top": "#9CC25F", "slope_side": "#5A4630", "slope_line": "#3E5A2C", "cliff_light": "#B4B2BC", "cliff_dark": "#4E5264", "robe": "#586080", "sagat": "#8A7448", "old_skin": "#B58E70", "hull": "#3B3F52", "beard": "#D8D0C0", "hat": "#14141F", "face": "#0A0A12", "cloth": "#232338", "road": "#A8946B", "skin": "#D9B79B", "blue_cloth": "#3E64B0", "yellow_cloth": "#E8C15A",
 }
 _mats = {}
 
@@ -112,10 +112,11 @@ def export(o, path, apply=True):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     for x in bpy.context.view_layer.objects: x.select_set(False)
     o.select_set(True); bpy.context.view_layer.objects.active = o
+    for c in o.children_recursive: c.select_set(True)   # 빈 오브젝트(광원 위치)도 함께 내보낸다
     bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True, export_apply=apply, export_yup=True,
-                              export_materials="EXPORT", export_cameras=False, export_lights=False)
+                              export_materials="EXPORT", export_cameras=False, export_lights=False, export_extras=True)
 
-def setup_render(ortho, center, elev=50, size=(720, 540), sun_dir=(0.5, -0.4, -1), ground=True, ground_size=40):
+def setup_render(ortho, center, elev=50, size=(720, 540), sun_dir=(0.5, -0.4, -1), ground=True, ground_size=40, night=False):
     """로스트아크식 50° 내려다보는 직교 카메라 미리보기. 정면(-Y 쪽)에서 본다."""
     sc = bpy.context.scene
     sc.render.engine = "BLENDER_EEVEE" if False else "CYCLES"
@@ -123,7 +124,7 @@ def setup_render(ortho, center, elev=50, size=(720, 540), sun_dir=(0.5, -0.4, -1
     sc.render.resolution_x, sc.render.resolution_y = size
     sc.render.film_transparent = False
     w = bpy.data.worlds.new("W"); sc.world = w; w.use_nodes = True
-    bg = w.node_tree.nodes["Background"]; bg.inputs[0].default_value = (0.32, 0.38, 0.55, 1); bg.inputs[1].default_value = 1.0
+    bg = w.node_tree.nodes["Background"]; bg.inputs[0].default_value = (0.05, 0.07, 0.16, 1) if night else (0.32, 0.38, 0.55, 1); bg.inputs[1].default_value = 1.0
     if ground:
         g = box("ground", (ground_size, ground_size, 0.1), (center[0], center[1], -0.05), "ground")
     cam = bpy.data.cameras.new("cam"); cam.type = "ORTHO"; cam.ortho_scale = ortho
@@ -133,9 +134,14 @@ def setup_render(ortho, center, elev=50, size=(720, 540), sun_dir=(0.5, -0.4, -1
     co.rotation_euler = (math.radians(90 - elev), 0, 0)
     cam.clip_end = 300
     sc.camera = co
-    sun = bpy.data.lights.new("sun", "SUN"); sun.energy = 4.5; sun.angle = math.radians(18)
+    sun = bpy.data.lights.new("sun", "SUN"); sun.energy = 1.2 if night else 4.5; sun.angle = math.radians(18)
     so = bpy.data.objects.new("sun", sun); bpy.context.collection.objects.link(so)
     so.rotation_euler = Euler((math.radians(52), 0, math.radians(-28)))
+    if night:
+        for ob in list(bpy.context.scene.objects):
+            if ob.type == 'EMPTY' and ob.name.startswith('Light_'):
+                ld = bpy.data.lights.new(ob.name + '_L', 'POINT'); ld.energy = 600; ld.color = hex2rgb(ob['color'])[:3]; ld.shadow_soft_size = 0.2
+                lo = bpy.data.objects.new(ob.name + '_L', ld); bpy.context.collection.objects.link(lo); lo.parent = ob
     bpy.context.view_layer.update()
 
 def render(path):
@@ -149,3 +155,12 @@ def limb(name, a, b, r1, r2, material, segs=6):
     a, b = Vector(a), Vector(b); d = b - a
     q = Vector((0, 0, 1)).rotation_difference(d.normalized())
     return cyl(name, r1, r2, d.length, tuple(a), material, segs, rot=tuple(q.to_euler()))
+
+
+def light_empty(parent, name, pos, color, intensity=1.0, range_m=8.0, flicker=False, kind="point"):
+    """광원 위치를 빈 오브젝트로 표시한다. 이름과 추가 속성(extras)으로 코드팀이 광원을 만든다."""
+    e = bpy.data.objects.new(name, None); e.empty_display_type = "SPHERE"; e.empty_display_size = 0.1
+    bpy.context.collection.objects.link(e)
+    e.location = pos; e.parent = parent
+    e["light_type"] = kind; e["color"] = color; e["intensity"] = intensity; e["range_m"] = range_m; e["flicker"] = 1 if flicker else 0
+    return e
