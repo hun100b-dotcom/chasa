@@ -103,7 +103,7 @@ def souls():
             p.append(box(f"arm{sx}", (0.1, 0.1, 0.62), (o + sx * 0.33, 0, 0.62), m, rot=(0, sx * 0.2, 0)))
         return p + eyes(1.17, -0.19, dx=0.075, ox=o)
     def old(o=0):     # 오래된 혼: 구부정, 가시, 긴 꼬리
-        m = mat("soul_old", 0.5)
+        m = mat("soul_old", 0.2)
         p = [sphere("body", 0.36, (o, 0.05, 0.6), m, 8, 6, (1.1, 1.0, 0.9)), cyl("tail", 0.0, 0.3, 0.45, (o, 0.15, 0.0), m, 7, rot=(-0.3, 0, 0))]
         for i, (a, z) in enumerate([(0.2, 0.95), (1.0, 1.0), (2.1, 0.95), (3.0, 0.9), (4.0, 0.95), (5.2, 1.0)]):
             p.append(cyl(f"spike{i}", 0.08, 0.0, 0.34, (o + math.cos(a) * 0.22, 0.05 + math.sin(a) * 0.22, z - 0.05), m, 5))

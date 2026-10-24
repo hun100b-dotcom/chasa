@@ -54,3 +54,5 @@
 [필드 조립에서 찾아 고친 이음새 7건] ①바닥 상자와 타일 윗면이 같은 높이라 길 옆이 검게 깨짐(조립기 바닥을 맨 밑으로) ②풀 칸을 안 깔아 물(0.18)이 풀 바닥(0.3)에 묻힘(빈 칸에 풀 타일 깔기) ③보릿들이 논 타일 → terrain_tile_barley 신설(180삼각형) ④개울이 논 격자 → terrain_tile_stream 신설(서쪽 칸 rot 0, 동쪽 칸 rot 180) ⑤다리 앞 길 4m 끊김 → br_road_pad(12삼각형) 신설, 필드 (74,452)·(94,452) ⑥서낭당 4곳이 마커뿐 → prop_seonangdang+횃대 2개씩 structures에 추가 ⑦불빛 목록 없음 → layouts/field_5x5_lights.json(26개).
 유니티 주의: 타일 사이 머리카락 틈이 보이면 풀 타일을 3% 크게(xy만) 깔고 높이를 3~6mm 낮춰 아래에 겹쳐 놓으면 사라진다(field_scene.py 참고). 같은 높이 면끼리 겹치면 깨진다.
 [렌더 컷] previews/scene_{gate,village,barley,bridge,naru,tendo}_final.jpg(후처리: 위쪽 푸른 안개+비네팅, tools/art3d/scene_post.py). 갤러리 같은 링크 갱신.
+
+[오래된 혼 색 변경 #A5472E → #665659] 채도를 낮춘 먼지색 자주갈색, 발광 0.5→0.2. 이유: 따뜻한 등불 아래서 붉은 주황으로 읽혀 파혼 주황(#E8683A)과 혼동. 혼 16종·처결 대기 고리(old)·보스 조각 재생성. 확인 렌더: previews/soul_old_check.png(주황 등불 아래 오래된·해 넘긴·갓 죽은 혼 + 파혼 주황 구슬 나란히).
