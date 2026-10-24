@@ -69,7 +69,7 @@ public static class Props3D
             if (prefab != null)
             {
                 var inst = Object.Instantiate(prefab, t);
-                inst.transform.localPosition = Vector3.zero; inst.transform.localScale = Vector3.one * row.scale;
+                inst.transform.localPosition = Vector3.zero; inst.transform.localRotation = Quaternion.Euler(0f, row.yaw, 0f); inst.transform.localScale = Vector3.one * row.scale;
                 var tex = string.IsNullOrEmpty(row.texture) ? null : Resources.Load<Texture2D>(row.texture);
                 foreach (var r in inst.GetComponentsInChildren<Renderer>())
                 {

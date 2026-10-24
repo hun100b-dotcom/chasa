@@ -13,10 +13,10 @@ public static class ModelCatalog
     [Serializable] public class ClipRow { public string pose; public string clip; }
     [Serializable] public class ActorRow
     {
-        public string key, path, texture; public float scale = 1f;
+        public string key, path, texture; public float scale = 1f, yaw;   // yaw: 앞 방향 보정(도). glTFast 는 GLB 의 앞(+Z)을 유니티에서 뒤집어 읽어서 GLB 모델은 180
         public ClipRow[] clips; public string[] loop;
     }
-    [Serializable] public class PropRow { public string sprite, path, texture; public float scale = 1f; }
+    [Serializable] public class PropRow { public string sprite, path, texture; public float scale = 1f, yaw; }
     [Serializable] class File { public ActorRow[] actors; public PropRow[] props; }
 
     static readonly Dictionary<string, ActorRow> actors = new Dictionary<string, ActorRow>();

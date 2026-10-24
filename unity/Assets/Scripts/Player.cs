@@ -220,6 +220,9 @@ public class Player : MonoBehaviour
         hasBuffered = false; // 이동을 지시하면 눌러둔 다음 타는 취소
     }
 
+    /// <summary>쫓기·이동·예약된 공격을 모두 끊는다(데모·연출이 '이제 그만 때리고 천도해' 할 때)</summary>
+    public void CommandStop() { chaseTarget = null; moveTarget = null; hasBuffered = false; bufferedAim = null; }
+
     public void CommandAttack(Enemy e)
     {
         if (Busy) return;

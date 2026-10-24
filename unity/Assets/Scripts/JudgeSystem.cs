@@ -105,6 +105,9 @@ public class JudgeSystem : MonoBehaviour
         player.facing = Mathf.Atan2(e.Pos.z - player.Pos.z, e.Pos.x - player.Pos.x);
     }
 
+    /// <summary>이 혼을 지금 천도할 수 있나(덩어리·단서 부족이면 아니오). 데모가 대상을 고를 때 쓴다</summary>
+    public bool CanTendoNow(Enemy e) { return e != null && e.soul.CanTendo && e.soul.CanTendoWith(night.Clues); }
+
     public void CommandPahon()
     {
         if (Casting || !player.CanActNow()) return;

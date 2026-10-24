@@ -28,7 +28,7 @@ public class DemoScript : MonoBehaviour
         Enemy best = null; float bd = 999f;
         foreach (var e in enemies.list)
         {
-            if (e == null || !e.alive || e.kneeling) continue;   // 무릎 꿇은 혼은 천도 몫이라 때리지 않는다
+            if (e == null || !e.alive || e.kneeling || e.soul.Boss) continue;   // 무릎 꿇은 혼은 천도 몫이라 때리지 않는다
             float d = Vector3.Distance(e.Pos, player.Pos);
             if (d < bd) { bd = d; best = e; }
         }
@@ -50,7 +50,7 @@ public class DemoScript : MonoBehaviour
                 if (e == null) { stage = 1; stageT = 0f; break; }
                 // 0.45초마다 다시 명령 → 달려가서 1타, 2타, 3타가 이어진다(입력 버퍼)
                 if (t >= nextAttack) { player.CommandAttack(e); nextAttack = t + 0.45f; }
-                foreach (var k in enemies.list) if (k != null && k.alive && k.kneeling && Vector3.Distance(k.Pos, player.Pos) < 6f) { stage = 1; stageT = 0f; walkT = 0f; break; }   // 가까이 무릎 꿇은 혼이 있을 때만 천도로(멀리 있는 혼을 쫓다 일어서는 일 방지)
+                foreach (var k in enemies.list) if (k != null && k.alive && k.kneeling && judge.CanTendoNow(k) && Vector3.Distance(k.Pos, player.Pos) < 6f) { stage = 1; stageT = 0f; walkT = 0f; break; }   // 가까이 무릎 꿇은 혼이 있을 때만 천도로(멀리 있는 혼을 쫓다 일어서는 일 방지)
                 if (stageT > 14f) { stage = 1; stageT = 0f; }   // 안전장치: 너무 오래 걸리면 다음으로
                 break;
             }
@@ -60,7 +60,7 @@ public class DemoScript : MonoBehaviour
                 Enemy k = null; float kd = 999f;
                 foreach (var e in enemies.list)
                 {
-                    if (e == null || !e.alive || !e.kneeling) continue;
+                    if (e == null || !e.alive || !e.kneeling || !judge.CanTendoNow(e)) continue;   // 덩어리·보스처럼 천도 못 하는 혼은 거른다
                     float d = Vector3.Distance(e.Pos, player.Pos);
                     if (d < kd) { kd = d; k = e; }
                 }
@@ -71,6 +71,7 @@ public class DemoScript : MonoBehaviour
                     if (walkT > 2.5f) { stage = 0; stageT = 0f; break; }   // 못 다가가면 포기하고 다시 때리기
                     player.CommandMove(k.Pos); break;
                 }
+                player.CommandStop();   // 쫓기던 대상·예약 공격을 끊어야 천도가 시작된다(안 끊으면 계속 때리며 천도가 거절됨)
                 if (stageT > 0.35f && !judge.Casting && stageT < 3f) judge.CommandTendo();
                 if (stageT > 3.2f) { stage = 2; stageT = 0f; }
                 break;

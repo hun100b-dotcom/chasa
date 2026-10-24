@@ -57,7 +57,7 @@ public class ActorModel : MonoBehaviour
         var prefab = Resources.Load<GameObject>(heroRow.path);
         if (prefab == null) return false;
         hero = Instantiate(prefab, modelRoot.transform);
-        hero.transform.localPosition = Vector3.zero; hero.transform.localRotation = Quaternion.identity;
+        hero.transform.localPosition = Vector3.zero; hero.transform.localRotation = Quaternion.Euler(0f, heroRow.yaw, 0f);
         hero.transform.localScale = Vector3.one * heroRow.scale;
         // 재질은 가져오지 않았으므로(색 팔레트는 코드에서) 색 지도(colormap) 한 장을 입힌 무광 재질을 만든다
         var tex = string.IsNullOrEmpty(heroRow.texture) ? null : Resources.Load<Texture2D>(heroRow.texture);
