@@ -50,6 +50,44 @@ ZONES = {
    ("광석 더미", "pile"), ("버팀목 기둥", "post"), ("등불 걸이", "torch"), ("외상 장부 벽", "board"),
    ("막장 막힌 돌", "rubble"), ("빈 노새 마구간", "stable")]),
 }
+ZONES2 = {
+ "⑦ 삼도천 나루 (갈대늪 · 빈 나루 마을 · 먹물 여울 · 물안개 둑)": (
+  [("갈대 흙", "#3E4A42", line("M-30,6 l4,-12 M-6,-6 l4,-12 M20,8 l4,-12", "#B8C4C8", 2)),
+   ("나루 널판", "#5B4D3E", line("M-44,-4 L-14,-18 M-30,6 L10,-12", "#42362A", 3)),
+   ("빈 마을 흙길", "#4F4436", line("M-44,0 L44,0", "#3E352A", 3)),
+   ("먹물 여울", "#0E0E16", line("M-40,0 q10,-8 20,0 t20,0 t20,0", "#4A4A6C", 2)),
+   ("둑 돌", "#4A4F5E", line("M-32,-8 L0,-24 L32,-8 L0,8 Z", "#2B2E38", 2)),
+   ("줄 서는 자리", "#3C3C48", line("M-40,0 L40,0", "#BFE8FF", 2))],
+  [("갈대 다발", "arrows"), ("나룻배 한 척", "boat"), ("빈 집", "stable"), ("줄 말뚝", "post"), ("먹물 통", "jars"),
+   ("둑 돌무더기", "rubble"), ("물안개 등", "torch"), ("부서진 나루터", "bench"), ("사공 삿대", "mast"), ("이름 없는 팻말", "board")]),
+ "⑧ 저승 관아 (서리 숙사 · 먹방 · 문서 창고 · 숫자 마당)": (
+  [("행랑 마루", "#5B4D3E", line("M-44,-4 L-14,-18 M-30,6 L10,-12", "#42362A", 3)),
+   ("먹방 석판", "#2E2E38", line("M-32,-8 L0,-24 L32,-8 L0,8 Z", "#14141C", 2)),
+   ("서고 바닥", "#4A4F5E", line("M-40,0 L0,-20 L40,0 L0,20 Z", "#3A3E4A", 2)),
+   ("숫자 마당 칸", "#3C3C48", line("M-24,-4 L-4,-14 L16,-4 L-4,6 Z", "#F3E7D3", 2)),
+   ("먹 얼룩", "#1A1A24", line("M-20,0 q20,-14 40,0", "#7B4FD6", 3)),
+   ("붓 말리는 마당", "#4F4436", line("M-44,0 L44,0", "#3E352A", 3))],
+  [("벼루 (거대)", "stable"), ("서가", "tags"), ("붓 말림 줄", "net"), ("먹 가는 돌", "pile"), ("명부 상자", "board"),
+   ("번호 팻말", "post"), ("행랑 기둥", "post"), ("빨래 장대", "torch"), ("인주 단지", "jars"), ("관아 문", "gate")]),
+ "⑨ 명부전 담장 (빈 고을 · 아홉째 문 · 도장 없는 장터 · 인장 굴)": (
+  [("문패 없는 길", "#4F4436", line("M-44,0 L44,0", "#3E352A", 3)),
+   ("문 앞 돌", "#4A4F5E", line("M-40,0 L40,0 M0,-20 L0,20", "#2B2E38", 3)),
+   ("장터 흙", "#5B4D3E", line("M-30,6 l4,-6 M0,-8 l5,-5", "#8A7A62", 3)),
+   ("인장 굴 바닥", "#2E2E38", line("M-26,-8 L-4,-18 L10,-6 L-8,8 Z", "#14141C", 3)),
+   ("인주 자국", "#3C3C48", line("M-14,-4 L14,-4", "#E85C41", 5)),
+   ("빈 종이 마당", "#6B6558", line("M-30,0 L30,0", "#F3E7D3", 2))],
+  [("빈 문패 기둥", "tags"), ("빈 종이 걸린 나무", "flag"), ("아홉째 문", "gate"), ("문지기 자리", "stele"), ("장터 좌판", "tent"),
+   ("인장 벽", "wall"), ("인주 단지", "jars"), ("빈 집", "stable"), ("깃대", "flag"), ("횃불대", "torch")]),
+ "⑩ 사슬 무덤 (처음 마을 · 사슬 무덤 · 우물터 · 물막이 바닥)": (
+  [("처음 마을 흙", "#5B4D3E", line("M-30,6 l4,-6 M0,-8 l5,-5", "#8A7A62", 3)),
+   ("새벽 풀", "#3E5A44", line("M-30,6 l4,-10 M-6,-6 l4,-10 M20,8 l4,-10", "#8AB58A", 2)),
+   ("사슬 들판", "#3C3C48", line("M-30,0 L30,0", "#6B4A3A", 3)),
+   ("우물 돌", "#4A4F5E", line("M-32,-8 L0,-24 L32,-8 L0,8 Z", "#2B2E38", 2)),
+   ("깨진 이름 바닥", "#2A2A38", line("M-26,-4 L-6,-14 L14,-4 M-10,8 L18,-8", "#9A5CFF", 3)),
+   ("물막이 바닥", "#1D2C47", line("M-40,0 q10,-8 20,0 t20,0 t20,0", "#7B4FD6", 2))],
+  [("초가", "stable"), ("우물", "bench"), ("꽂힌 사슬 (비석처럼)", "post"), ("녹슨 사슬 더미", "pile"), ("작은 신발·큰 신발", "jars"),
+   ("깨진 이름 덩이", "rubble"), ("처음 마을 담", "wall"), ("고목", "stone_f"), ("강둑 틈", "gate"), ("새벽 등", "torch")]),
+}
 SH = {
  "wall": '<path d="M-66,0 L-66,-70 L-40,-60 L-34,-90 L-10,-70 L12,-80 L30,-56 L66,-62 L66,0 L0,30Z"/>',
  "flag": '<rect x="-3" y="-120" width="6" height="120"/><path d="M3,-118 L70,-104 L54,-88 L72,-72 L3,-70Z"/>',
@@ -65,6 +103,7 @@ SH = {
  "net": '<path d="M-60,0 L-60,-90 M60,0 L60,-90 M-60,-90 L60,-90" stroke="#000" stroke-width="6"/><path d="M-60,-70 L60,-30 M-60,-30 L60,-70 M-20,-90 L-20,-20 M20,-90 L20,-20" stroke="#000" stroke-width="3"/>',
  "stone_f": '<path d="M-50,0 L-40,-40 L-24,-70 L-16,-110 Q0,-130 16,-110 L24,-70 L44,-30 L56,0 L0,26Z"/>',
  "mast": '<rect x="-4" y="-120" width="8" height="120" transform="rotate(12)"/><path d="M4,-110 L50,-80 L8,-70Z" transform="rotate(12)"/>',
+ "stele": '<rect x="-18" y="-76" width="36" height="76" rx="14"/><rect x="-30" y="-8" width="60" height="12"/>',
  "gate": '<path d="M-60,0 L-60,-100 L60,-100 L60,0 L40,0 L40,-80 L-40,-80 L-40,0Z"/>',
  "tags": '<rect x="-50" y="-90" width="100" height="70"/>' + ''.join(f'<rect x="{-42+i*16}" y="-14" width="10" height="16"/>' for i in range(6)),
  "bench": '<path d="M-60,-30 L60,-30 L60,-18 L-60,-18Z M-52,-18 L-52,0 M52,-18 L52,0 M-4,-18 L-4,0" stroke="#000" stroke-width="8"/>',
@@ -72,11 +111,11 @@ SH = {
  "rubble": '<path d="M-60,0 L-40,-60 L-10,-40 L10,-80 L40,-50 L64,0 L0,30Z"/>',
  "stable": '<path d="M-70,0 L-70,-60 L0,-90 L70,-60 L70,0 L0,30Z"/><rect x="-14" y="-40" width="28" height="40" fill="#F3E7D3"/>',
 }
-def sheet():
+def sheet(ZONES=ZONES, title='③~⑥ 붉은재·쇳골·갯마을·도성'):
     W = 1260
     rows = []
     y = 100
-    o = [f'<text x="24" y="38" fill="{HANJI}" font-size="22" font-weight="bold">③~⑥ 붉은재·쇳골·갯마을·도성 타일·소품 실루엣 시트 (쿼터뷰 2:1, 도형 초안)</text>',
+    o = [f'<text x="24" y="38" fill="{HANJI}" font-size="22" font-weight="bold">{title} 타일·소품 실루엣 시트 (쿼터뷰 2:1, 도형 초안)</text>',
          f'<text x="24" y="60" fill="{TEAL}" font-size="12">검정으로 칠해도 읽히는지가 합격선. 실제 전쟁·사고를 특정하는 도상 없음. 작품명 참조 없음.</text>']
     for zone, (tiles, props) in ZONES.items():
         o.append(f'<text x="24" y="{y}" fill="{GOLD}" font-size="16" font-weight="bold">{zone}</text>')
@@ -91,4 +130,5 @@ def sheet():
     H = y - 130
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" font-family="sans-serif"><rect width="{W}" height="{H}" fill="{BG}"/>' + "".join(o) + '</svg>'
 if __name__ == "__main__":
-    open(os.path.join(OUT, "P2-043-redash-ironbone-tiles-props.svg"), "w", encoding="utf-8").write(sheet()); print("ok")
+    open(os.path.join(OUT, "P2-043-redash-ironbone-tiles-props.svg"), "w", encoding="utf-8").write(sheet()); 
+    open(os.path.join(OUT, "P2-044-season2-tiles-props.svg"), "w", encoding="utf-8").write(sheet(ZONES2, "⑦~⑩ 나루·저승 관아·명부전 담장·사슬 무덤")); print("ok")
