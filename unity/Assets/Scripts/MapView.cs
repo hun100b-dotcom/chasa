@@ -65,18 +65,25 @@ public static class MapView
     /// 화면 위쪽 꼭짓점 = 먼 모서리(-x,-z), 오른쪽 = (-x,+z), 아래 = (+x,+z), 왼쪽 = (+x,-z).
     /// 같은 종류·무늬는 메쉬 하나로 묶어 그린다.
     /// </summary>
-    static bool BuildGroundTiles(GameObject root, string[] ground, float originX, float originZ)
+    /// <summary>땅 그림(타일)이 전부 있는가. 하나라도 없으면 반쪽짜리 땅을 막으려고 통째로 포기한다</summary>
+    public static bool GroundArtAvailable()
     {
-        // 필요한 그림이 하나라도 없으면 통째로 포기한다(반쪽짜리 땅을 막기 위해)
         foreach (var k in new[] { "grass", "dirt_road", "stone_path", "paddy", "yard", "stepping_stones" })
             if (SpriteLib.Texture("tiles/tile_" + k + "_a") == null) return false;
+        return true;
+    }
+
+    static bool BuildGroundTiles(GameObject root, string[] ground, float originX, float originZ, int rowFrom = 0, int rowTo = -1)
+    {
+        if (!GroundArtAvailable()) return false;
+        if (rowTo < 0 || rowTo > ground.Length) rowTo = ground.Length;   // 기본: 전체 줄
 
         var verts = new Dictionary<string, List<Vector3>>();
         var uvs = new Dictionary<string, List<Vector2>>();
         var tris = new Dictionary<string, List<int>>();
         float h = Balance.MAP_CELL_SIZE * 0.5f;
         const float y = 0.004f;   // 바닥판 바로 위 (임시 격자·마당 원보다는 아래)
-        for (int gy = 0; gy < ground.Length; gy++)
+        for (int gy = rowFrom; gy < rowTo; gy++)
             for (int gx = 0; gx < ground[gy].Length; gx++)
             {
                 // 칸 중심. (마을은 originX = 마을 모서리라 예전 WorldX(gy+0.5)와 같은 값이다)
@@ -97,7 +104,7 @@ public static class MapView
             var mesh = new Mesh();
             mesh.SetVertices(verts[key]); mesh.SetUVs(0, uvs[key]); mesh.SetTriangles(tris[key], 0);
             mesh.RecalculateNormals(); mesh.RecalculateBounds();
-            var go = new GameObject("Tiles_" + key);
+            var go = new GameObject("Tiles_" + key + "_" + rowFrom);
             go.transform.SetParent(root.transform, false);
             go.AddComponent<MeshFilter>().sharedMesh = mesh;
             var mr = go.AddComponent<MeshRenderer>();
@@ -118,7 +125,7 @@ public static class MapView
     {
         var root = new GameObject("Zone_" + z.Id);
         root.transform.SetParent(parent, false);
-        if (!BuildGroundTiles(root, z.Ground, z.MinX, z.MinZ))
+        if (!GroundArtAvailable())
         {
             var floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
             Object.Destroy(floor.GetComponent<Collider>());
@@ -128,6 +135,12 @@ public static class MapView
             floor.GetComponent<Renderer>().sharedMaterial = U.Matte(VillageGround);
         }
         return root;
+    }
+
+    /// <summary>구역 땅의 일부(rowFrom 줄 ~ rowTo 줄)를 깐다. 한 프레임에 조금씩 부르려고 나눴다(경계에서 프레임이 튀는 것 방지)</summary>
+    public static void BuildZoneGroundRows(ZoneDef z, GameObject root, int rowFrom, int rowTo)
+    {
+        BuildGroundTiles(root, z.Ground, z.MinX, z.MinZ, rowFrom, rowTo);
     }
 
     /// <summary>구역 소품 하나를 세운다 (그림이 없으면 색 도형)</summary>

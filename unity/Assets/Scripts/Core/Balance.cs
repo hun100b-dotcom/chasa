@@ -350,4 +350,5 @@ public static class Balance
     public const float BUFFER_WINDOW = 0.2f;  // (기획 타격감 분석 10-24, 임시) 끊기 창(후딜 시작)이 열리기 전 이 시간(초) 안에 누른 입력만 저장했다가 실행
     public const float BUFFER_LIFETIME = 0.15f;  // (기획 타격감 분석 10-24, 임시) 저장된 입력의 유효 시간(초). 너무 오래 기억하면 의도와 다른 동작이 나간다
     public const float BUFFER_TOUCH_ADD = 0.05f;  // (기획 타격감 분석 10-24, 임시) 폰은 창·유효 시간 +0.05초(터치 지연)
+    public const int ZONE_LOAD_ROWS_PER_FRAME = 8;  // 구역을 불러올 때 한 프레임에 까는 땅 줄 수(64줄 → 8프레임). 경계에서 프레임이 튀지 않게 나눈다
 }

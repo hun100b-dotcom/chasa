@@ -43,12 +43,20 @@ public class ZoneManager : MonoBehaviour
         MapLayout.ZoneBlockers.AddRange(z.Blockers);   // 충돌 먼저
         var root = MapView.BuildZoneGround(z, transform);
         roots[z] = root;
-        loading[z] = StartCoroutine(BuildProps(z, root));
+        loading[z] = StartCoroutine(BuildZone(z, root));
         Debug.Log("[Zone] 켬 " + z.Name + " (" + z.Id + ") / 켜짐 " + roots.Count);
     }
 
-    IEnumerator BuildProps(ZoneDef z, GameObject root)
+    IEnumerator BuildZone(ZoneDef z, GameObject root)
     {
+        // 땅은 줄 묶음 단위로 나눠 깐다(한 번에 만들면 경계에서 50ms 넘는 프레임이 생겼다: PC 측정)
+        if (MapView.GroundArtAvailable())
+            for (int r = 0; r < z.Ground.Length; r += Balance.ZONE_LOAD_ROWS_PER_FRAME)
+            {
+                if (root == null) yield break;
+                MapView.BuildZoneGroundRows(z, root, r, Mathf.Min(z.Ground.Length, r + Balance.ZONE_LOAD_ROWS_PER_FRAME));
+                yield return null;
+            }
         int n = 0;
         foreach (var p in z.Props)
         {
@@ -67,7 +75,14 @@ public class ZoneManager : MonoBehaviour
         GameObject root;
         if (roots.TryGetValue(z, out root))
         {
-            if (root != null) { propsBuilt -= Mathf.Min(propsBuilt, z.Props.Count); Destroy(root); }
+            if (root != null)
+            {
+                propsBuilt -= Mathf.Min(propsBuilt, z.Props.Count);
+                // GameObject 를 지워도 땅 메시·재질은 메모리에 남는다 → 직접 지워야 구역을 오가도 메모리가 안 샌다
+                foreach (var mf in root.GetComponentsInChildren<MeshFilter>()) if (mf.sharedMesh != null) Destroy(mf.sharedMesh);
+                foreach (var mr in root.GetComponentsInChildren<MeshRenderer>()) if (mr.sharedMaterial != null) Destroy(mr.sharedMaterial);
+                Destroy(root);
+            }
             roots.Remove(z);
         }
         foreach (var b in z.Blockers) MapLayout.ZoneBlockers.Remove(b);
