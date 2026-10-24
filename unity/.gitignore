@@ -1,0 +1,9 @@
+# Unity가 자동으로 만드는 폴더들 — 매번 다시 생기므로 저장하지 않는다
+/Library/
+/Temp/
+/Logs/
+/obj/
+/Build/
+/UserSettings/
+*.csproj
+*.sln
