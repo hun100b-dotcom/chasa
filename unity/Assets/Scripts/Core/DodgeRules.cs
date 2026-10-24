@@ -19,6 +19,9 @@ namespace Chasa.Core
         public static bool RecoverAllowsDodge(bool lastStep, float progress)
         { return !(lastStep && progress < Balance.COMBO3_RECOVER_DODGE_LOCK); }
 
+        /// <summary>공격 후딜 진행률(0~1)이 기준을 넘으면 이동 입력으로 끝동작을 끊을 수 있다 (왜: 때린 뒤 굳어 있는 느낌을 줄인다)</summary>
+        public static bool CanCancelRecoverToMove(float progress) { return progress >= Balance.MOVE_CANCEL_RECOVER; }
+
         /// <summary>피하기 중, 공격·처결로 끊을 수 있는 시점인가</summary>
         public static bool CanCancelToAction(float t) { return t >= Balance.DODGE_CANCEL_TO_ATTACK; }
     }

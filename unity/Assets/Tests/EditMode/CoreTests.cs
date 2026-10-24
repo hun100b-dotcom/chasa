@@ -1107,6 +1107,14 @@ public class CoreTests
     }
 
     [Test]
+    public void 후딜_60퍼센트_뒤에는_이동으로_끊을_수_있다()
+    {
+        Assert.IsFalse(DodgeRules.CanCancelRecoverToMove(0.5f));
+        Assert.IsTrue(DodgeRules.CanCancelRecoverToMove(0.6f));
+        Assert.Less(Balance.PAHON_RECOVER, Balance.DODGE_TIME + 0.2f, "파혼 끝동작이 너무 길면 안 됨");
+    }
+
+    [Test]
     public void 피하기_충전은_1_1초에_한_번_최대_2()
     {
         float c = 0f;

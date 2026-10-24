@@ -41,7 +41,8 @@ public class Player : MonoBehaviour
     Vector3 lastPos; float walkT;      // 걷는 그림 두 장을 번갈아 보여 주려고
     public Loadout loadout = new Loadout();   // 든 무기·도술 쿨다운·장비 (JudgeSystem 이 장비 드롭을 넣어 준다)
     ComboStep[] Steps => WeaponTable.Steps(loadout.weapon);   // 지금 든 무기의 콤보 표
-    bool Busy => locked || loadout.swapLeft > 0f;             // 천도 캐스팅 중이거나 무기를 바꿔 드는 중
+    public float actLock;   // 파혼 끝동작 잠금(초). 이 동안은 이동·공격 불가
+    bool Busy => locked || loadout.swapLeft > 0f || actLock > 0f;             // 천도 캐스팅 중이거나 무기를 바꿔 드는 중
     public bool locked;               // 천도 캐스팅 중엔 움직이지도 휘두르지도 못한다 (무방비 = 위험)
     public float speedMult = 1f;      // 원념 얼룩 위면 0.8 (이동속도 -20%). JudgeSystem 이 매 프레임 넣어 준다
     public float invulnT;             // 맞은 직후 무적 시간(연속 피해 방지). 0이면 맞을 수 있다
@@ -209,6 +210,8 @@ public class Player : MonoBehaviour
         if (Busy) return;
         if (state == State.Dodge && !CanActNow()) return;
         if (state == State.Dodge) ConsumeAct();
+        // 공격 후딜이 60% 지났으면 이동으로 끝동작을 끊는다(손맛: 때리고 바로 움직일 수 있게)
+        else if (state == State.Attack && atk != null && atk.phase == "recover" && DodgeRules.CanCancelRecoverToMove(atk.t / atk.cfg.recover)) ConsumeAct();
         float tx = point.x, tz = point.z;
         MapLayout.ClampPoint(ref tx, ref tz);   // 맵 밖을 눌러도 맵 안쪽 끝으로
         moveTarget = new Vector3(tx, 0, tz);
@@ -302,6 +305,7 @@ public class Player : MonoBehaviour
     public void Tick(float dt)
     {
         invulnT = Mathf.Max(0f, invulnT - dt);
+        actLock = Mathf.Max(0f, actLock - dt);
         dodgeCharges = DodgeRules.Recharge(dodgeCharges, dt);   // 한 번 충전 1.1초
         loadout.Tick(dt);
         pullCooldown = Mathf.Max(0f, pullCooldown - dt);

@@ -352,5 +352,7 @@ public static class Balance
     public const float BUFFER_TOUCH_ADD = 0.05f;  // (기획 타격감 분석 10-24, 임시) 폰은 창·유효 시간 +0.05초(터치 지연)
     public const int ZONE_LOAD_ROWS_PER_FRAME = 8;  // 구역을 불러올 때 한 프레임에 까는 땅 줄 수(64줄 → 8프레임). 경계에서 프레임이 튀지 않게 나눈다
     public const bool UI_TOOLKIT = true;  // 새 HUD(UI Toolkit)가 본 화면(기획 총정리 0단계, 10-25). false 면 예전 IMGUI(정리 대상). 주소 ?ui 로도 켠다
+    public const float MOVE_CANCEL_RECOVER = 0.6f;  // (기획 1단계) 공격 후딜이 이 비율(60%)만큼 지나면 이동 입력으로 끝동작을 끊고 걸어갈 수 있다
+    public const float PAHON_RECOVER = 0.25f;  // (기획 1단계) 파혼 직후 끝동작 잠금(초). 천도보다 짧게 끊어 손맛 유지
     public const bool VIEW_3D_DEFAULT = true;  // 오너 결정(10-24): 차사 전체를 3D 로 전면 교체. true 면 주소에 아무것도 없을 때 새 3D 화면. 옛 2D 화면은 ?v=2d 로만(정리 대상, 오너 확인 뒤 삭제)
 }

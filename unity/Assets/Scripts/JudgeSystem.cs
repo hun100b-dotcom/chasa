@@ -113,6 +113,7 @@ public class JudgeSystem : MonoBehaviour
         if (!e.soul.TryPahon()) return;
         player.ConsumeAct();   // 후딜·피하기를 끊고 파혼
         DoPahon(e);
+        player.actLock = Balance.PAHON_RECOVER;   // 파혼 끝동작 0.25초
     }
 
     void DoPahon(Enemy e)

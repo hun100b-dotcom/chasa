@@ -228,3 +228,8 @@
 - 새 HUD(UI Toolkit) 기본 켜짐(`UI_TOOLKIT=true`). 옛 IMGUI·옛 2D(`?v=2d`)는 기본 경로에서 분리된 정리 대상(삭제는 오너 확인 뒤).
 - 혼 색: 오래된 혼 #FF6A3D → 녹슨 적갈색 #A8472E (주황은 파혼 전용). 화면 글자에 '동이' 이름 없음 확인('동이 튼다'는 새벽 뜻).
 - 모델 형식 안내(아트팀): GLB 권장, 1유닛=1m, 바닥이 원점.
+
+## [코드] 1단계 손맛 마감 — 1차분 (2026-10-25 KST)
+- 후딜 60% 지나면 이동 입력으로 끝동작 끊기(`MOVE_CANCEL_RECOVER`, DodgeRules.CanCancelRecoverToMove + 시험 1개).
+- 파혼 끝동작 0.25초 잠금(`PAHON_RECOVER`, Player.actLock).
+- 임시 효과음은 이미 10종(sfx_synth) 있어 요구 8종 충족. 남은 것: 3D 동작 타격 순간 맞추기, 아래쪽 기술 줄·획득 알림 UI, 30초 영상.
