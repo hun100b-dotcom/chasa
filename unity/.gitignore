@@ -7,3 +7,6 @@
 /UserSettings/
 *.csproj
 *.sln
+/Obj/
+/.vscode/
+*.slnx
