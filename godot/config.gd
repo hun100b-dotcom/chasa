@@ -204,3 +204,11 @@ const MAP_REWARD_PER_RING := 0.25     # 한 고리 멀어질 때마다 보상 +2
 const MAP_LUMP_BASE := 0.05           # 덩어리 혼 확률 기본. 바깥 고리일수록 +5%
 const MAP_LUMP_PER_RING := 0.05
 const MAP_MIN_SOUL_GAP := 3.0         # 혼끼리 최소 간격(m)
+
+# --- 서사 제안 → QC 검증 후 채택한 임시값 (docs/BALANCE-NARRATIVE-CHECK.md). 🔴 PD 확정 대기 ---
+const SEAL_FADED_CAST_BONUS := 0.25   # 명부 인이 흐린 이름의 혼: 천도 캐스팅 +0.25초
+const SEAL_MISSING_CAST_BONUS := 0.5  # 인이 없는 이름의 혼: +0.5초
+const BOSS_TENDO_CAST_TIME := 2.0     # 보스 천도 캐스팅. 서사 제안 2.5초는 잡몹 2마리면 항상 지는 선택이라 2.0으로 낮춤
+const BOSS_CAST_ADD_PAUSE := 2.0      # 보스 천도 캐스팅 시작 후 이 시간 동안 잡몹 스폰 정지 (캐스팅이 '고행'만 되지 않게)
+const BOSS_PAHON_KARMA := 3           # 보스 파혼 업 (일반 파혼 3회분). 업 단계 경계(10, 30)를 넘길 땐 경고 필요
+const SHORTCUT_RETURN_CUT := 0.175    # 1호 보스 천도 보상: 귀환 거리 단축. 서사 제안 -40%는 과함 → 중간값 -17.5%

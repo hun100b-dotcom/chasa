@@ -308,6 +308,10 @@ func _core_loop_tests(p: Player, em: EnemyManager) -> void:
 	check(p.karma_tier() == 3, "업 60 = K-004")
 	p.karma = kk
 
+	print("[14-4] 서사 채택 임시값 범위 (P1 서사 검증)")
+	check(Config.BOSS_TENDO_CAST_TIME < 2.5 and Config.BOSS_TENDO_CAST_TIME > Config.TENDO_CAST_TIME, "보스 천도 %.1f초 (일반보다 길고 2.5보다 짧음)" % Config.BOSS_TENDO_CAST_TIME)
+	check(Config.SHORTCUT_RETURN_CUT >= 0.15 and Config.SHORTCUT_RETURN_CUT <= 0.20, "지름길 -%.1f%% (권고 15~20%%)" % (Config.SHORTCUT_RETURN_CUT * 100.0))
+
 	print("[14-3] 맵 생성 (P1-017)")
 	var m1 := MapGen.generate(42)
 	var m2 := MapGen.generate(42)
