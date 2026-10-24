@@ -26,6 +26,9 @@ public static class SpriteLib
         foreach (var e in m.sprites) entries[e.file.Replace(".png", "")] = e;
     }
 
+    /// <summary>스프라이트가 아닌 원본 텍스처가 필요할 때(지형 타일을 메쉬에 입힐 때). 없으면 null</summary>
+    public static Texture2D Texture(string name) { return Resources.Load<Texture2D>("Sprites/" + name); }
+
     /// <summary>"characters/chasa_idle" 같은 이름으로 스프라이트를 얻는다. 없으면 null</summary>
     public static Sprite Get(string name)
     {

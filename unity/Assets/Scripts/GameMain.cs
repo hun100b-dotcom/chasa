@@ -116,7 +116,8 @@ public class GameMain : MonoBehaviour
         lr.sharedMaterial = U.VertexColor();
         lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
-        MapView.Build(transform);   // 솔고개 마을(집·장승·길) — 막힌 곳 규칙은 Core/MapLayout
+        bool groundArt = MapView.Build(transform);   // 솔고개 마을(집·장승·길) — 막힌 곳 규칙은 Core/MapLayout
+        if (groundArt) lines.SetActive(false);        // 그림 지형이 깔렸으면 임시 격자선은 끈다
     }
 
     void UpdateCamera(float dt)
