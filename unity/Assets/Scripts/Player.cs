@@ -419,7 +419,7 @@ public class Player : MonoBehaviour
         state = State.Attack;
         atk = new AttackRun { step = step, cfg = cfg, startAngle = start, prevAngle = start, totalSweep = cfg.dir * cfg.sweepDeg * Mathf.Deg2Rad };
         hasBuffered = false;
-        if (spr != null) spr.PlayAttack(cfg.windup / loadout.stats.AttackSpeedMult, cfg.swing / loadout.stats.AttackSpeedMult);   // 3D 동작을 이 타에 맞춰 처음부터
+        if (spr != null) spr.PlayAttack(cfg.windup / loadout.stats.AttackSpeedMult, cfg.swing / loadout.stats.AttackSpeedMult, step);   // 3D 동작을 이 타에 맞춰 처음부터
         chain.gameObject.SetActive(!loadout.Def.Projectile);   // 붓은 사슬 그림을 쓰지 않는다
     }
 

@@ -16,7 +16,7 @@ public static class Props3D
     static readonly Color Leaf = new Color(0.12f, 0.24f, 0.17f);
 
     /// <summary>재질에서 기본 색을 꺼낸다. OBJ 는 _Color, 내장 렌더러용 glTFast(GLB)는 baseColorFactor(밑줄 없음)에 색이 들어 있어 차례로 찾는다</summary>
-    static Color MatColor(Material m)
+    public static Color MatColor(Material m)
     {
         if (m == null) return Color.gray;
         foreach (var n in new[] { "baseColorFactor", "_BaseColorFactor", "_BaseColor", "_Color" })

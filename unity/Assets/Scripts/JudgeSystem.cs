@@ -674,7 +674,7 @@ public class JudgeSystem : MonoBehaviour
             GUI.DrawTexture(new Rect(bar.x + 1, bar.y + 1, 158f * Mathf.Clamp01(castT / castTotal), 10), white);
             GUI.color = Color.white;
         }
-        if (Balance.DODGE_ENABLED)
+        if (Balance.DODGE_ENABLED && ui == null)   // 새 HUD 가 아래쪽 기술 줄에 그리면 중복이라 예전 칸은 숨긴다
         {
             // 피하기 충전 표시: 작은 막대 2개(채워지는 중이면 부분만 찬다). 글자 없이 도형이라 글꼴 걱정이 없다
             for (int i = 0; i < Balance.DODGE_CHARGES; i++)

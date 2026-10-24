@@ -15,7 +15,7 @@ using UnityEngine.Playables;
 
 public class ActorModel : MonoBehaviour
 {
-    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge }
+    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3 }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
 
     // 모양 설명서: 이름에서 골라 쓴다
     struct Spec
@@ -28,6 +28,7 @@ public class ActorModel : MonoBehaviour
     Renderer[] rends; Material[] mats; Color[] baseCol;
     string key;
     Pose pose = Pose.Idle; float poseT;
+    Pose atkPose = Pose.Attack;           // 지금 공격이 쓸 모델 동작(1·2·3타)
     float heroSpeed = 1f;                 // 한 번짜리 동작(공격) 재생 속도 배율 — 타격 순간을 판정 시각에 맞추려고
     float walkPhase, yaw, lastYawSet;
     Vector3 lastPos;
@@ -60,15 +61,24 @@ public class ActorModel : MonoBehaviour
         hero.transform.localScale = Vector3.one * heroRow.scale;
         // 재질은 가져오지 않았으므로(색 팔레트는 코드에서) 색 지도(colormap) 한 장을 입힌 무광 재질을 만든다
         var tex = string.IsNullOrEmpty(heroRow.texture) ? null : Resources.Load<Texture2D>(heroRow.texture);
-        var rl = new List<Material>();
+        var rl = new List<Material>(); var cl = new List<Color>();
         foreach (var r in hero.GetComponentsInChildren<Renderer>())
         {
-            var m = U.Flashable(Color.white);
-            if (tex != null) m.mainTexture = tex;
-            r.sharedMaterial = m; rl.Add(m);
+            if (tex != null)
+            {
+                var m = U.Flashable(Color.white); m.mainTexture = tex;   // 색 지도 한 장 쓰는 모델(켄니)
+                r.sharedMaterial = m; rl.Add(m); cl.Add(Color.white);
+            }
+            else
+            {
+                // 색 지도가 없는 모델(아트팀 GLB): 재질 칸마다 원래 색을 따서 번쩍 가능한 재질로 바꾼다
+                var src = r.sharedMaterials; var dst = new Material[src.Length];
+                for (int i = 0; i < src.Length; i++) { var c = Props3D.MatColor(src[i]); dst[i] = U.Flashable(c); rl.Add(dst[i]); cl.Add(c); }
+                r.sharedMaterials = dst;
+            }
             r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On; r.receiveShadows = true;
         }
-        mats = rl.ToArray(); baseCol = new Color[mats.Length]; for (int i = 0; i < baseCol.Length; i++) baseCol[i] = Color.white;
+        mats = rl.ToArray(); baseCol = cl.ToArray();
         hasGlow = false;
         // 움직임: 컨트롤러 없이 코드로 재생(Playables = 움직임 조각을 섞는 유니티 기능). 상태가 바뀌면 부드럽게 섞어 넘긴다
         var anim = hero.GetComponentInChildren<Animator>();
@@ -79,12 +89,13 @@ public class ActorModel : MonoBehaviour
         graph = PlayableGraph.Create("Hero");
         graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);   // 우리가 직접 시간을 흘린다(히트스톱과 무관하게 부드럽게)
         var output = AnimationPlayableOutput.Create(graph, "out", anim);
-        var order = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge };
+        var order = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3 };
         mixer = AnimationMixerPlayable.Create(graph, order.Length);
         heroPlayables = new AnimationClipPlayable[order.Length];
         for (int i = 0; i < order.Length; i++)
         {
             AnimationClip clip; var cn = ClipName(heroRow, order[i]);
+            if (cn == null && (order[i] == Pose.Attack2 || order[i] == Pose.Attack3)) cn = ClipName(heroRow, Pose.Attack);   // 2·3타 동작이 표에 없으면 1타 동작을 쓴다
             if ((cn == null || !byName.TryGetValue(cn, out clip)) && !byName.TryGetValue(ClipName(heroRow, Pose.Idle) ?? "idle", out clip)) continue;
             heroPlayables[i] = AnimationClipPlayable.Create(graph, clip);
             graph.Connect(heroPlayables[i], 0, mixer, i);
@@ -101,6 +112,7 @@ public class ActorModel : MonoBehaviour
     void HeroUpdate(float dt, bool moving)
     {
         var want = pose == Pose.Idle && moving ? Pose.Walk : pose;
+        if (want == Pose.Attack) want = atkPose;   // 콤보 2·3타는 전용 동작
         if (want == Pose.Walk && !moving && pose == Pose.Walk) want = Pose.Idle;
         int idx; if (!heroInput.TryGetValue(want, out idx)) idx = 0;
         if (idx != heroCur) { heroCur = idx; heroT = 0f; heroSpeed = 1f; }   // 새 동작은 처음부터
@@ -127,10 +139,11 @@ public class ActorModel : MonoBehaviour
     /// 모델 동작의 '때리는 순간'(대략 클립의 45%)이 판정 시각(선딜 + 휘두름의 가운데)에 오도록 재생 속도를 맞춘다.
     /// 왜? 판정과 몸 동작이 따로 놀면 "사슬만 혼자 도는" 느낌이 난다(PC 영상 의견).
     /// </summary>
-    public void PlayAttack(float windup, float swing)
+    public void PlayAttack(float windup, float swing, int step = 1)
     {
         pose = Pose.Attack; poseT = 0f; heroT = 0f;
-        int idx; if (!heroInput.TryGetValue(Pose.Attack, out idx) || heroPlayables == null || !heroPlayables[idx].IsValid()) { heroSpeed = 1f; return; }
+        atkPose = step >= 3 ? Pose.Attack3 : step == 2 ? Pose.Attack2 : Pose.Attack;
+        int idx; if (!heroInput.TryGetValue(atkPose, out idx) || heroPlayables == null || !heroPlayables[idx].IsValid()) { heroSpeed = 1f; return; }
         float len = heroPlayables[idx].GetAnimationClip().length;
         heroSpeed = Mathf.Clamp(0.45f * len / Mathf.Max(0.05f, windup + swing * 0.5f), 0.5f, 6f);
     }

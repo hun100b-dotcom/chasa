@@ -56,6 +56,16 @@ public class DemoScript : MonoBehaviour
             }
             case 1:
             {
+                // 무릎 꿇은 혼이 천도 범위 밖이면 먼저 걸어간다(전엔 범위 밖이라 '대상이 없다'만 반복했다)
+                Enemy k = null; float kd = 999f;
+                foreach (var e in enemies.list)
+                {
+                    if (e == null || !e.alive || !e.kneeling) continue;
+                    float d = Vector3.Distance(e.Pos, player.Pos);
+                    if (d < kd) { kd = d; k = e; }
+                }
+                if (k == null) { stage = 2; stageT = 0f; break; }
+                if (kd > Balance.JUDGE_RANGE * 0.8f) { player.CommandMove(k.Pos); stageT = 0f; break; }   // 가까워질 때까지 시간 안 셈
                 if (stageT > 0.35f && !judge.Casting && stageT < 3f) judge.CommandTendo();
                 if (stageT > 3.2f) { stage = 2; stageT = 0f; }
                 break;

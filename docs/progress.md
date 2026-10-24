@@ -250,3 +250,10 @@
 - 데모: 혼을 반복해서 상대(다음 혼이 있으면 0단계로), 무릎 꿇은 혼은 때리지 않음.
 - 타격 순간: ActorModel.PlayAttack — 타마다 3D 동작을 처음부터, 클립의 45% 지점이 선딜+휘두름 가운데에 오게 재생 속도 조정(이전엔 1·2·3타 동안 같은 자세라 동작이 다시 시작되지 않았음).
 - 남음: 큰 기와집 지붕이 보스를 가리는 문제(OccluderFade 일반화 후보). 주인공 GLB 는 뼈대 없음 → 아트팀 재내보내기 요청, Kenney 주인공 유지.
+
+## [코드] 새 주인공 GLB 연결 (2026-10-25 KST)
+- models.json: `dongi` → Models/Hero/hero_chasa(스케일 0.89로 약 1.8m), 동작 Idle/Walk/Attack/Attack2/Attack3/Hit/Cast/Dodge. 켄니 주인공은 `dongi_kenney` 줄로 보관(되돌릴 때 key 만 바꿈).
+- ActorModel: 색 지도 없는 모델은 재질 칸마다 원래 색을 따서 번쩍 가능한 재질로 교체. 콤보 1·2·3타가 각자 동작(PlayAttack step).
+- PC가 만든 `tools/glb_split_prims.py`(재질 조각을 메시로 나눔)로 glTFast 가중치 오류를 우회. 아트팀이 다음에 내보낼 땐 재질별로 메시를 나눠 내보내면 됨.
+- IMGUI 피하기 칸 중복 숨김, 알림 상자 테두리, 데모는 무릎 꿇은 혼 쪽으로 걸어가 천도.
+- 확인 필요: 정면(+Z)·발 높이(발바닥 y -0.09), 한 번짜리 동작 Clamp, 천도 Cast 자세.
