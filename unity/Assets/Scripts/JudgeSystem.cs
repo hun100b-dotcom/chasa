@@ -84,7 +84,7 @@ public class JudgeSystem : MonoBehaviour
     // ===== 명령 ====================================================================
     public void CommandTendo()
     {
-        if (Casting || !player.CanAct()) return;
+        if (Casting || !player.CanActNow()) return;
         // 천도는 보낼 수 있는 혼 중 가장 가까운 것을 고른다 — 곁에 덩어리(천도 불가)가 있어도 막히지 않게(QA)
         var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE, x => x.soul.CanTendoWith(night.Clues));
         if (e == null) e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);   // 없으면 가장 가까운 혼으로 이유를 안내
@@ -92,6 +92,7 @@ public class JudgeSystem : MonoBehaviour
         if (!e.soul.CanTendo) { Say("보낼 수 없는 넋 - 파혼만 가능"); return; }
         if (!e.soul.CanTendoWith(night.Clues)) { Say("단서 " + Balance.BOSS_CLUES_REQUIRED + "개가 필요하다 (" + night.Clues + ") - 파혼만 가능"); return; }
         if (!e.soul.BeginSending()) return;
+        player.ConsumeAct();   // 후딜·피하기를 끊고 천도 시작
         castTarget = e;
         castT = 0f;
         castTotal = e.soul.Boss ? Balance.BOSS_TENDO_CAST_TIME : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult);   // 연속 천도면 0.8초, 보스는 2.0초
@@ -101,10 +102,11 @@ public class JudgeSystem : MonoBehaviour
 
     public void CommandPahon()
     {
-        if (Casting || !player.CanAct()) return;
+        if (Casting || !player.CanActNow()) return;
         var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);
         if (e == null) { Say("대상이 없다"); return; }
         if (!e.soul.TryPahon()) return;
+        player.ConsumeAct();   // 후딜·피하기를 끊고 파혼
         DoPahon(e);
     }
 

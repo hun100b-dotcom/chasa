@@ -52,7 +52,9 @@ public class Player : MonoBehaviour
     int comboStep;
     float comboTimer;
     AttackRun atk;
-    bool hasBuffered; Enemy buffered; Vector3? bufferedAim; // 후딜 중 눌러둔 다음 입력
+    bool hasBuffered; Enemy buffered; Vector3? bufferedAim; // 눌러둔 다음 입력(공격). 후딜 직전 0.2초부터만 저장되고 0.15초 지나면 버려진다
+    float bufferAge;                                         // 저장된 공격 입력의 나이(초)
+    bool hasDodgeBuffer; Vector3? dodgeBufferAim; float dodgeBufferAge;   // 눌러둔 피하기(우선순위 최고)
     PullRun pullRun;
     float pullCooldown;
     float chainLag;
@@ -107,11 +109,45 @@ public class Player : MonoBehaviour
     }
 
     // ===== 피하기 ==================================================================
-    /// <summary>자유 상태이거나, 피하기가 '끊을 수 있는 시점'(0.22초)을 지났으면 다른 행동을 시작할 수 있다. 시작하면 피하기는 끝난다</summary>
-    public bool CanAct()
+    /// <summary>
+    /// 지금 처결(천도·파혼) 같은 행동을 시작할 수 있나? (상태를 바꾸지 않는다)
+    /// 자유 상태 / 피하기 중 0.22초 지남 / 공격 후딜(끊기 창 = 후딜 시작부터)이면 가능.
+    /// </summary>
+    public bool CanActNow()
     {
         if (state == State.Free) return true;
-        if (state == State.Dodge && DodgeRules.CanCancelToAction(dodgeT)) { state = State.Free; return true; }
+        if (state == State.Dodge) return DodgeRules.CanCancelToAction(dodgeT);
+        if (state == State.Attack && atk != null) return atk.phase == "recover";
+        return false;
+    }
+
+    /// <summary>실제로 행동을 시작할 때 부른다: 피하기·공격 후딜을 끝내고 자유 상태로 만든다</summary>
+    public bool ConsumeAct()
+    {
+        if (!CanActNow()) return false;
+        if (state == State.Dodge) state = State.Free;
+        else if (state == State.Attack)
+        {
+            int finished = atk.step; atk = null; state = State.Free; hasBuffered = false; bufferedAim = null; hasDodgeBuffer = false;
+            chain.gameObject.SetActive(false);
+            if (finished >= Steps.Length) { comboStep = 0; comboTimer = 0f; } else comboTimer = Config.COMBO_RESET_TIME;
+        }
+        return true;
+    }
+
+    /// <summary>폰은 터치 지연 때문에 버퍼 창과 유효 시간이 조금 길다</summary>
+    float BufWindow => Balance.BUFFER_WINDOW + (Ko.TouchUI ? Balance.BUFFER_TOUCH_ADD : 0f);
+    float BufLife => Balance.BUFFER_LIFETIME + (Ko.TouchUI ? Balance.BUFFER_TOUCH_ADD : 0f);
+
+    /// <summary>
+    /// 공격 중 들어온 입력을 저장해도 되는가: 휘두르는 끝(후딜 직전 BUFFER_WINDOW 초)부터, 후딜 중에는 언제든.
+    /// 왜? 예전엔 선딜 때 누른 입력도 기억해서 '내가 안 누른 타'가 나가는 느낌이 났다.
+    /// </summary>
+    bool CanBufferNow()
+    {
+        if (atk == null) return false;
+        if (atk.phase == "recover") return true;
+        if (atk.phase == "swing") return (atk.cfg.swing - atk.t) <= BufWindow;
         return false;
     }
 
@@ -133,7 +169,12 @@ public class Player : MonoBehaviour
     /// <summary>피하기. aim = 가고 싶은 쪽 바닥 점(없으면 걷던 방향, 그것도 없으면 바라보던 방향)</summary>
     public bool CommandDodge(Vector3? aim)
     {
-        if (!CanDodgeNow()) return false;
+        if (!CanDodgeNow())
+        {
+            // 지금은 못 피하지만 곧 가능해지는 때(휘두르는 끝·3타 후딜 앞)라면 눌러둔다 — 우선순위 최고
+            if (state == State.Attack && atk != null && dodgeCharges >= 1f && Balance.DODGE_ENABLED && CanBufferNow()) { hasDodgeBuffer = true; dodgeBufferAim = aim; dodgeBufferAge = 0f; }
+            return false;
+        }
         if (locked) { onDodgeCancelCast?.Invoke(); locked = false; }
         Vector3 dir;
         if (aim.HasValue) dir = new Vector3(aim.Value.x - Pos.x, 0, aim.Value.z - Pos.z);
@@ -166,7 +207,8 @@ public class Player : MonoBehaviour
     public void CommandMove(Vector3 point)
     {
         if (Busy) return;
-        if (state == State.Dodge && !CanAct()) return;
+        if (state == State.Dodge && !CanActNow()) return;
+        if (state == State.Dodge) ConsumeAct();
         float tx = point.x, tz = point.z;
         MapLayout.ClampPoint(ref tx, ref tz);   // 맵 밖을 눌러도 맵 안쪽 끝으로
         moveTarget = new Vector3(tx, 0, tz);
@@ -177,8 +219,8 @@ public class Player : MonoBehaviour
     public void CommandAttack(Enemy e)
     {
         if (Busy) return;
-        if (state == State.Dodge) CanAct();   // 끊을 수 있는 시점이면 피하기를 끝내고 아래로
-        if (state == State.Attack) { hasBuffered = true; buffered = e; bufferedAim = null; } // 다음 타 예약
+        if (state == State.Dodge) ConsumeAct();   // 끊을 수 있는 시점이면 피하기를 끝내고 아래로
+        if (state == State.Attack) { if (CanBufferNow()) { hasBuffered = true; buffered = e; bufferedAim = null; bufferAge = 0f; } } // 다음 타 예약(새 입력이 이전 저장을 덮어쓴다)
         else if (state == State.Free) { chaseTarget = e; moveTarget = null; }
     }
 
@@ -186,8 +228,8 @@ public class Player : MonoBehaviour
     public void CommandSwing(Vector3 aim)
     {
         if (Busy) return;
-        if (state == State.Dodge) CanAct();
-        if (state == State.Attack) { hasBuffered = true; buffered = null; bufferedAim = aim; }
+        if (state == State.Dodge) ConsumeAct();
+        if (state == State.Attack) { if (CanBufferNow()) { hasBuffered = true; buffered = null; bufferedAim = aim; bufferAge = 0f; } }
         else if (state == State.Free) { moveTarget = null; chaseTarget = null; StartAttack(null, comboTimer > 0f, aim); }
     }
 
@@ -378,6 +420,7 @@ public class Player : MonoBehaviour
     void TickAttack(float dt)
     {
         var a = atk; var cfg = a.cfg;
+        bufferAge += dt; dodgeBufferAge += dt;
         a.t += dt * loadout.stats.AttackSpeedMult;   // 장비의 공격 속도 보너스: 시간이 더 빨리 흐르는 셈
         var hand = Hand;
         if (a.phase == "windup")
@@ -412,6 +455,11 @@ public class Player : MonoBehaviour
             return;
         }
         // recover: 후딜. 사슬을 거둬들인다
+        // 끊기 창: 후딜이 시작되면 저장된 입력을 바로 실행한다(우선순위: 피하기 > 공격). 0.15초 지난 입력은 버린다
+        if (hasDodgeBuffer && dodgeBufferAge > BufLife) hasDodgeBuffer = false;
+        if (hasBuffered && bufferAge > BufLife) { hasBuffered = false; bufferedAim = null; }
+        if (hasDodgeBuffer && CanDodgeNow()) { hasDodgeBuffer = false; var da = dodgeBufferAim; CommandDodge(da); return; }
+        if (hasBuffered) { FinishAttack(); return; }   // 후딜을 건너뛰고 다음 타로
         float pr = Mathf.Clamp01(a.t / cfg.recover);
         float ang = a.startAngle + a.totalSweep + cfg.dir * 0.2f * U.EaseOutQuad(pr);
         chainLag *= Mathf.Exp(-10f * dt);
@@ -422,7 +470,7 @@ public class Player : MonoBehaviour
     void FinishAttack()
     {
         int finished = atk.step;
-        atk = null;
+        atk = null; hasDodgeBuffer = false;
         if (hasBuffered)
         {
             var next = buffered; var nextAim = bufferedAim;
