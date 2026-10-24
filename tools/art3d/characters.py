@@ -15,29 +15,29 @@ def to_group(objs, bone):
 
 def hero():
     parts = []
-    A = 0.62   # 팔이 벌어진 각도(라디안): A자 자세
+    A = 0.5   # 팔이 벌어진 각도(라디안): A자 자세
     # 몸통 계열
-    parts += to_group([cyl("skirt", 0.55, 0.30, 1.0, (0, 0, 0.1), "ink", 8)], "Hips")                      # 밑단이 퍼지는 긴 도포
-    parts += to_group([cyl("sash", 0.31, 0.31, 0.09, (0, 0, 1.0), "red", 8),
-                       box("sash_end", (0.1, 0.03, 0.42), (0.13, -0.3, 0.78), "red"),
-                       box("sash_end2", (0.09, 0.03, 0.34), (0.2, -0.3, 0.8), "red", rot=(0, 0.15, 0))], "Hips")  # 붉은 띠와 늘어진 끝
-    parts += to_group([cyl("torso", 0.29, 0.23, 0.48, (0, 0, 1.0), "cloth", 8),
-                       box("collar", (0.17, 0.03, 0.34), (0, -0.2, 1.3), "hanji", rot=(0, 0.0, 0)),
-                       box("collar_l", (0.08, 0.03, 0.3), (0.07, -0.205, 1.31), "hanji", rot=(0, 0.45, 0)),
-                       box("collar_r", (0.08, 0.03, 0.3), (-0.07, -0.205, 1.31), "hanji", rot=(0, -0.45, 0))], "Chest")
+    parts += to_group([cyl("skirt", 0.44, 0.25, 1.0, (0, 0, 0.1), "ink", 8)], "Hips")                      # 밑단이 퍼지는 긴 도포
+    parts += to_group([cyl("sash", 0.25, 0.25, 0.08, (0, 0, 1.0), "red", 8),
+                       box("sash_end", (0.09, 0.03, 0.4), (0.1, -0.25, 0.78), "red"),
+                       box("sash_end2", (0.08, 0.03, 0.32), (0.17, -0.25, 0.8), "red", rot=(0, 0.15, 0))], "Hips")  # 붉은 띠와 늘어진 끝
+    parts += to_group([cyl("torso", 0.23, 0.2, 0.48, (0, 0, 1.0), "cloth", 8),
+                       box("collar", (0.15, 0.03, 0.34), (0, -0.17, 1.3), "hanji", rot=(0, 0.0, 0)),
+                       box("collar_l", (0.07, 0.03, 0.3), (0.06, -0.175, 1.31), "hanji", rot=(0, 0.45, 0)),
+                       box("collar_r", (0.07, 0.03, 0.3), (-0.06, -0.175, 1.31), "hanji", rot=(0, -0.45, 0))], "Chest")
     parts += to_group([cyl("neck", 0.07, 0.07, 0.1, (0, 0, 1.46), "face", 6)], "Neck")
-    parts += to_group([sphere("head", 0.15, (0, 0, 1.58), "face", 7, 5),
-                       cyl("hat_brim", 0.40, 0.40, 0.035, (0, 0, 1.69), "hat", 10),
-                       cyl("hat_crown", 0.17, 0.13, 0.3, (0, 0, 1.72), "hat", 8),
-                       box("hat_band", (0.36, 0.02, 0.025), (0, -0.14, 1.66), "red"),
-                       box("strap_l", (0.02, 0.02, 0.2), (0.12, -0.12, 1.55), "red"), box("strap_r", (0.02, 0.02, 0.2), (-0.12, -0.12, 1.55), "red")], "Head")
+    parts += to_group([sphere("head", 0.13, (0, 0, 1.58), "face", 7, 5),
+                       cyl("hat_brim", 0.33, 0.33, 0.03, (0, 0, 1.68), "hat", 10),
+                       cyl("hat_crown", 0.14, 0.11, 0.24, (0, 0, 1.7), "hat", 8),
+                       box("hat_band", (0.3, 0.02, 0.025), (0, -0.115, 1.665), "red"),
+                       box("strap_l", (0.02, 0.02, 0.2), (0.1, -0.1, 1.55), "red"), box("strap_r", (0.02, 0.02, 0.2), (-0.1, -0.1, 1.55), "red")], "Head")
     # 팔: 넓은 소매(어깨는 좁고 손목 쪽이 크게 퍼짐)
     for sx, side in ((1, "L"), (-1, "R")):
-        sh = Vector((sx * 0.27, 0, 1.4))
+        sh = Vector((sx * 0.23, 0, 1.4))
         d = Vector((sx * math.sin(A), 0, -math.cos(A)))
         theta = math.pi - sx * A
-        parts += to_group([cyl(f"sleeve_{side}", 0.085, 0.26, 0.62, tuple(sh), "cloth", 8, rot=(0, theta, 0))], f"UpperArm.{side}")
-        hand = sh + d * 0.66
+        parts += to_group([cyl(f"sleeve_{side}", 0.07, 0.18, 0.58, tuple(sh), "cloth", 8, rot=(0, theta, 0))], f"UpperArm.{side}")
+        hand = sh + d * 0.6
         hp = [sphere(f"hand_{side}", 0.06, tuple(hand), "face", 5, 4)]
         if side == "R":   # 오른손에 철삭을 감는다
             for i in range(6):
@@ -62,13 +62,14 @@ BONES = [  # (이름, 부모, 머리(head), 꼬리(tail)) — 블렌더 좌표(Z
     ("UpperLeg.R", "Hips", (-0.13, 0, 0.95), (-0.13, 0, 0.5)), ("LowerLeg.R", "UpperLeg.R", (-0.13, 0, 0.5), (-0.13, 0, 0.09)), ("Foot.R", "LowerLeg.R", (-0.13, 0, 0.09), (-0.13, -0.2, 0.02)),
 ]
 
-def rig(mesh):
+def rig(mesh, bones=None):
+    bones = bones or BONES
     arm = bpy.data.armatures.new("Armature"); ao = bpy.data.objects.new("Armature", arm)
     bpy.context.collection.objects.link(ao)
     bpy.context.view_layer.objects.active = ao; ao.select_set(True)
     bpy.ops.object.mode_set(mode="EDIT")
     eb = {}
-    for n, par, h, t in BONES:
+    for n, par, h, t in bones:
         b = arm.edit_bones.new(n); b.head = h; b.tail = t
         if par: b.parent = eb[par]
         eb[n] = b
