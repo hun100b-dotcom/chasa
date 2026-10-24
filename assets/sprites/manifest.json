@@ -1235,6 +1235,546 @@
    "note": "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)"
   },
   {
+   "file": "gear/gear_w_cheolsak_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 set"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 set"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 set"
+  },
+  {
+   "file": "gear/gear_w_samjichang_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_samjichang_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_samjichang_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_samjichang_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_samjichang_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 set"
+  },
+  {
+   "file": "gear/gear_w_but_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_but_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_but_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_but_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_but_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 set"
+  },
+  {
+   "file": "gear/gear_gat_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 common"
+  },
+  {
+   "file": "gear/gear_gat_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_gat_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 rare"
+  },
+  {
+   "file": "gear/gear_gat_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 named"
+  },
+  {
+   "file": "gear/gear_gat_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 set"
+  },
+  {
+   "file": "gear/gear_dopo_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 common"
+  },
+  {
+   "file": "gear/gear_dopo_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_dopo_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_dopo_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 named"
+  },
+  {
+   "file": "gear/gear_dopo_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 set"
+  },
+  {
+   "file": "gear/gear_tti_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 common"
+  },
+  {
+   "file": "gear/gear_tti_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_tti_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_tti_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 named"
+  },
+  {
+   "file": "gear/gear_tti_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 set"
+  },
+  {
+   "file": "gear/gear_sin_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 common"
+  },
+  {
+   "file": "gear/gear_sin_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_sin_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 rare"
+  },
+  {
+   "file": "gear/gear_sin_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 named"
+  },
+  {
+   "file": "gear/gear_sin_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 set"
+  },
+  {
+   "file": "gear/gear_norigae_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 common"
+  },
+  {
+   "file": "gear/gear_norigae_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_norigae_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_norigae_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 named"
+  },
+  {
+   "file": "gear/gear_norigae_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 set"
+  },
+  {
+   "file": "icons/frame_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · set(한 벌) · 색 #C9B0FF"
+  },
+  {
+   "file": "characters/chasa_set_wolhwa.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "세트 외형 · 월화 세트(굿옷) (정면 idle 변형)"
+  },
+  {
+   "file": "characters/chasa_set_miner.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "세트 외형 · 광부 세트(쇳골) (정면 idle 변형)"
+  },
+  {
+   "file": "characters/chasa_set_heukwol.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "세트 외형 · 흑월 세트 (정면 idle 변형)"
+  },
+  {
    "file": "hud/gauge_frame_r2.png",
    "w": 192,
    "h": 24,

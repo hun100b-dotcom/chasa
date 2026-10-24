@@ -51,3 +51,11 @@
 - characters/chasa_{bell,tri,brush}{1,2,3}.png : 예비동작 → 타격 → 마무리 3프레임. 캔버스 320×300, 피벗은 육모방망이와 동일(발 기준). 좌우는 flipX.
 - fx/fx_{bell,trident,brush}_{0,1,2}.png : 512×256, 중심 = 공격 기준점. 요령=소리 고리(반경 약 3m), 삼지창=전방 직선 관통, 붓=먹 한 획 부채꼴. 범위 수치는 제안(밸런스 확정 전).
 - 성장 UI 시안: assets/ui/growth_*_{pc,phone}.svg (장비 7칸·도술 3갈래·능력·조합). 슬롯 7종과 능력치 목록은 제안, 기획 확정 후 수정.
+
+## 장비 아이콘 (기획서 6절 기준으로 개정, 총 199종)
+- 장비 7칸 = 무기(두 벌 바꿔 들기) · 갓 · 도포 · 띠 · 신 · 노리개 2. 철삭은 칸이 아니라 무기 계열. 흑립은 갓 칸의 외형.
+- gear/gear_{w_cheolsak,w_bangmangi,w_yoryeong,w_samjichang,w_but,gat,dopo,tti,sin,norigae}_{common,crafted,rare,named,set}.png (96×96, 10종×5등급 = 50). 노리개 2칸은 같은 아이콘 계열을 공유.
+- 등급(5): 흔한 common #F3E7D3 / 손본 crafted #4FA8A0 / 귀한 rare #D4A94E / 이름 있는 named #E85C41 / 한 벌 set #C9B0FF. 테두리 icons/frame_{common..named,set}.png.
+- 세트 3종 외형(주인공 정면 변형): characters/chasa_set_{wolhwa,miner,heukwol}.png (월화 굿옷 / 광부 / 흑월). 세트 구성 부품 수는 기획 JSON 이후 확정.
+- 능력치 4(힘·날램·몸·마음)와 품계 1~50은 UI 시안(assets/ui)에 반영. 도술 27개(3갈래×9)도 반영. 옵션 표·인 조합표 JSON이 오면 문구를 갱신한다.
+- 이전 시안의 철삭·흑립·붉은 띠·미투리·인장 슬롯 아이콘(gear_cheolsak 등)은 폐기됨.

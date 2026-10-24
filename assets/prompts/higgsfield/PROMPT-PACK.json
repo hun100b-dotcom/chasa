@@ -1,5 +1,5 @@
 {
- "count": 145,
+ "count": 199,
  "rule": "작품명 0개, HEX 직접 명시, 변수 1개씩, 첫 승인 이미지를 레퍼런스로 고정",
  "items": [
   {
@@ -2092,6 +2092,924 @@
    "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
    "reference": "fx/fx_brush_0.png",
    "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a coiled iron chain (cheolsak) with a weighted end, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a coiled iron chain (cheolsak) with a weighted end, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_cheolsak_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a coiled iron chain (cheolsak) with a weighted end, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_cheolsak_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a coiled iron chain (cheolsak) with a weighted end, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_cheolsak_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a coiled iron chain (cheolsak) with a weighted end, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_cheolsak_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a six-sided wooden club (yukmo-bangmangi) with two iron bands, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a six-sided wooden club (yukmo-bangmangi) with two iron bands, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_bangmangi_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a six-sided wooden club (yukmo-bangmangi) with two iron bands, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_bangmangi_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a six-sided wooden club (yukmo-bangmangi) with two iron bands, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_bangmangi_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a six-sided wooden club (yukmo-bangmangi) with two iron bands, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_bangmangi_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a brass handbell (yoryeong) with a short handle, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a brass handbell (yoryeong) with a short handle, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_yoryeong_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a brass handbell (yoryeong) with a short handle, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_yoryeong_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a brass handbell (yoryeong) with a short handle, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_yoryeong_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a brass handbell (yoryeong) with a short handle, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_yoryeong_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_samjichang_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a trident (samjichang) with a long wooden shaft, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_w_samjichang_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a trident (samjichang) with a long wooden shaft, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_samjichang_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_samjichang_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a trident (samjichang) with a long wooden shaft, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_samjichang_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_samjichang_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a trident (samjichang) with a long wooden shaft, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_samjichang_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_samjichang_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a trident (samjichang) with a long wooden shaft, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_samjichang_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_but_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a large registry brush (myeongbu-but) with an ink-soaked black tip, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_w_but_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a large registry brush (myeongbu-but) with an ink-soaked black tip, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_but_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_but_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a large registry brush (myeongbu-but) with an ink-soaked black tip, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_but_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_but_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a large registry brush (myeongbu-but) with an ink-soaked black tip, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_but_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_w_but_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a large registry brush (myeongbu-but) with an ink-soaked black tip, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_w_but_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_gat_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a tall black horsehair hat (heukrip) with a wide flat brim, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_gat_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a tall black horsehair hat (heukrip) with a wide flat brim, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_gat_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_gat_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a tall black horsehair hat (heukrip) with a wide flat brim, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_gat_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_gat_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a tall black horsehair hat (heukrip) with a wide flat brim, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_gat_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_gat_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a tall black horsehair hat (heukrip) with a wide flat brim, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_gat_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_dopo_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a long black Korean overcoat (dopo) with wide sleeves, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_dopo_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a long black Korean overcoat (dopo) with wide sleeves, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_dopo_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_dopo_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a long black Korean overcoat (dopo) with wide sleeves, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_dopo_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_dopo_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a long black Korean overcoat (dopo) with wide sleeves, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_dopo_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_dopo_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a long black Korean overcoat (dopo) with wide sleeves, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_dopo_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_tti_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a red cloth sash #E85C41 tied with a knot and two hanging tails, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_tti_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a red cloth sash #E85C41 tied with a knot and two hanging tails, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_tti_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_tti_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a red cloth sash #E85C41 tied with a knot and two hanging tails, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_tti_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_tti_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a red cloth sash #E85C41 tied with a knot and two hanging tails, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_tti_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_tti_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a red cloth sash #E85C41 tied with a knot and two hanging tails, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_tti_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_sin_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a pair of straw shoes (mituri), plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_sin_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a pair of straw shoes (mituri), fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_sin_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_sin_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a pair of straw shoes (mituri), gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_sin_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_sin_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a pair of straw shoes (mituri), red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_sin_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_sin_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a pair of straw shoes (mituri), violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_sin_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_norigae_common.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a Korean ornamental tassel pendant (norigae) with a round knot and three red strands, plain, undecorated, hanji-white #F3E7D3 outline. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "기준 등급"
+  },
+  {
+   "file": "gear/gear_norigae_crafted.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a Korean ornamental tassel pendant (norigae) with a round knot and three red strands, fine teal #4FA8A0 trim. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_norigae_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_norigae_rare.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a Korean ornamental tassel pendant (norigae) with a round knot and three red strands, gold #D4A94E trim and one small gold gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_norigae_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_norigae_named.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a Korean ornamental tassel pendant (norigae) with a round knot and three red strands, red #E85C41 trim, soft red glow, gem. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_norigae_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "gear/gear_norigae_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat game inventory icon, centered, dark navy #16213E rounded-square background: a Korean ornamental tassel pendant (norigae) with a round knot and three red strands, violet #C9B0FF trim, violet aura and small sparkles, part of a matching set. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "gear/gear_norigae_common.png",
+   "change_only": "테두리 색·장식만 변경"
+  },
+  {
+   "file": "icons/frame_set.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI item frame, rounded square, violet #C9B0FF double border with soft glow, empty inside. Korean folk dark-fantasy game UI, flat clean vector-like rendering, palette navy #16213E and #0F1729, gold #D4A94E, teal #5FE3C0, red #E85C41, hanji #F3E7D3. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "icons/frame_named.png",
+   "change_only": "테두리 색만 변경"
+  },
+  {
+   "file": "characters/chasa_set_wolhwa.png",
+   "size": [
+    256,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.90625
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, wearing a dark plum shaman ritual coat with gold bands and red ribbons, keeping the tall black hat, red sash and chain, front view standing relaxed. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 256x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "옷 색·장식만 변경"
+  },
+  {
+   "file": "characters/chasa_set_miner.png",
+   "size": [
+    256,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.90625
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, wearing a charcoal grey coat with brass bands and a small glowing miner's lamp on the hat, keeping the red sash and chain, front view standing relaxed. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 256x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "옷 색·장식만 변경"
+  },
+  {
+   "file": "characters/chasa_set_heukwol.png",
+   "size": [
+    256,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.90625
+   ],
+   "tint": false,
+   "prompt": "a Korean afterlife escort in a tall black horsehair hat (heukrip) with a wide flat brim, long black overcoat (dopo) with wide sleeves, a red sash #E85C41 at the waist, a chain (cheolsak) in pale blue #BFE8FF, and a small floating teal soul-flame #5FE3C0 near the shoulder, wearing a pitch-black coat with glowing red #E85C41 seams and a red hat string, keeping the tall black hat and chain, front view standing relaxed. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 256x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "characters/chasa_idle.png",
+   "change_only": "옷 색·장식만 변경"
   },
   {
    "file": "hud/gauge_frame_r2.png",

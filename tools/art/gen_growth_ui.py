@@ -6,9 +6,9 @@ import os
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets", "ui")
 NIGHT, DEEP, TEAL, HANJI, RED, GOLD, INK = "#16213E", "#0F1729", "#4FA8A0", "#F3E7D3", "#E85C41", "#D4A94E", "#2A2A38"
 CHAIN, CHEON, VIO = "#BFE8FF", "#5FE3C0", "#C9B0FF"
-GRADE = {"일반": "#F3E7D3", "공들인": "#4FA8A0", "귀한": "#D4A94E", "이름 있는": "#E85C41"}
+GRADE = {"흔한": "#F3E7D3", "손본": "#4FA8A0", "귀한": "#D4A94E", "이름 있는": "#E85C41", "한 벌": "#C9B0FF"}
 SOUL = ["#BFE8FF", "#FFCC55", "#FF6A3D", "#9A5CFF"]
-SLOTS = ["철삭(무기)", "흑립(머리)", "도포(몸)", "붉은 띠(허리)", "미투리(발)", "노리개", "인장"]
+SLOTS = ["무기", "갓", "도포", "띠", "신", "노리개 1", "노리개 2"]   # 기획서 6절: 무기 칸은 두 벌(바꿔 들기), 노리개 2칸
 
 def T(x, y, s, size=15, fill=HANJI, anchor="start", bold=False):
     return f'<text x="{x}" y="{y}" fill="{fill}" font-size="{size}" text-anchor="{anchor}"{" font-weight=\"bold\"" if bold else ""}>{s}</text>'
@@ -47,78 +47,82 @@ def inv(mobile):
         b += R(16, 116, W-32, 330, NIGHT, "#3B4C7A", 2, 12, .9)
         b += f'<path d="M{W/2-18},300 L{W/2-12},186 L{W/2+12},186 L{W/2+18},300 Z" fill="{INK}"/><ellipse cx="{W/2}" cy="170" rx="30" ry="7" fill="#000"/><rect x="{W/2-8}" y="150" width="16" height="20" fill="#000"/>'
         pos = [(24, 150), (W/2-26, 126), (24, 240), (W-76, 240), (W/2-26, 380), (W-76, 150), (24, 330)]
-        for (x, y), n, g in zip(pos, SLOTS, ["귀한", "공들인", "이름 있는", "일반", "공들인", None, "일반"]):
+        for (x, y), n, g in zip(pos, SLOTS, ["귀한", "손본", "이름 있는", "흔한", "손본", "한 벌", None]):
             b += slot(x, y, 52, "", g) + T(x + 26, y + 66, n.split('(')[0], 12, HANJI, 'middle')
+        b += slot(24, 206, 40, "", "손본") + T(70, 232, "⇄ 바꿔 들기", 12, GOLD)
         b += T(W/2, 436, "슬롯을 누르면 아래 목록이 해당 종류로 걸러집니다", 12, TEAL, "middle")
         # 인벤토리 그리드 5열
         b += T(20, 478, "가방 18/30", 15, HANJI, "start", True)
         for i in range(15):
             x, y = 16 + (i % 5) * 72, 492 + (i // 5) * 72
-            b += slot(x, y, 64, "", ["일반", "공들인", "귀한", "일반", None][i % 5] if i < 9 else None)
+            b += slot(x, y, 64, "", ["흔한", "손본", "귀한", "흔한", None][i % 5] if i < 9 else None)
         b += btn(16, H - 76, W - 32, 56, "착용하기")
     else:
         b += tabs(520, 60, TABS, 0, False)
         b += R(24, 120, 480, 560, NIGHT, "#3B4C7A", 2, 12, .9)
         b += f'<path d="M264,420 L272,230 L296,230 L304,420 Z" fill="{INK}"/><ellipse cx="284" cy="212" rx="44" ry="9" fill="#000"/><rect x="274" y="180" width="20" height="30" fill="#000"/><path d="M270,320 L298,320" stroke="{RED}" stroke-width="6"/>'
         pos = [(60, 200), (254, 130), (60, 320), (436-24, 320), (254, 560), (436-24, 200), (60, 440)]
-        for (x, y), n, g in zip(pos, SLOTS, ["귀한", "공들인", "이름 있는", "일반", "공들인", None, "일반"]):
+        for (x, y), n, g in zip(pos, SLOTS, ["귀한", "손본", "이름 있는", "흔한", "손본", "한 벌", None]):
             b += slot(x, y, 68, n, g)
-        b += T(284, 664, "철삭 · 흑립 · 도포 · 붉은 띠 · 미투리 · 노리개 · 인장", 12, TEAL, "middle")
+        b += slot(138, 215, 44, "", "손본") + T(138, 280, "⇄ 바꿔 들기", 12, GOLD) + T(284, 664, "무기(두 벌) · 갓 · 도포 · 띠 · 신 · 노리개 2", 12, TEAL, "middle")
         b += T(540, 90, "가방 18/30", 18, HANJI, "start", True)
         for i in range(30):
             x, y = 540 + (i % 8) * 90, 110 + (i // 8) * 90
-            b += slot(x, y, 80, "", ["일반", "공들인", "귀한", "일반", None, "이름 있는", None, "공들인"][i % 8] if i < 18 else None)
+            b += slot(x, y, 80, "", ["흔한", "손본", "귀한", "흔한", None, "이름 있는", None, "손본"][i % 8] if i < 18 else None)
         b += R(540, 480, 700, 160, NIGHT, GOLD, 2, 12, .95) + T(560, 512, "월화의 방울 (이름 있는)", 18, RED, "start", True) + T(560, 542, "파혼 반경 +1m · 천도 캐스팅 +0.2초", 15, HANJI) + T(560, 570, "'열두째 잔이 엎어진 뒤로, 이 방울은 소리를 내지 않는다.'", 14, TEAL)
         b += btn(1000, 600, 220, 52, "착용하기")
     return frame(W, H, "장비", b, mobile)
 
 def tree(mobile):
     W, H = (390, 844) if mobile else (1280, 720)
-    b = ""; branches = [("붙잡아 부르기", CHEON, ["넓게", "빠르게", "끌어당김", "연쇄", "정지"]), ("휘감기", CHAIN, ["오래", "넓게", "독", "가시", "결박"]), ("터뜨리기", RED, ["반경", "연쇄", "불꽃", "역류", "파문"])]
+    b = ""; branches = [("붙잡아 부르기", CHEON, ["넓게", "빠르게", "끌어당김", "연쇄", "정지", "공명", "되부름", "그물", "초혼"]), ("휘감기", CHAIN, ["오래", "넓게", "독", "가시", "결박", "조임", "역감기", "사슬비", "묶음"]), ("터뜨리기", RED, ["반경", "연쇄", "불꽃", "역류", "파문", "여진", "낙인", "폭풍", "마지막"])]
     if mobile:
         b += tabs(W, 60, TABS, 1, True)
         b += T(20, 130, "넋 14", 18, CHEON, "start", True)
         for bi, (n, c, nodes) in enumerate(branches):
             x = 20 + bi * 120
             b += T(x + 50, 170, n, 14, c, "middle", True)
-            b += f'<path d="M{x+50},190 L{x+50},{190+4*86}" stroke="{c}" stroke-width="4" opacity=".4"/>'
+            b += f'<path d="M{x+50},190 L{x+50},{190+8*58}" stroke="{c}" stroke-width="4" opacity=".4"/>'
             for k, nm in enumerate(nodes):
-                y = 190 + k * 86
-                st = 0 if k < 2 else (1 if k == 2 else 2)
-                b += f'<circle cx="{x+50}" cy="{y+28}" r="28" fill="{DEEP}" stroke="{c if st<2 else "#3B4C7A"}" stroke-width="{4 if st==1 else 3}" opacity="{1 if st<2 else .6}"/>' + (f'<circle cx="{x+50}" cy="{y+28}" r="16" fill="{c}"/>' if st == 0 else "")
-                b += T(x + 50, y + 74, nm, 12, HANJI, "middle")
+                y = 190 + k * 58
+                st = 0 if k < 3 else (1 if k == 3 else 2)
+                b += f'<circle cx="{x+50}" cy="{y+20}" r="20" fill="{DEEP}" stroke="{c if st<2 else "#3B4C7A"}" stroke-width="{4 if st==1 else 3}" opacity="{1 if st<2 else .6}"/>' + (f'<circle cx="{x+50}" cy="{y+20}" r="11" fill="{c}"/>' if st == 0 else "")
+                b += T(x + 50, y + 56, nm, 11, HANJI, "middle")
+        b += T(W/2, H - 160, "↓ 아래 단계는 스크롤", 12, TEAL, "middle")
         b += R(16, H - 150, W - 32, 70, NIGHT, GOLD, 2, 12) + T(28, H - 120, "휘감기 · 독 (선택됨)", 15, CHAIN, "start", True) + T(28, H - 98, "묶은 적이 초당 피해를 입음 · 비용 넋 3", 13, HANJI)
         b += btn(16, H - 66, W - 32, 52, "익히기 (넋 3)")
     else:
         b += tabs(520, 60, TABS, 1, False)
         b += T(1240, 90, "넋 14", 20, CHEON, "end", True)
         for bi, (n, c, nodes) in enumerate(branches):
-            x = 130 + bi * 380
+            x = 90 + bi * 280
             b += T(x, 140, n, 20, c, "middle", True)
-            b += f'<path d="M{x},170 L{x},{170+4*100}" stroke="{c}" stroke-width="4" opacity=".4"/>'
+            b += f'<path d="M{x},170 L{x},{170+8*58}" stroke="{c}" stroke-width="4" opacity=".4"/>'
             for k, nm in enumerate(nodes):
-                y = 170 + k * 100; st = 0 if k < 2 else (1 if k == 2 else 2)
-                b += f'<circle cx="{x}" cy="{y+30}" r="32" fill="{DEEP}" stroke="{c if st<2 else "#3B4C7A"}" stroke-width="{4 if st==1 else 3}" opacity="{1 if st<2 else .6}"/>' + (f'<circle cx="{x}" cy="{y+30}" r="18" fill="{c}"/>' if st == 0 else "") + T(x + 50, y + 36, nm, 15, HANJI)
-        b += R(640, 560, 600, 130, NIGHT, GOLD, 2, 12, .95) + T(664, 596, "휘감기 · 독", 20, CHAIN, "start", True) + T(664, 626, "묶은 적이 초당 피해를 입음", 15, HANJI) + btn(1000, 620, 220, 52, "익히기 (넋 3)")
+                y = 170 + k * 58; st = 0 if k < 3 else (1 if k == 3 else 2)
+                b += f'<circle cx="{x}" cy="{y+22}" r="22" fill="{DEEP}" stroke="{c if st<2 else "#3B4C7A"}" stroke-width="{4 if st==1 else 3}" opacity="{1 if st<2 else .6}"/>' + (f'<circle cx="{x}" cy="{y+22}" r="12" fill="{c}"/>' if st == 0 else "") + T(x + 32, y + 28, nm, 14, HANJI)
+        b += R(920, 150, 320, 250, NIGHT, GOLD, 2, 12, .95) + T(944, 190, "휘감기 · 독", 22, CHAIN, "start", True) + T(944, 224, "묶은 적이 초당 피해를 입음", 15, HANJI) + T(944, 250, "선행: 오래, 넓게", 13, TEAL) + btn(944, 330, 272, 52, "익히기 (넋 3)") + T(1080, 440, "도술 27개 (3갈래 × 9)", 13, TEAL, "middle")
     return frame(W, H, "도술", b, mobile)
 
-STATS = [("맺힘 저항(체력)", 120, 200, "+14"), ("철삭 길이", 5.5, 10, "+0.5m"), ("천도 속도", 2.0, 4, "-0.1초"), ("파혼 반경", 3.0, 6, "+1m"), ("이동 속도", 5, 8, ""), ("시야 반경", 100, 120, "")]
+STATS = [("힘", 24, 60, "+4"), ("날램", 18, 60, "+2"), ("몸", 30, 60, "+6"), ("마음", 21, 60, "+3")]   # 기획서 6절: 능력치 4개 + 품계 1~50
 def stats(mobile):
     W, H = (390, 844) if mobile else (1280, 720)
     b = ""
     if mobile:
         b += tabs(W, 60, TABS, 2, True)
+        b += R(16, 116, W - 32, 74, NIGHT, GOLD, 2, 12, .95) + T(30, 148, "품계 17 / 50", 20, GOLD, "start", True) + R(30, 162, W - 60, 12, DEEP, None, 0, 6) + R(30, 162, (W - 60) * .46, 12, CHEON, None, 0, 6) + T(W - 30, 148, "다음 품계까지 540", 13, HANJI, "end")
         for i, (n, v, mx, d) in enumerate(STATS):
-            y = 130 + i * 92
+            y = 210 + i * 100
             b += R(16, y, W - 32, 80, NIGHT, "#3B4C7A", 2, 12, .9) + T(30, y + 28, n, 16, HANJI, "start", True) + T(W - 30, y + 28, f"{v}", 18, GOLD, "end", True)
             b += R(30, y + 44, W - 60, 12, DEEP, None, 0, 6) + R(30, y + 44, (W - 60) * v / mx, 12, TEAL, None, 0, 6)
             if d: b += T(W - 30, y + 72, f"장비 {d}", 13, CHEON, "end")
-        b += btn(16, H - 76, W - 32, 56, "자세히 (수치 근거)")
+        b += btn(16, H - 76, W - 32, 56, "능력치 올리기")
     else:
         b += tabs(520, 60, TABS, 2, False)
         b += R(24, 120, 560, 560, NIGHT, "#3B4C7A", 2, 12, .9) + f'<path d="M284,560 L292,260 L316,260 L324,560 Z" fill="{INK}"/><ellipse cx="304" cy="240" rx="50" ry="10" fill="#000"/><rect x="292" y="200" width="24" height="36" fill="#000"/>'
+        b += T(620, 150, "품계 17 / 50", 26, GOLD, "start", True) + R(620, 166, 620, 16, DEEP, None, 0, 8) + R(620, 166, 620 * .46, 16, CHEON, None, 0, 8) + T(1240, 150, "다음 품계까지 540", 14, HANJI, "end")
         for i, (n, v, mx, d) in enumerate(STATS):
-            y = 130 + i * 90
+            y = 210 + i * 110
             b += T(620, y + 24, n, 18, HANJI, "start", True) + T(1240, y + 24, f"{v}", 20, GOLD, "end", True) + R(620, y + 40, 620, 14, DEEP, None, 0, 7) + R(620, y + 40, 620 * v / mx, 14, TEAL, None, 0, 7)
             if d: b += T(1240, y + 74, f"장비 {d}", 14, CHEON, "end")
     return frame(W, H, "능력", b, mobile)

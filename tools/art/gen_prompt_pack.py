@@ -126,6 +126,25 @@ for k, d in FXW.items():
     for f in range(3):
         add(f"fx/{k}_{f}", f"game effect sprite frame {f+1} of 3: {d}", f"fx/{k}_0" if f else "", "프레임 진행만 변경")
 
+# 장비 아이콘 10종 × 5등급 — 한 번에 등급만 바꾼다(기준 = common)
+GEAR = {"w_cheolsak": "a coiled iron chain (cheolsak) with a weighted end", "w_bangmangi": "a six-sided wooden club (yukmo-bangmangi) with two iron bands",
+        "w_yoryeong": "a brass handbell (yoryeong) with a short handle", "w_samjichang": "a trident (samjichang) with a long wooden shaft",
+        "w_but": "a large registry brush (myeongbu-but) with an ink-soaked black tip", "gat": "a tall black horsehair hat (heukrip) with a wide flat brim",
+        "dopo": "a long black Korean overcoat (dopo) with wide sleeves", "tti": "a red cloth sash #E85C41 tied with a knot and two hanging tails",
+        "sin": "a pair of straw shoes (mituri)", "norigae": "a Korean ornamental tassel pendant (norigae) with a round knot and three red strands"}
+GR = {"common": ("plain, undecorated, hanji-white #F3E7D3 outline", "기준 등급"), "crafted": ("fine teal #4FA8A0 trim", "테두리 색·장식만 변경"),
+      "rare": ("gold #D4A94E trim and one small gold gem", "테두리 색·장식만 변경"), "named": ("red #E85C41 trim, soft red glow, gem", "테두리 색·장식만 변경"),
+      "set": ("violet #C9B0FF trim, violet aura and small sparkles, part of a matching set", "테두리 색·장식만 변경")}
+for k, d in GEAR.items():
+    for g, (gd, var) in GR.items():
+        add(f"gear/gear_{k}_{g}", f"flat game inventory icon, centered, dark navy #16213E rounded-square background: {d}, {gd}", "" if g == "common" else f"gear/gear_{k}_common", var)
+add("icons/frame_set", "flat UI item frame, rounded square, violet #C9B0FF double border with soft glow, empty inside", "icons/frame_named", "테두리 색만 변경")
+SETSD = {"wolhwa": "wearing a dark plum shaman ritual coat with gold bands and red ribbons, keeping the tall black hat, red sash and chain",
+         "miner": "wearing a charcoal grey coat with brass bands and a small glowing miner's lamp on the hat, keeping the red sash and chain",
+         "heukwol": "wearing a pitch-black coat with glowing red #E85C41 seams and a red hat string, keeping the tall black hat and chain"}
+for k, d in SETSD.items():
+    add(f"characters/chasa_set_{k}", f"{CHASA}, {d}, front view standing relaxed", "characters/chasa_idle", "옷 색·장식만 변경")
+
 pack = []; missing = []
 for m in man:
     key = m["file"][:-4]
