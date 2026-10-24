@@ -213,8 +213,8 @@ public static class Balance
     public const float B30_WAVE_PERIOD = 8.0f;  // B-30 우물 물 오르내림 주기(초)
     public const float B30_WAVE_RISE_TIME = 3.0f;  // 그중 물이 오르는 시간. 버티기는 내림(나머지 5초) 구간에서만 진행
     public const float REWARD_ROPE_PULL_BONUS = 0.2f;  // 첫 우물의 두레박줄: 사슬 당기기 속도 +20%
-    public const float NIGHT_DURATION = 300.0f;  // (시연판 임시) 하룻밤 길이(초). 동트기까지. 시나리오 밸런스 확정 전 잠정값
-    public const float NIGHT_WARN_TIME = 60.0f;  // (시연판 임시) 동트기 이만큼 전부터 경고 표시
-    public const int NIGHT_QUOTA = 3;  // (시연판 임시) 명부 몫 = 이 수만큼 천도하면 몫 달성. 넘긴 만큼이 '추가 수확분'
-    public const float SHRINE_RADIUS = 3.0f;  // (시연판 임시) 서낭당 귀환 판정 반경(m)
+    public const float NIGHT_DURATION = 480.0f;  // 솔고개 첫 밤(튜토리얼) 길이(초). 서사 확정(SCENARIO-ACT1). 정규 밤은 900~1200초
+    public const float NIGHT_WARN_TIME = 30.0f;  // 동트기 경고 시작(초 전). 서사 확정, 6막 물 차오름 경고와 같은 값
+    public const int NIGHT_QUOTA = 3;  // 명부 몫 = 천도만 센다(파혼 제외). 첫 밤: 무명 혼 2 + 이름혼 박돌쇠 1. 서사 확정
+    public const float SHRINE_RADIUS = 4.0f;  // 서낭당 귀환 반경(m, 서낭나무 중심). 장승 한 쌍을 가장자리에 세운다. 서사 확정
 }
