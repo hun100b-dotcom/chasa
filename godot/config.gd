@@ -102,7 +102,7 @@ const NUMBER_COLOR_PULL := Color("7fd8ff")
 const NUMBER_COLOR_HURT := Color("ff4d4d")    # 내가 맞았을 때 숫자 (빨강 = 위험)
 
 # --- 9) 적 (접근형 샌드백) ----------------------------------------------------------
-const ENEMY_COUNT := 5   # 4 → 5: "네모들에 둘러싸인 채" 압박을 만들려고 1마리 늘림(임시)
+const ENEMY_COUNT := 3   # 4 → 5: "네모들에 둘러싸인 채" 압박을 만들려고 1마리 늘림(임시)
 const ENEMY_RADIUS := 0.6
 const ENEMY_HEIGHT := 1.8
 const ENEMY_SPEED := 2.8
@@ -131,8 +131,8 @@ const CLICK_MARKER_COLOR := Color("7fe3ff")
 # --- 적 / 맺힘 (1-1) ---
 const MAEDHIM_NORMAL := 100           # E-001 맺힘(일반 적). 체력 대신 깎이고 0이면 처결 대기
 const MAEDHIM_LUMP := 400             # E-002 맺힘(덩어리)
-const ENEMY_ATTACK_DAMAGE := 12       # E-003 적 공격력
-const ENEMY_ATTACK_INTERVAL := 2.0    # E-004 적 공격 주기
+const ENEMY_ATTACK_DAMAGE := 10       # E-003 적 공격력
+const ENEMY_ATTACK_INTERVAL := 2.6    # E-004 적 공격 주기
 const ENEMY_ATTACK_WINDUP := 0.4      # E-005 예비동작(피할 수 있는 신호 시간)
 const ENEMY_HIT_STAGGER := 0.15       # E-006 적 피격 경직 (콤보 stun 값이 더 크면 그쪽이 적용)
 const PLAYER_HIT_STAGGER := 0.3       # E-007 플레이어 피격 경직

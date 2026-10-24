@@ -982,4 +982,29 @@ public class CoreTests
         Assert.AreEqual(3, l.Karma);
         Assert.AreEqual(4, l.TendoTotal);
     }
+
+    [Test]
+    public void 체력_회복_서낭당은_빠르고_밖은_맞고_4초_뒤_천천히()
+    {
+        var l = new Ledger(); l.Hp = 50;
+        Assert.AreEqual(0, l.Regen(1f, false, 1f), "맞은 직후 밖에서는 회복 없음");
+        Assert.AreEqual(50, l.Hp);
+        l.Regen(1f, false, Balance.REGEN_DELAY);
+        Assert.AreEqual(52, l.Hp, "밖에서 초당 2");
+        l.Regen(1f, true, 0f);
+        Assert.AreEqual(64, l.Hp, "서낭당 안은 맞은 직후에도 초당 12");
+        for (int i = 0; i < 100; i++) l.Regen(1f, true, 0f);
+        Assert.AreEqual(l.MaxHp, l.Hp, "최대 체력을 넘지 않는다");
+        var dead = new Ledger { Hp = 0 };
+        Assert.AreEqual(0, dead.Regen(5f, true, 99f), "쓰러진 뒤에는 회복 없음");
+    }
+
+    [Test]
+    public void 첫밤_적_수는_3_공격_10_주기_2_6_체력_100_회복약_2()
+    {
+        Assert.AreEqual(3, Balance.ENEMY_COUNT);
+        Assert.AreEqual(10, Balance.ENEMY_ATTACK_DAMAGE);
+        Assert.AreEqual(2.6f, Balance.ENEMY_ATTACK_INTERVAL, 1e-4f);
+        Assert.AreEqual(2, Balance.FIRST_NIGHT_HEAL);
+    }
 }

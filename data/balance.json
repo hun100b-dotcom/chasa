@@ -196,8 +196,8 @@
   "note": ""
  },
  "ENEMY_COUNT": {
-  "value": 5,
-  "note": "4 → 5: \"네모들에 둘러싸인 채\" 압박을 만들려고 1마리 늘림(임시)"
+  "value": 3,
+  "note": "(QA M6 조정) 5→3: 첫 밤 처음 하는 사람이 보스까지 갈 수 있게(Unity는 Config 가 이 값을 씀). 죽이면 1.6초 뒤 다시 나온다"
  },
  "ENEMY_RADIUS": {
   "value": 0.6,
@@ -272,12 +272,12 @@
   "note": "E-002 맺힘(덩어리)"
  },
  "ENEMY_ATTACK_DAMAGE": {
-  "value": 12,
-  "note": "E-003 적 공격력"
+  "value": 10,
+  "note": "(QA M6 조정) 12→10: E-003 적 공격력, 최대 체력 100 기준 10번 맞으면 쓰러짐"
  },
  "ENEMY_ATTACK_INTERVAL": {
-  "value": 2.0,
-  "note": "E-004 적 공격 주기"
+  "value": 2.6,
+  "note": "(QA M6 조정) 2.0→2.6: E-004 적 공격 주기. 천도 캐스팅(1.5초) 한 번에 적 하나가 많아야 한 번 때리도록"
  },
  "ENEMY_ATTACK_WINDUP": {
   "value": 0.4,
@@ -1222,5 +1222,21 @@
  "NIGHT_GRACE": {
   "value": 4.0,
   "note": "(QA 버그 B1) 밤 시작·첫 입력 뒤 이 시간 동안 적이 공격 준비를 시작하지 않는다(그 뒤 첫 공격은 ENEMY_ATTACK_INTERVAL 뒤). 서낭당에서 가만히 서 있다 죽는 것 방지"
+ },
+ "REGEN_DELAY": {
+  "value": 4.0,
+  "note": "(QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다"
+ },
+ "REGEN_PER_SEC": {
+  "value": 2.0,
+  "note": "(QA M6 조정) 첫 밤 생존: 맞지 않는 동안 초당 체력 회복"
+ },
+ "SHRINE_HEAL_PER_SEC": {
+  "value": 12.0,
+  "note": "(QA M6 조정) 첫 밤 생존: 서낭당 원 안에서 초당 체력 회복(맞은 직후에도). 서낭당 = 안전한 쉼터"
+ },
+ "FIRST_NIGHT_HEAL": {
+  "value": 2,
+  "note": "(QA M6 조정) 첫 밤 생존: 첫 밤 시작 때 당할미가 쥐여 주는 회복약 수(H 키)"
  }
 }

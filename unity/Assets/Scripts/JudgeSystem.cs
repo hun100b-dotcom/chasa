@@ -37,6 +37,7 @@ public class JudgeSystem : MonoBehaviour
     string toast = ""; float toastT;     // 화면 안내 글자(영문: 기본 글꼴에 한글이 없다)
     Texture2D white, vignette;
     bool godMode;                        // ?debug 검증용: 체력이 줄지 않는다
+    float sinceHit = 99f;                // 마지막으로 맞은 뒤 지난 시간(초) — 체력 회복 시작 판단
     bool played;                         // 첫 입력이 있었나 (그 전엔 적이 공격하지 않는다: 로딩 중 죽는 것 방지)
     public bool NightOver { get { return night.Over; } }
     bool debugKeys;
@@ -299,6 +300,7 @@ public class JudgeSystem : MonoBehaviour
         if (ledger.Dead || night.Over || !player.Hurt()) return;
         // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
         int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult)) : by.damage;
+        sinceHit = 0f;
         int dealt = godMode ? 0 : ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
         feel.AddShake(0.35f);
@@ -315,7 +317,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>쓰러진 뒤 한 판을 처음부터. 체력·적·얼룩을 되돌리고 장부(수확)는 결과 화면(M5)에서 다룬다</summary>
     void RestartNight()
     {
-        night = new NightRun(); settled = false; ResetRound();
+        night = new NightRun(); settled = false; ResetRound(); sinceHit = 99f;
         toastT = 0f; played = true; enemies.graceT = Balance.NIGHT_GRACE;   // 지난 밤 안내 지우기(QA B3), 새 밤 유예(QA B1)
         night.Clues = dayScreen.BossCluesHave;   // 낮에 얻은 단서는 사라지지 않고 밤으로 이어진다
         if (dayScreen.Pack.Dawn > 0) { dayScreen.Pack.Dawn--; night.WarnTime += Balance.SHOP_DAWN_EARLY; }   // 새벽 부적: 경고가 일찍
@@ -376,6 +378,8 @@ public class JudgeSystem : MonoBehaviour
         if (night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");
         chainLeft = Mathf.Max(0f, chainLeft - dt);
         stains.Tick(dt);
+        sinceHit += dt;
+        ledger.Regen(dt, toShrine <= Balance.SHRINE_RADIUS, sinceHit);   // 서낭당 안: 빠른 회복 / 밖: 맞지 않으면 천천히
         player.speedMult = stains.IsOnStain(player.Pos.x, player.Pos.z) ? 1f - Balance.STAIN_SLOW : 1f;   // 얼룩 위: -20%
 
         if (Casting)
@@ -551,7 +555,7 @@ public class JudgeSystem : MonoBehaviour
             "넋 " + ledger.Neok + "   기억 " + ledger.Memory + "   엽전 " + ledger.Coin +
             "   업 " + ledger.Karma + " (" + CoreRules.KarmaTier(ledger.Karma) + "단계)" +
             (chainLeft > 0f ? "   연쇄!" : ""), small);
-        GUI.Label(new Rect(12, 74, 700, 24), "체력 " + ledger.Hp + " / " + ledger.MaxHp + "   무기 " + lo.Def.Name + " (Tab)" +
+        GUI.Label(new Rect(12, 74, 700, 24), "체력 " + ledger.Hp + " / " + ledger.MaxHp + "   회복약 " + dayScreen.Pack.Heal + " (H)   무기 " + lo.Def.Name + " (Tab)" +
             (lo.Def.HasQuake ? "  Q 땅울림" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") + "   능력치 점수 " + StatPoints.Earned(ledger.Neok), small);
         string sk = "";
         for (int i = 0; i < 3; i++)

@@ -25,7 +25,7 @@ public class DayScreen
     bool funeralOn;                            // 장례를 지켜보는 중 (눈금 0, 시간이 흐른다)
     float emptyT;                              // 할 것 없는 낮 안내 남은 시간
 
-    public DayScreen(Ledger l, Loadout loadout) { ledger = l; lo = loadout; }
+    public DayScreen(Ledger l, Loadout loadout) { ledger = l; lo = loadout; Pack.Heal = Balance.FIRST_NIGHT_HEAL; }   // 첫 밤: 당할미가 회복약 두 첩을 쥐여 준다
 
     /// <summary>새 낮을 시작. namedTendoLastNight = 어젯밤 이름혼을 천도했나(장례가 열림)</summary>
     public void Begin(bool namedTendoLastNight)

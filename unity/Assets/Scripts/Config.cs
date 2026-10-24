@@ -108,7 +108,7 @@ public static class Config
     public static readonly Color NUMBER_COLOR_PULL = Hex(0x7fd8ff);
 
     // 9) 적
-    public const int ENEMY_COUNT = 4;
+    public const int ENEMY_COUNT = Balance.ENEMY_COUNT;   // 값의 원본은 balance.json (QA M6 조정)
     public const int ENEMY_MAX_HP = 80;
     public const float ENEMY_RADIUS = 0.6f;
     public const float ENEMY_HEIGHT = 1.8f;

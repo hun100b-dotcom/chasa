@@ -25,6 +25,25 @@ namespace Chasa.Core
             return before - Hp;
         }
 
+        /// <summary>
+        /// 체력 회복 한 걸음. 서낭당 안이면 언제나 빠르게(안전한 쉼터), 밖이면 마지막으로 맞고 REGEN_DELAY 초가 지난 뒤에 천천히.
+        /// 왜? 처음 하는 사람이 480초 동안 체력이 한 번도 안 차면 보스에 닿기 전에 죽는다 (QA M6).
+        /// 반환: 실제로 오른 체력(소수는 버리지 않고 쌓는다)
+        /// </summary>
+        public int Regen(float dt, bool inShrine, float sinceHit)
+        {
+            if (Dead || Hp >= MaxHp) { regenAcc = 0f; return 0; }
+            float rate = inShrine ? Balance.SHRINE_HEAL_PER_SEC : (sinceHit >= Balance.REGEN_DELAY ? Balance.REGEN_PER_SEC : 0f);
+            regenAcc += rate * dt;
+            int whole = (int)regenAcc;
+            if (whole <= 0) return 0;
+            regenAcc -= whole;
+            int before = Hp;
+            Hp = System.Math.Min(MaxHp, Hp + whole);
+            return Hp - before;
+        }
+        float regenAcc;   // 아직 정수가 안 된 회복량
+
         /// <summary>한 판을 다시 시작할 때 체력만 되돌린다 (넋·기억 같은 장부는 결과 화면에서 따로 다룬다)</summary>
         public void ResetHp() { Hp = MaxHp; }
 

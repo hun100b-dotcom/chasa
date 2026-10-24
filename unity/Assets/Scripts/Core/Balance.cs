@@ -51,7 +51,7 @@ public static class Balance
     public const float NUMBER_FONT_BASE = 22.0f;
     public const float NUMBER_FONT_PER_DAMAGE = 0.9f;
     public const float NUMBER_FONT_MAX = 60.0f;
-    public const int ENEMY_COUNT = 5;  // 4 → 5: "네모들에 둘러싸인 채" 압박을 만들려고 1마리 늘림(임시)
+    public const int ENEMY_COUNT = 3;  // (QA M6 조정) 5→3: 첫 밤 처음 하는 사람이 보스까지 갈 수 있게(Unity는 Config 가 이 값을 씀). 죽이면 1.6초 뒤 다시 나온다
     public const float ENEMY_RADIUS = 0.6f;
     public const float ENEMY_HEIGHT = 1.8f;
     public const float ENEMY_SPEED = 2.8f;
@@ -70,8 +70,8 @@ public static class Balance
     public const float CLICK_MARKER_LIFETIME = 0.45f;
     public const int MAEDHIM_NORMAL = 100;  // E-001 맺힘(일반 적). 체력 대신 깎이고 0이면 처결 대기
     public const int MAEDHIM_LUMP = 400;  // E-002 맺힘(덩어리)
-    public const int ENEMY_ATTACK_DAMAGE = 12;  // E-003 적 공격력
-    public const float ENEMY_ATTACK_INTERVAL = 2.0f;  // E-004 적 공격 주기
+    public const int ENEMY_ATTACK_DAMAGE = 10;  // (QA M6 조정) 12→10: E-003 적 공격력, 최대 체력 100 기준 10번 맞으면 쓰러짐
+    public const float ENEMY_ATTACK_INTERVAL = 2.6f;  // (QA M6 조정) 2.0→2.6: E-004 적 공격 주기. 천도 캐스팅(1.5초) 한 번에 적 하나가 많아야 한 번 때리도록
     public const float ENEMY_ATTACK_WINDUP = 0.4f;  // E-005 예비동작(피할 수 있는 신호 시간)
     public const float ENEMY_HIT_STAGGER = 0.15f;  // E-006 적 피격 경직 (콤보 stun 값이 더 크면 그쪽이 적용)
     public const float PLAYER_HIT_STAGGER = 0.3f;  // E-007 플레이어 피격 경직
@@ -308,4 +308,8 @@ public static class Balance
     public const int SOCKET_COST_2 = 240;  // (시연판 임시) 기획서 부록 B 낮: 홈 뚫기 둘째 엽전
     public const int SOCKET_MAX = 2;  // (시연판 임시) 기획서 부록 B 낮: 장비 한 개의 인 홈 최대 수
     public const float NIGHT_GRACE = 4.0f;  // (QA 버그 B1) 밤 시작·첫 입력 뒤 이 시간 동안 적이 공격 준비를 시작하지 않는다(그 뒤 첫 공격은 ENEMY_ATTACK_INTERVAL 뒤). 서낭당에서 가만히 서 있다 죽는 것 방지
+    public const float REGEN_DELAY = 4.0f;  // (QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다
+    public const float REGEN_PER_SEC = 2.0f;  // (QA M6 조정) 첫 밤 생존: 맞지 않는 동안 초당 체력 회복
+    public const float SHRINE_HEAL_PER_SEC = 12.0f;  // (QA M6 조정) 첫 밤 생존: 서낭당 원 안에서 초당 체력 회복(맞은 직후에도). 서낭당 = 안전한 쉼터
+    public const int FIRST_NIGHT_HEAL = 2;  // (QA M6 조정) 첫 밤 생존: 첫 밤 시작 때 당할미가 쥐여 주는 회복약 수(H 키)
 }
