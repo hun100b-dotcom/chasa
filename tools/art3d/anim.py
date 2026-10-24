@@ -52,6 +52,16 @@ def export_rig(arm, path):
     bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True, export_apply=False, export_yup=True, export_materials="EXPORT",
                               export_skins=True, export_animations=True, export_animation_mode="NLA_TRACKS", export_force_sampling=True,
                               export_cameras=False, export_lights=False, export_extras=True)
+    split_prims(path)
+
+def split_prims(path):
+    """재질 조각을 메시별로 나눈다. 왜: 뼈대 메시가 조각 여러 개면 유니티 glTFast가 읽기에 실패한다(코드팀 확인).
+    도구(tools/glb_split_prims.py)는 조각이 1개면 종료코드로 알리므로 그 경우는 그대로 둔다."""
+    import subprocess, sys, shutil
+    tool = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "glb_split_prims.py"); tmp = path + ".split"
+    r = subprocess.run([sys.executable, tool, path, tmp], capture_output=True, text=True)
+    if r.returncode == 0 and os.path.exists(tmp): shutil.move(tmp, path)
+    elif os.path.exists(tmp): os.remove(tmp)
 
 def verify(path):
     """GLB를 직접 열어 뼈대(스킨)·동작·글로벌 정보를 센다."""
