@@ -43,6 +43,7 @@ public class JudgeSystem : MonoBehaviour
     bool played;                         // 첫 입력이 있었나 (그 전엔 적이 공격하지 않는다: 로딩 중 죽는 것 방지)
     public bool NightOver { get { return night.Over; } }
     bool debugKeys;
+    float overT;   // 결과 화면이 뜬 지 얼마나 됐나(초)
     DayScreen dayScreen;                 // 낮 화면과 낮에 쌓이는 것(단서·소모품)
     bool inDay;                          // 지금 낮 화면인가
     public bool InDay { get { return inDay; } }
@@ -377,13 +378,16 @@ public class JudgeSystem : MonoBehaviour
         if (!played && (Input.anyKeyDown || Input.GetMouseButtonDown(0) || Input.touchCount > 0)) { played = true; enemies.graceT = Balance.NIGHT_GRACE; }
         enemies.holdFire = !played;
         if (!night.Over) HandleKeys();   // 결과 화면에서는 무기 교체·공격 키가 먹지 않는다(QA B4)
+        if (!night.Over) overT = 0f;
         if (night.Over)
         {
             // 한 번만 정산: 동이 터서 끝났으면 흩어진 추가 수확분(넋)을 장부에서 뺀다. 몫과 성장(기억·품계)은 그대로.
             if (!settled) { settled = true; dayScreen.BossCluesHave = Mathf.Max(dayScreen.BossCluesHave, night.Clues);   // 밤에 주운 단서도 남는다
                 ledger.Neok = Mathf.Max(0, ledger.Neok - night.LostNeok); ledger.Coin = Mathf.Max(0, ledger.Coin - night.LostCoin); }
-            // 결과 화면: 아무 때나 R/E 가 아닌 Space(또는 터치 버튼)로 다시 시작
-            if (Input.GetKeyDown(KeyCode.Space)) RestartNight();
+            // 결과 화면: Space(또는 버튼)로 다시 시작. 단, 결과가 뜬 뒤 1.2초 동안은 Space 를 무시한다 —
+            // Space 가 '피하기'이기도 해서, 쓰러지는 순간 연타하던 피하기가 곧바로 다시 시작으로 이어지는 것을 막는다(QA)
+            overT += realDt;
+            if (overT > 1.2f && Input.GetKeyDown(KeyCode.Space)) RestartNight();
             if (Demo.Day && Input.GetKeyDown(KeyCode.D)) StartDay();
             return;
         }
@@ -437,6 +441,12 @@ public class JudgeSystem : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.G)) godMode = !godMode;   // 검증용 불사
             if (Input.GetKeyDown(KeyCode.J)) player.Pos = new Vector3(MapLayout.BossX - 3f, 0, MapLayout.BossZ);   // 검증용: 보스 곁으로
+            if (Input.GetKeyDown(KeyCode.N))   // 검증용: 가장 가까운 산 적을 바로 공격(클릭 타이밍 없이 콤보·피하기 검사)
+            {
+                Enemy best = null; float bd = 99f;
+                foreach (var e in enemies.list) { if (!e.alive) continue; float d = Vector3.Distance(e.Pos, player.Pos); if (d < bd) { bd = d; best = e; } }
+                if (best != null) player.CommandAttack(best);
+            }
             if (Input.GetKeyDown(KeyCode.Alpha7)) lo.other = WeaponId.Bell;
             if (Input.GetKeyDown(KeyCode.Alpha8)) lo.other = WeaponId.Trident;
             if (Input.GetKeyDown(KeyCode.Alpha9)) lo.other = WeaponId.Brush;
