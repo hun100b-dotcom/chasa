@@ -84,3 +84,6 @@
 
 ## 2026-10-24 Unity 핵심 규칙 이식 1단계 (코드)
 - `unity/Assets/Scripts/Core/`(CoreRules·Ledger·Soul·StainSet, 엔진 무관 asmdef)와 `Assets/Tests/EditMode/CoreTests.cs`. PC에서 EditMode 테스트 28개 통과(0 실패), WebGL 빌드 재확인(32.9MB, 에러 0). 오너 PC에서 Unity 기본 패키지 중 결제(purchasing)·분석(analytics)이 자동 추가됨 → 불필요하면 제거 예정. 다음: 화면 연결(플레이어·적 오브젝트가 Core 사용, 시야 축소, 얼룩 표시).
+
+## 2026-10-24 Unity 2단계: 천도·파혼 화면 연결과 PC 브라우저 검증 (코드)
+- 적 Soul 연결, JudgeSystem(E/R·SEND/SHATTER·시야 축소·얼룩·HUD). PC Chrome 확인: 천도 NEOK+10·MEMORY+1, 파혼 COIN+5·KARMA+1·얼룩 표시, 콘솔 오류 0. 빌드 설정 `stripEngineCode=false` 필요(켜 두면 물리·IMGUI 클래스가 잘려 오류 2만 건+버튼 배경 소실). 검사용 `?debug` + K 키. 빠진 것: 적 공격·플레이어 체력, 낮/밤, 맵.
