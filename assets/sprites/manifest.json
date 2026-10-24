@@ -1235,6 +1235,276 @@
    "note": "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)"
   },
   {
+   "file": "ui/ui_hanji_panel.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "한지 창 · 9조각(모서리 48px) · 가장자리 살짝 찢김"
+  },
+  {
+   "file": "ui/ui_ink_border_thin.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "먹 붓선 테두리 · 가는 한 겹 · 9조각(모서리 28px)"
+  },
+  {
+   "file": "ui/ui_ink_border_double.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "먹 붓선 테두리 · 겹선 · 9조각(모서리 28px)"
+  },
+  {
+   "file": "ui/ui_seal_select.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "붉은 인 · 선택/확정 (누르면 0.15초 도장 찍힘 움직임)"
+  },
+  {
+   "file": "ui/ui_seal_new.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "붉은 인 · 새것 (누르면 0.15초 도장 찍힘 움직임)"
+  },
+  {
+   "file": "ui/ui_seal_cheondo.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "붉은 인 · 천도함 (누르면 0.15초 도장 찍힘 움직임)"
+  },
+  {
+   "file": "ui/ui_strike_pahon.png",
+   "w": 128,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "파혼 기록 = 먹으로 그은 줄"
+  },
+  {
+   "file": "ui/ui_time_ring.png",
+   "w": 512,
+   "h": 512,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "시각 고리 · 12지시 눈금 · 붉은 호=동틀녘 · 미니맵 둘레"
+  },
+  {
+   "file": "ui/ui_marker_sun.png",
+   "w": 48,
+   "h": 48,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "해 표시"
+  },
+  {
+   "file": "ui/ui_marker_moon.png",
+   "w": 48,
+   "h": 48,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 표시"
+  },
+  {
+   "file": "ui/ui_moon_0.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 0/8 (그믐)"
+  },
+  {
+   "file": "ui/ui_moon_1.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 1/8 (초승)"
+  },
+  {
+   "file": "ui/ui_moon_2.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 2/8 (상현)"
+  },
+  {
+   "file": "ui/ui_moon_3.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 3/8 (차오름)"
+  },
+  {
+   "file": "ui/ui_moon_4.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 4/8 (보름)"
+  },
+  {
+   "file": "ui/ui_moon_5.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 5/8 (기움)"
+  },
+  {
+   "file": "ui/ui_moon_6.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 6/8 (하현)"
+  },
+  {
+   "file": "ui/ui_moon_7.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 7/8 (그믐 직전)"
+  },
+  {
+   "file": "ui/ui_nameplate_v.png",
+   "w": 96,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "세로쓰기 이름표 받침(대화창)"
+  },
+  {
+   "file": "ui/ui_grade_1.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 1 · 흔한: 가는 먹선 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_grade_2.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 2 · 손본: 겹선 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_grade_3.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 3 · 귀한: 금 겹선 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_grade_4.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 4 · 이름 있는: 붉은 인 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_grade_5.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 5 · 한 벌: 매듭 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_judge_ring_fresh.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "처결 대기 고리 · 혼 나이 색(fresh) · 코드가 호 길이로 시간 표시"
+  },
+  {
+   "file": "ui/ui_judge_ring_day.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "처결 대기 고리 · 혼 나이 색(day) · 코드가 호 길이로 시간 표시"
+  },
+  {
+   "file": "ui/ui_judge_ring_old.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "처결 대기 고리 · 혼 나이 색(old) · 코드가 호 길이로 시간 표시"
+  },
+  {
    "file": "gear/gear_w_cheolsak_common.png",
    "w": 96,
    "h": 96,

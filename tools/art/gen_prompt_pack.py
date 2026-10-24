@@ -139,6 +139,28 @@ for k, d in GEAR.items():
     for g, (gd, var) in GR.items():
         add(f"gear/gear_{k}_{g}", f"flat game inventory icon, centered, dark navy #16213E rounded-square background: {d}, {gd}", "" if g == "common" else f"gear/gear_{k}_common", var)
 add("icons/frame_set", "flat UI item frame, rounded square, violet #C9B0FF double border with soft glow, empty inside", "icons/frame_named", "테두리 색만 변경")
+
+# --- UI 재료 키트 (한지·먹·인) ---
+add("ui/ui_hanji_panel", "flat UI window background, aged mulberry paper #F3E7D3 with torn irregular edges and faint fibers, empty, nine-slice friendly", "", "한지 창")
+add("ui/ui_ink_border_thin", "flat UI frame, thin dry-brush ink line #2A2A38 forming a rounded rectangle, transparent inside", "", "가는 먹 테두리")
+add("ui/ui_ink_border_double", "flat UI frame, double dry-brush ink line #2A2A38 forming a rounded rectangle, transparent inside", "ui/ui_ink_border_thin", "겹 테두리")
+add("ui/ui_seal_select", "small square red seal stamp #E85C41 with carved white character 印, rough stamped edge", "", "선택 인")
+add("ui/ui_seal_new", "small square red seal stamp #E85C41 with carved white character 新, rough stamped edge", "ui/ui_seal_select", "새것 인")
+add("ui/ui_seal_cheondo", "small square red seal stamp #E85C41 with carved white character 度, rough stamped edge", "ui/ui_seal_select", "천도함 인")
+add("ui/ui_strike_pahon", "single horizontal ink brush strike-through stroke, orange-red #E8683A tint, tapered ends, transparent", "", "파혼 취소선")
+add("ui/ui_time_ring", "circular dial of twelve Chinese earthly-branch characters with fine tick marks, gold #D4A94E ring on deep navy, red arc #E85C41 for dawn, transparent center", "", "열두 때 고리")
+add("ui/ui_marker_sun", "tiny glowing sun marker, warm gold orb with soft halo", "", "해 표식")
+add("ui/ui_marker_moon", "tiny crescent moon marker, pale cream #F3E7D3 with soft halo", "", "달 표식")
+for i,n in enumerate(["new","waxing crescent","first quarter","waxing gibbous","full","waning gibbous","last quarter","waning crescent"]):
+    add(f"ui/ui_moon_{i}", f"small moon phase icon, {n}, cream #F3E7D3 on deep navy #16213E disc", "" if i==0 else "ui/ui_moon_0", f"달 위상 {i}")
+add("ui/ui_nameplate_v", "tall narrow vertical name plaque, dark ink #2A2A38 board with thin gold #D4A94E border and two gold studs, empty for vertical text", "", "세로 이름패")
+add("ui/ui_grade_1", "flat UI item frame, single thin ink line border on pale paper tone #F3E7D3, empty inside", "", "흔한: 먹선")
+add("ui/ui_grade_2", "flat UI item frame, double ink line border, teal #4FA8A0 accent, empty inside", "ui/ui_grade_1", "손본: 겹선")
+add("ui/ui_grade_3", "flat UI item frame, gold #D4A94E double line border, empty inside", "ui/ui_grade_1", "귀한: 금 겹선")
+add("ui/ui_grade_4", "flat UI item frame, ink border with a red seal #E85C41 stamped in the corner, empty inside", "ui/ui_grade_1", "이름 있는: 붉은 인")
+add("ui/ui_grade_5", "flat UI item frame, violet #C9B0FF border tied with decorative knots at the corners, empty inside", "ui/ui_grade_1", "한 벌: 매듭")
+for k,c,n in [("fresh","#BFE8FF","갓 죽은"),("day","#FFCC55","날수 찬"),("old","#FF6A3D","오래된")]:
+    add(f"ui/ui_judge_ring_{k}", f"flat ground-aligned 2:1 ellipse ring, glowing {c}, waiting-for-judgment ring", "", f"처결 대기 {n} 혼")
 SETSD = {"wolhwa": "wearing a dark plum shaman ritual coat with gold bands and red ribbons, keeping the tall black hat, red sash and chain",
          "miner": "wearing a charcoal grey coat with brass bands and a small glowing miner's lamp on the hat, keeping the red sash and chain",
          "heukwol": "wearing a pitch-black coat with glowing red #E85C41 seams and a red hat string, keeping the tall black hat and chain"}

@@ -116,6 +116,8 @@ def run(manifest, src):
     for k in range(3):
         plague(k, False); plague(k, True)
     fx_weapons()
+    import gen_ui_kit
+    gen_ui_kit.run(add)
     import gen_gear
     gen_gear.run(add, SRC)
     hud_region()

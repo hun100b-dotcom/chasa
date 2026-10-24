@@ -1,5 +1,5 @@
 {
- "count": 199,
+ "count": 226,
  "rule": "작품명 0개, HEX 직접 명시, 변수 1개씩, 첫 승인 이미지를 레퍼런스로 고정",
  "items": [
   {
@@ -2092,6 +2092,465 @@
    "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
    "reference": "fx/fx_brush_0.png",
    "change_only": "프레임 진행만 변경"
+  },
+  {
+   "file": "ui/ui_hanji_panel.png",
+   "size": [
+    256,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI window background, aged mulberry paper #F3E7D3 with torn irregular edges and faint fibers, empty, nine-slice friendly. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 256x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "한지 창"
+  },
+  {
+   "file": "ui/ui_ink_border_thin.png",
+   "size": [
+    128,
+    128
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI frame, thin dry-brush ink line #2A2A38 forming a rounded rectangle, transparent inside. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 128x128 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "가는 먹 테두리"
+  },
+  {
+   "file": "ui/ui_ink_border_double.png",
+   "size": [
+    128,
+    128
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI frame, double dry-brush ink line #2A2A38 forming a rounded rectangle, transparent inside. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 128x128 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_ink_border_thin.png",
+   "change_only": "겹 테두리"
+  },
+  {
+   "file": "ui/ui_seal_select.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small square red seal stamp #E85C41 with carved white character 印, rough stamped edge. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "선택 인"
+  },
+  {
+   "file": "ui/ui_seal_new.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small square red seal stamp #E85C41 with carved white character 新, rough stamped edge. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_seal_select.png",
+   "change_only": "새것 인"
+  },
+  {
+   "file": "ui/ui_seal_cheondo.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small square red seal stamp #E85C41 with carved white character 度, rough stamped edge. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_seal_select.png",
+   "change_only": "천도함 인"
+  },
+  {
+   "file": "ui/ui_strike_pahon.png",
+   "size": [
+    128,
+    24
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "single horizontal ink brush strike-through stroke, orange-red #E8683A tint, tapered ends, transparent. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 128x24 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "파혼 취소선"
+  },
+  {
+   "file": "ui/ui_time_ring.png",
+   "size": [
+    512,
+    512
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "circular dial of twelve Chinese earthly-branch characters with fine tick marks, gold #D4A94E ring on deep navy, red arc #E85C41 for dawn, transparent center. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 512x512 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "열두 때 고리"
+  },
+  {
+   "file": "ui/ui_marker_sun.png",
+   "size": [
+    48,
+    48
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "tiny glowing sun marker, warm gold orb with soft halo. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 48x48 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "해 표식"
+  },
+  {
+   "file": "ui/ui_marker_moon.png",
+   "size": [
+    48,
+    48
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "tiny crescent moon marker, pale cream #F3E7D3 with soft halo. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 48x48 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "달 표식"
+  },
+  {
+   "file": "ui/ui_moon_0.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small moon phase icon, new, cream #F3E7D3 on deep navy #16213E disc. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "달 위상 0"
+  },
+  {
+   "file": "ui/ui_moon_1.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small moon phase icon, waxing crescent, cream #F3E7D3 on deep navy #16213E disc. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_moon_0.png",
+   "change_only": "달 위상 1"
+  },
+  {
+   "file": "ui/ui_moon_2.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small moon phase icon, first quarter, cream #F3E7D3 on deep navy #16213E disc. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_moon_0.png",
+   "change_only": "달 위상 2"
+  },
+  {
+   "file": "ui/ui_moon_3.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small moon phase icon, waxing gibbous, cream #F3E7D3 on deep navy #16213E disc. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_moon_0.png",
+   "change_only": "달 위상 3"
+  },
+  {
+   "file": "ui/ui_moon_4.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small moon phase icon, full, cream #F3E7D3 on deep navy #16213E disc. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_moon_0.png",
+   "change_only": "달 위상 4"
+  },
+  {
+   "file": "ui/ui_moon_5.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small moon phase icon, waning gibbous, cream #F3E7D3 on deep navy #16213E disc. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_moon_0.png",
+   "change_only": "달 위상 5"
+  },
+  {
+   "file": "ui/ui_moon_6.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small moon phase icon, last quarter, cream #F3E7D3 on deep navy #16213E disc. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_moon_0.png",
+   "change_only": "달 위상 6"
+  },
+  {
+   "file": "ui/ui_moon_7.png",
+   "size": [
+    64,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "small moon phase icon, waning crescent, cream #F3E7D3 on deep navy #16213E disc. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 64x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_moon_0.png",
+   "change_only": "달 위상 7"
+  },
+  {
+   "file": "ui/ui_nameplate_v.png",
+   "size": [
+    96,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "tall narrow vertical name plaque, dark ink #2A2A38 board with thin gold #D4A94E border and two gold studs, empty for vertical text. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "세로 이름패"
+  },
+  {
+   "file": "ui/ui_grade_1.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI item frame, single thin ink line border on pale paper tone #F3E7D3, empty inside. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "흔한: 먹선"
+  },
+  {
+   "file": "ui/ui_grade_2.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI item frame, double ink line border, teal #4FA8A0 accent, empty inside. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_grade_1.png",
+   "change_only": "손본: 겹선"
+  },
+  {
+   "file": "ui/ui_grade_3.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI item frame, gold #D4A94E double line border, empty inside. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_grade_1.png",
+   "change_only": "귀한: 금 겹선"
+  },
+  {
+   "file": "ui/ui_grade_4.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI item frame, ink border with a red seal #E85C41 stamped in the corner, empty inside. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_grade_1.png",
+   "change_only": "이름 있는: 붉은 인"
+  },
+  {
+   "file": "ui/ui_grade_5.png",
+   "size": [
+    96,
+    96
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI item frame, violet #C9B0FF border tied with decorative knots at the corners, empty inside. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 96x96 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "ui/ui_grade_1.png",
+   "change_only": "한 벌: 매듭"
+  },
+  {
+   "file": "ui/ui_judge_ring_fresh.png",
+   "size": [
+    128,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat ground-aligned 2:1 ellipse ring, glowing #BFE8FF, waiting-for-judgment ring. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 128x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "처결 대기 갓 죽은 혼"
+  },
+  {
+   "file": "ui/ui_judge_ring_day.png",
+   "size": [
+    128,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat ground-aligned 2:1 ellipse ring, glowing #FFCC55, waiting-for-judgment ring. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 128x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "처결 대기 날수 찬 혼"
+  },
+  {
+   "file": "ui/ui_judge_ring_old.png",
+   "size": [
+    128,
+    64
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat ground-aligned 2:1 ellipse ring, glowing #FF6A3D, waiting-for-judgment ring. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 128x64 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "",
+   "change_only": "처결 대기 오래된 혼"
   },
   {
    "file": "gear/gear_w_cheolsak_common.png",
