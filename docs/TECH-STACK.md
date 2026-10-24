@@ -48,3 +48,9 @@ Godot 시험판(`godot/`)은 **규칙·수치 검증 기준**으로 보존한다
 - 원본: `data/balance.json` (엔진 무관, 129개 숫자·참/거짓 상수와 한 줄 설명). 색·배열(콤보 표 등)은 아직 엔진 쪽(`godot/config.gd`)에 남아 있다.
 - 반영: `python3 tools/sync_balance.py` → `godot/config.gd` 값 갱신 + `unity/Assets/Scripts/Balance.cs` 자동 생성. `--check`는 어긋남만 검사.
 - 지금 Unity는 `Balance.cs`(컴파일 시점 상수)로 읽는다. ScriptableObject(편집기에서 값 조절) 가져오기는 Unity 에디터 설치 후 후속 작업. 기존 `unity/.../Config.cs`는 옛 값이라 `Balance`로 점차 교체한다.
+
+## Unity 확정 버전·빌드 검증 (2026-10-24)
+- 버전 **6000.3.27f1 (Unity 6.3 LTS)** 고정 (`unity/ProjectSettings/ProjectVersion.txt`). 오너 PC 설치 경로 `C:\Users\hun10\Unity\Editor\6000.3.27f1`, WebGL 모듈 포함.
+- batchmode WebGL 빌드 성공: 종료코드 0, 컴파일 에러·C# 경고 0, 산출물 32MB(wasm 26MB), 526초(첫 가져오기 포함). 명령: `Unity.exe -batchmode -nographics -quit -projectPath <unity 폴더> -executeMethod BuildScript.BuildWebGL`.
+- 라이선스: 오너 Unity 계정 로그인으로 Personal 활성(Hub 3 방식, `UnityEntitlementLicense.xml`). 서버 CI 라이선스 방식은 여전히 미정.
+- 커밋 대상 생성물: `.meta`, `ProjectSettings/`, `Packages/manifest.json`·`packages-lock.json`. 제외: Library, Temp, Build 등.
