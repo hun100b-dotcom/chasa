@@ -12,6 +12,7 @@ using UnityEngine;
 public class OccluderFade : MonoBehaviour
 {
     public float radius = 2.4f;      // 이 거리 안에 카메라 선이 지나가면 가린 것으로 본다(m)
+    public float centerHeight = 3.8f;   // 가림 판정에 쓰는 중심 높이(m). 서낭나무 잎 3.8, 지붕 조각은 약 3.2
     Renderer[] rs;
     bool hidden;
 
@@ -22,7 +23,7 @@ public class OccluderFade : MonoBehaviour
         var cam = Camera.main; if (cam == null || rs == null) return;
         // 카메라에서 정면으로 뻗은 선과 이 물체 중심 사이 거리 (주인공은 화면 중앙 근처에 있으므로 정면선으로 근사)
         Vector3 o = cam.transform.position, d = cam.transform.forward;
-        Vector3 c = transform.position + Vector3.up * 3.8f;                 // 잎 덩이 중심 높이
+        Vector3 c = transform.position + Vector3.up * centerHeight;          // 가리는 덩이의 중심 높이
         float along = Vector3.Dot(c - o, d);
         float dist = (c - (o + d * along)).magnitude;
         // 카메라와 초점 사이에 있고(along < 초점 거리 + 여유) 선에 가까우면 가림
