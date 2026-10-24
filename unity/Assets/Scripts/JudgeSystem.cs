@@ -29,10 +29,12 @@ public class JudgeSystem : MonoBehaviour
     string toast = ""; float toastT;     // 화면 안내 글자(영문: 기본 글꼴에 한글이 없다)
     Texture2D white, vignette;
     bool touchUI;
+    bool debugKeys;
 
     void Start()
     {
         touchUI = Input.touchSupported;
+        debugKeys = Application.isEditor || Application.absoluteURL.Contains("debug");
         white = new Texture2D(1, 1); white.SetPixel(0, 0, Color.white); white.Apply();
         // 가운데는 투명, 가장자리로 갈수록 진해지는 둥근 가림막 (시야가 좁아지는 연출)
         const int n = 128;
@@ -146,6 +148,23 @@ public class JudgeSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E)) CommandTendo();
         if (Input.GetKeyDown(KeyCode.R)) CommandPahon();
+        // 검사용: 주소 끝에 ?debug 를 붙여 연 경우에만 K 키로 가장 가까운 적을 바로 무릎 꿇린다
+        // (자동 화면 확인에서 '무릎 꿇은 혼' 장면을 안정적으로 만들기 위해. 일반 플레이엔 영향 없음)
+        if (debugKeys && Input.GetKeyDown(KeyCode.K))
+        {
+            Enemy best = null; float bestD = 99f;
+            foreach (var e in enemies.list)
+            {
+                if (!e.alive) continue;
+                float d = Vector3.Distance(e.Pos, player.Pos);
+                if (d < bestD) { bestD = d; best = e; }
+            }
+            if (best != null)
+            {
+                best.Pos = player.Pos + new Vector3(1.8f, 0, 0);   // 사거리 안으로
+                best.TakeHit(100000, Vector3.right, 0f, 0f);
+            }
+        }
     }
 
     void UpdateStainViews()
