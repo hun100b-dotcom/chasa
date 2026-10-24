@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public int damage = Balance.ENEMY_ATTACK_DAMAGE;   // 공격력 (보스는 더 아프다)
+    public string label;                               // 이름혼·보스 이름표 (없으면 null)
     public float radius = Config.ENEMY_RADIUS;
     public float height = Config.ENEMY_HEIGHT;
     public Vector3 vel;            // 넉백 속도 (맞으면 크게, 마찰로 줄어듦)
@@ -31,11 +33,12 @@ public class Enemy : MonoBehaviour
 
     public Vector3 Pos { get => transform.position; set => transform.position = value; }
 
-    public static Enemy Create(bool capsule, Vector3 at)
+    public static Enemy Create(bool capsule, Vector3 at, float scale = 1f)
     {
         var root = new GameObject(capsule ? "Enemy(capsule)" : "Enemy(box)");
         var e = root.AddComponent<Enemy>();
         e.capsuleShape = capsule;
+        e.radius *= scale; e.height *= scale;   // 보스는 크게 (몸 크기와 충돌 크기를 같이 키운다)
         e.soul = new Soul(RandomKind());
         e.speed = Config.ENEMY_SPEED * (1f + Random.Range(-Config.ENEMY_SPEED_VARIANCE, Config.ENEMY_SPEED_VARIANCE));
         // 도형 두 종류로 "다른 적"처럼 보이게 (에셋 없이 구분하는 가장 싼 방법)
@@ -108,6 +111,24 @@ public class Enemy : MonoBehaviour
         mat.color = baseColor;
         atk = new AttackClock();
         ApplyVisual();
+    }
+
+    /// <summary>이름혼(박돌쇠): 무명 혼보다 맺힘이 크고, 머리 위에 이름이 뜬다</summary>
+    public void MakeNamed(string name)
+    {
+        extra = true; label = name;
+        soul = Soul.Named(name, SoulKind.Fresh, Balance.NAMED_MAEDHIM);
+        baseColor = ChasaPalette.SoulFresh; mat.color = baseColor;
+    }
+
+    /// <summary>S1 보스 나루 영감: 크고 느리고 한 방이 아프다</summary>
+    public void MakeBoss()
+    {
+        extra = true; label = "나루 영감";
+        soul = Soul.MakeBossS1();
+        damage = Balance.BOSS_S1_DAMAGE;
+        speed *= Balance.BOSS_S1_SPEED_MULT;
+        baseColor = new Color(0.55f, 0.42f, 0.78f); mat.color = baseColor;
     }
 
     /// <summary>얼룩 3개가 겹쳐 소환된 사나운 적 (P-010, P-011)</summary>
@@ -226,6 +247,7 @@ public class Enemy : MonoBehaviour
 public class EnemyManager
 {
     public readonly List<Enemy> list = new List<Enemy>();
+    public bool spawnPaused;                    // true 면 잡몹이 다시 일어서듯 새로 나오지 않는다 (보스 천도 보호)
     public System.Action<Enemy> onPlayerHit;   // 어느 적의 공격이 명중했는지 (JudgeSystem/GameMain이 체력 처리)
 
     /// <summary>원념 얼룩 3개가 겹친 자리에서 사나운 적이 솟아난다</summary>
@@ -233,6 +255,24 @@ public class EnemyManager
     {
         var e = Enemy.Create(true, at);
         e.MakeFierce();
+        e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        list.Add(e);
+        return e;
+    }
+
+    public Enemy SpawnNamed(Vector3 at, string name)
+    {
+        var e = Enemy.Create(false, at);
+        e.MakeNamed(name);
+        e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        list.Add(e);
+        return e;
+    }
+
+    public Enemy SpawnBoss(Vector3 at)
+    {
+        var e = Enemy.Create(true, at, 1.6f);
+        e.MakeBoss();
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
         list.Add(e);
         return e;
@@ -276,6 +316,7 @@ public class EnemyManager
             e.Tick(dt, playerPos);
             if (e.gone && e.respawnReady)
             {
+                if (spawnPaused && !e.extra) continue;   // 스폰 정지 중엔 대기
                 if (e.extra) { toRemove.Add(e); continue; }   // 소환된 적은 한 번 처리하면 끝 (계속 늘어나지 않게)
                 e.Respawn(SpawnPoint(playerPos, Random.value * U.TAU));
             }

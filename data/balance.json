@@ -858,5 +858,41 @@
  "SHRINE_RADIUS": {
   "value": 4.0,
   "note": "서낭당 귀환 반경(m, 서낭나무 중심). 장승 한 쌍을 가장자리에 세운다. 서사 확정"
+ },
+ "BOSS_S1_MAEDHIM": {
+  "value": 1200,
+  "note": "(시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)"
+ },
+ "BOSS_S1_WAIT": {
+  "value": 8.0,
+  "note": "(시연판 임시) S1 보스 처결 대기(초)"
+ },
+ "BOSS_S1_DAMAGE": {
+  "value": 20,
+  "note": "(시연판 임시) S1 보스 공격력(일반 12)"
+ },
+ "BOSS_S1_SPEED_MULT": {
+  "value": 0.6,
+  "note": "(시연판 임시) S1 보스 이동속도 배율(느리지만 한 방이 아프다)"
+ },
+ "BOSS_S1_NEOK": {
+  "value": 60,
+  "note": "(시연판 임시) S1 보스 천도 넋(일반 10의 6배)"
+ },
+ "BOSS_S1_MEMORY": {
+  "value": 3,
+  "note": "(시연판 임시) S1 보스 천도 기억 조각"
+ },
+ "BOSS_PAHON_COIN": {
+  "value": 30,
+  "note": "(시연판 임시) 보스 파혼 엽전(일반 5의 6배. 천도 쏠림 방지: BALANCE-NARRATIVE-CHECK 엽전×30 권고)"
+ },
+ "NAMED_MAEDHIM": {
+  "value": 150,
+  "note": "(시연판 임시) 이름혼(박돌쇠) 맺힘"
+ },
+ "CLUE_PICK_RADIUS": {
+  "value": 1.6,
+  "note": "(시연판 임시) 낮 단서를 줍는 거리(m). 시연판은 마을에 놓인 3개를 걸어가 줍는다"
  }
 }

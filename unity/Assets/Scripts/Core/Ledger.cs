@@ -38,10 +38,22 @@ namespace Chasa.Core
                 Karma = System.Math.Max(0, Karma - 1);
         }
 
+        /// <summary>보스 천도: 큰 넋과 기억을 얻는다. 업 감쇠 횟수에는 일반 천도와 똑같이 센다</summary>
+        public int CompleteBossTendo()
+        {
+            int gain = (int)System.Math.Round(Balance.BOSS_S1_NEOK * CoreRules.RewardMult(Karma));
+            Neok += gain;
+            Memory += Balance.BOSS_S1_MEMORY;
+            TendoStreak++;
+            TendoTotal++;
+            if (TendoTotal % Balance.KARMA_DECAY_TENDO_INTERVAL == 0) Karma = System.Math.Max(0, Karma - 1);
+            return gain;
+        }
+
         /// <summary>파혼 하나가 끝났을 때. 엽전을 얻고 업이 쌓이며 연속 천도가 끊긴다</summary>
         public void DoPahon(bool boss = false)
         {
-            Coin += Balance.PAHON_COIN;
+            Coin += boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN;
             Karma += boss ? Balance.BOSS_PAHON_KARMA : Balance.PAHON_KARMA;
             TendoStreak = 0;
         }

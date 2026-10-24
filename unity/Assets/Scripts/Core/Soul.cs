@@ -23,6 +23,8 @@ namespace Chasa.Core
         public float WaitTotal;
         public float Stun;           // 남은 경직 시간
         public bool Fierce;          // 얼룩 3개로 소환된 사나운 적
+        public bool Boss;            // 보스 여부 (천도에 단서 3개 필요, 보상이 큼)
+        public string Name;          // 이름혼/보스의 이름 (무명 혼은 null)
 
         public Soul(SoulKind kind, bool fierce = false)
         {
@@ -33,13 +35,29 @@ namespace Chasa.Core
             Maedhim = MaedhimMax;
         }
 
+        /// <summary>이름이 있는 혼(박돌쇠 등). 맺힘은 따로 정한다</summary>
+        public static Soul Named(string name, SoulKind kind, int maedhim)
+        {
+            var s = new Soul(kind) { Name = name, MaedhimMax = maedhim, Maedhim = maedhim };
+            return s;
+        }
+
+        /// <summary>시연판 S1 보스 나루 영감. 대기·맺힘은 Balance 의 보스 값</summary>
+        public static Soul MakeBossS1()
+        {
+            return new Soul(SoulKind.Old) { Name = "나루 영감", Boss = true, MaedhimMax = Balance.BOSS_S1_MAEDHIM, Maedhim = Balance.BOSS_S1_MAEDHIM };
+        }
+
         public bool Alive { get { return State == SoulState.Active; } }
         public bool Kneeling { get { return State == SoulState.Kneel; } }
         /// <summary>덩어리는 천도 불가 → 파혼만 (W-004)</summary>
         public bool CanTendo { get { return Kind != SoulKind.Lump; } }
+        /// <summary>천도 가능 여부(단서 반영). 보스는 낮 단서가 BOSS_CLUES_REQUIRED 개 이상이어야 한다 (N-005, B-1 확정)</summary>
+        public bool CanTendoWith(int clues) { return CanTendo && (!Boss || clues >= Balance.BOSS_CLUES_REQUIRED); }
 
         public float WaitTimeForKind()
         {
+            if (Boss) return Balance.BOSS_S1_WAIT;
             switch (Kind)
             {
                 case SoulKind.Fresh: return Balance.WAIT_FRESH;

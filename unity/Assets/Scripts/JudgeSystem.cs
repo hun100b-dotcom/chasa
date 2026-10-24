@@ -26,6 +26,9 @@ public class JudgeSystem : MonoBehaviour
     readonly List<GameObject> stainViews = new List<GameObject>();
 
     Enemy castTarget;
+    float enemySpawnPause;               // 보스 천도 직후 잡몹 스폰 정지 남은 시간
+    readonly List<Vector3> cluePos = new List<Vector3>();   // 아직 안 주운 단서 위치
+    readonly List<GameObject> clueViews = new List<GameObject>();
     float castT, castTotal, chainLeft;
     float visionP;                       // 0(평소) ~ 1(캐스팅 중): 시야 축소·기억색 정도. 0.2초에 걸쳐 부드럽게 변한다
     string toast = ""; float toastT;     // 화면 안내 글자(영문: 기본 글꼴에 한글이 없다)
@@ -41,7 +44,8 @@ public class JudgeSystem : MonoBehaviour
         shrineView.GetComponent<Renderer>().sharedMaterial = U.Matte(ChasaPalette.CheondoGlow);
         shrineView.transform.position = new Vector3(0, 0.015f, 0);
         shrineView.transform.localScale = new Vector3(Balance.SHRINE_RADIUS * 2f, 0.01f, Balance.SHRINE_RADIUS * 2f);
-        enemies.onPlayerHit = OnPlayerHit;   // 적 공격이 명중하면 체력 처리로 연결
+        enemies.onPlayerHit = OnPlayerHit;
+        SetupNight();   // 적 공격이 명중하면 체력 처리로 연결
         touchUI = Input.touchSupported;
         debugKeys = Application.isEditor || Application.absoluteURL.Contains("debug");
         white = new Texture2D(1, 1); white.SetPixel(0, 0, Color.white); white.Apply();
@@ -67,10 +71,11 @@ public class JudgeSystem : MonoBehaviour
         var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);
         if (e == null) { Say("NO TARGET"); return; }
         if (!e.soul.CanTendo) { Say("CAN'T SEND - SHATTER ONLY"); return; }
+        if (!e.soul.CanTendoWith(night.Clues)) { Say("NEED " + Balance.BOSS_CLUES_REQUIRED + " CLUES (" + night.Clues + ") - SHATTER ONLY"); return; }
         if (!e.soul.BeginSending()) return;
         castTarget = e;
         castT = 0f;
-        castTotal = CoreRules.CastTime(chainLeft > 0f);   // 연속 천도면 0.8초
+        castTotal = e.soul.Boss ? Balance.BOSS_TENDO_CAST_TIME : CoreRules.CastTime(chainLeft > 0f);   // 연속 천도면 0.8초, 보스는 2.0초
         player.locked = true;
         player.facing = Mathf.Atan2(e.Pos.z - player.Pos.z, e.Pos.x - player.Pos.x);
     }
@@ -88,7 +93,8 @@ public class JudgeSystem : MonoBehaviour
     {
         var at = e.Pos;
         e.Finish();
-        ledger.DoPahon();
+        ledger.DoPahon(e.soul.Boss);
+        if (e.soul.Boss) { night.BossDone = true; Say("BOSS SHATTERED"); }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
         float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION;
         foreach (var o in enemies.list)
@@ -114,9 +120,20 @@ public class JudgeSystem : MonoBehaviour
     void FinishTendo()
     {
         castTarget.Finish();
-        int before = ledger.Neok;
-        ledger.CompleteTendo();
-        night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
+        if (castTarget.soul.Boss)
+        {
+            int g = ledger.CompleteBossTendo();
+            night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
+            enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
+            Say("BOSS SENT!");
+        }
+        else
+        {
+            int before = ledger.Neok;
+            ledger.CompleteTendo();
+            night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
+            if (night.TakeNamedSpawn()) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
+        }
         chainLeft = Balance.TENDO_CHAIN_WINDOW;
         feel.AddShake(0.15f);
         EndCast();
@@ -129,12 +146,53 @@ public class JudgeSystem : MonoBehaviour
         player.locked = false;
     }
 
+    // ===== M4: 이름혼·보스·단서 ======================================================
+    void SpawnNamedSoul()
+    {
+        // 플레이어 앞쪽 7m 에서 나타난다 (길 위, 집 밖)
+        var at = new Vector3(player.Pos.x + 7f, 0, 0f);
+        enemies.SpawnNamed(at, "Bak Dolsoe");
+        Say("A NAME ON THE LIST...");
+    }
+
+    /// <summary>한 판 시작: 마을 어귀에 보스, 마을 곳곳에 단서 3개</summary>
+    void SetupNight()
+    {
+        enemies.SpawnBoss(new Vector3(24f, 0, 0f));
+        cluePos.Clear();
+        foreach (var v in clueViews) Destroy(v);
+        clueViews.Clear();
+        var spots = new[] { new Vector3(12f, 0, -3.2f), new Vector3(18f, 0, 3.4f), new Vector3(-9f, 0, 7f) };
+        foreach (var p in spots)
+        {
+            cluePos.Add(p);
+            var g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            Destroy(g.GetComponent<Collider>());
+            g.transform.position = p + Vector3.up * 0.8f;
+            g.transform.localScale = Vector3.one * 0.6f;
+            g.GetComponent<Renderer>().sharedMaterial = U.Unlit(ChasaPalette.MemoryRim);   // 보랏빛 구슬 = 기억의 단서
+            clueViews.Add(g);
+        }
+    }
+
+    void TickClues()
+    {
+        for (int i = cluePos.Count - 1; i >= 0; i--)
+        {
+            var p = cluePos[i];
+            if (new Vector2(player.Pos.x - p.x, player.Pos.z - p.z).magnitude > Balance.CLUE_PICK_RADIUS) continue;
+            night.PickClue();
+            Destroy(clueViews[i]); clueViews.RemoveAt(i); cluePos.RemoveAt(i);
+            Say("CLUE " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED);
+        }
+    }
+
     // ===== M1: 맞음·체력·쓰러짐 ======================================================
     /// <summary>적 공격이 명중했을 때. 무적 시간이면 무시. 천도 캐스팅 중이면 끊긴다 (무방비의 대가)</summary>
     void OnPlayerHit(Enemy by)
     {
         if (ledger.Dead || night.Over || !player.Hurt()) return;
-        int dealt = ledger.TakeDamage(Balance.ENEMY_ATTACK_DAMAGE);
+        int dealt = ledger.TakeDamage(by.damage);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
         feel.AddShake(0.35f);
         feel.HitStop(3);
@@ -158,6 +216,8 @@ public class JudgeSystem : MonoBehaviour
         foreach (var e in enemies.list) if (!e.extra) e.Respawn(Vector3.zero + new Vector3(8f + Random.value * 4f, 0, 8f + Random.value * 4f));
         var extras = enemies.list.FindAll(x => x.extra);
         foreach (var e in extras) { enemies.list.Remove(e); Destroy(e.gameObject); }
+        enemySpawnPause = 0f;
+        SetupNight();
     }
 
     void Say(string s) { toast = s; toastT = 1.5f; }
@@ -173,6 +233,9 @@ public class JudgeSystem : MonoBehaviour
             return;
         }
         night.Tick(dt);
+        TickClues();
+        enemySpawnPause = Mathf.Max(0f, enemySpawnPause - dt);
+        enemies.spawnPaused = enemySpawnPause > 0f || (Casting && castTarget.soul.Boss);   // 보스 천도 중·직후엔 잡몹이 새로 나오지 않는다
         // 귀환: 서낭당 위에 서면 즉시. 단 출발 직후(몫을 하나도 못 채움)에는 자동 귀환하지 않는다 — 밤을 시작도 못 하고 끝나는 것 방지
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
         if (night.QuotaDone && night.TryReturn(toShrine)) Say("RETURNED!");
@@ -261,6 +324,18 @@ public class JudgeSystem : MonoBehaviour
             GUI.DrawTexture(new Rect(r.xMax, r.y, Screen.width - r.xMax, r.height), white);
             GUI.color = Color.white;
         }
+        // (1-2) 이름표: 이름혼·보스 머리 위 (기본 글꼴에 한글이 없어 영문 표기: 나루 영감=Old Ferryman)
+        if (cam != null)
+        {
+            var nameStyle = new GUIStyle(GUI.skin.label) { fontSize = 16, alignment = TextAnchor.MiddleCenter };
+            nameStyle.normal.textColor = Color.white;
+            foreach (var e in enemies.list)
+            {
+                if (e.label == null || e.gone) continue;
+                var sp = cam.WorldToScreenPoint(e.HeadPosition + Vector3.up * 0.9f);
+                GUI.Label(new Rect(sp.x - 80, Screen.height - sp.y - 12, 160, 24), e.soul.Boss ? "Old Ferryman" : e.label, nameStyle);
+            }
+        }
         // (2) 무릎 꿇은 혼 머리 위 막대 = 처결 대기 남은 시간 (색 = 혼 종류)
         if (cam != null)
         {
@@ -287,7 +362,7 @@ public class JudgeSystem : MonoBehaviour
         GUI.Label(new Rect(12, 52, 700, 24), "E: send (cheondo)   R: shatter (pahon)", small);
         GUI.Label(new Rect(12, 96, 700, 24),
             "NIGHT " + Mathf.CeilToInt(night.TimeLeft) + "s   SENT " + night.Sent + "/" + Balance.NIGHT_QUOTA +
-            (night.QuotaDone ? "  (go back to the shrine!)" : "") + (night.Warning ? "   DAWN IS COMING!" : ""), small);
+            "   CLUES " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED + (night.BossDone ? "   BOSS DONE" : "") + (night.QuotaDone ? "  (go back to the shrine!)" : "") + (night.Warning ? "   DAWN IS COMING!" : ""), small);
         if (night.Over)
         {
             GUI.color = new Color(0, 0, 0, 0.75f); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white;

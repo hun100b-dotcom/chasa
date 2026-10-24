@@ -16,6 +16,31 @@ namespace Chasa.Core
         public int KeptNeok;       // 명부 몫으로 확정된 넋(실패해도 보존)
         public int ExtraNeok;      // 추가 수확분 넋(실패하면 잃음)
 
+        public int Clues;          // 주운 낮 단서 수 (보스 천도 조건)
+        public bool NamedSpawned;  // 이름혼(박돌쇠)이 이미 나왔나
+        public bool BossDone;      // 보스를 처결했나
+
+        public void PickClue() { if (Clues < Balance.BOSS_CLUES_REQUIRED) Clues++; }
+
+        /// <summary>
+        /// 이름혼은 명부 맨 아래 줄이라 몫의 '마지막 하나'로 나온다: 무명 혼을 몫-1 마리 보낸 뒤 한 번만 (서사 확정)
+        /// 반환이 true 면 지금 이름혼을 내보내라.
+        /// </summary>
+        public bool TakeNamedSpawn()
+        {
+            if (Over || NamedSpawned || Sent < Balance.NIGHT_QUOTA - 1) return false;
+            NamedSpawned = true;
+            return true;
+        }
+
+        /// <summary>보스 처결 보상은 몫이 아니라 '추가 수확분'이다 (동이 트면 잃는다 — 어디까지 갈 것인가의 위험)</summary>
+        public void RecordBoss(int neokGained)
+        {
+            if (Over) return;
+            BossDone = true;
+            ExtraNeok += neokGained;
+        }
+
         public bool Over => Phase != NightPhase.Night;
         public bool QuotaDone => Sent >= Balance.NIGHT_QUOTA;
         public bool Warning => !Over && TimeLeft <= Balance.NIGHT_WARN_TIME;

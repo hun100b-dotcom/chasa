@@ -418,4 +418,54 @@ public class CoreTests
         // 길(z=0)은 마을 어귀까지 막힘 없음
         for (float x = 0f; x <= 25f; x += 1f) Assert.IsFalse(MapLayout.IsBlocked(x, 0f, 0.5f), "길이 막힘 x=" + x);
     }
+
+    // ---- M4: 이름혼·보스·단서 ----
+    [Test]
+    public void Boss_TendoNeedsThreeClues()
+    {
+        var b = Soul.MakeBossS1();
+        Assert.IsFalse(b.CanTendoWith(2), "단서 2개 이하면 천도 불가 — 파혼만");
+        Assert.IsTrue(b.CanTendoWith(Balance.BOSS_CLUES_REQUIRED));
+        Assert.IsTrue(new Soul(SoulKind.Fresh).CanTendoWith(0), "일반 혼은 단서와 무관");
+    }
+
+    [Test]
+    public void Boss_RewardsAreBigger_AndPahonPaysMoreCoin()
+    {
+        var l = new Ledger();
+        int g = l.CompleteBossTendo();
+        Assert.Greater(g, Balance.TENDO_NEOK * 3);
+        var l2 = new Ledger(); l2.DoPahon(true);
+        Assert.Greater(l2.Coin, Balance.PAHON_COIN * 3, "보스 파혼은 천도 쏠림을 막을 만큼 후하다");
+        Assert.AreEqual(Balance.BOSS_PAHON_KARMA, l2.Karma);
+    }
+
+    [Test]
+    public void Named_SpawnsOnceAsLastOfQuota()
+    {
+        var n = new NightRun();
+        Assert.IsFalse(n.TakeNamedSpawn());
+        for (int i = 0; i < Balance.NIGHT_QUOTA - 1; i++) n.RecordTendo(10);
+        Assert.IsTrue(n.TakeNamedSpawn());
+        Assert.IsFalse(n.TakeNamedSpawn(), "한 번만");
+    }
+
+    [Test]
+    public void BossNeok_IsExtra_LostAtDawn()
+    {
+        var n = new NightRun();
+        for (int i = 0; i < Balance.NIGHT_QUOTA; i++) n.RecordTendo(10);
+        n.RecordBoss(60);
+        n.Tick(Balance.NIGHT_DURATION + 1f);
+        Assert.AreEqual(Balance.NIGHT_QUOTA * 10, n.FinalNeok);
+        Assert.AreEqual(60, n.LostNeok);
+    }
+
+    [Test]
+    public void Clues_CapAtRequired()
+    {
+        var n = new NightRun();
+        for (int i = 0; i < 10; i++) n.PickClue();
+        Assert.AreEqual(Balance.BOSS_CLUES_REQUIRED, n.Clues);
+    }
 }

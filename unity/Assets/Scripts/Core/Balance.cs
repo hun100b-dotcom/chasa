@@ -217,4 +217,13 @@ public static class Balance
     public const float NIGHT_WARN_TIME = 30.0f;  // 동트기 경고 시작(초 전). 서사 확정, 6막 물 차오름 경고와 같은 값
     public const int NIGHT_QUOTA = 3;  // 명부 몫 = 천도만 센다(파혼 제외). 첫 밤: 무명 혼 2 + 이름혼 박돌쇠 1. 서사 확정
     public const float SHRINE_RADIUS = 4.0f;  // 서낭당 귀환 반경(m, 서낭나무 중심). 장승 한 쌍을 가장자리에 세운다. 서사 확정
+    public const int BOSS_S1_MAEDHIM = 1200;  // (시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)
+    public const float BOSS_S1_WAIT = 8.0f;  // (시연판 임시) S1 보스 처결 대기(초)
+    public const int BOSS_S1_DAMAGE = 20;  // (시연판 임시) S1 보스 공격력(일반 12)
+    public const float BOSS_S1_SPEED_MULT = 0.6f;  // (시연판 임시) S1 보스 이동속도 배율(느리지만 한 방이 아프다)
+    public const int BOSS_S1_NEOK = 60;  // (시연판 임시) S1 보스 천도 넋(일반 10의 6배)
+    public const int BOSS_S1_MEMORY = 3;  // (시연판 임시) S1 보스 천도 기억 조각
+    public const int BOSS_PAHON_COIN = 30;  // (시연판 임시) 보스 파혼 엽전(일반 5의 6배. 천도 쏠림 방지: BALANCE-NARRATIVE-CHECK 엽전×30 권고)
+    public const int NAMED_MAEDHIM = 150;  // (시연판 임시) 이름혼(박돌쇠) 맺힘
+    public const float CLUE_PICK_RADIUS = 1.6f;  // (시연판 임시) 낮 단서를 줍는 거리(m). 시연판은 마을에 놓인 3개를 걸어가 줍는다
 }
