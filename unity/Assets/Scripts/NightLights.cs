@@ -56,7 +56,7 @@ public class NightLights : MonoBehaviour
         lantern.type = LightType.Point; lantern.color = Warm; lantern.range = 12f; lantern.intensity = 2.0f;
         lantern.shadows = LightShadows.None;
         // 마을 소품에서 등불 자리를 뽑는다 (Atmosphere 와 같은 규칙: 집은 창가, 장승은 약하게, 서낭나무는 크게)
-        foreach (var p in MapData.Props)
+        foreach (var p in FieldRules.On ? new PropDef[0] : MapData.Props)   // 필드 모드는 불빛을 FieldManager 가 따로 켠다
         {
             var pos = new Vector3(MapLayout.WorldX(p.Ay), 2.0f, MapLayout.WorldZ(p.Ax));
             if (p.Sprite.EndsWith("seonang_tree")) { pos = new Vector3(-2.2f, 2.6f, -1.0f); AddLamp(pos, 14f, 2.2f); }

@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+"""
+build_field_data.py — 아트팀 필드 배치표(field_5x5.json 등)를 유니티가 읽는 한 파일(field.json)로 줄이고,
+쓰는 GLB 모델을 Resources/Models/Field/ 에 모은다.
+
+왜? 아트 배치표는 블렌더 좌표(x=동, y=북, z=위)와 파일 경로가 길게 들어 있다. 게임은 그중 필요한 것만 짧은 표로 읽는다.
+  - 좌표: 유니티 (x, 높이, z) = (x, z, y). 회전: 유니티 yaw = -rot (아트 약속)
+  - 마을 배치표(solgogae_village.json)는 필드의 village_offset_m 만큼 옮겨 합친다
+  - 풀밭 칸(표에 없는 칸)은 코드가 채운다(5천 칸을 표에 적지 않으려고)
+사용: python3 tools/build_field_data.py <assets3d 폴더>
+"""
+import json, os, shutil, sys
+
+art = sys.argv[1]
+root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+res = os.path.join(root, "unity", "Assets", "Resources")
+f = json.load(open(os.path.join(art, "layouts", "field_5x5.json"), encoding="utf-8"))
+v = json.load(open(os.path.join(art, "layouts", "solgogae_village.json"), encoding="utf-8"))
+lights_src = json.load(open(os.path.join(art, "layouts", "field_5x5_lights.json"), encoding="utf-8"))
+ox, oy = f["village_offset_m"]
+
+used = set()
+items = []
+
+def add(name, x, y, rot, z=0.0, tile=0):
+    used.add(name)
+    items.append({"n": name, "x": round(x, 2), "z": round(y, 2), "y": round(z, 2), "r": int(rot) % 360, "t": tile})
+
+TILE = f["tile_m"] if "tile_m" in f else f["grid"]["tile_m"]
+for t in f["tiles"]:
+    add(t["tile"], t["ix"] * TILE + TILE / 2, t["iy"] * TILE + TILE / 2, t.get("rot", 0), t.get("z", 0.0), 1)
+for p in f["props"]:
+    add(p["prop"], p["x"], p["y"], p.get("rot", 0), p.get("z", 0.0))
+for s in f["structures"]:
+    if "pieces" in s:
+        for q in s["pieces"]: add(q["piece"], q["x"], q["y"], q.get("rot", 0), q.get("z", 0.0))
+    else:
+        add(s["piece"], s["x"], s["y"], s.get("rot", 0), s.get("z", 0.0))
+# 마을(원점이 필드의 (ox, oy))
+for b in v["buildings"]:
+    for q in b["pieces"]: add(q["piece"], q["x"] + ox, q["y"] + oy, q.get("rot", 0), q.get("z", 0.0))
+for p in v["props"]:
+    add(p["prop"], p["x"] + ox, p["y"] + oy, p.get("rot", 0), p.get("z", 0.0))
+
+markers = [{"kind": m["kind"], "name": m["name"], "x": m["x"], "z": m["y"]} for m in f["markers"]]
+lights = [{"x": l["x"], "z": l["y"], "y": l["z"], "color": l["color"], "intensity": l["intensity"], "range": l["range_m"],
+           "flicker": 1 if l.get("flicker") else 0} for l in lights_src["lights"]]
+out = {"size": f["grid"]["tiles"][0] * TILE, "tile": TILE, "items": items, "markers": markers, "lights": lights}
+with open(os.path.join(res, "Data", "field.json"), "w", encoding="utf-8") as fp:
+    json.dump(out, fp, ensure_ascii=False, separators=(",", ":"))
+
+# 모델 모으기: 어느 폴더에 있든 이름으로 찾는다(풀밭은 코드가 쓰니 항상 포함)
+used.add("terrain_tile_grass")
+dst = os.path.join(res, "Models", "Field"); os.makedirs(dst, exist_ok=True)
+missing = []
+for n in sorted(used):
+    src = None
+    for sub in ("terrain", "nature", "blackrapids", "hanok", "props", "night"):
+        c = os.path.join(art, sub, n + ".glb")
+        if os.path.exists(c): src = c; break
+    if src: shutil.copyfile(src, os.path.join(dst, n + ".glb"))
+    else: missing.append(n)
+print("항목", len(items), "마커", len(markers), "불빛", len(lights), "모델", len(used) - len(missing), "없음", missing)

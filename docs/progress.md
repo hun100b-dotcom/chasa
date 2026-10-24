@@ -262,3 +262,10 @@
 - 앞뒤 반대(180°): glTFast 는 GLB 앞(+Z)을 유니티에서 뒤집어 읽음 → models.json 에 `yaw`(앞 보정 도) 추가, dongi=180. 소품 줄에도 yaw 가능(GLB 소품은 180, OBJ 는 0).
 - 데모 천도 0회: 쫓기던 대상(chaseTarget)이 천도를 막음 → Player.CommandStop 추가해 1단계 진입 시 끊음. 대상 고를 때 덩어리·보스 제외(JudgeSystem.CanTendoNow).
 - 남음: 3타 큰 원호 잔상이 숫자보다 약 0.3초 늦음(체감 확인 후 조정).
+
+## [코드] 5×5 필드 1차 (주소 `?field`) + 3타 잔상 (2026-10-25 KST)
+- 3타 큰 원호 잔상: 맞는 순간 남은 원호를 한꺼번에 그림(숫자와 같은 프레임). 이후 기록 중단.
+- `tools/build_field_data.py`: 아트 field_5x5.json + 마을 v2 + 불빛 → `Resources/Data/field.json`(2135항목) + `Resources/Models/Field/*.glb`(72종, 1MB).
+- `Core/FieldRules`(청크 128m 5×5, 소품별 충돌 반지름, 이야기 자리, 시험 2개) · `FieldManager`(둘레 3×3 청크만 세움, 프레임당 60개, 충돌 먼저, 풀밭 칸 자동 채움, 가까운 불빛 6개만 점광원).
+- 켜는 법: 주소 끝 `?field`. 옛 마을 충돌표는 비우고 시작 위치=마커 spawn(196,30), 보스=마커(404,288), 단서·이름혼=마을 원점(196,60) 둘레.
+- 이번 판 한계: 땅 높이는 평평(고지 +2m 는 0) / 그림자는 필드 소품엔 끔 / 단서·이름혼 자리 임시 / 비탈 모서리 rot ±90 보정 PC 확인 필요 / 씬 소품 GLB 의 .meta 와 Models/Field 재질 가져오기 설정(PC).

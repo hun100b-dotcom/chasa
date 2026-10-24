@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
         public float startAngle, totalSweep, prevAngle;
         public HashSet<Enemy> hit = new HashSet<Enemy>(); // 한 번 휘두를 때 한 번만 맞게
         public bool firstSample = true;
+        public bool trailDone;                             // 큰 원호 잔상을 맞는 순간 한꺼번에 그렸는가(그 뒤 기록 중단)
         public bool fired;                                 // 붓: 먹물을 이미 쐈는가
     }
     /// <summary>명부 붓이 쏘는 먹물. 앞으로 날다가 처음 닿는 적 한 마리를 맞히고 사라진다(사거리 = 콤보 reach)</summary>
@@ -455,7 +456,17 @@ public class Player : MonoBehaviour
                 chainLag = Mathf.Lerp(chainLag, cfg.dir * Mathf.Min(angVel * 0.04f, 1.1f), 0.5f); // 빠를수록 많이 휨
                 if (loadout.Def.Projectile) { if (!a.fired) { a.fired = true; FireBolt(a); } }   // 붓: 투사체
                 else SweepHits(a, a.prevAngle, angle);
-                RecordTrail(a, hand, a.prevAngle, angle, radius, headY);
+                if (!a.trailDone)
+                {
+                    RecordTrail(a, hand, a.prevAngle, angle, radius, headY);
+                    // 길게 휘두르는 타(3타): 맞는 순간 남은 원호를 한꺼번에 그려 '맞은 프레임에 잔상이 같이 뜨게' 한다
+                    // (원래는 휘두름이 끝나는 0.3초 뒤까지 천천히 자라 숫자보다 늦게 보였다 — PC 영상 의견)
+                    if (cfg.swing >= 0.2f && a.hit.Count > 0)
+                    {
+                        RecordTrail(a, hand, angle, a.startAngle + a.totalSweep, cfg.reach, headY);
+                        a.trailDone = true;
+                    }
+                }
                 if (cfg.lunge > 0f) { Pos += U.Dir(facing) * (cfg.lunge / cfg.swing * dt); ClampToArena(); } // 앞으로 밀고 들어감
             }
             chain.SetShape(Hand, angle, radius, headY, chainLag, 0f);

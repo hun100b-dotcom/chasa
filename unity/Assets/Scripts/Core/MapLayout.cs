@@ -30,10 +30,10 @@ namespace Chasa.Core
         public static float VillageMaxZ { get { return (MapData.Cols - 1.5f) * S; } }
 
         /// <summary>맵 경계 (월드). 구역 기능이 꺼져 있으면 마을 한 곳(기존 동작), 켜져 있으면 이어 붙인 구역 전체</summary>
-        public static float MinX { get { return World.Enabled ? World.MinX : VillageMinX; } }
-        public static float MaxX { get { return World.Enabled ? World.MaxX : VillageMaxX; } }
-        public static float MinZ { get { return World.Enabled ? World.MinZ : VillageMinZ; } }
-        public static float MaxZ { get { return World.Enabled ? World.MaxZ : VillageMaxZ; } }
+        public static float MinX { get { return FieldRules.On ? 0f : World.Enabled ? World.MinX : VillageMinX; } }
+        public static float MaxX { get { return FieldRules.On ? FieldRules.Size : World.Enabled ? World.MaxX : VillageMaxX; } }
+        public static float MinZ { get { return FieldRules.On ? 0f : World.Enabled ? World.MinZ : VillageMinZ; } }
+        public static float MaxZ { get { return FieldRules.On ? FieldRules.Size : World.Enabled ? World.MaxZ : VillageMaxZ; } }
 
         public static float CenterX { get { return (MinX + MaxX) * 0.5f; } }
         public static float CenterZ { get { return (MinZ + MaxZ) * 0.5f; } }
@@ -43,12 +43,21 @@ namespace Chasa.Core
         public static float WorldZ(float gx) { return (gx - 1.5f) * S; }
 
         // 이야기 자리 (칸 좌표로 정한다 — 아트 배치표의 메모를 따름)
-        public static float BossX { get { return WorldX(10.5f); } }   // 징검다리 쪽 동쪽 끝 '나루'
-        public static float BossZ { get { return WorldZ(16f); } }
-        public static float NamedX { get { return WorldX(11f); } }    // 튜토리얼 첫 이름혼(박돌쇠) 자리
-        public static float NamedZ { get { return WorldZ(12f); } }
+        public static float BossX { get { return FieldRules.On ? FieldRules.BossX : WorldX(10.5f); } }   // 징검다리 쪽 동쪽 끝 '나루'
+        public static float BossZ { get { return FieldRules.On ? FieldRules.BossZ : WorldZ(16f); } }
+        public static float NamedX { get { return FieldRules.On ? FieldRules.NamedX : WorldX(11f); } }    // 튜토리얼 첫 이름혼(박돌쇠) 자리
+        public static float NamedZ { get { return FieldRules.On ? FieldRules.NamedZ : WorldZ(12f); } }
         /// <summary>낮 단서 세 곳(칸 좌표). 큰길과 마당에 놓아 걸어가며 줍게 한다</summary>
         public static readonly float[][] ClueCells = { new[] { 6f, 5.4f }, new[] { 13.5f, 3.2f }, new[] { 5.2f, 8.6f } };
+
+        /// <summary>단서 자리(월드 x, z). 필드 모드면 필드 마을 안, 아니면 옛 배치표 칸에서 계산</summary>
+        public static float[][] CluePoints()
+        {
+            if (FieldRules.On) return FieldRules.CluePoints();
+            var r = new float[ClueCells.Length][];
+            for (int i = 0; i < r.Length; i++) r[i] = new[] { WorldX(ClueCells[i][1]), WorldZ(ClueCells[i][0]) };
+            return r;
+        }
 
         /// <summary>솔고개 첫 밤 막힌 곳 목록: 아트 배치표의 소품에서 자동으로 만든다</summary>
         public static readonly List<Blocker> Blockers = BuildFromProps();

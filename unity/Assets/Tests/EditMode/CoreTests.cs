@@ -1114,6 +1114,30 @@ public class CoreTests
         Assert.Less(Balance.PAHON_RECOVER, Balance.DODGE_TIME + 0.2f, "파혼 끝동작이 너무 길면 안 됨");
     }
 
+    // ---------- 5×5 필드 ----------
+    [Test]
+    public void 필드_청크_번호는_128m마다_바뀌고_가장자리로_붙는다()
+    {
+        Assert.AreEqual(0, FieldRules.ChunkIndex(0f));
+        Assert.AreEqual(0, FieldRules.ChunkIndex(127.9f));
+        Assert.AreEqual(1, FieldRules.ChunkIndex(128f));
+        Assert.AreEqual(4, FieldRules.ChunkIndex(639f));
+        Assert.AreEqual(4, FieldRules.ChunkIndex(900f), "필드 밖은 가장자리 청크");
+        Assert.AreEqual(0, FieldRules.ChunkIndex(-5f));
+    }
+
+    [Test]
+    public void 필드_충돌은_나무_바위_벽만_막고_덤불_길은_통과()
+    {
+        Assert.Greater(FieldRules.BlockerRadius("nature_pine_a"), 0f);
+        Assert.Greater(FieldRules.BlockerRadius("terrain_rock_cluster"), FieldRules.BlockerRadius("terrain_rock_small"));
+        Assert.Greater(FieldRules.BlockerRadius("hanok_wall_mud"), 0f);
+        Assert.AreEqual(0f, FieldRules.BlockerRadius("hanok_door_single"), "문은 드나드는 곳");
+        Assert.AreEqual(0f, FieldRules.BlockerRadius("nature_bush_a"));
+        Assert.AreEqual(0f, FieldRules.BlockerRadius("terrain_tile_road_straight"));
+        Assert.Greater(FieldRules.BlockerRadius("br_deep"), 4f, "깊은 물은 못 건넌다");
+    }
+
     // ---------- 얻은 것 알림 ----------
     [Test]
     public void 알림은_같은_글을_합치고_2초_뒤_사라진다()

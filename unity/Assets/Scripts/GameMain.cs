@@ -33,16 +33,22 @@ public class GameMain : MonoBehaviour
         // 구역을 이어 붙인 넓은 필드: 설정값 또는 주소에 ?zones 가 있으면 켠다 (꺼져 있으면 마을 한 곳 = 기존 동작)
         if (DemoScript.Wanted()) Random.InitState(7);   // 비교 영상용: 같은 장면이 매번 똑같이(난수 씨앗 고정)
         View3D.Init();   // 주소의 ?v=3d / ?cam=a|b|c 를 읽는다
-        World.Enabled = Balance.WORLD_ZONES || Application.absoluteURL.Contains("zones");
+        // 5×5 넓은 필드(아트팀 조립): 주소 ?field 로 켠다(검증 뒤 기본값으로). 켜지면 옛 구역 시험판(?zones)은 쓰지 않는다
+        FieldRules.On = (Application.absoluteURL ?? "").ToLowerInvariant().Contains("field");
+        if (FieldRules.On) { FieldManager.ApplyMarkers(); MapLayout.Blockers.Clear(); }   // 마을 옛 충돌표는 비우고 필드 소품 충돌을 쓴다
+        World.Enabled = !FieldRules.On && (Balance.WORLD_ZONES || Application.absoluteURL.Contains("zones"));
         var url = Application.absoluteURL;
         UiRoot.Enabled = Balance.UI_TOOLKIT || url.Contains("?ui") || url.Contains("&ui");   // 주소에 ?ui 가 있으면 UI Toolkit HUD ("build" 같은 글자에 걸리지 않게 ? 와 & 를 붙여 본다)
         GrowthData.Load();   // 기획팀 도술·옵션 JSON 덮어쓰기(있을 때만)
         BuildStage();
-        enemies.SpawnAll(Vector3.zero);
+        var startPos = FieldRules.On ? new Vector3(FieldRules.StartX, 0f, FieldRules.StartZ) : Vector3.zero;
+        if (FieldRules.On) focus = startPos;   // 카메라가 원점에서 날아오지 않게 시작 위치에서 시작
+        enemies.SpawnAll(startPos);
         numbers = gameObject.AddComponent<DamageNumbers>();
         numbers.cam = cam;
         marker = ClickMarker.Create();
         player = Player.Create();
+        player.Pos = startPos;
         player.enemies = enemies; player.feel = feel; player.numbers = numbers;
         player.chain = ChainVisual.Create();
         // 처결(천도·파혼): 규칙은 Core, 화면 연결은 JudgeSystem
@@ -60,6 +66,7 @@ public class GameMain : MonoBehaviour
             var atmo = gameObject.AddComponent<Atmosphere>();
             atmo.cam = cam; atmo.judge = judge; atmo.player = player; atmo.enemies = enemies;
         }
+        if (FieldRules.On) { var fm = gameObject.AddComponent<FieldManager>(); fm.player = player; }   // 걸어가면 둘레 청크를 켜고 끈다
         if (World.Enabled) { var zm = gameObject.AddComponent<ZoneManager>(); zm.player = player; }   // 걸어가면 둘레 구역을 켜고 끈다
         if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)
         Sfx.Create(judge);   // 효과음 재생기
@@ -130,7 +137,7 @@ public class GameMain : MonoBehaviour
         Destroy(floor.GetComponent<Collider>());
         floor.transform.position = new Vector3(MapLayout.CenterX, 0f, MapLayout.CenterZ);
         floor.transform.localScale = new Vector3(sizeX / 10f, 1, sizeZ / 10f);
-        floor.GetComponent<Renderer>().sharedMaterial = U.Matte(Config.Hex(0x2b303b));
+        floor.GetComponent<Renderer>().sharedMaterial = U.Matte(FieldRules.On ? new Color(0.17f, 0.24f, 0.15f) : Config.Hex(0x2b303b));   // 필드: 풀색 밑판(타일 사이 틈이 보여도 어둡지 않게)
 
         // 격자(2칸 간격) + 붉은 테두리 — 선 메쉬 하나로 (그림 지형이 있으면 꺼진다)
         var verts = new System.Collections.Generic.List<Vector3>();
@@ -161,7 +168,7 @@ public class GameMain : MonoBehaviour
         lr.sharedMaterial = U.VertexColor();
         lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
-        bool groundArt = MapView.Build(transform);   // 솔고개 마을(집·장승·길) — 막힌 곳 규칙은 Core/MapLayout
+        bool groundArt = FieldRules.On || MapView.Build(transform);   // 필드 모드는 FieldManager 가 땅을 세운다   // 솔고개 마을(집·장승·길) — 막힌 곳 규칙은 Core/MapLayout
         if (groundArt) lines.SetActive(false);        // 그림 지형이 깔렸으면 임시 격자선은 끈다
     }
 

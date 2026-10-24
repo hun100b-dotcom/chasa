@@ -293,9 +293,9 @@ public class JudgeSystem : MonoBehaviour
         cluePos.Clear();
         foreach (var v in clueViews) Destroy(v);
         clueViews.Clear();
-        foreach (var cell in MapLayout.ClueCells)
+        foreach (var cp in MapLayout.CluePoints())
         {
-            var p = new Vector3(MapLayout.WorldX(cell[1]), 0, MapLayout.WorldZ(cell[0]));
+            var p = new Vector3(cp[0], 0, cp[1]);
             cluePos.Add(p);
             var g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Destroy(g.GetComponent<Collider>());
