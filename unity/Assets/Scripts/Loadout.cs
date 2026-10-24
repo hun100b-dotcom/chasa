@@ -7,6 +7,7 @@ using Chasa.Core;
 public class Loadout
 {
     public WeaponId weapon = WeaponId.Chain;
+    public WeaponId other = WeaponId.Mace;                  // 등에 멘 다른 한 자루 (Tab 으로 맞바꿈, 기획: 2자루 교체)
     public float swapLeft;                                  // 바꿔 들기 남은 시간(이동·공격 불가)
     public float quakeCd;                                   // 땅울림 재사용 남은 시간
     public readonly SkillBar skills = new SkillBar();

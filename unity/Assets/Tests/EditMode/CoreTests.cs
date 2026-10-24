@@ -490,6 +490,15 @@ public class CoreTests
         Assert.Greater(WeaponDef.Mace.PahonDamageMult, WeaponDef.Chain.PahonDamageMult);
         Assert.Greater(WeaponDef.Mace.PahonKnockbackMult, WeaponDef.Chain.PahonKnockbackMult);
         Assert.AreEqual(WeaponDef.Mace, WeaponDef.Get(WeaponId.Mace));
+        // 무기 3계열 추가: 정의가 서로 구별되고, Q 기술·관통 상한이 기획대로인지
+        Assert.AreEqual(WeaponDef.Bell, WeaponDef.Get(WeaponId.Bell));
+        Assert.AreEqual(WeaponDef.Trident, WeaponDef.Get(WeaponId.Trident));
+        Assert.AreEqual(WeaponDef.Brush, WeaponDef.Get(WeaponId.Brush));
+        Assert.IsTrue(WeaponDef.Chain.HasPull);                       // 견인은 사슬만
+        Assert.IsFalse(WeaponDef.Mace.HasPull || WeaponDef.Bell.HasPull || WeaponDef.Trident.HasPull || WeaponDef.Brush.HasPull);
+        Assert.AreEqual(3, WeaponDef.Trident.MaxHits);                // 삼지창 관통 3
+        Assert.AreEqual(1, WeaponDef.Brush.MaxHits);                  // 붓은 한 마리
+        Assert.AreEqual(0, WeaponDef.Bell.MaxHits);                   // 요령은 원 범위(제한 없음)
     }
 
     [Test]

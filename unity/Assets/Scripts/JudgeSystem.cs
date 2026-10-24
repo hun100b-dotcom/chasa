@@ -359,6 +359,13 @@ public class JudgeSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3)) UseSkill(2);
         if (Input.GetKeyDown(KeyCode.Tab)) player.CommandSwap();
         if (Input.GetKeyDown(KeyCode.R)) CommandPahon();
+        // 검사용(?debug): 7/8/9 로 등에 멘 무기를 요령방울/삼지창/붓으로 바꿔 Tab 으로 꺼내 본다
+        if (debugKeys)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha7)) lo.other = WeaponId.Bell;
+            if (Input.GetKeyDown(KeyCode.Alpha8)) lo.other = WeaponId.Trident;
+            if (Input.GetKeyDown(KeyCode.Alpha9)) lo.other = WeaponId.Brush;
+        }
         // 검사용: 주소 끝에 ?debug 를 붙여 연 경우에만 K 키로 가장 가까운 적을 바로 무릎 꿇린다
         // (자동 화면 확인에서 '무릎 꿇은 혼' 장면을 안정적으로 만들기 위해. 일반 플레이엔 영향 없음)
         if (debugKeys && Input.GetKeyDown(KeyCode.K))

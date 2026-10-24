@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
     public void CommandSwap()
     {
         if (Busy || state != State.Free) return;
-        loadout.weapon = loadout.weapon == WeaponId.Chain ? WeaponId.Mace : WeaponId.Chain;
+        var next = loadout.other; loadout.other = loadout.weapon; loadout.weapon = next;   // 든 것과 멘 것을 맞바꾼다
         loadout.swapLeft = Balance.WEAPON_SWAP_TIME;
         comboStep = 0; comboTimer = 0f; moveTarget = null; chaseTarget = null;
     }
@@ -321,10 +321,20 @@ public class Player : MonoBehaviour
         else comboTimer = Config.COMBO_RESET_TIME;
     }
 
+    /// <summary>가까운 적부터 차례로 — 상한이 있는 무기가 먼 적보다 가까운 적을 먼저 맞히도록</summary>
+    IEnumerable<Enemy> SweepOrder()
+    {
+        var sorted = new List<Enemy>(enemies.list);
+        sorted.Sort((x, y) => (x.Pos - Pos).sqrMagnitude.CompareTo((y.Pos - Pos).sqrMagnitude));
+        return sorted;
+    }
+
     void SweepHits(AttackRun a, float prev, float cur)
     {
-        foreach (var e in enemies.list)
+        int cap = loadout.Def.MaxHits;   // 관통 상한 (0 = 제한 없음)
+        foreach (var e in SweepOrder())
         {
+            if (cap > 0 && a.hit.Count >= cap) break;   // 삼지창은 3마리, 붓은 1마리에서 멈춘다
             if (!e.alive || a.hit.Contains(e)) continue;
             var d = new Vector2(e.Pos.x - Pos.x, e.Pos.z - Pos.z);
             float dist = d.magnitude;

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Chasa.Core
 {
     // ---------------------------------------------------------------- 무기
-    public enum WeaponId { Chain, Mace }
+    public enum WeaponId { Chain, Mace, Bell, Trident, Brush }   // 철삭 / 육모방망이 / 요령방울 / 삼지창 / 명부 붓
 
     /// <summary>무기 하나의 처결 쪽 성격. 콤보 모션(화면 값)은 Unity 쪽 표에서 같은 Id 로 찾는다</summary>
     public class WeaponDef
@@ -19,9 +19,11 @@ namespace Chasa.Core
         public string Name;
         public float PahonKnockbackMult = 1f;   // 파혼 넉백 배율
         public float PahonDamageMult = 1f;      // 파혼 피해 배율
-        public bool HasQuake;                   // 이 무기의 Q 기술이 땅울림인가 (아니면 철삭 견인)
+        public bool HasQuake;                   // 이 무기의 Q 기술이 땅울림인가
+        public bool HasPull;                    // 이 무기의 Q 기술이 철삭 견인인가 (사슬만)
+        public int MaxHits;                     // 한 번 휘두를 때 맞는 적 수 상한 (0 = 제한 없음, 삼지창 관통 3 등)
 
-        public static readonly WeaponDef Chain = new WeaponDef { Id = WeaponId.Chain, Name = "철삭", HasQuake = false };
+        public static readonly WeaponDef Chain = new WeaponDef { Id = WeaponId.Chain, Name = "철삭", HasQuake = false, HasPull = true };
         public static readonly WeaponDef Mace = new WeaponDef
         {
             Id = WeaponId.Mace, Name = "육모방망이",
@@ -30,7 +32,25 @@ namespace Chasa.Core
             HasQuake = true
         };
 
-        public static WeaponDef Get(WeaponId id) { return id == WeaponId.Mace ? Mace : Chain; }
+        // 시연판 이후 무기 3계열 (기획서 6절 임시값). 콤보 숫자는 Unity 쪽 WeaponTable 에 있다.
+        // 요령방울: 짧은 원 범위 — 여러 마리를 한꺼번에 흔든다
+        public static readonly WeaponDef Bell = new WeaponDef { Id = WeaponId.Bell, Name = "요령방울" };
+        // 삼지창: 가늘고 긴 찌르기 — 줄지은 적을 최대 3마리까지 꿰뚫는다
+        public static readonly WeaponDef Trident = new WeaponDef { Id = WeaponId.Trident, Name = "삼지창", MaxHits = 3 };
+        // 명부 붓: 멀리서 한 마리 — 투사체(날아가는 것)가 생기기 전까지는 좁고 긴 휘두름으로 대신한다
+        public static readonly WeaponDef Brush = new WeaponDef { Id = WeaponId.Brush, Name = "명부 붓", MaxHits = 1 };
+
+        public static WeaponDef Get(WeaponId id)
+        {
+            switch (id)
+            {
+                case WeaponId.Mace: return Mace;
+                case WeaponId.Bell: return Bell;
+                case WeaponId.Trident: return Trident;
+                case WeaponId.Brush: return Brush;
+                default: return Chain;
+            }
+        }
     }
 
     // ---------------------------------------------------------------- 도술(스킬)
