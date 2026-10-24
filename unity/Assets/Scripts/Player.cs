@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
     float dodgeCharges = Balance.DODGE_CHARGES;     // 남은 충전(소수 가능: 충전되는 중)
     public System.Action onDodgeCancelCast;         // 천도 캐스팅 중 피하면 JudgeSystem 이 캐스팅만 취소한다
     public float DodgeCharges => dodgeCharges;
+    public float PullCooldown => pullCooldown;
     public bool Dodging => state == State.Dodge;
 
     public Vector3 Pos { get => transform.position; set => transform.position = value; }

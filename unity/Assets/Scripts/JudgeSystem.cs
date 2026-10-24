@@ -543,8 +543,21 @@ public class JudgeSystem : MonoBehaviour
         h.SecondsLeft = Mathf.CeilToInt(night.TimeLeft); h.Sent = night.Sent; h.Quota = Balance.NIGHT_QUOTA;
         h.Clues = night.Clues; h.CluesNeeded = Balance.BOSS_CLUES_REQUIRED;
         h.BossDone = night.BossDone; h.QuotaDone = night.QuotaDone; h.Warning = night.Warning;
+        h.DodgeCharges = player.DodgeCharges; h.DodgeMax = Balance.DODGE_CHARGES; h.PullCd = player.PullCooldown; h.WeaponName = lo.Def.Name;
+        // 얻은 것 알림: 장부 값이 늘어난 만큼 쪽지를 띄운다(같은 글은 합쳐진다). 낮 화면을 넘어온 첫 프레임엔 띄우지 않는다
+        if (toastReady)
+        {
+            if (ledger.Neok > pNeok) h.Toasts.Add("넋 +" + (ledger.Neok - pNeok));
+            if (ledger.Memory > pMemory) h.Toasts.Add("기억 +" + (ledger.Memory - pMemory));
+            if (ledger.Coin > pCoin) h.Toasts.Add("엽전 +" + (ledger.Coin - pCoin));
+            if (ledger.Karma > pKarma) h.Toasts.Add("업 +" + (ledger.Karma - pKarma));
+            if (lo.lastDropT > 0f && lo.lastDrop != pDrop) h.Toasts.Add(lo.lastDrop);
+        }
+        pNeok = ledger.Neok; pMemory = ledger.Memory; pCoin = ledger.Coin; pKarma = ledger.Karma; pDrop = lo.lastDrop; toastReady = true;
+        h.Toasts.Tick(Time.unscaledDeltaTime);
         ui.Refresh(!inDay && !night.Over && !CharacterPanel.Open);
     }
+    int pNeok, pMemory, pCoin, pKarma; string pDrop; bool toastReady;
 
     void OnGUI()
     {

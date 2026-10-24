@@ -20,6 +20,11 @@ namespace Chasa.Core
         // 밤
         public int SecondsLeft, Sent, Quota, Clues, CluesNeeded;
         public bool BossDone, QuotaDone, Warning;
+        // 아래쪽 기술 줄
+        public float DodgeCharges; public int DodgeMax;     // 피하기 충전(소수는 충전 중인 칸)
+        public float PullCd;                                // 끌어당김 남은 시간(초, 0이면 쓸 수 있음)
+        public string WeaponName = "";
+        public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 
         public float HpRatio { get { return MaxHp <= 0 ? 0f : System.Math.Max(0f, System.Math.Min(1f, (float)Hp / MaxHp)); } }
         /// <summary>체력이 이 비율 아래면 위험 색으로 (화면이 쓴다)</summary>

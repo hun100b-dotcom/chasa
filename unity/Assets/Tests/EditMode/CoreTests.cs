@@ -1114,6 +1114,27 @@ public class CoreTests
         Assert.Less(Balance.PAHON_RECOVER, Balance.DODGE_TIME + 0.2f, "파혼 끝동작이 너무 길면 안 됨");
     }
 
+    // ---------- 얻은 것 알림 ----------
+    [Test]
+    public void 알림은_같은_글을_합치고_2초_뒤_사라진다()
+    {
+        var t = new ToastStack();
+        t.Add("넋 +1"); t.Add("넋 +1"); t.Add("엽전 +5");
+        Assert.AreEqual(2, t.Items.Count);
+        Assert.AreEqual("넋 +1 ×2", ToastStack.Line(t.Items[0]));
+        t.Tick(1.5f); Assert.AreEqual(2, t.Items.Count);
+        t.Tick(0.6f); Assert.AreEqual(0, t.Items.Count);
+    }
+
+    [Test]
+    public void 알림은_최대_5줄이다()
+    {
+        var t = new ToastStack();
+        for (int i = 0; i < 8; i++) t.Add("글" + i);
+        Assert.AreEqual(ToastStack.MaxLines, t.Items.Count);
+        Assert.AreEqual("글3", t.Items[0].Text);
+    }
+
     [Test]
     public void 피하기_충전은_1_1초에_한_번_최대_2()
     {

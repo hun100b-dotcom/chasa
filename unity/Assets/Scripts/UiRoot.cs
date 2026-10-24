@@ -21,7 +21,9 @@ public class UiRoot : MonoBehaviour
 
     UIDocument doc;
     Label ledger, vital, night, hint, hpText;
-    VisualElement hpFill, root;
+    VisualElement hpFill, root, toastBox, skillBar;
+    Label dodgeLabel, pullLabel, weaponLabel; VisualElement[] pips = new VisualElement[0];
+    string lastToasts;
     string lastLedger, lastVital, lastNight;
 
     static readonly Color PaperBg = new Color(0.05f, 0.05f, 0.09f, 0.62f);
@@ -67,7 +69,52 @@ public class UiRoot : MonoBehaviour
         bar.Add(hpFill);
         note.Add(bar);
         night = Line(note, 18);
+        BuildToasts(); BuildSkillBar();
         hint = Line(note, 14); hint.text = HudState.KeyHint(); hint.style.opacity = 0.65f; hint.style.marginTop = 4;
+    }
+
+    static void Panel(VisualElement v)
+    {
+        v.style.backgroundColor = PaperBg;
+        v.style.paddingLeft = 10; v.style.paddingRight = 10; v.style.paddingTop = 6; v.style.paddingBottom = 6;
+        v.style.borderTopLeftRadius = 6; v.style.borderBottomLeftRadius = 6; v.style.borderTopRightRadius = 6; v.style.borderBottomRightRadius = 6;
+    }
+
+    /// <summary>얻은 것 알림: 왼쪽 가운데 (장부 쪽지와 겹치지 않게 화면 세로 중앙)</summary>
+    void BuildToasts()
+    {
+        toastBox = new VisualElement { name = "toasts", pickingMode = PickingMode.Ignore };
+        toastBox.style.position = Position.Absolute; toastBox.style.left = 12; toastBox.style.top = Length.Percent(42);
+        root.Add(toastBox);
+    }
+
+    /// <summary>아래쪽 기술 줄: 가운데 아래에 무기 / E 천도 / R 파혼 / Q 끌어당김 / 피하기 충전 칸</summary>
+    void BuildSkillBar()
+    {
+        skillBar = new VisualElement { name = "skillbar", pickingMode = PickingMode.Ignore };
+        skillBar.style.position = Position.Absolute; skillBar.style.left = 0; skillBar.style.right = 0; skillBar.style.bottom = 14;
+        skillBar.style.flexDirection = FlexDirection.Row; skillBar.style.justifyContent = Justify.Center;
+        root.Add(skillBar);
+        weaponLabel = Slot("무기"); Slot("E 천도"); Slot("R 파혼"); pullLabel = Slot("Q 끌어당김");
+        // 피하기: 글자 + 충전 칸(켜진 칸 = 지금 쓸 수 있는 횟수)
+        var d = new VisualElement { pickingMode = PickingMode.Ignore }; Panel(d);
+        d.style.flexDirection = FlexDirection.Row; d.style.alignItems = Align.Center; d.style.marginLeft = 6;
+        dodgeLabel = Line(d, 16); dodgeLabel.text = "Space 피하기 ";
+        pips = new VisualElement[Mathf.Max(1, Balance.DODGE_CHARGES)];
+        for (int i = 0; i < pips.Length; i++)
+        {
+            var p = new VisualElement { pickingMode = PickingMode.Ignore };
+            p.style.width = 12; p.style.height = 12; p.style.marginLeft = 4; p.style.rotate = new Rotate(45f);
+            d.Add(p); pips[i] = p;
+        }
+        skillBar.Add(d);
+    }
+
+    Label Slot(string text)
+    {
+        var s = new VisualElement { pickingMode = PickingMode.Ignore }; Panel(s); s.style.marginLeft = 6;
+        var l = Line(s, 16); l.text = text; skillBar.Add(s);
+        return l;
     }
 
     Label Line(VisualElement parent, int size)
@@ -90,7 +137,35 @@ public class UiRoot : MonoBehaviour
         var a = Hud.LedgerLine(); if (a != lastLedger) { ledger.text = lastLedger = a; }
         var b = Hud.VitalLine(); if (b != lastVital) { vital.text = lastVital = b; }
         var c = Hud.NightLine(); if (c != lastNight) { night.text = lastNight = c; }
+        RefreshSkillBar(); RefreshToasts();
         hpFill.style.width = Length.Percent(Hud.HpRatio * 100f);
         hpFill.style.backgroundColor = Hud.HpLow ? new Color(0.9f, 0.3f, 0.3f) : new Color(0.72f, 0.82f, 0.95f);
+    }
+
+    void RefreshSkillBar()
+    {
+        weaponLabel.text = "무기 " + Hud.WeaponName;
+        pullLabel.text = Hud.PullCd > 0.05f ? "Q 끌어당김 " + Mathf.CeilToInt(Hud.PullCd) + "s" : "Q 끌어당김";
+        pullLabel.style.opacity = Hud.PullCd > 0.05f ? 0.5f : 1f;
+        for (int i = 0; i < pips.Length; i++)
+        {
+            float fill = Mathf.Clamp01(Hud.DodgeCharges - i);   // 충전 중인 칸은 흐리게 차오른다
+            pips[i].style.backgroundColor = Color.Lerp(new Color(1, 1, 1, 0.15f), new Color(0.72f, 0.9f, 1f, 1f), fill);
+        }
+    }
+
+    /// <summary>알림 줄이 바뀐 때만 다시 만든다(나이에 따라 서서히 투명해짐)</summary>
+    void RefreshToasts()
+    {
+        var sb = new System.Text.StringBuilder();
+        foreach (var t in Hud.Toasts.Items) sb.Append(ToastStack.Line(t)).Append('|');
+        string key = sb.ToString();
+        if (key != lastToasts)
+        {
+            lastToasts = key; toastBox.Clear();
+            foreach (var t in Hud.Toasts.Items) { var v = new VisualElement { pickingMode = PickingMode.Ignore }; Panel(v); v.style.marginBottom = 3; Line(v, 18).text = ToastStack.Line(t); toastBox.Add(v); }
+        }
+        for (int i = 0; i < Hud.Toasts.Items.Count && i < toastBox.childCount; i++)
+            toastBox[i].style.opacity = Mathf.Clamp01((ToastStack.Life - Hud.Toasts.Items[i].Age) / 0.5f);   // 마지막 0.5초에 사라짐
     }
 }
