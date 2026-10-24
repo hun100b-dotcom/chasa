@@ -141,11 +141,11 @@ public static class Balance
     public const float MEMORY_MAP_RADIUS = 8.0f;  // ⑨ 천도 1회당 기억 지도가 그려지는 반경(m)
     public const float B13_DOCK_WINDOW = 3.5f;  // B-13 배 정박 시간(초) (서사 제안 3초는 빠듯)
     public const float B13_BOARD_BOSS_CUT = 0.2f;  // B-13 줄 선 혼을 배에 태우면 노인 맺힘 -20% (1회)
-    public const float B14_STAMP_CAST_BONUS = 0.5f;  // B-14 번호 낙인: 천도 캐스팅 +0.5초 (서사 제안 +1초는 일반 천도까지 막음)
-    public const float B14_STAMP_DURATION = 8.0f;  // 번호 낙인 지속(초)
-    public const int B14_SAFE_CELL_PER_TENDO = 25;  // 천도 이 수마다 이름 안전 칸 1칸
-    public const int B14_SAFE_CELL_MAX = 6;  // 안전 칸 상한 (천도 800이면 32칸이 되는 폭주 방지)
-    public const float B14_BRUSH_NO_KARMA_CHANCE = 0.2f;  // 서리의 붓: 파혼 시 업 +0이 될 확률
+    public const float B15_STAMP_CAST_BONUS = 0.5f;  // B-15 번호 낙인: 천도 캐스팅 +0.5초 (서사 제안 +1초는 일반 천도까지 막음) [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]
+    public const float B15_STAMP_DURATION = 8.0f;  // 번호 낙인 지속(초) [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]
+    public const int B15_SAFE_CELL_PER_TENDO = 25;  // 천도 이 수마다 이름 안전 칸 1칸 [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]
+    public const int B15_SAFE_CELL_MAX = 6;  // 안전 칸 상한 (천도 800이면 32칸이 되는 폭주 방지) [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]
+    public const float B15_BRUSH_NO_KARMA_CHANCE = 0.2f;  // 서리의 붓: 파혼 시 업 +0이 될 확률 [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]
     public const int MEMORY_PIECE_MAX = 6;  // B-15·16 화면 기억 조각 상한
     public const float MEMORY_PIECE_STOP = 1.0f;  // 조각을 잡으면 보스 멈춤(초)
     public const float MEMORY_PIECE_RESTOP_COOLDOWN = 3.0f;  // 재멈춤 대기(초). 조각이 많아도 경직 무한 연쇄 방지

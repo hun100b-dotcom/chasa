@@ -234,11 +234,11 @@ const NAME_JOIN_REWARD_MULT := 3.0    # ⑩ 이은 이름 천도 보상 = 일반
 const MEMORY_MAP_RADIUS := 8.0        # ⑨ 천도 1회당 기억 지도가 그려지는 반경(m)
 const B13_DOCK_WINDOW := 3.5          # B-13 배 정박 시간(초) (서사 제안 3초는 빠듯)
 const B13_BOARD_BOSS_CUT := 0.2      # B-13 줄 선 혼을 배에 태우면 노인 맺힘 -20% (1회)
-const B14_STAMP_CAST_BONUS := 0.5     # B-14 번호 낙인: 천도 캐스팅 +0.5초 (서사 제안 +1초는 일반 천도까지 막음)
-const B14_STAMP_DURATION := 8.0       # 번호 낙인 지속(초)
-const B14_SAFE_CELL_PER_TENDO := 25   # 천도 이 수마다 이름 안전 칸 1칸
-const B14_SAFE_CELL_MAX := 6          # 안전 칸 상한 (천도 800이면 32칸이 되는 폭주 방지)
-const B14_BRUSH_NO_KARMA_CHANCE := 0.2 # 서리의 붓: 파혼 시 업 +0이 될 확률
+const B15_STAMP_CAST_BONUS := 0.5     # B-15 번호 낙인: 천도 캐스팅 +0.5초 (서사 제안 +1초는 일반 천도까지 막음)
+const B15_STAMP_DURATION := 8.0       # 번호 낙인 지속(초)
+const B15_SAFE_CELL_PER_TENDO := 25   # 천도 이 수마다 이름 안전 칸 1칸
+const B15_SAFE_CELL_MAX := 6          # 안전 칸 상한 (천도 800이면 32칸이 되는 폭주 방지)
+const B15_BRUSH_NO_KARMA_CHANCE := 0.2 # 서리의 붓: 파혼 시 업 +0이 될 확률
 const MEMORY_PIECE_MAX := 6           # B-15·16 화면 기억 조각 상한
 const MEMORY_PIECE_STOP := 1.0        # 조각을 잡으면 보스 멈춤(초)
 const MEMORY_PIECE_RESTOP_COOLDOWN := 3.0 # 재멈춤 대기(초). 조각이 많아도 경직 무한 연쇄 방지
