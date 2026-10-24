@@ -58,7 +58,7 @@ public static class Balance
     public const float ENEMY_SPEED_VARIANCE = 0.2f;
     public const float ENEMY_STOP_DISTANCE = 1.7f;
     public const float ENEMY_KNOCKBACK_FRICTION = 5.5f;
-    public const float ENEMY_FLASH_TIME = 0.14f;
+    public const float ENEMY_FLASH_TIME = 0.09f;  // (기획 타격감 분석 10-24, 임시) 맞은 적 하얀 번쩍(초) [0.14→0.09]
     public const float ENEMY_SQUASH = 0.25f;
     public const float ENEMY_KILL_KNOCKBACK_MULT = 1.5f;
     public const float ENEMY_DEATH_HOLD = 0.25f;
@@ -72,7 +72,7 @@ public static class Balance
     public const int MAEDHIM_LUMP = 400;  // E-002 맺힘(덩어리)
     public const int ENEMY_ATTACK_DAMAGE = 10;  // (QA M6 조정) 12→10: E-003 적 공격력, 최대 체력 100 기준 10번 맞으면 쓰러짐
     public const float ENEMY_ATTACK_INTERVAL = 2.6f;  // (QA M6 조정) 2.0→2.6: E-004 적 공격 주기. 천도 캐스팅(1.5초) 한 번에 적 하나가 많아야 한 번 때리도록
-    public const float ENEMY_ATTACK_WINDUP = 0.4f;  // E-005 예비동작(피할 수 있는 신호 시간)
+    public const float ENEMY_ATTACK_WINDUP = 0.55f;  // (기획 타격감 분석 10-24, 임시) 적 일반 근접 예고(초). 사람 반응 0.25+판단 0.2+여유 [0.4→0.55]
     public const float ENEMY_HIT_STAGGER = 0.15f;  // E-006 적 피격 경직 (콤보 stun 값이 더 크면 그쪽이 적용)
     public const float PLAYER_HIT_STAGGER = 0.3f;  // E-007 플레이어 피격 경직
     public const float ENEMY_ATTACK_RANGE = 2.2f;  // (임시 해석) 공격 거리. 다가와 멈추는 거리(1.7)보다 살짝 길게
@@ -96,7 +96,7 @@ public static class Balance
     public const float JUDGE_RANGE = 2.8f;  // (임시 해석) 처결하려면 이 거리 안. 멀면 먼저 걸어간다
     public const float PAHON_RADIUS = 3.0f;  // P-002 폭발 반경
     public const int PAHON_DAMAGE = 35;  // P-003 주변 적 맺힘 피해
-    public const float PAHON_KNOCKBACK_DIST = 2.5f;  // P-004 넉백 거리(m). 속도 = 거리 × 마찰(5.5)로 환산
+    public const float PAHON_KNOCKBACK_DIST = 3.0f;  // (기획 타격감 분석 10-24, 임시) 파혼 넉백 거리(m) [2.5→3.0]
     public const int PAHON_COIN = 5;  // P-005 엽전
     public const int PAHON_KARMA = 1;  // P-006 업 누적
     public const float STAIN_RADIUS = 2.0f;  // P-007 원념 얼룩 반경
@@ -328,4 +328,13 @@ public static class Balance
     public const float SHAKE_MOBILE_MULT = 0.7f;  // (기획 타격감 분석 10-24, 임시) 폰 화면은 흔들림 70%
     public const int HITSTOP_CAP_FRAMES = 10;  // (기획 타격감 분석 10-24, 임시) 어떤 경우에도 이 이상 멈추지 않음
     public const float TRAUMA_PLAYER_HIT = 0.3f;  // (기획 타격감 분석 10-24, 임시) 차사가 맞았을 때 충격값 [0.35→0.3]
+    public const float COMBO1_KNOCKBACK_DIST = 1.0f;  // (기획 타격감 분석 10-24, 임시) 철삭 1타 넉백 거리(m). 다음 타 사거리 안에 남게 짧게. 속도 = 거리 × 마찰로 환산
+    public const float COMBO2_KNOCKBACK_DIST = 1.3f;  // (기획 타격감 분석 10-24, 임시) 2타 넉백 거리(m)
+    public const float COMBO3_KNOCKBACK_DIST = 3.5f;  // (기획 타격감 분석 10-24, 임시) 3타 마무리 넉백 거리(m). 멀리 날려 숨 돌릴 틈
+    public const float WEIGHT_FIERCE = 0.6f;  // (기획 타격감 분석 10-24, 임시) 넉백 배율: 사나운 적
+    public const float WEIGHT_LUMP = 0.3f;  // (기획 타격감 분석 10-24, 임시) 넉백 배율: 덩어리
+    public const float WEIGHT_BOSS = 0.0f;  // (기획 타격감 분석 10-24, 임시) 넉백 배율: 보스는 밀리지 않음
+    public const float TENDO_COMPLETE_SLOWMO = 0.35f;  // (기획 타격감 분석 10-24, 임시) 천도 완료 순간 정지 대신 이 시간(초) 동안 시간이 느려짐(멈춤=폭력, 느림=보냄)
+    public const float TENDO_COMPLETE_SLOWMO_SCALE = 0.5f;  // (기획 타격감 분석 10-24, 임시) 위 느린 시간의 속도 배율
+    public const float PLAYER_HIT_INVULN = 0.5f;  // (기획 타격감 분석 10-24, 임시) 피격 직후 무적(초) [0.6→0.5]
 }

@@ -63,7 +63,7 @@ public class GameMain : MonoBehaviour
         if (!judge.NightOver) HandleInput();   // 결과 화면에서는 조작이 먹지 않는다(QA B4)
         float realDt = Mathf.Min(0.05f, Time.unscaledDeltaTime);
         bool frozen = feel.Tick(realDt);
-        float dt = frozen ? 0f : realDt;
+        float dt = frozen ? 0f : realDt * feel.TimeScale;   // 히트스톱 중 0, 천도 완료 슬로모 중 절반
         player.Tick(dt);
         judge.Tick(dt, realDt);
         enemies.Tick(dt, player.Pos, Config.PLAYER_RADIUS);

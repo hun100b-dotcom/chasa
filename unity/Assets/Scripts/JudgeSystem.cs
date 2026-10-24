@@ -172,6 +172,7 @@ public class JudgeSystem : MonoBehaviour
         chainLeft = lo.stats.ChainWindow;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
         Sfx.Play("sfx.tendo.done");
+        feel.SlowMo(Balance.TENDO_COMPLETE_SLOWMO, Balance.TENDO_COMPLETE_SLOWMO_SCALE);   // 멈춤이 아니라 느림 = 보냄
         feel.AddZoom(-0.7f);                    // 천도 완료: 숨을 내쉬듯 화면이 살짝 멀어졌다 돌아온다
         flashColor = new Color(0.85f, 0.8f, 1f); flashA = 0.5f;        // 흰 보랏빛 번쩍임(보냄)
         EndCast();

@@ -91,7 +91,9 @@ public class Enemy : MonoBehaviour
         stun = Mathf.Max(stun, stunTime);
         pulled = false;                 // 끌려오던 중 맞으면 견인 취소
         atk.Interrupt();                // 맞으면 예비동작이 끊긴다 (때리는 쪽이 이득)
-        vel = dir * knockback;          // '덮어쓰기': 연타해도 무한히 빨라지지 않는다
+        // 무게 배율: 보스는 안 밀리고(0), 덩어리·사나운 적은 덜 밀린다
+        float weight = soul.Boss ? Balance.WEIGHT_BOSS : soul.Kind == SoulKind.Lump ? Balance.WEIGHT_LUMP : soul.Fierce ? Balance.WEIGHT_FIERCE : 1f;
+        vel = dir * knockback * weight;          // '덮어쓰기': 연타해도 무한히 빨라지지 않는다
         if (soul.TakeHit(damage))
         {
             if (!dropRolled) { dropRolled = true; onKneel?.Invoke(); }

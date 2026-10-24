@@ -45,11 +45,11 @@ public static class Config
     public static readonly ComboStep[] COMBO =
     {
         new ComboStep { name = "1타 (횡베기)", damage = 12, reach = 4.6f, sweepDeg = 150f, startOffsetDeg = 75f, dir = 1,
-            windup = 0.09f, swing = 0.15f, recover = 0.13f, hitStopFrames = 3, shake = 0.18f, knockback = 9f, stun = 0.28f, lunge = 0.9f },
+            windup = 0.09f, swing = 0.15f, recover = 0.13f, hitStopFrames = 3, shake = 0.18f, knockback = Balance.COMBO1_KNOCKBACK_DIST * Balance.ENEMY_KNOCKBACK_FRICTION, stun = 0.28f, lunge = 0.9f },
         new ComboStep { name = "2타 (역횡베기)", damage = 14, reach = 4.6f, sweepDeg = 150f, startOffsetDeg = 75f, dir = -1,
-            windup = 0.08f, swing = 0.15f, recover = 0.13f, hitStopFrames = 3, shake = 0.22f, knockback = 10f, stun = 0.3f, lunge = 0.9f },
+            windup = 0.08f, swing = 0.15f, recover = 0.13f, hitStopFrames = 3, shake = 0.22f, knockback = Balance.COMBO2_KNOCKBACK_DIST * Balance.ENEMY_KNOCKBACK_FRICTION, stun = 0.3f, lunge = 0.9f },
         new ComboStep { name = "3타 (회전 후려치기)", damage = 30, reach = 5.6f, sweepDeg = 360f, startOffsetDeg = 35f, dir = 1,
-            windup = 0.16f, swing = 0.3f, recover = 0.36f, hitStopFrames = 6, shake = 0.45f, knockback = 24f, stun = 0.65f, lunge = 0f },
+            windup = 0.16f, swing = 0.3f, recover = 0.36f, hitStopFrames = 6, shake = 0.45f, knockback = Balance.COMBO3_KNOCKBACK_DIST * Balance.ENEMY_KNOCKBACK_FRICTION, stun = 0.65f, lunge = 0f },
     };
     public const float COMBO_RESET_TIME = 0.6f;
     public const float ATTACK_START_RANGE = 3.6f;
@@ -116,7 +116,7 @@ public static class Config
     public const float ENEMY_SPEED_VARIANCE = 0.2f;
     public const float ENEMY_STOP_DISTANCE = 1.7f;
     public const float ENEMY_KNOCKBACK_FRICTION = 5.5f;
-    public const float ENEMY_FLASH_TIME = 0.14f;
+    public const float ENEMY_FLASH_TIME = Balance.ENEMY_FLASH_TIME;
     public const float ENEMY_SQUASH = 0.25f;
     public const float ENEMY_KILL_KNOCKBACK_MULT = 1.5f;
     public const float ENEMY_DEATH_HOLD = 0.25f;

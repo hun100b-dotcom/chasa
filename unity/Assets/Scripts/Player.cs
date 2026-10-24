@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
     public bool Hurt()
     {
         if (invulnT > 0f) return false;
-        invulnT = 0.6f;
+        invulnT = Balance.PLAYER_HIT_INVULN;
         if (state == State.Attack)
         {
             // 공격 중단: 대기 예약·콤보를 지우고 자유 상태로 (여기서 EndAttack 대신 직접 정리해야 후딜 로직이 안 돈다)

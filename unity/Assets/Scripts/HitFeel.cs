@@ -7,6 +7,7 @@ public class HitFeel
 {
     float hitStopTimer; // 남은 정지 시간(초)
     float shake;        // 충격값 trauma(0~1). 실제 흔들림은 이 값의 제곱 → 작은 타는 거의 안 흔들리고 큰 타만 확 흔들린다
+    float slowT, slowScale = 1f;   // 천도 완료 슬로모: 남은 시간(초)과 속도 배율
     float noiseT;       // 흔들림 잡음 시계(초)
     float zoom;         // 줌 펀치(-1~1): + 이면 화면이 확 다가갔다 돌아오고, − 이면 멀어졌다 돌아온다
     Vector3 kick;       // 맞은 방향으로 카메라가 툭 밀렸다 돌아오는 정도(세계 좌표, m)
@@ -16,6 +17,11 @@ public class HitFeel
 
     /// <summary>때린 방향으로 카메라를 밀어 준다(방향 있는 충격). 세계 좌표 방향 × 세기(m)</summary>
     public void AddKick(Vector3 worldDir, float meters) { kick += new Vector3(worldDir.x, 0, worldDir.z).normalized * meters; if (kick.magnitude > 0.9f) kick = kick.normalized * 0.9f; }
+
+    /// <summary>시간이 느려진다(정지가 아니라 느림). 천도 완료처럼 '보내는' 순간에 쓴다</summary>
+    public void SlowMo(float seconds, float scale) { slowT = Mathf.Max(slowT, seconds); slowScale = scale; }
+    /// <summary>게임 세계 시간 배율 (슬로모 중 < 1)</summary>
+    public float TimeScale => slowT > 0f ? slowScale : 1f;
 
     public float Zoom => zoom;
     public Vector3 Kick => kick;
@@ -30,6 +36,7 @@ public class HitFeel
     {
         shake = Mathf.Max(0f, shake - Config.FEEL_SHAKE_DECAY * realDt);
         noiseT += realDt;
+        if (slowT > 0f) slowT = Mathf.Max(0f, slowT - realDt);   // 슬로모 시간은 진짜 시간으로 센다(안 그러면 두 배 오래 간다)
         zoom = Mathf.MoveTowards(zoom, 0f, 6f * realDt);   // 0.15초 안팎에 제자리
         kick *= Mathf.Exp(-12f * realDt);                  // 빠르게 되돌아온다(스프링 느낌)
         if (hitStopTimer > 1e-4f) // 오차로 2프레임이 3프레임 되는 것 방지

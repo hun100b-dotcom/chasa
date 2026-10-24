@@ -109,7 +109,7 @@ const ENEMY_SPEED := 2.8
 const ENEMY_SPEED_VARIANCE := 0.2
 const ENEMY_STOP_DISTANCE := 1.7
 const ENEMY_KNOCKBACK_FRICTION := 5.5
-const ENEMY_FLASH_TIME := 0.14
+const ENEMY_FLASH_TIME := 0.09
 const ENEMY_SQUASH := 0.25
 const ENEMY_KILL_KNOCKBACK_MULT := 1.5
 const ENEMY_DEATH_HOLD := 0.25
@@ -133,7 +133,7 @@ const MAEDHIM_NORMAL := 100           # E-001 맺힘(일반 적). 체력 대신 
 const MAEDHIM_LUMP := 400             # E-002 맺힘(덩어리)
 const ENEMY_ATTACK_DAMAGE := 10       # E-003 적 공격력
 const ENEMY_ATTACK_INTERVAL := 2.6    # E-004 적 공격 주기
-const ENEMY_ATTACK_WINDUP := 0.4      # E-005 예비동작(피할 수 있는 신호 시간)
+const ENEMY_ATTACK_WINDUP := 0.55      # E-005 예비동작(피할 수 있는 신호 시간)
 const ENEMY_HIT_STAGGER := 0.15       # E-006 적 피격 경직 (콤보 stun 값이 더 크면 그쪽이 적용)
 const PLAYER_HIT_STAGGER := 0.3       # E-007 플레이어 피격 경직
 const ENEMY_ATTACK_RANGE := 2.2       # (임시 해석) 공격 거리. 다가와 멈추는 거리(1.7)보다 살짝 길게
@@ -163,7 +163,7 @@ const JUDGE_RANGE := 2.8              # (임시 해석) 처결하려면 이 거�
 # --- 파혼 (1-4) ---
 const PAHON_RADIUS := 3.0             # P-002 폭발 반경
 const PAHON_DAMAGE := 35              # P-003 주변 적 맺힘 피해
-const PAHON_KNOCKBACK_DIST := 2.5     # P-004 넉백 거리(m). 속도 = 거리 × 마찰(5.5)로 환산
+const PAHON_KNOCKBACK_DIST := 3.0     # P-004 넉백 거리(m). 속도 = 거리 × 마찰(5.5)로 환산
 const PAHON_COIN := 5                 # P-005 엽전
 const PAHON_KARMA := 1                # P-006 업 누적
 const STAIN_RADIUS := 2.0             # P-007 원념 얼룩 반경
