@@ -202,3 +202,8 @@
 - Core/HudState.cs(값 묶음 + 글자 규칙, 테스트 1개: Core 92개 통과), UiRoot.cs(코드로 만든 UI Toolkit: PanelSettings 1280x720 기준, hud-root·ledger-note·vitals, 마우스 안 가로챔, 한글 글꼴 FontDefinition.FromFont).
 - 켜는 법: 주소 끝 ?ui (또는 UI_TOOLKIT=true). 꺼져 있으면 IMGUI. 켜면 IMGUI 장부·체력·밤·안내 줄은 건너뜀.
 - PC 에디터 단계 필요 없음(코드 생성). 미확인: Unity 6.3 WebGL 에서 빈 테마(ThemeStyleSheet 인스턴스)로 정상 표시되는지, 한글 글꼴 표시 — PC 스크린샷 필요.
+
+## [QA] PC 확인(34f3c60) 반영
+- ?ui 통과(한글·막대·클릭 이동 정상, 경고 0). 구역 프레임 튐 해결(최대 12~19ms). N 키 3연타 콤보·3타 직후 Space 무시·0.8초 뒤 피하기 통과.
+- 빌드 용량 32.1→45.6MB(+13.5MB): UI Toolkit 모듈 포함 추정. 판단 필요(아래 보고).
+- 임시 월드를 3×3(384m)으로 키움: 구역이 2칸 이상 멀어져야 끄기를 시험할 수 있어서. 소리 버튼은 오른쪽 위로 옮겨 안내 글과 겹침 해소.

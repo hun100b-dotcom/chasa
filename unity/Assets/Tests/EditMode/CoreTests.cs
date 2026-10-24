@@ -1065,7 +1065,7 @@ public class CoreTests
         var st = new ZoneStreamer(); var load = new System.Collections.Generic.List<ZoneDef>(); var drop = new System.Collections.Generic.List<ZoneDef>();
         st.Update(0f, 0f, load, drop);   // 마을 한가운데
         Assert.AreEqual(World.Get(0, 0), st.Current);
-        Assert.AreEqual(World.Zones.Count, st.ActiveCount, "2x2 월드라 시작하면 전부 켜진다");
+        Assert.AreEqual(4, st.ActiveCount, "마을은 모서리 구역이라 이웃 3개와 합쳐 4개만 켜진다");
         // 경계 x = Get(1,0).MinX 부근을 오가도 현재 구역이 바뀌지 않는다(히스테리시스)
         float edge = World.Get(1, 0).MinX; load.Clear(); drop.Clear();
         st.Update(edge + 1f, 10f, load, drop); st.Update(edge - 1f, 10f, load, drop); st.Update(edge + 2f, 10f, load, drop);

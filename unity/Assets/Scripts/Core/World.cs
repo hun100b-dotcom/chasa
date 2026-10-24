@@ -52,19 +52,24 @@ namespace Chasa.Core
         public static readonly List<ZoneDef> Zones = Build();
         static readonly Dictionary<long, ZoneDef> byCell = Index();
 
+        /// <summary>임시 월드는 GridSize×GridSize 구역 (3×3 = 384m). 구역이 2칸 넘게 멀어져야 '끄기'를 시험할 수 있어 3으로 둔다</summary>
+        public const int GridSize = 3;
+
         // 이름표 번호: (0,0)=마을, (1,0)=보릿들, (0,1)=물막이 골, (1,1)=폐당집 어귀
         static int NameIndex(int zx, int zz) { return zx == 0 && zz == 0 ? 0 : zx == 1 && zz == 0 ? 1 : zx == 0 && zz == 1 ? 2 : 3; }
+        static string NameOf(int zx, int zz) { return (zx < 2 && zz < 2) ? Names[NameIndex(zx, zz)] : "먼 들판 " + zx + "-" + zz; }
+        static int DangerOf(int zx, int zz) { return (zx < 2 && zz < 2) ? Dangers[NameIndex(zx, zz)] : Math.Min(5, 2 + Math.Max(zx, zz)); }
 
         static long Key(int zx, int zz) { return ((long)zx << 32) ^ (uint)zz; }
 
         static List<ZoneDef> Build()
         {
             var list = new List<ZoneDef>();
-            for (int zx = 0; zx < 2; zx++)
-                for (int zz = 0; zz < 2; zz++)
+            for (int zx = 0; zx < GridSize; zx++)
+                for (int zz = 0; zz < GridSize; zz++)
                 {
-                    var z = new ZoneDef { Id = "z" + zx + "_" + zz, Name = Names[NameIndex(zx, zz)], Zx = zx, Zz = zz };
-                    z.Danger = Dangers[NameIndex(zx, zz)];
+                    var z = new ZoneDef { Id = "z" + zx + "_" + zz, Name = NameOf(zx, zz), Zx = zx, Zz = zz };
+                    z.Danger = DangerOf(zx, zz);
                     z.Village = zx == 0 && zz == 0;
                     z.MinX = BaseX + zx * ZoneSize; z.MaxX = z.MinX + ZoneSize;
                     z.MinZ = BaseZ + zz * ZoneSize; z.MaxZ = z.MinZ + ZoneSize;
