@@ -24,6 +24,7 @@ namespace Chasa.Core
         public float DodgeCharges; public int DodgeMax;     // 피하기 충전(소수는 충전 중인 칸)
         public float PullCd;                                // 끌어당김 남은 시간(초, 0이면 쓸 수 있음)
         public string WeaponName = "";
+        public readonly System.Collections.Generic.List<EdgeMark> Edges = new System.Collections.Generic.List<EdgeMark>();   // 화면 가장자리 경고(시야 밖 공격 예고)
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 
         public float HpRatio { get { return MaxHp <= 0 ? 0f : System.Math.Max(0f, System.Math.Min(1f, (float)Hp / MaxHp)); } }

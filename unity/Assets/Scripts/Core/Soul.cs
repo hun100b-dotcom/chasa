@@ -25,6 +25,8 @@ namespace Chasa.Core
         public bool Fierce;          // 얼룩 3개로 소환된 사나운 적
         public bool Boss;            // 보스 여부 (천도에 단서 3개 필요, 보상이 큼)
         public string Name;          // 이름혼/보스의 이름 (무명 혼은 null)
+        public bool Trick;           // 속임수 혼: 무릎 꿇은 척하다 가까이 오면 덮친다 (한 번만)
+        public float Fuse;           // 속임수 도화선: 플레이어가 가까이 있는 동안 쌓이는 시간 (화면이 붉은 고리로 보여 줌)
 
         public Soul(SoulKind kind, bool fierce = false)
         {
@@ -123,5 +125,24 @@ namespace Chasa.Core
                 Stun = 0.4f;
             }
         }
-    }
+    
+        /// <summary>
+        /// 속임수 혼 도화선. 무릎 꿇은(또는 천도 받는) 속임수 혼 곁에 TRICK_TRIGGER_DIST 안으로 서 있으면 Fuse 가 쌓이고,
+        /// TRICK_FUSE 에 닿으면 맺힘 일부를 되찾고 벌떡 일어선다. 일어서면 true (겉모습·공격 시작은 호출한 쪽이 처리).
+        /// 왜 이렇게? 천도는 캐스팅이 길어 '가까이 선 채'로 해야 하므로 걸리기 쉽고, 파혼은 즉시라 안전하다 →
+        /// 둘 다 쓸 이유가 생긴다(천도=보상 크지만 위험 / 파혼=안전하지만 보상 작음).
+        /// </summary>
+        public bool TickTrick(float dt, float playerDist)
+        {
+            if (!Trick || (State != SoulState.Kneel && State != SoulState.Sending)) { Fuse = 0f; return false; }
+            if (playerDist > Balance.TRICK_TRIGGER_DIST) { Fuse = System.Math.Max(0f, Fuse - dt); return false; }   // 멀어지면 도화선이 식는다
+            Fuse += dt;
+            if (Fuse < Balance.TRICK_FUSE) return false;
+            Trick = false; Fuse = 0f;
+            State = SoulState.Active;
+            Maedhim = System.Math.Max(1, (int)(MaedhimMax * Balance.TRICK_REVIVE));
+            Stun = 0f;
+            return true;
+        }
+}
 }

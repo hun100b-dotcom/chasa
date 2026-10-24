@@ -1194,4 +1194,104 @@ public class CoreTests
         h.Hp = 10; Assert.IsTrue(h.HpLow);
         h.Warning = true; StringAssert.Contains("동이 튼다", h.NightLine());
     }
+
+    // ---------- 화면 가장자리 경고 (2단계) ----------
+    [Test]
+    public void EdgeWarn_InsideView_NoMark()
+    {
+        float ex, ey;
+        Assert.IsFalse(EdgeWarn.Compute(960 + 100, 540 + 50, 1920, 1080, 40, 0f, out ex, out ey));   // 화면 안, 시야 원 없음
+    }
+
+    [Test]
+    public void EdgeWarn_OffScreen_MarkOnEdge()
+    {
+        float ex, ey;
+        Assert.IsTrue(EdgeWarn.Compute(3000, 540, 1920, 1080, 40, 0f, out ex, out ey));            // 오른쪽 화면 밖
+        Assert.AreEqual(1920 - 40, ex, 0.01f);                                                      // 오른쪽 안쪽 경계
+        Assert.AreEqual(540, ey, 0.01f);
+    }
+
+    [Test]
+    public void EdgeWarn_InsideScreenButOutsideVision_Marks()
+    {
+        float ex, ey;
+        float r = EdgeWarn.VisionRadius(2203f, 0.6f, 1f);                                           // 캐스팅 중 좁아진 시야
+        Assert.Greater(r, 0f);
+        Assert.IsTrue(EdgeWarn.Compute(960 + 850, 540, 1920, 1080, 40, r, out ex, out ey));        // 화면 안이지만 시야 밖
+        Assert.AreEqual(960 + (r - 40), ex, 0.5f);                                                  // 시야 원 가장자리에 붙음
+        Assert.IsFalse(EdgeWarn.Compute(960 + 100, 540, 1920, 1080, 40, r, out ex, out ey));       // 시야 안은 표시 없음
+    }
+
+    [Test]
+    public void EdgeWarn_VisionRadius_ZeroWhenNotCasting()
+    {
+        Assert.AreEqual(0f, EdgeWarn.VisionRadius(2203f, 0.6f, 0f));
+        Assert.Less(EdgeWarn.VisionRadius(2203f, 0.6f, 1f), EdgeWarn.VisionRadius(2203f, 0.6f, 0.01f) + 1f);
+    }
+
+    // ---------- 속임수 혼 (2단계) ----------
+    static Soul KneelingTrick()
+    {
+        var so = new Soul(SoulKind.Fresh) { Trick = true };
+        so.TakeHit(so.MaedhimMax);   // 맺힘을 모두 깎아 무릎 꿇림
+        return so;
+    }
+
+    [Test]
+    public void Trick_FarAway_NeverSprings()
+    {
+        var so = KneelingTrick();
+        for (int i = 0; i < 100; i++) Assert.IsFalse(so.TickTrick(0.1f, Balance.TRICK_TRIGGER_DIST + 1f));
+        Assert.AreEqual(SoulState.Kneel, so.State);
+    }
+
+    [Test]
+    public void Trick_Near_SpringsAfterFuse()
+    {
+        var so = KneelingTrick();
+        float t = 0f; bool sprang = false;
+        while (t < Balance.TRICK_FUSE + 0.5f && !sprang) { sprang = so.TickTrick(0.05f, 1f); t += 0.05f; }
+        Assert.IsTrue(sprang);
+        Assert.AreEqual(SoulState.Active, so.State);
+        Assert.Greater(so.Maedhim, 0);
+        Assert.IsFalse(so.Trick);   // 한 번만 속인다
+    }
+
+    [Test]
+    public void Trick_PahonBeforeFuse_IsSafe()
+    {
+        var so = KneelingTrick();
+        so.TickTrick(Balance.TRICK_FUSE * 0.5f, 1f);   // 도화선이 절반만 탐
+        Assert.IsTrue(so.TryPahon());                   // 파혼은 즉시라 걸리지 않는다
+        Assert.AreEqual(SoulState.Gone, so.State);
+    }
+
+    [Test]
+    public void Trick_FuseCoolsWhenPlayerLeaves()
+    {
+        var so = KneelingTrick();
+        so.TickTrick(Balance.TRICK_FUSE * 0.6f, 1f);
+        so.TickTrick(10f, Balance.TRICK_TRIGGER_DIST + 5f);
+        Assert.AreEqual(0f, so.Fuse, 1e-5f);
+    }
+
+    [Test]
+    public void Trick_SpringsEvenWhileSending()
+    {
+        var so = KneelingTrick();
+        Assert.IsTrue(so.BeginSending());
+        bool sprang = false;
+        for (int i = 0; i < 40 && !sprang; i++) sprang = so.TickTrick(0.05f, 1f);
+        Assert.IsTrue(sprang);   // 천도하다 걸림 → 캐스팅은 끊기고 혼은 일어선다
+        Assert.AreEqual(SoulState.Active, so.State);
+    }
+
+    [Test]
+    public void AttackClock_ForceWindup_StartsImmediately()
+    {
+        var a = new AttackClock();
+        a.ForceWindup();
+        Assert.IsTrue(a.Winding);
+    }
 }

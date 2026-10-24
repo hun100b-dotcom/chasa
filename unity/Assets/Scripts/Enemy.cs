@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
         var e = root.AddComponent<Enemy>();
         e.capsuleShape = capsule;
         e.radius *= scale; e.height *= scale;   // 보스는 크게 (몸 크기와 충돌 크기를 같이 키운다)
-        e.soul = new Soul(RandomKind());
+        e.soul = new Soul(RandomKind()); RollTrick(e.soul);
         e.speed = Config.ENEMY_SPEED * (1f + Random.Range(-Config.ENEMY_SPEED_VARIANCE, Config.ENEMY_SPEED_VARIANCE));
         // 도형 두 종류로 "다른 적"처럼 보이게 (에셋 없이 구분하는 가장 싼 방법)
         var body = GameObject.CreatePrimitive(capsule ? PrimitiveType.Capsule : PrimitiveType.Cube);
@@ -60,6 +60,12 @@ public class Enemy : MonoBehaviour
         body.GetComponent<Renderer>().sharedMaterial = e.mat;
         root.transform.position = at;
         return e;
+    }
+
+    /// <summary>보통 혼(덩어리 제외) 중 일부는 무릎 꿇은 척하는 속임수 혼이다 (TRICK_SPAWN_CHANCE)</summary>
+    static void RollTrick(Soul s)
+    {
+        if (s.Kind != SoulKind.Lump && Random.value < Balance.TRICK_SPAWN_CHANCE) s.Trick = true;
     }
 
     /// <summary>혼 종류를 무작위로. 덩어리는 드물게 (LUMP_SPAWN_CHANCE)</summary>
@@ -114,7 +120,7 @@ public class Enemy : MonoBehaviour
 
     public void Respawn(Vector3 at)
     {
-        soul = new Soul(RandomKind()); respawnReady = false; dropRolled = false;
+        soul = new Soul(RandomKind()); RollTrick(soul); respawnReady = false; dropRolled = false;
         stun = 0f; pulled = false; flash = 0f; spawnT = 0f; vel = Vector3.zero;
         Pos = at;
         baseColor = KindColor(soul.Kind);
@@ -169,6 +175,9 @@ public class Enemy : MonoBehaviour
             Pos += vel * dt;
             vel *= Mathf.Exp(-Config.ENEMY_KNOCKBACK_FRICTION * dt);
             soul.Tick(dt);
+            // 속임수 혼: 가까이 선 채로 도화선이 다 타면 벌떡 일어나 곧바로 덮친다
+            float pd = new Vector2(playerPos.x - Pos.x, playerPos.z - Pos.z).magnitude;
+            if (soul.TickTrick(dt, pd)) { atk.ForceWindup(); Sfx.Play("sfx.enemy.telegraph"); flash = 1f; }
             if (alive) { stun = soul.Stun; flash = 1f; }
             ClampToArena(); ApplyVisual();
             return;

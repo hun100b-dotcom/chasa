@@ -38,6 +38,9 @@ namespace Chasa.Core
             return false;
         }
 
+        /// <summary>쿨다운 없이 곧바로 예비동작에 들어간다 (속임수 혼이 벌떡 일어나 덮칠 때)</summary>
+        public void ForceWindup() { Windup = Balance.ENEMY_ATTACK_WINDUP; }
+
         /// <summary>맞아서 끊김: 예비동작이 취소되고 쿨다운이 처음부터 다시 돈다 (때리는 쪽이 이득이어야 손맛이 산다)</summary>
         public void Interrupt()
         {

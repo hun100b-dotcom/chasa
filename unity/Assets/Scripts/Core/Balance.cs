@@ -355,4 +355,8 @@ public static class Balance
     public const float MOVE_CANCEL_RECOVER = 0.6f;  // (기획 1단계) 공격 후딜이 이 비율(60%)만큼 지나면 이동 입력으로 끝동작을 끊고 걸어갈 수 있다
     public const float PAHON_RECOVER = 0.25f;  // (기획 1단계) 파혼 직후 끝동작 잠금(초). 천도보다 짧게 끊어 손맛 유지
     public const bool VIEW_3D_DEFAULT = true;  // 오너 결정(10-24): 차사 전체를 3D 로 전면 교체. true 면 주소에 아무것도 없을 때 새 3D 화면. 옛 2D 화면은 ?v=2d 로만(정리 대상, 오너 확인 뒤 삭제)
+    public const float TRICK_SPAWN_CHANCE = 0.12f;  // 속임수 혼: 새 보통 혼이 무릎 꿇은 척하는 종류일 확률
+    public const float TRICK_TRIGGER_DIST = 3.0f;  // 속임수 혼: 플레이어가 이 거리(m) 안에 있으면 도화선이 탄다
+    public const float TRICK_FUSE = 0.7f;  // 속임수 혼: 가까이 선 채로 이 시간(초)이 지나면 덮친다. 그 전에 파혼하면 안전(천도는 캐스팅이 길어 걸림)
+    public const float TRICK_REVIVE = 0.5f;  // 속임수 혼: 덮치며 되찾는 맺힘 비율
 }

@@ -22,6 +22,7 @@ public class UiRoot : MonoBehaviour
     UIDocument doc;
     Label ledger, vital, night, hint, hpText;
     VisualElement hpFill, root, toastBox, skillBar;
+    readonly System.Collections.Generic.List<VisualElement> edgePool = new System.Collections.Generic.List<VisualElement>();   // 화면 가장자리 경고 표시 재사용 묶음
     Label dodgeLabel, pullLabel, weaponLabel; VisualElement[] pips = new VisualElement[0];
     string lastToasts;
     string lastLedger, lastVital, lastNight;
@@ -142,7 +143,7 @@ public class UiRoot : MonoBehaviour
         var a = Hud.LedgerLine(); if (a != lastLedger) { ledger.text = lastLedger = a; }
         var b = Hud.VitalLine(); if (b != lastVital) { vital.text = lastVital = b; }
         var c = Hud.NightLine(); if (c != lastNight) { night.text = lastNight = c; }
-        RefreshSkillBar(); RefreshToasts();
+        RefreshSkillBar(); RefreshToasts(); RefreshEdges();
         hpFill.style.width = Length.Percent(Hud.HpRatio * 100f);
         hpFill.style.backgroundColor = Hud.HpLow ? new Color(0.9f, 0.3f, 0.3f) : new Color(0.72f, 0.82f, 0.95f);
     }
@@ -172,5 +173,33 @@ public class UiRoot : MonoBehaviour
         }
         for (int i = 0; i < Hud.Toasts.Items.Count && i < toastBox.childCount; i++)
             toastBox[i].style.opacity = Mathf.Clamp01((ToastStack.Life - Hud.Toasts.Items[i].Age) / 0.5f);   // 마지막 0.5초에 사라짐
+    }
+
+    /// <summary>
+    /// 가장자리 경고: 시야 밖에서 공격을 준비하는 적의 방향에 붉은 마름모를 띄운다.
+    /// 위치는 화면 비율(%)이라 해상도·UI 배율이 달라도 맞는다. 표시는 미리 만들어 둔 것을 재사용(매 프레임 새로 만들면 느려진다).
+    /// </summary>
+    void RefreshEdges()
+    {
+        int n = Hud.Edges.Count;
+        while (edgePool.Count < n)
+        {
+            var v = new VisualElement { pickingMode = PickingMode.Ignore };
+            v.style.position = Position.Absolute; v.style.width = 26; v.style.height = 26;
+            v.style.marginLeft = -13; v.style.marginTop = -13;           // 가운데 기준으로 놓는다
+            v.style.rotate = new Rotate(45f);
+            v.style.backgroundColor = new Color(0.95f, 0.18f, 0.15f, 0.9f);
+            root.Add(v); edgePool.Add(v);
+        }
+        float pulse = 0.65f + 0.35f * Mathf.Sin(Time.unscaledTime * 14f);   // 빠르게 깜박여 눈에 띄게
+        for (int i = 0; i < edgePool.Count; i++)
+        {
+            var v = edgePool[i];
+            if (i >= n) { v.style.display = DisplayStyle.None; continue; }
+            v.style.display = DisplayStyle.Flex;
+            v.style.left = Length.Percent(Hud.Edges[i].Nx * 100f);
+            v.style.top = Length.Percent(Hud.Edges[i].Ny * 100f);
+            v.style.opacity = pulse;
+        }
     }
 }

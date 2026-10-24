@@ -537,10 +537,18 @@ public class JudgeSystem : MonoBehaviour
 
     // ===== 화면 ====================================================================
     /// <summary>화면에 보일 값을 모아(HudState) 새 화면(UI Toolkit)에 넘긴다</summary>
+    SoulMarkers soulMarkers;
     void LateUpdate()
     {
+        if (!inDay)
+        {
+            if (soulMarkers == null) soulMarkers = new SoulMarkers(null);
+            soulMarkers.Refresh(enemies.list);          // 발밑 시간 고리
+        }
+        else if (soulMarkers != null) soulMarkers.Refresh(new List<Enemy>());   // 낮에는 모두 끈다
         if (ui == null) return;
         var h = ui.Hud;
+        FillEdges(h);
         h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.ChainBonus = chainLeft > 0f;
         h.Hp = ledger.Hp; h.MaxHp = ledger.MaxHp; h.Heal = dayScreen.Pack.Heal;
         h.SecondsLeft = Mathf.CeilToInt(night.TimeLeft); h.Sent = night.Sent; h.Quota = Balance.NIGHT_QUOTA;
@@ -561,6 +569,39 @@ public class JudgeSystem : MonoBehaviour
         ui.Refresh(!inDay && !night.Over && !CharacterPanel.Open);
     }
     int pNeok, pMemory, pCoin, pKarma; string pDrop; bool toastReady;
+
+    /// <summary>화면 가장자리 경고: 공격 준비 중인 적이 화면 밖이거나(천도 중이면) 좁아진 시야 밖이면 방향 표시를 띄운다</summary>
+    void FillEdges(HudState h)
+    {
+        h.Edges.Clear();
+        var cam = Camera.main; if (cam == null || inDay || night.Over) return;
+        float w = Screen.width, hh = Screen.height;
+        float diag = Mathf.Sqrt(w * w + hh * hh);
+        float vr = EdgeWarn.VisionRadius(diag, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO), visionP);
+        foreach (var e in enemies.list)
+        {
+            if (!e.alive || !e.atk.Winding) continue;      // 예비동작 중인 적만 (평소 모든 적에 띄우면 어지럽다)
+            var sp = cam.WorldToScreenPoint(e.HeadPosition);
+            if (sp.z < 0f) { sp.x = w - sp.x; sp.y = hh - sp.y; }   // 카메라 뒤쪽이면 반대편으로 뒤집어 방향만 맞춘다
+            float ex, ey;
+            if (EdgeWarn.Compute(sp.x, hh - sp.y, w, hh, 48f, vr, out ex, out ey))   // 화면 y 는 위로 갈수록 커서 UI 좌표로 뒤집는다
+                h.Edges.Add(new EdgeMark { Nx = ex / w, Ny = ey / hh });
+        }
+    }
+
+    /// <summary>맥락 버튼: 지금 천도/파혼이 가능한 무릎 꿇은 혼이 가까이 있나 (폰 버튼을 그때만 켠다)</summary>
+    bool AnyKneelNearby(out bool canTendo)
+    {
+        canTendo = false; bool any = false;
+        foreach (var e in enemies.list)
+        {
+            if (!e.kneeling) continue;
+            if ((e.Pos - player.Pos).sqrMagnitude > 7f * 7f) continue;
+            any = true;
+            if (CanTendoNow(e)) canTendo = true;
+        }
+        return any;
+    }
 
     void OnGUI()
     {
@@ -598,18 +639,30 @@ public class JudgeSystem : MonoBehaviour
                 GUI.Label(new Rect(sp.x - 80, Screen.height - sp.y - 12, 160, 24), e.soul.Boss ? "나루 영감" : e.label, nameStyle);
             }
         }
-        // (2) 무릎 꿇은 혼 머리 위 막대 = 처결 대기 남은 시간 (색 = 혼 종류)
+        // (2) 머리 위 '맺힘' 막대 = 남은 맺힘(체력 대신 깎이는 수치). 처결 대기 시간은 발밑 고리(SoulMarkers)가 맡는다.
+        //     보스·이름혼·맞아서 깎인 혼에게만 보인다(전부 띄우면 화면이 막대 숲이 된다). 덩어리는 두 줄(= 두 배 질기다는 표시)
         if (cam != null)
         {
             foreach (var e in enemies.list)
             {
-                if (!e.kneeling && !e.sending) continue;
+                if (!e.alive) continue;
+                var so = e.soul;
+                bool named = so.Boss || e.label != null;
+                if (!named && so.Maedhim >= so.MaedhimMax) continue;
                 var sp = cam.WorldToScreenPoint(e.HeadPosition + Vector3.up * 0.3f);
-                float ratio = Mathf.Clamp01(e.soul.WaitLeft / Mathf.Max(0.01f, e.soul.WaitTotal));
-                var bg = new Rect(sp.x - 28, Screen.height - sp.y - 4, 56, 8);
-                GUI.color = new Color(0, 0, 0, 0.7f); GUI.DrawTexture(bg, white);
-                GUI.color = Enemy.KindColor(e.soul.Kind);
-                GUI.DrawTexture(new Rect(bg.x + 1, bg.y + 1, 54 * ratio, 6), white);
+                if (sp.z < 0f) continue;
+                float ratio = Mathf.Clamp01((float)so.Maedhim / Mathf.Max(1, so.MaedhimMax));
+                int rows = so.Kind == SoulKind.Lump ? 2 : 1;
+                float wBar = named ? 72f : 56f;
+                for (int r = 0; r < rows; r++)
+                {
+                    // 두 줄이면 위 줄이 먼저 닳는다: 전체 비율을 줄마다 절반씩 나눠 채운다
+                    float rowRatio = rows == 1 ? ratio : Mathf.Clamp01(ratio * 2f - (rows - 1 - r));
+                    var bg = new Rect(sp.x - wBar * 0.5f, Screen.height - sp.y - 4 + r * 9, wBar, 8);
+                    GUI.color = new Color(0, 0, 0, 0.7f); GUI.DrawTexture(bg, white);
+                    GUI.color = new Color(0.85f, 0.3f, 0.3f);
+                    GUI.DrawTexture(new Rect(bg.x + 1, bg.y + 1, (wBar - 2) * rowRatio, 6), white);
+                }
                 GUI.color = Color.white;
             }
         }
@@ -701,8 +754,14 @@ public class JudgeSystem : MonoBehaviour
         {
             var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
             var sbs = new GUIStyle(bs) { fontSize = 13, wordWrap = true };   // 도술 이름이 길어 작은 글씨로
+            // 천도·파혼은 '무릎 꿇은 혼이 가까이 있을 때만' 켜진다(평소엔 흐리고 눌러도 안 됨 → 전투 중 오터치 방지)
+            bool nearKneel = AnyKneelNearby(out bool nearTendo);
+            bool wasEnabled = GUI.enabled;
+            GUI.enabled = wasEnabled && nearTendo;
             if (GUI.Button(new Rect(24, Screen.height - 110, 110, 90), "천도", bs)) CommandTendo();
+            GUI.enabled = wasEnabled && nearKneel;
             if (GUI.Button(new Rect(148, Screen.height - 110, 130, 90), "파혼", bs)) CommandPahon();
+            GUI.enabled = wasEnabled;
             // 도술 세 칸과 무기 바꾸기 (위쪽 줄) — 시연판 기본 구성에서는 숨김
             if (Demo.Skills)
                 for (int i = 0; i < 3; i++)
