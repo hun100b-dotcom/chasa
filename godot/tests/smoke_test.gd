@@ -312,6 +312,10 @@ func _core_loop_tests(p: Player, em: EnemyManager) -> void:
 	check(Config.BOSS_TENDO_CAST_TIME < 2.5 and Config.BOSS_TENDO_CAST_TIME > Config.TENDO_CAST_TIME, "보스 천도 %.1f초 (일반보다 길고 2.5보다 짧음)" % Config.BOSS_TENDO_CAST_TIME)
 	check(Config.SHORTCUT_RETURN_CUT >= 0.15 and Config.SHORTCUT_RETURN_CUT <= 0.20, "지름길 -%.1f%% (권고 15~20%%)" % (Config.SHORTCUT_RETURN_CUT * 100.0))
 
+	print("[14-5] 3막 채택값 (P1-043)")
+	check(Config.TENDO_CAST_TIME + Config.WATER_SOUL_CAST_BONUS >= Config.CAST_MIN_TIME, "물 혼 캐스팅 %.1f초 (하한 %.1f 이상)" % [Config.TENDO_CAST_TIME + Config.WATER_SOUL_CAST_BONUS, Config.CAST_MIN_TIME])
+	check(Config.B10_CREW_TENDO_BOSS_CUT * 7.0 <= 0.40, "선원 7명 천도 = 선장 맺힘 -%d%% (40%% 이하)" % int(Config.B10_CREW_TENDO_BOSS_CUT * 700.0))
+
 	print("[14-3] 맵 생성 (P1-017)")
 	var m1 := MapGen.generate(42)
 	var m2 := MapGen.generate(42)

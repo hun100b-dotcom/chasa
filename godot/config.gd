@@ -213,3 +213,12 @@ const BOSS_CAST_ADD_PAUSE := 2.0      # 보스 천도 캐스팅 시작 후 이 �
 const BOSS_PAHON_KARMA := 3           # 보스 파혼 업 (일반 파혼 3회분). 업 단계 경계(10, 30)를 넘길 땐 경고 필요
 const SHORTCUT_RETURN_CUT := 0.175    # 1호 보스 천도 보상: 귀환 거리 단축. 서사 제안 -40%는 과함 → 중간값 -17.5%
 const BOSS_CLUES_REQUIRED := 3        # N-005 보스 천도에 필요한 낮 단서 수. B-1 확정: 2개 이하면 천도 불가(파혼만). 4초 캐스팅 완화안(b)은 플레이테스트 후 재검토
+
+# --- 3막 수치 (docs/BALANCE-ACT3.md, 서사팀 동의 완료). 🔴 PD 확정 대기 ---
+const CAST_MIN_TIME := 0.5            # 어떤 보정을 받아도 천도 캐스팅은 이보다 짧아지지 않는다(연쇄 악용 방지)
+const WATER_SOUL_CAST_BONUS := -0.5   # 물 혼: 천도 캐스팅 -0.5초 (서사 제안 -1초는 물 혼을 무조건 천도로 만들어 완화)
+const WATER_TIDE_WINDOW := 20.0       # 밀물 신호 뒤 이 시간 안에 못 붙잡으면 그 밤엔 가라앉아 사라진다
+const NAMED_SOUL_CAST_BONUS := -0.5   # 낮에 별명을 들은 무적 혼: 천도 캐스팅 -0.5초 (하한 CAST_MIN_TIME)
+const B10_CREW_TENDO_BOSS_CUT := 0.05 # B-10 선원 천도 1명당 선장 맺힘 -5% (서사 제안 -10%는 천도 정답화)
+const B12_WATER_TENDO_BOSS_CUT := 0.03 # B-12 3페이즈 물 혼 천도 1마리당 흑월 맺힘 -3%
+const BOSS_ADD_PAUSE_ALL_BOSSES := true # 천도 직후 2초 스폰 정지(BOSS_CAST_ADD_PAUSE)를 B-09~B-12 포함 모든 보스에 적용
