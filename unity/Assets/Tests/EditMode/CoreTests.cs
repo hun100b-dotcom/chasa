@@ -354,4 +354,38 @@ public class CoreTests
         l.ResetHp();
         Assert.IsFalse(l.Dead);
     }
+
+    // ---- M2: 하룻밤 한 판 ----
+    [Test]
+    public void Night_ReturnInTime_KeepsEverything()
+    {
+        var n = new NightRun();
+        for (int i = 0; i < Balance.NIGHT_QUOTA + 2; i++) n.RecordTendo(10);
+        n.Tick(Balance.NIGHT_DURATION - 1f);
+        Assert.IsTrue(n.TryReturn(1f));
+        Assert.AreEqual((Balance.NIGHT_QUOTA + 2) * 10, n.FinalNeok);
+        Assert.AreEqual(0, n.LostNeok);
+    }
+
+    [Test]
+    public void Night_Dawn_LosesOnlyExtra()
+    {
+        var n = new NightRun();
+        for (int i = 0; i < Balance.NIGHT_QUOTA + 2; i++) n.RecordTendo(10);
+        n.Tick(Balance.NIGHT_DURATION + 1f);
+        Assert.AreEqual(NightPhase.Dawn, n.Phase);
+        Assert.AreEqual(Balance.NIGHT_QUOTA * 10, n.FinalNeok, "명부 몫은 보존");
+        Assert.AreEqual(20, n.LostNeok, "추가 수확분만 잃는다");
+        Assert.IsFalse(n.TryReturn(0f), "동이 튼 뒤엔 귀환 불가");
+    }
+
+    [Test]
+    public void Night_TooFarFromShrine_CannotReturn()
+    {
+        var n = new NightRun();
+        Assert.IsFalse(n.TryReturn(Balance.SHRINE_RADIUS + 1f));
+        Assert.IsFalse(n.Over);
+        n.Tick(Balance.NIGHT_DURATION - Balance.NIGHT_WARN_TIME + 1f);
+        Assert.IsTrue(n.Warning);
+    }
 }

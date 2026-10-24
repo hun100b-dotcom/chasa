@@ -213,4 +213,8 @@ public static class Balance
     public const float B30_WAVE_PERIOD = 8.0f;  // B-30 우물 물 오르내림 주기(초)
     public const float B30_WAVE_RISE_TIME = 3.0f;  // 그중 물이 오르는 시간. 버티기는 내림(나머지 5초) 구간에서만 진행
     public const float REWARD_ROPE_PULL_BONUS = 0.2f;  // 첫 우물의 두레박줄: 사슬 당기기 속도 +20%
+    public const float NIGHT_DURATION = 300.0f;  // (시연판 임시) 하룻밤 길이(초). 동트기까지. 시나리오 밸런스 확정 전 잠정값
+    public const float NIGHT_WARN_TIME = 60.0f;  // (시연판 임시) 동트기 이만큼 전부터 경고 표시
+    public const int NIGHT_QUOTA = 3;  // (시연판 임시) 명부 몫 = 이 수만큼 천도하면 몫 달성. 넘긴 만큼이 '추가 수확분'
+    public const float SHRINE_RADIUS = 3.0f;  // (시연판 임시) 서낭당 귀환 판정 반경(m)
 }

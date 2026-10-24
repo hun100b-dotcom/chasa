@@ -20,6 +20,8 @@ public class JudgeSystem : MonoBehaviour
     public Camera cam;
 
     public readonly Ledger ledger = new Ledger();
+    public NightRun night = new NightRun();   // 하룻밤 한 판의 뼈대(시간·몫·귀환) — 규칙은 Core
+    GameObject shrineView;                      // 서낭당 표시(바닥 원)
     readonly StainSet stains = new StainSet();
     readonly List<GameObject> stainViews = new List<GameObject>();
 
@@ -33,6 +35,12 @@ public class JudgeSystem : MonoBehaviour
 
     void Start()
     {
+        // 서낭당: 출발점이자 귀환점. 납작한 노란 원으로 '돌아갈 곳'을 보여 준다
+        shrineView = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        Destroy(shrineView.GetComponent<Collider>());
+        shrineView.GetComponent<Renderer>().sharedMaterial = U.Matte(ChasaPalette.CheondoGlow);
+        shrineView.transform.position = new Vector3(0, 0.015f, 0);
+        shrineView.transform.localScale = new Vector3(Balance.SHRINE_RADIUS * 2f, 0.01f, Balance.SHRINE_RADIUS * 2f);
         enemies.onPlayerHit = OnPlayerHit;   // 적 공격이 명중하면 체력 처리로 연결
         touchUI = Input.touchSupported;
         debugKeys = Application.isEditor || Application.absoluteURL.Contains("debug");
@@ -106,7 +114,9 @@ public class JudgeSystem : MonoBehaviour
     void FinishTendo()
     {
         castTarget.Finish();
+        int before = ledger.Neok;
         ledger.CompleteTendo();
+        night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
         chainLeft = Balance.TENDO_CHAIN_WINDOW;
         feel.AddShake(0.15f);
         EndCast();
@@ -123,7 +133,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>적 공격이 명중했을 때. 무적 시간이면 무시. 천도 캐스팅 중이면 끊긴다 (무방비의 대가)</summary>
     void OnPlayerHit(Enemy by)
     {
-        if (ledger.Dead || !player.Hurt()) return;
+        if (ledger.Dead || night.Over || !player.Hurt()) return;
         int dealt = ledger.TakeDamage(Balance.ENEMY_ATTACK_DAMAGE);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
         feel.AddShake(0.35f);
@@ -134,10 +144,12 @@ public class JudgeSystem : MonoBehaviour
             EndCast();
             Say("INTERRUPTED!");
         }
-        if (ledger.Dead) { Say("FALLEN - RESTART"); Invoke(nameof(ResetRound), 1.5f); }
+        if (ledger.Dead) { Say("FALLEN"); night.Tick(night.TimeLeft + 1f); }   // 쓰러짐 = 동트기와 같은 실패(추가 수확분 상실)
     }
 
     /// <summary>쓰러진 뒤 한 판을 처음부터. 체력·적·얼룩을 되돌리고 장부(수확)는 결과 화면(M5)에서 다룬다</summary>
+    void RestartNight() { night = new NightRun(); ResetRound(); }
+
     void ResetRound()
     {
         ledger.ResetHp();
@@ -154,6 +166,16 @@ public class JudgeSystem : MonoBehaviour
     public void Tick(float dt, float realDt)
     {
         HandleKeys();
+        if (night.Over)
+        {
+            // 결과 화면: 아무 때나 R/E 가 아닌 Space(또는 터치 버튼)로 다시 시작
+            if (Input.GetKeyDown(KeyCode.Space)) RestartNight();
+            return;
+        }
+        night.Tick(dt);
+        // 귀환: 서낭당 위에 서면 즉시. 단 출발 직후(몫을 하나도 못 채움)에는 자동 귀환하지 않는다 — 밤을 시작도 못 하고 끝나는 것 방지
+        float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
+        if (night.QuotaDone && night.TryReturn(toShrine)) Say("RETURNED!");
         chainLeft = Mathf.Max(0f, chainLeft - dt);
         toastT -= realDt;
         stains.Tick(dt);
@@ -263,6 +285,22 @@ public class JudgeSystem : MonoBehaviour
             (chainLeft > 0f ? "   CHAIN!" : ""), small);
         GUI.Label(new Rect(12, 74, 700, 24), "HP " + ledger.Hp + " / " + Balance.PLAYER_MAX_HP, small);
         GUI.Label(new Rect(12, 52, 700, 24), "E: send (cheondo)   R: shatter (pahon)", small);
+        GUI.Label(new Rect(12, 96, 700, 24),
+            "NIGHT " + Mathf.CeilToInt(night.TimeLeft) + "s   SENT " + night.Sent + "/" + Balance.NIGHT_QUOTA +
+            (night.QuotaDone ? "  (go back to the shrine!)" : "") + (night.Warning ? "   DAWN IS COMING!" : ""), small);
+        if (night.Over)
+        {
+            GUI.color = new Color(0, 0, 0, 0.75f); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white;
+            var h = new GUIStyle(GUI.skin.label) { fontSize = 34, alignment = TextAnchor.MiddleCenter }; h.normal.textColor = Color.white;
+            var m = new GUIStyle(h) { fontSize = 22 };
+            bool ok = night.Phase == NightPhase.Returned;
+            GUI.Label(new Rect(0, Screen.height * 0.25f, Screen.width, 50), ok ? "NIGHT COMPLETE" : "DAWN BROKE", h);
+            GUI.Label(new Rect(0, Screen.height * 0.25f + 60, Screen.width, 120),
+                "SENT " + night.Sent + "   NEOK KEPT " + night.FinalNeok + (night.LostNeok > 0 ? "   LOST " + night.LostNeok : "") +
+                "\nCOIN " + ledger.Coin + "   KARMA " + ledger.Karma, m);
+            if (GUI.Button(new Rect(Screen.width / 2f - 90, Screen.height * 0.25f + 190, 180, 70), "AGAIN (Space)")) RestartNight();
+            return;
+        }
         if (Casting)
         {
             var bar = new Rect(Screen.width / 2f - 80, Screen.height - 90, 160, 12);
