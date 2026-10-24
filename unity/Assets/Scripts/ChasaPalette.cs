@@ -37,8 +37,8 @@ public static class ChasaPalette
     public static readonly Color SoulFresh = Hex("#BFE8FF");
     /// <summary>혼_단계 / 해_넘긴_혼</summary>
     public static readonly Color SoulDay = Hex("#FFCC55");
-    /// <summary>혼_단계 / 오래된_혼</summary>
-    public static readonly Color SoulOld = Hex("#FF6A3D");
+    /// <summary>혼_단계 / 오래된_혼 — 녹슨 적갈색. 주황(#E8683A)은 파혼 전용이라 겹치지 않게 바꿈(기획 총정리 ④, 2026-10-25)</summary>
+    public static readonly Color SoulOld = Hex("#A8472E");
     /// <summary>혼_단계 / 덩어리</summary>
     public static readonly Color SoulMass = Hex("#9A5CFF");
     /// <summary>파혼 / 파혼_폭발</summary>

@@ -351,6 +351,6 @@ public static class Balance
     public const float BUFFER_LIFETIME = 0.15f;  // (기획 타격감 분석 10-24, 임시) 저장된 입력의 유효 시간(초). 너무 오래 기억하면 의도와 다른 동작이 나간다
     public const float BUFFER_TOUCH_ADD = 0.05f;  // (기획 타격감 분석 10-24, 임시) 폰은 창·유효 시간 +0.05초(터치 지연)
     public const int ZONE_LOAD_ROWS_PER_FRAME = 8;  // 구역을 불러올 때 한 프레임에 까는 땅 줄 수(64줄 → 8프레임). 경계에서 프레임이 튀지 않게 나눈다
-    public const bool UI_TOOLKIT = false;  // (시연판 임시) 장부·체력 HUD 를 UI Toolkit 으로 그리기. false 면 예전 IMGUI. 주소 끝 ?ui 로도 켠다. 화면 확인 뒤 기본값을 true 로
+    public const bool UI_TOOLKIT = true;  // 새 HUD(UI Toolkit)가 본 화면(기획 총정리 0단계, 10-25). false 면 예전 IMGUI(정리 대상). 주소 ?ui 로도 켠다
     public const bool VIEW_3D_DEFAULT = true;  // 오너 결정(10-24): 차사 전체를 3D 로 전면 교체. true 면 주소에 아무것도 없을 때 새 3D 화면. 옛 2D 화면은 ?v=2d 로만(정리 대상, 오너 확인 뒤 삭제)
 }
