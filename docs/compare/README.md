@@ -44,3 +44,10 @@
 - `stage1b-demo-cam-a.mp4` — ?demo=1&cam=a 30초(원본 4초 지점부터). 혼 여러 마리를 돌며 때림, 천도는 1회(그 뒤 '대상이 없다' 반복)
 - `stage1b-skillbar-toast.png` — 아래 가운데 기술 줄(무기 철삭 / E 천도 / R 파혼 / Q 끌어당김 / Space 피하기◆◆), 왼쪽 가운데 '넋 +10 / 기억 +1'
 - `stage1b-glb-choga-color.png` — (임시 시험) GLB 초가: 흙벽·초가 색이 제대로 나옴(오른쪽 아래)
+
+## 2026-10-25 06:10 KST — 새 주인공 GLB 연결 확인 (작업 브랜치 f8fdb65)
+- `stage1c-demo-cam-a.mp4` — ?demo=1&cam=a 30초. 주인공=아트팀 GLB(검은 도포·갓). 이 빌드는 데모 중 천도 0회(끝까지 천도 0/3)
+- `stage1c-hero-body.png` — 주인공 서 있는 모습(확대)
+- `stage1c-combo-1-2-3.png` — 1·2·3타 순간(?debug N 키)
+- `stage1c-tendo-cast.png` — 천도 시전 자세(팔을 들어 올림, ?debug K→E). 이 경로로는 천도 1/3 정상
+- `stage1c-toast.png` — '넋 +10 / 기억 +1' 알림 상자(테두리 생겨 잘 보임)
