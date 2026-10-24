@@ -62,9 +62,11 @@ def shadow(cx, cy, rx, ry, op=.55):
 # 1) 주인공 (256×256, 발 기준 (128, 232)). 좌우 한쪽만 그리고 Unity에서 flipX
 # =========================================================
 def chasa(pose, name=None, tilt=0, bob=0, hit=False):
-    W = 448 if pose == "swing" else 256
-    H = 256
-    ox, oy, s = 128, 53, .5          # 몸통 좌표계: 목 중앙이 (0,0), .5배로 줄여 쓴다
+    W = 448 if pose == "swing" else (320 if pose.startswith("bang") else 256)
+    bang = pose.startswith('bang')
+    H = 300 if bang else 256          # 육모방망이는 머리 위로 올라가므로 캔버스를 키운다
+    up = 44 if bang else 0            # 키운 만큼 그림을 아래로 밀어 발 기준 위치를 유지한다
+    ox, oy, s = 128, 53 + up, .5          # 몸통 좌표계: 목 중앙이 (0,0), .5배로 줄여 쓴다
     defs = lg("body", "#232338", "#0A0A12") + lg("band", "#F07A5E", "#B8402A") + lg("hat", "#2E2E46", "#0E0E18") + rg("soul", CHEON, .9, 0) + rg("orb", CHEON, 1, 0)
     # 공통 몸통(도포) · 흑립은 sid로 정의해 림 라이트에 재사용
     shapes = ('<g id="coat"><path d="M-34,40 L34,40 L70,165 L110,275 L50,355 L-60,355 L-120,275 L-70,165 Z"/></g>'
@@ -73,9 +75,13 @@ def chasa(pose, name=None, tilt=0, bob=0, hit=False):
         "idle":  ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L110,120 L170,165 L150,203 L88,165 Z"/>'),
         "swing": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L120,40 L240,0 L248,48 L120,92 Z"/>'),
         "cast":  ('<path d="M-34,40 L-82,120 L-30,195 L-8,150 Z"/><path d="M34,40 L82,120 L30,195 L8,150 Z"/>'),
+        # 육모방망이: 1 치켜들기(예비동작) → 2 내리침 → 3 땅 찍기(충격파)
+        "bang1": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L118,20 L160,-14 L130,-40 L88,0 Z"/>'),
+        "bang2": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L130,70 L214,120 L190,152 L110,108 Z"/>'),
+        "bang3": ('<path d="M-34,40 L-120,135 L-135,195 L-90,185 L-62,135 Z"/><path d="M34,40 L112,126 L176,208 L150,232 L88,170 Z"/>'),
     }[pose]
     shapes += f'<g id="arms">{arms}</g>'
-    g = f'<g transform="rotate({tilt} {ox} 232) translate({ox},{oy + bob}) scale({s})">'
+    g = f'<g transform="rotate({tilt} {ox} {232+up}) translate({ox},{oy + bob}) scale({s})">'
     g += shapes
     # 철삭(사슬) — 몸 뒤에서 늘어지는/휘두르는 선
     if pose == "idle":
@@ -83,6 +89,14 @@ def chasa(pose, name=None, tilt=0, bob=0, hit=False):
     if pose == "swing":
         g += f'<path d="M240,20 Q370,-90 560,60" stroke="{CHAIN}" stroke-width="8" fill="none" stroke-dasharray="18 8" stroke-linecap="round"/><path d="M240,20 Q370,-90 560,60" stroke="#fff" stroke-width="3" fill="none" opacity=".35"/>'
         g += f'<circle cx="560" cy="60" r="26" fill="url(#orb)"/>'
+    club = {"bang1": (146, -26, 50, 0.0), "bang2": (200, 128, -62, 0.0), "bang3": (166, 222, -84, 0.0)}.get(pose)
+    if club:
+        cx_, cy_, rot, _ = club
+        g += (f'<g transform="translate({cx_},{cy_}) rotate({rot})"><path d="M-14,-140 L14,-140 L16,40 L-16,40 Z" fill="#6B4A2E"/>'
+              f'<path d="M-14,-140 L-4,-140 L-4,40 L-16,40 Z" fill="#8A6038"/><rect x="-18" y="-120" width="36" height="14" fill="#3A3A48"/><rect x="-18" y="-40" width="36" height="14" fill="#3A3A48"/>'
+              f'<path d="M-14,-140 L14,-140" stroke="{GOLD}" stroke-width="5"/></g>')
+    if pose == "bang3":   # 땅 찍기: 붉은 충격파 고리(반경 3m)
+        g += f'<ellipse cx="60" cy="355" rx="190" ry="60" fill="none" stroke="{RED}" stroke-width="10" opacity=".8"/><ellipse cx="60" cy="355" rx="190" ry="60" fill="{RED}" opacity=".12"/>'
     if pose == "cast":
         g += f'<circle cx="0" cy="150" r="120" fill="url(#soul)" opacity=".55"/>'
     # 몸: 림 라이트 + 본체
@@ -102,8 +116,8 @@ def chasa(pose, name=None, tilt=0, bob=0, hit=False):
     if hit:   # 피격: 붉은 번쩍임을 몸 위에 한 겹 덮는다
         g += f'<use xlink:href="#coat" fill="{RED}" opacity=".55"/><use xlink:href="#hat" fill="{RED}" opacity=".4"/>'
     g += '</g>'
-    body = shadow(128, 232, 56, 12) + g
-    save("characters", name or f"chasa_{pose}", W, H, body, defs, pivot=(128 / W, 232 / H), note="주인공 · 정면, 좌우는 flipX")
+    body = shadow(128, 232 + up, 56, 12) + g
+    save("characters", name or f"chasa_{pose}", W, H, body, defs, pivot=(128 / W, (232 + up) / H), note="주인공 · 정면, 좌우는 flipX")
 
 
 # =========================================================
@@ -299,7 +313,7 @@ def boss_naru(attack):
     g += f'<path d="M-60,-130 Q0,-182 60,-130 Q0,-122 -60,-130 Z" fill="#6B5A3A"/><path d="M-60,-130 Q0,-182 60,-130" stroke="#3C3220" stroke-width="3" fill="none"/>'
     g += f'<circle cx="-8" cy="-120" r="2.4" fill="#D8D0C0"/><circle cx="9" cy="-120" r="2.4" fill="#D8D0C0"/>'
     if attack:   # 삿대 휩쓸기 예비동작: 삿대를 크게 뒤로 젖힌다
-        g += f'<path d="M44,-96 L170,-190 M170,-190 L186,-206" stroke="#7A5A34" stroke-width="9" stroke-linecap="round"/><path d="M70,-120 A130,130 0 0 1 150,-40" stroke="{RED}" stroke-width="5" fill="none" stroke-dasharray="10 8" opacity=".85"/>'
+        g += f'<path d="M44,-96 L170,-140 M170,-140 L186,-206" stroke="#7A5A34" stroke-width="9" stroke-linecap="round"/><path d="M70,-120 A130,130 0 0 1 150,-40" stroke="{RED}" stroke-width="5" fill="none" stroke-dasharray="10 8" opacity=".85"/>'
     else:
         g += f'<path d="M44,-90 L96,40" stroke="#7A5A34" stroke-width="9" stroke-linecap="round"/>'
     # 칼금 새긴 삿대 끝과 물결
@@ -355,6 +369,11 @@ def main():
     chasa("idle", "chasa_walk_a", tilt=-4, bob=-3)    # 걷기 2프레임: 몸을 좌우로 기울이며 위아래로 흔든다
     chasa("idle", "chasa_walk_b", tilt=4, bob=0)
     chasa("idle", "chasa_hit", tilt=-9, bob=2, hit=True)
+    for b_ in ("bang1", "bang2", "bang3"):
+        chasa(b_, f"chasa_{b_}")
+    import gen_sprites2
+    gen_sprites2.run()
+    MANIFEST.extend(gen_sprites2.G.MANIFEST)   # gen_sprites2 가 import 한 모듈 쪽 목록을 합친다
     for k in range(4):
         ghost(k)
         if k < 3:
@@ -369,7 +388,7 @@ def main():
     boss_naru(False)
     boss_naru(True)
     hud()
-    with open(os.path.join(ROOT, "assets", "sprites_src", "manifest.json"), "w") as f:
+    with open(os.path.join(ROOT, "assets", "sprites", "manifest.json"), "w") as f:
         json.dump({"ppu": 128, "filter": "Bilinear", "mipmaps": False, "compression": "None", "sprites": MANIFEST}, f, ensure_ascii=False, indent=1)
     print(len(MANIFEST), "sprites")
 

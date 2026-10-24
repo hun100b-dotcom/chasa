@@ -18,3 +18,12 @@
 | hud | 게이지 틀/채움, 처결 타이머 링, 천도·파혼 버튼, 넋·기억·엽전·업 아이콘, 시야 축소 비네트, 기억색 테두리, 밤 시간 바, 패널 |
 
 이 그림은 **임시**다. 최종 에셋은 Higgsfield(MCP 연결 후) 단계에서 같은 파일 이름·피벗으로 교체한다.
+
+## 추가분 (2026-10-24)
+| 폴더 | 내용 |
+|---|---|
+| characters | 육모방망이 3동작 chasa_bang1(치켜들기)·bang2(내리침)·bang3(땅 찍기+충격파 고리) |
+| fx | 도술 이펙트 3종 × 3프레임: fx_call_0~2(붙잡아 부르기 6m), fx_bind_0~2(휘감기 4m), fx_burst_0~2(터뜨리기 2.5m). 512×256 바닥 눕힌 타원, 피벗 중앙 |
+| icons | 장비 아이콘 3칸(weapon·dopo·noriga) × 3등급(common·crafted·rare) + 이름 있는 물건 월화의 방울, 등급 테두리 frame_common(미색)·crafted(청록)·rare(금빛)·named(주홍) |
+
+맵 배치 시안: `assets/maps/solgogae_village_layout.json`(코드팀이 읽어 배치) + `solgogae_village_preview.png`(확인용). 다시 뽑기: `python3 tools/art/compose_map.py`.

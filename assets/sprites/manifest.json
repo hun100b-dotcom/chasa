@@ -65,6 +65,266 @@
    "note": "주인공 · 정면, 좌우는 flipX"
   },
   {
+   "file": "characters/chasa_bang1.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bang2.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bang3.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "fx/fx_call_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 붙잡아 부르기 · 6m 반경"
+  },
+  {
+   "file": "fx/fx_bind_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 휘감기 · 4m 반경 · 1.5초 묶기"
+  },
+  {
+   "file": "fx/fx_burst_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 터뜨리기 · 얼룩 폭파 2.5m"
+  },
+  {
+   "file": "fx/fx_call_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 붙잡아 부르기 · 6m 반경"
+  },
+  {
+   "file": "fx/fx_bind_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 휘감기 · 4m 반경 · 1.5초 묶기"
+  },
+  {
+   "file": "fx/fx_burst_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 터뜨리기 · 얼룩 폭파 2.5m"
+  },
+  {
+   "file": "fx/fx_call_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 붙잡아 부르기 · 6m 반경"
+  },
+  {
+   "file": "fx/fx_bind_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 휘감기 · 4m 반경 · 1.5초 묶기"
+  },
+  {
+   "file": "fx/fx_burst_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 터뜨리기 · 얼룩 폭파 2.5m"
+  },
+  {
+   "file": "icons/icon_weapon_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기(육모방망이) · 등급 common"
+  },
+  {
+   "file": "icons/icon_dopo_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도포 · 등급 common"
+  },
+  {
+   "file": "icons/icon_noriga_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "노리개 · 등급 common"
+  },
+  {
+   "file": "icons/icon_weapon_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기(육모방망이) · 등급 crafted"
+  },
+  {
+   "file": "icons/icon_dopo_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도포 · 등급 crafted"
+  },
+  {
+   "file": "icons/icon_noriga_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "노리개 · 등급 crafted"
+  },
+  {
+   "file": "icons/icon_weapon_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기(육모방망이) · 등급 rare"
+  },
+  {
+   "file": "icons/icon_dopo_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도포 · 등급 rare"
+  },
+  {
+   "file": "icons/icon_noriga_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "노리개 · 등급 rare"
+  },
+  {
+   "file": "icons/icon_named_wolhwa_bell.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "월화의 방울(이름 있는 물건, 노리개 칸)"
+  },
+  {
+   "file": "icons/frame_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · common · 색 #F3E7D3"
+  },
+  {
+   "file": "icons/frame_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · crafted · 색 #4FA8A0"
+  },
+  {
+   "file": "icons/frame_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · rare · 색 #D4A94E"
+  },
+  {
+   "file": "icons/frame_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · named · 색 #E85C41"
+  },
+  {
    "file": "enemies/soul_fresh.png",
    "w": 192,
    "h": 256,
