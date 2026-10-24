@@ -256,4 +256,10 @@ public static class Balance
     public const float DROP_CHANCE = 0.35f;  // (시연판 임시) 기획서 6절 초안: 맺힘 0 때 장비가 떨어질 확률(처결과 무관)
     public const float MOONFLOWER_BELL_PAHON_RADIUS = 0.5f;  // (시연판 임시) 기획서 6절 초안: 월화의 방울: 파혼 반경 +m. 정본은 +1m, 업 상한 초과라 QA 확인 전 임시 0.5
     public const int STAT_POINT_PER_NEOK = 30;  // (시연판 임시) 기획서 6절 초안: 능력치 점수 1점당 넋(시연판은 표시 전용)
+    public const float B03_WARN_TIME = 0.8f;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 바닥 칸 예고(초). 반응 0.25초여도 4.95m 이동 가능
+    public const int B03_GRID = 5;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 칸 수 한 변(5×5)
+    public const int B03_CELLS_PER_WAVE = 16;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 한 번에 터지는 칸 수. 10칸 이하는 항상 피해져 위협이 없고 20칸이면 97%만 피해져 불공정에 가까움 → 15~18
+    public const float B03_WAVE_GAP = 1.2f;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 연속 파동 간격(초). 안전 칸이 파동마다 바뀌어 이동을 강제
+    public const float B03_WEAK_TIME = 3.0f;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 약점 노출(초). 철삭 초당 36 기준 창 1번에 108 피해
+    public const int B03_BOSS_MAEDHIM = 800;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 보스 맺힘. 약점 창 약 8번 필요(철삭·방망이 동일). S1 시연 보스는 1200으로 12번이라 B-03이 더 짧게 느껴지도록 낮춤
 }
