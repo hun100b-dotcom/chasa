@@ -81,3 +81,6 @@
 
 ## 2026-10-24 Unity 설치·컴파일·WebGL 빌드 검증 (코드)
 - Unity 6000.3.27f1 설치(오너 PC, 비관리자), batchmode WebGL 빌드 통과(에러 0), 생성물 52개 커밋(ec498eb). TECH-STACK에 기록. 다음: Godot 스모크 검사를 Unity 테스트로 포팅, Config.cs를 Balance.cs로 교체.
+
+## 2026-10-24 Unity 핵심 규칙 이식 1단계 (코드)
+- `unity/Assets/Scripts/Core/`(CoreRules·Ledger·Soul·StainSet, 엔진 무관 asmdef)와 `Assets/Tests/EditMode/CoreTests.cs`. PC에서 EditMode 테스트 28개 통과(0 실패), WebGL 빌드 재확인(32.9MB, 에러 0). 오너 PC에서 Unity 기본 패키지 중 결제(purchasing)·분석(analytics)이 자동 추가됨 → 불필요하면 제거 예정. 다음: 화면 연결(플레이어·적 오브젝트가 Core 사용, 시야 축소, 얼룩 표시).
