@@ -33,7 +33,7 @@ public static class MapView
         var root = new GameObject("Solgogae");
         root.transform.SetParent(parent, false);
 
-        bool tiles = BuildGroundTiles(root);
+        bool tiles = BuildGroundTiles(root, MapData.Ground, MapLayout.VillageMinX, MapLayout.VillageMinZ);
         if (!tiles)
         {
             // 그림이 없을 때: 서낭당 마당만 색 원으로 (귀환 반경 안쪽을 조금 밝게)
@@ -65,7 +65,7 @@ public static class MapView
     /// 화면 위쪽 꼭짓점 = 먼 모서리(-x,-z), 오른쪽 = (-x,+z), 아래 = (+x,+z), 왼쪽 = (+x,-z).
     /// 같은 종류·무늬는 메쉬 하나로 묶어 그린다.
     /// </summary>
-    static bool BuildGroundTiles(GameObject root)
+    static bool BuildGroundTiles(GameObject root, string[] ground, float originX, float originZ)
     {
         // 필요한 그림이 하나라도 없으면 통째로 포기한다(반쪽짜리 땅을 막기 위해)
         foreach (var k in new[] { "grass", "dirt_road", "stone_path", "paddy", "yard", "stepping_stones" })
@@ -76,11 +76,12 @@ public static class MapView
         var tris = new Dictionary<string, List<int>>();
         float h = Balance.MAP_CELL_SIZE * 0.5f;
         const float y = 0.004f;   // 바닥판 바로 위 (임시 격자·마당 원보다는 아래)
-        for (int gy = 0; gy < MapData.Rows; gy++)
-            for (int gx = 0; gx < MapData.Cols; gx++)
+        for (int gy = 0; gy < ground.Length; gy++)
+            for (int gx = 0; gx < ground[gy].Length; gx++)
             {
-                float cx = MapLayout.WorldX(gy + 0.5f), cz = MapLayout.WorldZ(gx + 0.5f);   // 칸 중심
-                string key = TileName(MapData.Ground[gy][gx]) + (((gx * 7 + gy * 13) % 3 == 0) ? "_b" : "_a");   // 무늬를 흩뿌려 반복이 티 나지 않게
+                // 칸 중심. (마을은 originX = 마을 모서리라 예전 WorldX(gy+0.5)와 같은 값이다)
+                float cx = originX + (gy + 0.5f) * Balance.MAP_CELL_SIZE, cz = originZ + (gx + 0.5f) * Balance.MAP_CELL_SIZE;
+                string key = TileName(ground[gy][gx]) + (((gx * 7 + gy * 13) % 3 == 0) ? "_b" : "_a");   // 무늬를 흩뿌려 반복이 티 나지 않게
                 if (!verts.ContainsKey(key)) { verts[key] = new List<Vector3>(); uvs[key] = new List<Vector2>(); tris[key] = new List<int>(); }
                 int b = verts[key].Count;
                 verts[key].Add(new Vector3(cx - h, y, cz - h)); uvs[key].Add(new Vector2(0.5f, 1f));   // 위
@@ -107,6 +108,33 @@ public static class MapView
             mr.receiveShadows = false;
         }
         return true;
+    }
+
+    /// <summary>
+    /// 마을이 아닌 구역의 땅을 한 번에 깐다(타일 종류별 메시 하나씩). 소품은 BuildZoneProp 으로 프레임마다 조금씩 세운다.
+    /// 그림 타일이 없으면 구역 크기의 단색 판 하나로 대신한다.
+    /// </summary>
+    public static GameObject BuildZoneGround(ZoneDef z, Transform parent)
+    {
+        var root = new GameObject("Zone_" + z.Id);
+        root.transform.SetParent(parent, false);
+        if (!BuildGroundTiles(root, z.Ground, z.MinX, z.MinZ))
+        {
+            var floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Object.Destroy(floor.GetComponent<Collider>());
+            floor.name = "ZoneFloor"; floor.transform.SetParent(root.transform, false);
+            floor.transform.position = new Vector3((z.MinX + z.MaxX) * 0.5f, -0.02f, (z.MinZ + z.MaxZ) * 0.5f);
+            floor.transform.localScale = new Vector3(z.MaxX - z.MinX, 0.04f, z.MaxZ - z.MinZ);
+            floor.GetComponent<Renderer>().sharedMaterial = U.Matte(VillageGround);
+        }
+        return root;
+    }
+
+    /// <summary>구역 소품 하나를 세운다 (그림이 없으면 색 도형)</summary>
+    public static void BuildZoneProp(GameObject root, ZoneProp p)
+    {
+        float widthM = p.W * Balance.MAP_CELL_SIZE * 1.1f + 0.8f;
+        if (!SpriteProp(root, p.Sprite, new Vector3(p.X, 0, p.Z), widthM)) FallbackShape(root, p.Sprite, p.X, p.Z, widthM);
     }
 
     /// <summary>그림 소품을 세운다. 그림이 있으면 true. widthM = 그려질 폭(m)</summary>

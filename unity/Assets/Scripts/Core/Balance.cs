@@ -317,4 +317,8 @@ public static class Balance
     public const bool DEMO_GEAR = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 장비 드롭·장착·월화 방울 켜기 true
     public const bool DEMO_DAY = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 낮 화면·서낭당 켜기 true
     public const bool DEMO_PANEL = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: C 캐릭터 창 켜기 true
+    public const bool WORLD_ZONES = false;  // (시연판 임시) 구역 이어 붙인 넓은 필드 켜기. false 면 마을 한 곳만(기존 동작). 주소에 ?zones 를 붙여도 켜진다
+    public const float ZONE_SIZE_M = 128.0f;  // 구역 한 칸 한 변(m). 기획 확정(10-24): 128×128m, 3×3 로딩. 마을(28×36m)은 0번 구역 안쪽에 들어간다
+    public const float ZONE_HYSTERESIS_M = 6.0f;  // 구역 경계에서 '현재 구역'이 바뀌기 전 여유(m). 경계에서 켜졌다 꺼졌다 반복하지 않게
+    public const int ZONE_LOAD_PROPS_PER_FRAME = 6;  // 구역을 불러올 때 한 프레임에 세우는 소품 수(웹은 쓰레드가 없어 나눠서 해야 끊기지 않음)
 }

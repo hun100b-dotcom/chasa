@@ -23,11 +23,17 @@ namespace Chasa.Core
     {
         static float S { get { return Balance.MAP_CELL_SIZE; } }
 
-        /// <summary>맵 경계 (월드). 칸 (0,0)의 바깥 모서리부터 마지막 칸의 바깥 모서리까지</summary>
-        public static float MinX { get { return (0f - 1.5f) * S; } }
-        public static float MaxX { get { return (MapData.Rows - 1.5f) * S; } }
-        public static float MinZ { get { return (0f - 1.5f) * S; } }
-        public static float MaxZ { get { return (MapData.Cols - 1.5f) * S; } }
+        // 마을 한 곳만의 경계 (구역 0번 = 마을의 기준 모서리이기도 하다)
+        public static float VillageMinX { get { return (0f - 1.5f) * S; } }
+        public static float VillageMaxX { get { return (MapData.Rows - 1.5f) * S; } }
+        public static float VillageMinZ { get { return (0f - 1.5f) * S; } }
+        public static float VillageMaxZ { get { return (MapData.Cols - 1.5f) * S; } }
+
+        /// <summary>맵 경계 (월드). 구역 기능이 꺼져 있으면 마을 한 곳(기존 동작), 켜져 있으면 이어 붙인 구역 전체</summary>
+        public static float MinX { get { return World.Enabled ? World.MinX : VillageMinX; } }
+        public static float MaxX { get { return World.Enabled ? World.MaxX : VillageMaxX; } }
+        public static float MinZ { get { return World.Enabled ? World.MinZ : VillageMinZ; } }
+        public static float MaxZ { get { return World.Enabled ? World.MaxZ : VillageMaxZ; } }
 
         public static float CenterX { get { return (MinX + MaxX) * 0.5f; } }
         public static float CenterZ { get { return (MinZ + MaxZ) * 0.5f; } }
@@ -46,6 +52,8 @@ namespace Chasa.Core
 
         /// <summary>솔고개 첫 밤 막힌 곳 목록: 아트 배치표의 소품에서 자동으로 만든다</summary>
         public static readonly List<Blocker> Blockers = BuildFromProps();
+        /// <summary>불러온 다른 구역들의 막힌 곳 (ZoneManager 가 구역을 켜고 끌 때 넣고 뺀다)</summary>
+        public static readonly List<Blocker> ZoneBlockers = new List<Blocker>();
 
         static List<Blocker> BuildFromProps()
         {
@@ -71,8 +79,9 @@ namespace Chasa.Core
         public static void PushOut(ref float x, ref float z, float radius)
         {
             for (int pass = 0; pass < 2; pass++)
-                foreach (var o in Blockers)
+                for (int bi = 0; bi < Blockers.Count + ZoneBlockers.Count; bi++)
                 {
+                    var o = bi < Blockers.Count ? Blockers[bi] : ZoneBlockers[bi - Blockers.Count];
                     float dx = x - o.X, dz = z - o.Z;
                     float min = o.R + radius;
                     float d2 = dx * dx + dz * dz;
@@ -97,6 +106,11 @@ namespace Chasa.Core
         public static bool IsBlocked(float x, float z, float radius)
         {
             foreach (var o in Blockers)
+            {
+                float dx = x - o.X, dz = z - o.Z, min = o.R + radius;
+                if (dx * dx + dz * dz < min * min) return true;
+            }
+            foreach (var o in ZoneBlockers)
             {
                 float dx = x - o.X, dz = z - o.Z, min = o.R + radius;
                 if (dx * dx + dz * dz < min * min) return true;

@@ -1028,4 +1028,71 @@ public class CoreTests
         var a = SfxSynth.Render("sfx.hit.chain"); var b = SfxSynth.Render("sfx.hit.chain");
         CollectionAssert.AreEqual(a, b);
     }
+
+    // ---------- 구역(Zone) 바둑판 ----------
+    [Test]
+    public void 구역_마을은_0번_구역_안에_들어가고_구역은_틈과_겹침이_없다()
+    {
+        var v = World.Get(0, 0);
+        Assert.IsTrue(v.Village);
+        Assert.GreaterOrEqual(MapLayout.VillageMinX, v.MinX); Assert.LessOrEqual(MapLayout.VillageMaxX, v.MaxX);
+        Assert.GreaterOrEqual(MapLayout.VillageMinZ, v.MinZ); Assert.LessOrEqual(MapLayout.VillageMaxZ, v.MaxZ);
+        // 이웃 구역은 변이 정확히 맞닿는다
+        Assert.AreEqual(World.Get(0, 0).MaxX, World.Get(1, 0).MinX, 1e-3f);
+        Assert.AreEqual(World.Get(0, 0).MaxZ, World.Get(0, 1).MinZ, 1e-3f);
+        Assert.AreEqual(World.ZoneSize, v.MaxX - v.MinX, 1e-3f);
+    }
+
+    [Test]
+    public void 구역_소품은_자기_구역_안에만_있고_길_위가_아니다()
+    {
+        foreach (var z in World.Zones)
+        {
+            Assert.AreEqual(z.Props.Count, z.Blockers.Count, z.Id);
+            foreach (var p in z.Props)
+            {
+                Assert.IsTrue(z.Contains(p.X, p.Z), z.Id + " 소품이 구역 밖");
+                Assert.IsTrue(World.At(p.X, p.Z) == z);
+            }
+        }
+        // 같은 구역은 항상 같은 모양(재현 가능)
+        Assert.AreEqual(World.Get(1, 1).Props[0].X, World.Get(1, 1).Props[0].X);
+    }
+
+    [Test]
+    public void 구역_켜짐은_둘레_3x3이고_경계에서_깜빡이지_않는다()
+    {
+        var st = new ZoneStreamer(); var load = new System.Collections.Generic.List<ZoneDef>(); var drop = new System.Collections.Generic.List<ZoneDef>();
+        st.Update(0f, 0f, load, drop);   // 마을 한가운데
+        Assert.AreEqual(World.Get(0, 0), st.Current);
+        Assert.AreEqual(World.Zones.Count, st.ActiveCount, "2x2 월드라 시작하면 전부 켜진다");
+        // 경계 x = Get(1,0).MinX 부근을 오가도 현재 구역이 바뀌지 않는다(히스테리시스)
+        float edge = World.Get(1, 0).MinX; load.Clear(); drop.Clear();
+        st.Update(edge + 1f, 10f, load, drop); st.Update(edge - 1f, 10f, load, drop); st.Update(edge + 2f, 10f, load, drop);
+        Assert.AreEqual(World.Get(0, 0), st.Current, "경계를 막 넘은 것만으로는 바뀌지 않음");
+        Assert.AreEqual(0, load.Count + drop.Count);
+        // 충분히 넘어가면 바뀐다
+        st.Update(edge + Balance.ZONE_HYSTERESIS_M + 2f, 10f, load, drop);
+        Assert.AreEqual(World.Get(1, 0), st.Current);
+    }
+
+    [Test]
+    public void 구역_켜면_경계가_넓어지고_꺼면_마을만()
+    {
+        float oldMax = MapLayout.MaxX;
+        try
+        {
+            World.Enabled = true;
+            Assert.AreEqual(World.MaxX, MapLayout.MaxX);
+            Assert.Greater(MapLayout.MaxX, oldMax + 50f);
+            // 다른 구역 소품도 막힌 곳이다
+            var p = World.Get(1, 1).Blockers[0];
+            MapLayout.ZoneBlockers.AddRange(World.Get(1, 1).Blockers);
+            Assert.IsTrue(MapLayout.IsBlocked(p.X, p.Z, 0.3f));
+            float x = p.X, z = p.Z; MapLayout.PushOut(ref x, ref z, 0.3f);
+            Assert.IsFalse(MapLayout.IsBlocked(x, z, 0.3f - 0.01f));
+        }
+        finally { MapLayout.ZoneBlockers.Clear(); World.Enabled = false; }
+        Assert.AreEqual(oldMax, MapLayout.MaxX, "꺼 두면 기존 마을 경계 그대로");
+    }
 }
