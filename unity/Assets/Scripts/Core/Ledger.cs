@@ -42,10 +42,28 @@ namespace Chasa.Core
             Neok += (int)System.Math.Round(Balance.TENDO_NEOK * CoreRules.RewardMult(Karma));
             Memory += Balance.TENDO_MEMORY;
             TendoStreak++;
+            CountForDecay();
+        }
+
+        /// <summary>
+        /// 업 감쇠 횟수 세기: 천도와 눕히기(시즌 3 '천도의 백 버전')를 같이 세어 2회마다 업 −1 (LOCKED-DECISIONS).
+        /// 왜 감쇠? 업이 오르기만 하면 긴 게임 끝에서 모두가 '업 높음'이 되어 천도의 선택이 결말에 의미를 갖지 못한다
+        /// </summary>
+        void CountForDecay()
+        {
             TendoTotal++;
-            // 왜 감쇠? 업이 오르기만 하면 긴 게임 끝에서 모두가 '업 높음'이 되어 천도의 선택이 결말에 의미를 갖지 못한다
             if (TendoTotal % Balance.KARMA_DECAY_TENDO_INTERVAL == 0)
                 Karma = System.Math.Max(0, Karma - 1);
+        }
+
+        /// <summary>
+        /// 눕히기 하나가 끝났을 때 (시즌 3 백 보스, 시연판에는 없음). 보상은 보스별로 달라 여기서 다루지 않고,
+        /// 천도와 같은 횟수로 세어 업만 줄인다. 연속 천도 창에도 이어진다.
+        /// </summary>
+        public void CompleteLay()
+        {
+            TendoStreak++;
+            CountForDecay();
         }
 
         /// <summary>보스 천도: 큰 넋과 기억을 얻는다. 업 감쇠 횟수에는 일반 천도와 똑같이 센다</summary>
@@ -55,8 +73,7 @@ namespace Chasa.Core
             Neok += gain;
             Memory += Balance.BOSS_S1_MEMORY;
             TendoStreak++;
-            TendoTotal++;
-            if (TendoTotal % Balance.KARMA_DECAY_TENDO_INTERVAL == 0) Karma = System.Math.Max(0, Karma - 1);
+            CountForDecay();
             return gain;
         }
 

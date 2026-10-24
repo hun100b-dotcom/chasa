@@ -969,4 +969,17 @@ public class CoreTests
         Assert.IsTrue(Shrine.Socket(it, l)); Assert.AreEqual(1000, l.Coin);
         Assert.IsFalse(Shrine.Socket(it, l), "최대 2개");
     }
+
+    [Test]
+    public void 업_감쇠는_천도와_눕히기를_같이_세어_2회마다_1()
+    {
+        var l = new Ledger { Karma = 5 };
+        l.CompleteTendo();                    // 1회: 변화 없음
+        Assert.AreEqual(5, l.Karma);
+        l.CompleteLay();                      // 2회째(눕히기): -1
+        Assert.AreEqual(4, l.Karma);
+        l.CompleteLay(); l.CompleteTendo();   // 4회째: -1
+        Assert.AreEqual(3, l.Karma);
+        Assert.AreEqual(4, l.TendoTotal);
+    }
 }
