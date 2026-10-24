@@ -298,7 +298,7 @@ BOSSES = [
                  patterns=[P("물살", "가로 띠 폭 3m, 바깥으로 밀어냄", 1.0, 3.0, "1초 둔화", "제안")]),
             dict(at="15%", title="사슬을 내려놓다", desc="물이 빠지고 새벽빛. 그가 사슬을 내려놓고 선다. 마지막 대사 \"이번엔 내가 기억하마. 불러 보아라.\" 처결 대기 10초(시즌 마지막이라 다른 보스보다 3초 길다).", patterns=[]),
         ],
-        weak=dict(what="큰물 단계에서 물속 횃불을 사슬로 건지면(1회) 흑월이 그 밤을 다시 보며 3초 멈춘다. 맺힘 피해 ×1.5", status="제안"),
+        weak=dict(what="큰물 단계에서 물속 횃불을 사슬로 건지면(1회) 흑월이 3초 멈춘다. 맺힘 피해 ×1.5. 왜 멈추는지는 말로 드러내지 않는다(정체는 천도 기억 M-B12에서)", status="제안"),
         clues=[("지켜보기", "성문 벽의 바랜 방(사십 년 전 역병 명단 사본), 끝 줄 글씨체"),
                ("엿듣기", "늙은 문지기 '그 서생, 명단 다 적고 나니 관아가 쫓아냈지'"),
                ("만져 보기", "팻말 없는 구덩이 무덤의 닳은 붓, 이름을 깎아 낸 흔적"),
@@ -347,14 +347,16 @@ COMMON_ROWS_S1 = [
 ]
 ASKS_S1 = [
     ("QA", "맺힘 공식(800 기준 고리 계단)과 목표 시간이 맞는지 / 약점 창 9개(제안)의 피해 배율 ×1.5~×2 / B-07 광석 ×15, B-03 회복약 ×5로 수량을 정한 것 / B-12 처결 대기 10초"),
-    ("서사", "B-04 1차의 대사를 MASTER의 \"너는 아직 모른다.\"로 썼다(ACT1의 옛 두 줄과 다름) / B-11 50% \"아이를 업는다\" 연출 / B-12 횃불 건지기 약점"),
+    ("서사", "(확인 완료 10-24) B-04 대사 \"너는 아직 모른다.\" 맞음 / B-11 업기 좋음 / B-12 횃불은 그가 멈추는 것만 보이고 이유는 말하지 않음"),
     ("아트", "P2-042는 B-10을 \"무리형\"으로, BOSS-ARCHETYPES는 \"① 물 위\"로 적었다. 이 부록은 원형 표(물 위)를 따랐다"),
 ]
 
 
-def render(data, title, intro, sec, common_rows, asks):
+def render(data, title, intro, sec, common_rows, asks, verbs=("천도", "파혼")):
     """보스 부록 마크다운을 만든다. 시즌 1·2·3 생성기가 같은 모양으로 쓰도록 함께 쓴다.
-    sec: 소제목 번호 앞머리(예: "E1" → E1-1, E1-2 …)"""
+    sec: 소제목 번호 앞머리(예: "E1" → E1-1, E1-2 …)
+    verbs: 두 선택의 이름. 시즌 3는 몸(백)이 상대라 ("눕히기", "깨뜨리기")를 쓴다"""
+    good, bad = verbs
     L = []
     A = L.append
     A("## " + title)
@@ -375,7 +377,7 @@ def render(data, title, intro, sec, common_rows, asks):
     A("")
     A("### %s-2. 한눈에" % sec)
     A("")
-    A("| 보스 | 원형 · 장소 | 맺힘 | 목표 시간 | 약점 한 줄 | 천도하면 | 파혼하면 |")
+    A("| 보스 | 원형 · 장소 | 맺힘 | 목표 시간 | 약점 한 줄 | %s하면 | %s하면 |" % (good, bad))
     A("|---|---|---|---|---|---|---|")
     for b in data["bosses"]:
         A("| %s %s | %s · %s | %d | %s | %s | %s | %s |" % (
@@ -388,7 +390,7 @@ def render(data, title, intro, sec, common_rows, asks):
         A("#### %s %s — %s" % (b["id"], b["name"], b["place"]))
         A("")
         A("한: %s. 원형 %s, 맺힘 %d, 목표 %s%s." % (b["han"], b["archetype"], b["maedhim"], b["minutes"],
-                                              ", 천도 넋 %d" % b["neok_tendo"] if b["neok_tendo"] else ""))
+                                              ", %s 넋 %d" % (good, b["neok_tendo"]) if b["neok_tendo"] else ""))
         A("")
         A("| 단계 | 무대 | 패턴 | 모양 | 예고 | 맞으면 |")
         A("|---|---|---|---|---|---|")
@@ -407,7 +409,7 @@ def render(data, title, intro, sec, common_rows, asks):
         if b["clues"]:
             A("단서: " + " / ".join("%d. %s — %s" % (i + 1, c["verb"], c["text"]) for i, c in enumerate(b["clues"])))
             A("")
-        A("천도: %s. 파혼: %s." % (b["tendo"], b["pahon"]))
+        A("%s: %s. %s: %s." % (good, b["tendo"], bad, b["pahon"]))
         if b["link"]:
             A("")
             A("숨은 연결: %s." % b["link"])
