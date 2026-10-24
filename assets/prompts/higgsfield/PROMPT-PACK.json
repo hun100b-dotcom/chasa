@@ -1,5 +1,5 @@
 {
- "count": 99,
+ "count": 109,
  "rule": "작품명 0개, HEX 직접 명시, 변수 1개씩, 첫 승인 이미지를 레퍼런스로 고정",
  "items": [
   {
@@ -1684,6 +1684,176 @@
    "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
    "reference": "",
    "change_only": "UI 하나씩"
+  },
+  {
+   "file": "enemies/soul_fresh_plague.png",
+   "size": [
+    192,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.921875
+   ],
+   "tint": false,
+   "prompt": "the same freshly dead soul with pale lime-white plague spots #C8C3A0 on the torso and two black ink strike-through lines across the chest, faint lime dust motes above the head. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 192x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "enemies/soul_fresh.png",
+   "change_only": "역병 표식만 추가"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel_plague.png",
+   "size": [
+    192,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.921875
+   ],
+   "tint": false,
+   "prompt": "the same kneeling freshly dead soul with pale lime-white plague spots #C8C3A0 and two black ink strike-through lines across the chest. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 192x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "enemies/soul_fresh_kneel.png",
+   "change_only": "역병 표식만 추가"
+  },
+  {
+   "file": "enemies/soul_day_plague.png",
+   "size": [
+    192,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.921875
+   ],
+   "tint": false,
+   "prompt": "the same day-old soul with pale lime-white plague spots #C8C3A0 on the torso and two black ink strike-through lines across the chest, faint lime dust motes above the head. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 192x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "enemies/soul_day.png",
+   "change_only": "역병 표식만 추가"
+  },
+  {
+   "file": "enemies/soul_day_kneel_plague.png",
+   "size": [
+    192,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.921875
+   ],
+   "tint": false,
+   "prompt": "the same kneeling day-old soul with pale lime-white plague spots #C8C3A0 and two black ink strike-through lines across the chest. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 192x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "enemies/soul_day_kneel.png",
+   "change_only": "역병 표식만 추가"
+  },
+  {
+   "file": "enemies/soul_old_plague.png",
+   "size": [
+    192,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.921875
+   ],
+   "tint": false,
+   "prompt": "the same old soul with pale lime-white plague spots #C8C3A0 on the torso and two black ink strike-through lines across the chest, faint lime dust motes above the head. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 192x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "enemies/soul_old.png",
+   "change_only": "역병 표식만 추가"
+  },
+  {
+   "file": "enemies/soul_old_kneel_plague.png",
+   "size": [
+    192,
+    256
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.921875
+   ],
+   "tint": false,
+   "prompt": "the same kneeling old soul with pale lime-white plague spots #C8C3A0 and two black ink strike-through lines across the chest. Korean folk dark-fantasy game art, painterly gothic with traditional dancheong accent colors, quarter-view 45 degree 2:1 isometric camera, low-key lighting, desaturated navy ambient light #16213E, deep shadow #0F1729, teal rim light #4FA8A0, warm hanji paper texture #F3E7D3, soft contact shadow, clean readable silhouette that still reads when filled solid black. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 192x256 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "enemies/soul_old_kneel.png",
+   "change_only": "역병 표식만 추가"
+  },
+  {
+   "file": "hud/gauge_frame_r2.png",
+   "size": [
+    192,
+    24
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI asset: a horizontal gauge frame with pale lime #C8C3A0 border and notched corners, empty inside, nine-slice friendly. Korean folk dark-fantasy game UI, flat clean vector-like rendering, palette navy #16213E and #0F1729, gold #D4A94E, teal #5FE3C0, red #E85C41, hanji #F3E7D3. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 192x24 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "hud/gauge_frame.png",
+   "change_only": "지역 색만 변경"
+  },
+  {
+   "file": "hud/panel_hanji_r2.png",
+   "size": [
+    128,
+    128
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI asset: a square UI panel with pale lime #C8C3A0 border, corner brackets, notch at top and bottom center, dark navy #16213E fill, nine-slice friendly. Korean folk dark-fantasy game UI, flat clean vector-like rendering, palette navy #16213E and #0F1729, gold #D4A94E, teal #5FE3C0, red #E85C41, hanji #F3E7D3. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 128x128 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "hud/panel_hanji.png",
+   "change_only": "지역 색만 변경"
+  },
+  {
+   "file": "hud/timer_ring_bg_r2.png",
+   "size": [
+    128,
+    128
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI asset: a circular timer ring background with thin pale lime #C8C3A0 outer line and a dotted inner ring on dark navy. Korean folk dark-fantasy game UI, flat clean vector-like rendering, palette navy #16213E and #0F1729, gold #D4A94E, teal #5FE3C0, red #E85C41, hanji #F3E7D3. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 128x128 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "hud/timer_ring_bg.png",
+   "change_only": "지역 색만 변경"
+  },
+  {
+   "file": "hud/night_bar_r2.png",
+   "size": [
+    480,
+    32
+   ],
+   "ppu": 128,
+   "pivot": [
+    0.5,
+    0.5
+   ],
+   "tint": false,
+   "prompt": "flat UI asset: a horizontal night-time progress bar gradient from overcast grey-blue #5A6B8C to deep navy #0F1729 to dawn blue #3A5A7C, pale lime frame. Korean folk dark-fantasy game UI, flat clean vector-like rendering, palette navy #16213E and #0F1729, gold #D4A94E, teal #5FE3C0, red #E85C41, hanji #F3E7D3. isolated on a flat solid #00FF00 chroma-key background, no ground, no text. Output canvas 480x32 px.",
+   "negative": "scythe, skull face, kimono, hooded robe, pixel art, photorealistic, text, watermark, logo, extra limbs, cropped, busy background, anime style",
+   "reference": "hud/night_bar.png",
+   "change_only": "지역 색만 변경"
   }
  ]
 }

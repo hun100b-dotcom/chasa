@@ -993,6 +993,106 @@
    "ppu": 128,
    "tint": false,
    "note": "패널 · 9-slice(테두리 24px)"
+  },
+  {
+   "file": "enemies/soul_fresh_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 갓 죽은 혼 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 갓 죽은 혼 · 무릎 꿇음 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_day_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 해 넘긴 혼 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_day_kneel_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 해 넘긴 혼 · 무릎 꿇음 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_old_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 오래된 혼 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_old_kneel_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 오래된 혼 · 무릎 꿇음 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "hud/gauge_frame_r2.png",
+   "w": 192,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 게이지 틀(석회 테두리 · 모서리 파임) · 9-slice 좌우 12px"
+  },
+  {
+   "file": "hud/panel_hanji_r2.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 패널 · 9-slice 24px"
+  },
+  {
+   "file": "hud/timer_ring_bg_r2.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 처결 타이머 링 배경(점선 안쪽 = 번호 칸 느낌)"
+  },
+  {
+   "file": "hud/night_bar_r2.png",
+   "w": 480,
+   "h": 32,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 하룻밤 시간 바(해 질 녘이 붉지 않고 흐린 회청 — 비·안개 읍성)"
   }
  ]
 }

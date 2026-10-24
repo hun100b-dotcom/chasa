@@ -388,6 +388,8 @@ def main():
     boss_naru(False)
     boss_naru(True)
     hud()
+    import gen_sprites3
+    gen_sprites3.run(MANIFEST, SRC)   # ② 검은여울 변형(역병 혼·지역 HUD)
     with open(os.path.join(ROOT, "assets", "sprites", "manifest.json"), "w") as f:
         json.dump({"ppu": 128, "filter": "Bilinear", "mipmaps": False, "compression": "None", "sprites": MANIFEST}, f, ensure_ascii=False, indent=1)
     print(len(MANIFEST), "sprites")

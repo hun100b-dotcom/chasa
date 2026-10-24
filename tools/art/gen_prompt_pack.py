@@ -91,6 +91,16 @@ H = {"gauge_frame": "a slim pill-shaped gauge frame, gold #D4A94E border, empty 
 for k, d in H.items():
     add(f"hud/{k}", f"flat UI asset: {d}", "", "UI 하나씩")
 
+# ② 검은여울 변형 — 기본 혼과 같은 그림에 석회색 반점(#C8C3A0)과 지워진 이름 먹줄만 추가(변수 1개)
+for st, base, nm in [("fresh", "soul_fresh", "freshly dead"), ("day", "soul_day", "day-old"), ("old", "soul_old", "old")]:
+    add(f"enemies/{base}_plague", f"the same {nm} soul with pale lime-white plague spots #C8C3A0 on the torso and two black ink strike-through lines across the chest, faint lime dust motes above the head", f"enemies/{base}", "역병 표식만 추가")
+    add(f"enemies/{base}_kneel_plague", f"the same kneeling {nm} soul with pale lime-white plague spots #C8C3A0 and two black ink strike-through lines across the chest", f"enemies/{base}_kneel", "역병 표식만 추가")
+for k, d in {"gauge_frame_r2": "a horizontal gauge frame with pale lime #C8C3A0 border and notched corners, empty inside, nine-slice friendly",
+             "panel_hanji_r2": "a square UI panel with pale lime #C8C3A0 border, corner brackets, notch at top and bottom center, dark navy #16213E fill, nine-slice friendly",
+             "timer_ring_bg_r2": "a circular timer ring background with thin pale lime #C8C3A0 outer line and a dotted inner ring on dark navy",
+             "night_bar_r2": "a horizontal night-time progress bar gradient from overcast grey-blue #5A6B8C to deep navy #0F1729 to dawn blue #3A5A7C, pale lime frame"}.items():
+    add(f"hud/{k}", f"flat UI asset: {d}", f"hud/{k[:-3]}", "지역 색만 변경")
+
 pack = []; missing = []
 for m in man:
     key = m["file"][:-4]
