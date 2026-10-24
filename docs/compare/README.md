@@ -68,3 +68,12 @@
 - `stage1g-demo-cam-a.mp4` — 30초, 2.2MB. 끝 화면 천도 3/3(넋 30·기억 3, '당집으로 돌아가라')
 - `stage1g-tendo-cast.png` — 데모 중 천도 시전(시야 좁아짐·시전 막대)
 - `stage1g-end-hud.png` — 끝 화면 장부
+
+## 2026-10-25 06:55 KST — 5×5 필드 1차 확인 (?field, 작업 브랜치 187423e + 849efd1)
+- `field-demo-cam-a.mp4` — ?field&demo=1&cam=a 30초
+- `field-a-start.png` 시작(마을 남쪽 입구) / `field-b-village-house.png` 마을 집(지붕이 바닥에 놓임) / `field-c-road.png` 길·돌담
+- `field-d-barley.png` 보릿들 / `field-d-forest.png` 소나무 숲 자리(나무가 거의 없음)
+- `field-e-stone-bridge.png` 검은여울 돌다리 / `field-e-ferry.png` 나루터 / `field-e-doctor-house.png` 의원 집
+- `field-f-seonang-south.png`·`field-f-seonang-northwest.png` 서낭당 / `field-boss-spot.png` 보스 자리(개울 위) / `field-highland-slope.png` 고지 비탈(평평하게 펴짐)
+- `field-walk-tour.png` — 시작→마을→북서쪽 걷기 15컷
+- (b~f 위치 사진은 PC 에서만 쓴 임시 시작 위치 지정으로 찍음. 코드는 커밋하지 않음)
