@@ -38,6 +38,10 @@ public class JudgeSystem : MonoBehaviour
     Texture2D white, vignette;
     bool touchUI;
     bool debugKeys;
+    DayScreen dayScreen;                 // 낮 화면과 낮에 쌓이는 것(단서·소모품)
+    bool inDay;                          // 지금 낮 화면인가
+    public bool InDay { get { return inDay; } }
+    bool namedTendoed;                   // 이번 밤 이름혼을 천도했나 (다음 낮에 장례가 열린다)
 
     void Start()
     {
@@ -51,6 +55,7 @@ public class JudgeSystem : MonoBehaviour
         panel.judge = this;
         enemies.onPlayerHit = OnPlayerHit;
         enemies.onEnemyKneel = OnEnemyKneel;
+        dayScreen = new DayScreen(ledger, lo);
         SetupNight();   // 적 공격이 명중하면 체력 처리로 연결
         touchUI = Input.touchSupported;
         debugKeys = Application.isEditor || Application.absoluteURL.Contains("debug");
@@ -152,6 +157,7 @@ public class JudgeSystem : MonoBehaviour
             ledger.CompleteTendo();
             ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f));   // 향 내음: 천도 넋 보너스
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
+            if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
             if (night.TakeNamedSpawn()) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
         }
         chainLeft = lo.stats.ChainWindow;   // 젖은 소매가 있으면 창이 길다
@@ -306,7 +312,20 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>쓰러진 뒤 한 판을 처음부터. 체력·적·얼룩을 되돌리고 장부(수확)는 결과 화면(M5)에서 다룬다</summary>
-    void RestartNight() { night = new NightRun(); settled = false; ResetRound(); }
+    void RestartNight()
+    {
+        night = new NightRun(); settled = false; ResetRound();
+        night.Clues = dayScreen.BossCluesHave;   // 낮에 얻은 단서는 사라지지 않고 밤으로 이어진다
+        if (dayScreen.Pack.Dawn > 0) { dayScreen.Pack.Dawn--; night.WarnTime += Balance.SHOP_DAWN_EARLY; }   // 새벽 부적: 경고가 일찍
+    }
+
+    /// <summary>결과 화면에서 낮으로. 어젯밤 이름혼을 천도했으면 장례가 열린다</summary>
+    void StartDay()
+    {
+        inDay = true;
+        dayScreen.Begin(namedTendoed);
+        namedTendoed = false;
+    }
 
     void ResetRound()
     {
@@ -326,13 +345,21 @@ public class JudgeSystem : MonoBehaviour
     public void Tick(float dt, float realDt)
     {
         if (CharacterPanel.Open) return;   // 캐릭터 창이 열려 있으면 세계가 멈춘다
+        if (inDay)
+        {
+            dayScreen.Tick(realDt);
+            if (dayScreen.WantsNight) { inDay = false; RestartNight(); }   // 해 넘기기 → 새 밤
+            return;
+        }
         HandleKeys();
         if (night.Over)
         {
             // 한 번만 정산: 동이 터서 끝났으면 흩어진 추가 수확분(넋)을 장부에서 뺀다. 몫과 성장(기억·품계)은 그대로.
-            if (!settled) { settled = true; ledger.Neok = Mathf.Max(0, ledger.Neok - night.LostNeok); ledger.Coin = Mathf.Max(0, ledger.Coin - night.LostCoin); }
+            if (!settled) { settled = true; dayScreen.BossCluesHave = Mathf.Max(dayScreen.BossCluesHave, night.Clues);   // 밤에 주운 단서도 남는다
+                ledger.Neok = Mathf.Max(0, ledger.Neok - night.LostNeok); ledger.Coin = Mathf.Max(0, ledger.Coin - night.LostCoin); }
             // 결과 화면: 아무 때나 R/E 가 아닌 Space(또는 터치 버튼)로 다시 시작
             if (Input.GetKeyDown(KeyCode.Space)) RestartNight();
+            if (Input.GetKeyDown(KeyCode.D)) StartDay();
             return;
         }
         night.Tick(dt);
@@ -369,6 +396,14 @@ public class JudgeSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2)) UseSkill(1);
         if (Input.GetKeyDown(KeyCode.Alpha3)) UseSkill(2);
         if (Input.GetKeyDown(KeyCode.Tab)) player.CommandSwap();
+        // 공물상에서 산 소모품: H = 회복약, X = 밟고 선 얼룩 지우기(씻김 부적)
+        if (Input.GetKeyDown(KeyCode.H) && Shrine.UseHeal(ledger, dayScreen.Pack)) Say("회복약을 마셨다");
+        if (Input.GetKeyDown(KeyCode.X) && dayScreen.Pack.Cleanse > 0)
+        {
+            float sx, sz;
+            if (stains.RemoveNearest(player.Pos.x, player.Pos.z, Balance.STAIN_RADIUS, out sx, out sz)) { dayScreen.Pack.Cleanse--; Say("얼룩을 씻었다"); }
+            else Say("지울 얼룩이 없다");
+        }
         if (Input.GetKeyDown(KeyCode.R)) CommandPahon();
         // 검사용(?debug): 7/8/9 로 등에 멘 무기를 요령방울/삼지창/붓으로 바꿔 Tab 으로 꺼내 본다
         if (debugKeys)
@@ -458,6 +493,7 @@ public class JudgeSystem : MonoBehaviour
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (white == null) return;
+        if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)
         if (visionP > 0.001f)
         {
@@ -535,7 +571,8 @@ public class JudgeSystem : MonoBehaviour
                 "\n나루 영감 " + (night.BossDone ? "끝" : "-") + "   단서 " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED +
                 "   장비 무기:" + GearName(Slot.Weapon) + " 도포:" + GearName(Slot.Robe) + " 노리개:" + GearName(Slot.Charm) +
                 (night.Phase == NightPhase.Returned ? "" : "\n(몫만큼은 지켰고, 그 너머의 수확은 흩어졌다)"), m);
-            if (GUI.Button(new Rect(Screen.width / 2f - 90, Screen.height * 0.25f + 260, 180, 70), "다시 (Space)")) RestartNight();
+            if (GUI.Button(new Rect(Screen.width / 2f - 200, Screen.height * 0.25f + 260, 190, 70), "낮으로 (D)")) StartDay();
+            if (GUI.Button(new Rect(Screen.width / 2f + 10, Screen.height * 0.25f + 260, 190, 70), "다시 (Space)")) RestartNight();
             return;
         }
         if (Casting)

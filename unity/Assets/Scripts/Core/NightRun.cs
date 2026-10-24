@@ -52,7 +52,8 @@ namespace Chasa.Core
 
         public bool Over => Phase != NightPhase.Night;
         public bool QuotaDone => Sent >= Balance.NIGHT_QUOTA;
-        public bool Warning => !Over && TimeLeft <= Balance.NIGHT_WARN_TIME;
+        public float WarnTime = Balance.NIGHT_WARN_TIME;   // 동트기 경고 시작(남은 초). 새벽 부적을 쓰면 더 일찍
+        public bool Warning => !Over && TimeLeft <= WarnTime;
         /// <summary>밤이 얼마나 지났나 0(해 질 무렵)~1(동트기). 하늘 색 보간용</summary>
         public float Progress => 1f - TimeLeft / Balance.NIGHT_DURATION;
 

@@ -34,6 +34,9 @@ public class Loadout
         return true;
     }
 
+    /// <summary>손보기로 장비가 바뀐 뒤 합계를 다시 계산한다</summary>
+    public void Refresh() { stats = gear.Stats(); }
+
     public static string Describe(ItemDef it)
     {
         return Ko.Describe(it);

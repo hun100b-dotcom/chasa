@@ -293,6 +293,9 @@ namespace Chasa.Core
             return true;
         }
 
+        /// <summary>그 칸을 비운다 (풀기·분해에 쓴다)</summary>
+        public void Remove(Slot s) { slots[(int)s] = null; }
+
         public GearStats Stats()
         {
             var st = new GearStats();

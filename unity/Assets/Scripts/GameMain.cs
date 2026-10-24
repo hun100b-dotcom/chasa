@@ -52,6 +52,7 @@ public class GameMain : MonoBehaviour
     void Update()
     {
         if (CharacterPanel.Open) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
+        if (judge.InDay) { judge.Tick(0f, Mathf.Min(0.05f, Time.unscaledDeltaTime)); return; }   // 낮 화면: 세계는 멈추고 낮 화면만 흐른다
         HandleInput();
         float realDt = Mathf.Min(0.05f, Time.unscaledDeltaTime);
         bool frozen = feel.Tick(realDt);
@@ -200,6 +201,7 @@ public class GameMain : MonoBehaviour
     void OnGUI()
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
+        if (judge.InDay) return;   // 낮 화면에서는 밤의 안내·버튼을 그리지 않는다
         var hint = new GUIStyle(GUI.skin.label) { fontSize = 14 };
         hint.normal.textColor = new Color(1, 1, 1, 0.55f);
         GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 휘두르기   C: 캐릭터 창", hint);
