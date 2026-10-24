@@ -16,7 +16,7 @@ public class DemoScript : MonoBehaviour
 
     float t, nextAttack;
     int stage;            // 0 달려가 때리기 · 1 천도 · 2 피하기 · 3 다음 혼이 있으면 0으로(반복)
-    float stageT;
+    float stageT, walkT;
 
     public static bool Wanted()
     {
@@ -50,7 +50,7 @@ public class DemoScript : MonoBehaviour
                 if (e == null) { stage = 1; stageT = 0f; break; }
                 // 0.45초마다 다시 명령 → 달려가서 1타, 2타, 3타가 이어진다(입력 버퍼)
                 if (t >= nextAttack) { player.CommandAttack(e); nextAttack = t + 0.45f; }
-                foreach (var k in enemies.list) if (k != null && k.kneeling) { stage = 1; stageT = 0f; break; }
+                foreach (var k in enemies.list) if (k != null && k.alive && k.kneeling && Vector3.Distance(k.Pos, player.Pos) < 6f) { stage = 1; stageT = 0f; walkT = 0f; break; }   // 가까이 무릎 꿇은 혼이 있을 때만 천도로(멀리 있는 혼을 쫓다 일어서는 일 방지)
                 if (stageT > 14f) { stage = 1; stageT = 0f; }   // 안전장치: 너무 오래 걸리면 다음으로
                 break;
             }
@@ -65,7 +65,12 @@ public class DemoScript : MonoBehaviour
                     if (d < kd) { kd = d; k = e; }
                 }
                 if (k == null) { stage = 2; stageT = 0f; break; }
-                if (kd > Balance.JUDGE_RANGE * 0.8f) { player.CommandMove(k.Pos); stageT = 0f; break; }   // 가까워질 때까지 시간 안 셈
+                if (kd > Balance.JUDGE_RANGE * 0.8f)
+                {
+                    walkT += dt; stageT = 0f;
+                    if (walkT > 2.5f) { stage = 0; stageT = 0f; break; }   // 못 다가가면 포기하고 다시 때리기
+                    player.CommandMove(k.Pos); break;
+                }
                 if (stageT > 0.35f && !judge.Casting && stageT < 3f) judge.CommandTendo();
                 if (stageT > 3.2f) { stage = 2; stageT = 0f; }
                 break;
