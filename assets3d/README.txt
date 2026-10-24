@@ -24,3 +24,10 @@
 
 [혼 지역 변형 12종] souls/soul_{fresh,day,old,lump}_{yeoksa,bungjae,soegol}.glb — 검은여울 역병(푸른 멍울)·붉은재 번호 병사(전립+번호표)·쇳골 광부(등불 모자+곡괭이).
 기본 4종과 같은 실루엣·같은 크기, 색과 부착물만 다름. 최대 432삼각형. 생성: tools/art3d/soul_variants.py
+
+[마을 v2·필드 배치표]
+- layouts/solgogae_village.json: 집 7채를 한옥 조각 키트로 재조립(buildings[].pieces = 세계 좌표 조각 144개). 나머지 소품은 props[].
+- layouts/field_5x5.json: 5×5칸(640m) 땅 배치표. tiles(80×80 중 풀밭 아닌 칸)·props(자연물 523)·markers(서낭당·굴·물막이·폐당집·보스·넋길)·zones. 마을 배치표는 필드 (196,60)에 놓는다.
+  동선: 마을 → 동쪽 보릿들(밭 칸) → 북쪽 물막이 골(개울 + 양쪽 벼랑 +2m) → 동북 폐당집 터(+2m 고지, 남쪽 비탈 한 칸이 입구).
+  비탈 모서리 rot는 추정값(QA에서 어긋나면 ±90 보정). 굴 입구는 서쪽 벼랑 비탈 한 칸이 길로 바뀐 자리.
+- 생성: tools/art3d/kit_buildings.py(집 설명서) → solgogae.py(마을) / field_layout.py(필드, 파이썬만으로 실행)

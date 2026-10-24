@@ -1,0 +1,11923 @@
+{
+ "map": "첫 필드 5×5칸 640m",
+ "units": "m",
+ "axes": "x=동,y=북, 원점=남서쪽 모서리, 타일 중심=(ix*8+4, iy*8+4)",
+ "grid": {
+  "tiles": [
+   80,
+   80
+  ],
+  "tile_m": 8.0,
+  "cell_m": 128,
+  "cells": [
+   5,
+   5
+  ]
+ },
+ "default_tile": "terrain_tile_grass(표에 없는 칸은 풀밭, z=0)",
+ "rotation": "반시계 도. 비탈 0=북쪽으로 오름, 길 직선 0=동서",
+ "provisional": "비탈 모서리(slope_corner_out)의 rot는 추정값. 유니티에서 높이가 어긋나면 rot를 ±90 보정(코드팀 QA).",
+ "zones": [
+  {
+   "name": "솔고개 마을",
+   "rect_m": [
+    160,
+    24,
+    232,
+    100
+   ]
+  },
+  {
+   "name": "보릿들",
+   "rect_m": [
+    208,
+    40,
+    448,
+    240
+   ]
+  },
+  {
+   "name": "물막이 골",
+   "rect_m": [
+    264,
+    240,
+    504,
+    500
+   ]
+  },
+  {
+   "name": "폐당집",
+   "rect_m": [
+    520,
+    500,
+    620,
+    620
+   ]
+  }
+ ],
+ "tiles": [
+  {
+   "ix": 24,
+   "iy": 3,
+   "tile": "terrain_tile_road_end",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 4,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 5,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 6,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 45,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 46,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 6,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 7,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 45,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 46,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 7,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 8,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 9,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 45,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 46,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 9,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 10,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 45,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 46,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 10,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 11,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 12,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 12,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 13,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 13,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 24,
+   "iy": 14,
+   "tile": "terrain_tile_road_corner",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 25,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 26,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 27,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 31,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 35,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 14,
+   "tile": "terrain_tile_road_t",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 39,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 43,
+   "iy": 14,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 14,
+   "tile": "terrain_tile_road_corner",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 15,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 15,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 15,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 16,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 16,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 16,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 17,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 17,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 18,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 18,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 18,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 18,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 18,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 18,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 18,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 18,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 19,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 19,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 19,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 19,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 19,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 19,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 19,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 19,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 20,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 20,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 21,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 21,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 21,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 22,
+   "tile": "terrain_tile_road_corner",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 22,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 22,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 39,
+   "iy": 22,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 22,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 22,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 22,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 43,
+   "iy": 22,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 22,
+   "tile": "terrain_tile_road_t",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 45,
+   "iy": 22,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 46,
+   "iy": 22,
+   "tile": "terrain_tile_road_end",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 22,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 23,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 24,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 24,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 25,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 25,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 26,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 27,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 27,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 28,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 29,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 30,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 28,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 28,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 29,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 30,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 30,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 30,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 31,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 31,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 31,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 32,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 32,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 32,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 33,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 33,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 33,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 34,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 34,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 34,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 35,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 35,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 35,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 35,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 55,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 56,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 57,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 58,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 59,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 60,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 61,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 62,
+   "iy": 35,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 63,
+   "iy": 35,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 36,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 36,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 36,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 36,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 36,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 36,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 37,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 35,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 39,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 37,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 37,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 37,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 37,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 37,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 37,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 38,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 38,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 38,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 38,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 38,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 38,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 38,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 38,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 39,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 39,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 39,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 39,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 39,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 39,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 39,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 39,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 40,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 40,
+   "tile": "terrain_tile_road_end",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 42,
+   "iy": 40,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 43,
+   "iy": 40,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 40,
+   "tile": "terrain_tile_road_t",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 40,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 40,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 40,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 40,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 40,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 41,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 41,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 41,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 41,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 41,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 41,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 41,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 41,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 42,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 42,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 42,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 42,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 42,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 42,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 42,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 42,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 43,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 43,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 43,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 43,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 43,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 43,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 43,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 43,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 44,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 44,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 44,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 44,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 44,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 44,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 44,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 44,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 45,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 45,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 45,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 45,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 45,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 45,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 45,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 45,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 46,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 46,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 44,
+   "iy": 46,
+   "tile": "terrain_tile_road_corner",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 45,
+   "iy": 46,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 46,
+   "iy": 46,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 47,
+   "iy": 46,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 46,
+   "tile": "terrain_tile_road_corner",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 46,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 46,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 46,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 46,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 46,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 47,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 47,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 47,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 47,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 47,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 47,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 47,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 47,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 48,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 48,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 48,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 48,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 48,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 48,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 48,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 48,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 49,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 49,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 49,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 49,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 49,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 49,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 49,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 49,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 50,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 50,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 50,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 50,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 50,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 50,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 50,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 50,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 51,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 51,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 51,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 51,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 51,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 51,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 51,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 51,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 52,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 52,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 52,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 52,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 52,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 52,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 52,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 52,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 53,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 53,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 53,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 53,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 53,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 53,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 53,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 53,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 54,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 54,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 54,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 54,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 54,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 54,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 54,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 54,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 55,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 55,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 55,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 55,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 55,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 55,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 55,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 55,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 56,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 56,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 56,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 56,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 56,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 56,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 56,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 56,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 57,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 57,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 57,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 57,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 57,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 57,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 57,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 57,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 58,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 34,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 35,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 36,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 37,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 38,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 39,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 40,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 41,
+   "iy": 58,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 58,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 58,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 58,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 58,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 58,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 58,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 32,
+   "iy": 59,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 33,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 34,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 35,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 36,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 37,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 38,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 39,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 40,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 41,
+   "iy": 59,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 59,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 59,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 59,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 59,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 59,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 60,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 60,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 60,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 60,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 55,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 56,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 57,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 58,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 59,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 60,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 61,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 62,
+   "iy": 60,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 63,
+   "iy": 60,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 61,
+   "tile": "terrain_tile_road_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 61,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 61,
+   "tile": "terrain_tile_paddy",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 61,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 55,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 56,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 57,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 58,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 59,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 60,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 61,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 62,
+   "iy": 61,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 63,
+   "iy": 61,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 48,
+   "iy": 62,
+   "tile": "terrain_tile_road_corner",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 49,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 50,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 51,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 52,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 53,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 54,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 55,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 56,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 57,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 58,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 59,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 60,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 61,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 62,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 63,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 64,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 65,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 66,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 69,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 70,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 71,
+   "iy": 62,
+   "tile": "terrain_tile_road_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 72,
+   "iy": 62,
+   "tile": "terrain_tile_road_end",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 63,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 69,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 70,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 71,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 72,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 73,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 74,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 75,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 76,
+   "iy": 63,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "ix": 77,
+   "iy": 63,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 64,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 64,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 64,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 65,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 65,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 65,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 66,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 66,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 66,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 67,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 67,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 67,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 68,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 68,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 68,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 69,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 69,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 69,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 70,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 70,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 70,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 71,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 71,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 71,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 72,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 72,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 72,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 73,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 73,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 73,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 74,
+   "tile": "terrain_tile_slope_straight",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 69,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 70,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 71,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 72,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 73,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 74,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 75,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 76,
+   "iy": 74,
+   "tile": "terrain_tile_grass",
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "ix": 77,
+   "iy": 74,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "ix": 67,
+   "iy": 75,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "ix": 68,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 69,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 70,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 71,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 72,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 73,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 74,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 75,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 76,
+   "iy": 75,
+   "tile": "terrain_tile_slope_straight",
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "ix": 77,
+   "iy": 75,
+   "tile": "terrain_tile_slope_corner_out",
+   "rot": 180,
+   "z": 0.0
+  }
+ ],
+ "props": [
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_a",
+   "x": 234.4,
+   "y": 4.5,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_b",
+   "x": 170.6,
+   "y": 6.9,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_a",
+   "x": 219.0,
+   "y": 25.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_b",
+   "x": 156.6,
+   "y": 86.6,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_a",
+   "x": 117.2,
+   "y": 107.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_b",
+   "x": 135.2,
+   "y": 108.8,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_a",
+   "x": 238.8,
+   "y": 36.4,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_c",
+   "x": 114.9,
+   "y": 129.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_b",
+   "x": 163.9,
+   "y": 99.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_c",
+   "x": 159.2,
+   "y": 65.0,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_c",
+   "x": 267.0,
+   "y": 12.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_a",
+   "x": 227.8,
+   "y": 130.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_b",
+   "x": 227.0,
+   "y": 26.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_b",
+   "x": 172.8,
+   "y": 117.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_b",
+   "x": 118.2,
+   "y": 22.9,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_a",
+   "x": 145.1,
+   "y": 66.6,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_b",
+   "x": 259.1,
+   "y": 34.6,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_a",
+   "x": 209.9,
+   "y": 6.4,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_b",
+   "x": 206.3,
+   "y": 122.7,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_a",
+   "x": 181.1,
+   "y": 94.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_a",
+   "x": 260.3,
+   "y": 37.7,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_a",
+   "x": 239.1,
+   "y": 91.0,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_a",
+   "x": 151.3,
+   "y": 113.4,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_b",
+   "x": 160.8,
+   "y": 14.1,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bush_b",
+   "x": 120.6,
+   "y": 1.9,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_zelkova_a",
+   "x": 142.5,
+   "y": 50.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_b",
+   "x": 126.8,
+   "y": 110.1,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_b",
+   "x": 150.5,
+   "y": 123.8,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_a",
+   "x": 163.3,
+   "y": 85.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_b",
+   "x": 114.2,
+   "y": 118.5,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_a",
+   "x": 126.4,
+   "y": 80.9,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_a",
+   "x": 148.3,
+   "y": 83.9,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_b",
+   "x": 150.8,
+   "y": 124.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_a",
+   "x": 154.9,
+   "y": 147.5,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_a",
+   "x": 121.6,
+   "y": 106.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_b",
+   "x": 122.3,
+   "y": 100.0,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_a",
+   "x": 116.7,
+   "y": 116.5,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_b",
+   "x": 162.8,
+   "y": 112.6,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_a",
+   "x": 159.5,
+   "y": 111.1,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "솔고개 마을 둘레",
+   "prop": "nature_bamboo_a",
+   "x": 165.5,
+   "y": 141.1,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 223.5,
+   "y": 81.7,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 213.4,
+   "y": 204.7,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 390.0,
+   "y": 218.7,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 446.0,
+   "y": 147.3,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 241.5,
+   "y": 95.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 346.2,
+   "y": 156.9,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_a",
+   "x": 261.7,
+   "y": 243.1,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 222.7,
+   "y": 166.1,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_a",
+   "x": 282.0,
+   "y": 99.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_flower",
+   "x": 222.8,
+   "y": 204.9,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 283.5,
+   "y": 243.1,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_low",
+   "x": 321.6,
+   "y": 142.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 345.0,
+   "y": 210.9,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_flower",
+   "x": 345.9,
+   "y": 221.1,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 380.7,
+   "y": 243.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 257.9,
+   "y": 139.4,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_flower",
+   "x": 377.6,
+   "y": 187.2,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_low",
+   "x": 283.7,
+   "y": 226.5,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_a",
+   "x": 209.5,
+   "y": 221.2,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 325.6,
+   "y": 44.9,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 363.1,
+   "y": 102.6,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 350.4,
+   "y": 138.2,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 297.6,
+   "y": 142.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_flower",
+   "x": 316.9,
+   "y": 225.5,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_a",
+   "x": 401.8,
+   "y": 63.1,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 214.0,
+   "y": 145.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 211.5,
+   "y": 234.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_flower",
+   "x": 382.6,
+   "y": 62.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 239.1,
+   "y": 129.5,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_flower",
+   "x": 267.2,
+   "y": 138.9,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 250.0,
+   "y": 76.9,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_a",
+   "x": 235.5,
+   "y": 42.1,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 435.8,
+   "y": 230.6,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 328.9,
+   "y": 64.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_a",
+   "x": 253.6,
+   "y": 212.5,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_flower",
+   "x": 375.4,
+   "y": 111.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 227.2,
+   "y": 242.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_b",
+   "x": 442.3,
+   "y": 48.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "terrain_bush_low",
+   "x": 451.0,
+   "y": 86.0,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_bush_c",
+   "x": 253.5,
+   "y": 189.2,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_zelkova_a",
+   "x": 412.4,
+   "y": 140.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_zelkova_a",
+   "x": 244.3,
+   "y": 207.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_zelkova_a",
+   "x": 410.0,
+   "y": 235.7,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_zelkova_a",
+   "x": 452.8,
+   "y": 186.2,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_zelkova_b",
+   "x": 441.5,
+   "y": 225.5,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_zelkova_b",
+   "x": 370.0,
+   "y": 246.9,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_zelkova_a",
+   "x": 250.1,
+   "y": 154.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들",
+   "prop": "nature_zelkova_b",
+   "x": 395.0,
+   "y": 117.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 373.5,
+   "y": 290.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 369.2,
+   "y": 454.2,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 372.8,
+   "y": 293.9,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 360.5,
+   "y": 420.4,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 347.4,
+   "y": 443.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 350.7,
+   "y": 312.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 454.8,
+   "y": 262.5,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 398.9,
+   "y": 460.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 343.4,
+   "y": 330.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 458.0,
+   "y": 242.7,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 339.4,
+   "y": 484.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 343.0,
+   "y": 437.2,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 422.1,
+   "y": 439.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 377.9,
+   "y": 298.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 453.9,
+   "y": 258.4,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 398.0,
+   "y": 344.5,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 469.9,
+   "y": 273.7,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 421.0,
+   "y": 457.5,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 365.4,
+   "y": 434.4,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 360.8,
+   "y": 278.3,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 375.1,
+   "y": 331.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 390.0,
+   "y": 300.5,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 372.9,
+   "y": 346.1,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 349.3,
+   "y": 240.7,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 347.0,
+   "y": 415.3,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 350.3,
+   "y": 316.1,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 382.5,
+   "y": 249.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 396.6,
+   "y": 466.2,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 380.1,
+   "y": 309.4,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 365.6,
+   "y": 428.0,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 380.9,
+   "y": 435.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 394.7,
+   "y": 308.9,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 365.7,
+   "y": 288.8,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 364.6,
+   "y": 485.9,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 394.7,
+   "y": 371.1,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 362.6,
+   "y": 485.8,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 377.6,
+   "y": 396.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 372.8,
+   "y": 495.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 420.8,
+   "y": 326.1,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 372.1,
+   "y": 309.5,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 416.5,
+   "y": 452.9,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 422.4,
+   "y": 427.9,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 373.0,
+   "y": 489.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 366.1,
+   "y": 393.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 362.2,
+   "y": 307.0,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 382.4,
+   "y": 419.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 379.1,
+   "y": 316.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 382.4,
+   "y": 498.9,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 397.2,
+   "y": 349.4,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 388.0,
+   "y": 246.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 396.7,
+   "y": 362.9,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 346.9,
+   "y": 453.8,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 339.9,
+   "y": 357.4,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 449.2,
+   "y": 270.7,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 397.3,
+   "y": 411.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_b",
+   "x": 351.2,
+   "y": 348.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_a",
+   "x": 416.7,
+   "y": 413.0,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_reed_b",
+   "x": 376.7,
+   "y": 347.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "terrain_bush_tall",
+   "x": 383.0,
+   "y": 309.1,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 바닥",
+   "prop": "nature_silvergrass_a",
+   "x": 419.2,
+   "y": 292.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 304.6,
+   "y": 444.6,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 437.3,
+   "y": 335.5,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_c",
+   "x": 478.9,
+   "y": 396.3,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 491.7,
+   "y": 390.9,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 455.4,
+   "y": 340.1,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 322.4,
+   "y": 368.7,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_c",
+   "x": 277.5,
+   "y": 389.5,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 316.9,
+   "y": 337.5,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 467.0,
+   "y": 335.1,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 310.8,
+   "y": 381.3,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 305.2,
+   "y": 419.5,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 456.7,
+   "y": 438.1,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 462.5,
+   "y": 479.2,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_medium",
+   "x": 473.4,
+   "y": 396.5,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 442.9,
+   "y": 346.4,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_medium",
+   "x": 299.0,
+   "y": 409.1,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_medium",
+   "x": 314.5,
+   "y": 449.3,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 293.9,
+   "y": 337.6,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 267.7,
+   "y": 454.0,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 478.3,
+   "y": 453.3,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 283.1,
+   "y": 369.7,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 483.5,
+   "y": 475.7,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_c",
+   "x": 282.3,
+   "y": 382.7,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 325.2,
+   "y": 451.4,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_c",
+   "x": 444.2,
+   "y": 468.3,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 460.8,
+   "y": 372.3,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 444.8,
+   "y": 316.2,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 274.5,
+   "y": 399.0,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 458.0,
+   "y": 339.1,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 436.9,
+   "y": 404.7,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 463.0,
+   "y": 356.1,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_medium",
+   "x": 324.9,
+   "y": 305.8,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 325.0,
+   "y": 468.2,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 327.4,
+   "y": 463.0,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 308.0,
+   "y": 457.6,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_c",
+   "x": 273.2,
+   "y": 409.8,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 494.6,
+   "y": 467.7,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 502.9,
+   "y": 373.8,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 475.7,
+   "y": 345.1,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 477.8,
+   "y": 442.3,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 275.3,
+   "y": 311.1,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 473.6,
+   "y": 475.4,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_medium",
+   "x": 444.1,
+   "y": 300.9,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 298.6,
+   "y": 461.5,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 463.2,
+   "y": 415.3,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 267.5,
+   "y": 378.5,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 287.0,
+   "y": 377.2,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 482.6,
+   "y": 388.9,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 322.4,
+   "y": 317.7,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_c",
+   "x": 498.0,
+   "y": 338.6,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 266.0,
+   "y": 390.4,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 462.1,
+   "y": 357.4,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 463.0,
+   "y": 417.5,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 436.6,
+   "y": 446.6,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 277.7,
+   "y": 306.3,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_a",
+   "x": 447.0,
+   "y": 395.1,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 293.9,
+   "y": 334.3,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 484.4,
+   "y": 312.6,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_medium",
+   "x": 486.6,
+   "y": 329.8,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_c",
+   "x": 494.3,
+   "y": 321.3,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_medium",
+   "x": 313.4,
+   "y": 313.8,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_medium",
+   "x": 324.9,
+   "y": 348.1,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_small",
+   "x": 459.0,
+   "y": 369.8,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 267.2,
+   "y": 333.7,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 460.6,
+   "y": 481.2,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_c",
+   "x": 451.0,
+   "y": 393.0,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 490.7,
+   "y": 418.5,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 489.5,
+   "y": 440.7,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "nature_pine_b",
+   "x": 496.6,
+   "y": 446.2,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "물막이 골 벼랑",
+   "prop": "terrain_rock_cluster",
+   "x": 464.5,
+   "y": 421.4,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 530.2,
+   "y": 519.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 565.0,
+   "y": 203.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 195.9,
+   "y": 123.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 492.6,
+   "y": 46.9,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 233.2,
+   "y": 356.9,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 450.3,
+   "y": 508.0,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 630.1,
+   "y": 454.3,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 134.3,
+   "y": 340.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 610.7,
+   "y": 156.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 564.9,
+   "y": 46.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 157.4,
+   "y": 167.4,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 20.1,
+   "y": 290.9,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 1.3,
+   "y": 456.5,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 564.3,
+   "y": 81.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 18.9,
+   "y": 99.1,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 97.8,
+   "y": 341.3,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 538.6,
+   "y": 132.5,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 162.7,
+   "y": 565.1,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 155.9,
+   "y": 9.8,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 86.1,
+   "y": 627.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 522.4,
+   "y": 440.6,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 476.0,
+   "y": 54.4,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 115.7,
+   "y": 598.1,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 158.9,
+   "y": 81.4,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 118.6,
+   "y": 581.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 146.4,
+   "y": 267.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 6.2,
+   "y": 397.6,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 60.7,
+   "y": 635.6,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 396.6,
+   "y": 290.3,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 418.5,
+   "y": 402.9,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 318.2,
+   "y": 582.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 493.8,
+   "y": 25.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 441.8,
+   "y": 505.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 528.9,
+   "y": 556.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 283.1,
+   "y": 69.5,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 463.4,
+   "y": 168.7,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 138.9,
+   "y": 393.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 72.8,
+   "y": 141.8,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 172.6,
+   "y": 254.5,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 177.2,
+   "y": 108.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 104.6,
+   "y": 489.7,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 238.6,
+   "y": 538.6,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 621.6,
+   "y": 264.8,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 32.7,
+   "y": 29.9,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 62.1,
+   "y": 3.7,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 257.7,
+   "y": 490.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 369.9,
+   "y": 198.3,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 331.0,
+   "y": 289.9,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 50.5,
+   "y": 520.9,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 32.8,
+   "y": 494.5,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 253.6,
+   "y": 217.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 226.8,
+   "y": 126.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 180.3,
+   "y": 243.4,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 13.1,
+   "y": 636.4,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 73.7,
+   "y": 307.4,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 20.1,
+   "y": 25.1,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 41.3,
+   "y": 579.7,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 462.6,
+   "y": 507.6,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 584.7,
+   "y": 639.2,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 201.2,
+   "y": 425.5,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 439.0,
+   "y": 259.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 72.9,
+   "y": 43.5,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 201.1,
+   "y": 586.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 625.7,
+   "y": 49.3,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 211.9,
+   "y": 176.9,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 62.5,
+   "y": 430.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 95.1,
+   "y": 481.1,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 428.4,
+   "y": 259.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 325.8,
+   "y": 260.3,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 599.0,
+   "y": 617.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 447.4,
+   "y": 116.8,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 530.6,
+   "y": 287.1,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 493.2,
+   "y": 41.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 308.6,
+   "y": 619.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 14.9,
+   "y": 308.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 190.4,
+   "y": 382.5,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 395.3,
+   "y": 407.3,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 219.4,
+   "y": 628.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 538.1,
+   "y": 166.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 154.6,
+   "y": 419.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 629.3,
+   "y": 566.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 35.7,
+   "y": 299.2,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 213.6,
+   "y": 4.1,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 63.1,
+   "y": 46.9,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 547.6,
+   "y": 609.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 274.5,
+   "y": 605.9,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 174.4,
+   "y": 94.2,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 365.6,
+   "y": 245.6,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 261.4,
+   "y": 38.4,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 298.2,
+   "y": 284.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 392.8,
+   "y": 143.1,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 542.4,
+   "y": 34.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 131.2,
+   "y": 201.3,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 245.2,
+   "y": 504.9,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 317.2,
+   "y": 125.6,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 49.0,
+   "y": 364.6,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 373.5,
+   "y": 35.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 118.1,
+   "y": 522.8,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 140.8,
+   "y": 450.8,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 122.7,
+   "y": 10.7,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 207.1,
+   "y": 341.1,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 45.5,
+   "y": 306.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 441.5,
+   "y": 247.1,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 213.2,
+   "y": 6.3,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 575.1,
+   "y": 450.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 513.2,
+   "y": 268.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 614.7,
+   "y": 332.5,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 194.0,
+   "y": 612.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 164.0,
+   "y": 442.3,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 342.0,
+   "y": 31.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 257.1,
+   "y": 12.9,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 4.1,
+   "y": 600.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 358.1,
+   "y": 551.4,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 129.8,
+   "y": 178.5,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 589.5,
+   "y": 349.9,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 62.3,
+   "y": 114.3,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 148.3,
+   "y": 541.5,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 22.1,
+   "y": 517.7,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 161.6,
+   "y": 613.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 290.4,
+   "y": 619.0,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 257.9,
+   "y": 3.1,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 533.6,
+   "y": 618.8,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 466.6,
+   "y": 509.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 221.0,
+   "y": 354.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 291.8,
+   "y": 595.1,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 49.7,
+   "y": 169.1,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 27.5,
+   "y": 342.4,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 378.4,
+   "y": 470.2,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 509.6,
+   "y": 159.3,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 469.4,
+   "y": 582.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 49.4,
+   "y": 636.8,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 197.8,
+   "y": 560.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 134.9,
+   "y": 267.1,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 347.1,
+   "y": 126.5,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 638.6,
+   "y": 277.1,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 364.4,
+   "y": 385.4,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 492.1,
+   "y": 165.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 354.8,
+   "y": 604.8,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 89.5,
+   "y": 387.3,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 363.3,
+   "y": 29.6,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 76.4,
+   "y": 295.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 510.0,
+   "y": 45.1,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 445.5,
+   "y": 606.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 285.8,
+   "y": 67.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 473.0,
+   "y": 628.7,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 52.8,
+   "y": 408.7,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 211.1,
+   "y": 434.0,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 583.2,
+   "y": 113.1,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 379.9,
+   "y": 169.7,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 11.3,
+   "y": 185.1,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 275.5,
+   "y": 270.0,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 131.1,
+   "y": 185.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 549.7,
+   "y": 461.6,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 517.8,
+   "y": 91.0,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 267.9,
+   "y": 491.5,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 222.8,
+   "y": 254.9,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 2.8,
+   "y": 51.5,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 393.4,
+   "y": 364.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 124.2,
+   "y": 282.1,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 614.9,
+   "y": 406.3,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 566.4,
+   "y": 52.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 556.4,
+   "y": 25.3,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 260.7,
+   "y": 558.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 97.3,
+   "y": 490.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 467.8,
+   "y": 29.9,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 154.4,
+   "y": 629.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 235.5,
+   "y": 343.1,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 318.4,
+   "y": 509.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 377.3,
+   "y": 604.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 381.3,
+   "y": 548.8,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 367.3,
+   "y": 293.3,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 413.0,
+   "y": 589.4,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 235.6,
+   "y": 454.5,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 418.0,
+   "y": 475.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 107.0,
+   "y": 445.8,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 43.7,
+   "y": 603.4,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 313.7,
+   "y": 240.7,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 164.5,
+   "y": 454.1,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 12.8,
+   "y": 398.4,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 204.5,
+   "y": 502.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 512.9,
+   "y": 568.6,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 172.0,
+   "y": 337.5,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 163.2,
+   "y": 50.1,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 11.1,
+   "y": 490.5,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 235.6,
+   "y": 577.1,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 152.7,
+   "y": 391.3,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 177.1,
+   "y": 413.4,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 588.1,
+   "y": 164.9,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 499.9,
+   "y": 538.6,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 273.1,
+   "y": 233.7,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 277.2,
+   "y": 164.9,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 274.0,
+   "y": 579.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 144.5,
+   "y": 77.1,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 547.0,
+   "y": 456.9,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 194.8,
+   "y": 342.2,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 78.6,
+   "y": 356.5,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 292.7,
+   "y": 64.9,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_cluster",
+   "x": 257.0,
+   "y": 137.5,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 220.9,
+   "y": 290.3,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_b",
+   "x": 438.1,
+   "y": 15.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 484.6,
+   "y": 177.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_c",
+   "x": 470.9,
+   "y": 237.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 36.4,
+   "y": 482.9,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 595.7,
+   "y": 360.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 33.2,
+   "y": 153.3,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 383.2,
+   "y": 354.2,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 380.4,
+   "y": 101.2,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_medium",
+   "x": 428.8,
+   "y": 589.2,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 569.4,
+   "y": 194.8,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 126.4,
+   "y": 498.6,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 180.2,
+   "y": 438.8,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 159.2,
+   "y": 549.6,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 190.5,
+   "y": 137.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 326.9,
+   "y": 187.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_a",
+   "x": 102.2,
+   "y": 273.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_c",
+   "x": 410.6,
+   "y": 84.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 528.9,
+   "y": 310.7,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "terrain_rock_small",
+   "x": 283.6,
+   "y": 532.8,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_pine_a",
+   "x": 195.6,
+   "y": 344.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "산자락",
+   "prop": "nature_bush_b",
+   "x": 607.1,
+   "y": 492.1,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 595.1,
+   "y": 593.1,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 571.9,
+   "y": 522.9,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 553.8,
+   "y": 530.3,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 555.1,
+   "y": 554.3,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 576.9,
+   "y": 583.0,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 545.6,
+   "y": 524.9,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 545.1,
+   "y": 517.2,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 587.4,
+   "y": 570.4,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_medium",
+   "x": 604.3,
+   "y": 587.2,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 562.4,
+   "y": 514.4,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 606.2,
+   "y": 595.8,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 545.8,
+   "y": 558.1,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 565.6,
+   "y": 553.3,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 577.2,
+   "y": 578.9,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 551.4,
+   "y": 550.4,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 611.2,
+   "y": 553.7,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 565.3,
+   "y": 593.2,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 592.6,
+   "y": 532.9,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_medium",
+   "x": 579.3,
+   "y": 530.7,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 615.4,
+   "y": 532.8,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 557.4,
+   "y": 551.2,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_medium",
+   "x": 573.9,
+   "y": 555.6,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 599.2,
+   "y": 595.3,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 559.2,
+   "y": 530.7,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 564.0,
+   "y": 534.2,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_medium",
+   "x": 565.0,
+   "y": 570.6,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 553.7,
+   "y": 544.8,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_medium",
+   "x": 613.8,
+   "y": 585.0,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 553.2,
+   "y": 596.5,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 575.3,
+   "y": 515.0,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 610.8,
+   "y": 551.0,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 570.1,
+   "y": 572.6,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 559.4,
+   "y": 529.0,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 604.2,
+   "y": 542.2,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 588.3,
+   "y": 571.0,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 554.7,
+   "y": 541.8,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 606.3,
+   "y": 571.8,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 569.2,
+   "y": 553.2,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_medium",
+   "x": 569.4,
+   "y": 598.9,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 591.3,
+   "y": 565.7,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 510.7,
+   "y": 573.1,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 519.1,
+   "y": 505.2,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 502.6,
+   "y": 606.7,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 573.0,
+   "y": 489.2,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 566.2,
+   "y": 457.9,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 520.7,
+   "y": 470.6,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 595.3,
+   "y": 637.5,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 614.5,
+   "y": 454.0,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 485.7,
+   "y": 597.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 619.3,
+   "y": 474.7,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 492.7,
+   "y": 623.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 527.4,
+   "y": 480.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 582.7,
+   "y": 469.5,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 489.5,
+   "y": 558.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 484.8,
+   "y": 547.7,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 529.5,
+   "y": 614.1,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 566.7,
+   "y": 635.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 550.6,
+   "y": 467.1,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 529.4,
+   "y": 577.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 515.0,
+   "y": 473.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 594.4,
+   "y": 627.4,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 493.3,
+   "y": 607.3,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 628.7,
+   "y": 515.3,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 612.3,
+   "y": 471.1,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 512.9,
+   "y": 630.3,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 524.2,
+   "y": 456.6,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 603.1,
+   "y": 451.9,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 521.5,
+   "y": 622.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 629.9,
+   "y": 638.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 628.5,
+   "y": 593.9,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 633.6,
+   "y": 612.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 603.3,
+   "y": 635.8,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 546.9,
+   "y": 638.5,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 633.3,
+   "y": 489.5,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 636.7,
+   "y": 535.4,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 629.0,
+   "y": 508.9,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 514.7,
+   "y": 625.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 631.0,
+   "y": 513.6,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 602.0,
+   "y": 492.5,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 510.3,
+   "y": 564.3,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 562.2,
+   "y": 636.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 570.8,
+   "y": 465.3,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 630.5,
+   "y": 545.5,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 625.2,
+   "y": 451.4,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 556.7,
+   "y": 611.9,
+   "rot": 0,
+   "z": 0.0
+  }
+ ],
+ "markers": [
+  {
+   "kind": "village",
+   "name": "솔고개 마을(원점, 마을 배치표 참조)",
+   "x": 196,
+   "y": 62,
+   "z": 0
+  },
+  {
+   "kind": "seonang",
+   "name": "서낭당·넋길 이동 지점 ①(마을)",
+   "x": 188,
+   "y": 36,
+   "z": 0
+  },
+  {
+   "kind": "spawn",
+   "name": "시작 위치(마을 남쪽 입구)",
+   "x": 196,
+   "y": 30,
+   "z": 0
+  },
+  {
+   "kind": "seonang",
+   "name": "서낭당 ②(보릿들 한가운데)",
+   "x": 160.0,
+   "y": 180,
+   "z": 0
+  },
+  {
+   "kind": "seonang",
+   "name": "서낭당 ③(물막이 골 어귀)",
+   "x": 356,
+   "y": 324,
+   "z": 0
+  },
+  {
+   "kind": "cave",
+   "name": "굴 입구(물막이 골 서쪽 벼랑 아래, 안은 늘 밤)",
+   "x": 324,
+   "y": 324,
+   "z": 0
+  },
+  {
+   "kind": "weir",
+   "name": "물막이(개울을 막은 둑, 장소 이름의 유래)",
+   "x": 404.0,
+   "y": 384.0,
+   "z": 0
+  },
+  {
+   "kind": "ruin",
+   "name": "폐당집 입구(터 위, 보스 ①: 나루 영감은 개울 물가로 따로)",
+   "x": 580,
+   "y": 552,
+   "z": 2.0
+  },
+  {
+   "kind": "boss",
+   "name": "1호 보스 나루 영감 자리(개울 위 나룻배)",
+   "x": 404.0,
+   "y": 288,
+   "z": 0
+  },
+  {
+   "kind": "soulpath",
+   "name": "넋길 시작(마을 → 보릿들, 밤에만)",
+   "x": 292,
+   "y": 144,
+   "z": 0
+  },
+  {
+   "kind": "soulpath",
+   "name": "넋길 중간",
+   "x": 368,
+   "y": 352,
+   "z": 0
+  },
+  {
+   "kind": "soulpath",
+   "name": "넋길 끝(폐당집)",
+   "x": 576,
+   "y": 496,
+   "z": 0
+  }
+ ],
+ "village_layout": "assets3d/layouts/solgogae_village.json (원점 = 필드 (196,60)에 놓는다)",
+ "village_offset_m": [
+  196,
+  60
+ ],
+ "counts": {
+  "tiles(비풀밭)": 1083,
+  "props": 523,
+  "paddy": 286
+ }
+}

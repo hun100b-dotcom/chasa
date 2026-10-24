@@ -1,8 +1,1233 @@
 {
- "map": "솔고개 마을(첫 구역)",
+ "map": "솔고개 마을(첫 구역) v2 — 집은 한옥 조각 키트로 조립",
+ "how_to": "buildings[].pieces는 이미 세계 좌표(x,y,z,rot). 그대로 한옥 조각 GLB를 놓으면 집이 선다.",
  "units": "m",
  "axes": "x=동, y=북, rot=반시계 도(0=정면이 남쪽)",
  "origin": "마을 길 한가운데",
+ "buildings": [
+  {
+   "id": "house_00",
+   "kind": "choga4",
+   "x": -8.5,
+   "y": -13,
+   "rot": 90,
+   "note": "서쪽 초가",
+   "pieces": [
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -6.5,
+     "y": -13.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -10.5,
+     "y": -13.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -8.5,
+     "y": -15.0,
+     "z": 0,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -8.5,
+     "y": -11.0,
+     "z": 0,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_door_single",
+     "file": "assets3d/hanok/hanok_door_single.glb",
+     "x": -6.5,
+     "y": -13.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": -10.5,
+     "y": -13.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": -8.5,
+     "y": -11.0,
+     "z": 0.5,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": -8.5,
+     "y": -15.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -6.5,
+     "y": -15.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -10.5,
+     "y": -15.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -6.5,
+     "y": -11.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -10.5,
+     "y": -11.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": -8.5,
+     "y": -13.0,
+     "z": 2.9,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": -8.5,
+     "y": -13.0,
+     "z": 2.9,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_saripmun",
+     "file": "assets3d/hanok/hanok_saripmun.glb",
+     "x": -3.5,
+     "y": -13.0,
+     "z": 0,
+     "rot": 90
+    }
+   ]
+  },
+  {
+   "id": "house_01",
+   "kind": "choga8",
+   "x": -8.5,
+   "y": -3,
+   "rot": 90,
+   "note": "서쪽 긴 초가(방 둘)",
+   "pieces": [
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -6.5,
+     "y": -5.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -10.5,
+     "y": -5.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -6.5,
+     "y": -1.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -10.5,
+     "y": -1.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -8.5,
+     "y": -7.0,
+     "z": 0,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -8.5,
+     "y": 1.0,
+     "z": 0,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": -6.5,
+     "y": -7.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": -10.5,
+     "y": -7.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": -6.5,
+     "y": 1.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": -10.5,
+     "y": 1.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_door_single",
+     "file": "assets3d/hanok/hanok_door_single.glb",
+     "x": -6.5,
+     "y": -5.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_door_single",
+     "file": "assets3d/hanok/hanok_door_single.glb",
+     "x": -6.5,
+     "y": -1.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": -10.5,
+     "y": -5.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": -10.5,
+     "y": -1.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": -8.5,
+     "y": 1.0,
+     "z": 0.5,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": -8.5,
+     "y": -7.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -6.5,
+     "y": -7.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -10.5,
+     "y": -7.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -6.5,
+     "y": -3.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -10.5,
+     "y": -3.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -6.5,
+     "y": 1.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -10.5,
+     "y": 1.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_choga_roof_straight",
+     "file": "assets3d/hanok/hanok_choga_roof_straight.glb",
+     "x": -8.5,
+     "y": -3.0,
+     "z": 2.9,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": -8.5,
+     "y": -1.0,
+     "z": 2.9,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": -8.5,
+     "y": -5.0,
+     "z": 2.9,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_chimney",
+     "file": "assets3d/hanok/hanok_chimney.glb",
+     "x": -10.8,
+     "y": 2.6,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_saripmun",
+     "file": "assets3d/hanok/hanok_saripmun.glb",
+     "x": -3.5,
+     "y": -3.0,
+     "z": 0,
+     "rot": 90
+    }
+   ]
+  },
+  {
+   "id": "house_02",
+   "kind": "choga4",
+   "x": -8.5,
+   "y": 7,
+   "rot": 90,
+   "note": "서쪽 초가",
+   "pieces": [
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -6.5,
+     "y": 7.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -10.5,
+     "y": 7.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -8.5,
+     "y": 5.0,
+     "z": 0,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -8.5,
+     "y": 9.0,
+     "z": 0,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_door_single",
+     "file": "assets3d/hanok/hanok_door_single.glb",
+     "x": -6.5,
+     "y": 7.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": -10.5,
+     "y": 7.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": -8.5,
+     "y": 9.0,
+     "z": 0.5,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": -8.5,
+     "y": 5.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -6.5,
+     "y": 5.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -10.5,
+     "y": 5.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -6.5,
+     "y": 9.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": -10.5,
+     "y": 9.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": -8.5,
+     "y": 7.0,
+     "z": 2.9,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": -8.5,
+     "y": 7.0,
+     "z": 2.9,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_saripmun",
+     "file": "assets3d/hanok/hanok_saripmun.glb",
+     "x": -3.5,
+     "y": 7.0,
+     "z": 0,
+     "rot": 90
+    }
+   ]
+  },
+  {
+   "id": "house_03",
+   "kind": "choga4",
+   "x": 8.5,
+   "y": -10,
+   "rot": -90,
+   "note": "동쪽 초가",
+   "pieces": [
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 6.5,
+     "y": -10.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 10.5,
+     "y": -10.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 8.5,
+     "y": -8.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 8.5,
+     "y": -12.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_door_single",
+     "file": "assets3d/hanok/hanok_door_single.glb",
+     "x": 6.5,
+     "y": -10.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": 10.5,
+     "y": -10.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": 8.5,
+     "y": -12.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": 8.5,
+     "y": -8.0,
+     "z": 0.5,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 6.5,
+     "y": -8.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 10.5,
+     "y": -8.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 6.5,
+     "y": -12.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 10.5,
+     "y": -12.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": 8.5,
+     "y": -10.0,
+     "z": 2.9,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": 8.5,
+     "y": -10.0,
+     "z": 2.9,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_saripmun",
+     "file": "assets3d/hanok/hanok_saripmun.glb",
+     "x": 3.5,
+     "y": -10.0,
+     "z": 0,
+     "rot": -90
+    }
+   ]
+  },
+  {
+   "id": "house_04",
+   "kind": "choga4",
+   "x": 8.5,
+   "y": 0,
+   "rot": -90,
+   "note": "동쪽 초가",
+   "pieces": [
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 6.5,
+     "y": -0.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 10.5,
+     "y": 0.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 8.5,
+     "y": 2.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 8.5,
+     "y": -2.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_door_single",
+     "file": "assets3d/hanok/hanok_door_single.glb",
+     "x": 6.5,
+     "y": -0.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": 10.5,
+     "y": 0.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": 8.5,
+     "y": -2.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": 8.5,
+     "y": 2.0,
+     "z": 0.5,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 6.5,
+     "y": 2.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 10.5,
+     "y": 2.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 6.5,
+     "y": -2.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 10.5,
+     "y": -2.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": 8.5,
+     "y": 0.0,
+     "z": 2.9,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": 8.5,
+     "y": 0.0,
+     "z": 2.9,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_saripmun",
+     "file": "assets3d/hanok/hanok_saripmun.glb",
+     "x": 3.5,
+     "y": -0.0,
+     "z": 0,
+     "rot": -90
+    }
+   ]
+  },
+  {
+   "id": "house_05",
+   "kind": "choga8",
+   "x": 8.5,
+   "y": 9,
+   "rot": -90,
+   "note": "동쪽 긴 초가(방 둘)",
+   "pieces": [
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 6.5,
+     "y": 11.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 10.5,
+     "y": 11.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 6.5,
+     "y": 7.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 10.5,
+     "y": 7.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 8.5,
+     "y": 13.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 8.5,
+     "y": 5.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": 6.5,
+     "y": 13.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": 10.5,
+     "y": 13.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": 6.5,
+     "y": 5.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": 10.5,
+     "y": 5.0,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_door_single",
+     "file": "assets3d/hanok/hanok_door_single.glb",
+     "x": 6.5,
+     "y": 11.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_door_single",
+     "file": "assets3d/hanok/hanok_door_single.glb",
+     "x": 6.5,
+     "y": 7.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": 10.5,
+     "y": 11.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": 10.5,
+     "y": 7.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_wall_mud",
+     "file": "assets3d/hanok/hanok_wall_mud.glb",
+     "x": 8.5,
+     "y": 5.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": 8.5,
+     "y": 13.0,
+     "z": 0.5,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 6.5,
+     "y": 13.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 10.5,
+     "y": 13.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 6.5,
+     "y": 9.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 10.5,
+     "y": 9.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 6.5,
+     "y": 5.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_square",
+     "file": "assets3d/hanok/hanok_pillar_square.glb",
+     "x": 10.5,
+     "y": 5.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_choga_roof_straight",
+     "file": "assets3d/hanok/hanok_choga_roof_straight.glb",
+     "x": 8.5,
+     "y": 9.0,
+     "z": 2.9,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": 8.5,
+     "y": 7.0,
+     "z": 2.9,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_choga_roof_hip_end",
+     "file": "assets3d/hanok/hanok_choga_roof_hip_end.glb",
+     "x": 8.5,
+     "y": 11.0,
+     "z": 2.9,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_chimney",
+     "file": "assets3d/hanok/hanok_chimney.glb",
+     "x": 10.8,
+     "y": 3.4,
+     "z": 0,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_saripmun",
+     "file": "assets3d/hanok/hanok_saripmun.glb",
+     "x": 3.5,
+     "y": 9.0,
+     "z": 0,
+     "rot": -90
+    }
+   ]
+  },
+  {
+   "id": "house_06",
+   "kind": "giwa8",
+   "x": 0,
+   "y": 19,
+   "rot": 0,
+   "note": "북쪽 끝 기와집(마을에서 가장 큰 집)",
+   "pieces": [
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -2.0,
+     "y": 17.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -2.0,
+     "y": 21.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 2.0,
+     "y": 17.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 2.0,
+     "y": 21.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": -4.0,
+     "y": 19.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_straight",
+     "file": "assets3d/hanok/hanok_gidan_straight.glb",
+     "x": 4.0,
+     "y": 19.0,
+     "z": 0,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": -4.0,
+     "y": 17.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": -4.0,
+     "y": 21.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": 4.0,
+     "y": 17.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_gidan_corner",
+     "file": "assets3d/hanok/hanok_gidan_corner.glb",
+     "x": 4.0,
+     "y": 21.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_wall_window",
+     "file": "assets3d/hanok/hanok_wall_window.glb",
+     "x": -2.0,
+     "y": 17.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_door_double",
+     "file": "assets3d/hanok/hanok_door_double.glb",
+     "x": 2.0,
+     "y": 17.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_wall_plaster",
+     "file": "assets3d/hanok/hanok_wall_plaster.glb",
+     "x": -2.0,
+     "y": 21.0,
+     "z": 0.5,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_wall_plaster",
+     "file": "assets3d/hanok/hanok_wall_plaster.glb",
+     "x": 2.0,
+     "y": 21.0,
+     "z": 0.5,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_wall_plank",
+     "file": "assets3d/hanok/hanok_wall_plank.glb",
+     "x": 4.0,
+     "y": 19.0,
+     "z": 0.5,
+     "rot": 90
+    },
+    {
+     "piece": "hanok_wall_plaster",
+     "file": "assets3d/hanok/hanok_wall_plaster.glb",
+     "x": -4.0,
+     "y": 19.0,
+     "z": 0.5,
+     "rot": -90
+    },
+    {
+     "piece": "hanok_pillar_round",
+     "file": "assets3d/hanok/hanok_pillar_round.glb",
+     "x": -4.0,
+     "y": 17.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_pillar_round",
+     "file": "assets3d/hanok/hanok_pillar_round.glb",
+     "x": -4.0,
+     "y": 21.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_pillar_round",
+     "file": "assets3d/hanok/hanok_pillar_round.glb",
+     "x": 0.0,
+     "y": 17.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_pillar_round",
+     "file": "assets3d/hanok/hanok_pillar_round.glb",
+     "x": 0.0,
+     "y": 21.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_pillar_round",
+     "file": "assets3d/hanok/hanok_pillar_round.glb",
+     "x": 4.0,
+     "y": 17.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_pillar_round",
+     "file": "assets3d/hanok/hanok_pillar_round.glb",
+     "x": 4.0,
+     "y": 21.0,
+     "z": 0.5,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_toenmaru_straight",
+     "file": "assets3d/hanok/hanok_toenmaru_straight.glb",
+     "x": -2.0,
+     "y": 17.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_toenmaru_straight",
+     "file": "assets3d/hanok/hanok_toenmaru_straight.glb",
+     "x": 2.0,
+     "y": 17.0,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_daetdol_step",
+     "file": "assets3d/hanok/hanok_daetdol_step.glb",
+     "x": 2.0,
+     "y": 15.7,
+     "z": 0,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_giwa_roof_straight",
+     "file": "assets3d/hanok/hanok_giwa_roof_straight.glb",
+     "x": 0.0,
+     "y": 19.0,
+     "z": 2.9,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_giwa_roof_hip_end",
+     "file": "assets3d/hanok/hanok_giwa_roof_hip_end.glb",
+     "x": 2.0,
+     "y": 19.0,
+     "z": 2.9,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_giwa_roof_hip_end",
+     "file": "assets3d/hanok/hanok_giwa_roof_hip_end.glb",
+     "x": -2.0,
+     "y": 19.0,
+     "z": 2.9,
+     "rot": 180
+    },
+    {
+     "piece": "hanok_giwa_ridge_end",
+     "file": "assets3d/hanok/hanok_giwa_ridge_end.glb",
+     "x": 3.0,
+     "y": 19.0,
+     "z": 4.45,
+     "rot": 0
+    },
+    {
+     "piece": "hanok_chimney",
+     "file": "assets3d/hanok/hanok_chimney.glb",
+     "x": 5.6,
+     "y": 21.3,
+     "z": 0,
+     "rot": 0
+    }
+   ]
+  }
+ ],
  "props": [
   {
    "prop": "prop_jangseung",
@@ -53,65 +1278,17 @@
    "note": "빈 상여(어귀 곁, 복선)"
   },
   {
-   "prop": "prop_choga",
-   "file": "assets3d/props/prop_choga.glb",
-   "x": -7.5,
-   "y": -13,
-   "rot": 90,
-   "note": "서쪽 초가"
-  },
-  {
-   "prop": "prop_choga",
-   "file": "assets3d/props/prop_choga.glb",
-   "x": -7.5,
-   "y": -4,
-   "rot": 90,
-   "note": "서쪽 초가"
-  },
-  {
-   "prop": "prop_choga",
-   "file": "assets3d/props/prop_choga.glb",
-   "x": -7.5,
-   "y": 6,
-   "rot": 90,
-   "note": "서쪽 초가"
-  },
-  {
    "prop": "prop_jangdok",
    "file": "assets3d/props/prop_jangdok.glb",
-   "x": -12.5,
+   "x": -13.5,
    "y": -4,
    "rot": 90,
    "note": "서쪽 집 뒤 장독대"
   },
   {
-   "prop": "prop_choga",
-   "file": "assets3d/props/prop_choga.glb",
-   "x": 7.5,
-   "y": -10,
-   "rot": -90,
-   "note": "동쪽 초가"
-  },
-  {
-   "prop": "prop_choga",
-   "file": "assets3d/props/prop_choga.glb",
-   "x": 7.5,
-   "y": 1,
-   "rot": -90,
-   "note": "동쪽 초가"
-  },
-  {
-   "prop": "prop_choga",
-   "file": "assets3d/props/prop_choga.glb",
-   "x": 7.5,
-   "y": 9,
-   "rot": -90,
-   "note": "동쪽 초가"
-  },
-  {
    "prop": "prop_jangdok",
    "file": "assets3d/props/prop_jangdok.glb",
-   "x": 12.5,
+   "x": 13.5,
    "y": 1,
    "rot": -90,
    "note": "동쪽 집 뒤 장독대"
@@ -123,14 +1300,6 @@
    "y": -5.5,
    "rot": 0,
    "note": "마을 우물(모이는 자리)"
-  },
-  {
-   "prop": "prop_giwa",
-   "file": "assets3d/props/prop_giwa.glb",
-   "x": 0,
-   "y": 19,
-   "rot": 0,
-   "note": "북쪽 끝 기와집(마을에서 가장 큰 집)"
   },
   {
    "prop": "prop_dolddam",
@@ -374,10 +1543,8 @@
   }
  ],
  "counts": {
-  "choga": 6,
   "dolddam": 30,
   "geumjul": 1,
-  "giwa": 1,
   "jangdok": 2,
   "jangseung": 2,
   "sangyeo": 1,
