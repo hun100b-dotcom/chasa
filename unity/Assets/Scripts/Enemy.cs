@@ -318,12 +318,13 @@ public class EnemyManager
     }
 
     /// <summary>처결 대기 중인 혼 중 pos 에서 가장 가까운 것 (사거리 안)</summary>
-    public Enemy NearestKneeling(Vector3 pos, float range)
+    public Enemy NearestKneeling(Vector3 pos, float range, System.Func<Enemy, bool> accept = null)
     {
         Enemy best = null; float bestD = range;
         foreach (var e in list)
         {
             if (!e.kneeling) continue;
+            if (accept != null && !accept(e)) continue;   // 조건에 안 맞는 혼은 건너뛴다(예: 천도 못 하는 덩어리)
             float d = new Vector2(e.Pos.x - pos.x, e.Pos.z - pos.z).magnitude;
             if (d <= bestD) { bestD = d; best = e; }
         }
