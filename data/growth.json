@@ -1,0 +1,2283 @@
+{
+  "_설명": "차사 성장 시스템 데이터. tools/growth_data.py 가 만든다. 직접 고치지 말고 그 파일을 고친 뒤 다시 돌린다. 모든 수치 임시값.",
+  "_version": "growth-v1 (2026-10-24, 임시값, 오너 확인 전)",
+  "schools": {
+    "burum": {
+      "name": "부름",
+      "lean": "천도",
+      "color": "#5FE3C0",
+      "desc": "이름을 불러 보내는 힘. 천도를 돕는다"
+    },
+    "jul": {
+      "name": "줄",
+      "lean": "중립",
+      "color": "#D4A94E",
+      "desc": "사슬과 매듭으로 묶는 힘. 싸움과 제어"
+    },
+    "eolruk": {
+      "name": "얼룩",
+      "lean": "파혼",
+      "color": "#E85C41",
+      "desc": "원념을 다루는 힘. 쓸수록 흑월을 닮아 간다"
+    }
+  },
+  "skills": [
+    {
+      "id": "burum_hold",
+      "name": "붙잡아 부르기",
+      "school": "burum",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 12,
+        "per_rank": -0.5,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "radius": {
+          "base": 6,
+          "per_rank": 0,
+          "unit": "m"
+        },
+        "wait_bonus": {
+          "base": 3,
+          "per_rank": 0.25,
+          "unit": "초"
+        },
+        "enemy_stagger": {
+          "base": 0.8,
+          "per_rank": 0,
+          "unit": "초"
+        }
+      },
+      "effect": "반경 6m 안 무릎 꿇은 혼의 처결 대기 시간을 늘리고, 서 있는 적을 잠깐 멈칫하게 한다. 같은 혼에는 한 번만 걸린다",
+      "tendo": "고민할 시간을 사 준다. 천도할 혼을 고를 여유가 생긴다",
+      "pahon": "늘린 시간 안에 파혼해도 된다. 선택지를 늘릴 뿐 방향을 정하지 않는다",
+      "demo": true
+    },
+    {
+      "id": "burum_wisp",
+      "name": "혼불 날리기",
+      "school": "burum",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 5,
+        "per_rank": -0.25,
+        "unit": "초"
+      },
+      "use_cost": "혼불 1개(던지면 4초 뒤 돌아옴)",
+      "values": {
+        "damage": {
+          "base": 12,
+          "per_rank": 2,
+          "unit": "맺힘"
+        },
+        "wisp_max": {
+          "base": 3,
+          "per_rank": 0.5,
+          "unit": "개"
+        }
+      },
+      "effect": "따르는 혼불을 던져 맺힘 피해. 혼불 수 = 그날 밤 천도한 혼 수(최대 3→5)",
+      "tendo": "천도할수록 강해지는 공격. 천도가 곧 화력이 된다",
+      "pahon": "파혼하면 혼불 하나가 놀라 3초 동안 흩어진다(못 던짐)",
+      "demo": false
+    },
+    {
+      "id": "burum_namelight",
+      "name": "이름 비추기",
+      "school": "burum",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 8,
+        "per_rank": -0.5,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "cast_cut": {
+          "base": 0.4,
+          "per_rank": 0.05,
+          "unit": "초"
+        },
+        "duration": {
+          "base": 10,
+          "per_rank": 0,
+          "unit": "초"
+        }
+      },
+      "effect": "혼 하나(서 있는 적도 됨)의 이름을 미리 비춘다. 10초 안에 그 혼을 천도하면 캐스팅이 짧아진다(하한 0.5초)",
+      "tendo": "오래된 혼(대기 4초)도 안전하게 보낼 수 있다",
+      "pahon": "비춘 혼을 파혼하면 효과가 사라지고, 명부의 그 이름이 흐려지는 연출이 나온다(수치 변화 없음)",
+      "demo": false
+    },
+    {
+      "id": "burum_path",
+      "name": "배웅길",
+      "school": "burum",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 15,
+        "per_rank": -1,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "charges": {
+          "base": 3,
+          "per_rank": 0,
+          "unit": "회"
+        },
+        "slow": {
+          "base": 0.3,
+          "per_rank": 0,
+          "unit": "비율"
+        },
+        "duration": {
+          "base": 3,
+          "per_rank": 0.5,
+          "unit": "초"
+        },
+        "radius": {
+          "base": 3,
+          "per_rank": 0,
+          "unit": "m"
+        }
+      },
+      "effect": "켜 두면 다음 천도 3회 동안, 천도가 끝난 자리에 길이 생겨 반경 3m 적 이동이 30% 느려진다",
+      "tendo": "천도 직후의 빈틈(시야가 돌아오는 순간)을 지켜 준다",
+      "pahon": "파혼에는 걸리지 않는다. 켜 둔 채 파혼하면 횟수만 남는다",
+      "demo": false
+    },
+    {
+      "id": "burum_longcall",
+      "name": "오래 부르기",
+      "school": "burum",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "chain_window": {
+          "base": 0.7,
+          "per_rank": 0.65,
+          "unit": "초"
+        }
+      },
+      "effect": "연속 천도로 인정되는 시간(기본 5초)이 늘어난다",
+      "tendo": "연속 천도(0.8초)를 잇기 쉬워진다",
+      "pahon": "없음",
+      "demo": false
+    },
+    {
+      "id": "burum_neok",
+      "name": "고마운 넋",
+      "school": "burum",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "neok_bonus": {
+          "base": 0.07,
+          "per_rank": 0.065,
+          "unit": "비율"
+        }
+      },
+      "effect": "천도로 받는 넋이 늘어난다(기억 조각은 늘지 않음)",
+      "tendo": "품계·인이 빨라진다",
+      "pahon": "없음",
+      "demo": false
+    },
+    {
+      "id": "burum_guard",
+      "name": "곁을 지킴",
+      "school": "burum",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "cast_dr": {
+          "base": 0.07,
+          "per_rank": 0.065,
+          "unit": "비율"
+        }
+      },
+      "effect": "천도 캐스팅 중 받는 피해가 줄어든다",
+      "tendo": "맞아서 캐스팅이 끊길 위험이 준다(피격 시 중단 규칙은 그대로)",
+      "pahon": "없음",
+      "demo": false
+    },
+    {
+      "id": "burum_quota",
+      "name": "몫을 채움",
+      "school": "burum",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "move_bonus": {
+          "base": 0.04,
+          "per_rank": 0.02,
+          "unit": "비율"
+        }
+      },
+      "effect": "그날 밤 명부 몫(천도만 셈)을 채우면 그 밤 동안 이동 속도가 오른다",
+      "tendo": "몫을 먼저 채우고 멀리 가는 전략",
+      "pahon": "파혼은 몫에 안 들어간다",
+      "demo": false
+    },
+    {
+      "id": "burum_seven",
+      "name": "일곱 이름",
+      "school": "burum",
+      "kind": "deep",
+      "max_rank": 1,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "chain_count": {
+          "base": 7,
+          "per_rank": 0,
+          "unit": "회"
+        }
+      },
+      "effect": "연속 천도 7회째 다음 천도 1회는 하한 0.5초로 끝난다. 시야 축소는 그대로",
+      "tendo": "천도만으로 몰려오는 적을 버티는 빌드의 완성",
+      "pahon": "파혼 한 번이면 연속이 끊긴다",
+      "demo": false
+    },
+    {
+      "id": "jul_coil",
+      "name": "휘감기",
+      "school": "jul",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 10,
+        "per_rank": -0.5,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "radius": {
+          "base": 4,
+          "per_rank": 0,
+          "unit": "m"
+        },
+        "bind": {
+          "base": 1.5,
+          "per_rank": 0.1,
+          "unit": "초"
+        }
+      },
+      "effect": "반경 4m 서 있는 적을 사슬로 묶어 못 움직이게 한다(보스는 묶는 시간 1/3)",
+      "tendo": "천도 캐스팅 전에 주변을 묶어 두면 안전하게 보낼 수 있다",
+      "pahon": "묶인 적은 파혼 폭발 피해는 받지만 넉백되지 않는다. 묶고 터뜨릴지, 터뜨려서 밀어낼지 고른다",
+      "demo": true
+    },
+    {
+      "id": "jul_multipull",
+      "name": "여럿 끌기",
+      "school": "jul",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 8,
+        "per_rank": -0.4,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "targets": {
+          "base": 3,
+          "per_rank": 0.5,
+          "unit": "명"
+        },
+        "range": {
+          "base": 10,
+          "per_rank": 0,
+          "unit": "m"
+        }
+      },
+      "effect": "10m 안 적 셋(→다섯)을 한꺼번에 끌어온다. 무릎 꿇은 혼은 끌지 않는다",
+      "tendo": "흩어진 적을 모아 한 번에 정리한 뒤 천도할 틈을 만든다",
+      "pahon": "적을 한곳에 모으면 파혼 폭발 한 번의 값어치가 커진다",
+      "demo": false
+    },
+    {
+      "id": "jul_knotstep",
+      "name": "매듭 걸음",
+      "school": "jul",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 7,
+        "per_rank": -0.4,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "distance": {
+          "base": 8,
+          "per_rank": 0,
+          "unit": "m"
+        },
+        "iframe": {
+          "base": 0.3,
+          "per_rank": 0.02,
+          "unit": "초"
+        }
+      },
+      "effect": "사슬을 걸어 8m를 달려 나간다. 달리는 동안 맞지 않는다",
+      "tendo": "천도 캐스팅 중에 쓰면 캐스팅이 취소된다(혼의 대기 시간은 남은 만큼 이어짐)",
+      "pahon": "포위에서 빠져나와 파혼 없이 버티는 선택지가 생긴다",
+      "demo": false
+    },
+    {
+      "id": "jul_thread",
+      "name": "한 줄 꿰기",
+      "school": "jul",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 20,
+        "per_rank": -1,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "range": {
+          "base": 5,
+          "per_rank": 0,
+          "unit": "m"
+        },
+        "pair_cast": {
+          "base": 2.4,
+          "per_rank": -0.1,
+          "unit": "초"
+        },
+        "pair_blast_mult": {
+          "base": 1.6,
+          "per_rank": 0,
+          "unit": "배"
+        }
+      },
+      "effect": "무릎 꿇은 혼 둘을 한 줄로 묶는다. 함께 천도(2.4초, 시야 축소 한 번, 넋·기억 둘 다) 또는 함께 파혼(폭발 피해 1.6배, 업 +2, 얼룩 2개가 한 자리). 덩어리는 못 꿴다",
+      "tendo": "두 혼을 한 번의 위험으로 보낸다",
+      "pahon": "한 자리에 얼룩이 2개 겹친다. 세 번째 얼룩이면 사나운 적이 나온다",
+      "demo": false
+    },
+    {
+      "id": "jul_firmhand",
+      "name": "단단한 손",
+      "school": "jul",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "attack_speed": {
+          "base": 0.04,
+          "per_rank": 0.03,
+          "unit": "비율"
+        }
+      },
+      "effect": "공격 속도가 오른다",
+      "tendo": "무릎 꿇리는 속도가 빨라져 처결 상황이 자주 온다",
+      "pahon": "같음",
+      "demo": false
+    },
+    {
+      "id": "jul_longchain",
+      "name": "긴 사슬",
+      "school": "jul",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "reach": {
+          "base": 0.3,
+          "per_rank": 0.25,
+          "unit": "m"
+        }
+      },
+      "effect": "모든 무기의 사거리가 늘어난다",
+      "tendo": "거리를 두고 싸워 천도 자리를 지키기 쉽다",
+      "pahon": "없음",
+      "demo": false
+    },
+    {
+      "id": "jul_bound",
+      "name": "묶인 자",
+      "school": "jul",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "bound_damage": {
+          "base": 0.06,
+          "per_rank": 0.045,
+          "unit": "비율"
+        }
+      },
+      "effect": "묶이거나 고정된 적이 받는 맺힘 피해가 늘어난다",
+      "tendo": "휘감기·삼지창과 짝",
+      "pahon": "휘감기 후 파혼 폭발과 짝",
+      "demo": false
+    },
+    {
+      "id": "jul_familiar",
+      "name": "손에 익음",
+      "school": "jul",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "chain_pull_cd": {
+          "base": 0.1,
+          "per_rank": 0.1,
+          "unit": "비율"
+        },
+        "mace_stun": {
+          "base": 0.1,
+          "per_rank": 0.1,
+          "unit": "초"
+        },
+        "bell_slow": {
+          "base": 0.05,
+          "per_rank": 0.05,
+          "unit": "비율"
+        },
+        "spear_pin": {
+          "base": 0.2,
+          "per_rank": 0.2,
+          "unit": "초"
+        },
+        "brush_mark": {
+          "base": 2,
+          "per_rank": 2,
+          "unit": "초"
+        }
+      },
+      "effect": "지금 든 무기의 특성 하나가 강해진다: 철삭 견인 재사용 −10/20/30% · 육모방망이 기절 +0.1/0.2/0.3초 · 요령 둔화 +5/10/15%p · 삼지창 고정 +0.2/0.4/0.6초 · 명부 붓 표식 지속 +2/4/6초",
+      "tendo": "무기 성향을 더 진하게 만든다",
+      "pahon": "무기 성향을 더 진하게 만든다",
+      "demo": false
+    },
+    {
+      "id": "jul_cage",
+      "name": "쇠사슬 울",
+      "school": "jul",
+      "kind": "deep",
+      "max_rank": 1,
+      "cd": {
+        "base": 40,
+        "per_rank": 0,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "radius": {
+          "base": 5,
+          "per_rank": 0,
+          "unit": "m"
+        },
+        "hold": {
+          "base": 3,
+          "per_rank": 0,
+          "unit": "초"
+        },
+        "boss_hold": {
+          "base": 1,
+          "per_rank": 0,
+          "unit": "초"
+        }
+      },
+      "effect": "반경 5m 원 안의 서 있는 적을 3초 동안 고정한다(보스 1초)",
+      "tendo": "울 안에서는 천도를 안전하게 할 수 있다",
+      "pahon": "갇힌 적은 넉백 없이 폭발 피해만 받는다",
+      "demo": false
+    },
+    {
+      "id": "eol_burst",
+      "name": "터뜨리기",
+      "school": "eolruk",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 9,
+        "per_rank": -0.5,
+        "unit": "초"
+      },
+      "use_cost": "얼룩 1개",
+      "values": {
+        "find_range": {
+          "base": 8,
+          "per_rank": 0,
+          "unit": "m"
+        },
+        "radius": {
+          "base": 2.5,
+          "per_rank": 0,
+          "unit": "m"
+        },
+        "damage": {
+          "base": 40,
+          "per_rank": 6,
+          "unit": "맺힘"
+        }
+      },
+      "effect": "8m 안 가장 가까운 원념 얼룩 하나를 터뜨려 없앤다. 반경 2.5m 맺힘 피해. 얼룩을 지우는 유일한 방법이며 업은 그대로다",
+      "tendo": "얼룩을 지워 천도할 자리를 만들고, 세 번째 얼룩(사나운 적 소환)을 막는다",
+      "pahon": "파혼의 뒤처리이자 두 번째 폭발. 파혼을 더 자주 하게 만든다",
+      "demo": true
+    },
+    {
+      "id": "eol_grudge",
+      "name": "원념 두르기",
+      "school": "eolruk",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 18,
+        "per_rank": -1,
+        "unit": "초"
+      },
+      "use_cost": "쓰는 동안 천도 캐스팅 +0.3초",
+      "values": {
+        "duration": {
+          "base": 6,
+          "per_rank": 0,
+          "unit": "초"
+        },
+        "atk_per_tier": {
+          "base": 0.05,
+          "per_rank": 0.005,
+          "unit": "비율/업 단계"
+        }
+      },
+      "effect": "6초 동안 업 단계(0~3)에 따라 공격력이 오른다(단계당 +5%→+7%). 업 벌칙은 그대로다",
+      "tendo": "쓰는 동안 원념이 이름 부르는 목소리를 가려 천도가 느려진다",
+      "pahon": "업이 높을수록 세진다. 업을 쌓고 싶은 유혹",
+      "demo": false
+    },
+    {
+      "id": "eol_ride",
+      "name": "얼룩 타기",
+      "school": "eolruk",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 14,
+        "per_rank": -0.75,
+        "unit": "초"
+      },
+      "use_cost": "없음",
+      "values": {
+        "duration": {
+          "base": 6,
+          "per_rank": 0.5,
+          "unit": "초"
+        },
+        "move_bonus": {
+          "base": 0.15,
+          "per_rank": 0,
+          "unit": "비율"
+        }
+      },
+      "effect": "잠깐 동안 얼룩 위에서 느려지는 대신 빨라진다",
+      "tendo": "없음",
+      "pahon": "얼룩 투성이 바닥을 무기로 쓴다. 대신 얼룩을 지우지는 않는다",
+      "demo": false
+    },
+    {
+      "id": "eol_shard",
+      "name": "깨진 이름 던지기",
+      "school": "eolruk",
+      "kind": "active",
+      "max_rank": 5,
+      "cd": {
+        "base": 4,
+        "per_rank": 0,
+        "unit": "초"
+      },
+      "use_cost": "그 파혼의 엽전 0",
+      "values": {
+        "window": {
+          "base": 5,
+          "per_rank": 0,
+          "unit": "초"
+        },
+        "damage": {
+          "base": 30,
+          "per_rank": 5,
+          "unit": "맺힘"
+        },
+        "range": {
+          "base": 12,
+          "per_rank": 0,
+          "unit": "m"
+        }
+      },
+      "effect": "파혼 뒤 5초 안에 쓸 수 있다. 깨진 혼의 파편을 12m 날려 일직선 적을 관통한다",
+      "tendo": "없음",
+      "pahon": "파혼 한 번을 원거리 공격 한 번으로 바꾼다. 엽전을 포기하는 대가",
+      "demo": false
+    },
+    {
+      "id": "eol_bigblast",
+      "name": "큰 폭발",
+      "school": "eolruk",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "pahon_radius": {
+          "base": 0.15,
+          "per_rank": 0.125,
+          "unit": "m"
+        }
+      },
+      "effect": "파혼 폭발 반경이 늘어난다(업 묶음 합계 상한 안)",
+      "tendo": "없음",
+      "pahon": "포위 탈출이 쉬워진다",
+      "demo": false
+    },
+    {
+      "id": "eol_push",
+      "name": "세찬 넉백",
+      "school": "eolruk",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "pahon_knockback": {
+          "base": 0.15,
+          "per_rank": 0.125,
+          "unit": "비율"
+        }
+      },
+      "effect": "파혼 넉백 거리가 늘어난다",
+      "tendo": "없음",
+      "pahon": "밀어낸 뒤 천도할 틈을 만드는 '파혼으로 천도 돕기'",
+      "demo": false
+    },
+    {
+      "id": "eol_coin",
+      "name": "노잣돈",
+      "school": "eolruk",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "coin_bonus": {
+          "base": 0.15,
+          "per_rank": 0.125,
+          "unit": "비율"
+        }
+      },
+      "effect": "파혼으로 얻는 엽전이 늘어난다",
+      "tendo": "없음",
+      "pahon": "장비 손보기 재화가 빨리 쌓인다",
+      "demo": false
+    },
+    {
+      "id": "eol_dry",
+      "name": "마른 얼룩",
+      "school": "eolruk",
+      "kind": "passive",
+      "max_rank": 3,
+      "cd": null,
+      "use_cost": "없음",
+      "values": {
+        "stain_duration_cut": {
+          "base": 0.1,
+          "per_rank": 0.1,
+          "unit": "비율"
+        }
+      },
+      "effect": "얼룩 지속 시간이 줄어든다(얼룩이 안 생기지는 않는다)",
+      "tendo": "얼룩이 빨리 마르면 천도 자리가 빨리 생긴다",
+      "pahon": "파혼의 바닥 대가가 줄어든다",
+      "demo": false
+    },
+    {
+      "id": "eol_shadow",
+      "name": "검은 갓의 그림자",
+      "school": "eolruk",
+      "kind": "deep",
+      "max_rank": 1,
+      "cd": {
+        "base": 90,
+        "per_rank": 0,
+        "unit": "초"
+      },
+      "use_cost": "깨진 혼마다 업 +1, 얼룩 +1",
+      "values": {
+        "duration": {
+          "base": 10,
+          "per_rank": 0,
+          "unit": "초"
+        }
+      },
+      "effect": "10초 동안 파혼 폭발이 반경 안의 다른 무릎 꿇은 혼까지 함께 깨뜨린다(연쇄 파혼)",
+      "tendo": "쓰는 동안 갓끈이 검게 바래는 연출. 결말 C(다음 검은 갓)의 거울",
+      "pahon": "가장 강한 파혼 빌드의 완성. 대신 그 혼들의 이야기는 영영 없다",
+      "demo": false
+    }
+  ],
+  "active_slots": {
+    "count": 4,
+    "unlock_rank": [
+      1,
+      5,
+      12,
+      20
+    ],
+    "keys_pc": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "mobile": "기술 버튼 4"
+  },
+  "skill_points": {
+    "per_rank_up": 1,
+    "per_boss_tendo": 1,
+    "deep_unlock_school_points": 10,
+    "note": "품계 2~50에서 49점 + 보스 천도 최대 30점 = 79점. 세 갈래를 다 채우려면 99점이라 다 배울 수 없다(빌드 선택이 생김)"
+  },
+  "weapons": [
+    {
+      "id": "chain",
+      "name": "철삭",
+      "family": "사슬",
+      "lean": "기준",
+      "target_index": 100,
+      "implemented": true,
+      "combo": [
+        {
+          "name": "1 횡베기",
+          "damage": 12,
+          "reach": 4.6,
+          "sweepDeg": 150,
+          "windup": 0.09,
+          "swing": 0.15,
+          "recover": 0.13,
+          "knockback": 9,
+          "stun": 0.28
+        },
+        {
+          "name": "2 역횡베기",
+          "damage": 14,
+          "reach": 4.6,
+          "sweepDeg": 150,
+          "windup": 0.08,
+          "swing": 0.15,
+          "recover": 0.13,
+          "knockback": 10,
+          "stun": 0.3
+        },
+        {
+          "name": "3 회전 후려치기",
+          "damage": 30,
+          "reach": 5.6,
+          "sweepDeg": 360,
+          "windup": 0.16,
+          "swing": 0.3,
+          "recover": 0.36,
+          "knockback": 24,
+          "stun": 0.65
+        }
+      ],
+      "special": {
+        "name": "견인",
+        "key": "Q·우클릭",
+        "cd": 0.5,
+        "values": {
+          "range": 13,
+          "damage": 8,
+          "stun": 0.8
+        },
+        "desc": "13m 밖 적 하나를 사슬로 끌어온다"
+      },
+      "judge": {
+        "tendo": "무릎 꿇은 혼을 사슬로 묶어 끌고 다닐 수 있다(이동 −30%, 대기 시간은 그대로 흐름)",
+        "pahon": "기준(반경 3m, 피해 35, 넉백 2.5m)"
+      },
+      "named": [
+        "흑월의 철삭(B-12)",
+        "선장의 닻(B-10)",
+        "첫 사슬(5막)"
+      ],
+      "dps": 36.1,
+      "index": 100.0
+    },
+    {
+      "id": "mace",
+      "name": "육모방망이",
+      "family": "둔기",
+      "lean": "파혼 쪽",
+      "target_index": 90,
+      "implemented": true,
+      "combo": [
+        {
+          "name": "1 내려치기",
+          "damage": 16,
+          "reach": 3.2,
+          "sweepDeg": 110,
+          "windup": 0.16,
+          "swing": 0.18,
+          "recover": 0.22,
+          "knockback": 12,
+          "stun": 0.4
+        },
+        {
+          "name": "2 되치기",
+          "damage": 18,
+          "reach": 3.2,
+          "sweepDeg": 110,
+          "windup": 0.16,
+          "swing": 0.18,
+          "recover": 0.22,
+          "knockback": 13,
+          "stun": 0.45
+        },
+        {
+          "name": "3 내려찍기",
+          "damage": 34,
+          "reach": 3.0,
+          "sweepDeg": 360,
+          "windup": 0.28,
+          "swing": 0.22,
+          "recover": 0.45,
+          "knockback": 18,
+          "stun": 1.2
+        }
+      ],
+      "special": {
+        "name": "땅울림",
+        "key": "Q·우클릭",
+        "cd": 6,
+        "values": {
+          "radius": 4,
+          "damage": 20,
+          "stun": 0.8
+        },
+        "desc": "땅을 내리쳐 반경 4m 적에게 맺힘 피해와 기절"
+      },
+      "judge": {
+        "tendo": "효과 없음. 여럿을 한꺼번에 무릎 꿇려 대기 시간이 동시에 흐른다(다 천도 못 함)",
+        "pahon": "파혼 넉백 +50%, 파혼 피해 +20%"
+      },
+      "named": [
+        "문지기의 육모방망이(B-17)"
+      ],
+      "dps": 32.9,
+      "index": 90.9
+    },
+    {
+      "id": "bell",
+      "name": "요령",
+      "family": "방울",
+      "lean": "천도 쪽",
+      "target_index": 70,
+      "implemented": false,
+      "combo": [
+        {
+          "name": "1 울림",
+          "damage": 10,
+          "reach": 4.0,
+          "sweepDeg": 360,
+          "windup": 0.12,
+          "swing": 0.12,
+          "recover": 0.18,
+          "knockback": 4,
+          "stun": 0.0,
+          "slow": 0.25,
+          "slow_time": 1.0
+        },
+        {
+          "name": "2 울림",
+          "damage": 10,
+          "reach": 4.0,
+          "sweepDeg": 360,
+          "windup": 0.12,
+          "swing": 0.12,
+          "recover": 0.18,
+          "knockback": 4,
+          "stun": 0.0,
+          "slow": 0.25,
+          "slow_time": 1.0
+        },
+        {
+          "name": "3 큰 울림",
+          "damage": 20,
+          "reach": 4.5,
+          "sweepDeg": 360,
+          "windup": 0.2,
+          "swing": 0.2,
+          "recover": 0.35,
+          "knockback": 8,
+          "stun": 0.3,
+          "slow": 0.25,
+          "slow_time": 1.5
+        }
+      ],
+      "special": {
+        "name": "불러 세우기",
+        "key": "Q·우클릭",
+        "cd": 10,
+        "values": {
+          "radius": 6,
+          "freeze": 3
+        },
+        "desc": "반경 6m 무릎 꿇은 혼들의 처결 대기 시간이 3초 동안 멈춘다"
+      },
+      "judge": {
+        "tendo": "천도 캐스팅 −10%",
+        "pahon": "파혼 폭발 피해 −30%. 포위되면 약해서 파혼에 기대게 된다"
+      },
+      "named": [
+        "노인의 요령(B-13)"
+      ],
+      "dps": 25.2,
+      "index": 69.6
+    },
+    {
+      "id": "spear",
+      "name": "삼지창",
+      "family": "장병",
+      "lean": "자리 싸움",
+      "target_index": 95,
+      "implemented": false,
+      "combo": [
+        {
+          "name": "1 찌르기",
+          "damage": 13,
+          "reach": 5.0,
+          "sweepDeg": 20,
+          "windup": 0.1,
+          "swing": 0.12,
+          "recover": 0.16,
+          "knockback": 6,
+          "stun": 0.2,
+          "pierce": 3
+        },
+        {
+          "name": "2 찌르기",
+          "damage": 14,
+          "reach": 5.0,
+          "sweepDeg": 20,
+          "windup": 0.1,
+          "swing": 0.12,
+          "recover": 0.16,
+          "knockback": 6,
+          "stun": 0.2,
+          "pierce": 3
+        },
+        {
+          "name": "3 꿰찌르기",
+          "damage": 24,
+          "reach": 6.0,
+          "sweepDeg": 20,
+          "windup": 0.18,
+          "swing": 0.2,
+          "recover": 0.34,
+          "knockback": 0,
+          "stun": 1.0,
+          "pierce": 3,
+          "pin": 1.0
+        }
+      ],
+      "special": {
+        "name": "꽂아 버티기",
+        "key": "Q·우클릭",
+        "cd": 14,
+        "values": {
+          "radius": 2.5,
+          "duration": 4
+        },
+        "desc": "창을 땅에 꽂아 4초 동안 반경 2.5m 안으로 일반 적이 못 들어온다"
+      },
+      "judge": {
+        "tendo": "천도 캐스팅을 지키는 울타리(울타리 안에서 천도)",
+        "pahon": "파혼 폭발이 원 대신 앞쪽 6m 직선으로 나가고, 얼룩도 앞에 떨어진다(발밑이 깨끗)"
+      },
+      "named": [
+        "찢어진 군기(B-05)",
+        "두 편의 깃대 조각(7막)"
+      ],
+      "dps": 34.5,
+      "index": 95.4
+    },
+    {
+      "id": "brush",
+      "name": "명부 붓",
+      "family": "원거리",
+      "lean": "둘 다",
+      "target_index": 75,
+      "implemented": false,
+      "combo": [
+        {
+          "name": "1 먹 획",
+          "damage": 10,
+          "reach": 12.0,
+          "sweepDeg": 0,
+          "windup": 0.1,
+          "swing": 0.1,
+          "recover": 0.18,
+          "knockback": 3,
+          "stun": 0.0,
+          "projectile": true,
+          "mark": 1
+        },
+        {
+          "name": "2 먹 획",
+          "damage": 10,
+          "reach": 12.0,
+          "sweepDeg": 0,
+          "windup": 0.1,
+          "swing": 0.1,
+          "recover": 0.18,
+          "knockback": 3,
+          "stun": 0.0,
+          "projectile": true,
+          "mark": 1
+        },
+        {
+          "name": "3 큰 획",
+          "damage": 18,
+          "reach": 12.0,
+          "sweepDeg": 0,
+          "windup": 0.2,
+          "swing": 0.15,
+          "recover": 0.3,
+          "knockback": 6,
+          "stun": 0.2,
+          "projectile": true,
+          "pierce": 99,
+          "mark": 1
+        }
+      ],
+      "special": {
+        "name": "이름 쓰기",
+        "key": "Q·우클릭",
+        "cd": 6,
+        "values": {
+          "mark_need": 3,
+          "cast_cut": 0.4,
+          "mark_time": 8
+        },
+        "desc": "먹 표식 3개가 쌓인 적의 이름을 미리 써 둔다. 그 혼은 무릎 꿇으면 천도 캐스팅 −0.4초"
+      },
+      "judge": {
+        "tendo": "이름을 써 둔 혼은 천도 캐스팅 −0.4초(하한 0.5초)",
+        "pahon": "표식 있는 혼을 파혼하면 먹이 튀어 주변 4m 적에게 표식 +1"
+      },
+      "named": [
+        "서리의 붓(B-15)"
+      ],
+      "dps": 27.0,
+      "index": 74.6
+    }
+  ],
+  "weapon_swap": {
+    "time": 0.5,
+    "pc": "Tab",
+    "mobile": "무기 바꾸기 버튼",
+    "slots": 2
+  },
+  "slots": [
+    {
+      "id": "weapon",
+      "name": "무기",
+      "count": 2,
+      "sockets": "0~2",
+      "main": "손"
+    },
+    {
+      "id": "gat",
+      "name": "갓",
+      "count": 1,
+      "sockets": "0~2",
+      "main": "혼·도술"
+    },
+    {
+      "id": "dopo",
+      "name": "도포",
+      "count": 1,
+      "sockets": "0~2",
+      "main": "몸"
+    },
+    {
+      "id": "tti",
+      "name": "띠",
+      "count": 1,
+      "sockets": "없음",
+      "main": "혼·업"
+    },
+    {
+      "id": "sin",
+      "name": "신",
+      "count": 1,
+      "sockets": "없음",
+      "main": "몸(이동)"
+    },
+    {
+      "id": "norigae",
+      "name": "노리개",
+      "count": 2,
+      "sockets": "없음",
+      "main": "특수"
+    }
+  ],
+  "rarities": [
+    {
+      "id": "common",
+      "name": "흔한",
+      "color": "#F3E7D3",
+      "affixes": "0~1",
+      "tilt": false,
+      "source": "잡몹, 상자"
+    },
+    {
+      "id": "crafted",
+      "name": "손본",
+      "color": "#4FA8A0",
+      "affixes": "1~2",
+      "tilt": false,
+      "source": "잡몹, 사나운 적"
+    },
+    {
+      "id": "rare",
+      "name": "귀한",
+      "color": "#D4A94E",
+      "affixes": "3~4",
+      "tilt": true,
+      "source": "사나운 적(확정), 덩어리, 먼 구역"
+    },
+    {
+      "id": "named",
+      "name": "이름 있는",
+      "color": "#E85C41",
+      "affixes": "고유 1 + 2",
+      "tilt": false,
+      "source": "보스 파혼, 먼 구역 숨은 자리"
+    },
+    {
+      "id": "set",
+      "name": "한 벌",
+      "color": "#5FE3C0",
+      "affixes": "한 벌 효과 + 1",
+      "tilt": false,
+      "source": "관할별 정해진 자리"
+    }
+  ],
+  "drop": {
+    "chance_on_maedhim_zero": 0.35,
+    "rare": 0.08,
+    "crafted": 0.3,
+    "fierce_enemy": "귀한 확정(예비안: 70% 이상)",
+    "note": "드롭 판정은 맺힘 0 때 1회, 천도·파혼과 무관"
+  },
+  "affixes": [
+    {
+      "id": "dmg_pct",
+      "group": "손",
+      "name": "맺힘 피해 +%",
+      "slots": [
+        "weapon",
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          3,
+          5
+        ],
+        "crafted": [
+          5,
+          9
+        ],
+        "rare": [
+          9,
+          14
+        ]
+      },
+      "cap": "합계 +40%",
+      "demo": true,
+      "note": ""
+    },
+    {
+      "id": "aspd_pct",
+      "group": "손",
+      "name": "공격 속도 +%",
+      "slots": [
+        "weapon",
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          2,
+          3
+        ],
+        "crafted": [
+          3,
+          6
+        ],
+        "rare": [
+          6,
+          9
+        ]
+      },
+      "cap": "합계 +25%",
+      "demo": true,
+      "note": ""
+    },
+    {
+      "id": "special_cd",
+      "group": "손",
+      "name": "무기 기술 재사용 −%",
+      "slots": [
+        "weapon",
+        "gat"
+      ],
+      "ranges": {
+        "common": [
+          4,
+          6
+        ],
+        "crafted": [
+          6,
+          10
+        ],
+        "rare": [
+          10,
+          15
+        ]
+      },
+      "cap": "합계 −40%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "fierce_dmg",
+      "group": "손",
+      "name": "사나운 적·덩어리 피해 +%",
+      "slots": [
+        "weapon",
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          5,
+          8
+        ],
+        "crafted": [
+          8,
+          14
+        ],
+        "rare": [
+          14,
+          20
+        ]
+      },
+      "cap": "합계 +50%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "reach",
+      "group": "손",
+      "name": "무기 사거리 +m",
+      "slots": [
+        "weapon"
+      ],
+      "ranges": {
+        "common": [
+          0.1,
+          0.2
+        ],
+        "crafted": [
+          0.2,
+          0.3
+        ],
+        "rare": [
+          0.3,
+          0.5
+        ]
+      },
+      "cap": "합계 +1.2m",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "stun_time",
+      "group": "손",
+      "name": "기절·묶기 시간 +%",
+      "slots": [
+        "weapon",
+        "tti"
+      ],
+      "ranges": {
+        "common": [
+          5,
+          8
+        ],
+        "crafted": [
+          8,
+          12
+        ],
+        "rare": [
+          12,
+          18
+        ]
+      },
+      "cap": "합계 +40%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "skill_power",
+      "group": "손",
+      "name": "도술 위력 +%",
+      "slots": [
+        "gat",
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          3,
+          5
+        ],
+        "crafted": [
+          5,
+          9
+        ],
+        "rare": [
+          9,
+          14
+        ]
+      },
+      "cap": "합계 +50%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "skill_cd",
+      "group": "손",
+      "name": "도술 재사용 −%",
+      "slots": [
+        "gat"
+      ],
+      "ranges": {
+        "common": [
+          3,
+          5
+        ],
+        "crafted": [
+          5,
+          8
+        ],
+        "rare": [
+          8,
+          12
+        ]
+      },
+      "cap": "합계 −35%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "life",
+      "group": "몸",
+      "name": "생명 +",
+      "slots": [
+        "dopo",
+        "gat",
+        "sin",
+        "tti"
+      ],
+      "ranges": {
+        "common": [
+          8,
+          12
+        ],
+        "crafted": [
+          12,
+          20
+        ],
+        "rare": [
+          20,
+          32
+        ]
+      },
+      "cap": "없음",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "armor_pct",
+      "group": "몸",
+      "name": "방어(받는 피해 −%)",
+      "slots": [
+        "dopo",
+        "gat"
+      ],
+      "ranges": {
+        "common": [
+          2,
+          3
+        ],
+        "crafted": [
+          3,
+          5
+        ],
+        "rare": [
+          5,
+          8
+        ]
+      },
+      "cap": "합계 60%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "move_pct",
+      "group": "몸",
+      "name": "이동 속도 +%",
+      "slots": [
+        "sin"
+      ],
+      "ranges": {
+        "common": [
+          2,
+          3
+        ],
+        "crafted": [
+          3,
+          5
+        ],
+        "rare": [
+          5,
+          8
+        ]
+      },
+      "cap": "합계 +20%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "slow_resist",
+      "group": "몸",
+      "name": "둔화 저항(얼룩 포함) +%",
+      "slots": [
+        "sin",
+        "dopo"
+      ],
+      "ranges": {
+        "common": [
+          5,
+          8
+        ],
+        "crafted": [
+          8,
+          12
+        ],
+        "rare": [
+          12,
+          18
+        ]
+      },
+      "cap": "합계 50%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "stagger_cut",
+      "group": "몸",
+      "name": "피격 경직 −%",
+      "slots": [
+        "dopo"
+      ],
+      "ranges": {
+        "common": [
+          5,
+          8
+        ],
+        "crafted": [
+          8,
+          12
+        ],
+        "rare": [
+          12,
+          18
+        ]
+      },
+      "cap": "합계 −50%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "return_time",
+      "group": "몸",
+      "name": "동트기 전 귀환 경고 +초",
+      "slots": [
+        "sin"
+      ],
+      "ranges": {
+        "common": [
+          3,
+          5
+        ],
+        "crafted": [
+          5,
+          8
+        ],
+        "rare": [
+          8,
+          12
+        ]
+      },
+      "cap": "합계 +20초",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "tendo_cast",
+      "group": "혼",
+      "name": "천도 캐스팅 −%",
+      "slots": [
+        "tti",
+        "gat",
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          2,
+          3
+        ],
+        "crafted": [
+          3,
+          5
+        ],
+        "rare": [
+          5,
+          8
+        ]
+      },
+      "cap": "합계 −30%, 하한 0.5초",
+      "demo": true,
+      "note": ""
+    },
+    {
+      "id": "chain_window",
+      "group": "혼",
+      "name": "연속 천도 창 +초",
+      "slots": [
+        "tti",
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          0.2,
+          0.3
+        ],
+        "crafted": [
+          0.3,
+          0.6
+        ],
+        "rare": [
+          0.6,
+          1.0
+        ]
+      },
+      "cap": "합계 +3초",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "tendo_neok",
+      "group": "혼",
+      "name": "천도 넋 +%",
+      "slots": [
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          3,
+          4
+        ],
+        "crafted": [
+          4,
+          7
+        ],
+        "rare": [
+          7,
+          10
+        ]
+      },
+      "cap": "합계 +30%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "cast_dr",
+      "group": "혼",
+      "name": "천도 중 받는 피해 −%",
+      "slots": [
+        "dopo",
+        "tti"
+      ],
+      "ranges": {
+        "common": [
+          3,
+          5
+        ],
+        "crafted": [
+          5,
+          8
+        ],
+        "rare": [
+          8,
+          12
+        ]
+      },
+      "cap": "합계 −40%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "wait_time",
+      "group": "혼",
+      "name": "처결 대기 시간 +초",
+      "slots": [
+        "tti"
+      ],
+      "ranges": {
+        "common": [
+          0.2,
+          0.3
+        ],
+        "crafted": [
+          0.3,
+          0.5
+        ],
+        "rare": [
+          0.5,
+          0.8
+        ]
+      },
+      "cap": "합계 +2초(덩어리 제외)",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "tendo_vision",
+      "group": "혼",
+      "name": "천도 중 최저 시야 +%p",
+      "slots": [
+        "gat"
+      ],
+      "ranges": {
+        "common": [
+          1,
+          1
+        ],
+        "crafted": [
+          1,
+          2
+        ],
+        "rare": [
+          2,
+          4
+        ]
+      },
+      "cap": "최대 70%까지",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "pahon_radius",
+      "group": "업",
+      "name": "파혼 반경 +m",
+      "slots": [
+        "tti",
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          0.05,
+          0.1
+        ],
+        "crafted": [
+          0.1,
+          0.2
+        ],
+        "rare": [
+          0.2,
+          0.3
+        ]
+      },
+      "cap": "면적 +40%(약 3.55m)",
+      "demo": true,
+      "note": ""
+    },
+    {
+      "id": "pahon_dmg",
+      "group": "업",
+      "name": "파혼 피해 +%",
+      "slots": [
+        "weapon",
+        "tti",
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          4,
+          6
+        ],
+        "crafted": [
+          6,
+          10
+        ],
+        "rare": [
+          10,
+          16
+        ]
+      },
+      "cap": "합계 +50%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "pahon_kb",
+      "group": "업",
+      "name": "파혼 넉백 +%",
+      "slots": [
+        "tti",
+        "dopo"
+      ],
+      "ranges": {
+        "common": [
+          5,
+          8
+        ],
+        "crafted": [
+          8,
+          12
+        ],
+        "rare": [
+          12,
+          18
+        ]
+      },
+      "cap": "합계 +60%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "coin_pct",
+      "group": "업",
+      "name": "파혼 엽전 +%",
+      "slots": [
+        "norigae"
+      ],
+      "ranges": {
+        "common": [
+          4,
+          6
+        ],
+        "crafted": [
+          6,
+          10
+        ],
+        "rare": [
+          10,
+          15
+        ]
+      },
+      "cap": "합계 +50%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "stain_cut",
+      "group": "업",
+      "name": "얼룩 지속 −%",
+      "slots": [
+        "sin",
+        "tti"
+      ],
+      "ranges": {
+        "common": [
+          3,
+          5
+        ],
+        "crafted": [
+          5,
+          8
+        ],
+        "rare": [
+          8,
+          12
+        ]
+      },
+      "cap": "합계 −30%",
+      "demo": false,
+      "note": ""
+    },
+    {
+      "id": "stain_slow_cut",
+      "group": "업",
+      "name": "얼룩 둔화 −%p",
+      "slots": [
+        "sin"
+      ],
+      "ranges": {
+        "common": [
+          2,
+          3
+        ],
+        "crafted": [
+          3,
+          5
+        ],
+        "rare": [
+          5,
+          8
+        ]
+      },
+      "cap": "합계 −15%p",
+      "demo": false,
+      "note": ""
+    }
+  ],
+  "tilts": [
+    {
+      "id": "tilt_dmg_cast",
+      "name": "피 묻은 매듭",
+      "plus": "맺힘 피해 +20%",
+      "minus": "천도 캐스팅 +10%(느려짐)",
+      "lean": "파혼",
+      "demo": true,
+      "qa": "검증 통과(경계 변화 없음)"
+    },
+    {
+      "id": "tilt_neok_coin",
+      "name": "향 내음",
+      "plus": "천도 넋 +25%",
+      "minus": "파혼 엽전 −50%",
+      "lean": "천도",
+      "demo": false,
+      "qa": "다음 단계 검증"
+    },
+    {
+      "id": "tilt_radius_wait",
+      "name": "검은 술",
+      "plus": "파혼 반경 +0.3m",
+      "minus": "처결 대기 시간 −0.5초(덩어리 외)",
+      "lean": "파혼",
+      "demo": false,
+      "qa": "미검증"
+    },
+    {
+      "id": "tilt_window_dmg",
+      "name": "젖은 소매",
+      "plus": "연속 천도 창 +1.5초",
+      "minus": "맺힘 피해 −10%",
+      "lean": "천도",
+      "demo": false,
+      "qa": "미검증"
+    },
+    {
+      "id": "tilt_kb_vision",
+      "name": "깨진 거울",
+      "plus": "파혼 넉백 +30%",
+      "minus": "천도 중 최저 시야 −5%p(55%)",
+      "lean": "파혼",
+      "demo": false,
+      "qa": "미검증 — 시야 하한 55% 허용 여부"
+    },
+    {
+      "id": "tilt_castdr_aspd",
+      "name": "상복 자락",
+      "plus": "천도 중 받는 피해 −20%",
+      "minus": "공격 속도 −8%",
+      "lean": "천도",
+      "demo": false,
+      "qa": "미검증"
+    }
+  ],
+  "forbidden_affixes": [
+    "업이 안 쌓임(예외: 서리의 붓, 확률 25% 이하)",
+    "얼룩이 안 생김",
+    "기억 조각 증가",
+    "천도 시야 축소 제거",
+    "덩어리 천도 가능",
+    "자동 처결",
+    "천도 캐스팅 0.5초 미만"
+  ],
+  "sets": [
+    {
+      "id": "set_baeung",
+      "name": "배웅 한 벌",
+      "lean": "천도",
+      "pieces": [
+        "갓",
+        "띠",
+        "신",
+        "노리개"
+      ],
+      "bonus": {
+        "2": "연속 천도 창 +2초",
+        "3": "천도를 끝낼 때마다 2초 동안 이동 +10%",
+        "4": "연속 천도 중 혼불이 주변 2m 적을 밀어내 캐스팅을 지킨다(4초마다 1번)"
+      }
+    },
+    {
+      "id": "set_kkaejin",
+      "name": "깨진 인 한 벌",
+      "lean": "파혼",
+      "pieces": [
+        "무기",
+        "도포",
+        "띠",
+        "노리개"
+      ],
+      "bonus": {
+        "2": "파혼 피해 +30%",
+        "3": "파혼 직후 3초 동안 받는 피해 −15%",
+        "4": "원념 얼룩 위에 서 있으면 공격력 +15%(3개째 얼룩 소환 위험은 그대로)"
+      }
+    },
+    {
+      "id": "set_sangdu",
+      "name": "상두 한 벌",
+      "lean": "번갈아",
+      "pieces": [
+        "갓",
+        "도포",
+        "신",
+        "노리개"
+      ],
+      "bonus": {
+        "2": "천도 뒤 4초간 다음 파혼 반경 +0.5m, 파혼 뒤 4초간 다음 천도 캐스팅 −0.3초",
+        "3": "번갈아 할 때마다 생명 3% 회복",
+        "4": "천도와 파혼을 번갈아 4번 하면 혼불 하나가 3초 동안 함께 싸운다"
+      }
+    }
+  ],
+  "named_season1": [
+    {
+      "id": "named_wolhwa_bell",
+      "name": "월화의 방울",
+      "slot": "노리개",
+      "boss": "B-02 월화 (폐당집) 파혼",
+      "status": "canon",
+      "unique": "파혼 폭발 반경 +1m (업 상한을 넘으므로 QA 확인 전 +0.5m)",
+      "memory_from": "B-02",
+      "memory": "열두째 잔은 당집 아이 몫이었다. 이름을 부르려는데 물이 들어왔다."
+    },
+    {
+      "id": "named_torn_banner",
+      "name": "찢어진 군기",
+      "slot": "무기(삼지창)",
+      "boss": "B-05 기수 대돌 (산성) 파혼",
+      "status": "canon",
+      "unique": "들고 있으면 주변 잡몹이 1초 겁먹는다(8초마다)",
+      "memory_from": "B-05",
+      "memory": "서른일곱. 매일 밤 불렀다. 오늘은 서른하나까지밖에 생각나지 않는다."
+    },
+    {
+      "id": "named_general_armor",
+      "name": "장수의 갑주",
+      "slot": "도포",
+      "boss": "B-06 이름 없는 장수 (군막 터) 파혼",
+      "status": "canon",
+      "unique": "방어 +10%, 대신 무기 바꿔 들기 +0.3초(무겁다)",
+      "memory_from": "B-06",
+      "memory": "번호를 부르면 앞만 보았다. 그래서 번호로 불렀다. 그래서 다 죽었다."
+    },
+    {
+      "id": "named_captain_anchor",
+      "name": "선장의 닻",
+      "slot": "무기(철삭)",
+      "boss": "B-10 만선호 선장 (난파 여울) 파혼",
+      "status": "canon",
+      "unique": "견인이 무거워진다: 끌어온 적 기절 +0.5초, 견인 재사용 +1초",
+      "memory_from": "B-10",
+      "memory": "줄을 끊자 배가 가벼워졌다. 나 혼자 남았다."
+    },
+    {
+      "id": "named_heukwol_chain",
+      "name": "흑월의 철삭",
+      "slot": "무기(철삭)",
+      "boss": "B-12 흑월 2차 (성문 밖) 파혼",
+      "status": "canon",
+      "unique": "전설 무기. 견인한 적이 무릎 꿇으면 대기 시간 +2초. 대신 F9(나의 정체)는 영영 없다",
+      "memory_from": "B-12",
+      "memory": "횃불을 진 젊은이가 물에 뛰어들었다. 숨이 끊기기 전에 이름을 불러 주지 못했다."
+    },
+    {
+      "id": "named_naru_pole",
+      "name": "칼금 새긴 삿대",
+      "slot": "무기(삼지창)",
+      "boss": "① 물막이 골 먼 여울 숨은 자리",
+      "status": "proposal",
+      "unique": "찌르기 사거리 +1m, 물 위(얕은 여울)에서 이동 둔화 없음",
+      "memory_from": "B-01",
+      "memory": "나루에 검은 갓이 서 있었다. 물에서 건져 낸 혼을 하나씩 깨뜨리고 있었다. 울면서."
+    },
+    {
+      "id": "named_seo_brush",
+      "name": "씻은 붓",
+      "slot": "무기(명부 붓)",
+      "boss": "② 역병막 약장 맨 아래 칸",
+      "status": "proposal",
+      "unique": "인이 흐린 이름(seal faded)의 천도 가산 +0.25초를 없앤다",
+      "memory_from": "B-03",
+      "memory": "이름을 지울 때마다 붓을 씻었다. 물이 검어질수록, 지운 이름은 내 손에 남았다."
+    },
+    {
+      "id": "named_dangmi_fan",
+      "name": "살 부러진 부채",
+      "slot": "노리개",
+      "boss": "① 서낭당(당할미, 2막 이후)",
+      "status": "proposal",
+      "unique": "붙잡아 부르기 반경 +1.5m",
+      "memory_from": "없음(당할미는 살아 있는 사람)",
+      "memory": "(설명 칸: 당할미가 펼쳐 보던 부채. 굿을 끝내지 못한 집에서 가져왔다)"
+    },
+    {
+      "id": "named_chilseong_tag",
+      "name": "열넷 목패",
+      "slot": "노리개",
+      "boss": "④ 무너진 막장 깊은 곳",
+      "status": "proposal",
+      "unique": "숫자 혼(인 없음) 천도 캐스팅 가산 +0.5초 → +0.25초",
+      "memory_from": "B-07",
+      "memory": "하나, 둘… 열셋. 다 나갔다. 하나가 모자란다."
+    },
+    {
+      "id": "named_lamp_oil",
+      "name": "등잔 기름",
+      "slot": "소모품(이름 있는 물건 아님)",
+      "boss": "B-09 망부석 아낙 파혼",
+      "status": "canon",
+      "unique": "천도 중 시야 축소 무효 3회(일회용). 기둥 1 예외라 소모품으로만 둔다",
+      "memory_from": "B-09",
+      "memory": "그이 몸은 아직 저 아래 있어요. 나는 혼만 데리고 가요."
+    }
+  ],
+  "non_item_rewards_season1": "B-01 엽전 ×30 · B-03 회복약 대량 · B-07 광석 대량(제작 재료) · B-08 엽전 ×80 · B-11 엽전 ×60 · B-04 처결 없음",
+  "neok_colors": [
+    {
+      "id": "blue",
+      "name": "푸른 넋",
+      "obang": "청(나무·동)",
+      "hex": "#4FA8A0",
+      "death": "산·숲·고개",
+      "zones": "솔고개 마을, 폐당집",
+      "lean": "빠름"
+    },
+    {
+      "id": "red",
+      "name": "붉은 넋",
+      "obang": "적(불·남)",
+      "hex": "#E85C41",
+      "death": "싸움·불·역병",
+      "zones": "붉은재, 검은여울 역병막",
+      "lean": "셈(피해)"
+    },
+    {
+      "id": "yellow",
+      "name": "누런 넋",
+      "obang": "황(흙·가운데)",
+      "hex": "#D4A94E",
+      "death": "밭·흙·광산",
+      "zones": "보릿들, 쇳골",
+      "lean": "버팀(생명)"
+    },
+    {
+      "id": "white",
+      "name": "흰 넋",
+      "obang": "백(쇠·서)",
+      "hex": "#F3E7D3",
+      "death": "쇠·관아·명부",
+      "zones": "동헌 터, 도성, 명부전",
+      "lean": "굳음(방어)"
+    },
+    {
+      "id": "black",
+      "name": "검은 넋",
+      "obang": "흑(물·북)",
+      "hex": "#16213E",
+      "death": "물",
+      "zones": "물막이 골, 갯마을, 삼도천, 시즌 3 물 밑",
+      "lean": "깊음(도술)"
+    }
+  ],
+  "seal_cost": {
+    "small": 40,
+    "large": 120,
+    "large_mult": 2.0,
+    "where": "서낭당",
+    "sockets": "무기·갓·도포 홈 0~2"
+  },
+  "seals": [
+    {
+      "a": "blue",
+      "b": "blue",
+      "name": "날랜 인",
+      "effect": "공격 속도 +6%",
+      "lean": "중립"
+    },
+    {
+      "a": "red",
+      "b": "red",
+      "name": "센 인",
+      "effect": "맺힘 피해 +8%",
+      "lean": "중립"
+    },
+    {
+      "a": "yellow",
+      "b": "yellow",
+      "name": "굳은 인",
+      "effect": "생명 +30",
+      "lean": "중립"
+    },
+    {
+      "a": "white",
+      "b": "white",
+      "name": "쇠 인",
+      "effect": "방어 +6%",
+      "lean": "중립"
+    },
+    {
+      "a": "black",
+      "b": "black",
+      "name": "깊은 인",
+      "effect": "도술 재사용 −8%",
+      "lean": "중립"
+    },
+    {
+      "a": "blue",
+      "b": "red",
+      "name": "서두름 인",
+      "effect": "연속 천도 창 +1초",
+      "lean": "천도"
+    },
+    {
+      "a": "blue",
+      "b": "yellow",
+      "name": "길 인",
+      "effect": "이동 속도 +5%",
+      "lean": "중립"
+    },
+    {
+      "a": "blue",
+      "b": "white",
+      "name": "바람 인",
+      "effect": "무기 기술 재사용 −10%",
+      "lean": "중립"
+    },
+    {
+      "a": "blue",
+      "b": "black",
+      "name": "물길 인",
+      "effect": "천도 캐스팅 −6%",
+      "lean": "천도"
+    },
+    {
+      "a": "red",
+      "b": "yellow",
+      "name": "불씨 인",
+      "effect": "파혼 피해 +15%",
+      "lean": "파혼"
+    },
+    {
+      "a": "red",
+      "b": "white",
+      "name": "칼끝 인",
+      "effect": "사나운 적·덩어리 피해 +12%",
+      "lean": "중립"
+    },
+    {
+      "a": "red",
+      "b": "black",
+      "name": "그을음 인",
+      "effect": "얼룩 지속 −20%",
+      "lean": "파혼"
+    },
+    {
+      "a": "yellow",
+      "b": "white",
+      "name": "버팀 인",
+      "effect": "천도 중 받는 피해 −15%",
+      "lean": "천도"
+    },
+    {
+      "a": "yellow",
+      "b": "black",
+      "name": "무덤 인",
+      "effect": "처결 대기 시간 +1초",
+      "lean": "둘 다"
+    },
+    {
+      "a": "white",
+      "b": "black",
+      "name": "찬 인",
+      "effect": "파혼 넉백 +30%",
+      "lean": "파혼"
+    }
+  ],
+  "special_seal": {
+    "name": "인의 조각",
+    "source": "5막 보스 파혼 보상",
+    "note": "만들 수 없는 가장 센 인. 효과는 서사 5막 확정안을 따른다"
+  },
+  "stats": [
+    {
+      "id": "str",
+      "name": "힘",
+      "per_point": "맺힘 피해 +1%, 넉백 +0.5%"
+    },
+    {
+      "id": "agi",
+      "name": "날램",
+      "per_point": "공격 속도 +0.4%, 이동 속도 +0.2%"
+    },
+    {
+      "id": "body",
+      "name": "몸",
+      "per_point": "생명 +4(기본 100), 얼룩 둔화 저항 +0.5%"
+    },
+    {
+      "id": "mind",
+      "name": "마음",
+      "per_point": "도술 위력 +1%, 도술 재사용 −0.3%, 천도 캐스팅 −0.15%"
+    }
+  ],
+  "ranks": {
+    "min": 1,
+    "max": 50,
+    "cost_formula": "40 × 품계^1.5 넋 (QA 1차)",
+    "points_per_rank": 5,
+    "start_each": 10
+  }
+}
