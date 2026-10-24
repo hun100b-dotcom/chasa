@@ -185,6 +185,7 @@ public class FieldManager : MonoBehaviour
             var src = r.sharedMaterials; var dst = new Material[src.Length];
             for (int i = 0; i < src.Length; i++)
             {
+                if (name == "terrain_tile_grass" && src[i] != null) { dst[i] = GrassVariant(src[i], x, z); continue; }   // 넓은 풀밭이 한 색 평면으로 보이지 않게 칸마다 약간 다른 초록
                 Material m;
                 if (src[i] == null || !matCache.TryGetValue(src[i], out m))
                 {
@@ -197,6 +198,25 @@ public class FieldManager : MonoBehaviour
             r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;   // 수백 개 그림자는 웹에서 무거워 일단 끈다(주인공·혼은 그림자 유지)
             r.receiveShadows = true;
         }
+    }
+
+    readonly Dictionary<long, Material> grassMats = new Dictionary<long, Material>();
+    static readonly float[] GrassTint = { 0.86f, 0.96f, 1.06f, 1.16f };
+
+    /// <summary>풀 타일의 색을 위치로 4가지 밝기 중 하나로(같은 위치는 늘 같은 색 — 이웃 칸과 살짝 다르게). 변형마다 재질을 하나만 만든다</summary>
+    Material GrassVariant(Material src, float x, float z)
+    {
+        int h = (Mathf.FloorToInt(x / 8f) * 73856093) ^ (Mathf.FloorToInt(z / 8f) * 19349663);
+        int v = (h & 0x7fffffff) % GrassTint.Length;
+        long key = (long)src.GetInstanceID() * 8 + v;
+        Material m;
+        if (!grassMats.TryGetValue(key, out m))
+        {
+            var c = Props3D.MatColor(src); float t = GrassTint[v];
+            m = U.Matte(new Color(Mathf.Clamp01(c.r * t * 0.95f), Mathf.Clamp01(c.g * t), Mathf.Clamp01(c.b * t * 0.9f), 1f)); m.enableInstancing = true;
+            grassMats[key] = m;
+        }
+        return m;
     }
 
     // ---- 불빛 ------------------------------------------------------------------
