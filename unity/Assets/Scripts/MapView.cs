@@ -29,26 +29,46 @@ public static class MapView
         yard.GetComponent<Renderer>().sharedMaterial = U.Matte(VillageGround);
 
         // 서낭나무: 몸통(충돌 없음 — 출발점이 막히면 안 되어서)과 둥근 잎
-        Prim(PrimitiveType.Cylinder, root, "ShrineTree", new Vector3(0, 1.4f, 0), new Vector3(0.7f, 1.4f, 0.7f), new Color(0.25f, 0.18f, 0.12f));
-        Prim(PrimitiveType.Sphere, root, "ShrineLeaves", new Vector3(0, 3.4f, 0), new Vector3(3.4f, 2.4f, 3.4f), new Color(0.18f, 0.30f, 0.22f));
+        if (!SpriteProp(root, "props/prop_seonang_tree", new Vector3(-3.2f, 0, 0), 5.5f))
+        {
+            Prim(PrimitiveType.Cylinder, root, "ShrineTree", new Vector3(0, 1.4f, 0), new Vector3(0.7f, 1.4f, 0.7f), new Color(0.25f, 0.18f, 0.12f));
+            Prim(PrimitiveType.Sphere, root, "ShrineLeaves", new Vector3(0, 3.4f, 0), new Vector3(3.4f, 2.4f, 3.4f), new Color(0.18f, 0.30f, 0.22f));
+        }
 
         foreach (var b in MapLayout.Blockers)
         {
             switch (b.Kind)
             {
                 case "house":
+                    if (SpriteProp(root, (b.X > 0 && ((int)b.X) % 2 == 0) ? "props/prop_giwa" : "props/prop_choga", new Vector3(b.X, 0, b.Z), b.R * 2.8f)) break;
                     Prim(PrimitiveType.Cube, root, "House", new Vector3(b.X, 1.1f, b.Z), new Vector3(b.R * 1.7f, 2.2f, b.R * 1.7f), HouseWall);
                     Prim(PrimitiveType.Cube, root, "Roof", new Vector3(b.X, 2.45f, b.Z), new Vector3(b.R * 2.3f, 0.5f, b.R * 2.3f), HouseRoof);
                     break;
-                case "post":   // 장승: 길쭉한 나무 기둥 + 붉은 머리 (ChasaRed 로 눈에 띄게)
+                case "post":
+                    if (SpriteProp(root, "props/prop_jangseung", new Vector3(b.X, 0, b.Z), 1.6f)) break;
+   // 장승: 길쭉한 나무 기둥 + 붉은 머리 (ChasaRed 로 눈에 띄게)
                     Prim(PrimitiveType.Cube, root, "Post", new Vector3(b.X, 1.2f, b.Z), new Vector3(b.R * 1.6f, 2.4f, b.R * 1.6f), new Color(0.35f, 0.24f, 0.15f));
                     Prim(PrimitiveType.Cube, root, "PostHead", new Vector3(b.X, 2.6f, b.Z), new Vector3(b.R * 2.2f, 0.7f, b.R * 2.2f), ChasaPalette.ChasaRed);
                     break;
                 default:       // 돌무더기
+                    if (SpriteProp(root, "props/prop_cairn", new Vector3(b.X, 0, b.Z), b.R * 2.4f)) break;
                     Prim(PrimitiveType.Sphere, root, "Stones", new Vector3(b.X, b.R * 0.5f, b.Z), new Vector3(b.R * 2f, b.R, b.R * 2f), new Color(0.42f, 0.42f, 0.44f));
                     break;
             }
         }
+    }
+
+    /// <summary>그림 소품을 세운다. 그림이 있으면 true (그러면 색 도형은 만들지 않는다). width = 그려질 폭(m)</summary>
+    static bool SpriteProp(GameObject root, string name, Vector3 pos, float widthM)
+    {
+        var s = SpriteLib.Get(name);
+        if (s == null) return false;
+        var a = ActorSprite.Create(root.transform, null);
+        a.transform.position = pos;
+        a.Show(name, Vector3.right);
+        float natural = s.rect.width / s.pixelsPerUnit;               // 그림 원래 폭(m)
+        a.transform.localScale = Vector3.one * (widthM / Mathf.Max(0.1f, natural));
+        return true;
     }
 
     static GameObject Prim(PrimitiveType t, GameObject parent, string name, Vector3 pos, Vector3 scale, Color c)

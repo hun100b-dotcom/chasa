@@ -30,6 +30,9 @@ public class Enemy : MonoBehaviour
 
     float speed, flash, deathT, spawnT, pulledT;
     Material mat;
+    ActorSprite spr;               // 아트팀 그림(없으면 색 도형으로 대신)
+    Renderer bodyRenderer;
+    Vector3 lastPlayerPos;         // 그림이 플레이어 쪽을 보게 하려고 기억
     Color baseColor;               // 평소 색 (예비동작 붉은 신호에서 되돌아올 색)
     public bool capsuleShape;
 
@@ -50,6 +53,8 @@ public class Enemy : MonoBehaviour
         if (capsule) body.transform.localScale = new Vector3(e.radius * 1.7f, e.height / 2f, e.radius * 1.7f); // 기본 캡슐: 지름1·키2
         else body.transform.localScale = new Vector3(e.radius * 1.9f, e.height, e.radius * 1.9f);
         body.transform.localPosition = new Vector3(0, e.height / 2f, 0); // 발바닥이 바닥에
+        e.bodyRenderer = body.GetComponent<Renderer>();
+        e.spr = ActorSprite.Create(root.transform, null);
         e.baseColor = KindColor(e.soul.Kind);
         e.mat = U.Flashable(e.baseColor);
         body.GetComponent<Renderer>().sharedMaterial = e.mat;
@@ -145,6 +150,7 @@ public class Enemy : MonoBehaviour
 
     public void Tick(float dt, Vector3 playerPos)
     {
+        lastPlayerPos = playerPos;
         if (gone) { TickDead(dt); return; }
         if (!alive)
         {
@@ -222,8 +228,32 @@ public class Enemy : MonoBehaviour
         Pos = new Vector3(x, Pos.y, z);
     }
 
+    /// <summary>상태에 맞는 그림을 고른다. 그림이 있으면 색 도형은 숨긴다</summary>
+    void UpdateSprite()
+    {
+        if (spr == null) return;
+        string n;
+        bool down = kneeling || sending;
+        if (soul.Boss) n = atk.Winding ? "boss/boss_naru_attack" : "boss/boss_naru_idle";
+        else if (soul.Fierce) n = "enemies/soul_fierce";
+        else switch (soul.Kind)
+        {
+            case SoulKind.Year: n = down ? "enemies/soul_day_kneel" : "enemies/soul_day"; break;
+            case SoulKind.Old: n = down ? "enemies/soul_old_kneel" : "enemies/soul_old"; break;
+            case SoulKind.Lump: n = "enemies/soul_lump"; break;   // 덩어리는 무릎 꿇는 그림이 없다
+            default: n = down ? "enemies/soul_fresh_kneel" : "enemies/soul_fresh"; break;
+        }
+        var look = lastPlayerPos - Pos;
+        // 예비동작이면 붉게, 맞은 순간이면 하얗게 번쩍 (색 도형의 flash 와 같은 신호)
+        var tint = Color.Lerp(Color.white, new Color(1f, 0.4f, 0.35f), atk.Winding ? atk.WindupRatio : 0f);
+        tint = Color.Lerp(tint, new Color(1f, 1f, 1f), flash);
+        bool shown = spr.Show(n, look, tint);
+        if (bodyRenderer != null) bodyRenderer.enabled = !shown;
+    }
+
     void ApplyVisual()
     {
+        UpdateSprite();
         mat.SetColor("_EmissionColor", Color.white * (flash * 0.9f));
         // 등장 팝인(0→1) 또는 죽은 뒤 쪼그라듦(1→0)
         float b = U.EaseOutQuad(Mathf.Clamp01(spawnT / Config.ENEMY_SPAWN_POP_TIME));

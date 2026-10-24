@@ -66,6 +66,7 @@ public class GameMain : MonoBehaviour
     {
         // 직교 카메라: 멀어도 작아지지 않음 = 원근감 없는 쿼터뷰
         cam = new GameObject("Camera").AddComponent<Camera>();
+        cam.gameObject.tag = "MainCamera";   // 그림(빌보드)이 Camera.main 으로 카메라를 찾는다
         cam.orthographic = true;
         cam.orthographicSize = Config.CAMERA_VIEW_HEIGHT / 2f; // 유니티는 '세로 절반' 값을 받는다
         cam.nearClipPlane = 0.1f; cam.farClipPlane = 300f;

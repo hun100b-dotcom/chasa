@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     public DamageNumbers numbers;
     public ChainVisual chain;
 
+    ActorSprite spr;                   // 아트팀 그림(없으면 파란 캡슐로 대신)
+    Renderer[] bodyShapes;
+    Vector3 lastPos; float walkT;      // 걷는 그림 두 장을 번갈아 보여 주려고
     public Loadout loadout = new Loadout();   // 든 무기·도술 쿨다운·장비 (JudgeSystem 이 장비 드롭을 넣어 준다)
     ComboStep[] Steps => WeaponTable.Steps(loadout.weapon);   // 지금 든 무기의 콤보 표
     bool Busy => locked || loadout.swapLeft > 0f;             // 천도 캐스팅 중이거나 무기를 바꿔 드는 중
@@ -63,7 +66,27 @@ public class Player : MonoBehaviour
         nose.transform.localScale = new Vector3(0.25f, 0.25f, 0.4f);
         nose.transform.localPosition = new Vector3(0, 1.35f, Config.PLAYER_RADIUS * 0.9f);
         nose.GetComponent<Renderer>().sharedMaterial = U.Matte(Config.Hex(0xffe066));
+        p.bodyShapes = new[] { body.GetComponent<Renderer>(), nose.GetComponent<Renderer>() };
+        p.spr = ActorSprite.Create(go.transform, null);
+        p.spr.transform.localPosition = Vector3.zero;
         return p;
+    }
+
+    /// <summary>지금 하는 일에 맞는 그림: 휘두름(철삭/방망이)·시전·피격·걷기·서 있기</summary>
+    void UpdateSprite(float dt)
+    {
+        if (spr == null) return;
+        float moved = new Vector2(Pos.x - lastPos.x, Pos.z - lastPos.z).magnitude;
+        lastPos = Pos;
+        if (moved > 0.001f) walkT += dt; else walkT = 0f;
+        string n = "characters/chasa_idle";
+        bool mace = loadout.weapon == WeaponId.Mace;
+        if (invulnT > 0.35f) n = "characters/chasa_hit";                 // 막 맞음
+        else if (locked) n = "characters/chasa_cast";                    // 천도 시전
+        else if (state == State.Attack && atk != null) n = mace ? "characters/chasa_bang" + Mathf.Clamp(atk.step, 1, 3) : "characters/chasa_swing";
+        else if (moved > 0.001f) n = ((int)(walkT * 6f) % 2 == 0) ? "characters/chasa_walk_a" : "characters/chasa_walk_b";
+        bool shown = spr.Show(n, U.Dir(facing));
+        foreach (var r in bodyShapes) r.enabled = !shown;
     }
 
     // ===== 명령 (입력 쪽에서 호출) ================================================
@@ -167,6 +190,7 @@ public class Player : MonoBehaviour
             case State.Pull: TickPull(dt); break;
         }
         transform.rotation = Quaternion.LookRotation(U.Dir(facing)); // 코(+z)가 facing 방향을 보게
+        UpdateSprite(dt);
         chain.trail.Tick(dt);
     }
 
