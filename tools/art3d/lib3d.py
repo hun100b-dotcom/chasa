@@ -12,7 +12,7 @@ PAL = {  # 팔레트 토큰(docs/art/palette-tokens.json)을 3D용으로 옮긴 
     "pillar": "#7A3F2C", "mud": "#C9B38A", "thatch": "#B89A55", "stone": "#8A8A82", "stone_dark": "#666660",
     "jar": "#7A4A2E", "leaf": "#3F6B4E", "leaf_dark": "#2F5440", "bark": "#5A3E2A", "water": "#2B3A66",
     "soul_fresh": "#BFE8FF", "soul_day": "#FFCC55", "soul_old": "#A5472E", "soul_lump": "#9A5CFF",
-    "ground": "#6F7B5B", "robe": "#586080", "sagat": "#8A7448", "old_skin": "#B58E70", "hull": "#3B3F52", "beard": "#D8D0C0", "hat": "#14141F", "face": "#0A0A12", "cloth": "#232338", "road": "#A8946B", "skin": "#D9B79B", "blue_cloth": "#3E64B0", "yellow_cloth": "#E8C15A",
+    "ground": "#6F7B5B", "slope_top": "#9CC25F", "slope_side": "#5A4630", "slope_line": "#3E5A2C", "cliff_light": "#B4B2BC", "cliff_dark": "#4E5264", "robe": "#586080", "sagat": "#8A7448", "old_skin": "#B58E70", "hull": "#3B3F52", "beard": "#D8D0C0", "hat": "#14141F", "face": "#0A0A12", "cloth": "#232338", "road": "#A8946B", "skin": "#D9B79B", "blue_cloth": "#3E64B0", "yellow_cloth": "#E8C15A",
 }
 _mats = {}
 

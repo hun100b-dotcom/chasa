@@ -21,7 +21,7 @@ def heightfield(name, hf, n=4, rise=2.0):
     for i in range(n):
         for j in range(n):
             bm.faces.new((V[i, j], V[i + 1, j], V[i + 1, j + 1], V[i, j + 1]))
-    top = _obj(name + "_top", bm, "leaf")
+    top = _obj(name + "_top", bm, "slope_top")
     bm2 = bmesh.new()
     def edge(pts):
         for a, b in zip(pts, pts[1:]):
@@ -32,7 +32,7 @@ def heightfield(name, hf, n=4, rise=2.0):
     edge([P(i / n, 0) for i in range(n + 1)]); edge([P(1, j / n) for j in range(n + 1)])
     edge([P(1 - i / n, 1) for i in range(n + 1)]); edge([P(0, 1 - j / n) for j in range(n + 1)])
     bmesh.ops.recalc_face_normals(bm2, faces=bm2.faces)
-    side = _obj(name + "_side", bm2, "mud")
+    side = _obj(name + "_side", bm2, "slope_side")
     return [top, side, box("under", (T, T, 0.02), (0, 0, 0.01), "mud")]
 
 def rocks(n, spread, sizes, seed, ground_z=0.0):
@@ -67,10 +67,12 @@ def tiles():
     t["tile_bank_straight"] = ("논두렁 직진", [slab(), box("bank", (T, 1.0, 0.45), (0, 0, TH + 0.225), "mud"), box("top", (T, 0.6, 0.04), (0, 0, TH + 0.47), "leaf")], "동서로 이어지는 폭 1m 둑")
     t["tile_bank_corner"] = ("논두렁 모서리", [slab(), box("bankE", (T / 2 + 0.5, 1.0, 0.45), (T / 4 - 0.25, 0, TH + 0.225), "mud"), box("bankS", (1.0, T / 2 + 0.5, 0.45), (0, -T / 4 + 0.25, TH + 0.225), "mud")], "동쪽과 남쪽으로 이어짐")
     # 비탈: 북쪽(+Y)으로 올라간다. 윗면 높이 0.3 → 2.3m
-    t["tile_slope_straight"] = ("비탈 직진", heightfield("slope", lambda u, v: v), "남쪽 낮은 쪽 → 북쪽 높은 쪽, 높이차 2m")
+    ang = math.atan2(2.0, T)
+    cont = [box(f"contour{i}", (T, 0.1, 0.03), (0, -T / 2 + T * f, TH + 2.0 * f + 0.02), "slope_line", rot=(-ang, 0, 0)) for i, f in enumerate((0.25, 0.5, 0.75))]
+    t["tile_slope_straight"] = ("비탈 직진", heightfield("slope", lambda u, v: v) + cont, "남쪽 낮은 쪽 → 북쪽 높은 쪽, 높이차 2m, 등고선 3줄")
     t["tile_slope_corner_out"] = ("비탈 볼록 모서리", heightfield("slope", lambda u, v: min(u, v) ** 1.0), "언덕 모서리(바깥으로 볼록)")
     t["tile_slope_corner_in"] = ("비탈 오목 모서리", heightfield("slope", lambda u, v: max(u, v)), "움푹 파인 모서리")
-    t["tile_cliff_wall"] = ("벼랑 벽", [slab("stone_dark")] + [box(f"blk{i}", (1.6 + (i % 2) * 0.3, 1.4, 1.2), (-3.5 + i * 1.4, 3.2 + (i % 2) * 0.1, TH + 0.6), "stone" if i % 2 else "stone_dark") for i in range(6)] + [box("top", (T, 1.6, 0.04), (0, 3.3, TH + 1.22), "leaf")], "북쪽 가장자리를 따라 선 바위벽 2m")
+    t["tile_cliff_wall"] = ("벼랑 벽", [slab("cliff_dark")] + [box(f"blk{i}", (1.6 + (i % 2) * 0.3, 1.4, 1.2), (-3.5 + i * 1.4, 3.2 + (i % 2) * 0.1, TH + 0.6), "cliff_light" if i % 2 else "cliff_dark") for i in range(6)] + [box("top", (T, 1.6, 0.04), (0, 3.3, TH + 1.22), "slope_top"), box("shadow", (T, 0.1, 1.2), (0, 2.45, TH + 0.6), "ink")], "북쪽 가장자리를 따라 선 바위벽 2m")
     # 소품(타일 위에 얹음)
     t["rock_small"] = ("바위 작은 것", rocks(2, 0.3, (0.3, 0.5), 1), "높이 0.5m")
     t["rock_medium"] = ("바위 중간", rocks(1, 0, (1.0, 1.2), 2), "높이 1.3m")

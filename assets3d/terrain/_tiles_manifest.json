@@ -103,8 +103,8 @@
   {
    "name": "terrain_tile_slope_straight",
    "label": "비탈 직진",
-   "note": "남쪽 낮은 쪽 → 북쪽 높은 쪽, 높이차 2m",
-   "tris": 76,
+   "note": "남쪽 낮은 쪽 → 북쪽 높은 쪽, 높이차 2m, 등고선 3줄",
+   "tris": 112,
    "size_m": [
     8.0,
     8.0,
@@ -140,7 +140,7 @@
    "name": "terrain_tile_cliff_wall",
    "label": "벼랑 벽",
    "note": "북쪽 가장자리를 따라 선 바위벽 2m",
-   "tris": 96,
+   "tris": 108,
    "size_m": [
     8.75,
     8.1,
