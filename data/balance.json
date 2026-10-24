@@ -770,5 +770,77 @@
  "REWARD_AREA_GAIN_MAX": {
   "value": 0.4,
   "note": "장비 보상 공통 기준: 타격·폭발 면적 증가 ≤ +40%"
+ },
+ "KARMA_DECAY_TENDO_INTERVAL": {
+  "value": 2,
+  "note": "천도(눕히기 포함) 이 횟수마다 업 -1 (최저 0). 업이 오르기만 하면 결말 A(업 60 미만)가 아무도 못 열린다"
+ },
+ "ENDING_A_MEMORY_MIN": {
+  "value": 150,
+  "note": "최종 눕히기(결말 A) 조건: 기억 이 값 이상 (서사 제안 200은 시즌 3 기본 상태가 못 닿음)"
+ },
+ "ENDING_A_KARMA_MAX": {
+  "value": 60,
+  "note": "업이 이 값 미만이어야 최종 눕히기 가능"
+ },
+ "B31_CHAIN_RADIUS": {
+  "value": 8.0,
+  "note": "B-31 나의 백에 묶여 움직일 수 있는 반경(m). 3타 사거리 5.6m보다 넉넉히"
+ },
+ "B31_LIGHT_PER_SENT": {
+  "value": 40,
+  "note": "보낸 사람(천도·눕히기) 이 수마다 일곱의 빛 1개 (최소 1, 최대 7)"
+ },
+ "B31_LIGHT_MAX": {
+  "value": 7,
+  "note": ""
+ },
+ "B31_LIGHT_PUSH_CUT": {
+  "value": 0.12,
+  "note": "빛 1개당 밀침 -12%"
+ },
+ "B31_KNEEL_WAIT": {
+  "value": 15.0,
+  "note": "B-31 처결 대기(초). 게임 전체에서 가장 긴 망설임"
+ },
+ "COMPASS_BACK_SLOW_MAX": {
+  "value": 0.1,
+  "note": "사슬 나침반: 가장 깊은 곳에서 되돌아갈 때 이동 최대 -10% (깊이에 비례)"
+ },
+ "INK_SILT_SLOW": {
+  "value": 0.15,
+  "note": "먹 앙금 이동 둔화"
+ },
+ "SLOW_STACK_MAX": {
+  "value": 0.35,
+  "note": "이동 둔화 합산 상한 (앙금·웅덩이·안개가 겹쳐도 속도 65% 아래로 안 내려감)"
+ },
+ "B29_STAND_TIME": {
+  "value": 3.0,
+  "note": "B-29 밥상 앞 서 있기(초)"
+ },
+ "B29_REGEN_STOP_TIME": {
+  "value": 15.0,
+  "note": "서 있기 완료 시 할미 맺힘 회복 정지(초)"
+ },
+ "B29_HOT_CELL_DPS_RATIO": {
+  "value": 0.04,
+  "note": "뜨거운 칸에 닿을 때 초당 최대 체력 비율"
+ },
+ "B29_HOT_CELL_AREA_MAX": {
+  "value": 0.25,
+  "note": "뜨거운 칸이 무대에서 차지하는 비율 상한 (2단계 0.35)"
+ },
+ "B30_WAVE_PERIOD": {
+  "value": 8.0,
+  "note": "B-30 우물 물 오르내림 주기(초)"
+ },
+ "B30_WAVE_RISE_TIME": {
+  "value": 3.0,
+  "note": "그중 물이 오르는 시간. 버티기는 내림(나머지 5초) 구간에서만 진행"
+ },
+ "REWARD_ROPE_PULL_BONUS": {
+  "value": 0.2,
+  "note": "첫 우물의 두레박줄: 사슬 당기기 속도 +20%"
  }
 }

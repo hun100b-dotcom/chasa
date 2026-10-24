@@ -39,7 +39,8 @@ var hp := Config.PLAYER_MAX_HP
 var neok := 0                # 넋 (천도 보상)
 var memory := 0              # 기억 조각 (천도 보상)
 var coin := 0                # 엽전 (파혼 보상)
-var karma := 0               # 업 (파혼할 때마다 쌓임)
+var karma := 0               # 업 (파혼할 때마다 쌓이고, 천도 2회마다 1씩 줄어든다)
+var tendo_total := 0         # 지금까지 천도한 횟수 (업 감쇠 계산용)
 var speed_mult := 1.0        # 이동속도 배율 (얼룩 위면 0.8). main 이 매 프레임 넣어준다
 var judge_target: Enemy = null   # 처결하러 다가가는 대상
 var judge_kind := ""             # "tendo"(천도) / "pahon"(파혼)
@@ -460,6 +461,13 @@ func _start_tendo(e: Enemy) -> void:
 	# 사슬을 혼에 걸어둔다 (붙잡고 있다는 표시)
 	chain.visible = true
 
+func _decay_karma() -> void:
+	# 천도할 때마다 세어 N회마다 업을 1 덜어 준다. 왜? 업이 오르기만 하면 긴 게임 끝에서 모두가 '업 높음'이 되어
+	# 천도를 고르는 선택이 결말에 의미를 갖지 못한다 (docs/BALANCE-ACT8.md)
+	tendo_total += 1
+	if tendo_total % Config.KARMA_DECAY_TENDO_INTERVAL == 0:
+		karma = maxi(0, karma - 1)
+
 func karma_tier() -> int:
 	# 업 단계: 0 = K-001(0~9), 1 = K-002, 2 = K-003, 3 = K-004 (P1-015)
 	# 왜 숫자 단계로 따로 뽑나? 낮 단서 난이도·보상 감소 등 나중 시스템이 "지금 몇 단계냐"만 물으면 되게.
@@ -494,6 +502,7 @@ func _tick_cast(dt: float) -> void:
 		neok += gain
 		memory += Config.TENDO_MEMORY
 		tendo_streak += 1
+		_decay_karma()
 		tendo_chain_left = Config.TENDO_CHAIN_WINDOW
 		numbers.spawn_text(e.get_head_position(), "+%d NEOK" % gain, Config.MEMORY_TINT)
 		feel.add_shake(0.15)

@@ -104,6 +104,9 @@ func run() -> void:
 			far = x
 			break
 	far.stun = 5.0  # 견인 전에 스스로 걸어오지 않게
+	for x in em.list:
+		if x != far:
+			x.stun = 5.0  # 다른 혼이 끼어들어 견인을 막거나 플레이어를 때리지 않게 (가끔 실패하던 원인)
 	far.position = p.position + Vector3(9, 0, 0)
 	var d0 := far.position.distance_to(p.position)
 	main._update_camera(1.0)
@@ -332,6 +335,21 @@ func _core_loop_tests(p: Player, em: EnemyManager) -> void:
 	check(ink_gain <= Config.REWARD_AREA_GAIN_MAX, "번진 먹 면적 +%d%% (≤ +40%%)" % int(ink_gain * 100.0))
 	var rope_gain: float = pow((5.6 + Config.B22_ROPE_REACH_BONUS) / 5.6, 2.0) - 1.0
 	check(rope_gain <= Config.REWARD_AREA_GAIN_MAX, "선원의 밧줄 면적 +%d%% (≤ +40%%)" % int(rope_gain * 100.0))
+
+	print("[14-9] 8막 채택값·업 감쇠 (P1-047)")
+	var pk := Player.new()
+	pk.karma = 5
+	pk.tendo_total = 0
+	pk._decay_karma()
+	check(pk.karma == 5, "천도 1회: 업 그대로")
+	pk._decay_karma()
+	check(pk.karma == 4, "천도 2회: 업 -1")
+	pk.karma = 0
+	pk._decay_karma(); pk._decay_karma()
+	check(pk.karma == 0, "업은 0 아래로 내려가지 않음")
+	check(Config.B31_LIGHT_MAX * Config.B31_LIGHT_PUSH_CUT <= 0.9, "일곱의 빛 전부 모아도 밀침 완전 무효는 아님 (-%d%%)" % int(Config.B31_LIGHT_MAX * Config.B31_LIGHT_PUSH_CUT * 100.0))
+	check(Config.B30_WAVE_PERIOD - Config.B30_WAVE_RISE_TIME >= 4.0, "내림 구간 %.0f초 (버티기 3초 + 여유)" % (Config.B30_WAVE_PERIOD - Config.B30_WAVE_RISE_TIME))
+	pk.free()
 
 	print("[14-3] 맵 생성 (P1-017)")
 	var m1 := MapGen.generate(42)

@@ -195,4 +195,22 @@ public static class Balance
     public const float REWARD_LIME_SLOW_TIME = 2.0f;
     public const float REWARD_INK_RADIUS_BONUS = 0.5f;  // 번진 먹: 파혼 폭발 반경 +0.5m (서사 제안 +1m는 면적 +78%). 6막 매듭 조각과는 큰 쪽만
     public const float REWARD_AREA_GAIN_MAX = 0.4f;  // 장비 보상 공통 기준: 타격·폭발 면적 증가 ≤ +40%
+    public const int KARMA_DECAY_TENDO_INTERVAL = 2;  // 천도(눕히기 포함) 이 횟수마다 업 -1 (최저 0). 업이 오르기만 하면 결말 A(업 60 미만)가 아무도 못 열린다
+    public const int ENDING_A_MEMORY_MIN = 150;  // 최종 눕히기(결말 A) 조건: 기억 이 값 이상 (서사 제안 200은 시즌 3 기본 상태가 못 닿음)
+    public const int ENDING_A_KARMA_MAX = 60;  // 업이 이 값 미만이어야 최종 눕히기 가능
+    public const float B31_CHAIN_RADIUS = 8.0f;  // B-31 나의 백에 묶여 움직일 수 있는 반경(m). 3타 사거리 5.6m보다 넉넉히
+    public const int B31_LIGHT_PER_SENT = 40;  // 보낸 사람(천도·눕히기) 이 수마다 일곱의 빛 1개 (최소 1, 최대 7)
+    public const int B31_LIGHT_MAX = 7;
+    public const float B31_LIGHT_PUSH_CUT = 0.12f;  // 빛 1개당 밀침 -12%
+    public const float B31_KNEEL_WAIT = 15.0f;  // B-31 처결 대기(초). 게임 전체에서 가장 긴 망설임
+    public const float COMPASS_BACK_SLOW_MAX = 0.1f;  // 사슬 나침반: 가장 깊은 곳에서 되돌아갈 때 이동 최대 -10% (깊이에 비례)
+    public const float INK_SILT_SLOW = 0.15f;  // 먹 앙금 이동 둔화
+    public const float SLOW_STACK_MAX = 0.35f;  // 이동 둔화 합산 상한 (앙금·웅덩이·안개가 겹쳐도 속도 65% 아래로 안 내려감)
+    public const float B29_STAND_TIME = 3.0f;  // B-29 밥상 앞 서 있기(초)
+    public const float B29_REGEN_STOP_TIME = 15.0f;  // 서 있기 완료 시 할미 맺힘 회복 정지(초)
+    public const float B29_HOT_CELL_DPS_RATIO = 0.04f;  // 뜨거운 칸에 닿을 때 초당 최대 체력 비율
+    public const float B29_HOT_CELL_AREA_MAX = 0.25f;  // 뜨거운 칸이 무대에서 차지하는 비율 상한 (2단계 0.35)
+    public const float B30_WAVE_PERIOD = 8.0f;  // B-30 우물 물 오르내림 주기(초)
+    public const float B30_WAVE_RISE_TIME = 3.0f;  // 그중 물이 오르는 시간. 버티기는 내림(나머지 5초) 구간에서만 진행
+    public const float REWARD_ROPE_PULL_BONUS = 0.2f;  // 첫 우물의 두레박줄: 사슬 당기기 속도 +20%
 }

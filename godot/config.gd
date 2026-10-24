@@ -292,3 +292,23 @@ const REWARD_LIME_SLOW := 0.3         # 석회 주머니: 폭발 뒤 잡몹 둔�
 const REWARD_LIME_SLOW_TIME := 2.0
 const REWARD_INK_RADIUS_BONUS := 0.5  # 번진 먹: 파혼 폭발 반경 +0.5m (서사 제안 +1m는 면적 +78%). 6막 매듭 조각과는 큰 쪽만
 const REWARD_AREA_GAIN_MAX := 0.4    # 장비 보상 공통 기준: 타격·폭발 면적 증가 ≤ +40%
+
+# --- 8막(나의 몸) 수치 + 업 감쇠 (docs/BALANCE-ACT8.md, 서사 합의·코디네이터 채택 2026-10-24). 🔴 PD 확정 대기 ---
+const KARMA_DECAY_TENDO_INTERVAL := 2  # 천도(눕히기 포함) 이 횟수마다 업 -1 (최저 0). 업이 오르기만 하면 결말 A(업 60 미만)가 아무도 못 열린다
+const ENDING_A_MEMORY_MIN := 150      # 최종 눕히기(결말 A) 조건: 기억 이 값 이상 (서사 제안 200은 시즌 3 기본 상태가 못 닿음)
+const ENDING_A_KARMA_MAX := 60        # 업이 이 값 미만이어야 최종 눕히기 가능
+const B31_CHAIN_RADIUS := 8.0         # B-31 나의 백에 묶여 움직일 수 있는 반경(m). 3타 사거리 5.6m보다 넉넉히
+const B31_LIGHT_PER_SENT := 40        # 보낸 사람(천도·눕히기) 이 수마다 일곱의 빛 1개 (최소 1, 최대 7)
+const B31_LIGHT_MAX := 7
+const B31_LIGHT_PUSH_CUT := 0.12      # 빛 1개당 밀침 -12%
+const B31_KNEEL_WAIT := 15.0          # B-31 처결 대기(초). 게임 전체에서 가장 긴 망설임
+const COMPASS_BACK_SLOW_MAX := 0.1   # 사슬 나침반: 가장 깊은 곳에서 되돌아갈 때 이동 최대 -10% (깊이에 비례)
+const INK_SILT_SLOW := 0.15           # 먹 앙금 이동 둔화
+const SLOW_STACK_MAX := 0.35          # 이동 둔화 합산 상한 (앙금·웅덩이·안개가 겹쳐도 속도 65% 아래로 안 내려감)
+const B29_STAND_TIME := 3.0           # B-29 밥상 앞 서 있기(초)
+const B29_REGEN_STOP_TIME := 15.0     # 서 있기 완료 시 할미 맺힘 회복 정지(초)
+const B29_HOT_CELL_DPS_RATIO := 0.04  # 뜨거운 칸에 닿을 때 초당 최대 체력 비율
+const B29_HOT_CELL_AREA_MAX := 0.25   # 뜨거운 칸이 무대에서 차지하는 비율 상한 (2단계 0.35)
+const B30_WAVE_PERIOD := 8.0          # B-30 우물 물 오르내림 주기(초)
+const B30_WAVE_RISE_TIME := 3.0       # 그중 물이 오르는 시간. 버티기는 내림(나머지 5초) 구간에서만 진행
+const REWARD_ROPE_PULL_BONUS := 0.2  # 첫 우물의 두레박줄: 사슬 당기기 속도 +20%
