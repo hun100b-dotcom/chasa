@@ -8,7 +8,10 @@
 // 움직임: 서기(숨쉬기) · 걷기(팔다리 흔들기) · 공격(팔 휘두르기) · 맞음(젖힘) · 천도 자세(팔 들기) · 무릎 꿇음 · 피하기(앞으로 숙임).
 // ActorSprite 가 그림 이름(예: characters/chasa_swing)을 알려 주면 여기서 상태로 바꿔 쓴다 → 전투 코드는 그대로.
 // =============================================================================
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Playables;
 
 public class ActorModel : MonoBehaviour
 {
@@ -29,6 +32,102 @@ public class ActorModel : MonoBehaviour
     Vector3 lastPos;
     float speed;                          // 이동 속도(m/s) — 걷기 판정에 쓴다
     bool hasGlow; float glowAmt;
+
+    // ---- 모델 슬롯: Resources/Models/Hero 에 CC0 3D 모델(Kenney 캐릭터)이 있으면 도형 인형 대신 그것을 쓴다 ----
+    GameObject hero;                         // 있으면 진짜 모델
+    PlayableGraph graph; AnimationMixerPlayable mixer;
+    readonly Dictionary<Pose, int> heroInput = new Dictionary<Pose, int>();
+    readonly List<AnimationClip> heroClips = new List<AnimationClip>();
+    AnimationClipPlayable[] heroPlayables;
+    int heroCur = -1; float heroT;
+    const string HeroPath = "Models/Hero/character-male-a";
+    const float HeroScale = 2.7f;            // Kenney 미니 캐릭터는 키 0.67m → 1.8m 로
+
+    // 동작 → 모델에 들어 있는 움직임 이름. 맞음(Hit) 전용 움직임이 없어 고개 젓기로 대신한다
+    static string ClipFor(Pose p)
+    {
+        switch (p)
+        {
+            case Pose.Walk: return "walk";
+            case Pose.Attack: return "attack-melee-right";
+            case Pose.Hit: return "emote-no";
+            case Pose.Cast: return "pick-up";
+            case Pose.Kneel: return "crouch";
+            case Pose.Dodge: return "sprint";
+            default: return "idle";
+        }
+    }
+
+    bool TryBuildHero()
+    {
+        var prefab = Resources.Load<GameObject>(HeroPath);
+        if (prefab == null) return false;
+        hero = Instantiate(prefab, modelRoot.transform);
+        hero.transform.localPosition = Vector3.zero; hero.transform.localRotation = Quaternion.identity;
+        hero.transform.localScale = Vector3.one * HeroScale;
+        // 재질은 가져오지 않았으므로(색 팔레트는 코드에서) 색 지도(colormap) 한 장을 입힌 무광 재질을 만든다
+        var tex = Resources.Load<Texture2D>("Models/Hero/colormap");
+        var rl = new List<Material>();
+        foreach (var r in hero.GetComponentsInChildren<Renderer>())
+        {
+            var m = U.Flashable(Color.white);
+            if (tex != null) m.mainTexture = tex;
+            r.sharedMaterial = m; rl.Add(m);
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On; r.receiveShadows = true;
+        }
+        mats = rl.ToArray(); baseCol = new Color[mats.Length]; for (int i = 0; i < baseCol.Length; i++) baseCol[i] = Color.white;
+        hasGlow = false;
+        // 움직임: 컨트롤러 없이 코드로 재생(Playables = 움직임 조각을 섞는 유니티 기능). 상태가 바뀌면 부드럽게 섞어 넘긴다
+        var anim = hero.GetComponentInChildren<Animator>();
+        if (anim == null) anim = hero.AddComponent<Animator>();
+        var all = Resources.LoadAll<AnimationClip>(HeroPath);
+        var byName = new Dictionary<string, AnimationClip>();
+        foreach (var c in all) if (!c.name.StartsWith("__")) byName[c.name] = c;
+        graph = PlayableGraph.Create("Hero");
+        graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);   // 우리가 직접 시간을 흘린다(히트스톱과 무관하게 부드럽게)
+        var output = AnimationPlayableOutput.Create(graph, "out", anim);
+        var order = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge };
+        mixer = AnimationMixerPlayable.Create(graph, order.Length);
+        heroPlayables = new AnimationClipPlayable[order.Length];
+        for (int i = 0; i < order.Length; i++)
+        {
+            AnimationClip clip; if (!byName.TryGetValue(ClipFor(order[i]), out clip) && !byName.TryGetValue("idle", out clip)) continue;
+            heroPlayables[i] = AnimationClipPlayable.Create(graph, clip);
+            graph.Connect(heroPlayables[i], 0, mixer, i);
+            mixer.SetInputWeight(i, i == 0 ? 1f : 0f);
+            heroInput[order[i]] = i; heroClips.Add(clip);
+        }
+        if (heroInput.Count == 0) { graph.Destroy(); Destroy(hero); hero = null; return false; }
+        output.SetSourcePlayable(mixer);
+        graph.Play();
+        heroCur = 0;
+        return true;
+    }
+
+    void HeroUpdate(float dt, bool moving)
+    {
+        var want = pose == Pose.Idle && moving ? Pose.Walk : pose;
+        if (want == Pose.Walk && !moving && pose == Pose.Walk) want = Pose.Idle;
+        int idx; if (!heroInput.TryGetValue(want, out idx)) idx = 0;
+        if (idx != heroCur) { heroCur = idx; heroT = 0f; }   // 새 동작은 처음부터
+        heroT += dt;
+        // 가중치를 부드럽게 옮긴다 (0.12초 안팎 크로스페이드)
+        for (int i = 0; i < mixer.GetInputCount(); i++)
+        {
+            float w = mixer.GetInputWeight(i), target = i == idx ? 1f : 0f;
+            mixer.SetInputWeight(i, Mathf.MoveTowards(w, target, dt / 0.12f));
+            var pl = heroPlayables[i];
+            if (!pl.IsValid()) continue;
+            float len = pl.GetAnimationClip().length;
+            // 반복 동작(서기·걷기·무릎 꿇음 자세)은 돌고, 한 번짜리(공격·맞음·천도)는 처음부터 한 번
+            bool loop = i == heroInput[Pose.Idle] || i == heroInput[Pose.Walk] || i == heroInput[Pose.Kneel] || i == heroInput[Pose.Dodge];
+            if (i == idx) pl.SetTime(loop ? heroT % Mathf.Max(0.01f, len) : Mathf.Min(heroT, len - 0.001f));
+        }
+        graph.Evaluate(0f);
+        // 피하기·무릎 꿇음 때 몸 높이(미끄러짐 방지용 보정은 하지 않는다 — 대역이라 단순하게)
+    }
+
+    void OnDestroy() { if (graph.IsValid()) graph.Destroy(); }
 
     public static ActorModel Create(Transform parent)
     {
@@ -82,7 +181,7 @@ public class ActorModel : MonoBehaviour
         for (int i = 0; i < mats.Length; i++)
         {
             mats[i].color = baseCol[i] * new Color(tint.r, tint.g, tint.b, 1f);
-            if (hasGlow) mats[i].SetColor("_EmissionColor", baseCol[i] * glowAmt + Color.white * Mathf.Max(0f, (tint.g + tint.b) * 0.5f - 0.7f) * 1.2f);
+            if (hasGlow && hero == null) mats[i].SetColor("_EmissionColor", baseCol[i] * glowAmt + Color.white * Mathf.Max(0f, (tint.g + tint.b) * 0.5f - 0.7f) * 1.2f);
         }
     }
 
@@ -93,6 +192,7 @@ public class ActorModel : MonoBehaviour
         if (modelRoot != null) Destroy(modelRoot);
         modelRoot = new GameObject("Model_" + sp.key);
         modelRoot.transform.SetParent(transform, false);
+        if (sp.key == "dongi" && TryBuildHero()) { modelRoot.transform.localRotation = Quaternion.Euler(0, yaw, 0); return; }   // 슬롯에 진짜 모델이 있으면 그걸 쓴다
         var rl = new System.Collections.Generic.List<Renderer>();
         var ml = new System.Collections.Generic.List<Material>();
         var cl = new System.Collections.Generic.List<Color>();
@@ -187,6 +287,7 @@ public class ActorModel : MonoBehaviour
         modelRoot.transform.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(cur, yaw, 1f - Mathf.Exp(-18f * dt)), 0);
 
         bool moving = speed > 0.6f && (pose == Pose.Idle || pose == Pose.Walk);
+        if (hero != null) { HeroUpdate(dt, moving); return; }   // 진짜 모델은 자기 움직임으로
         if (moving) walkPhase += dt * Mathf.Clamp(speed * 1.1f, 4f, 13f);
         float swing = moving ? Mathf.Sin(walkPhase) : 0f;
         float t = Time.time;
