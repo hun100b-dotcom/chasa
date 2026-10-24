@@ -99,10 +99,10 @@ const NUMBER_FONT_MAX := 60.0
 const NUMBER_COLOR_NORMAL := Color("ffffff")
 const NUMBER_COLOR_HEAVY := Color("ffd23f")
 const NUMBER_COLOR_PULL := Color("7fd8ff")
+const NUMBER_COLOR_HURT := Color("ff4d4d")    # 내가 맞았을 때 숫자 (빨강 = 위험)
 
 # --- 9) 적 (접근형 샌드백) ----------------------------------------------------------
-const ENEMY_COUNT := 4
-const ENEMY_MAX_HP := 80
+const ENEMY_COUNT := 5   # 4 → 5: "네모들에 둘러싸인 채" 압박을 만들려고 1마리 늘림(임시)
 const ENEMY_RADIUS := 0.6
 const ENEMY_HEIGHT := 1.8
 const ENEMY_SPEED := 2.8
@@ -122,3 +122,67 @@ const ENEMY_PICK_RADIUS := 1.0
 # --- 10) 클릭 표시 -------------------------------------------------------------------
 const CLICK_MARKER_LIFETIME := 0.45
 const CLICK_MARKER_COLOR := Color("7fe3ff")
+
+# =============================================================================
+# 11) 핵심 루프 — 맺힘 → 처결 대기 → 천도/파혼  (docs/COMBAT-SPEC.md 의 ID와 1:1)
+#   ★ 전부 임시값. 바꿀 땐 COMBAT-SPEC.md 표를 먼저 고친다(그 문서의 규칙).
+#   (임시 해석)이라고 적힌 값은 스펙에 아직 공백(🔴)이라 시험판이 돌아가게 정한 값이다.
+# =============================================================================
+# --- 적 / 맺힘 (1-1) ---
+const MAEDHIM_NORMAL := 100           # E-001 맺힘(일반 적). 체력 대신 깎이고 0이면 처결 대기
+const MAEDHIM_LUMP := 400             # E-002 맺힘(덩어리)
+const ENEMY_ATTACK_DAMAGE := 12       # E-003 적 공격력
+const ENEMY_ATTACK_INTERVAL := 2.0    # E-004 적 공격 주기
+const ENEMY_ATTACK_WINDUP := 0.4      # E-005 예비동작(피할 수 있는 신호 시간)
+const ENEMY_HIT_STAGGER := 0.15       # E-006 적 피격 경직 (콤보 stun 값이 더 크면 그쪽이 적용)
+const PLAYER_HIT_STAGGER := 0.3       # E-007 플레이어 피격 경직
+const ENEMY_ATTACK_RANGE := 2.2       # (임시 해석) 공격 거리. 다가와 멈추는 거리(1.7)보다 살짝 길게
+const ENEMY_ATTACK_DODGE_MARGIN := 0.3 # (임시 해석) 예비동작 끝에 이만큼 더 멀어지면 피한 것
+const PLAYER_MAX_HP := 100            # (임시 해석) 스펙에 없음. 적 공격력 12 기준 9번 맞으면 쓰러짐
+const LUMP_SPAWN_CHANCE := 0.15       # (임시 해석) 새 적이 덩어리일 확률
+
+# --- 처결 대기 시간 (1-2) ---
+const WAIT_FRESH := 10.0              # W-001 갓 죽은 혼
+const WAIT_YEAR := 7.0                # W-002 해 넘긴 혼
+const WAIT_OLD := 4.0                 # W-003 오래된 혼
+const WAIT_LUMP := 4.0                # W-004 덩어리: 스펙상 "대기 없음·천도 불가". (임시 해석) 4초 동안 파혼만 받는다
+const WAIT_TIMEOUT_RECOVER := 0.5     # W-005 🔴공백. (임시 해석) 시간 초과 시 맺힘 50%로 다시 일어선다
+
+# --- 천도 (1-3) ---
+const TENDO_CAST_TIME := 1.5          # T-001
+const TENDO_CHAIN_CAST_TIME := 0.8    # T-002 연속 천도 캐스팅
+const TENDO_CHAIN_WINDOW := 5.0       # T-003 이 안에 다음 천도를 시작하면 단축 유지
+const TENDO_VISION_RATIO := 0.6       # T-004 시야 반경 60%
+const TENDO_VISION_BLEND := 0.2       # T-005 시야 전환 시간
+const TENDO_NEOK := 10                # T-006 넋
+const TENDO_MEMORY := 1               # T-007 기억 조각
+const TENDO_CANCEL_ON_HIT := true     # T-008 🔴공백. (임시 해석) 캐스팅 중 맞으면 중단(대상은 계속 대기)
+const TENDO_HOLD_TIME := 0.3          # (임시 해석) 이만큼 누르고 있으면 '길게 누름' = 천도
+const JUDGE_RANGE := 2.8              # (임시 해석) 처결하려면 이 거리 안. 멀면 먼저 걸어간다
+
+# --- 파혼 (1-4) ---
+const PAHON_RADIUS := 3.0             # P-002 폭발 반경
+const PAHON_DAMAGE := 35              # P-003 주변 적 맺힘 피해
+const PAHON_KNOCKBACK_DIST := 2.5     # P-004 넉백 거리(m). 속도 = 거리 × 마찰(5.5)로 환산
+const PAHON_COIN := 5                 # P-005 엽전
+const PAHON_KARMA := 1                # P-006 업 누적
+const STAIN_RADIUS := 2.0             # P-007 원념 얼룩 반경
+const STAIN_DURATION := 15.0          # P-008 지속
+const STAIN_SLOW := 0.2               # P-009 위를 밟으면 이동속도 -20%
+const STAIN_SUMMON_COUNT := 3         # P-010 3개가 겹치면 사나운 적 소환
+const FIERCE_MULT := 1.5              # P-011 사나운 적: 맺힘·공격력 +50%
+const PAHON_HITSTOP_FRAMES := 4       # (임시) 폭발 순간 정지
+const PAHON_SHAKE := 0.8              # (임시) 폭발 흔들림
+
+# --- 시야 (밤) ---
+const VISION_BASE_RATIO := 0.62       # (임시) 평소 시야 반경 = 화면 세로 × 이 값 (밤이라 가장자리가 어둡다)
+const VISION_EDGE_SOFT := 0.35        # (임시) 시야 경계 번짐 정도
+const MEMORY_TINT := Color("c9a46a")  # (임시) 천도 중 가장자리를 물들이는 '생전 기억' 색 (P1-034 연출 스터디 전 임시)
+
+# --- 혼 종류별 표시 색 (처결 대기 타이머 막대) ---
+const SOUL_COLOR := {
+	"fresh": Color("bfe8ff"),  # 갓 죽은 혼
+	"year": Color("ffcc55"),   # 해 넘긴 혼
+	"old": Color("ff6a3d"),    # 오래된 혼
+	"lump": Color("9a5cff"),   # 덩어리 (천도 불가)
+}

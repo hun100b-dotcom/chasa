@@ -5,12 +5,14 @@
 #   FREE   : 가만히 있거나 이동 중
 #   ATTACK : 콤보 중 (windup 준비 → swing 휘두름 → recover 후딜)
 #   PULL   : 견인 중 (throw 던짐 → drag 끌어당김 → retract 되감기)
+#   CAST   : 천도 캐스팅 중 (무릎 꿇은 혼을 붙잡고 1.5초 / 연속이면 0.8초)
+#   HURT   : 맞아서 잠깐 휘청 (0.3초, COMBAT-SPEC E-007)
 # 한 번에 한 상태만 가지므로 "공격하면서 견인" 같은 꼬임이 생기지 않는다.
 # =============================================================================
 class_name Player
 extends Node3D
 
-enum State { FREE, ATTACK, PULL }
+enum State { FREE, ATTACK, PULL, CAST, HURT }
 
 var enemies: EnemyManager
 var feel: HitFeel
@@ -31,6 +33,23 @@ var buffered_aim = null      # 키보드 '제자리 휘두르기'를 예약했�
 var pull_run = null          # 견인 진행 기록 (Dictionary) 또는 null
 var pull_cooldown := 0.0
 var chain_lag := 0.0         # 사슬이 뒤처지는 각도
+
+## ---- 핵심 루프(처결) 관련 ----
+var hp := Config.PLAYER_MAX_HP
+var neok := 0                # 넋 (천도 보상)
+var memory := 0              # 기억 조각 (천도 보상)
+var coin := 0                # 엽전 (파혼 보상)
+var karma := 0               # 업 (파혼할 때마다 쌓임)
+var speed_mult := 1.0        # 이동속도 배율 (얼룩 위면 0.8). main 이 매 프레임 넣어준다
+var judge_target: Enemy = null   # 처결하러 다가가는 대상
+var judge_kind := ""             # "tendo"(천도) / "pahon"(파혼)
+var cast_enemy: Enemy = null     # 지금 천도 중인 혼
+var cast_t := 0.0
+var cast_total := 1.0
+var tendo_chain_left := 0.0      # 이 시간 안에 다음 천도를 시작하면 캐스팅 단축 (T-003)
+var tendo_streak := 0            # 연속 천도 횟수 (화면 표시용)
+var hurt_t := 0.0
+var on_pahon: Callable           # 파혼이 일어난 자리를 main 에 알림 → 얼룩을 남긴다
 
 func _ready() -> void:
 	# 몸: 파란 캡슐 + 노란 박스(코). 코가 있어야 어느 쪽을 보는지 보인다.
@@ -54,6 +73,7 @@ func _ready() -> void:
 # 명령 (입력 쪽에서 호출) — "무엇을 하라"만 받고 실제 행동은 tick 이 한다
 # =============================================================================
 func command_move(point: Vector3) -> void:
+	judge_target = null
 	move_target = Vector3(
 		clampf(point.x, -Config.ARENA_HALF_SIZE, Config.ARENA_HALF_SIZE), 0,
 		clampf(point.z, -Config.ARENA_HALF_SIZE, Config.ARENA_HALF_SIZE))
@@ -69,6 +89,7 @@ func command_attack(enemy: Enemy) -> void:
 	elif state == State.FREE:
 		chase_target = enemy
 		move_target = null
+		judge_target = null
 
 func command_swing(aim: Vector3) -> void:
 	# 키보드(Space) '제자리 휘두르기': 달려가지 않고 그 자리에서 커서 방향으로 콤보를 이어간다.
@@ -81,6 +102,30 @@ func command_swing(aim: Vector3) -> void:
 		move_target = null
 		chase_target = null
 		_start_attack(null, combo_timer > 0.0, aim)
+
+func command_tendo(e: Enemy) -> void:
+	# 천도 지시: 가까우면 바로 캐스팅, 멀면 먼저 걸어간다
+	_command_judge(e, "tendo")
+
+func command_pahon(e: Enemy) -> void:
+	# 파혼 지시: 가까우면 즉시 터뜨림, 멀면 먼저 걸어간다
+	_command_judge(e, "pahon")
+
+func _command_judge(e: Enemy, kind: String) -> void:
+	if e == null or not e.kneeling:
+		return
+	if state == State.CAST or state == State.HURT:
+		return  # 캐스팅·휘청 중엔 새 처결을 받지 않는다
+	judge_target = e
+	judge_kind = kind
+	move_target = null
+	chase_target = null
+	has_buffered = false
+	# 콤보 후딜 중이면 끊고 바로 처결로 넘어간다 (처결이 콤보보다 우선)
+	if state == State.ATTACK and atk != null and atk.phase == "recover":
+		atk = null
+		state = State.FREE
+		chain.visible = false
 
 func command_pull(enemy: Enemy, aim: Vector3) -> void:
 	if pull_cooldown > 0.0:
@@ -96,10 +141,15 @@ func command_pull(enemy: Enemy, aim: Vector3) -> void:
 # =============================================================================
 func tick(dt: float) -> void:
 	pull_cooldown = maxf(0.0, pull_cooldown - dt)
+	tendo_chain_left = maxf(0.0, tendo_chain_left - dt)
+	if tendo_chain_left <= 0.0 and state != State.CAST:
+		tendo_streak = 0
 	match state:
 		State.FREE: _tick_free(dt)
 		State.ATTACK: _tick_attack(dt)
 		State.PULL: _tick_pull(dt)
+		State.CAST: _tick_cast(dt)
+		State.HURT: _tick_hurt(dt)
 	rotation.y = -facing  # 로컬 +x 가 facing 방향을 향하도록
 	chain.trail.tick(dt)
 
@@ -108,6 +158,22 @@ func _tick_free(dt: float) -> void:
 	combo_timer = maxf(0.0, combo_timer - dt)
 	if dt <= 0.0:
 		return
+	if judge_target:
+		var j := judge_target
+		if not j.kneeling:
+			judge_target = null  # 그새 일어났거나 사라졌다
+		else:
+			var dj := Vector2(j.position.x - position.x, j.position.z - position.z)
+			facing = U.turn_toward(facing, atan2(dj.y, dj.x), Config.PLAYER_TURN_SPEED * dt)
+			if dj.length() <= Config.JUDGE_RANGE:
+				judge_target = null
+				if judge_kind == "tendo":
+					_start_tendo(j)
+				else:
+					_do_pahon(j)
+			else:
+				_step_toward(j.position, dt)
+			return
 	if chase_target:
 		var e := chase_target
 		if not e.alive:
@@ -135,7 +201,7 @@ func _step_toward(target: Vector3, dt: float) -> void:
 	var dist := d.length()
 	if dist < 1e-5:
 		return
-	var step := minf(dist, Config.PLAYER_MOVE_SPEED * dt)
+	var step := minf(dist, Config.PLAYER_MOVE_SPEED * speed_mult * dt)
 	position.x += d.x / dist * step
 	position.z += d.y / dist * step
 	_clamp_to_arena()
@@ -373,3 +439,124 @@ func _set_straight_chain(hand: Vector3, head: Vector3, sag: float) -> void:
 	# 손에서 head 까지 일직선(약간 처짐)
 	var d := Vector2(head.x - hand.x, head.z - hand.z)
 	chain.set_shape(hand, atan2(d.y, d.x), d.length(), head.y, 0.0, sag)
+
+# =============================================================================
+# 처결: 천도 (COMBAT-SPEC 1-3)
+#   무릎 꿇은 혼을 붙잡고 1.5초 버틴다. 그동안 시야가 좁아지고 무방비가 된다.
+#   → 주변 적이 많을수록 위험한 선택. 연속으로 하면 0.8초로 빨라진다.
+# =============================================================================
+func _start_tendo(e: Enemy) -> void:
+	if not e.can_tendo():
+		# 덩어리 혼은 천도 불가 → 파혼만 가능하다는 걸 글자로 알린다
+		numbers.spawn_text(e.get_head_position(), "CAN'T SEND", Config.SOUL_COLOR["lump"])
+		return
+	var chained := tendo_chain_left > 0.0
+	cast_total = Config.TENDO_CHAIN_CAST_TIME if chained else Config.TENDO_CAST_TIME
+	cast_t = 0.0
+	cast_enemy = e
+	e.begin_sending()
+	state = State.CAST
+	facing = atan2(e.position.z - position.z, e.position.x - position.x)
+	# 사슬을 혼에 걸어둔다 (붙잡고 있다는 표시)
+	chain.visible = true
+
+func cast_ratio() -> float:
+	# 시야 연출용: 캐스팅 중이면 1, 아니면 0
+	return 1.0 if state == State.CAST else 0.0
+
+func cast_progress() -> float:
+	return clampf(cast_t / cast_total, 0.0, 1.0) if state == State.CAST else 0.0
+
+func _tick_cast(dt: float) -> void:
+	var e := cast_enemy
+	if e == null or e.state != Enemy.S.SENDING:
+		_end_cast()
+		return
+	cast_t += dt
+	var hand := _hand()
+	var head := Vector3(e.position.x, Config.PLAYER_HAND_HEIGHT + 0.4 * sin(cast_t * 12.0) * 0.1, e.position.z)
+	_set_straight_chain(hand, head, 0.15)
+	if cast_t >= cast_total:
+		e.finish("tendo")
+		neok += Config.TENDO_NEOK
+		memory += Config.TENDO_MEMORY
+		tendo_streak += 1
+		tendo_chain_left = Config.TENDO_CHAIN_WINDOW
+		numbers.spawn_text(e.get_head_position(), "+%d NEOK" % Config.TENDO_NEOK, Config.MEMORY_TINT)
+		feel.add_shake(0.15)
+		_end_cast()
+
+func _end_cast() -> void:
+	cast_enemy = null
+	cast_t = 0.0
+	state = State.FREE
+	chain.visible = false
+
+# =============================================================================
+# 처결: 파혼 (COMBAT-SPEC 1-4)
+#   즉시 터뜨린다. 주변 적까지 밀쳐내고 엽전을 주지만, 업이 쌓이고 얼룩이 남는다.
+# =============================================================================
+func _do_pahon(e: Enemy) -> void:
+	var at := e.position
+	e.finish("pahon")
+	coin += Config.PAHON_COIN
+	karma += Config.PAHON_KARMA
+	# 폭발: 반경 안의 싸우는 적에게 피해 + 바깥으로 넉백
+	# 넉백 '거리'(2.5m)를 속도로 바꾸기: 지수 감속에서 총 이동거리 = 속도 ÷ 마찰 → 속도 = 거리 × 마찰
+	var kb := Config.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION
+	for o in enemies.list:
+		if o == e or not o.alive:
+			continue
+		var d := Vector3(o.position.x - at.x, 0, o.position.z - at.z)
+		if d.length() > Config.PAHON_RADIUS + o.radius:
+			continue
+		var dir := d.normalized() if d.length() > 0.01 else Vector3(1, 0, 0)
+		o.take_hit(Config.PAHON_DAMAGE, dir, kb, Config.ENEMY_HIT_STAGGER)
+		numbers.spawn(o.get_head_position(), Config.PAHON_DAMAGE, "heavy")
+	feel.hit_stop(Config.PAHON_HITSTOP_FRAMES)
+	feel.add_shake(Config.PAHON_SHAKE)
+	numbers.spawn_text(Vector3(at.x, 2.2, at.z), "+%d COIN" % Config.PAHON_COIN, Color("ffd23f"))
+	if on_pahon.is_valid():
+		on_pahon.call(at)
+
+# =============================================================================
+# 맞기 (COMBAT-SPEC E-003, E-007, T-008)
+# =============================================================================
+func take_damage(amount: int) -> bool:
+	# 체력이 깎인다. 0이 되면 true (main 이 판을 다시 시작한다)
+	hp = maxi(0, hp - amount)
+	numbers.spawn(Vector3(position.x, 2.0, position.z), amount, "hurt")
+	feel.add_shake(0.3)
+	if state == State.CAST:
+		if Config.TENDO_CANCEL_ON_HIT and cast_enemy:
+			# T-008 (임시 해석): 캐스팅이 끊기고 혼은 다시 대기 (남은 시간 그대로)
+			cast_enemy.cancel_sending()
+			numbers.spawn_text(Vector3(position.x, 2.6, position.z), "INTERRUPTED", Color("ff8080"))
+		cast_enemy = null
+	if state != State.PULL:
+		# 견인 중엔 휘청이지 않는다 (사슬이 허공에 멈춰 버리는 꼬임 방지)
+		atk = null
+		has_buffered = false
+		chain.visible = false
+		state = State.HURT
+		hurt_t = Config.PLAYER_HIT_STAGGER
+	return hp <= 0
+
+func _tick_hurt(dt: float) -> void:
+	hurt_t -= dt
+	if hurt_t <= 0.0:
+		state = State.FREE
+
+func reset_after_fall() -> void:
+	# 쓰러진 뒤 다시 시작: 체력과 행동만 초기화 (모은 넋·엽전·업은 남겨서 비교해 볼 수 있게)
+	hp = Config.PLAYER_MAX_HP
+	state = State.FREE
+	atk = null
+	pull_run = null
+	cast_enemy = null
+	judge_target = null
+	chase_target = null
+	move_target = null
+	has_buffered = false
+	chain.visible = false
+	position = Vector3.ZERO

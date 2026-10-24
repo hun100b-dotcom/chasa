@@ -20,6 +20,18 @@ func spawn(world_pos: Vector3, value: int, kind: String) -> void:
 		color = Config.NUMBER_COLOR_HEAVY
 	elif kind == "pull":
 		color = Config.NUMBER_COLOR_PULL
+	elif kind == "hurt":
+		color = Config.NUMBER_COLOR_HURT
+	_push(label, screen, color)
+
+func spawn_text(world_pos: Vector3, text: String, color: Color) -> void:
+	# 숫자 대신 짧은 글자(예: "+10 NEOK", "CAN'T SEND")를 같은 방식으로 띄운다
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_size_override("font_size", 22)
+	_push(label, camera.unproject_position(world_pos), color)
+
+func _push(label: Label, screen: Vector2, color: Color) -> void:
 	label.add_theme_color_override("font_color", color)
 	# 검은 테두리: 어두운/밝은 바닥 어디서든 읽히게 (CSS text-shadow 와 같은 역할)
 	label.add_theme_color_override("font_outline_color", Color.BLACK)
