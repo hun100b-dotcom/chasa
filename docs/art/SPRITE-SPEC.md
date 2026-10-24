@@ -57,6 +57,7 @@
 - gear/gear_{w_cheolsak,w_bangmangi,w_yoryeong,w_samjichang,w_but,gat,dopo,tti,sin,norigae}_{common,crafted,rare,named,set}.png (96×96, 10종×5등급 = 50). 노리개 2칸은 같은 아이콘 계열을 공유.
 - 등급(5): 흔한 common #F3E7D3 / 손본 crafted #4FA8A0 / 귀한 rare #D4A94E / 이름 있는 named #E85C41 / 한 벌 set #C9B0FF. 테두리 icons/frame_{common..named,set}.png.
 - 세트 3종 외형(주인공 정면 변형): characters/chasa_set_{wolhwa,miner,heukwol}.png (월화 굿옷 / 광부 / 흑월). 세트 구성 부품 수는 기획 JSON 이후 확정.
+- 능력 창 한지판: assets/ui/growth_stats_hanji_{pc,phone}.png (tools/art/gen_stats_hanji.py, data/growth.json에서 직접 읽음).
 - 능력치 4(힘·날램·몸·마음)와 품계 1~50은 UI 시안(assets/ui)에 반영. 도술 27개(3갈래×9)도 반영. 옵션 표·인 조합표 JSON이 오면 문구를 갱신한다.
 - 이전 시안의 철삭·흑립·붉은 띠·미투리·인장 슬롯 아이콘(gear_cheolsak 등)은 폐기됨.
 
