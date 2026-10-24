@@ -1,6 +1,6 @@
 {
- "_설명": "혼 기억 DB 2차(전체 시나리오판). 칸 뜻은 SOUL-MEMORY-DB.md §2, 단서·보스는 SCENARIO-MASTER.md §4·§6. 엔진이 정해지면 code-system-lead가 이 파일을 그대로 읽는다.",
- "_version": 2,
+ "_설명": "혼 기억 DB 3차(5막 10관할판). region=관할 번호(1~10). 칸 뜻은 SOUL-MEMORY-DB.md §2, 척추는 SCENARIO-MASTER.md. 지금은 관할 ①②⑦분(53개). 나머지 관할은 막 상세를 쓸 때 추가.",
+ "_version": 3,
  "facts": {
   "F1": "명부의 이름이 번지고, 인이 빠진 이름이 내려온다 — 불러도 안 들린다",
   "F2": "몇 해 전 큰물(홍수) 밤, 많은 사람이 죽고 장례를 못 치렀다",
@@ -32,7 +32,8 @@
    "tint": "쇳물 주황",
    "fact": "F1",
    "weight": "main",
-   "funeral": true
+   "funeral": true,
+   "region": 1
   },
   {
    "id": "S-002",
@@ -47,7 +48,8 @@
    "tint": "촛불 노랑",
    "fact": "F2",
    "weight": "main",
-   "funeral": true
+   "funeral": true,
+   "region": 1
   },
   {
    "id": "S-003",
@@ -62,7 +64,8 @@
    "tint": "쌀김 흰빛",
    "fact": null,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "region": 1
   },
   {
    "id": "S-004",
@@ -77,7 +80,8 @@
    "tint": "짚 누렁",
    "fact": "F4",
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "region": 1
   },
   {
    "id": "S-005",
@@ -92,7 +96,8 @@
    "tint": "먹빛 청회",
    "fact": "F5",
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "region": 1
   },
   {
    "id": "S-006",
@@ -107,7 +112,8 @@
    "tint": "흙탕 갈색",
    "fact": "F3",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-007",
@@ -122,7 +128,8 @@
    "tint": "보리 금빛",
    "fact": "F4",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-008",
@@ -137,7 +144,8 @@
    "tint": "향불 연기",
    "fact": "F1",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-009",
@@ -152,7 +160,8 @@
    "tint": "횃불 주홍",
    "fact": "F8",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-010",
@@ -168,7 +177,8 @@
    "fact": null,
    "weight": "boss",
    "boss": "B-01",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-011",
@@ -183,7 +193,8 @@
    "tint": "비단 남색",
    "fact": "F3",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-012",
@@ -198,7 +209,8 @@
    "tint": "녹 붉은빛",
    "fact": "F7",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-013",
@@ -213,7 +225,8 @@
    "tint": "벼루 검정",
    "fact": "F5",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-014",
@@ -229,7 +242,8 @@
    "fact": "F6",
    "weight": "main",
    "funeral": false,
-   "boss": "B-02"
+   "boss": "B-02",
+   "region": 1
   },
   {
    "id": "S-015",
@@ -244,7 +258,8 @@
    "tint": "송진 호박색",
    "fact": "F6",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-016",
@@ -259,7 +274,8 @@
    "tint": "모시 흰빛",
    "fact": "F4",
    "weight": "side",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-017",
@@ -274,7 +290,8 @@
    "tint": "쇠 청록",
    "fact": "F7",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "S-018",
@@ -289,7 +306,8 @@
    "tint": "새벽 쪽빛",
    "fact": "F8",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 0
   },
   {
    "id": "S-019",
@@ -304,7 +322,8 @@
    "tint": "엿 호박색",
    "fact": null,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "region": 2
   },
   {
    "id": "S-020",
@@ -319,7 +338,8 @@
    "tint": "쪽물 남색",
    "fact": null,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "region": 2
   },
   {
    "id": "S-021",
@@ -334,7 +354,8 @@
    "tint": "탁주 흰빛",
    "fact": "F10",
    "weight": "main",
-   "funeral": true
+   "funeral": true,
+   "region": 2
   },
   {
    "id": "S-022",
@@ -349,7 +370,8 @@
    "tint": "관인 붉은빛",
    "fact": "F10",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-023",
@@ -364,7 +386,8 @@
    "tint": "녹슨 쇠",
    "fact": "F13",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-024",
@@ -379,7 +402,8 @@
    "tint": "약탕 갈색",
    "fact": "F10",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-025",
@@ -394,7 +418,8 @@
    "tint": "강돌 회색",
    "fact": "F10",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-026",
@@ -409,7 +434,8 @@
    "tint": "이끼 녹색",
    "fact": "F11",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-027",
@@ -424,7 +450,8 @@
    "tint": "한지 누런빛",
    "fact": "F11",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-028",
@@ -440,7 +467,8 @@
    "fact": "F11",
    "weight": "side",
    "funeral": false,
-   "boss": "B-04"
+   "boss": "B-04",
+   "region": 2
   },
   {
    "id": "S-029",
@@ -455,7 +483,8 @@
    "tint": "소가죽 갈색",
    "fact": null,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "region": 2
   },
   {
    "id": "S-030",
@@ -470,7 +499,8 @@
    "tint": "곤장 검붉음",
    "fact": "F13",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-031",
@@ -485,7 +515,8 @@
    "tint": "송연 먹빛",
    "fact": "F5",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-032",
@@ -500,7 +531,8 @@
    "tint": "소금 흰빛",
    "fact": "F12",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-033",
@@ -515,7 +547,8 @@
    "tint": "향 연기",
    "fact": "F15",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-034",
@@ -530,7 +563,8 @@
    "tint": "쇠 청록",
    "fact": "F13",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-035",
@@ -545,7 +579,8 @@
    "tint": "상여 오방색",
    "fact": "F1",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
    "id": "S-036",
@@ -561,7 +596,8 @@
    "fact": null,
    "weight": "boss",
    "funeral": false,
-   "boss": "B-03"
+   "boss": "B-03",
+   "region": 2
   },
   {
    "id": "S-037",
@@ -576,7 +612,8 @@
    "tint": "갈대 은빛",
    "fact": "F12",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-038",
@@ -591,7 +628,8 @@
    "tint": "가루 은빛",
    "fact": "F12",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-039",
@@ -606,7 +644,8 @@
    "tint": "물안개 흰빛",
    "fact": "F14",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-040",
@@ -621,7 +660,8 @@
    "tint": "새벽 잿빛",
    "fact": "F14",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-041",
@@ -636,7 +676,8 @@
    "tint": "나룻불 주황",
    "fact": "F14",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-042",
@@ -651,7 +692,8 @@
    "tint": "먹물 검정",
    "fact": "F13",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-043",
@@ -666,7 +708,8 @@
    "tint": "벼루 검정",
    "fact": "F13",
    "weight": "side",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-044",
@@ -681,7 +724,8 @@
    "tint": "먹물 검정",
    "fact": "F12",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-045",
@@ -696,7 +740,8 @@
    "tint": "녹 붉은빛",
    "fact": "F7",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-046",
@@ -711,7 +756,8 @@
    "tint": "횃불 주홍",
    "fact": "F8",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-047",
@@ -726,7 +772,8 @@
    "tint": "검은 달빛",
    "fact": "F4",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "S-048",
@@ -741,7 +788,8 @@
    "tint": "새벽 쪽빛",
    "fact": "F15",
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "region": 7
   },
   {
    "id": "B-01",
@@ -756,7 +804,8 @@
    "tint": "나룻불 주황",
    "fact": "F4",
    "weight": "decisive",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "B-02",
@@ -771,7 +820,8 @@
    "tint": "오방 천",
    "fact": "F12",
    "weight": "decisive",
-   "funeral": false
+   "funeral": false,
+   "region": 1
   },
   {
    "id": "B-03",
@@ -786,37 +836,40 @@
    "tint": "약탕 갈색",
    "fact": "F10",
    "weight": "decisive",
-   "funeral": false
+   "funeral": false,
+   "region": 2
   },
   {
-   "id": "B-04",
+   "id": "B-12",
    "name": "흑월 차사",
    "type": "boss",
-   "zone": "Graves",
+   "zone": "CityGate",
    "spawn": "boss",
    "seal": "missing",
-   "life": "솔고개 고을의 앞선 차사. 사십 년 전 검은여울 역병 명단을 적던 서생. 2막 끝 보스. 상세는 SCENARIO-MASTER.md §6.",
-   "memory_id": "M-B04",
+   "life": "솔고개 고을의 앞선 차사. 사십 년 전 검은여울 역병 명단을 적던 서생. 1막 끝(무덤골) 1차 대결은 처결 없이 물러나고, 3막 끝(⑥ 성문 밖) 2차 대결에서 처결. SCENARIO-MASTER §5.",
+   "memory_id": "M-B12",
    "memory": "횃불을 진 젊은이가 물에 뛰어들었다. 숨이 끊기기 전에 이름을 불러 주지 못했다. 명부에서 찾았을 때 그 이름엔 이미 획이 없었다. 그래서 그 손에 사슬을 쥐여 주었다.",
    "tint": "검은 달빛",
    "fact": "F9",
    "weight": "decisive",
-   "funeral": false
+   "funeral": false,
+   "region": 6
   },
   {
-   "id": "B-05",
-   "name": "물막이",
+   "id": "B-20",
+   "name": "큰 물막이",
    "type": "boss",
-   "zone": "Dam",
+   "zone": "BigDam",
    "spawn": "boss",
    "seal": "missing",
-   "life": "수천 개의 깨진 혼 가루가 삼도천 둑에 엉겨 붙은 덩어리. 천도 대신 '풀어내기'(SCENARIO-MASTER §7).",
-   "memory_id": "M-B05",
+   "life": "모든 관할에서 깨진 이름이 흘러와 ⑩ 열째 관할 바닥에 고인 덩어리. 최종 보스. 천도 대신 '풀어내기'(SCENARIO-MASTER §6).",
+   "memory_id": "M-B20",
    "memory": "(기억 대신, 풀려나는 이름들이 하나씩 들린다.)",
    "tint": "먹물 검정",
    "fact": null,
    "weight": "finale",
-   "funeral": false
+   "funeral": false,
+   "region": 10
   }
  ],
  "generic_pool": {
