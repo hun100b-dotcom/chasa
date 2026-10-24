@@ -263,4 +263,16 @@ public static class Balance
     public const float B03_WEAK_TIME = 3.0f;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 약점 노출(초). 철삭 초당 36 기준 창 1번에 108 피해
     public const int B03_BOSS_MAEDHIM = 800;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 보스 맺힘. 약점 창 약 8번 필요(철삭·방망이 동일). S1 시연 보스는 1200으로 12번이라 B-03이 더 짧게 느껴지도록 낮춤
     public const float MAP_CELL_SIZE = 2.0f;  // (시연판 임시) 아트 배치표 한 칸의 실제 길이(m). 1이면 아트 비율 그대로 18×14m로 너무 좁아 2로 키움
+    public const float TILT_NEOK_PCT = 0.25f;  // (시연판 임시) 기획 growth.json 기울기: 향 내음 +: 천도 넋 +25%
+    public const float TILT_PAHON_COIN_PCT = -0.5f;  // (시연판 임시) 기획 growth.json 기울기: 향 내음 −: 파혼 엽전 −50%
+    public const float TILT_RADIUS_M = 0.3f;  // (시연판 임시) 기획 growth.json 기울기: 검은 술 +: 파혼 반경 +0.3m
+    public const float TILT_WAIT_ADD = -0.5f;  // (시연판 임시) 기획 growth.json 기울기: 검은 술 −: 처결 대기 시간 −0.5초(덩어리 외)
+    public const float TILT_WINDOW_ADD = 1.5f;  // (시연판 임시) 기획 growth.json 기울기: 젖은 소매 +: 연속 천도 창 +1.5초
+    public const float TILT_WINDOW_DMG_PCT = -0.1f;  // (시연판 임시) 기획 growth.json 기울기: 젖은 소매 −: 맺힘 피해 −10%
+    public const float TILT_KNOCKBACK_PCT = 0.3f;  // (시연판 임시) 기획 growth.json 기울기: 깨진 거울 +: 파혼 넉백 +30%
+    public const float TILT_VISION_SHIFT = -0.05f;  // (시연판 임시) 기획 growth.json 기울기: 깨진 거울 −: 천도 중 시야 비율 −5%p (0.6→0.55)
+    public const float VISION_RATIO_FLOOR = 0.55f;  // (시연판 임시) 기획 growth.json 기울기: 시야 비율 하한(QA 확인 전 임시): 깨진 거울을 여러 개 껴도 이 밑으로 안 줄어듦
+    public const float TILT_CAST_DR_PCT = 0.2f;  // (시연판 임시) 기획 growth.json 기울기: 상복 자락 +: 천도 중 받는 피해 −20%
+    public const float TILT_ASPD_PCT = -0.08f;  // (시연판 임시) 기획 growth.json 기울기: 상복 자락 −: 공격 속도 −8%
+    public const float WAIT_FLOOR = 0.5f;  // (시연판 임시) 기획 growth.json 기울기: 처결 대기 시간 최소(초). 검은 술을 겹쳐도 이 밑으로 안 줄어듦(QA 제안)
 }

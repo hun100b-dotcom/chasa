@@ -685,4 +685,77 @@ public class CoreTests
         Assert.IsFalse(Loot.SetBase("PahonRadiusM", 1f), "이름 있는 물건 전용 옵션은 굴림 값이 아니다");
         Loot.SetBase("DamagePct", oldBase);
     }
+
+    // ---- 기울기 옵션 6종 (기획 growth.json tilts) ------------------------------------------
+    static GearStats StatsOf(string tiltId)
+    {
+        var it = new ItemDef { Slot = Slot.Charm, Rarity = Rarity.Rare, Gradient = true, TiltId = tiltId };
+        it.Options.AddRange(TiltDef.Find(tiltId).Options);
+        var st = new GearStats(); st.Add(it); return st;
+    }
+
+    [Test]
+    public void 기울기_향내음_넋은_늘고_파혼엽전은_절반()
+    {
+        var st = StatsOf("tilt_neok_coin");
+        Assert.AreEqual(1.25f, st.TendoNeokMult, 1e-4f);
+        Assert.AreEqual(0.5f, st.PahonCoinMult, 1e-4f);
+        Assert.Less(st.Tilt(), 0f, "천도 쪽 기울기");
+    }
+
+    [Test]
+    public void 기울기_검은술_반경은_늘고_대기는_짧아지되_덩어리와_하한은_지킨다()
+    {
+        var st = StatsOf("tilt_radius_wait");
+        Assert.AreEqual(3.3f, st.PahonRadius(3.0f), 1e-3f);
+        Assert.AreEqual(4.5f, st.AdjustWait(5.0f, false), 1e-4f);
+        Assert.AreEqual(5.0f, st.AdjustWait(5.0f, true), 1e-4f, "덩어리는 대기 단축 제외");
+        Assert.AreEqual(Balance.WAIT_FLOOR, st.AdjustWait(0.8f, false), 1e-4f, "하한 아래로 못 내려간다");
+        Assert.Greater(st.Tilt(), 0f, "파혼 쪽 기울기");
+    }
+
+    [Test]
+    public void 기울기_젖은소매_연속창은_길고_피해는_줄어든다()
+    {
+        var st = StatsOf("tilt_window_dmg");
+        Assert.AreEqual(Balance.TENDO_CHAIN_WINDOW + 1.5f, st.ChainWindow, 1e-4f);
+        Assert.AreEqual(0.9f, st.DamageMult, 1e-4f);
+    }
+
+    [Test]
+    public void 기울기_깨진거울_넉백은_늘고_시야는_하한까지만_좁아진다()
+    {
+        var st = StatsOf("tilt_kb_vision");
+        Assert.AreEqual(1.3f, st.PahonKnockbackMult, 1e-4f);
+        Assert.AreEqual(0.55f, st.VisionRatio(0.6f), 1e-4f);
+        var two = new GearStats(); two.VisionShift = -0.2f;
+        Assert.AreEqual(Balance.VISION_RATIO_FLOOR, two.VisionRatio(0.6f), 1e-4f, "여러 개 껴도 하한");
+    }
+
+    [Test]
+    public void 기울기_상복자락_시전중_피해는_줄고_공격속도는_느려진다()
+    {
+        var st = StatsOf("tilt_castdr_aspd");
+        Assert.AreEqual(0.8f, st.CastDamageTakenMult, 1e-4f);
+        Assert.AreEqual(0.92f, st.AttackSpeedMult, 1e-4f);
+    }
+
+    [Test]
+    public void 기울기_기본_드롭은_시연판_하나만_AllTilts면_여섯종이_나온다()
+    {
+        var rnd = new System.Random(7);
+        for (int i = 0; i < 50; i++)
+        {
+            var it = Loot.Roll(() => (float)rnd.NextDouble(), true);   // 사나운 적 = 귀한 확정
+            Assert.AreEqual("tilt_dmg_cast", it.TiltId);
+        }
+        Loot.AllTilts = true;
+        try
+        {
+            var seen = new System.Collections.Generic.HashSet<string>();
+            for (int i = 0; i < 300; i++) seen.Add(Loot.Roll(() => (float)rnd.NextDouble(), true).TiltId);
+            Assert.AreEqual(6, seen.Count);
+        }
+        finally { Loot.AllTilts = false; }
+    }
 }

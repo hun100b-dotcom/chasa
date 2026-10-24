@@ -37,6 +37,13 @@ public static class Ko
         return it.Named ? it.Name : RarityName(it.Rarity);
     }
 
+    /// <summary>기울기 이름 (피 묻은 매듭·향 내음 …). 모르면 빈 글자</summary>
+    public static string TiltName(ItemDef it)
+    {
+        var t = it.TiltId == null ? null : TiltDef.Find(it.TiltId);
+        return t == null ? "" : t.Name;
+    }
+
     /// <summary>드롭 알림용 한 줄 설명</summary>
     public static string Describe(ItemDef it)
     {

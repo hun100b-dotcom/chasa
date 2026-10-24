@@ -65,7 +65,7 @@ public class CharacterPanel : MonoBehaviour
             else
             {
                 DrawIcon(slot, it, icon);
-                label += Ko.ItemName(it) + (it.Gradient ? "  [기울기]" : "");
+                label += Ko.ItemName(it) + (it.Gradient ? "  [기울기: " + Ko.TiltName(it) + "]" : "");
             }
             GUI.Label(new Rect(box.x + 92, y, box.width - 110, 24), label, body);
             if (it != null)
@@ -90,6 +90,13 @@ public class CharacterPanel : MonoBehaviour
             case Opt.HpFlat: return "체력 +" + (int)o.Value;
             case Opt.MoveSpeedPct: return "이동 " + Pct(o.Value);
             case Opt.CoinPct: return "엽전 " + Pct(o.Value);
+            case Opt.TendoNeokPct: return "천도 넋 " + Pct(o.Value);
+            case Opt.PahonCoinPct: return "파혼 엽전 " + Pct(o.Value);
+            case Opt.WaitAddS: return "처결 대기 " + (o.Value >= 0 ? "+" : "") + o.Value.ToString("0.0") + "초";
+            case Opt.ChainWindowAddS: return "연속 천도 창 " + (o.Value >= 0 ? "+" : "") + o.Value.ToString("0.0") + "초";
+            case Opt.PahonKnockbackPct: return "파혼 넉백 " + Pct(o.Value);
+            case Opt.VisionShift: return "천도 중 시야 " + (o.Value >= 0 ? "+" : "") + Mathf.RoundToInt(o.Value * 100f) + "%p";
+            case Opt.CastDamageReducePct: return "시전 중 받는 피해 " + Pct(-o.Value);
             default: return "파혼 반경 +" + o.Value.ToString("0.0") + "m";
         }
     }

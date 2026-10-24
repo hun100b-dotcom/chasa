@@ -102,7 +102,9 @@ public class JudgeSystem : MonoBehaviour
         e.Finish();
         int coinBefore = ledger.Coin;
         ledger.DoPahon(e.soul.Boss);
-        ledger.Coin += Mathf.RoundToInt((e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN) * (lo.stats.CoinMult - 1f));   // 엽전 장비 보너스
+        // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
+        float baseCoin = e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN;
+        ledger.Coin += Mathf.RoundToInt(baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult - baseCoin);
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         if (e.soul.Boss)
         {
@@ -111,7 +113,7 @@ public class JudgeSystem : MonoBehaviour
             if (lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
         }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
-        float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
+        float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult * lo.stats.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
         float radius = lo.stats.PahonRadius(Balance.PAHON_RADIUS);   // 업 쪽 장비: 파혼 반경 (상한 안)
         int pahonDmg = Mathf.RoundToInt(Balance.PAHON_DAMAGE * lo.Def.PahonDamageMult * lo.stats.PahonDamageMult);
         foreach (var o in enemies.list)
@@ -148,10 +150,11 @@ public class JudgeSystem : MonoBehaviour
         {
             int before = ledger.Neok;
             ledger.CompleteTendo();
+            ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f));   // 향 내음: 천도 넋 보너스
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (night.TakeNamedSpawn()) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
         }
-        chainLeft = Balance.TENDO_CHAIN_WINDOW;
+        chainLeft = lo.stats.ChainWindow;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
         EndCast();
     }
@@ -167,6 +170,12 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>맺힘 0 → 장비 드롭 판정 1회(처결 방식과 무관). 사나운 적은 귀한 확정</summary>
     void OnEnemyKneel(Enemy e)
     {
+        // 검은 술: 무릎 꿇은 혼의 대기 시간이 짧아진다 (덩어리는 제외, 최소 WAIT_FLOOR)
+        if (!e.soul.Boss && e.soul.State == SoulState.Kneel)
+        {
+            e.soul.WaitTotal = lo.stats.AdjustWait(e.soul.WaitTotal, e.soul.Kind == SoulKind.Lump);
+            e.soul.WaitLeft = e.soul.WaitTotal;
+        }
         var it = Loot.Roll(() => Random.value, e.soul.Fierce);
         if (it == null) return;
         string txt = Loadout.Describe(it);
@@ -281,7 +290,9 @@ public class JudgeSystem : MonoBehaviour
     void OnPlayerHit(Enemy by)
     {
         if (ledger.Dead || night.Over || !player.Hurt()) return;
-        int dealt = ledger.TakeDamage(by.damage);
+        // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
+        int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult)) : by.damage;
+        int dealt = ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
         feel.AddShake(0.35f);
         feel.HitStop(3);
@@ -291,7 +302,7 @@ public class JudgeSystem : MonoBehaviour
             EndCast();
             Say("시전이 끊겼다!");
         }
-        if (ledger.Dead) { Say("FALLEN"); night.Tick(night.TimeLeft + 1f); }   // 쓰러짐 = 동트기와 같은 실패(추가 수확분 상실)
+        if (ledger.Dead) { Say("쓰러졌다"); night.Tick(night.TimeLeft + 1f); }   // 쓰러짐 = 동트기와 같은 실패(추가 수확분 상실)
     }
 
     /// <summary>쓰러진 뒤 한 판을 처음부터. 체력·적·얼룩을 되돌리고 장부(수확)는 결과 화면(M5)에서 다룬다</summary>
@@ -452,7 +463,7 @@ public class JudgeSystem : MonoBehaviour
         {
             var tint = ChasaPalette.MemoryRim;
             float diag = Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
-            float size = Mathf.Lerp(diag * 1.25f, diag * 1.25f * Balance.TENDO_VISION_RATIO, visionP);   // 반경 60%로
+            float size = Mathf.Lerp(diag * 1.25f, diag * 1.25f * lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO), visionP);   // 반경 60%로
             var r = new Rect((Screen.width - size) / 2f, (Screen.height - size) / 2f, size, size);
             GUI.color = new Color(tint.r * 0.35f, tint.g * 0.25f, tint.b * 0.5f, 0.95f * visionP);
             GUI.DrawTexture(r, vignette);
