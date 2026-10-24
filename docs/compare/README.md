@@ -39,3 +39,8 @@
 - `stage1-toast-skillbar.png` — 천도 직후: '넋 +10 / 기억 +1' 알림이 왼쪽 가운데가 아니라 왼쪽 위에 겹쳐 뜸, 아래쪽 기술 줄 안 보임
 - `village-art-props.png` — 아트팀 OBJ 소품(우물·상여·기와집·장승·돌담)
 - `village-glb-choga-gray.png` — (임시 시험 빌드) 초가를 GLB 로 바꿔 끼운 화면: 색이 회색으로 나옴(재질 색 속성 이름 차이)
+
+## 2026-10-25 05:55 KST — 1단계 수정 재확인 (작업 브랜치 d4aad92)
+- `stage1b-demo-cam-a.mp4` — ?demo=1&cam=a 30초(원본 4초 지점부터). 혼 여러 마리를 돌며 때림, 천도는 1회(그 뒤 '대상이 없다' 반복)
+- `stage1b-skillbar-toast.png` — 아래 가운데 기술 줄(무기 철삭 / E 천도 / R 파혼 / Q 끌어당김 / Space 피하기◆◆), 왼쪽 가운데 '넋 +10 / 기억 +1'
+- `stage1b-glb-choga-color.png` — (임시 시험) GLB 초가: 흙벽·초가 색이 제대로 나옴(오른쪽 아래)
