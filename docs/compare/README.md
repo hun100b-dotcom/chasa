@@ -63,3 +63,8 @@
 - `stage1f-demo-cam-a.mp4` — 30초. 끝 화면 천도 0/3 (데모 코드의 alive/kneeling 조건 충돌 — 보고 참고)
 - `stage1f-facing-up-down-left-right.png` — 빈 땅에서 위·아래·왼쪽·오른쪽으로 걸은 뒤: 위=뒷모습, 왼쪽=갓 금장식 왼쪽, 오른쪽=앞면 장식이 보임 → 앞뒤 보정 정상
 - `stage1f-tendo-cast.png` — ?debug 천도 시전(끝나면 천도 1/3, 넋 +10)
+
+## 2026-10-25 06:35 KST — 데모 천도 정상화 (작업 브랜치 85e1c8c)
+- `stage1g-demo-cam-a.mp4` — 30초, 2.2MB. 끝 화면 천도 3/3(넋 30·기억 3, '당집으로 돌아가라')
+- `stage1g-tendo-cast.png` — 데모 중 천도 시전(시야 좁아짐·시전 막대)
+- `stage1g-end-hud.png` — 끝 화면 장부
