@@ -894,5 +894,125 @@
  "CLUE_PICK_RADIUS": {
   "value": 1.6,
   "note": "(시연판 임시) 낮 단서를 줍는 거리(m). 시연판은 마을에 놓인 3개를 걸어가 줍는다"
+ },
+ "WEAPON_SWAP_TIME": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 무기 바꿔 들기 시간(초)"
+ },
+ "MACE_PAHON_KNOCKBACK_MULT": {
+  "value": 1.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 육모방망이: 파혼 넉백 +50%"
+ },
+ "MACE_PAHON_DAMAGE_MULT": {
+  "value": 1.2,
+  "note": "(시연판 임시) 기획서 6절 초안: 육모방망이: 파혼 피해 +20%"
+ },
+ "MACE_QUAKE_RADIUS": {
+  "value": 4.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 육모방망이 Q 땅울림 반경(m)"
+ },
+ "MACE_QUAKE_DAMAGE": {
+  "value": 20,
+  "note": "(시연판 임시) 기획서 6절 초안: 땅울림 맺힘 피해"
+ },
+ "MACE_QUAKE_STUN": {
+  "value": 0.8,
+  "note": "(시연판 임시) 기획서 6절 초안: 땅울림 기절(초). 서 있는 적에게만, 무릎 꿇은 혼의 대기 시간과 무관"
+ },
+ "MACE_QUAKE_COOLDOWN": {
+  "value": 6.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 땅울림 재사용(초)"
+ },
+ "SKILL_HOLD_RADIUS": {
+  "value": 6.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 붙잡아 부르기 반경(m)"
+ },
+ "SKILL_HOLD_WAIT_BONUS": {
+  "value": 3.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 붙잡아 부르기: 무릎 꿇은 혼 대기 시간 +초"
+ },
+ "SKILL_HOLD_STUN": {
+  "value": 0.8,
+  "note": "(시연판 임시) 기획서 6절 초안: 붙잡아 부르기: 서 있는 적 멈칫(초)"
+ },
+ "SKILL_HOLD_COOLDOWN": {
+  "value": 12.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 붙잡아 부르기 재사용(초)"
+ },
+ "SKILL_BIND_RADIUS": {
+  "value": 4.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 휘감기 반경(m)"
+ },
+ "SKILL_BIND_STUN": {
+  "value": 1.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 휘감기: 적 묶는 시간(초)"
+ },
+ "SKILL_BIND_COOLDOWN": {
+  "value": 10.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 휘감기 재사용(초)"
+ },
+ "SKILL_BURST_RADIUS": {
+  "value": 2.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기 반경(m)"
+ },
+ "SKILL_BURST_DAMAGE": {
+  "value": 40,
+  "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기 맺힘 피해. 업은 그대로"
+ },
+ "SKILL_BURST_COOLDOWN": {
+  "value": 9.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기 재사용(초)"
+ },
+ "SKILL_BURST_FIND_RANGE": {
+  "value": 8.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기가 고를 수 있는 얼룩 거리(m)"
+ },
+ "CAP_DAMAGE_PCT": {
+  "value": 0.4,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 맺힘 피해 +40% (기획서 6-3)"
+ },
+ "CAP_ATTACK_SPEED_PCT": {
+  "value": 0.25,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 공격 속도 +25%"
+ },
+ "CAP_CAST_REDUCE_PCT": {
+  "value": 0.3,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 천도 캐스팅 단축 -30% (하한 CAST_MIN_TIME)"
+ },
+ "CAP_PAHON_AREA_PCT": {
+  "value": 0.4,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 파혼 반경 면적 +40%"
+ },
+ "CAP_PAHON_DAMAGE_PCT": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 파혼 피해 +50%"
+ },
+ "CAP_MOVE_SPEED_PCT": {
+  "value": 0.2,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 이동 속도 +20%"
+ },
+ "CAP_COIN_PCT": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%"
+ },
+ "DROP_RARITY_RARE": {
+  "value": 0.08,
+  "note": "(시연판 임시) 기획서 6절 초안: 장비 드롭 귀한 확률"
+ },
+ "DROP_RARITY_CRAFTED": {
+  "value": 0.3,
+  "note": "(시연판 임시) 기획서 6절 초안: 장비 드롭 손본 확률(귀한 제외). 나머지는 흔한"
+ },
+ "DROP_CHANCE": {
+  "value": 0.35,
+  "note": "(시연판 임시) 기획서 6절 초안: 맺힘 0 때 장비가 떨어질 확률(처결과 무관)"
+ },
+ "MOONFLOWER_BELL_PAHON_RADIUS": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 월화의 방울: 파혼 반경 +m. 정본은 +1m, 업 상한 초과라 QA 확인 전 임시 0.5"
+ },
+ "STAT_POINT_PER_NEOK": {
+  "value": 30,
+  "note": "(시연판 임시) 기획서 6절 초안: 능력치 점수 1점당 넋(시연판은 표시 전용)"
  }
 }

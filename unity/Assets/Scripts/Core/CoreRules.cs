@@ -36,6 +36,13 @@ namespace Chasa.Core
             return Math.Max(Balance.CAST_MIN_TIME, t);
         }
 
+        /// <summary>장비의 캐스팅 배율(CastMult)까지 반영한 천도 시간. 배율을 곱한 뒤에도 하한은 지킨다</summary>
+        public static float CastTimeScaled(bool chained, float mult, float bonus = 0f)
+        {
+            float t = (chained ? Balance.TENDO_CHAIN_CAST_TIME : Balance.TENDO_CAST_TIME) * mult + bonus;
+            return Math.Max(Balance.CAST_MIN_TIME, t);
+        }
+
         /// <summary>결말 A(최종 눕히기) 가능한가: 기억 충분 + 업이 낮아야 한다</summary>
         public static bool EndingAOpen(int memory, int karma)
         {

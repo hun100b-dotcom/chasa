@@ -468,4 +468,82 @@ public class CoreTests
         for (int i = 0; i < 10; i++) n.PickClue();
         Assert.AreEqual(Balance.BOSS_CLUES_REQUIRED, n.Clues);
     }
+
+    // ---- M4.5: 무기·도술·장비 ----
+    [Test]
+    public void Weapon_MaceLeansPahon()
+    {
+        Assert.Greater(WeaponDef.Mace.PahonDamageMult, WeaponDef.Chain.PahonDamageMult);
+        Assert.Greater(WeaponDef.Mace.PahonKnockbackMult, WeaponDef.Chain.PahonKnockbackMult);
+        Assert.AreEqual(WeaponDef.Mace, WeaponDef.Get(WeaponId.Mace));
+    }
+
+    [Test]
+    public void SkillBar_CooldownCycle()
+    {
+        var b = new SkillBar();
+        Assert.IsTrue(b.TryUse(0));
+        Assert.IsFalse(b.TryUse(0), "쿨다운 중엔 못 쓴다");
+        b.Tick(SkillDef.All[0].Cooldown + 0.01f);
+        Assert.IsTrue(b.Ready(0));
+        Assert.IsTrue(b.TryUse(1), "다른 칸은 독립");
+    }
+
+    [Test]
+    public void Gear_CapsHold()
+    {
+        var it = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Rare };
+        it.Options.Add(new OptionRoll(Opt.DamagePct, 0.9f));
+        it.Options.Add(new OptionRoll(Opt.CastReducePct, 0.9f));
+        it.Options.Add(new OptionRoll(Opt.PahonAreaPct, 0.9f));
+        var st = new GearStats(); st.Add(it);
+        Assert.AreEqual(1f + Balance.CAP_DAMAGE_PCT, st.DamageMult, 0.001f);
+        Assert.AreEqual(1f - Balance.CAP_CAST_REDUCE_PCT, st.CastMult, 0.001f);
+        Assert.LessOrEqual(st.PahonRadius(2.5f), 2.5f * (float)System.Math.Sqrt(1f + Balance.CAP_PAHON_AREA_PCT) + 0.001f);
+    }
+
+    [Test]
+    public void Gear_CastMinFloorRespected()
+    {
+        // 장비가 캐스팅을 최대로 줄여도 하한 0.5초 아래로 못 간다
+        var st = new GearStats { CastReducePct = 5f };
+        Assert.AreEqual(1f - Balance.CAP_CAST_REDUCE_PCT, st.CastMult, 0.001f, "단축은 상한에서 멈춘다");
+        float t = CoreRules.CastTimeScaled(true, 0.01f);
+        Assert.GreaterOrEqual(t, Balance.CAST_MIN_TIME);
+    }
+
+    [Test]
+    public void Loot_FierceAlwaysRare_WithGradient()
+    {
+        var rnd = new System.Random(1);
+        for (int i = 0; i < 50; i++)
+        {
+            var it = Loot.Roll(() => (float)rnd.NextDouble(), true);
+            Assert.IsNotNull(it);
+            Assert.AreEqual(Rarity.Rare, it.Rarity);
+            Assert.IsTrue(it.Gradient);
+            Assert.IsTrue(it.Options.Exists(o => o.Kind == Opt.CastReducePct && o.Value < 0f), "기울기: 천도 느려짐 줄이 있다");
+        }
+    }
+
+    [Test]
+    public void Loot_DropRateRoughlyMatches()
+    {
+        var rnd = new System.Random(7);
+        int drops = 0;
+        for (int i = 0; i < 4000; i++) if (Loot.Roll(() => (float)rnd.NextDouble(), false) != null) drops++;
+        Assert.AreEqual(Balance.DROP_CHANCE, drops / 4000f, 0.04f);
+    }
+
+    [Test]
+    public void Equipment_BetterReplacesWorse_NamedBeatsRare()
+    {
+        var eq = new Equipment();
+        var common = new ItemDef { Slot = Slot.Charm, Rarity = Rarity.Common };
+        Assert.IsTrue(eq.TryEquip(common));
+        Assert.IsFalse(eq.TryEquip(common), "같은 물건은 교체하지 않는다");
+        Assert.IsTrue(eq.TryEquip(ItemDef.MoonflowerBell()));
+        var st = eq.Stats();
+        Assert.AreEqual(Balance.MOONFLOWER_BELL_PAHON_RADIUS, st.PahonRadiusM, 0.001f);
+    }
 }
