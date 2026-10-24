@@ -67,7 +67,7 @@ def chasa(pose, name=None, tilt=0, bob=0, hit=False):
     H = 300 if bang else 256          # 육모방망이는 머리 위로 올라가므로 캔버스를 키운다
     up = 44 if bang else 0            # 키운 만큼 그림을 아래로 밀어 발 기준 위치를 유지한다
     ox, oy, s = 128, 53 + up, .5          # 몸통 좌표계: 목 중앙이 (0,0), .5배로 줄여 쓴다
-    defs = lg("body", "#232338", "#0A0A12") + lg("band", "#F07A5E", "#B8402A") + lg("hat", "#2E2E46", "#0E0E18") + rg("soul", CHEON, .9, 0) + rg("orb", CHEON, 1, 0)
+    defs = lg("body", "#232338", "#0A0A12") + lg("band", "#F07A5E", "#B8402A") + lg("hat", "#2E2E46", "#0E0E18") + rg("soul", CHEON, .9, 0) + rg("orb", CHEON, 1, 0) + '<linearGradient id="vol" x1="0" x2="1"><stop offset="0" stop-color="#8FA0D0" stop-opacity=".22"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></linearGradient>'
     # 공통 몸통(도포) · 흑립은 sid로 정의해 림 라이트에 재사용
     shapes = ('<g id="coat"><path d="M-34,40 L34,40 L70,165 L110,275 L50,355 L-60,355 L-120,275 L-70,165 Z"/></g>'
               '<g id="hat"><ellipse cx="0" cy="3" rx="92" ry="17"/><path d="M-30,3 L-26,-53 Q0,-69 26,-53 L30,3 Z"/></g>')
@@ -127,6 +127,12 @@ def chasa(pose, name=None, tilt=0, bob=0, hit=False):
         g += f'<circle cx="0" cy="150" r="120" fill="url(#soul)" opacity=".55"/>'
     # 몸: 림 라이트 + 본체
     g += rim("coat", "url(#body)") + rim("arms", "url(#body)") + rim("hat", "url(#hat)")
+    # 입체감: 왼쪽은 밝고 오른쪽(림 라이트 쪽)으로 갈수록 어두워지는 세로 그림자 + 어깨 하이라이트
+    g += '<use xlink:href="#coat" fill="url(#vol)"/><use xlink:href="#arms" fill="url(#vol)" opacity=".7"/>'
+    # 동정(흰 깃)·갓끈: 도포의 오방색 포인트(백·적). 검은 실루엣 안에서도 얼굴 쪽 시선을 모아 준다
+    g += f'<path d="M-24,42 L0,100 L24,42 L14,42 L0,74 L-14,42 Z" fill="{HANJI}" opacity=".92"/><path d="M-12,56 L-30,150" stroke="#6B6B84" stroke-width="3" opacity=".6" fill="none"/>'
+    g += f'<path d="M-66,16 Q-62,46 -22,52 M66,16 Q62,46 22,52" stroke="{RED}" stroke-width="5" fill="none" stroke-linecap="round" opacity=".9"/>'
+    g += f'<path d="M-60,12 Q-90,60 -92,120" stroke="#F3E7D3" stroke-width="2" fill="none" opacity=".25"/>'
     # 도포 접힌 선, 갓 윗면 하이라이트
     g += f'<path d="M-6,45 L-18,350 M18,45 L34,350 M-44,150 L-70,340" stroke="#000" stroke-width="5" opacity=".35" fill="none"/>'
     g += f'<ellipse cx="0" cy="-2" rx="84" ry="11" fill="none" stroke="#3E3E5C" stroke-width="3"/>'
@@ -195,6 +201,14 @@ def ghost(kind, kneel=False):
         g += f'<circle cx="84" cy="136" r="5" fill="{HANJI}" opacity=".9"/><circle cx="106" cy="132" r="5" fill="{HANJI}" opacity=".9"/><circle cx="92" cy="146" r="3" fill="#111"/>'
         g += f'<path d="M44,158 q-12,-18 -2,-28 M150,200 q16,-2 22,-14" stroke="{HANJI}" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85"/>'
         g += f'<ellipse cx="96" cy="206" rx="78" ry="32" fill="none" stroke="{RED}" stroke-width="3.5" stroke-dasharray="9 7"/>'
+    if kind == 0:   # 갓 죽은 혼: 상투 + 앞섶 고름 — 산 사람의 흔적이 가장 많이 남아 있다
+        g += f'<ellipse cx="96" cy="{top-23}" rx="7" ry="9" fill="#1B2438"/><path d="M96,{top-14} L96,{top-18}" stroke="{HANJI}" stroke-width="2"/>'
+    elif kind == 1:  # 해 넘긴 혼: 아래로 번지는 물방울(윤곽이 풀린다)
+        g += ''.join(f'<ellipse cx="{x}" cy="{y}" rx="3" ry="5" fill="#FFE9B0" opacity="{o}"/>' for x, y, o in [(72, 246, .5), (96, 250, .4), (118, 245, .5), (84, 254, .3)])
+        g += f'<path d="M70,{top+50} Q96,{top+44} 122,{top+50}" stroke="#FFF3CC" stroke-width="2" fill="none" opacity=".5"/>'
+    elif kind == 2:  # 오래된 혼: 몸에 금이 간 듯한 어두운 균열 + 붉은 속빛
+        g += f'<path d="M86,{top+30} L96,{top+60} L88,{top+90} L100,{top+120} M108,{top+40} L100,{top+70}" stroke="#2A0F08" stroke-width="3" fill="none" opacity=".7"/>'
+        g += f'<path d="M96,{top+60} L88,{top+90}" stroke="#FFAA77" stroke-width="1.5" opacity=".8"/>'
     save("enemies", f"soul_{['fresh','day','old','lump'][kind]}{'_kneel' if kneel else ''}", W, H, body + g, defs,
          pivot=(ox / W, oy / H), note=["갓 죽은 혼 10초", "해 넘긴 혼 7초", "오래된 혼 4초", "덩어리(천도 불가)"][kind] + (" · 무릎 꿇음(처결 대기)" if kneel else " · 서 있음"))
 
@@ -220,13 +234,20 @@ def tile(name, base, dark, mode, v):
             b += f'<path d="M{x:.1f},{y:.1f} q6,-3 12,0" stroke="#CFE6F2" stroke-width="1.4" fill="none" opacity=".55"/>'
         else:
             b += f'<path d="M{x:.1f},{y:.1f} l{rnd.uniform(6,14):.1f},{rnd.uniform(-3,3):.1f}" stroke="{dark}" stroke-width="1.8" opacity=".6"/>'
+    # 큰 얼룩(색 번짐)으로 단조로움을 깨고, 타일마다 오방색 포인트를 한 점 둔다
+    for _ in range(3):
+        b += f'<ellipse cx="{rnd.uniform(20,108):.0f}" cy="{rnd.uniform(14,50):.0f}" rx="{rnd.uniform(14,26):.0f}" ry="{rnd.uniform(6,12):.0f}" fill="{rnd.choice([base, dark, "#000"])}" opacity=".16"/>'
+    acc = {"dirt_road": ("#C9A24E", "ochre"), "yard": ("#E8683A", "red"), "grass": ("#F3E7D3", "flower"), "paddy": ("#F3E7D3", "flower"), "stone_path": ("#5E8A5A", "moss"), "stepping_stones": ("#BFE8FF", "glint")}[name]
+    for _ in range(3 + v * 2):
+        x, y = rnd.uniform(14, 114), rnd.uniform(10, 54)
+        b += f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{1.6 if acc[1] in ("flower","glint") else 2.2}" fill="{acc[0]}" opacity=".75"/>'
     if name == "stone_path":
         b += f'<path d="M64,6 L64,58 M20,32 L108,32" stroke="{dark}" stroke-width="2" opacity=".7"/>'
     if name == "stepping_stones":
         for cx, cy in [(44, 26), (74, 38), (96, 24)]:
             b += f'<ellipse cx="{cx}" cy="{cy}" rx="13" ry="6" fill="#9A9EA8"/><ellipse cx="{cx}" cy="{cy-1.5}" rx="11" ry="4.5" fill="#B4B8C2"/>'
     # 가장자리 어둡게(타일 이음매 구분용으로 아주 약하게)
-    b += f'<path d="M64,0 L128,32 L64,64 L0,32 Z" fill="none" stroke="#000" stroke-width="2" opacity=".18"/></g>'
+    b += '<path d="M2,32 L64,1 L126,32" fill="none" stroke="#fff" stroke-width="2" opacity=".14"/><path d="M2,32 L64,63 L126,32" fill="none" stroke="#000" stroke-width="2.5" opacity=".28"/></g>'
     save("tiles", f"tile_{name}_{'ab'[v]}", 128, 64, b, defs, pivot=(0.5, 0.5), note="바닥 타일 · 마름모 128×64")
 
 
@@ -247,7 +268,7 @@ def p_choga():
             '<path d="M-82,-40 Q-74,-84 0,-98 Q74,-84 82,-40 L0,-2 Z" fill="url(#thatch)"/>'
             '<path d="M-82,-40 L0,-2 L82,-40" stroke="#7A5E2C" stroke-width="4" fill="none"/>'
             '<path d="M-40,-62 L-20,-30 M0,-80 L0,-16 M30,-66 L48,-34" stroke="#8C6A2E" stroke-width="3" opacity=".6"/>'
-            '<rect x="-10" y="-28" width="20" height="26" rx="2" fill="#2A1C12"/><rect x="-6" y="-24" width="12" height="18" fill="#E8C86A" opacity=".55"/>')
+            '<ellipse cx="0" cy="-12" rx="34" ry="22" fill="#E8C86A" opacity=".35" filter="url(#blur8)"/><rect x="-10" y="-28" width="20" height="26" rx="2" fill="#2A1C12"/><rect x="-6" y="-24" width="12" height="18" fill="#FFD98A" opacity=".85"/>')
 
 
 def p_giwa():
@@ -255,7 +276,7 @@ def p_giwa():
             '<path d="M-108,-50 Q-98,-44 -80,-44 L0,-6 L80,-44 Q98,-44 108,-50 Q94,-106 0,-114 Q-94,-106 -108,-50 Z" fill="url(#roof)"/>'
             '<path d="M-98,-54 Q0,-12 98,-54" stroke="#7A86A2" stroke-width="3" fill="none"/>'
             '<path d="M-60,-84 Q0,-66 60,-84 M-76,-68 Q0,-46 76,-68" stroke="#1E2434" stroke-width="3" fill="none" opacity=".6"/>'
-            '<rect x="-36" y="-32" width="24" height="26" fill="#7A4A2A"/><rect x="12" y="-32" width="24" height="26" fill="#7A4A2A"/><path d="M-24,-32 v26 M24,-32 v26" stroke="#E8C86A" stroke-width="2" opacity=".6"/>')
+            '<rect x="-36" y="-32" width="24" height="26" fill="#7A4A2A"/><rect x="12" y="-32" width="24" height="26" fill="#7A4A2A"/><path d="M-24,-32 v26 M24,-32 v26" stroke="#E8C86A" stroke-width="2" opacity=".6"/><ellipse cx="-24" cy="-18" rx="26" ry="20" fill="#FFD98A" opacity=".3" filter="url(#blur8)"/><ellipse cx="24" cy="-18" rx="26" ry="20" fill="#FFD98A" opacity=".3" filter="url(#blur8)"/><rect x="-33" y="-29" width="18" height="20" fill="#FFD98A" opacity=".5"/><rect x="15" y="-29" width="18" height="20" fill="#FFD98A" opacity=".5"/>')
 
 
 def p_dam():
