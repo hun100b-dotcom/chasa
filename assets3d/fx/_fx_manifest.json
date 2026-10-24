@@ -1,0 +1,92 @@
+[
+ {
+  "name": "fx_tendo_pillar",
+  "tris": 136,
+  "size_m": [
+   2.0,
+   2.0,
+   6.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_tendo_ring",
+  "tris": 224,
+  "size_m": [
+   2.5,
+   2.5,
+   0.05
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_pahon_shards_a",
+  "tris": 72,
+  "size_m": [
+   2.56,
+   2.18,
+   1.15
+  ],
+  "min_z": -0.06
+ },
+ {
+  "name": "fx_pahon_shards_b",
+  "tris": 72,
+  "size_m": [
+   2.54,
+   2.4,
+   1.21
+  ],
+  "min_z": 0.089
+ },
+ {
+  "name": "fx_pahon_shards_c",
+  "tris": 72,
+  "size_m": [
+   2.69,
+   2.74,
+   1.29
+  ],
+  "min_z": 0.085
+ },
+ {
+  "name": "fx_stain_decal",
+  "tris": 22,
+  "size_m": [
+   2.19,
+   2.33,
+   0.01
+  ],
+  "min_z": 0.02
+ },
+ {
+  "name": "fx_wait_ring_fresh",
+  "tris": 272,
+  "size_m": [
+   2.12,
+   2.12,
+   0.04
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_wait_ring_day",
+  "tris": 272,
+  "size_m": [
+   2.12,
+   2.12,
+   0.04
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_wait_ring_old",
+  "tris": 272,
+  "size_m": [
+   2.12,
+   2.12,
+   0.04
+  ],
+  "min_z": 0.0
+ }
+]

@@ -40,3 +40,5 @@
 회전·이동은 제자리(루트 모션 없음). 이동거리(피하기 3.2m 등)는 코드가 맡는다. 철삭 사슬은 영웅 오른손의 감긴 사슬 모델만 있고 늘어나는 사슬은 코드 이펙트.
 
 [무기 5종] weapons/weapon_{chain,bangmang,yoryeong,samjichang,myeongbu}.glb (110~436삼각형). 원점=쥐는 곳, 긴 방향=glTF +Y. 소켓은 weapons/_weapons_manifest.json(Hand.R 머리 위치에 원점, X축 +90°로 눕혀 앞을 향하게). 생성: tools/art3d/weapons.py
+
+[처결 이펙트 메시 9종] fx/fx_{tendo_pillar,tendo_ring,pahon_shards_a/b/c,stain_decal,wait_ring_fresh/day/old}.glb (22~272삼각형, 발광 재질만, 투명·애니메이션은 코드). 생성: tools/art3d/fx.py
