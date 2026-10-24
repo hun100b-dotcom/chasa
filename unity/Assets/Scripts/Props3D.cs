@@ -79,6 +79,7 @@ public static class Props3D
             Prim(PrimitiveType.Sphere, t, "Crown2", new Vector3(1.2f, 3.6f, 0.8f), new Vector3(2.8f, 2.2f, 2.8f), Leaf * 1.15f);
             Prim(PrimitiveType.Sphere, t, "Crown3", new Vector3(-1.1f, 3.9f, -0.7f), new Vector3(2.6f, 2.1f, 2.6f), Leaf * 0.9f);
             Prim(PrimitiveType.Cylinder, t, "Rope", new Vector3(0, 1.3f, 0), new Vector3(1.02f, 0.06f, 1.02f), new Color(0.65f, 0.12f, 0.12f));
+            t.gameObject.AddComponent<OccluderFade>();   // 잎이 주인공을 가리면 잎만 비켜 준다
         }
         else if (sprite.EndsWith("choga") || sprite.EndsWith("giwa"))
         {
