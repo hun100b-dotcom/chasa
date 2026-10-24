@@ -15,7 +15,7 @@ public class DemoScript : MonoBehaviour
     public JudgeSystem judge;
 
     float t, nextAttack;
-    int stage;            // 0 달려가 때리기 · 1 천도 · 2 피하기 · 3 끝
+    int stage;            // 0 달려가 때리기 · 1 천도 · 2 피하기 · 3 다음 혼이 있으면 0으로(반복)
     float stageT;
 
     public static bool Wanted()
@@ -28,7 +28,7 @@ public class DemoScript : MonoBehaviour
         Enemy best = null; float bd = 999f;
         foreach (var e in enemies.list)
         {
-            if (e == null || !e.alive) continue;
+            if (e == null || !e.alive || e.kneeling) continue;   // 무릎 꿇은 혼은 천도 몫이라 때리지 않는다
             float d = Vector3.Distance(e.Pos, player.Pos);
             if (d < bd) { bd = d; best = e; }
         }
@@ -61,7 +61,11 @@ public class DemoScript : MonoBehaviour
                 break;
             }
             case 2:
-                if (stageT > 0.6f) { player.CommandDodge(player.Pos + new Vector3(-3f, 0, 3f)); stage = 3; }
+                if (stageT > 0.6f) { player.CommandDodge(player.Pos + new Vector3(-3f, 0, 3f)); stage = 3; stageT = 0f; }
+                break;
+            case 3:
+                // 다음 혼이 남아 있으면 처음부터 다시(영상 30초 동안 여러 마리를 상대하게)
+                if (stageT > 0.8f && Nearest() != null) { stage = 0; stageT = 0f; }
                 break;
         }
     }

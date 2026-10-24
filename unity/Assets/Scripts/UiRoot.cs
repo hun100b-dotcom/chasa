@@ -48,6 +48,8 @@ public class UiRoot : MonoBehaviour
 
     void Build(VisualElement r)
     {
+        // 빈 테마라 기본 '화면 가득 채우기'가 없다 → 바닥(r) 높이가 0 이 돼 아래·퍼센트 위치가 어긋났다. 직접 화면 전체로 편다
+        r.style.position = Position.Absolute; r.style.left = 0; r.style.top = 0; r.style.right = 0; r.style.bottom = 0;
         root = new VisualElement { name = "hud-root", pickingMode = PickingMode.Ignore };
         root.style.position = Position.Absolute; root.style.left = 0; root.style.top = 0; root.style.right = 0; root.style.bottom = 0;
         r.Add(root);

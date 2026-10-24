@@ -28,6 +28,7 @@ public class ActorModel : MonoBehaviour
     Renderer[] rends; Material[] mats; Color[] baseCol;
     string key;
     Pose pose = Pose.Idle; float poseT;
+    float heroSpeed = 1f;                 // 한 번짜리 동작(공격) 재생 속도 배율 — 타격 순간을 판정 시각에 맞추려고
     float walkPhase, yaw, lastYawSet;
     Vector3 lastPos;
     float speed;                          // 이동 속도(m/s) — 걷기 판정에 쓴다
@@ -102,7 +103,7 @@ public class ActorModel : MonoBehaviour
         var want = pose == Pose.Idle && moving ? Pose.Walk : pose;
         if (want == Pose.Walk && !moving && pose == Pose.Walk) want = Pose.Idle;
         int idx; if (!heroInput.TryGetValue(want, out idx)) idx = 0;
-        if (idx != heroCur) { heroCur = idx; heroT = 0f; }   // 새 동작은 처음부터
+        if (idx != heroCur) { heroCur = idx; heroT = 0f; heroSpeed = 1f; }   // 새 동작은 처음부터
         heroT += dt;
         // 가중치를 부드럽게 옮긴다 (0.12초 안팎 크로스페이드)
         for (int i = 0; i < mixer.GetInputCount(); i++)
@@ -115,10 +116,23 @@ public class ActorModel : MonoBehaviour
             // 반복 동작(서기·걷기·무릎 꿇음 자세)은 돌고, 한 번짜리(공격·맞음·천도)는 처음부터 한 번
             bool loop = false;
             foreach (var kv in heroInput) if (kv.Value == i && heroRow.loop != null && System.Array.IndexOf(heroRow.loop, kv.Key.ToString()) >= 0) loop = true;
-            if (i == idx) pl.SetTime(loop ? heroT % Mathf.Max(0.01f, len) : Mathf.Min(heroT, len - 0.001f));
+            if (i == idx) pl.SetTime(loop ? heroT % Mathf.Max(0.01f, len) : Mathf.Min(heroT * heroSpeed, len - 0.001f));
         }
         graph.Evaluate(0f);
         // 피하기·무릎 꿇음 때 몸 높이(미끄러짐 방지용 보정은 하지 않는다 — 대역이라 단순하게)
+    }
+
+    /// <summary>
+    /// 공격을 새로 시작했다(1타·2타·3타 모두). 이름이 같아 자세가 안 바뀌면 동작이 다시 시작되지 않던 문제를 막고,
+    /// 모델 동작의 '때리는 순간'(대략 클립의 45%)이 판정 시각(선딜 + 휘두름의 가운데)에 오도록 재생 속도를 맞춘다.
+    /// 왜? 판정과 몸 동작이 따로 놀면 "사슬만 혼자 도는" 느낌이 난다(PC 영상 의견).
+    /// </summary>
+    public void PlayAttack(float windup, float swing)
+    {
+        pose = Pose.Attack; poseT = 0f; heroT = 0f;
+        int idx; if (!heroInput.TryGetValue(Pose.Attack, out idx) || heroPlayables == null || !heroPlayables[idx].IsValid()) { heroSpeed = 1f; return; }
+        float len = heroPlayables[idx].GetAnimationClip().length;
+        heroSpeed = Mathf.Clamp(0.45f * len / Mathf.Max(0.05f, windup + swing * 0.5f), 0.5f, 6f);
     }
 
     void OnDestroy() { if (graph.IsValid()) graph.Destroy(); }

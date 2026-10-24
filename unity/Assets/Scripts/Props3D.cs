@@ -15,11 +15,11 @@ public static class Props3D
     static readonly Color Stone = new Color(0.40f, 0.40f, 0.42f);
     static readonly Color Leaf = new Color(0.12f, 0.24f, 0.17f);
 
-    /// <summary>재질에서 기본 색을 꺼낸다. OBJ 는 _Color, glTFast(GLB)는 _BaseColorFactor/_BaseColor 에 색이 들어 있어 차례로 찾는다</summary>
+    /// <summary>재질에서 기본 색을 꺼낸다. OBJ 는 _Color, 내장 렌더러용 glTFast(GLB)는 baseColorFactor(밑줄 없음)에 색이 들어 있어 차례로 찾는다</summary>
     static Color MatColor(Material m)
     {
         if (m == null) return Color.gray;
-        foreach (var n in new[] { "_BaseColorFactor", "_BaseColor", "_Color" })
+        foreach (var n in new[] { "baseColorFactor", "_BaseColorFactor", "_BaseColor", "_Color" })
             if (m.HasProperty(n)) return m.GetColor(n);
         return Color.gray;
     }
