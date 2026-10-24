@@ -253,3 +253,19 @@ const B19_PAHON_HEAL := 0.08          # B-19 그림자를 파혼하면 첫 차�
 const B20_CALL_TIME := 1.0            # B-20 아는 이름 "부르기"(초)
 const ENDING_NAME_CLEAR_TENDO := 300  # 먹지기 이름이 또렷이 적히는 천도 수 (천도만 센다)
 const NAME_NOTES_PER_ZONE := 5        # ⑨ 먹지기가 주워 둔 이름 쪽지 구역당(총 18장 안팎)
+
+# --- 6막(시즌 3) 수치 (docs/BALANCE-ACT6.md, 서사팀 동의 완료 2026-10-24). 🔴 PD 확정 대기 ---
+const FLOOD_LOSS_RATIO := 0.5         # 물 차오름 때 아래층에 남으면 그날 얻은 넋·엽전의 이 비율을 잃는다 (보스 단서·장례 해금·도감 기억은 보존)
+const FLOOD_WARNING_TIME := 30.0      # 물 차오름 신호 몇 초 전에 경고하는가
+const BAEK_KNOWN_CAST_BONUS := -0.5   # 눕히기: 이미 그 사람의 혼을 천도했으면 캐스팅 -0.5초 (하한 CAST_MIN_TIME)
+const BAEK_BROKEN_CAST_BONUS := 0.5   # 눕히기: 그 사람의 혼을 파혼했으면 캐스팅 +0.5초
+const BAEK_TIDE_WINDOW := 20.0        # ⑤ 백 물때: 밀물 신호 뒤 이 시간 안에 못 눕히면 그 밤엔 묻힌다 (물 혼과 같은 값)
+const B21_FLOOD_LIMIT := 90.0         # B-21 2단계 물 차오름 실패 시한(초). 서사 제안 60초는 빡빡해 90초
+const B22_SYNC_KNEEL_WINDOW := 15.0   # B-22 일곱을 모두 무릎 꿇려야 하는 시간(초). 서사 제안 10초는 터치에서 빠듯
+const B22_ROPE_REACH_BONUS := 0.8     # 선원의 밧줄: 사슬 사거리 +0.8m (서사 제안 +1.5m는 3타 면적 +61%로 과함)
+const B21_SHORTCUT_CUT := 0.15        # B-21 천도 보상: 소 밑 지름길 -15%
+const B21_PLANK_FLOOD_BONUS := 10.0   # 나룻배 판자(파혼 보상): 물 차오름 신호 +10초
+const BAEK_PAHON_KARMA := 1           # 백 깨뜨리기 업 (보스 백은 BOSS_PAHON_KARMA 3)
+const B23_RELEASE_BAEK_MIN := 20      # B-23 풀기 조건: 이번 막 눕힌 백 수 이상 (백 36마리의 55%)
+const B23_RELEASE_TENDO_MIN := 300    # 또는 시즌 1·2 누적 천도 수 이상
+const SEASON3_START_TENDO := 120      # 시즌 3부터 시작하는 사람의 누적 천도 기본값

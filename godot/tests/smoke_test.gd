@@ -321,6 +321,11 @@ func _core_loop_tests(p: Player, em: EnemyManager) -> void:
 	check(Config.B18_STAMP_CAST_BONUS + Config.TENDO_CAST_TIME >= Config.CAST_MIN_TIME, "인 자국 캐스팅 %.1f초 (하한 이상)" % (Config.TENDO_CAST_TIME + Config.B18_STAMP_CAST_BONUS))
 	check(Config.RELEASE_RATIO_MIN > 0.4 and Config.RELEASE_RATIO_MIN < 1.0, "풀어내기 기준 R/S ≥ %.1f" % Config.RELEASE_RATIO_MIN)
 
+	print("[14-7] 6막 채택값 (P1-045)")
+	check(Config.TENDO_CAST_TIME + Config.BAEK_KNOWN_CAST_BONUS >= Config.CAST_MIN_TIME, "눕히기 단축 캐스팅 %.1f초 (하한 이상)" % (Config.TENDO_CAST_TIME + Config.BAEK_KNOWN_CAST_BONUS))
+	check(Config.SEASON3_START_TENDO < Config.B23_RELEASE_TENDO_MIN, "시즌3 시작 기본 천도 %d < 풀기 기준 %d (기본값만으론 자동 통과 안 됨)" % [Config.SEASON3_START_TENDO, Config.B23_RELEASE_TENDO_MIN])
+	check(Config.B22_ROPE_REACH_BONUS <= 1.0, "선원의 밧줄 +%.1fm (1m 이하)" % Config.B22_ROPE_REACH_BONUS)
+
 	print("[14-3] 맵 생성 (P1-017)")
 	var m1 := MapGen.generate(42)
 	var m2 := MapGen.generate(42)
