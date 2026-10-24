@@ -15,6 +15,15 @@ public static class Props3D
     static readonly Color Stone = new Color(0.40f, 0.40f, 0.42f);
     static readonly Color Leaf = new Color(0.12f, 0.24f, 0.17f);
 
+    /// <summary>재질에서 기본 색을 꺼낸다. OBJ 는 _Color, glTFast(GLB)는 _BaseColorFactor/_BaseColor 에 색이 들어 있어 차례로 찾는다</summary>
+    static Color MatColor(Material m)
+    {
+        if (m == null) return Color.gray;
+        foreach (var n in new[] { "_BaseColorFactor", "_BaseColor", "_Color" })
+            if (m.HasProperty(n)) return m.GetColor(n);
+        return Color.gray;
+    }
+
     static GameObject Prim(PrimitiveType t, Transform parent, string name, Vector3 pos, Vector3 scale, Color c, Vector3? euler = null)
     {
         var g = GameObject.CreatePrimitive(t);
@@ -73,7 +82,7 @@ public static class Props3D
                     {
                         // 색 지도가 없는 모델(아트팀 소품): 모델 재질마다 색만 따서 우리 무광 재질로 바꾼다(밤 조명에 맞추려고)
                         var src = r.sharedMaterials; var dst = new Material[src.Length];
-                        for (int i = 0; i < src.Length; i++) dst[i] = U.Matte(src[i] != null ? src[i].color : Color.gray);
+                        for (int i = 0; i < src.Length; i++) dst[i] = U.Matte(MatColor(src[i]));
                         r.sharedMaterials = dst;
                     }
                 }
