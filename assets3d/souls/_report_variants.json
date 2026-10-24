@@ -1,0 +1,134 @@
+[
+ {
+  "name": "soul_fresh_yeoksa",
+  "region": "검은여울 역병",
+  "tris": 266,
+  "min_z": -0.007,
+  "size_m": [
+   0.51,
+   0.51,
+   1.23
+  ]
+ },
+ {
+  "name": "soul_day_yeoksa",
+  "region": "검은여울 역병",
+  "tris": 298,
+  "min_z": 0.0,
+  "size_m": [
+   0.88,
+   0.54,
+   1.35
+  ]
+ },
+ {
+  "name": "soul_old_yeoksa",
+  "region": "검은여울 역병",
+  "tris": 292,
+  "min_z": 0.0,
+  "size_m": [
+   0.79,
+   0.93,
+   1.29
+  ]
+ },
+ {
+  "name": "soul_lump_yeoksa",
+  "region": "검은여울 역병",
+  "tris": 432,
+  "min_z": 0.0,
+  "size_m": [
+   1.45,
+   0.96,
+   1.41
+  ]
+ },
+ {
+  "name": "soul_fresh_bungjae",
+  "region": "붉은재 번호 병사",
+  "tris": 230,
+  "min_z": -0.007,
+  "size_m": [
+   0.6,
+   0.6,
+   1.23
+  ]
+ },
+ {
+  "name": "soul_day_bungjae",
+  "region": "붉은재 번호 병사",
+  "tris": 262,
+  "min_z": 0.0,
+  "size_m": [
+   0.88,
+   0.54,
+   1.49
+  ]
+ },
+ {
+  "name": "soul_old_bungjae",
+  "region": "붉은재 번호 병사",
+  "tris": 256,
+  "min_z": 0.0,
+  "size_m": [
+   0.9,
+   1.02,
+   1.29
+  ]
+ },
+ {
+  "name": "soul_lump_bungjae",
+  "region": "붉은재 번호 병사",
+  "tris": 396,
+  "min_z": 0.0,
+  "size_m": [
+   1.45,
+   0.96,
+   1.6
+  ]
+ },
+ {
+  "name": "soul_fresh_soegol",
+  "region": "쇳골 광부",
+  "tris": 220,
+  "min_z": -0.007,
+  "size_m": [
+   0.87,
+   0.55,
+   1.23
+  ]
+ },
+ {
+  "name": "soul_day_soegol",
+  "region": "쇳골 광부",
+  "tris": 252,
+  "min_z": 0.0,
+  "size_m": [
+   1.03,
+   0.54,
+   1.5
+  ]
+ },
+ {
+  "name": "soul_old_soegol",
+  "region": "쇳골 광부",
+  "tris": 246,
+  "min_z": 0.0,
+  "size_m": [
+   1.15,
+   0.98,
+   1.29
+  ]
+ },
+ {
+  "name": "soul_lump_soegol",
+  "region": "쇳골 광부",
+  "tris": 386,
+  "min_z": 0.0,
+  "size_m": [
+   1.45,
+   0.96,
+   1.61
+  ]
+ }
+]
