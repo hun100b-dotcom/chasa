@@ -38,3 +38,6 @@
 ## 2026-10-24 — P1-015 업 단계 데이터 모델 (code-system-lead)
 - Godot판: 업 0~9/10~29/30~59/60+ 단계(`Player.karma_tier()`), K-003부터 천도 보상(넋) -10%(`reward_mult()`), HUD에 단계 표시. 자동 검사 42개 통과.
 - K-002 수치, K-004 효과는 스펙 공백이라 미구현(연결점만). 기획 확정 필요.
+
+## 2026-10-24 — P1-014 처결 타이머 상태머신 설계 (code-system-lead)
+- `docs/TIMER-STATE-MACHINE.md`: 적 4상태(ACTIVE/KNEEL/SENDING/GONE)·플레이어 처결 명령 허용표·열린 질문(W-005, T-008, 다중 대기, 동트기). 구현(Godot판)과 1:1.
