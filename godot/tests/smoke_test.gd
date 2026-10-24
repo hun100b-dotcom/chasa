@@ -107,6 +107,7 @@ func run() -> void:
 	for x in em.list:
 		if x != far:
 			x.stun = 5.0  # 다른 혼이 끼어들어 견인을 막거나 플레이어를 때리지 않게 (가끔 실패하던 원인)
+	p.position = Vector3.ZERO  # 벽 근처에서 시작하면 적이 벽에 막혀 견인 거리가 줄어 가끔 실패했다
 	far.position = p.position + Vector3(9, 0, 0)
 	var d0 := far.position.distance_to(p.position)
 	main._update_camera(1.0)
