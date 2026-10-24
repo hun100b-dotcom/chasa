@@ -212,3 +212,4 @@ const BOSS_TENDO_CAST_TIME := 2.0     # 보스 천도 캐스팅. 서사 제안 2
 const BOSS_CAST_ADD_PAUSE := 2.0      # 보스 천도 캐스팅 시작 후 이 시간 동안 잡몹 스폰 정지 (캐스팅이 '고행'만 되지 않게)
 const BOSS_PAHON_KARMA := 3           # 보스 파혼 업 (일반 파혼 3회분). 업 단계 경계(10, 30)를 넘길 땐 경고 필요
 const SHORTCUT_RETURN_CUT := 0.175    # 1호 보스 천도 보상: 귀환 거리 단축. 서사 제안 -40%는 과함 → 중간값 -17.5%
+const BOSS_CLUES_REQUIRED := 3        # N-005 보스 천도에 필요한 낮 단서 수. B-1 확정: 2개 이하면 천도 불가(파혼만). 4초 캐스팅 완화안(b)은 플레이테스트 후 재검토
