@@ -498,6 +498,8 @@ public class CoreTests
         Assert.IsFalse(WeaponDef.Mace.HasPull || WeaponDef.Bell.HasPull || WeaponDef.Trident.HasPull || WeaponDef.Brush.HasPull);
         Assert.AreEqual(3, WeaponDef.Trident.MaxHits);                // 삼지창 관통 3
         Assert.AreEqual(1, WeaponDef.Brush.MaxHits);                  // 붓은 한 마리
+        Assert.IsTrue(WeaponDef.Brush.Projectile);                    // 붓만 투사체
+        Assert.IsFalse(WeaponDef.Chain.Projectile || WeaponDef.Mace.Projectile || WeaponDef.Bell.Projectile || WeaponDef.Trident.Projectile);
         Assert.AreEqual(0, WeaponDef.Bell.MaxHits);                   // 요령은 원 범위(제한 없음)
     }
 

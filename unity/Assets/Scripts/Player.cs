@@ -18,7 +18,17 @@ public class Player : MonoBehaviour
         public float startAngle, totalSweep, prevAngle;
         public HashSet<Enemy> hit = new HashSet<Enemy>(); // 한 번 휘두를 때 한 번만 맞게
         public bool firstSample = true;
+        public bool fired;                                 // 붓: 먹물을 이미 쐈는가
     }
+    /// <summary>명부 붓이 쏘는 먹물. 앞으로 날다가 처음 닿는 적 한 마리를 맞히고 사라진다(사거리 = 콤보 reach)</summary>
+    class InkBolt
+    {
+        public GameObject go; public Vector3 dir; public float left; public ComboStep cfg; public int step;
+    }
+    readonly List<InkBolt> bolts = new List<InkBolt>();
+    const float BOLT_SPEED = 22f;     // 먹물 속도(m/s). 6m 를 약 0.27초에 — 피하기 어려운 대신 사거리가 짧다 (임시값)
+    const float BOLT_RADIUS = 0.35f;  // 먹물 크기: 적 몸 반경에 더해 닿음을 판정
+
     class PullRun { public string phase = "throw"; public float t; public Enemy target; public Vector3 aim, from; }
 
     public EnemyManager enemies;
@@ -193,6 +203,41 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(U.Dir(facing)); // 코(+z)가 facing 방향을 보게
         UpdateSprite(dt);
         chain.trail.Tick(dt);
+        TickBolts(dt);
+    }
+
+    /// <summary>먹물 한 방 발사: 휘두름이 시작되는 순간 손에서 정면으로</summary>
+    void FireBolt(AttackRun a)
+    {
+        var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        Destroy(go.GetComponent<Collider>());
+        go.transform.localScale = Vector3.one * BOLT_RADIUS * 2f;
+        go.transform.position = Hand + U.Dir(facing) * 0.6f;
+        go.GetComponent<Renderer>().sharedMaterial = U.Unlit(Config.Hex(0x1a1a2e));   // 먹색
+        bolts.Add(new InkBolt { go = go, dir = U.Dir(facing), left = a.cfg.reach, cfg = a.cfg, step = a.step });
+    }
+
+    void TickBolts(float dt)
+    {
+        for (int i = bolts.Count - 1; i >= 0; i--)
+        {
+            var b = bolts[i];
+            float move = Mathf.Min(BOLT_SPEED * dt, b.left);
+            b.go.transform.position += b.dir * move;
+            b.left -= move;
+            bool done = b.left <= 0f;
+            var p = b.go.transform.position;
+            foreach (var e in enemies.list)
+            {
+                if (!e.alive) continue;
+                var d = new Vector2(e.Pos.x - p.x, e.Pos.z - p.z);
+                if (d.magnitude > e.radius + BOLT_RADIUS) continue;
+                var n = d.magnitude > 0.01f ? d.normalized : new Vector2(b.dir.x, b.dir.z);
+                HitEnemy(e, new AttackRun { step = b.step, cfg = b.cfg }, n.x, n.y);
+                done = true; break;   // 처음 닿은 한 마리만 (MaxHits 1)
+            }
+            if (done) { Destroy(b.go); bolts.RemoveAt(i); }
+        }
     }
 
     void TickFree(float dt)
@@ -257,7 +302,7 @@ public class Player : MonoBehaviour
         state = State.Attack;
         atk = new AttackRun { step = step, cfg = cfg, startAngle = start, prevAngle = start, totalSweep = cfg.dir * cfg.sweepDeg * Mathf.Deg2Rad };
         hasBuffered = false;
-        chain.gameObject.SetActive(true);
+        chain.gameObject.SetActive(!loadout.Def.Projectile);   // 붓은 사슬 그림을 쓰지 않는다
     }
 
     void TickAttack(float dt)
@@ -286,7 +331,8 @@ public class Player : MonoBehaviour
             {
                 float angVel = Mathf.Abs(angle - a.prevAngle) / dt;
                 chainLag = Mathf.Lerp(chainLag, cfg.dir * Mathf.Min(angVel * 0.04f, 1.1f), 0.5f); // 빠를수록 많이 휨
-                SweepHits(a, a.prevAngle, angle);
+                if (loadout.Def.Projectile) { if (!a.fired) { a.fired = true; FireBolt(a); } }   // 붓: 투사체
+                else SweepHits(a, a.prevAngle, angle);
                 RecordTrail(a, hand, a.prevAngle, angle, radius, headY);
                 if (cfg.lunge > 0f) { Pos += U.Dir(facing) * (cfg.lunge / cfg.swing * dt); ClampToArena(); } // 앞으로 밀고 들어감
             }

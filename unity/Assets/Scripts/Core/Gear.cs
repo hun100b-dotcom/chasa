@@ -21,6 +21,7 @@ namespace Chasa.Core
         public float PahonDamageMult = 1f;      // 파혼 피해 배율
         public bool HasQuake;                   // 이 무기의 Q 기술이 땅울림인가
         public bool HasPull;                    // 이 무기의 Q 기술이 철삭 견인인가 (사슬만)
+        public bool Projectile;                 // 휘두름 대신 날아가는 먹물(투사체)을 쏘는가 (명부 붓)
         public int MaxHits;                     // 한 번 휘두를 때 맞는 적 수 상한 (0 = 제한 없음, 삼지창 관통 3 등)
 
         public static readonly WeaponDef Chain = new WeaponDef { Id = WeaponId.Chain, Name = "철삭", HasQuake = false, HasPull = true };
@@ -37,8 +38,8 @@ namespace Chasa.Core
         public static readonly WeaponDef Bell = new WeaponDef { Id = WeaponId.Bell, Name = "요령방울" };
         // 삼지창: 가늘고 긴 찌르기 — 줄지은 적을 최대 3마리까지 꿰뚫는다
         public static readonly WeaponDef Trident = new WeaponDef { Id = WeaponId.Trident, Name = "삼지창", MaxHits = 3 };
-        // 명부 붓: 멀리서 한 마리 — 투사체(날아가는 것)가 생기기 전까지는 좁고 긴 휘두름으로 대신한다
-        public static readonly WeaponDef Brush = new WeaponDef { Id = WeaponId.Brush, Name = "명부 붓", MaxHits = 1 };
+        // 명부 붓: 멀리서 한 마리 — 먹물 투사체(날아가는 것)를 쏜다. 사거리는 콤보 표의 reach
+        public static readonly WeaponDef Brush = new WeaponDef { Id = WeaponId.Brush, Name = "명부 붓", MaxHits = 1, Projectile = true };
 
         public static WeaponDef Get(WeaponId id)
         {
