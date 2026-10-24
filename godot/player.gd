@@ -27,6 +27,7 @@ var combo_timer := 0.0       # 콤보 이음 허용 남은 시간
 var atk = null               # 진행 중인 한 타 기록 (Dictionary) 또는 null
 var has_buffered := false    # 후딜 중 눌러둔 다음 클릭이 있나
 var buffered: Enemy = null   # 그 클릭의 대상
+var buffered_aim = null      # 키보드 '제자리 휘두르기'를 예약했을 때 바라볼 지점 (Vector3 또는 null)
 var pull_run = null          # 견인 진행 기록 (Dictionary) 또는 null
 var pull_cooldown := 0.0
 var chain_lag := 0.0         # 사슬이 뒤처지는 각도
@@ -64,9 +65,22 @@ func command_attack(enemy: Enemy) -> void:
 		# 콤보 중이면 "다음 타 예약" (후딜이 끝나는 순간 이어진다)
 		has_buffered = true
 		buffered = enemy
+		buffered_aim = null
 	elif state == State.FREE:
 		chase_target = enemy
 		move_target = null
+
+func command_swing(aim: Vector3) -> void:
+	# 키보드(Space) '제자리 휘두르기': 달려가지 않고 그 자리에서 커서 방향으로 콤보를 이어간다.
+	# 왜 따로 두나? 적을 정확히 클릭하지 않아도 몰려오는 적을 쓸어낼 수 있게 (디아블로식 '제자리 공격')
+	if state == State.ATTACK:
+		has_buffered = true
+		buffered = null
+		buffered_aim = aim
+	elif state == State.FREE:
+		move_target = null
+		chase_target = null
+		_start_attack(null, combo_timer > 0.0, aim)
 
 func command_pull(enemy: Enemy, aim: Vector3) -> void:
 	if pull_cooldown > 0.0:
@@ -137,12 +151,14 @@ func _hand() -> Vector3:
 # =============================================================================
 # 철삭 3타 콤보
 # =============================================================================
-func _start_attack(target: Enemy, continue_combo: bool) -> void:
+func _start_attack(target: Enemy, continue_combo: bool, aim = null) -> void:
 	var step := (combo_step % Config.COMBO.size()) + 1 if continue_combo else 1
 	combo_step = step
 	var cfg: Dictionary = Config.COMBO[step - 1]
 	if target and target.alive:
 		facing = atan2(target.position.z - position.z, target.position.x - position.x)
+	elif aim != null:
+		facing = atan2(aim.z - position.z, aim.x - position.x)  # 대상 없이 휘두를 땐 지정 방향으로
 	var start_angle: float = facing - cfg.dir * deg_to_rad(cfg.start_offset_deg)
 	state = State.ATTACK
 	atk = {
@@ -213,10 +229,12 @@ func _finish_attack() -> void:
 	atk = null
 	if has_buffered:
 		var next := buffered
+		var next_aim = buffered_aim
 		has_buffered = false
+		buffered_aim = null
 		if finished_step >= Config.COMBO.size():
 			combo_step = 0  # 3타까지 끝났으면 다음은 1타
-		_start_attack(next, true)
+		_start_attack(next, true, next_aim)
 		return
 	state = State.FREE
 	chain.visible = false

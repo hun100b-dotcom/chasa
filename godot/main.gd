@@ -18,6 +18,7 @@ var marker: ClickMarker
 var _focus := Vector3.ZERO      # 카메라가 바라보는 점 (플레이어를 부드럽게 따라감)
 var _offset := Vector3.ZERO     # 카메라가 focus 에서 떨어진 방향/거리 (고정 각도)
 var _holding_move := false      # 좌클릭을 누른 채 바닥을 끌고 다니는 중인가
+var _cursor := Vector2.ZERO     # 마지막 마우스 위치(화면 픽셀). 키보드 기술이 '어디로' 쓸지 정할 때 쓴다
 
 func _ready() -> void:
 	_build_stage()
@@ -42,6 +43,7 @@ func _ready() -> void:
 	add_child(player.chain.trail)
 
 	_add_hint()
+	_add_touch_buttons()
 
 # -----------------------------------------------------------------------------
 # 게임 루프
@@ -141,7 +143,7 @@ func _add_hint() -> void:
 	# 화면 왼쪽 위 조작 안내 (Three.js판에는 없지만, 폰으로 처음 열었을 때 헤매지 않게)
 	var layer := CanvasLayer.new()
 	var label := Label.new()
-	label.text = "Godot  |  tap/left: move+attack  |  right: pull"  # 기본 글꼴에 한글이 없어 영문으로 표기
+	label.text = "Mouse: move / target   Q: pull   Space: swing"  # 기본 글꼴에 한글이 없어 영문으로 표기
 	label.position = Vector2(12, 8)
 	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
 	label.add_theme_font_size_override("font_size", 14)
@@ -163,6 +165,14 @@ func _update_camera(dt: float) -> void:
 # 입력: 좌클릭 바닥 → 이동 / 좌클릭 적 → 콤보 / 우클릭 → 견인
 # -----------------------------------------------------------------------------
 func _unhandled_input(event: InputEvent) -> void:
+	# 키보드 = 기술. 마우스로 위치·대상을 정하고, 키로 '무엇을 할지'를 고른다 (디아블로식 분업)
+	if event is InputEventKey and event.pressed and not event.echo:
+		match (event as InputEventKey).keycode:
+			KEY_Q: _skill_pull(_cursor)    # Q: 커서 근처 적을 견인
+			KEY_SPACE: _skill_swing(_cursor)  # Space: 제자리에서 커서 방향으로 휘두르기
+		return
+	if event is InputEventMouseMotion:
+		_cursor = (event as InputEventMouseMotion).position
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_LEFT and not mb.pressed:
@@ -182,9 +192,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				marker.show_at(ground)
 				_holding_move = true
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
-			# 근처에 적이 없으면 그 방향 허공으로 던진다
-			var enemy := enemies.pick(origin, dir, ground, Config.PULL_PICK_RADIUS)
-			player.command_pull(enemy, ground if ground != null else player.position)
+			_skill_pull(mb.position)  # 우클릭도 견인 (Q와 같음)
 	elif event is InputEventMouseMotion and _holding_move:
 		# 좌클릭을 누른 채 움직이면 이동 목표가 계속 갱신 (마우스 따라 걷기)
 		var mm := event as InputEventMouseMotion
@@ -200,3 +208,60 @@ func _ground_point(origin: Vector3, dir: Vector3):
 	if t < 0.0:
 		return null
 	return origin + dir * t
+
+# -----------------------------------------------------------------------------
+# 기술 (키보드·우클릭·터치 버튼이 모두 이 함수를 부른다 → 입력 방식이 늘어도 동작은 한 곳)
+# -----------------------------------------------------------------------------
+func _skill_pull(screen: Vector2) -> void:
+	# 커서 근처 적을 견인. 근처에 없으면 그 방향 허공으로 던진다(빗나감)
+	var origin := camera.project_ray_origin(screen)
+	var dir := camera.project_ray_normal(screen)
+	var ground = _ground_point(origin, dir)
+	var enemy := enemies.pick(origin, dir, ground, Config.PULL_PICK_RADIUS)
+	player.command_pull(enemy, ground if ground != null else player.position)
+
+func _skill_swing(screen: Vector2) -> void:
+	var ground = _ground_point(camera.project_ray_origin(screen), camera.project_ray_normal(screen))
+	player.command_swing(ground if ground != null else player.position + Vector3(cos(player.facing), 0, sin(player.facing)))
+
+func _nearest_enemy(max_dist: float) -> Enemy:
+	var best: Enemy = null
+	var best_d := max_dist
+	for e in enemies.list:
+		if e.alive and e.position.distance_to(player.position) <= best_d:
+			best_d = e.position.distance_to(player.position)
+			best = e
+	return best
+
+func _add_touch_buttons() -> void:
+	# 폰에는 키보드가 없으니 화면 오른쪽 아래에 같은 기술 버튼 두 개를 띄운다.
+	# 터치 화면이 없는 PC에서는 숨긴다(키보드를 쓰면 되므로).
+	if not DisplayServer.is_touchscreen_available():
+		return
+	var layer := CanvasLayer.new()
+	var box := HBoxContainer.new()
+	box.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	box.offset_left = -260
+	box.offset_top = -110
+	box.offset_right = -16
+	box.offset_bottom = -16
+	box.add_theme_constant_override("separation", 12)
+	for spec in [["PULL", "pull"], ["SWING", "swing"]]:
+		var b := Button.new()
+		b.text = spec[0]
+		b.custom_minimum_size = Vector2(110, 90)
+		b.add_theme_font_size_override("font_size", 20)
+		b.focus_mode = Control.FOCUS_NONE
+		var kind: String = spec[1]
+		b.pressed.connect(func() -> void: _touch_skill(kind))
+		box.add_child(b)
+	layer.add_child(box)
+	add_child(layer)
+
+func _touch_skill(kind: String) -> void:
+	# 터치는 커서가 없으니 '가장 가까운 적'을 자동으로 고른다
+	var e := _nearest_enemy(Config.PULL_RANGE)
+	if kind == "pull":
+		player.command_pull(e, e.position if e else player.position)
+	else:
+		player.command_swing(e.position if e else player.position + Vector3(cos(player.facing), 0, sin(player.facing)))

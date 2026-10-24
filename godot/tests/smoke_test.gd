@@ -114,6 +114,28 @@ func run() -> void:
 	check(d1 < d0 - 5.0, "끌려옴: 거리 %.1f → %.1f" % [d0, d1])
 	check(p.state == Player.State.FREE, "견인 종료 후 대기로 복귀")
 
+	print("[5-2] 키보드: Space 제자리 휘두르기, Q 견인")
+	step(60)
+	p.state = Player.State.FREE
+	p.atk = null
+	p.move_target = null
+	var pos_before := p.position
+	var key := InputEventKey.new()
+	key.keycode = KEY_SPACE
+	key.pressed = true
+	main._unhandled_input(key)
+	check(p.state == Player.State.ATTACK and p.chase_target == null, "Space → 그 자리에서 휘두르기 시작(달려가지 않음)")
+	step(60)
+	p.pull_cooldown = 0.0
+	p.state = Player.State.FREE
+	p.atk = null
+	var key_q := InputEventKey.new()
+	key_q.keycode = KEY_Q
+	key_q.pressed = true
+	main._unhandled_input(key_q)
+	check(p.state == Player.State.PULL, "Q → 견인 시작")
+	step(40)
+
 	print("[6] 오래 돌려도 에러 없음 (부활 포함, 20초)")
 	for i in 1200:
 		if i % 20 == 0:

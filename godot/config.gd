@@ -64,8 +64,8 @@ const PULL_PICK_RADIUS := 3.0
 
 # --- 6) 타격감 ------------------------------------------------------------------
 const FEEL_FRAME_TIME := 1.0 / 60.0
-const FEEL_SHAKE_MAX_OFFSET := 0.55
-const FEEL_SHAKE_DECAY := 3.8
+const FEEL_SHAKE_MAX_OFFSET := 0.28   # PD 피드백(10-24) "흔들림이 너무 심함" → 0.55에서 절반으로
+const FEEL_SHAKE_DECAY := 5.0         # 흔들림이 더 빨리 가라앉게 (3.8 → 5.0)
 const FEEL_KILL_BONUS_FRAMES := 2
 const FEEL_KILL_BONUS_SHAKE := 0.3
 const FEEL_KNOCKBACK_TANGENT_MIX := 0.35
