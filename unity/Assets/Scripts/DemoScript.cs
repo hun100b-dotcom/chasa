@@ -73,7 +73,7 @@ public class DemoScript : MonoBehaviour
                 }
                 player.CommandStop();   // 쫓기던 대상·예약 공격을 끊어야 천도가 시작된다(안 끊으면 계속 때리며 천도가 거절됨)
                 if (stageT > 0.35f && !judge.Casting && stageT < 3f) judge.CommandTendo();
-                if (stageT > 3.2f) { stage = 2; stageT = 0f; }
+                if (stageT > 3.2f && !judge.Casting) { stage = 2; stageT = 0f; }   // 시전이 끝난 뒤에 피하기로(시전 도중 피해서 취소되는 장면 방지)
                 break;
             }
             case 2:
