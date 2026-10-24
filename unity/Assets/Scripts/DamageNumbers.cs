@@ -44,6 +44,7 @@ public class DamageNumbers : MonoBehaviour
 
     void OnGUI()
     {
+        Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (style == null)
         {
             style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold };

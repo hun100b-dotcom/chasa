@@ -76,9 +76,9 @@ public class JudgeSystem : MonoBehaviour
     {
         if (Casting || player.state != Player.State.Free) return;
         var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);
-        if (e == null) { Say("NO TARGET"); return; }
-        if (!e.soul.CanTendo) { Say("CAN'T SEND - SHATTER ONLY"); return; }
-        if (!e.soul.CanTendoWith(night.Clues)) { Say("NEED " + Balance.BOSS_CLUES_REQUIRED + " CLUES (" + night.Clues + ") - SHATTER ONLY"); return; }
+        if (e == null) { Say("대상이 없다"); return; }
+        if (!e.soul.CanTendo) { Say("보낼 수 없는 넋 - 파혼만 가능"); return; }
+        if (!e.soul.CanTendoWith(night.Clues)) { Say("단서 " + Balance.BOSS_CLUES_REQUIRED + "개가 필요하다 (" + night.Clues + ") - 파혼만 가능"); return; }
         if (!e.soul.BeginSending()) return;
         castTarget = e;
         castT = 0f;
@@ -91,7 +91,7 @@ public class JudgeSystem : MonoBehaviour
     {
         if (Casting || player.state != Player.State.Free) return;
         var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);
-        if (e == null) { Say("NO TARGET"); return; }
+        if (e == null) { Say("대상이 없다"); return; }
         if (!e.soul.TryPahon()) return;
         DoPahon(e);
     }
@@ -106,9 +106,9 @@ public class JudgeSystem : MonoBehaviour
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         if (e.soul.Boss)
         {
-            night.BossDone = true; Say("BOSS SHATTERED");
+            night.BossDone = true; Say("나루 영감을 깨뜨렸다");
             // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
-            if (lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "NAMED: Moonflower Bell (pahon radius +)"; lo.lastDropT = 6f; }
+            if (lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
         }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
         float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
@@ -130,7 +130,7 @@ public class JudgeSystem : MonoBehaviour
         if (stains.Add(at.x, at.z, out cx, out cz))
         {
             enemies.SpawnFierce(new Vector3(cx, 0, cz));
-            Say("FIERCE SOUL!");
+            Say("사나운 넋이 깨어났다!");
         }
     }
 
@@ -142,7 +142,7 @@ public class JudgeSystem : MonoBehaviour
             int g = ledger.CompleteBossTendo();
             night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
-            Say("BOSS SENT!");
+            Say("나루 영감을 천도했다!");
         }
         else
         {
@@ -173,9 +173,9 @@ public class JudgeSystem : MonoBehaviour
         if (lo.Equip(it))
         {
             ledger.SetMaxHp(lo.stats.MaxHp);
-            lo.lastDrop = "DROP+EQUIP: " + txt;
+            lo.lastDrop = "획득·장착: " + txt;
         }
-        else lo.lastDrop = "DROP (worse, left): " + txt;
+        else lo.lastDrop = "획득(더 나쁨, 두고 감): " + txt;
         lo.lastDropT = 5f;
         TimedSprite.Spawn("fx/loot_" + (it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common"), e.Pos, 3f);   // 드롭 빛줄기
     }
@@ -195,9 +195,9 @@ public class JudgeSystem : MonoBehaviour
                     if (e.kneeling) { e.soul.WaitLeft += Balance.SKILL_HOLD_WAIT_BONUS; e.soul.WaitTotal += Balance.SKILL_HOLD_WAIT_BONUS; n++; }
                     else if (e.alive) { e.stun = Mathf.Max(e.stun, Balance.SKILL_HOLD_STUN); e.atk.Interrupt(); n++; }
                 }
-                if (n == 0) { Say("NOTHING IN RANGE"); return; }
+                if (n == 0) { Say("범위 안에 아무도 없다"); return; }
                 GroundFx.Play(player.Pos, Balance.SKILL_HOLD_RADIUS, "fx/fx_call_", 3, 0.7f);
-                Say("HOLD CALL");
+                Say("붙잡아 부르기");
                 break;
             }
             case 1: // 휘감기: 반경 4m 서 있는 적 1.5초 묶기
@@ -208,15 +208,15 @@ public class JudgeSystem : MonoBehaviour
                     if (!e.alive || new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > Balance.SKILL_BIND_RADIUS + e.radius) continue;
                     e.stun = Mathf.Max(e.stun, Balance.SKILL_BIND_STUN); e.atk.Interrupt(); e.vel = Vector3.zero; n++;
                 }
-                if (n == 0) { Say("NOTHING IN RANGE"); return; }
+                if (n == 0) { Say("범위 안에 아무도 없다"); return; }
                 GroundFx.Play(player.Pos, Balance.SKILL_BIND_RADIUS, "fx/fx_bind_", 3, 0.6f);
-                Say("BIND");
+                Say("휘감기");
                 break;
             }
             default: // 터뜨리기: 가까운 얼룩 하나를 터뜨려 지운다(업 그대로), 반경 2.5m 맺힘 40
             {
                 float sx, sz;
-                if (!stains.RemoveNearest(player.Pos.x, player.Pos.z, Balance.SKILL_BURST_FIND_RANGE, out sx, out sz)) { Say("NO STAIN"); return; }
+                if (!stains.RemoveNearest(player.Pos.x, player.Pos.z, Balance.SKILL_BURST_FIND_RANGE, out sx, out sz)) { Say("터뜨릴 얼룩이 없다"); return; }
                 foreach (var e in enemies.list)
                 {
                     if (!e.alive) continue;
@@ -228,7 +228,7 @@ public class JudgeSystem : MonoBehaviour
                 }
                 feel.AddShake(0.5f); feel.HitStop(3);
                 GroundFx.Play(new Vector3(sx, 0, sz), Balance.SKILL_BURST_RADIUS, "fx/fx_burst_", 3, 0.5f);
-                Say("BURST");
+                Say("터뜨리기");
                 break;
             }
         }
@@ -240,8 +240,8 @@ public class JudgeSystem : MonoBehaviour
     {
         // 플레이어 앞쪽 7m 에서 나타난다 (길 위, 집 밖)
         var at = new Vector3(MapLayout.NamedX, 0, MapLayout.NamedZ);   // 아트 배치표가 정한 자리
-        enemies.SpawnNamed(at, "Bak Dolsoe");
-        Say("A NAME ON THE LIST...");
+        enemies.SpawnNamed(at, "박돌쇠");
+        Say("명부에 오른 이름이 나타났다...");
     }
 
     /// <summary>한 판 시작: 마을 어귀에 보스, 마을 곳곳에 단서 3개</summary>
@@ -272,7 +272,7 @@ public class JudgeSystem : MonoBehaviour
             if (new Vector2(player.Pos.x - p.x, player.Pos.z - p.z).magnitude > Balance.CLUE_PICK_RADIUS) continue;
             night.PickClue();
             Destroy(clueViews[i]); clueViews.RemoveAt(i); cluePos.RemoveAt(i);
-            Say("CLUE " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED);
+            Say("단서 " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED);
         }
     }
 
@@ -289,7 +289,7 @@ public class JudgeSystem : MonoBehaviour
         {
             castTarget.soul.CancelSending();   // 혼은 무릎 꿇은 상태로 돌아간다(대기 시간은 그대로 흐름)
             EndCast();
-            Say("INTERRUPTED!");
+            Say("시전이 끊겼다!");
         }
         if (ledger.Dead) { Say("FALLEN"); night.Tick(night.TimeLeft + 1f); }   // 쓰러짐 = 동트기와 같은 실패(추가 수확분 상실)
     }
@@ -330,7 +330,7 @@ public class JudgeSystem : MonoBehaviour
         enemies.spawnPaused = enemySpawnPause > 0f || (Casting && castTarget.soul.Boss);   // 보스 천도 중·직후엔 잡몹이 새로 나오지 않는다
         // 귀환: 서낭당 위에 서면 즉시. 단 출발 직후(몫을 하나도 못 채움)에는 자동 귀환하지 않는다 — 밤을 시작도 못 하고 끝나는 것 방지
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
-        if (night.QuotaDone && night.TryReturn(toShrine)) Say("RETURNED!");
+        if (night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");
         chainLeft = Mathf.Max(0f, chainLeft - dt);
         toastT -= realDt;
         stains.Tick(dt);
@@ -432,12 +432,13 @@ public class JudgeSystem : MonoBehaviour
     string GearName(Slot s)
     {
         var it = lo.gear.Get(s);
-        return it == null ? "-" : (it.Named ? it.Name : it.Rarity.ToString()) + "/" + it.Options.Count;
+        return it == null ? "-" : Ko.ItemName(it) + "/" + it.Options.Count;
     }
 
     // ===== 화면 ====================================================================
     void OnGUI()
     {
+        Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (white == null) return;
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)
         if (visionP > 0.001f)
@@ -464,7 +465,7 @@ public class JudgeSystem : MonoBehaviour
             {
                 if (e.label == null || e.gone) continue;
                 var sp = cam.WorldToScreenPoint(e.HeadPosition + Vector3.up * 0.9f);
-                GUI.Label(new Rect(sp.x - 80, Screen.height - sp.y - 12, 160, 24), e.soul.Boss ? "Old Ferryman" : e.label, nameStyle);
+                GUI.Label(new Rect(sp.x - 80, Screen.height - sp.y - 12, 160, 24), e.soul.Boss ? "나루 영감" : e.label, nameStyle);
             }
         }
         // (2) 무릎 꿇은 혼 머리 위 막대 = 처결 대기 남은 시간 (색 = 혼 종류)
@@ -486,37 +487,37 @@ public class JudgeSystem : MonoBehaviour
         var small = new GUIStyle(GUI.skin.label) { fontSize = 16 };
         small.normal.textColor = new Color(1, 1, 1, 0.9f);
         GUI.Label(new Rect(12, 30, 700, 24),
-            "NEOK " + ledger.Neok + "   MEMORY " + ledger.Memory + "   COIN " + ledger.Coin +
-            "   KARMA " + ledger.Karma + " (tier " + CoreRules.KarmaTier(ledger.Karma) + ")" +
-            (chainLeft > 0f ? "   CHAIN!" : ""), small);
-        GUI.Label(new Rect(12, 74, 700, 24), "HP " + ledger.Hp + " / " + ledger.MaxHp + "   WEAPON " + lo.Def.Name + " (Tab)" +
-            (lo.Def.HasQuake ? "  Q quake" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") + "   STAT PTS " + StatPoints.Earned(ledger.Neok), small);
+            "넋 " + ledger.Neok + "   기억 " + ledger.Memory + "   엽전 " + ledger.Coin +
+            "   업 " + ledger.Karma + " (" + CoreRules.KarmaTier(ledger.Karma) + "단계)" +
+            (chainLeft > 0f ? "   연쇄!" : ""), small);
+        GUI.Label(new Rect(12, 74, 700, 24), "체력 " + ledger.Hp + " / " + ledger.MaxHp + "   무기 " + lo.Def.Name + " (Tab)" +
+            (lo.Def.HasQuake ? "  Q 땅울림" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") + "   능력치 점수 " + StatPoints.Earned(ledger.Neok), small);
         string sk = "";
         for (int i = 0; i < 3; i++)
             sk += (i + 1) + ":" + SkillDef.All[i].Name + (lo.skills.Ready(i) ? "" : "(" + Mathf.CeilToInt(lo.skills.Left[i]) + "s)") + "   ";
         GUI.Label(new Rect(12, 118, 800, 24), sk, small);
-        GUI.Label(new Rect(12, 140, 900, 24), "GEAR  W:" + GearName(Slot.Weapon) + "  R:" + GearName(Slot.Robe) + "  C:" + GearName(Slot.Charm), small);
+        GUI.Label(new Rect(12, 140, 900, 24), "장비  무기:" + GearName(Slot.Weapon) + "  도포:" + GearName(Slot.Robe) + "  노리개:" + GearName(Slot.Charm), small);
         if (lo.lastDropT > 0f) GUI.Label(new Rect(12, 162, 900, 24), lo.lastDrop, small);
         // 장비 아이콘 세 칸 (그림이 있을 때만): 등급 테두리 + 칸별 아이콘
         for (int si = 0; si < 3; si++) DrawGearIcon((Slot)si, new Rect(12 + si * 56, 190, 52, 52));
-        GUI.Label(new Rect(12, 52, 700, 24), "E: send (cheondo)   R: shatter (pahon)", small);
+        GUI.Label(new Rect(12, 52, 700, 24), "E: 천도(넋을 보냄)   R: 파혼(넋을 깸)", small);
         GUI.Label(new Rect(12, 96, 700, 24),
-            "NIGHT " + Mathf.CeilToInt(night.TimeLeft) + "s   SENT " + night.Sent + "/" + Balance.NIGHT_QUOTA +
-            "   CLUES " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED + (night.BossDone ? "   BOSS DONE" : "") + (night.QuotaDone ? "  (go back to the shrine!)" : "") + (night.Warning ? "   DAWN IS COMING!" : ""), small);
+            "밤 " + Mathf.CeilToInt(night.TimeLeft) + "초   천도 " + night.Sent + "/" + Balance.NIGHT_QUOTA +
+            "   단서 " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED + (night.BossDone ? "   나루 영감 끝" : "") + (night.QuotaDone ? "  (당집으로 돌아가라!)" : "") + (night.Warning ? "   동이 튼다!" : ""), small);
         if (night.Over)
         {
             GUI.color = new Color(0, 0, 0, 0.75f); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white;
             var h = new GUIStyle(GUI.skin.label) { fontSize = 34, alignment = TextAnchor.MiddleCenter }; h.normal.textColor = Color.white;
             var m = new GUIStyle(h) { fontSize = 22 };
             bool ok = night.Phase == NightPhase.Returned;
-            GUI.Label(new Rect(0, Screen.height * 0.25f, Screen.width, 50), ok ? "NIGHT COMPLETE" : "DAWN BROKE", h);
+            GUI.Label(new Rect(0, Screen.height * 0.25f, Screen.width, 50), ok ? "밤을 넘겼다" : "동이 트고 말았다", h);
             GUI.Label(new Rect(0, Screen.height * 0.25f + 60, Screen.width, 190),
-                "SENT " + night.Sent + "   NEOK KEPT " + night.FinalNeok + (night.LostNeok > 0 ? "   LOST " + night.LostNeok : "") + (night.LostCoin > 0 ? "   COIN LOST " + night.LostCoin : "") +
-                "\nCOIN " + ledger.Coin + "   KARMA " + ledger.Karma + "   MEMORY " + ledger.Memory +
-                "\nBOSS " + (night.BossDone ? "DONE" : "-") + "   CLUES " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED +
-                "   GEAR W:" + GearName(Slot.Weapon) + " R:" + GearName(Slot.Robe) + " C:" + GearName(Slot.Charm) +
-                (night.Phase == NightPhase.Returned ? "" : "\n(the quota's share is kept; extra harvest scattered)"), m);
-            if (GUI.Button(new Rect(Screen.width / 2f - 90, Screen.height * 0.25f + 260, 180, 70), "AGAIN (Space)")) RestartNight();
+                "천도 " + night.Sent + "   지킨 넋 " + night.FinalNeok + (night.LostNeok > 0 ? "   잃은 넋 " + night.LostNeok : "") + (night.LostCoin > 0 ? "   잃은 엽전 " + night.LostCoin : "") +
+                "\n엽전 " + ledger.Coin + "   업 " + ledger.Karma + "   기억 " + ledger.Memory +
+                "\n나루 영감 " + (night.BossDone ? "끝" : "-") + "   단서 " + night.Clues + "/" + Balance.BOSS_CLUES_REQUIRED +
+                "   장비 무기:" + GearName(Slot.Weapon) + " 도포:" + GearName(Slot.Robe) + " 노리개:" + GearName(Slot.Charm) +
+                (night.Phase == NightPhase.Returned ? "" : "\n(몫만큼은 지켰고, 그 너머의 수확은 흩어졌다)"), m);
+            if (GUI.Button(new Rect(Screen.width / 2f - 90, Screen.height * 0.25f + 260, 180, 70), "다시 (Space)")) RestartNight();
             return;
         }
         if (Casting)
@@ -537,14 +538,14 @@ public class JudgeSystem : MonoBehaviour
         if (touchUI)
         {
             var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
-            if (GUI.Button(new Rect(24, Screen.height - 110, 110, 90), "SEND", bs)) CommandTendo();
-            if (GUI.Button(new Rect(148, Screen.height - 110, 130, 90), "SHATTER", bs)) CommandPahon();
+            if (GUI.Button(new Rect(24, Screen.height - 110, 110, 90), "천도", bs)) CommandTendo();
+            if (GUI.Button(new Rect(148, Screen.height - 110, 130, 90), "파혼", bs)) CommandPahon();
             // 도술 세 칸과 무기 바꾸기 (위쪽 줄)
             for (int i = 0; i < 3; i++)
                 if (GUI.Button(new Rect(24 + i * 94, Screen.height - 206, 86, 80), (i + 1) + "\n" + SkillDef.All[i].Name, bs)) UseSkill(i);
-            if (GUI.Button(new Rect(24 + 3 * 94, Screen.height - 206, 86, 80), "SWAP", bs)) player.CommandSwap();
-            if (GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "MENU", bs)) panel.Toggle();
-            if (lo.Def.HasQuake && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "QUAKE", bs)) player.CommandQuake();
+            if (GUI.Button(new Rect(24 + 3 * 94, Screen.height - 206, 86, 80), "교체", bs)) player.CommandSwap();
+            if (GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "메뉴", bs)) panel.Toggle();
+            if (lo.Def.HasQuake && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "땅울림", bs)) player.CommandQuake();
         }
     }
 }

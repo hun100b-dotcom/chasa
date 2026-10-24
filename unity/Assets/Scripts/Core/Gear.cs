@@ -21,10 +21,10 @@ namespace Chasa.Core
         public float PahonDamageMult = 1f;      // 파혼 피해 배율
         public bool HasQuake;                   // 이 무기의 Q 기술이 땅울림인가 (아니면 철삭 견인)
 
-        public static readonly WeaponDef Chain = new WeaponDef { Id = WeaponId.Chain, Name = "Chain", HasQuake = false };
+        public static readonly WeaponDef Chain = new WeaponDef { Id = WeaponId.Chain, Name = "철삭", HasQuake = false };
         public static readonly WeaponDef Mace = new WeaponDef
         {
-            Id = WeaponId.Mace, Name = "Mace",
+            Id = WeaponId.Mace, Name = "육모방망이",
             PahonKnockbackMult = Balance.MACE_PAHON_KNOCKBACK_MULT,
             PahonDamageMult = Balance.MACE_PAHON_DAMAGE_MULT,
             HasQuake = true
@@ -57,9 +57,9 @@ namespace Chasa.Core
 
         public static readonly SkillDef[] All =
         {
-            new SkillDef { Id = SkillId.HoldCall, Name = "Hold Call", Cooldown = Balance.SKILL_HOLD_COOLDOWN },
-            new SkillDef { Id = SkillId.Bind, Name = "Bind", Cooldown = Balance.SKILL_BIND_COOLDOWN },
-            new SkillDef { Id = SkillId.StainBurst, Name = "Burst", Cooldown = Balance.SKILL_BURST_COOLDOWN },
+            new SkillDef { Id = SkillId.HoldCall, Name = "붙잡아 부르기", Cooldown = Balance.SKILL_HOLD_COOLDOWN },
+            new SkillDef { Id = SkillId.Bind, Name = "휘감기", Cooldown = Balance.SKILL_BIND_COOLDOWN },
+            new SkillDef { Id = SkillId.StainBurst, Name = "터뜨리기", Cooldown = Balance.SKILL_BURST_COOLDOWN },
         };
     }
 
@@ -119,7 +119,7 @@ namespace Chasa.Core
         /// <summary>시연판의 이름 있는 물건: 파혼 반경 +m (노리개)</summary>
         public static ItemDef MoonflowerBell()
         {
-            var it = new ItemDef { Slot = Slot.Charm, Rarity = Rarity.Rare, Name = "Moonflower Bell", Named = true };
+            var it = new ItemDef { Slot = Slot.Charm, Rarity = Rarity.Rare, Name = "월화 방울", Named = true };
             it.Options.Add(new OptionRoll(Opt.PahonRadiusM, Balance.MOONFLOWER_BELL_PAHON_RADIUS));
             return it;
         }

@@ -35,6 +35,6 @@ public class Loadout
 
     public static string Describe(ItemDef it)
     {
-        return it.Rarity + " " + it.Slot + (it.Named ? " [" + it.Name + "]" : "") + " (" + it.Options.Count + " opts" + (it.Gradient ? ", tilt" : "") + ")";
+        return Ko.Describe(it);
     }
 }

@@ -199,13 +199,14 @@ public class GameMain : MonoBehaviour
 
     void OnGUI()
     {
+        Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         var hint = new GUIStyle(GUI.skin.label) { fontSize = 14 };
         hint.normal.textColor = new Color(1, 1, 1, 0.55f);
-        GUI.Label(new Rect(12, 8, 600, 24), "Unity  |  Mouse: move / target   Q: pull   Space: swing", hint);
+        GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 휘두르기   C: 캐릭터 창", hint);
         if (!touchUI) return;
         var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
-        if (GUI.Button(PullBtn, "PULL", bs)) { var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); }
-        if (GUI.Button(SwingBtn, "SWING", bs)) { var e = Nearest(); player.CommandSwing(e != null ? e.Pos : player.Pos + U.Dir(player.facing)); }
+        if (GUI.Button(PullBtn, "끌기", bs)) { var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); }
+        if (GUI.Button(SwingBtn, "휘두르기", bs)) { var e = Nearest(); player.CommandSwing(e != null ? e.Pos : player.Pos + U.Dir(player.facing)); }
     }
 
     Enemy Nearest()
