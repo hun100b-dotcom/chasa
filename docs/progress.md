@@ -63,3 +63,6 @@
 
 ## 2026-10-24 P1-044 4·5막 🔴 수치 균형 검증 (QA)
 - `docs/BALANCE-ACT45.md`, `tools/balance_sim_act45.py`. 핵심: 풀어내기 기준 R/S ≥ 0.6, 눈금 +1/+0.5/+10, B-19 버티기 −10%/회, B-14 안전 칸 상한 6·낙인 +0.5초/8초. 서사 합의 후 data/balance.json 반영 예정.
+
+## 2026-10-24 P1-045 6막 🔴 수치 균형 검증 (QA)
+- `docs/BALANCE-ACT6.md`, `tools/balance_sim_act6.py`. 핵심: B-23 풀기 백 20 또는 천도 300(기본 120), B-22 창 15초·밧줄 +0.8m, B-21 60초 해석 질문. 서사 합의 후 data/balance.json 반영 예정.
