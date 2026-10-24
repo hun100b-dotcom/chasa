@@ -36,6 +36,10 @@ def shore():
     p.append(box("foam", (5, 0.08, 0.02), (0.5, 0.6, WZ + 0.01), "chain"))
     return p
 
+def road_pad():
+    """둑 위 길 조각 4×3.2m. 왜: 물가 타일(br_shore)에는 길이 없어서 길이 다리 앞 4m에서 끊겼다."""
+    return [box("pad", (4, 3.2, 0.04), (0, 0, 0.32), "road")]
+
 def bridge():
     """돌다리: 길이 8m(동서), 폭 2.4m. 돌기둥 3쌍 위에 널돌 상판, 난간돌 낮게."""
     p = []
@@ -95,7 +99,7 @@ def jars():
         p += [sphere(f"jar{i}", 0.25 * s, (x, y, 0.3 * s), "jar", 7, 5, (1, 1, 1.15)), cyl(f"lid{i}", 0.12 * s, 0.1 * s, 0.07, (x, y, 0.52 * s), "wood_dark", 6)]
     return p
 
-KIT = [("br_rapids", rapids, "여울 타일 8×8m(서→동 흐름, 물 윗면 z0.18)"), ("br_deep", deep, "깊은 물 타일 8×8m"), ("br_shore", shore, "물가 타일(남쪽=풀 둑, 북쪽=물)"), ("br_stone_bridge", bridge, "돌다리 8×2.4m(동서), 상판 z0.88"),
+KIT = [("br_rapids", rapids, "여울 타일 8×8m(서→동 흐름, 물 윗면 z0.18)"), ("br_deep", deep, "깊은 물 타일 8×8m"), ("br_shore", shore, "물가 타일(남쪽=풀 둑, 북쪽=물)"), ("br_road_pad", road_pad, "둑 위 길 조각 4×3.2m(다리 양끝에 이어 붙임, 중심 원점)"), ("br_stone_bridge", bridge, "돌다리 8×2.4m(동서), 상판 z0.88"),
        ("br_ferry_dock", dock, "나루터 부두(앞=-Y가 물 쪽, 등불 위치 Light_ 표시)"), ("br_willow_a", lambda: willow(0), "버드나무 키 약 3.8m"), ("br_willow_b", lambda: willow(1), "버드나무 키 약 4.5m"),
        ("br_reed_field", reeds, "갈대밭 8×8m"), ("br_herb_rack", herb_rack, "의원집 약초 건조대"), ("br_med_sign", med_sign, "약방 깃대"), ("br_jars", jars, "약 항아리 세 개")]
 

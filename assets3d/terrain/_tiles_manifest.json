@@ -77,6 +77,30 @@
    "min_z": 0.0
   },
   {
+   "name": "terrain_tile_stream",
+   "label": "개울 반쪽 칸",
+   "note": "서쪽에 둑, 동쪽은 얕은 물. 동쪽 칸은 180° 돌려 놓는다",
+   "tris": 294,
+   "size_m": [
+    8.0,
+    8.0,
+    0.34
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_barley",
+   "label": "보리밭(이랑 7줄)",
+   "note": "보릿들 밭 한 칸. 이랑은 남북으로 뻗음",
+   "tris": 180,
+   "size_m": [
+    8.0,
+    8.0,
+    0.74
+   ],
+   "min_z": 0.0
+  },
+  {
    "name": "terrain_tile_bank_straight",
    "label": "논두렁 직진",
    "note": "동서로 이어지는 폭 1m 둑",

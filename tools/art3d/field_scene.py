@@ -44,7 +44,7 @@ def add_light(pos, col, inten, rng, flicker, tag=""):
 def put(name, x, y, z=0.0, rot=0.0, lights=True, scale=1.0):
     t = lib.get(name); o = t.copy(); bpy.context.collection.objects.link(o); o.hide_render = False
     o.location = (x, y, z); o.rotation_euler = (0, 0, math.radians(rot)); stats["objs"] += 1
-    if scale != 1.0: o.scale = (scale,) * 3
+    if scale != 1.0: o.scale = scale if isinstance(scale, tuple) else (scale,) * 3
     if lights:
         for off, ex in lib.lights.get(name, []):
             r = Euler((0, 0, math.radians(rot))).to_matrix() @ off
@@ -56,10 +56,14 @@ def inwin(x, y, win, m=0.0): return win[0] - m <= x <= win[2] + m and win[1] - m
 def build(win):
     """win=(x0,y0,x1,y1) m. 창 안 타일·장식·구조물·마을·밤 소품을 조립한다."""
     x0, y0, x1, y1 = win
-    box("ground", (x1 - x0 + 40, y1 - y0 + 40, 0.28), ((x0 + x1) / 2, (y0 + y1) / 2, 0.14), "ground")   # 풀밭 기본 바닥(표에 없는 칸)
+    box("ground", (x1 - x0 + 40, y1 - y0 + 40, 0.05), ((x0 + x1) / 2, (y0 + y1) / 2, 0.025), "ground")   # 맨 밑 받침(물 칸 아래가 비어 하늘이 비치지 않게). 풀 윗면(0.3)과 겹치면 깨져서 일부러 낮춤
+    have = {(t["ix"], t["iy"]) for t in FIELD["tiles"]}   # 표에 없는 칸 = 풀밭. 풀 타일을 실제로 깔아야 물(0.18)이 풀 바닥에 묻히지 않는다
+    for ix in range(int((x0 - 6) // 8), int((x1 + 6) // 8) + 1):
+        for iy in range(int((y0 - 6) // 8), int((y1 + 6) // 8) + 1):
+            if 0 <= ix < 80 and 0 <= iy < 80 and (ix, iy) not in have: put("terrain_tile_grass", ix * 8 + 4, iy * 8 + 4, -0.006 + 0.003 * ((ix + iy) % 2), 0, scale=(1.03, 1.03, 1.0))   # 이웃 풀 타일끼리 높이를 3mm 엇갈려 같은 면 겹침(깜빡임)을 피한다
     for t in FIELD["tiles"]:
         cx, cy = t["ix"] * 8 + 4, t["iy"] * 8 + 4
-        if inwin(cx, cy, win, 6): put(t["tile"], cx, cy, t["z"], t["rot"])
+        if inwin(cx, cy, win, 6): put(t["tile"], cx, cy, t["z"], t["rot"])   # 틈은 아래 깔린 풀 타일(1.03배, 3~6mm 낮음)이 덮는다
     for p in FIELD["props"]:
         if inwin(p["x"], p["y"], win, 4): put(p["prop"], p["x"], p["y"], p.get("z", 0), p["rot"])
     for s in FIELD.get("structures", []):
@@ -119,12 +123,12 @@ def pose(name, x, y, z, rot, action, frame, scale=1.0):
     return top
 
 SHOTS = {
-  "gate":   dict(win=(150, 0, 245, 80), center=(196, 36, 0), ortho=62, title="솔고개 어귀(밤)"),
+  "gate":   dict(win=(150, 0, 245, 80), center=(196, 42, 0), ortho=50, title="솔고개 어귀(밤)"),
   "village": dict(win=(150, 20, 245, 110), center=(196, 62, 0), ortho=60, title="마을 안(밤)"),
   "barley": dict(win=(250, 70, 470, 220), center=(352, 134, 0), ortho=150, title="보릿들(밤)"),
   "bridge": dict(win=(40, 410, 130, 500), center=(84, 452, 0), ortho=48, title="검은여울 돌다리(밤)"),
   "naru":   dict(win=(340, 230, 470, 340), center=(404, 290, 0.6), ortho=40, title="나루 영감 보스 자리(밤)"),
-  "tendo":  dict(win=(170, 30, 230, 90), center=(200, 52, 0), ortho=20, title="천도 이펙트(밤)"),
+  "tendo":  dict(win=(170, 30, 230, 90), center=(196, 51, 0), ortho=18, title="천도 이펙트(밤)"),
 }
 
 def run(key):
@@ -132,15 +136,16 @@ def run(key):
     build(cfg["win"])
     if key == "naru":
         pose("boss_naru", 404, 288, 0.55, 0, "Windup", 56)
-        put("fx_wait_ring_old", 404, 281, 0.3, 0, scale=1.0); 
+        put("fx_wait_ring_old", 404, 281, 0.4, 0, scale=1.0); 
     if key == "tendo":
-        pose("hero_chasa", 197.0, 50.5, 0, 0, "Cast", 30)
-        put("fx_tendo_ring", 197.0, 50.5, 0.32, 0)
-        pose("soul_fresh", 204.5, 53.5, 0, 200, "Kneel", 36); put("fx_wait_ring_fresh", 204.5, 53.5, 0.32, 0); put("fx_tendo_pillar", 204.5, 53.5, 0.32, 0)
-        pose("soul_day", 192.0, 55.5, 0, 160, "Kneel", 36); put("fx_wait_ring_day", 192.0, 55.5, 0.32, 0)
-        pose("soul_old", 201.0, 47.0, 0, 20, "Windup", 33)
-        put("fx_pahon_shards_a", 207.5, 49.0, 0.3, 0, scale=0.8)
-        put("fx_stain_decal", 195.0, 46.0, 0.33, 30)
+        # 마을 길 한가운데(집 지붕이 기둥을 가리지 않게 길 폭 안쪽에 모은다)
+        pose("hero_chasa", 195.8, 49.5, 0, 0, "Cast", 30)
+        put("fx_tendo_ring", 195.8, 49.5, 0.36, 0)
+        pose("soul_fresh", 197.0, 54.3, 0, 200, "Kneel", 36); put("fx_wait_ring_fresh", 197.0, 54.3, 0.36, 0); put("fx_tendo_pillar", 197.0, 54.3, 0.36, 0)
+        pose("soul_day", 194.4, 56.8, 0, 160, "Kneel", 36); put("fx_wait_ring_day", 194.4, 56.8, 0.36, 0)
+        pose("soul_old", 197.6, 46.2, 0, 20, "Windup", 33)
+        put("fx_pahon_shards_a", 193.8, 46.8, 0.36, 0, scale=0.8)
+        put("fx_stain_decal", 196.4, 43.6, 0.37, 30)
     world_night(); camera(cfg["center"], cfg["ortho"], (1280, 720) if not os.environ.get("FS_TEST") else (640, 360))
     if os.environ.get("FS_TEST"): bpy.context.scene.cycles.samples = 16
     path = os.path.join(A3, "previews", f"scene_{key}.png"); render(path)

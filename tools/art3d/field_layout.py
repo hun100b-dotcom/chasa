@@ -82,13 +82,13 @@ for bx in range(28, 56, 4):
         if 24 - 3 <= bx <= 24 + 3: continue
         if rnd.random() < 0.75:
             for i in range(3):
-                for j in range(2): setT(bx + i, by + j, "paddy")
+                for j in range(2): setT(bx + i, by + j, "barley")
             fields.append((bx, by))
 
 # ── 4) 물막이 골: 계곡 가운데 개울(물 칸) + 둑(보 = 물막이) ─────────────────────
 for iy in range(30, 62):
-    if (50, iy) not in tile and (50, iy) not in road: setT(50, iy, "paddy"); 
-    if (51, iy) not in tile and (51, iy) not in road: setT(51, iy, "paddy")
+    if (50, iy) not in tile and (50, iy) not in road: setT(50, iy, "stream", 0)     # 개울 서쪽 반(둑은 서쪽)
+    if (51, iy) not in tile and (51, iy) not in road: setT(51, iy, "stream", 180)   # 개울 동쪽 반(둑은 동쪽)
 WEIR = (50.5 * T, 48 * T)   # 물막이 위치(m)
 
 # ── 4-2) 검은여울(2막): 남북으로 흐르는 강, 돌다리, 나루터, 의원 집 ─────────────────────────
@@ -100,6 +100,8 @@ for iy in range(RIVER_Y[0], RIVER_Y[1] + 1):
     setT(11, iy, "br_shore", 90)                       # 동쪽 물가(물은 서쪽 절반)
 for k, ix in enumerate((10, 11)):   # 돌다리 두 토막(8m씩, 물 폭 16m)
     structures.append({"piece": "br_stone_bridge", "file": "assets3d/blackrapids/br_stone_bridge.glb", "x": 80.0 + 8 * k, "y": BRIDGE_ROW * T + 4, "z": 0, "rot": 0, "note": "검은여울 돌다리"})
+for px in (74.0, 94.0):   # 다리 양끝 둑 위 길 조각(물가 타일에는 길이 없어 길이 끊겨 보이던 이음새)
+    structures.append({"piece": "br_road_pad", "file": "assets3d/blackrapids/br_road_pad.glb", "x": px, "y": BRIDGE_ROW * T + 4, "z": 0, "rot": 0, "note": "다리 앞 길 조각(이음새 보정)"})
 structures.append({"piece": "br_ferry_dock", "file": "assets3d/blackrapids/br_ferry_dock.glb", "x": 92.4, "y": 68 * T + 4, "z": 0, "rot": -90, "note": "나루터(동쪽 둑에서 서쪽 물로 뻗음). Light_ferry_dock 포함"})
 HX, HY = 6 * T + 4, 58 * T + 4   # 의원 집: 서쪽 둑, 동쪽(강·길)을 봄
 from kit_buildings import place_building
@@ -145,23 +147,27 @@ markers = [M(13 * 8 + 4, 56 * 8 + 4, "seonang", "서낭당 ④(검은여울 어�
            M(41 * 8 - 4, 40 * 8 + 4, "cave", "굴 입구(물막이 골 서쪽 벼랑 아래, 안은 늘 밤)"), M(WEIR[0], WEIR[1], "weir", "물막이(개울을 막은 둑, 장소 이름의 유래)"),
            M(72 * 8 + 4, 69 * 8, "ruin", "폐당집 입구(터 위, 보스 ①: 나루 영감은 개울 물가로 따로)", 2.0), M(50.5 * 8, 36 * 8, "boss", "1호 보스 나루 영감 자리(개울 위 나룻배)"),
            M(36 * 8 + 4, 18 * 8, "soulpath", "넋길 시작(마을 → 보릿들, 밤에만)"), M(46 * 8, 44 * 8, "soulpath", "넋길 중간"), M(72 * 8, 62 * 8, "soulpath", "넋길 끝(폐당집)")]
+for m_ in [m for m in markers if m["kind"] == "seonang"]:   # 서낭당 4곳에 실제 모델+양옆 횃대(밤 불빛). 마커만 있고 모델이 비어 있던 빈칸 보정
+    structures.append({"piece": "prop_seonangdang", "file": "assets3d/props/prop_seonangdang.glb", "x": m_["x"], "y": m_["y"], "z": 0, "rot": 0, "note": m_["name"]})
+    for dx_ in (-2.6, 2.6):
+        structures.append({"piece": "night_torch_stand", "file": "assets3d/night/night_torch_stand.glb", "x": m_["x"] + dx_, "y": m_["y"] - 1.2, "z": 0, "rot": 0, "note": "서낭당 횃대(Light_ 포함)"})
 zones = [{"name": "검은여울", "rect_m": [0, 272, 200, 640]}, {"name": "솔고개 마을", "rect_m": [160, 24, 232, 100]}, {"name": "보릿들", "rect_m": [208, 40, 448, 240]}, {"name": "물막이 골", "rect_m": [264, 240, 504, 500]}, {"name": "폐당집", "rect_m": [520, 500, 620, 620]}]
 
 # ── 7) 내보내기 ─────────────────────────────────────────────────────────────
-KIND = {"grass": "terrain_tile_grass", "paddy": "terrain_tile_paddy"}
+KIND = {"grass": "terrain_tile_grass", "paddy": "terrain_tile_paddy", "barley": "terrain_tile_barley", "stream": "terrain_tile_stream"}
 tiles = [{"ix": ix, "iy": iy, "tile": (v["t"] if v["t"].startswith("br_") else "terrain_tile_" + v["t"]), "rot": v["rot"], "z": v["lv"] * 2.0} for (ix, iy), v in sorted(tile.items(), key=lambda a: (a[0][1], a[0][0]))]
 out = {"map": "첫 필드 5×5칸 640m", "units": "m", "axes": "x=동,y=북, 원점=남서쪽 모서리, 타일 중심=(ix*8+4, iy*8+4)", "grid": {"tiles": [N, N], "tile_m": T, "cell_m": 128, "cells": [5, 5]},
        "default_tile": "terrain_tile_grass(표에 없는 칸은 풀밭, z=0)", "rotation": "반시계 도. 비탈 0=북쪽으로 오름, 길 직선 0=동서",
        "provisional": "비탈 모서리(slope_corner_out)의 rot는 추정값. 유니티에서 높이가 어긋나면 rot를 ±90 보정(코드팀 QA).",
-       "zones": zones, "tiles": tiles, "props": props + br_props, "structures": structures, "file_dirs": {"terrain_*": "assets3d/terrain/", "nature_*": "assets3d/nature/", "br_*": "assets3d/blackrapids/", "hanok_*": "assets3d/hanok/"}, "markers": markers, "village_layout": "assets3d/layouts/solgogae_village.json (원점 = 필드 (196,60)에 놓는다)",
-       "village_offset_m": [196, 60], "counts": {"tiles(비풀밭)": len(tiles), "props": len(props) + len(br_props), "structures": len(structures), "paddy": sum(1 for t in tiles if t["tile"].endswith("paddy"))}}
+       "zones": zones, "tiles": tiles, "props": props + br_props, "structures": structures, "file_dirs": {"terrain_*": "assets3d/terrain/", "nature_*": "assets3d/nature/", "br_*": "assets3d/blackrapids/", "hanok_*": "assets3d/hanok/", "prop_*": "assets3d/props/", "night_*": "assets3d/night/"}, "markers": markers, "village_layout": "assets3d/layouts/solgogae_village.json (원점 = 필드 (196,60)에 놓는다)",
+       "village_offset_m": [196, 60], "counts": {"tiles(비풀밭)": len(tiles), "props": len(props) + len(br_props), "structures": len(structures), "paddy": sum(1 for t in tiles if t["tile"].endswith("paddy")), "barley": sum(1 for t in tiles if t["tile"].endswith("barley"))}}
 json.dump(out, open(os.path.join(ROOT, "layouts", "field_5x5.json"), "w"), ensure_ascii=False, indent=1)
 
 # 눈으로 보는 지도(타일 1칸=8px)
 S = 8; im = Image.new("RGB", (N * S, N * S), "#6F7B5B"); d = ImageDraw.Draw(im)
 COL = {"road": "#C9B38A", "paddy": "#4F7A8A", "slope": "#9CC25F"}
 for (ix, iy), v in tile.items():
-    c = "#1C2744" if v["t"] in ("br_rapids", "br_deep") else "#3E5A7A" if v["t"] == "br_shore" else "#C9B38A" if v["t"].startswith("road") else "#4F7A8A" if v["t"] == "paddy" else "#B7D77A" if v["t"].startswith("slope") else ("#8FA66C" if v["lv"] else "#6F7B5B")
+    c = "#1C2744" if v["t"] in ("br_rapids", "br_deep") else "#3E5A7A" if v["t"] == "br_shore" else "#C9B38A" if v["t"].startswith("road") else "#4F7A8A" if v["t"] == "paddy" else "#D2B864" if v["t"] == "barley" else "#2B3A66" if v["t"] == "stream" else "#B7D77A" if v["t"].startswith("slope") else ("#8FA66C" if v["lv"] else "#6F7B5B")
     if v["lv"] and v["t"] == "grass": c = "#8FA66C"
     d.rectangle([ix * S, (N - 1 - iy) * S, ix * S + S - 1, (N - 1 - iy) * S + S - 1], fill=c)
 for p in props:
