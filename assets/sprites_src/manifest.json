@@ -1,0 +1,548 @@
+{
+ "ppu": 128,
+ "filter": "Bilinear",
+ "mipmaps": false,
+ "compression": "None",
+ "sprites": [
+  {
+   "file": "characters/chasa_idle.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_swing.png",
+   "w": 448,
+   "h": 256,
+   "pivotX": 0.2857142857142857,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_cast.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_walk_a.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_walk_b.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_hit.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "enemies/soul_fresh.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "갓 죽은 혼 10초 · 서 있음"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "갓 죽은 혼 10초 · 무릎 꿇음(처결 대기)"
+  },
+  {
+   "file": "enemies/soul_day.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "해 넘긴 혼 7초 · 서 있음"
+  },
+  {
+   "file": "enemies/soul_day_kneel.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "해 넘긴 혼 7초 · 무릎 꿇음(처결 대기)"
+  },
+  {
+   "file": "enemies/soul_old.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "오래된 혼 4초 · 서 있음"
+  },
+  {
+   "file": "enemies/soul_old_kneel.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "오래된 혼 4초 · 무릎 꿇음(처결 대기)"
+  },
+  {
+   "file": "enemies/soul_lump.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "덩어리(천도 불가) · 서 있음"
+  },
+  {
+   "file": "tiles/tile_dirt_road_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_dirt_road_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_yard_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_yard_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_grass_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_grass_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_paddy_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_paddy_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_stone_path_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_stone_path_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_stepping_stones_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_stepping_stones_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "props/prop_choga.png",
+   "w": 304,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7333333333333333,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×2"
+  },
+  {
+   "file": "props/prop_giwa.png",
+   "w": 368,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.68,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 3×2"
+  },
+  {
+   "file": "props/prop_stone_wall.png",
+   "w": 240,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7866666666666666,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×1"
+  },
+  {
+   "file": "props/prop_jars.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_well.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_seonang_tree.png",
+   "w": 304,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7333333333333333,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×2"
+  },
+  {
+   "file": "props/prop_cairn.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_jangseung.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_sangyeo.png",
+   "w": 240,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7866666666666666,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×1"
+  },
+  {
+   "file": "props/prop_pyeongsang.png",
+   "w": 240,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7866666666666666,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×1"
+  },
+  {
+   "file": "props/prop_jigae.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_sotdae.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "boss/boss_naru_idle.png",
+   "w": 384,
+   "h": 320,
+   "pivotX": 0.5,
+   "pivotY": 0.84375,
+   "ppu": 128,
+   "tint": false,
+   "note": "1호 보스 나루 영감"
+  },
+  {
+   "file": "boss/boss_naru_attack.png",
+   "w": 384,
+   "h": 320,
+   "pivotX": 0.5,
+   "pivotY": 0.84375,
+   "ppu": 128,
+   "tint": false,
+   "note": "1호 보스 나루 영감 · 삿대 휩쓸기 예비동작"
+  },
+  {
+   "file": "hud/gauge_frame.png",
+   "w": 192,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "게이지 틀 · 9-slice 권장(좌우 12px)"
+  },
+  {
+   "file": "hud/gauge_fill.png",
+   "w": 182,
+   "h": 14,
+   "pivotX": 0,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": true,
+   "note": "게이지 채움(흰색 → Tint로 맺힘=붉은색, 체력=청록 등)"
+  },
+  {
+   "file": "hud/timer_ring_bg.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "처결 대기 타이머 링 배경"
+  },
+  {
+   "file": "hud/timer_ring_fill.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": true,
+   "note": "처결 대기 타이머 링 채움(Image Filled Radial360, 시간 따라 색: 하늘→노랑→주황)"
+  },
+  {
+   "file": "hud/btn_cheondo.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "천도 버튼 아이콘(혼불)"
+  },
+  {
+   "file": "hud/btn_pahon.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "파혼 버튼 아이콘(균열)"
+  },
+  {
+   "file": "hud/icon_neok.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "넋(힘) 아이콘"
+  },
+  {
+   "file": "hud/icon_memory.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "기억 조각 아이콘(한지 쪽지)"
+  },
+  {
+   "file": "hud/icon_yeopjeon.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "엽전(파혼 보상) 아이콘"
+  },
+  {
+   "file": "hud/icon_karma.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "업 아이콘(검붉은 매듭)"
+  },
+  {
+   "file": "hud/vision_vignette.png",
+   "w": 1024,
+   "h": 1024,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "시야 축소 가장자리 먹 번짐(Unity에서 크기 조절로 반경 100%→60%)"
+  },
+  {
+   "file": "hud/memory_rim.png",
+   "w": 1024,
+   "h": 1024,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": true,
+   "note": "기억색 테두리(천도 성공 0.3초 번쩍, 기억색으로 Tint)"
+  },
+  {
+   "file": "hud/night_bar.png",
+   "w": 480,
+   "h": 32,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "하룻밤 시간 바(해 질 녘→동트기)"
+  },
+  {
+   "file": "hud/night_marker.png",
+   "w": 32,
+   "h": 32,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "시간 바 마커(달)"
+  },
+  {
+   "file": "hud/panel_hanji.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "패널 · 9-slice(테두리 24px)"
+  }
+ ]
+}
