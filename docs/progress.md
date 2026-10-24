@@ -22,3 +22,9 @@
 - `docs/ENGINE-COMPARISON.md` 작성: Godot 4.7 / Unity 6.6 / Babylon 9 / Three r183 / Unreal 5 / PlayCanvas를 TASKS.md P1-001의 9개 항목으로 가중 비교. 추천 2안 = A Godot(4.15) / B Unity(3.85), 결론은 PD 몫.
 - 근거 실측: 클라우드 컨테이너에서 Godot 4.7.2 헤드리스 실행 성공.
 - 남은 것: 오너 PC의 TASKS.md·DEVELOPMENT-LOG.md(레포 미업로드) 확인 후 P1-001 조건에 맞춰 보완, 오너 최종 결정.
+
+## 2026-10-24 — 엔진 결정 보류 → 손맛 직접 비교판 (code-system-lead)
+- PD가 엔진 결정을 "보류(더 비교)"로 선택 → 같은 숫자로 만든 Godot 4.7판을 `godot/`에 이식(자동 검사 11개 통과).
+- 비교 사이트 배포: https://chasa-compare.vercel.app (첫 화면 / `three/` / `godot/`). 소스 결과물은 `deploy/compare` 브랜치.
+- 배포 경로: 클라우드 Vercel 토큰은 프로젝트 생성 403 → 오너 PC의 Vercel CLI로 배포(오너가 공개 배포를 직접 지시).
+- 남은 것: PD 손맛 비교 → 엔진 결정. Unity판은 PC에 Unity 설치·로그인이 필요해 보류. 견인(우클릭)은 폰 조작 없음.
