@@ -11,7 +11,7 @@ import json, re, sys, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JSON_P = os.path.join(ROOT, 'data', 'balance.json')
 GD_P = os.path.join(ROOT, 'godot', 'config.gd')
-CS_P = os.path.join(ROOT, 'unity', 'Assets', 'Scripts', 'Balance.cs')
+CS_P = os.path.join(ROOT, 'unity', 'Assets', 'Scripts', 'Core', 'Balance.cs')
 # const KEY := 값   # 주석   (값이 숫자 또는 true/false 인 한 줄짜리만 대상. 색·배열·딕셔너리는 엔진 쪽에 남긴다)
 LINE = re.compile(r'^const ([A-Z][A-Z0-9_]*)\s*:?=\s*(-?\d+(?:\.\d+)?|true|false)\s*(?:#\s*(.*))?$')
 
