@@ -325,6 +325,196 @@
    "note": "등급 테두리 · named · 색 #E85C41"
   },
   {
+   "file": "fx/stain_0.png",
+   "w": 256,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "원념 얼룩 · 겹침 1단계(반경 2m = 128px 폭 기준 타원)"
+  },
+  {
+   "file": "fx/stain_1.png",
+   "w": 256,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "원념 얼룩 · 겹침 2단계(반경 2m = 128px 폭 기준 타원)"
+  },
+  {
+   "file": "fx/stain_2.png",
+   "w": 256,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "원념 얼룩 · 겹침 3단계(반경 2m = 128px 폭 기준 타원)"
+  },
+  {
+   "file": "enemies/soul_fierce.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "사나운 적(얼룩 3겹 소환 / 맺힘·공격 +50%)"
+  },
+  {
+   "file": "props/prop_seonangdang.png",
+   "w": 304,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7333333333333333,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×2"
+  },
+  {
+   "file": "fx/loot_common.png",
+   "w": 128,
+   "h": 192,
+   "pivotX": 0.5,
+   "pivotY": 0.875,
+   "ppu": 128,
+   "tint": false,
+   "note": "드롭 · 등급 common"
+  },
+  {
+   "file": "fx/loot_crafted.png",
+   "w": 128,
+   "h": 192,
+   "pivotX": 0.5,
+   "pivotY": 0.875,
+   "ppu": 128,
+   "tint": false,
+   "note": "드롭 · 등급 crafted"
+  },
+  {
+   "file": "fx/loot_rare.png",
+   "w": 128,
+   "h": 192,
+   "pivotX": 0.5,
+   "pivotY": 0.875,
+   "ppu": 128,
+   "tint": false,
+   "note": "드롭 · 등급 rare"
+  },
+  {
+   "file": "fx/loot_named.png",
+   "w": 128,
+   "h": 192,
+   "pivotX": 0.5,
+   "pivotY": 0.875,
+   "ppu": 128,
+   "tint": false,
+   "note": "드롭 · 등급 named"
+  },
+  {
+   "file": "hud/tilt_bar.png",
+   "w": 256,
+   "h": 28,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "기울기 막대(왼쪽 천도 ~ 오른쪽 파혼)"
+  },
+  {
+   "file": "hud/tilt_marker.png",
+   "w": 20,
+   "h": 28,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "기울기 마커"
+  },
+  {
+   "file": "hud/joystick_base.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "모바일 가상 조이스틱 바닥"
+  },
+  {
+   "file": "hud/joystick_knob.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "모바일 조이스틱 손잡이"
+  },
+  {
+   "file": "hud/btn_skill_call.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 1 붙잡아 부르기"
+  },
+  {
+   "file": "hud/btn_skill_bind.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 2 휘감기"
+  },
+  {
+   "file": "hud/btn_skill_burst.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 3 터뜨리기"
+  },
+  {
+   "file": "hud/btn_weapon_swap.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 바꿔 들기(Tab·버튼)"
+  },
+  {
+   "file": "hud/btn_plus.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "능력치 +1 배분"
+  },
+  {
+   "file": "hud/banner_result.png",
+   "w": 640,
+   "h": 160,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "결과 화면 배너(9-slice 테두리 40px)"
+  },
+  {
    "file": "enemies/soul_fresh.png",
    "w": 192,
    "h": 256,
