@@ -316,6 +316,11 @@ func _core_loop_tests(p: Player, em: EnemyManager) -> void:
 	check(Config.TENDO_CAST_TIME + Config.WATER_SOUL_CAST_BONUS >= Config.CAST_MIN_TIME, "물 혼 캐스팅 %.1f초 (하한 %.1f 이상)" % [Config.TENDO_CAST_TIME + Config.WATER_SOUL_CAST_BONUS, Config.CAST_MIN_TIME])
 	check(Config.B10_CREW_TENDO_BOSS_CUT * 7.0 <= 0.40, "선원 7명 천도 = 선장 맺힘 -%d%% (40%% 이하)" % int(Config.B10_CREW_TENDO_BOSS_CUT * 700.0))
 
+	print("[14-6] 4·5막 채택값 (P1-044)")
+	check(Config.B19_HOLD_BOSS_CUT <= 0.10 and Config.B19_PAHON_HEAL < Config.B19_HOLD_BOSS_CUT, "B-19 버티기 -%d%% / 파혼 회복 +%d%% (회복 < 버티기)" % [int(Config.B19_HOLD_BOSS_CUT * 100.0), int(Config.B19_PAHON_HEAL * 100.0)])
+	check(Config.B18_STAMP_CAST_BONUS + Config.TENDO_CAST_TIME >= Config.CAST_MIN_TIME, "인 자국 캐스팅 %.1f초 (하한 이상)" % (Config.TENDO_CAST_TIME + Config.B18_STAMP_CAST_BONUS))
+	check(Config.RELEASE_RATIO_MIN > 0.4 and Config.RELEASE_RATIO_MIN < 1.0, "풀어내기 기준 R/S ≥ %.1f" % Config.RELEASE_RATIO_MIN)
+
 	print("[14-3] 맵 생성 (P1-017)")
 	var m1 := MapGen.generate(42)
 	var m2 := MapGen.generate(42)

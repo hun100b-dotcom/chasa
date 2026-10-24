@@ -131,4 +131,33 @@ public static class Balance
     public const float B10_CREW_TENDO_BOSS_CUT = 0.05f;  // B-10 선원 천도 1명당 선장 맺힘 -5% (서사 제안 -10%는 천도 정답화)
     public const float B12_WATER_TENDO_BOSS_CUT = 0.03f;  // B-12 3페이즈 물 혼 천도 1마리당 흑월 맺힘 -3%
     public const bool BOSS_ADD_PAUSE_ALL_BOSSES = true;  // 천도 직후 2초 스폰 정지(BOSS_CAST_ADD_PAUSE)를 B-09~B-12 포함 모든 보스에 적용
+    public const float RELEASE_RATIO_MIN = 0.6f;  // B-20 풀어내기 조건: 기억한 이름 / 물막이 크기 ≥ 이 값 (모자라면 파혼만)
+    public const float DAM_TICK_PAHON = 1.0f;  // 물막이 눈금: 4막~ 일반 파혼 1회당 증가
+    public const float DAM_TICK_BOSS_PAHON = 10.0f;  // 물막이 눈금: 보스 파혼 1회당 증가 ("+큼")
+    public const float DAM_TICK_PICKUP_FACTOR = 0.5f;  // 이름 줍기 성공 시 눈금 증가 배율 (절반)
+    public const float NAME_PICKUP_WINDOW = 2.0f;  // 파혼 가루 속 이름 쪽지가 떠 있는 시간(초) (서사 제안 1.5초는 터치로 빠듯)
+    public const float TURNED_SOUL_NEOK_RATIO = 0.4f;  // ⑦ 돌아선 혼 천도 시 넋 = 일반의 40%
+    public const float NAME_JOIN_REWARD_MULT = 3.0f;  // ⑩ 이은 이름 천도 보상 = 일반 천도의 3배 (조각 3개 잇는 시간 보상)
+    public const float MEMORY_MAP_RADIUS = 8.0f;  // ⑨ 천도 1회당 기억 지도가 그려지는 반경(m)
+    public const float B13_DOCK_WINDOW = 3.5f;  // B-13 배 정박 시간(초) (서사 제안 3초는 빠듯)
+    public const float B13_BOARD_BOSS_CUT = 0.2f;  // B-13 줄 선 혼을 배에 태우면 노인 맺힘 -20% (1회)
+    public const float B14_STAMP_CAST_BONUS = 0.5f;  // B-14 번호 낙인: 천도 캐스팅 +0.5초 (서사 제안 +1초는 일반 천도까지 막음)
+    public const float B14_STAMP_DURATION = 8.0f;  // 번호 낙인 지속(초)
+    public const int B14_SAFE_CELL_PER_TENDO = 25;  // 천도 이 수마다 이름 안전 칸 1칸
+    public const int B14_SAFE_CELL_MAX = 6;  // 안전 칸 상한 (천도 800이면 32칸이 되는 폭주 방지)
+    public const float B14_BRUSH_NO_KARMA_CHANCE = 0.2f;  // 서리의 붓: 파혼 시 업 +0이 될 확률
+    public const int MEMORY_PIECE_MAX = 6;  // B-15·16 화면 기억 조각 상한
+    public const float MEMORY_PIECE_STOP = 1.0f;  // 조각을 잡으면 보스 멈춤(초)
+    public const float MEMORY_PIECE_RESTOP_COOLDOWN = 3.0f;  // 재멈춤 대기(초). 조각이 많아도 경직 무한 연쇄 방지
+    public const int INK_PUDDLE_MAX = 8;  // B-16 먹물 웅덩이 상한 (이동 -20%는 원념 얼룩과 같은 값)
+    public const float B17_DOZE_WINDOW = 2.0f;  // B-17 졸음 창(초) (서사 제안 1.5초는 짧음)
+    public const float B17_PASS_BOSS_CUT = 0.08f;  // B-17 혼을 문으로 통과시키면 문지기 맺힘 -8%
+    public const float B17_RAGE_HEAL = 0.1f;  // B-17 졸 때 때리면 광폭: 맺힘 +10% (1회)
+    public const float B18_STAMP_CAST_BONUS = -1.0f;  // B-18 인 자국 안 천도 캐스팅 -1초 (하한 CAST_MIN_TIME 적용)
+    public const float B19_HOLD_TIME = 3.0f;  // B-19 그림자 버티기 시간(초)
+    public const float B19_HOLD_BOSS_CUT = 0.1f;  // B-19 버티기 성공 1회당 첫 차사 맺힘 -10% (서사 제안 -12%는 천도 정답화)
+    public const float B19_PAHON_HEAL = 0.08f;  // B-19 그림자를 파혼하면 첫 차사 맺힘 +8% (버티기 이득보다 작아야 쉬운 길이 성립)
+    public const float B20_CALL_TIME = 1.0f;  // B-20 아는 이름 "부르기"(초)
+    public const int ENDING_NAME_CLEAR_TENDO = 300;  // 먹지기 이름이 또렷이 적히는 천도 수 (천도만 센다)
+    public const int NAME_NOTES_PER_ZONE = 5;  // ⑨ 먹지기가 주워 둔 이름 쪽지 구역당(총 18장 안팎)
 }

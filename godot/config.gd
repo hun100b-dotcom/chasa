@@ -222,3 +222,34 @@ const NAMED_SOUL_CAST_BONUS := -0.5   # 낮에 별명을 들은 무적 혼: 천�
 const B10_CREW_TENDO_BOSS_CUT := 0.05 # B-10 선원 천도 1명당 선장 맺힘 -5% (서사 제안 -10%는 천도 정답화)
 const B12_WATER_TENDO_BOSS_CUT := 0.03 # B-12 3페이즈 물 혼 천도 1마리당 흑월 맺힘 -3%
 const BOSS_ADD_PAUSE_ALL_BOSSES := true # 천도 직후 2초 스폰 정지(BOSS_CAST_ADD_PAUSE)를 B-09~B-12 포함 모든 보스에 적용
+
+# --- 4·5막 수치 (docs/BALANCE-ACT45.md, 서사팀 동의 완료 2026-10-24). 🔴 PD 확정 대기 ---
+const RELEASE_RATIO_MIN := 0.6        # B-20 풀어내기 조건: 기억한 이름 / 물막이 크기 ≥ 이 값 (모자라면 파혼만)
+const DAM_TICK_PAHON := 1.0           # 물막이 눈금: 4막~ 일반 파혼 1회당 증가
+const DAM_TICK_BOSS_PAHON := 10.0     # 물막이 눈금: 보스 파혼 1회당 증가 ("+큼")
+const DAM_TICK_PICKUP_FACTOR := 0.5   # 이름 줍기 성공 시 눈금 증가 배율 (절반)
+const NAME_PICKUP_WINDOW := 2.0       # 파혼 가루 속 이름 쪽지가 떠 있는 시간(초) (서사 제안 1.5초는 터치로 빠듯)
+const TURNED_SOUL_NEOK_RATIO := 0.4   # ⑦ 돌아선 혼 천도 시 넋 = 일반의 40%
+const NAME_JOIN_REWARD_MULT := 3.0    # ⑩ 이은 이름 천도 보상 = 일반 천도의 3배 (조각 3개 잇는 시간 보상)
+const MEMORY_MAP_RADIUS := 8.0        # ⑨ 천도 1회당 기억 지도가 그려지는 반경(m)
+const B13_DOCK_WINDOW := 3.5          # B-13 배 정박 시간(초) (서사 제안 3초는 빠듯)
+const B13_BOARD_BOSS_CUT := 0.2      # B-13 줄 선 혼을 배에 태우면 노인 맺힘 -20% (1회)
+const B14_STAMP_CAST_BONUS := 0.5     # B-14 번호 낙인: 천도 캐스팅 +0.5초 (서사 제안 +1초는 일반 천도까지 막음)
+const B14_STAMP_DURATION := 8.0       # 번호 낙인 지속(초)
+const B14_SAFE_CELL_PER_TENDO := 25   # 천도 이 수마다 이름 안전 칸 1칸
+const B14_SAFE_CELL_MAX := 6          # 안전 칸 상한 (천도 800이면 32칸이 되는 폭주 방지)
+const B14_BRUSH_NO_KARMA_CHANCE := 0.2 # 서리의 붓: 파혼 시 업 +0이 될 확률
+const MEMORY_PIECE_MAX := 6           # B-15·16 화면 기억 조각 상한
+const MEMORY_PIECE_STOP := 1.0        # 조각을 잡으면 보스 멈춤(초)
+const MEMORY_PIECE_RESTOP_COOLDOWN := 3.0 # 재멈춤 대기(초). 조각이 많아도 경직 무한 연쇄 방지
+const INK_PUDDLE_MAX := 8             # B-16 먹물 웅덩이 상한 (이동 -20%는 원념 얼룩과 같은 값)
+const B17_DOZE_WINDOW := 2.0          # B-17 졸음 창(초) (서사 제안 1.5초는 짧음)
+const B17_PASS_BOSS_CUT := 0.08       # B-17 혼을 문으로 통과시키면 문지기 맺힘 -8%
+const B17_RAGE_HEAL := 0.1           # B-17 졸 때 때리면 광폭: 맺힘 +10% (1회)
+const B18_STAMP_CAST_BONUS := -1.0    # B-18 인 자국 안 천도 캐스팅 -1초 (하한 CAST_MIN_TIME 적용)
+const B19_HOLD_TIME := 3.0            # B-19 그림자 버티기 시간(초)
+const B19_HOLD_BOSS_CUT := 0.1       # B-19 버티기 성공 1회당 첫 차사 맺힘 -10% (서사 제안 -12%는 천도 정답화)
+const B19_PAHON_HEAL := 0.08          # B-19 그림자를 파혼하면 첫 차사 맺힘 +8% (버티기 이득보다 작아야 쉬운 길이 성립)
+const B20_CALL_TIME := 1.0            # B-20 아는 이름 "부르기"(초)
+const ENDING_NAME_CLEAR_TENDO := 300  # 먹지기 이름이 또렷이 적히는 천도 수 (천도만 센다)
+const NAME_NOTES_PER_ZONE := 5        # ⑨ 먹지기가 주워 둔 이름 쪽지 구역당(총 18장 안팎)
