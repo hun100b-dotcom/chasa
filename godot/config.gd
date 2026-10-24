@@ -193,3 +193,14 @@ const SOUL_COLOR := {
 	"old": Color("ff6a3d"),    # 오래된 혼
 	"lump": Color("9a5cff"),   # 덩어리 (천도 불가)
 }
+
+# --- 맵 생성 (P1-017, 1차) ---
+# 뼈대(구역 배치)는 손으로 정한 표, 구역 안쪽 배치만 시드(같은 숫자 = 같은 결과)로 무작위.
+const MAP_ZONE_NAMES := ["Hub", "Village", "Field", "Ravine", "Shrine"]  # 손으로 정한 구역 순서(안쪽 → 바깥). 기본 글꼴에 한글이 없어 영문
+const MAP_ZONE_DIST := [0.0, 40.0, 80.0, 120.0, 160.0]  # 허브에서 각 구역 중심까지 거리(m). 멀수록 보상↑, 귀환 위험↑
+const MAP_ZONE_RADIUS := 18.0         # 구역 하나의 반경(m)
+const MAP_SOULS_PER_ZONE := [0, 4, 6, 8, 10]  # 구역별 떠도는 혼 수 (허브는 안전지대)
+const MAP_REWARD_PER_RING := 0.25     # 한 고리 멀어질 때마다 보상 +25%
+const MAP_LUMP_BASE := 0.05           # 덩어리 혼 확률 기본. 바깥 고리일수록 +5%
+const MAP_LUMP_PER_RING := 0.05
+const MAP_MIN_SOUL_GAP := 3.0         # 혼끼리 최소 간격(m)

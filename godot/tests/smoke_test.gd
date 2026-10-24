@@ -308,6 +308,34 @@ func _core_loop_tests(p: Player, em: EnemyManager) -> void:
 	check(p.karma_tier() == 3, "업 60 = K-004")
 	p.karma = kk
 
+	print("[14-3] 맵 생성 (P1-017)")
+	var m1 := MapGen.generate(42)
+	var m2 := MapGen.generate(42)
+	var m3 := MapGen.generate(43)
+	check(m1.size() == Config.MAP_ZONE_NAMES.size(), "구역 %d개 (손으로 정한 뼈대 그대로)" % m1.size())
+	var same := true
+	for i in m1.size():
+		same = same and (m1[i].center as Vector3).is_equal_approx(m2[i].center) and m1[i].souls.size() == m2[i].souls.size()
+		for j in m1[i].souls.size():
+			same = same and (m1[i].souls[j].pos as Vector3).is_equal_approx(m2[i].souls[j].pos)
+	check(same, "같은 시드 = 같은 맵")
+	var diff := false
+	for i in m1.size():
+		diff = diff or not (m1[i].center as Vector3).is_equal_approx(m3[i].center)
+	check(diff, "다른 시드 = 다른 맵")
+	var counts_ok := true
+	var reward_ok := true
+	var inside_ok := true
+	for z in m1:
+		counts_ok = counts_ok and z.souls.size() == Config.MAP_SOULS_PER_ZONE[z.ring]
+		reward_ok = reward_ok and absf(z.reward_mult - (1.0 + Config.MAP_REWARD_PER_RING * z.ring)) < 0.001
+		for s in z.souls:
+			inside_ok = inside_ok and (s.pos as Vector3).distance_to(z.center) <= z.radius
+	check(counts_ok, "구역별 혼 수가 표와 같음")
+	check(reward_ok, "멀수록 보상 배율 증가 (허브 x1.0 → 끝 x%.2f)" % m1[-1].reward_mult)
+	check(inside_ok, "모든 혼이 자기 구역 안")
+	check((m1[0].center as Vector3).length() < 0.01 and m1[0].souls.size() == 0, "허브는 중심에 있고 혼 없음(안전지대)")
+
 	print("[15] 체력 0 → 판 다시 시작")
 	_reset_player(p)
 	p.hp = 1
