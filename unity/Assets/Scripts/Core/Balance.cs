@@ -276,13 +276,13 @@ public static class Balance
     public const float TILT_ASPD_PCT = -0.08f;  // (시연판 임시) 기획 growth.json 기울기: 상복 자락 −: 공격 속도 −8%
     public const float WAIT_FLOOR = 0.5f;  // (시연판 임시) 기획 growth.json 기울기: 처결 대기 시간 최소(초). 검은 술을 겹쳐도 이 밑으로 안 줄어듦(QA 제안)
     public const int DAY_TICKS = 3;  // (시연판 임시) 기획서 부록 B 낮: 해 그림자 눈금 개수. 단서 동사 한 번 성공마다 1 줄어듦
-    public const float EAVESDROP_RADIUS = 3.0f;  // (시연판 임시) 기획서 부록 B 낮: 엿듣기 원 반경(m)
+    public const float EAVESDROP_RADIUS = 3.0f;  // 기획 확정(부록 B): 엿듣기 3m
     public const float EAVESDROP_RADIUS_EAR = 2.0f;  // (시연판 임시) 기획서 부록 B 낮: 업 10 이상일 때 엿듣기 원 반경(m)
     public const float EAVESDROP_TIME = 6.0f;  // (시연판 임시) 기획서 부록 B 낮: 엿듣기: 원 안에 머무는 시간(초)
     public const float WATCH_TIME = 15.0f;  // (시연판 임시) 기획서 부록 B 낮: 지켜보기: 장면 길이(초, 기획 10~20 가운데)
-    public const float WATCH_RADIUS = 4.0f;  // (시연판 임시) 기획서 부록 B 낮: 지켜보기: 장면을 볼 수 있는 거리(m, QA 확인 필요 임시)
+    public const float WATCH_RADIUS = 6.0f;  // 기획 확정(부록 B): 지켜보기 6m
     public const float TOUCH_TIME = 2.0f;  // (시연판 임시) 기획서 부록 B 낮: 만져 보기: 유품 길게 누르는 시간(초)
-    public const float TOUCH_RADIUS = 1.5f;  // (시연판 임시) 기획서 부록 B 낮: 만져 보기: 유품에 닿는 거리(m, QA 확인 필요 임시)
+    public const float TOUCH_RADIUS = 1.5f;  // 기획 확정(부록 B): 만져 보기 1.5m
     public const float FUNERAL_TIME = 70.0f;  // (시연판 임시) 기획서 부록 B 낮: 장례 목격 길이(초, 건너뛸 수 있음)
     public const float EMPTY_DAY_TIME = 5.0f;  // (시연판 임시) 기획서 부록 B 낮: 할 것이 없는 낮: '들을 것이 없다' 표시 후 해 질 녘으로 넘어가는 시간(초)
     public const int KARMA_EAR_HALF = 10;  // (시연판 임시) 기획서 부록 B 낮: 업 이상이면 사람 말 단서가 반쪽 문장으로 기록되고 엿듣기 원이 좁아짐
