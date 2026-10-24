@@ -18,6 +18,9 @@ public class ModelImportRules : AssetPostprocessor
     void OnPreprocessModel()
     {
         if (!assetPath.StartsWith(ModelsDir)) return;
+        // 아트팀 소품(Models/Art)은 예외: 모델 안 재질 색(MTL)을 Props3D 가 꺼내 쓰므로
+        // 재질을 들여와야 한다. 유니티 기본 설정(Scale Factor 1, 재질 생성 기본) 그대로 둔다.
+        if (assetPath.StartsWith(ModelsDir + "Art/")) return;
         var mi = (ModelImporter)assetImporter;
         mi.animationType = ModelImporterAnimationType.Generic;
         mi.materialImportMode = ModelImporterMaterialImportMode.None;
