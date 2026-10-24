@@ -33,6 +33,7 @@ public class JudgeSystem : MonoBehaviour
 
     void Start()
     {
+        enemies.onPlayerHit = OnPlayerHit;   // 적 공격이 명중하면 체력 처리로 연결
         touchUI = Input.touchSupported;
         debugKeys = Application.isEditor || Application.absoluteURL.Contains("debug");
         white = new Texture2D(1, 1); white.SetPixel(0, 0, Color.white); white.Apply();
@@ -116,6 +117,35 @@ public class JudgeSystem : MonoBehaviour
         castTarget = null;
         castT = 0f;
         player.locked = false;
+    }
+
+    // ===== M1: 맞음·체력·쓰러짐 ======================================================
+    /// <summary>적 공격이 명중했을 때. 무적 시간이면 무시. 천도 캐스팅 중이면 끊긴다 (무방비의 대가)</summary>
+    void OnPlayerHit(Enemy by)
+    {
+        if (ledger.Dead || !player.Hurt()) return;
+        int dealt = ledger.TakeDamage(Balance.ENEMY_ATTACK_DAMAGE);
+        numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
+        feel.AddShake(0.35f);
+        feel.HitStop(3);
+        if (Casting)
+        {
+            castTarget.soul.CancelSending();   // 혼은 무릎 꿇은 상태로 돌아간다(대기 시간은 그대로 흐름)
+            EndCast();
+            Say("INTERRUPTED!");
+        }
+        if (ledger.Dead) { Say("FALLEN - RESTART"); Invoke(nameof(ResetRound), 1.5f); }
+    }
+
+    /// <summary>쓰러진 뒤 한 판을 처음부터. 체력·적·얼룩을 되돌리고 장부(수확)는 결과 화면(M5)에서 다룬다</summary>
+    void ResetRound()
+    {
+        ledger.ResetHp();
+        stains.Clear();
+        player.Pos = Vector3.zero;
+        foreach (var e in enemies.list) if (!e.extra) e.Respawn(Vector3.zero + new Vector3(8f + Random.value * 4f, 0, 8f + Random.value * 4f));
+        var extras = enemies.list.FindAll(x => x.extra);
+        foreach (var e in extras) { enemies.list.Remove(e); Destroy(e.gameObject); }
     }
 
     void Say(string s) { toast = s; toastT = 1.5f; }
@@ -231,6 +261,7 @@ public class JudgeSystem : MonoBehaviour
             "NEOK " + ledger.Neok + "   MEMORY " + ledger.Memory + "   COIN " + ledger.Coin +
             "   KARMA " + ledger.Karma + " (tier " + CoreRules.KarmaTier(ledger.Karma) + ")" +
             (chainLeft > 0f ? "   CHAIN!" : ""), small);
+        GUI.Label(new Rect(12, 74, 700, 24), "HP " + ledger.Hp + " / " + Balance.PLAYER_MAX_HP, small);
         GUI.Label(new Rect(12, 52, 700, 24), "E: send (cheondo)   R: shatter (pahon)", small);
         if (Casting)
         {

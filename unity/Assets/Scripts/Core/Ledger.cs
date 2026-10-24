@@ -12,6 +12,19 @@ namespace Chasa.Core
         public int Karma;         // 업 (파혼하면 쌓이고, 천도 2회마다 1씩 줄어든다)
         public int TendoTotal;    // 지금까지 천도한 횟수 (업 감쇠 계산용)
         public int TendoStreak;   // 연속 천도 횟수
+        public int Hp = Balance.PLAYER_MAX_HP; // 플레이어 체력
+        public bool Dead => Hp <= 0;
+
+        /// <summary>피해를 입는다. 체력은 0 밑으로 내려가지 않는다. 반환: 실제로 깎인 양</summary>
+        public int TakeDamage(int amount)
+        {
+            int before = Hp;
+            Hp = System.Math.Max(0, Hp - System.Math.Max(0, amount));
+            return before - Hp;
+        }
+
+        /// <summary>한 판을 다시 시작할 때 체력만 되돌린다 (넋·기억 같은 장부는 결과 화면에서 따로 다룬다)</summary>
+        public void ResetHp() { Hp = Balance.PLAYER_MAX_HP; }
 
         /// <summary>천도 하나가 끝났을 때. 넋(업 단계 보상 배율 적용)·기억을 얻고 업이 N회마다 1 줄어든다</summary>
         public void CompleteTendo()

@@ -19,11 +19,14 @@ public class Enemy : MonoBehaviour
     public bool gone => soul.State == SoulState.Gone;            // 떠났거나 터짐
     public bool extra;                                           // 얼룩 3개로 소환된 추가 적 (한 번 처리하면 사라짐)
     public float stun;             // 남은 기절 시간
+    public AttackClock atk = new AttackClock();   // 공격 시계(쿨다운·예비동작) — 규칙은 Core에 있다
+    public System.Action onHitPlayer;             // 공격이 명중하면 불린다 (EnemyManager가 플레이어 피해로 연결)
     public bool pulled;            // 견인으로 끌려오는 중
     public bool respawnReady;
 
     float speed, flash, deathT, spawnT, pulledT;
     Material mat;
+    Color baseColor;               // 평소 색 (예비동작 붉은 신호에서 되돌아올 색)
     public bool capsuleShape;
 
     public Vector3 Pos { get => transform.position; set => transform.position = value; }
@@ -42,7 +45,8 @@ public class Enemy : MonoBehaviour
         if (capsule) body.transform.localScale = new Vector3(e.radius * 1.7f, e.height / 2f, e.radius * 1.7f); // 기본 캡슐: 지름1·키2
         else body.transform.localScale = new Vector3(e.radius * 1.9f, e.height, e.radius * 1.9f);
         body.transform.localPosition = new Vector3(0, e.height / 2f, 0); // 발바닥이 바닥에
-        e.mat = U.Flashable(KindColor(e.soul.Kind));
+        e.baseColor = KindColor(e.soul.Kind);
+        e.mat = U.Flashable(e.baseColor);
         body.GetComponent<Renderer>().sharedMaterial = e.mat;
         root.transform.position = at;
         return e;
@@ -76,6 +80,7 @@ public class Enemy : MonoBehaviour
         flash = 1f;
         stun = Mathf.Max(stun, stunTime);
         pulled = false;                 // 끌려오던 중 맞으면 견인 취소
+        atk.Interrupt();                // 맞으면 예비동작이 끊긴다 (때리는 쪽이 이득)
         vel = dir * knockback;          // '덮어쓰기': 연타해도 무한히 빨라지지 않는다
         if (soul.TakeHit(damage))
         {
@@ -99,7 +104,9 @@ public class Enemy : MonoBehaviour
         soul = new Soul(RandomKind()); respawnReady = false;
         stun = 0f; pulled = false; flash = 0f; spawnT = 0f; vel = Vector3.zero;
         Pos = at;
-        mat.color = KindColor(soul.Kind);
+        baseColor = KindColor(soul.Kind);
+        mat.color = baseColor;
+        atk = new AttackClock();
         ApplyVisual();
     }
 
@@ -108,7 +115,8 @@ public class Enemy : MonoBehaviour
     {
         extra = true;
         soul = new Soul(SoulKind.Fresh, true);
-        mat.color = new Color(0.48f, 0.06f, 0.11f);
+        baseColor = new Color(0.48f, 0.06f, 0.11f);
+        mat.color = baseColor;
     }
 
     public void Tick(float dt, Vector3 playerPos)
@@ -126,13 +134,20 @@ public class Enemy : MonoBehaviour
         }
         spawnT += dt;
         flash = Mathf.Max(0f, flash - dt / Config.ENEMY_FLASH_TIME);
-        if (pulled) TickPulled(dt, playerPos);
+        if (pulled) { atk.Interrupt(); TickPulled(dt, playerPos); }
         else
         {
             Pos += vel * dt;                                   // 넉백 이동
             vel *= Mathf.Exp(-Config.ENEMY_KNOCKBACK_FRICTION * dt); // 지수 감속 (프레임레이트 무관)
             stun -= dt;
-            if (stun <= 0f) Chase(dt, playerPos);
+            bool canAct = stun <= 0f;
+            float dist = new Vector2(playerPos.x - Pos.x, playerPos.z - Pos.z).magnitude;
+            // 예비동작 중에는 멈춰 서서 '곧 때린다'는 신호를 준다 (피할 시간)
+            if (canAct && !atk.Winding) Chase(dt, playerPos);
+            if (atk.Tick(dt, dist, canAct)) onHitPlayer?.Invoke();
+            // 신호: 예비동작이 진행될수록 붉게 달아오른다
+            mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)
+                                    : baseColor;
         }
         ClampToArena();
         ApplyVisual();
@@ -209,12 +224,14 @@ public class Enemy : MonoBehaviour
 public class EnemyManager
 {
     public readonly List<Enemy> list = new List<Enemy>();
+    public System.Action<Enemy> onPlayerHit;   // 어느 적의 공격이 명중했는지 (JudgeSystem/GameMain이 체력 처리)
 
     /// <summary>원념 얼룩 3개가 겹친 자리에서 사나운 적이 솟아난다</summary>
     public Enemy SpawnFierce(Vector3 at)
     {
         var e = Enemy.Create(true, at);
         e.MakeFierce();
+        e.onHitPlayer = () => onPlayerHit?.Invoke(e);
         list.Add(e);
         return e;
     }
@@ -235,7 +252,11 @@ public class EnemyManager
     public void SpawnAll(Vector3 playerPos)
     {
         for (int i = 0; i < Config.ENEMY_COUNT; i++)
-            list.Add(Enemy.Create(i % 2 == 0, SpawnPoint(playerPos, (float)i / Config.ENEMY_COUNT * U.TAU + 0.4f)));
+        {
+            var e = Enemy.Create(i % 2 == 0, SpawnPoint(playerPos, (float)i / Config.ENEMY_COUNT * U.TAU + 0.4f));
+            e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+            list.Add(e);
+        }
     }
 
     Vector3 SpawnPoint(Vector3 c, float angle)

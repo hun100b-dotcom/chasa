@@ -300,4 +300,58 @@ public class CoreTests
         for (int i = 0; i < 200; i++) l.CompleteTendo();
         Assert.GreaterOrEqual(l.Karma, Balance.ENDING_A_KARMA_MAX, "파혼 위주는 C로 간다");
     }
+
+    // ---- M1: 적 공격 시계와 체력 ----
+    [Test]
+    public void Attack_HitsIfPlayerStaysClose()
+    {
+        var a = new AttackClock();
+        bool hit = false;
+        for (int i = 0; i < 600 && !hit; i++) hit = a.Tick(0.016f, 1.0f, true);
+        Assert.IsTrue(hit, "가만히 있으면 맞는다");
+    }
+
+    [Test]
+    public void Attack_MissesIfPlayerDodgesDuringWindup()
+    {
+        var a = new AttackClock();
+        // 예비동작이 시작될 때까지 가까이 있다가, 시작되면 멀리 피한다
+        while (!a.Winding) a.Tick(0.016f, 1.0f, true);
+        bool hit = false;
+        for (int i = 0; i < 100; i++) hit |= a.Tick(0.016f, 5.0f, true);
+        Assert.IsFalse(hit, "예비동작 중 멀리 피하면 헛스윙");
+        Assert.IsFalse(a.Winding);
+    }
+
+    [Test]
+    public void Attack_InterruptResetsCooldown()
+    {
+        var a = new AttackClock();
+        while (!a.Winding) a.Tick(0.016f, 1.0f, true);
+        a.Interrupt();
+        Assert.IsFalse(a.Winding);
+        Assert.AreEqual(Balance.ENEMY_ATTACK_INTERVAL, a.Cooldown, 0.001f);
+    }
+
+    [Test]
+    public void Attack_NoWindupWhenFarOrKneeling()
+    {
+        var a = new AttackClock();
+        for (int i = 0; i < 600; i++) a.Tick(0.016f, 10f, true);
+        Assert.IsFalse(a.Winding, "사거리 밖에서는 시작하지 않는다");
+        a = new AttackClock();
+        for (int i = 0; i < 600; i++) Assert.IsFalse(a.Tick(0.016f, 1f, false));
+    }
+
+    [Test]
+    public void Ledger_HpClampsAtZero()
+    {
+        var l = new Ledger();
+        Assert.AreEqual(Balance.PLAYER_MAX_HP, l.Hp);
+        for (int i = 0; i < 20; i++) l.TakeDamage(Balance.ENEMY_ATTACK_DAMAGE);
+        Assert.AreEqual(0, l.Hp);
+        Assert.IsTrue(l.Dead);
+        l.ResetHp();
+        Assert.IsFalse(l.Dead);
+    }
 }

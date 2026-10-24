@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
 
     public bool locked;               // 천도 캐스팅 중엔 움직이지도 휘두르지도 못한다 (무방비 = 위험)
     public float speedMult = 1f;      // 원념 얼룩 위면 0.8 (이동속도 -20%). JudgeSystem 이 매 프레임 넣어 준다
+    public float invulnT;             // 맞은 직후 무적 시간(연속 피해 방지). 0이면 맞을 수 있다
     public float facing;              // 바닥 평면 각도 (0 = +x)
     public State state = State.Free;
     Vector3? moveTarget;
@@ -96,8 +97,29 @@ public class Player : MonoBehaviour
     }
 
     // ===== 매 프레임 (dt = 게임 세계 시간, 히트스톱 중엔 0) ==========================
+    /// <summary>
+    /// 적에게 맞음. 휘두르던 중이면 끊긴다(콤보 처음부터). 견인(Pull)은 끊기지 않는다 — 끌고 오는 선택이 위험하지만 보상받게.
+    /// 무적 시간 안이면 false(피해 없음).
+    /// </summary>
+    public bool Hurt()
+    {
+        if (invulnT > 0f) return false;
+        invulnT = 0.6f;
+        if (state == State.Attack)
+        {
+            // 공격 중단: 대기 예약·콤보를 지우고 자유 상태로 (여기서 EndAttack 대신 직접 정리해야 후딜 로직이 안 돈다)
+            hasBuffered = false; bufferedAim = null;
+            comboStep = 0; comboTimer = 0f;
+            state = State.Free;
+            chain.gameObject.SetActive(false);
+        }
+        moveTarget = null; chaseTarget = null;
+        return true;
+    }
+
     public void Tick(float dt)
     {
+        invulnT = Mathf.Max(0f, invulnT - dt);
         pullCooldown = Mathf.Max(0f, pullCooldown - dt);
         switch (state)
         {
