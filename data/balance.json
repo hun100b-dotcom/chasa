@@ -1338,5 +1338,45 @@
  "PLAYER_HIT_INVULN": {
   "value": 0.5,
   "note": "(기획 타격감 분석 10-24, 임시) 피격 직후 무적(초) [0.6→0.5]"
+ },
+ "DODGE_ENABLED": {
+  "value": true,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하기(구르기) 켜기. PC Space, 폰 오른쪽 아래 버튼"
+ },
+ "DODGE_DISTANCE": {
+  "value": 3.2,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하는 거리(m)"
+ },
+ "DODGE_TIME": {
+  "value": 0.32,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하기 전체 시간(초)"
+ },
+ "DODGE_IFRAME_START": {
+  "value": 0.03,
+  "note": "(기획 타격감 분석 10-24, 임시) 무적 시작(초)"
+ },
+ "DODGE_IFRAME_END": {
+  "value": 0.25,
+  "note": "(기획 타격감 분석 10-24, 임시) 무적 끝(초) → 무적 0.22초(60fps 13프레임)"
+ },
+ "DODGE_CHARGES": {
+  "value": 2,
+  "note": "(기획 타격감 분석 10-24, 임시) 연속으로 피할 수 있는 횟수"
+ },
+ "DODGE_RECHARGE": {
+  "value": 1.1,
+  "note": "(기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초)"
+ },
+ "DODGE_CANCEL_TO_ATTACK": {
+  "value": 0.22,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하기 시작 후 이 시점부터 공격·처결로 끊을 수 있음(초)"
+ },
+ "DODGE_CANCELS_TENDO": {
+  "value": true,
+  "note": "(기획 타격감 분석 10-24, 임시) 천도 캐스팅 중 피하면 캐스팅만 취소, 혼은 계속 무릎 꿇고 대기(다시 천도 가능)"
+ },
+ "COMBO3_RECOVER_DODGE_LOCK": {
+  "value": 0.5,
+  "note": "(기획 타격감 분석 10-24, 임시) 3타 후딜 앞쪽 이 비율은 피하기도 불가(마무리의 대가)"
  }
 }

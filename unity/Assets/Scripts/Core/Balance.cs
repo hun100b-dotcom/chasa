@@ -337,4 +337,14 @@ public static class Balance
     public const float TENDO_COMPLETE_SLOWMO = 0.35f;  // (기획 타격감 분석 10-24, 임시) 천도 완료 순간 정지 대신 이 시간(초) 동안 시간이 느려짐(멈춤=폭력, 느림=보냄)
     public const float TENDO_COMPLETE_SLOWMO_SCALE = 0.5f;  // (기획 타격감 분석 10-24, 임시) 위 느린 시간의 속도 배율
     public const float PLAYER_HIT_INVULN = 0.5f;  // (기획 타격감 분석 10-24, 임시) 피격 직후 무적(초) [0.6→0.5]
+    public const bool DODGE_ENABLED = true;  // (기획 타격감 분석 10-24, 임시) 피하기(구르기) 켜기. PC Space, 폰 오른쪽 아래 버튼
+    public const float DODGE_DISTANCE = 3.2f;  // (기획 타격감 분석 10-24, 임시) 피하는 거리(m)
+    public const float DODGE_TIME = 0.32f;  // (기획 타격감 분석 10-24, 임시) 피하기 전체 시간(초)
+    public const float DODGE_IFRAME_START = 0.03f;  // (기획 타격감 분석 10-24, 임시) 무적 시작(초)
+    public const float DODGE_IFRAME_END = 0.25f;  // (기획 타격감 분석 10-24, 임시) 무적 끝(초) → 무적 0.22초(60fps 13프레임)
+    public const int DODGE_CHARGES = 2;  // (기획 타격감 분석 10-24, 임시) 연속으로 피할 수 있는 횟수
+    public const float DODGE_RECHARGE = 1.1f;  // (기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초)
+    public const float DODGE_CANCEL_TO_ATTACK = 0.22f;  // (기획 타격감 분석 10-24, 임시) 피하기 시작 후 이 시점부터 공격·처결로 끊을 수 있음(초)
+    public const bool DODGE_CANCELS_TENDO = true;  // (기획 타격감 분석 10-24, 임시) 천도 캐스팅 중 피하면 캐스팅만 취소, 혼은 계속 무릎 꿇고 대기(다시 천도 가능)
+    public const float COMBO3_RECOVER_DODGE_LOCK = 0.5f;  // (기획 타격감 분석 10-24, 임시) 3타 후딜 앞쪽 이 비율은 피하기도 불가(마무리의 대가)
 }

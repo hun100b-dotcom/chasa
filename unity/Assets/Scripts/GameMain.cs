@@ -167,7 +167,7 @@ public class GameMain : MonoBehaviour
     {
         Vector3 mouse = Input.mousePosition;
         if (Input.GetKeyDown(KeyCode.Q)) { if (player.loadout.Def.HasQuake) player.CommandQuake(); else if (player.loadout.Def.HasPull) SkillPull(mouse); }   // Q: 철삭=견인 / 육모방망이=땅울림 / 그 외 무기는 없음
-        if (Input.GetKeyDown(KeyCode.Space)) SkillSwing(mouse); // Space: 제자리 휘두르기
+        if (Input.GetKeyDown(KeyCode.Space)) SkillDodge(mouse); // Space: 피하기(구르기). 휘두르기는 마우스 클릭으로 충분하다(기획 타격감 분석)
         if (Input.GetMouseButtonDown(1) && player.loadout.Def.HasPull) SkillPull(mouse);   // 우클릭도 견인(철삭일 때)
 
         if (Input.GetMouseButtonDown(0) && !OverTouchButtons(mouse))
@@ -194,6 +194,13 @@ public class GameMain : MonoBehaviour
         player.CommandPull(e, g ?? player.Pos);
     }
 
+    /// <summary>피하기: 마우스가 있는 쪽으로. 마우스 위치를 못 구하면 걷던 방향</summary>
+    void SkillDodge(Vector3 screen)
+    {
+        var g = Ground(cam.ScreenPointToRay(screen));
+        player.CommandDodge(g);
+    }
+
     void SkillSwing(Vector3 screen)
     {
         var g = Ground(cam.ScreenPointToRay(screen));
@@ -211,13 +218,14 @@ public class GameMain : MonoBehaviour
 
     // ---- 화면 글자 / 폰 버튼 (기본 글꼴에 한글이 없을 수 있어 영문) --------------------
     Rect PullBtn => new Rect(Screen.width - 260, Screen.height - 110, 110, 90);
+    Rect DodgeBtn => new Rect(Screen.width - 136, Screen.height - 212, 110, 90);
     Rect SwingBtn => new Rect(Screen.width - 136, Screen.height - 110, 110, 90);
 
     bool OverTouchButtons(Vector3 mouse)
     {
         if (!Ko.TouchUI) return false;
         var p = new Vector2(mouse.x, Screen.height - mouse.y);
-        return PullBtn.Contains(p) || SwingBtn.Contains(p);
+        return PullBtn.Contains(p) || SwingBtn.Contains(p) || DodgeBtn.Contains(p);
     }
 
     void OnGUI()
@@ -226,10 +234,11 @@ public class GameMain : MonoBehaviour
         if (judge.InDay || CharacterPanel.Open || judge.NightOver) return;   // 낮 화면·캐릭터 창에서는 밤의 안내·버튼을 그리지 않는다
         var hint = new GUIStyle(GUI.skin.label) { fontSize = 14 };
         hint.normal.textColor = new Color(1, 1, 1, 0.55f);
-        GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 휘두르기" + (Demo.Panel ? "   C: 캐릭터 창" : ""), hint);
+        GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 피하기" + (Demo.Panel ? "   C: 캐릭터 창" : ""), hint);
         if (!Ko.TouchUI) return;
         var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
         if (GUI.Button(PullBtn, "끌기", bs)) { var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); }
+        if (Balance.DODGE_ENABLED && GUI.Button(DodgeBtn, "피하기", bs)) player.CommandDodge(null);   // 폰: 걷던 방향으로
         if (GUI.Button(SwingBtn, "휘두르기", bs)) { var e = Nearest(); player.CommandSwing(e != null ? e.Pos : player.Pos + U.Dir(player.facing)); }
     }
 

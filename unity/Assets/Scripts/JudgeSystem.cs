@@ -59,6 +59,7 @@ public class JudgeSystem : MonoBehaviour
         panel = gameObject.AddComponent<CharacterPanel>();   // C 키 캐릭터 창(장비·도술·능력치)
         panel.judge = this;
         enemies.onPlayerHit = OnPlayerHit;
+        player.onDodgeCancelCast = () => { if (Casting) { castTarget.soul.CancelSending(); EndCast(); Say("천도를 거두고 피했다"); } };   // 천도 중 피하기: 캐스팅만 취소, 혼은 무릎 꿇은 채 대기
         enemies.onEnemyKneel = OnEnemyKneel;
         dayScreen = new DayScreen(ledger, lo);
         SetupNight();   // 적 공격이 명중하면 체력 처리로 연결
@@ -83,7 +84,7 @@ public class JudgeSystem : MonoBehaviour
     // ===== 명령 ====================================================================
     public void CommandTendo()
     {
-        if (Casting || player.state != Player.State.Free) return;
+        if (Casting || !player.CanAct()) return;
         // 천도는 보낼 수 있는 혼 중 가장 가까운 것을 고른다 — 곁에 덩어리(천도 불가)가 있어도 막히지 않게(QA)
         var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE, x => x.soul.CanTendoWith(night.Clues));
         if (e == null) e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);   // 없으면 가장 가까운 혼으로 이유를 안내
@@ -100,7 +101,7 @@ public class JudgeSystem : MonoBehaviour
 
     public void CommandPahon()
     {
-        if (Casting || player.state != Player.State.Free) return;
+        if (Casting || !player.CanAct()) return;
         var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);
         if (e == null) { Say("대상이 없다"); return; }
         if (!e.soul.TryPahon()) return;
@@ -623,6 +624,19 @@ public class JudgeSystem : MonoBehaviour
             GUI.color = ChasaPalette.CheondoGlow;
             GUI.DrawTexture(new Rect(bar.x + 1, bar.y + 1, 158f * Mathf.Clamp01(castT / castTotal), 10), white);
             GUI.color = Color.white;
+        }
+        if (Balance.DODGE_ENABLED)
+        {
+            // 피하기 충전 표시: 작은 막대 2개(채워지는 중이면 부분만 찬다). 글자 없이 도형이라 글꼴 걱정이 없다
+            for (int i = 0; i < Balance.DODGE_CHARGES; i++)
+            {
+                float fill = Mathf.Clamp01(player.DodgeCharges - i);
+                var r = new Rect(Screen.width / 2f - 34 + i * 36, Screen.height - 66, 32, 8);
+                GUI.color = new Color(0, 0, 0, 0.6f); GUI.DrawTexture(r, white);
+                GUI.color = fill >= 1f ? new Color(0.75f, 0.85f, 1f) : new Color(0.45f, 0.5f, 0.6f);
+                GUI.DrawTexture(new Rect(r.x + 1, r.y + 1, 30f * fill, 6), white);
+                GUI.color = Color.white;
+            }
         }
         if (toastT > 0f)
         {

@@ -1095,4 +1095,34 @@ public class CoreTests
         finally { MapLayout.ZoneBlockers.Clear(); World.Enabled = false; }
         Assert.AreEqual(oldMax, MapLayout.MaxX, "꺼 두면 기존 마을 경계 그대로");
     }
+
+    // ---------- 피하기 ----------
+    [Test]
+    public void 피하기_무적은_0_03초부터_0_25초까지만()
+    {
+        Assert.IsFalse(DodgeRules.Invulnerable(0f));
+        Assert.IsTrue(DodgeRules.Invulnerable(0.1f));
+        Assert.IsFalse(DodgeRules.Invulnerable(0.3f));
+        Assert.Less(Balance.DODGE_IFRAME_END, Balance.DODGE_TIME, "무적이 피하기보다 길면 안 됨");
+    }
+
+    [Test]
+    public void 피하기_충전은_1_1초에_한_번_최대_2()
+    {
+        float c = 0f;
+        c = DodgeRules.Recharge(c, Balance.DODGE_RECHARGE);
+        Assert.AreEqual(1f, c, 1e-4f);
+        c = DodgeRules.Recharge(c, 100f);
+        Assert.AreEqual((float)Balance.DODGE_CHARGES, c, 1e-4f);
+    }
+
+    [Test]
+    public void 피하기_3타_후딜_앞쪽은_못_피하고_1타는_바로_가능()
+    {
+        Assert.IsFalse(DodgeRules.RecoverAllowsDodge(true, 0.2f));
+        Assert.IsTrue(DodgeRules.RecoverAllowsDodge(true, 0.6f));
+        Assert.IsTrue(DodgeRules.RecoverAllowsDodge(false, 0f));
+        Assert.IsFalse(DodgeRules.CanCancelToAction(0.1f));
+        Assert.IsTrue(DodgeRules.CanCancelToAction(0.25f));
+    }
 }

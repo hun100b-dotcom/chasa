@@ -47,7 +47,7 @@ namespace Chasa.Core
         {
             "sfx.hit.chain", "sfx.hit.heavy", "sfx.enemy.telegraph", "sfx.kneel",
             "sfx.tendo.cast", "sfx.tendo.done", "sfx.pahon.burst", "amb.field",
-            "sfx.player.hurt", "sfx.clue",
+            "sfx.player.hurt", "sfx.clue", "sfx.dodge",
         };
 
         /// <summary>id 로 레시피를 찾는다 (없으면 null)</summary>
@@ -102,6 +102,11 @@ namespace Chasa.Core
                     r = R(-9, 120,
                         Tone(70, 50, 1, 120, 1.0f),
                         Noise(Filt.Low, 1200, 1200, 0.7f, 1, 50, 0.4f));
+                    return true;
+                case "sfx.dodge":   // 쉭 — 바람을 가르는 짧은 상승·하강
+                    r = R(-12, 260,
+                        Noise(Filt.Band, 400, 1800, 1.2f, 30, 220, 0.9f),
+                        Tone(220, 150, 20, 200, 0.15f));
                     return true;
                 case "sfx.clue":   // 대금 같은 숨 섞인 한 음
                     r = R(-11, 450,

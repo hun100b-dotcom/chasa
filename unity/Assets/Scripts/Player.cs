@@ -10,7 +10,7 @@ using Chasa.Core;
 
 public class Player : MonoBehaviour
 {
-    public enum State { Free, Attack, Pull }
+    public enum State { Free, Attack, Pull, Dodge }
 
     class AttackRun
     {
@@ -56,6 +56,12 @@ public class Player : MonoBehaviour
     PullRun pullRun;
     float pullCooldown;
     float chainLag;
+    // ---- 피하기(구르기) ----
+    float dodgeT; Vector3 dodgeDir;                 // 피하는 중 경과 시간, 방향
+    float dodgeCharges = Balance.DODGE_CHARGES;     // 남은 충전(소수 가능: 충전되는 중)
+    public System.Action onDodgeCancelCast;         // 천도 캐스팅 중 피하면 JudgeSystem 이 캐스팅만 취소한다
+    public float DodgeCharges => dodgeCharges;
+    public bool Dodging => state == State.Dodge;
 
     public Vector3 Pos { get => transform.position; set => transform.position = value; }
 
@@ -91,7 +97,8 @@ public class Player : MonoBehaviour
         if (moved > 0.001f) walkT += dt; else walkT = 0f;
         string n = "characters/chasa_idle";
         bool mace = loadout.weapon == WeaponId.Mace;
-        if (invulnT > 0.35f) n = "characters/chasa_hit";                 // 막 맞음
+        if (state == State.Dodge) n = "characters/chasa_walk_a";       // 피하는 중(전용 그림이 오기 전엔 걷는 그림)
+        else if (invulnT > 0.35f) n = "characters/chasa_hit";                 // 막 맞음
         else if (locked) n = "characters/chasa_cast";                    // 천도 시전
         else if (state == State.Attack && atk != null) n = mace ? "characters/chasa_bang" + Mathf.Clamp(atk.step, 1, 3) : "characters/chasa_swing";
         else if (moved > 0.001f) n = ((int)(walkT * 6f) % 2 == 0) ? "characters/chasa_walk_a" : "characters/chasa_walk_b";
@@ -99,10 +106,67 @@ public class Player : MonoBehaviour
         foreach (var r in bodyShapes) r.enabled = !shown;
     }
 
+    // ===== 피하기 ==================================================================
+    /// <summary>자유 상태이거나, 피하기가 '끊을 수 있는 시점'(0.22초)을 지났으면 다른 행동을 시작할 수 있다. 시작하면 피하기는 끝난다</summary>
+    public bool CanAct()
+    {
+        if (state == State.Free) return true;
+        if (state == State.Dodge && DodgeRules.CanCancelToAction(dodgeT)) { state = State.Free; return true; }
+        return false;
+    }
+
+    /// <summary>지금 피할 수 있나? (규칙: 휘두르는 중은 불가, 3타 후딜 앞 절반 불가, 견인 중 불가)</summary>
+    bool CanDodgeNow()
+    {
+        if (!Balance.DODGE_ENABLED || dodgeCharges < 1f) return false;
+        if (state == State.Pull) return false;
+        if (state == State.Dodge) return DodgeRules.CanCancelToAction(dodgeT);   // 연속 피하기
+        if (locked) return Balance.DODGE_CANCELS_TENDO;                               // 천도 중: 캐스팅을 포기하고 피한다
+        if (state == State.Attack && atk != null)
+        {
+            if (atk.phase == "swing") return false;                                   // 휘두르면 책임진다
+            if (atk.phase == "recover" && !DodgeRules.RecoverAllowsDodge(atk.step >= Steps.Length, atk.t / atk.cfg.recover)) return false;
+        }
+        return true;
+    }
+
+    /// <summary>피하기. aim = 가고 싶은 쪽 바닥 점(없으면 걷던 방향, 그것도 없으면 바라보던 방향)</summary>
+    public bool CommandDodge(Vector3? aim)
+    {
+        if (!CanDodgeNow()) return false;
+        if (locked) { onDodgeCancelCast?.Invoke(); locked = false; }
+        Vector3 dir;
+        if (aim.HasValue) dir = new Vector3(aim.Value.x - Pos.x, 0, aim.Value.z - Pos.z);
+        else if (moveTarget.HasValue) dir = new Vector3(moveTarget.Value.x - Pos.x, 0, moveTarget.Value.z - Pos.z);
+        else dir = U.Dir(facing);
+        if (dir.sqrMagnitude < 1e-4f) dir = U.Dir(facing);
+        dodgeDir = dir.normalized;
+        facing = Mathf.Atan2(dodgeDir.z, dodgeDir.x);
+        dodgeCharges -= 1f; dodgeT = 0f;
+        state = State.Dodge;
+        moveTarget = null; chaseTarget = null; hasBuffered = false; bufferedAim = null; atk = null;
+        chain.gameObject.SetActive(false);
+        Sfx.Play("sfx.dodge");
+        return true;
+    }
+
+    void TickDodge(float dt)
+    {
+        if (dt <= 0f) return;
+        // 처음 빠르고 끝에서 감속(EaseOut): 순간 이동처럼 튀지 않고 '미끄러져 피하는' 느낌
+        float t0 = dodgeT, t1 = Mathf.Min(Balance.DODGE_TIME, dodgeT + dt);
+        float p0 = 1f - Mathf.Pow(1f - t0 / Balance.DODGE_TIME, 2f), p1 = 1f - Mathf.Pow(1f - t1 / Balance.DODGE_TIME, 2f);
+        Pos += dodgeDir * (Balance.DODGE_DISTANCE * (p1 - p0));
+        ClampToArena();
+        dodgeT += dt;
+        if (dodgeT >= Balance.DODGE_TIME) { state = State.Free; comboTimer = Mathf.Max(comboTimer, 0f); }
+    }
+
     // ===== 명령 (입력 쪽에서 호출) ================================================
     public void CommandMove(Vector3 point)
     {
         if (Busy) return;
+        if (state == State.Dodge && !CanAct()) return;
         float tx = point.x, tz = point.z;
         MapLayout.ClampPoint(ref tx, ref tz);   // 맵 밖을 눌러도 맵 안쪽 끝으로
         moveTarget = new Vector3(tx, 0, tz);
@@ -113,6 +177,7 @@ public class Player : MonoBehaviour
     public void CommandAttack(Enemy e)
     {
         if (Busy) return;
+        if (state == State.Dodge) CanAct();   // 끊을 수 있는 시점이면 피하기를 끝내고 아래로
         if (state == State.Attack) { hasBuffered = true; buffered = e; bufferedAim = null; } // 다음 타 예약
         else if (state == State.Free) { chaseTarget = e; moveTarget = null; }
     }
@@ -121,6 +186,7 @@ public class Player : MonoBehaviour
     public void CommandSwing(Vector3 aim)
     {
         if (Busy) return;
+        if (state == State.Dodge) CanAct();
         if (state == State.Attack) { hasBuffered = true; buffered = null; bufferedAim = aim; }
         else if (state == State.Free) { moveTarget = null; chaseTarget = null; StartAttack(null, comboTimer > 0f, aim); }
     }
@@ -176,6 +242,8 @@ public class Player : MonoBehaviour
     public bool Hurt()
     {
         if (invulnT > 0f) return false;
+        // 피하기 무적 구간(시작 직후~끝): 맞지 않는다. 이 짧은 창을 맞추는 것이 피하기의 보상
+        if (state == State.Dodge && DodgeRules.Invulnerable(dodgeT)) return false;
         invulnT = Balance.PLAYER_HIT_INVULN;
         if (state == State.Attack)
         {
@@ -192,6 +260,7 @@ public class Player : MonoBehaviour
     public void Tick(float dt)
     {
         invulnT = Mathf.Max(0f, invulnT - dt);
+        dodgeCharges = DodgeRules.Recharge(dodgeCharges, dt);   // 한 번 충전 1.1초
         loadout.Tick(dt);
         pullCooldown = Mathf.Max(0f, pullCooldown - dt);
         switch (state)
@@ -199,6 +268,7 @@ public class Player : MonoBehaviour
             case State.Free: if (!Busy) TickFree(dt); break;
             case State.Attack: TickAttack(dt); break;
             case State.Pull: TickPull(dt); break;
+            case State.Dodge: TickDodge(dt); break;
         }
         transform.rotation = Quaternion.LookRotation(U.Dir(facing)); // 코(+z)가 facing 방향을 보게
         UpdateSprite(dt);
