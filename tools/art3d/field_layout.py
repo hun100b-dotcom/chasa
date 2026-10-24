@@ -138,11 +138,32 @@ scatter("물막이 골 바닥", (42, 30, 58, 62), REED + ["terrain_bush_tall"], 
 scatter("물막이 골 벼랑", (32, 36, 63, 60), PINE + ROCK, 70, lvl=1)
 scatter("산자락", (0, 0, 79, 79), PINE + BUSH + ROCK, 220, lvl=0)
 scatter("검은여울 둘레", (0, 34, 24, 79), PINE + BUSH + ["nature_dead_a", "nature_dead_b"], 70)
-# 코드팀 요청: 북서 청크(1,1)~(1,2)·(0,1)과 보릿들·마을~보릿들 길가가 휑해서 숲·덤불·바위를 청크당 100~200개 수준으로 보강
-scatter("북서 숲", (16, 16, 31, 47), PINE + ZEL + BUSH + ROCK + ["terrain_bush_low"], 260, lvl=0)
-scatter("서쪽 숲", (0, 16, 15, 31), PINE + ZEL + BUSH + ROCK + ["terrain_bush_low"], 130, lvl=0)
-scatter("보릿들 둘레", (24, 4, 58, 32), PINE + ZEL + BUSH + ROCK + ["terrain_bush_low", "terrain_bush_flower"], 130)
-scatter("마을~보릿들 길가", (24, 6, 40, 24), ZEL + BUSH + ROCK, 60)
+# 코드팀 요청(2차): 숲은 '군집'으로. 한 덩어리=6~12그루(그루당 약 30㎡), 덩어리 사이는 빈 풀밭, 빽빽한 곳은 덩어리를 촘촘히.
+import math as _m
+def cluster_grid(zone, rect, kinds, step, per=(6, 12), lvl=None, skip=0.0):
+    x0, y0, x1, y1 = [v * T for v in rect]; x1 += T; y1 += T; n = 0
+    gx = x0
+    while gx < x1:
+        gy = y0
+        while gy < y1:
+            if rnd.random() >= skip:
+                cx, cy = gx + rnd.uniform(-step * 0.3, step * 0.3), gy + rnd.uniform(-step * 0.3, step * 0.3); k = rnd.randint(*per); r = _m.sqrt(k * 30 / _m.pi)
+                for _ in range(k):
+                    a_ = rnd.uniform(0, _m.tau); d_ = r * _m.sqrt(rnd.random()); x = cx + _m.cos(a_) * d_; y = cy + _m.sin(a_) * d_; ix, iy = int(x // T), int(y // T)
+                    if not (0 <= ix < N and 0 <= iy < N) or not free(ix, iy) or getT(ix, iy)["t"].startswith("slope"): continue
+                    if lvl is not None and lv(ix, iy) != lvl: continue
+                    props.append({"zone": zone, "prop": rnd.choice(kinds), "x": round(x, 1), "y": round(y, 1), "rot": rnd.choice((0, 45, 90, 135, 180, 225, 270, 315)), "z": lv(ix, iy) * 2.0}); n += 1
+            gy += step
+        gx += step
+    return n
+FOREST = PINE * 3 + ZEL + BUSH * 2 + ROCK[:1]
+WILD = PINE * 2 + DEAD * 2 + ROCK + BUSH
+cluster_grid("물막이 골 숲(빽빽)", (32, 30, 63, 62), FOREST, 16, per=(8, 12))
+cluster_grid("폐당집 둘레 숲(빽빽)", (60, 56, 79, 79), PINE * 3 + DEAD + BUSH, 15, per=(8, 12))
+cluster_grid("보릿들 바깥 숲 띠", (24, 2, 58, 6), FOREST, 18); cluster_grid("보릿들 바깥 숲 띠", (24, 30, 58, 33), FOREST, 18); cluster_grid("보릿들 바깥 숲 띠", (24, 6, 27, 30), FOREST, 18); cluster_grid("보릿들 바깥 숲 띠", (56, 6, 59, 30), FOREST, 18)
+cluster_grid("북서 숲 군집", (0, 16, 31, 47), FOREST, 30, skip=0.2)
+cluster_grid("북쪽 빈 청크 채움", (16, 48, 31, 79), WILD, 28, skip=0.25); cluster_grid("북쪽 빈 청크 채움", (32, 64, 63, 79), WILD, 28, skip=0.25)
+cluster_grid("마을~보릿들 길가", (24, 6, 40, 24), ZEL + BUSH + ROCK, 22, per=(4, 8), skip=0.3)
 scatter("폐당집 터", (66, 62, 78, 76), DEAD + ROCK, 40, lvl=1); scatter("폐당집 둘레", (60, 56, 79, 79), DEAD + PINE, 45, lvl=0)
 
 # ── 6) 표식: 동선·거점(코드팀이 NPC·서낭당·굴 입구·혼 무리 자리로 쓴다) ──────────────
@@ -152,7 +173,7 @@ markers = [M(13 * 8 + 4, 56 * 8 + 4, "seonang", "서낭당 ④(검은여울 어�
            M(41 * 8 - 4, 40 * 8 + 4, "cave", "굴 입구(물막이 골 서쪽 벼랑 아래, 안은 늘 밤)"), M(WEIR[0], WEIR[1], "weir", "물막이(개울을 막은 둑, 장소 이름의 유래)"),
            M(72 * 8 + 4, 69 * 8, "ruin", "폐당집 입구(터 위, 보스 ①: 나루 영감은 개울 물가로 따로)", 2.0), M(50.5 * 8, 36 * 8, "boss", "1호 보스 나루 영감 자리(개울 위 나룻배)"),
            M(36 * 8 + 4, 18 * 8, "soulpath", "넋길 시작(마을 → 보릿들, 밤에만)"), M(46 * 8, 44 * 8, "soulpath", "넋길 중간"), M(72 * 8, 62 * 8, "soulpath", "넋길 끝(폐당집)")]
-for bx_, by_, bz_, br_, nt_ in ((84.6, 553.0, 0.0, 0, "나루터 곁에 맨 빈 배"), (410.0, 303.0, 0.0, 0, "보스 1호 자리 곁 빈 나룻배(나루 영감 모델 안에도 배가 따로 있음)")):
+for bx_, by_, bz_, br_, nt_ in ((84.6, 553.0, 0.0, 0, "나루터 곁에 맨 빈 배"), (410.5, 288.0, 0.0, 0, "보스 1호(404,288) 바로 옆 빈 나룻배(나루 영감 모델 안에도 배가 따로 있음)")):
     structures.append({"piece": "br_ferry_boat", "file": "assets3d/blackrapids/br_ferry_boat.glb", "x": bx_, "y": by_, "z": bz_, "rot": br_, "note": nt_})
 for m_ in [m for m in markers if m["kind"] == "seonang"]:   # 서낭당 4곳에 실제 모델+양옆 횃대(밤 불빛). 마커만 있고 모델이 비어 있던 빈칸 보정
     structures.append({"piece": "prop_seonangdang", "file": "assets3d/props/prop_seonangdang.glb", "x": m_["x"], "y": m_["y"], "z": 0, "rot": 0, "note": m_["name"]})
