@@ -2510,13 +2510,10 @@
       "framing": "빈 고을 위로 처음 드는 새벽빛"
      },
      "action": "⑨에 처음으로 새벽이 온다. 안개가 걷힌다",
-     "condition": "A",
-     "sfx": [
-      "amb.dawn.birds"
+     "sfx_request": [
+      "amb.dawn.still(바람 없는 새벽 — ⑨에 처음 드는 새벽, 저승엔 산 것의 소리가 없다)"
      ],
-     "sfx_note": [
-      "amb.dawn.birds(새벽 새 한두 마리)"
-     ]
+     "condition": "A"
     },
     {
      "t": 48.0,
