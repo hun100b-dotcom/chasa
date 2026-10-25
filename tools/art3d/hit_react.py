@@ -18,6 +18,7 @@ def mix(k, r, s, l=(0, 0, 0)):
 def extras(t, k):
     if t == "wail": return {"Arm": S(r=(28 * k, 0, 10 * k)), "Orb": S(s=(1 - 0.35 * min(k, 1.2),) * 3)}
     if t == "buried": return {"ArmL": S(r=(-30 * k, 0, 18 * k)), "ArmR": S(r=(-30 * k, 0, -18 * k))}
+    if t == "elite": return {"ArmL": S(r=(-18 * k, 0, 10 * k)), "ArmR": S(r=(-24 * k, 0, -10 * k))}      # 거센 혼: 무거워서 팔이 덜 휘둘린다
     return {}
 
 def hit(t, kind):
@@ -57,6 +58,7 @@ TAIL = {  # 기존 Kneel의 끝 자세(수정 전과 같다)
     "mote": {"Body": S(r=(20, 0, 0), s=(1.34, 1.34, 0.26))},
     "wail": {"Body": S(r=(28, 0, 0), s=(1.15, 1.15, 0.53)), "Arm": S(r=(8, 0, 12)), "Orb": S(s=(0.01, 0.01, 0.01))},
     "buried": {"Body": S(l=(0, 0, -0.7), r=(38, 0, 0), s=(1.12, 1.12, 0.56)), "ArmL": S(r=(10, 0, 14)), "ArmR": S(r=(10, 0, -14))},
+    "elite": {"Body": S(r=(34, 0, 0), s=(1.12, 1.12, 0.58)), "ArmL": S(r=(14, 0, 14)), "ArmR": S(r=(22, 0, -12))},
 }
 
 def tendo(t):
@@ -67,6 +69,7 @@ def tendo(t):
     def arms(a):
         if t == "wail": return {"Arm": S(r=(150 * a, 0, 0)), "Orb": S(s=(0.01,) * 3)}
         if t == "buried": return {"ArmL": S(r=(-160 * a, 0, -35 * a)), "ArmR": S(r=(-160 * a, 0, 35 * a))}
+        if t == "elite": return {"ArmL": S(r=(-150 * a, 0, -30 * a)), "ArmR": S(r=(-150 * a, 0, 30 * a))}      # 두 팔을 하늘로 들며 풀림(징채는 놓아 버리지 않고 같이 흩어짐)
         return {}
     zoff = -0.6 if t == "buried" else 0.0     # 묻힌 혼은 흙에서 반쯤 가라앉은 채 시작
     f = lambda zr, sx, sz, a, rz=0, rx=0, lz=0: {"Root": S(l=(0, 0, zr)), "Body": S(r=(rx, 0, rz), s=(sx, sx, sz), l=(0, 0, lz)), **arms(a)}
@@ -78,7 +81,7 @@ def pahon(t):
     events: crack=5(금), shatter=9(터짐·파편 발사), gone=13(모델 숨김). PAHON_HITSTOP_FRAMES 8 동안은 0번 자세로 정지(떨림만)."""
     k0 = TAIL[t]
     def sq(sx, sz, rz=0, r=0, a=None): return {"Body": S(r=(r, 0, rz), s=(sx, sx, sz)), "Root": S(r=(0, 0, rz * 0.5)), **(a or {})}
-    arms = lambda v: {"Arm": S(r=(v, 0, 0))} if t == "wail" else ({"ArmL": S(r=(v, 0, 0)), "ArmR": S(r=(v, 0, 0))} if t == "buried" else {})
+    arms = lambda v: {"Arm": S(r=(v, 0, 0))} if t == "wail" else ({"ArmL": S(r=(v, 0, 0)), "ArmR": S(r=(v, 0, 0))} if t in ("buried", "elite") else {})
     return ([(0, k0), (2, sq(1.18, 0.4, 7, 22, arms(30))), (4, sq(1.1, 0.5, -7, 18, arms(40))), (5, sq(1.3, 0.34, 4, 16, arms(50))), (7, sq(1.2, 1.1, -3, -8, arms(80))),
              (9, sq(1.85, 1.6, 0, -14, arms(110))), (11, sq(2.3, 1.1, 0, -10, arms(140))), (13, sq(0.02, 0.02)), (18, sq(0.02, 0.02))], "LINEAR", False,
             {"crack": 5, "shatter": 9, "gone": 13, "hide_after": 13})

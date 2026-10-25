@@ -94,7 +94,7 @@ def clips_wail():
 def clips_mote():
     B = lambda **k: {"Body": S(**k)}
     C = {"Float": ([(0, {**B(r=(4, 0, -8)), "Root": {"l": (0, 0, 0)}}), (10, {**B(r=(-4, 0, 8), s=(0.97, 0.97, 1.06)), "Root": {"l": (0, 0, 0.07)}}), (20, {**B(r=(4, 0, -8)), "Root": {"l": (0, 0, 0)}}), (30, {**B(r=(-4, 0, 8), s=(0.97, 0.97, 1.06)), "Root": {"l": (0, 0, 0.07)}}), (40, {**B(r=(4, 0, -8)), "Root": {"l": (0, 0, 0)}})], "BEZIER", True, {})}
-    sq = B(r=(-10, 0, 0), s=(1.18, 1.18, 0.72)); sq2 = B(r=(-12, 0, 6), s=(1.22, 1.22, 0.68)); sq3 = B(r=(-12, 0, -6), s=(1.22, 1.22, 0.68))
+    sq = {**B(r=(-14, 0, 0), s=(1.3, 1.3, 0.6)), "Root": {"l": (0, 0.03, 0)}}; sq2 = {**B(r=(-18, 0, 12), s=(1.4, 1.4, 0.5)), "Root": {"l": (0.05, 0.05, 0)}}; sq3 = {**B(r=(-18, 0, -12), s=(1.4, 1.4, 0.5)), "Root": {"l": (-0.05, 0.05, 0)}}   # 고친 점: 작은 몸이라 앞 비율(1.2/0.7)로는 100px 화면에서 안 보여 눌림·떨림을 키움
     C["Windup"] = ([(0, {}), (6, sq), (9, sq2), (12, sq3), (15, sq2), (18, sq3), (21, sq2), (24, sq3)], "LINEAR", False, {"flash": 14, "end_pose_held": True})   # 몸을 웅크려 부르르 떨고 번쩍(0.4초 — 기획 F-1b: 선딜 0.3→0.4)
     lung = {"Root": {"l": (0, -0.55, 0.08)}, **B(r=(35, 0, 0), s=(0.86, 0.86, 1.2))}
     C["Attack"] = ([(0, sq3), (4, lung), (6, lung), (14, {})], "LINEAR", False, {"hit": 4})
@@ -113,7 +113,8 @@ def clips_buried():
     burst = {"Body": S(l=(0, 0, -0.9), r=(-8, 0, 0)), "ArmL": S(r=(-175, 0, -18)), "ArmR": S(r=(-175, 0, 18)), "Root": S(s=(1.1, 1.1, 0.8))}
     up = {"Body": S(l=(0, 0, -0.25), r=(-12, 0, 0)), "ArmL": S(r=(-160, 0, -35)), "ArmR": S(r=(-160, 0, 35)), "Root": S(s=(1.05, 1.05, 0.9))}
     full = {"Body": S(l=(0, 0, 0), r=(-10, 0, 0), s=(1.0, 1.0, 1.0)), "ArmL": S(r=(-135, 0, -45)), "ArmR": S(r=(-135, 0, 45))}
-    C["Windup"] = ([(0, sunk), (8, shake1), (14, shake2), (20, shake1), (26, burst), (30, up), (36, full), (44, {**full, "Body": S(l=(0, 0, 0), r=(-14, 0, 0), s=(1.05, 1.05, 0.95))})], "BEZIER", False, {"flash": 26, "emerge_peak": 30, "end_pose_held": True, "ground_dust_at": 26})
+    poke1 = {**shake1, "Body": S(l=(0, 0, -1.25)), "ArmL": S(r=(-168, 0, -10)), "ArmR": S(r=(-168, 0, 10))}; poke2 = {**shake2, "Body": S(l=(0, 0, -1.1)), "ArmL": S(r=(-168, 0, -14)), "ArmR": S(r=(-168, 0, 14))}   # 고친 점: 손끝이 0.13초부터 흙 위로 삐죽
+    C["Windup"] = ([(0, sunk), (8, poke1), (14, poke2), (20, poke1), (25, burst), (29, up), (35, full), (42, {**full, "Body": S(l=(0, 0, 0), r=(-14, 0, 0), s=(1.05, 1.05, 0.95))})], "BEZIER", False, {"flash": 25, "emerge_peak": 29, "end_pose_held": True, "ground_dust_at": 25})
     slam = {"Body": S(l=(0, -0.45, 0), r=(30, 0, 0), s=(0.94, 0.94, 1.06)), "ArmL": S(r=(-60, 0, 8)), "ArmR": S(r=(-60, 0, -8))}
     C["Attack"] = ([(0, full), (6, slam), (9, slam), (20, {})], "LINEAR", False, {"hit": 6})
     kn = {"Body": S(l=(0, 0, -0.6), r=(34, 0, 0), s=(1.1, 1.1, 0.6)), "ArmL": S(r=(10, 0, 14)), "ArmR": S(r=(10, 0, -14))}
@@ -122,7 +123,61 @@ def clips_buried():
     C.update(hr.soul_clips("buried"))   # 피격·무릎·천도·파혼 (hit_react.py)
     return C
 
-TYPES = {"wail": (wail, B_WAIL, clips_wail, "넋두리", "원념을 던지는 원거리 혼"), "mote": (mote, B_MOTE, clips_mote, "잔넋", "작게 무리 짓는 혼"), "buried": (buried, B_BURIED, clips_buried, "묻힌 혼", "땅에서 솟는 혼")}
+
+# ───────────────────────── 거센 혼(첫 강적) ─────────────────────────
+B_ELITE = [("Root", None, (0, 0, 0), (0, 0, 0.2)), ("Body", "Root", (0, 0, 0), (0, 0, 0.6)), ("ArmL", "Body", (0.36, 0, 1.38), (0.5, -0.16, 0.8)), ("ArmR", "Body", (-0.36, 0, 1.38), (-0.5, -0.16, 0.8))]
+GONG = "#9A7B3A"   # 낡은 놋쇠 징색(주황 아님)
+
+def elite(g):
+    """거센 혼: 보통 혼의 1.3배 몸(높이 약 1.8m, 어깨 넓고 묵직함). 두레패 좌상의 혼 — 오른손에 징채, 왼손에 금 간 징(기획 서사 확정 10-26), 머리에 낡은 두레 수건.
+    왜 이런 모양인가: ① 한눈에 '센 놈' = 어깨가 넓은 역삼각 실루엣 ② 예고가 읽히게 = 오른팔의 긴 징채가 머리 위로 솟는 것이 곧 '내려치기' 신호 ③ 징이 부르기 울부짖음의 소리 근원.
+    높이가 이미 1.3배이므로 코드는 추가 배율 1.0으로 쓴다(ELITE_SCALE을 다시 곱하면 1.69배가 된다)."""
+    sh, core, sol = mats(g); r = random.Random(77); brass = mat(GONG, 0.5); cloth = mat("#D8D0C0", 0.4)
+    body = lathe("body", [(0.32, 0.0), (0.42, 0.34), (0.95, 0.38), (1.3, 0.4), (1.55, 0.3), (1.7, 0.16)], 10, sh, scale=(1.08, 0.88, 1.0), rot=(0.1, 0, 0))
+    torso = [body, sphere("head", 0.24, (0, -0.1, 1.74), sh, 9, 6), sphere("core", 0.17, (0, 0, 0.98), core, 7, 5, (1, 1, 1.5))]
+    torso += eyes(1.78, -0.335, dx=0.09, w=0.07, h=0.07, slit=0.5) + [sphere("mouth", 1, (0, -0.34, 1.66), "face", 7, 5, (0.06, 0.02, 0.08))]
+    torso += [cyl("tow", 0.27, 0.27, 0.07, (0, -0.1, 1.86), cloth, 10), box("towKnot", (0.1, 0.07, 0.1), (0, 0.17, 1.88), cloth)] + chain_pts("towTail1", [(0.05, 0.19, 1.88), (0.14, 0.3, 1.74), (0.2, 0.42, 1.55)], 0.05, 0.01, cloth, 5) + chain_pts("towTail2", [(-0.05, 0.19, 1.88), (-0.13, 0.32, 1.7), (-0.17, 0.46, 1.5)], 0.05, 0.01, cloth, 5)
+    for i in range(7):   # 해진 밑단
+        a = i / 7 * math.tau + 0.2; ln = r.uniform(0.25, 0.45)
+        torso += chain_pts(f"rag{i}", [(math.cos(a) * 0.28, math.sin(a) * 0.22, 0.4), (math.cos(a) * 0.32, math.sin(a) * 0.26, 0.4 - ln * 0.5), (math.cos(a) * 0.35 + r.uniform(-0.03, 0.03), math.sin(a) * 0.28, 0.4 - ln)], 0.06, 0.008, sol, 5)
+    torso += [sphere("hump", 0.3, (0, 0.12, 1.45), sh, 8, 5, (1.3, 0.8, 0.7))]   # 넓은 어깨 둔덕(옆모습 실루엣도 센 놈)
+    armR = [limb("armR", (-0.36, 0, 1.38), (-0.5, -0.16, 0.8), 0.08, 0.1, sol, 6), sphere("handR", 0.1, (-0.51, -0.17, 0.74), sol, 6, 4),
+            cyl("mallet", 0.03, 0.026, 0.95, (-0.51, -0.17, 0.66), mat("#6B4F36", 0.0), 6), sphere("malletHead", 0.11, (-0.51, -0.17, 1.64), cloth, 8, 5, (1, 1, 1.15))]
+    armL = [limb("armL", (0.36, 0, 1.38), (0.5, -0.16, 0.8), 0.08, 0.1, sol, 6), sphere("handL", 0.1, (0.51, -0.17, 0.74), sol, 6, 4),
+            cyl("gong", 0.34, 0.34, 0.05, (0.5, -0.3, 0.55), brass, 14, rot=(math.pi / 2, 0, 0)), cyl("gongBoss", 0.1, 0.1, 0.08, (0.5, -0.33, 0.55), mat("#C9A24E", 0.6), 10, rot=(math.pi / 2, 0, 0)),
+            box("gongCrack", (0.03, 0.02, 0.3), (0.58, -0.37, 0.6), "face", rot=(0, 0.5, 0)), box("gongCord", (0.03, 0.03, 0.34), (0.5, -0.25, 0.9), mat("#6B4F36", 0.0))]
+    return to_group(torso, "Body") + to_group(armL, "ArmL") + to_group(armR, "ArmR")
+
+def clips_elite():
+    B = lambda **k: {"Body": S(**k)}
+    C = {}
+    fl_a = {**B(r=(2, 0, -3)), "ArmL": S(r=(3, 0, 2)), "ArmR": S(r=(-3, 0, -2))}; fl_b = {"Root": {"l": (0, 0, 0.06)}, **B(r=(-2, 0, 3), s=(0.99, 0.99, 1.02)), "ArmL": S(r=(-4, 0, -2)), "ArmR": S(r=(4, 0, 3))}
+    C["Float"] = ([(0, fl_a), (45, fl_b), (90, fl_a)], "BEZIER", True, {})
+    # 내려치기 예고 72f(1.2초): ① 0~20 숨을 들이켜며 몸을 뒤로 젖히고 징채를 어깨 높이로 ② 20~54 징채를 머리 위로 높이 치켜든다(실루엣이 키 위로 솟음 = 신호) ③ 54 번쩍 → 72까지 부들부들 떨며 버틴다
+    p1 = {**B(r=(-10, 0, 0), s=(1.04, 1.04, 0.95)), "ArmR": S(r=(70, 0, 0)), "ArmL": S(r=(-25, 0, 8))}
+    p2 = {**B(r=(-22, 0, 4), s=(1.08, 1.08, 0.9)), "ArmR": S(r=(150, 0, 0)), "ArmL": S(r=(-45, 0, 14))}
+    p3 = {**B(r=(-26, 0, 6), s=(1.1, 1.1, 0.88)), "ArmR": S(r=(168, 0, 0)), "ArmL": S(r=(-50, 0, 16))}
+    t1 = {**p3, "Body": S(r=(-26, 0, 8), s=(1.1, 1.1, 0.88)), "ArmR": S(r=(172, 0, 3))}; t2 = {**p3, "Body": S(r=(-26, 0, 4), s=(1.1, 1.1, 0.88)), "ArmR": S(r=(166, 0, -3))}
+    C["SlamWindup"] = ([(0, fl_a), (20, p1), (54, p3), (58, t1), (62, t2), (66, t1), (70, t2), (72, t1)], "BEZIER", False, {"flash": 54, "end_pose_held": True, "tele_seconds": 1.2, "silhouette_cue": "징채가 머리 위로 솟음"})
+    sl = {"Root": S(l=(0, -0.35, 0)), **B(r=(34, 0, 0), s=(0.94, 0.94, 1.06)), "ArmR": S(r=(-38, 0, 0)), "ArmL": S(r=(-20, 0, 8))}
+    C["Slam"] = ([(0, t1), (5, sl), (9, sl), (24, {})], "LINEAR", False, {"hit": 6, "dust": 6, "shake": 6})
+    # 덮치기 예고 60f(1.0초): 몸을 낮게 웅크리고 앞으로 숙이며 두 팔을 뒤로 활짝(납작하고 넓은 실루엣 = 신호). 42에 번쩍
+    c1 = {"Root": S(l=(0, 0.1, 0)), **B(r=(18, 0, 0), s=(1.1, 1.1, 0.8)), "ArmL": S(r=(55, 0, 30)), "ArmR": S(r=(55, 0, -30))}
+    c2 = {"Root": S(l=(0, 0.25, 0)), **B(r=(32, 0, 0), s=(1.18, 1.18, 0.68)), "ArmL": S(r=(85, 0, 48)), "ArmR": S(r=(85, 0, -48))}
+    c3 = {"Root": S(l=(0, 0.28, 0)), **B(r=(34, 0, 2), s=(1.2, 1.2, 0.66)), "ArmL": S(r=(92, 0, 52)), "ArmR": S(r=(92, 0, -52))}
+    C["PounceWindup"] = ([(0, fl_a), (16, c1), (42, c2), (46, c3), (52, c2), (56, c3), (60, c3)], "BEZIER", False, {"flash": 42, "end_pose_held": True, "tele_seconds": 1.0, "silhouette_cue": "납작하게 웅크려 두 팔을 뒤로 활짝"})
+    lun = {"Root": S(l=(0, -0.8, 0.05)), **B(r=(48, 0, 0), s=(0.86, 0.86, 1.2)), "ArmL": S(r=(-95, 0, -18)), "ArmR": S(r=(-95, 0, 18))}
+    C["Pounce"] = ([(0, c3), (4, lun), (12, lun), (22, {"Root": S(l=(0, -0.4, 0)), **B(r=(20, 0, 0), s=(1.02, 1.02, 0.96)), "ArmL": S(r=(-50, 0, -10)), "ArmR": S(r=(-50, 0, 10))}), (30, {})], "LINEAR", False, {"hit": 8, "grab": 12, "note": "몸 이동 6m는 코드가 한다. 이 동작은 몸을 길게 늘여 앞으로 뻗은 모습만 그린다"})
+    # 부르기 울부짖음 48f(0.8초): 몸을 젖히며 왼손의 징을 얼굴 앞으로 들고(0~14), 징채를 뒤로 당겼다(14~24) 징을 친다(28) → 몸 전체가 떨며 외침(28~44)
+    k1 = {**B(r=(-14, 0, 0), s=(1.04, 1.04, 0.96)), "ArmL": S(r=(-70, 0, -8)), "ArmR": S(r=(60, 0, 0))}
+    k2 = {**B(r=(-26, 0, 0), s=(1.08, 1.08, 0.92)), "ArmL": S(r=(-82, 0, -12)), "ArmR": S(r=(135, 0, 0))}
+    k3 = {**B(r=(6, 0, 0), s=(0.96, 0.96, 1.05)), "ArmL": S(r=(-82, 0, -12)), "ArmR": S(r=(-68, 0, 0))}
+    sh1 = {**B(r=(-18, 0, 3), s=(1.1, 1.1, 0.9)), "ArmL": S(r=(-82, 0, -12)), "ArmR": S(r=(-60, 0, 2))}; sh2 = {**B(r=(-18, 0, -3), s=(1.12, 1.12, 0.88)), "ArmL": S(r=(-82, 0, -12)), "ArmR": S(r=(-60, 0, -2))}
+    C["Call"] = ([(0, fl_a), (14, k1), (24, k2), (28, k3), (32, sh1), (36, sh2), (40, sh1), (44, sh2), (48, {})], "BEZIER", False, {"flash": 14, "strike": 28, "howl_from": 28, "howl_to": 44, "spawn_motes": 30, "tele_seconds": 0.8, "sound": "cut.jing", "silhouette_cue": "징을 얼굴 앞으로 들고 징채를 뒤로 당김"})
+    C.update(hr.soul_clips("elite"))   # 피격 3단계·무릎(처결 대기 KneelHold 반복)·천도·파혼
+    return C
+
+TYPES = {"wail": (wail, B_WAIL, clips_wail, "넋두리", "원념을 던지는 원거리 혼"), "mote": (mote, B_MOTE, clips_mote, "잔넋", "작게 무리 짓는 혼"), "buried": (buried, B_BURIED, clips_buried, "묻힌 혼", "땅에서 솟는 혼"), "elite": (elite, B_ELITE, clips_elite, "거센 혼", "첫 강적(1.3배 몸, 징채·징)")}
 
 def orb_fx():
     """던지는 원념 구(투사체): 보랏빛 구 + 겉껍질 + 뒤로 끌리는 꼬리 3가닥. 지름 0.35m, 길이 0.9m. 원점=구 중심, 꼬리는 +Y(뒤) 쪽. 정면=−Y(날아가는 방향)."""
@@ -141,12 +196,15 @@ if __name__ == "__main__":
             reset(); anim.setup_scene(); o = join(name, fn(g)); arm = rig(o, bones); man = []
             for cn, (keys, interp, loop, ev) in cl().items():
                 i = anim.clip(arm, cn, keys, interp); i.update({"loop": loop, "events": ev}); man.append(i)
-            if g == "fresh" or (t == "buried" and g == "old"):
-                big = 3.4 if t != "mote" else 1.6; cz = 0.75 if t != "mote" else 0.25
+            if g == "fresh" or (t == "buried" and g == "old") or (t == "elite" and g == "day"):
+                big = 3.4 if t not in ("mote", "elite") else (1.6 if t == "mote" else 4.4); cz = 0.75 if t not in ("mote", "elite") else (0.25 if t == "mote" else 0.95)
                 setup_render(big, (0, 0, cz), size=(200, 260), ground_size=8)
                 for c in man:
                     n = c["frames"]; anim.sheet(arm, c["name"], sorted({0, n // 4, n // 2, 3 * n // 4, n - 1}), os.path.join(OUT, "previews", f"anim_{name}_{c['name']}"), ortho=big, center=(0, 0, cz), cell=(200, 260))
             p = os.path.join(OUT, "souls", f"{name}.glb"); anim.export_rig(arm, p); v = anim.verify(p); rep.append(v); mans[t] = {"label": ko, "desc": desc, "clips": man, "bones": [b[0] for b in bones]}
             lo, hi = bounds(o) if False else (None, None)
-    json.dump({"fps": anim.FPS, "grades": list(GRADES), "types": mans, "files": rep}, open(os.path.join(OUT, "souls", "_soul_types_manifest.json"), "w"), ensure_ascii=False, indent=1)
+    mp = os.path.join(OUT, "souls", "_soul_types_manifest.json")
+    if only and os.path.exists(mp):   # 일부만 다시 만들 때는 기존 유형·파일 기록을 지우지 않고 합친다
+        old = json.load(open(mp)); old["types"].update(mans); names = {r.get("name") for r in rep}; old["files"] = [f for f in old["files"] if f.get("name") not in names] + rep; mans = old["types"]; rep = old["files"]
+    json.dump({"fps": anim.FPS, "grades": list(GRADES), "types": mans, "files": rep}, open(mp, "w"), ensure_ascii=False, indent=1)
     print(len(rep), "개")

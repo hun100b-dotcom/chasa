@@ -268,14 +268,14 @@
     },
     {
      "name": "Windup",
-     "frames": 45,
-     "length_sec": 0.733,
+     "frames": 43,
+     "length_sec": 0.7,
      "loop": false,
      "events": {
-      "flash": 26,
-      "emerge_peak": 30,
+      "flash": 25,
+      "emerge_peak": 29,
       "end_pose_held": true,
-      "ground_dust_at": 26
+      "ground_dust_at": 25
      }
     },
     {
@@ -388,6 +388,172 @@
     "ArmL",
     "ArmR"
    ]
+  },
+  "elite": {
+   "label": "거센 혼",
+   "desc": "첫 강적(1.3배 몸, 징채·징)",
+   "clips": [
+    {
+     "name": "Float",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "SlamWindup",
+     "frames": 73,
+     "length_sec": 1.2,
+     "loop": false,
+     "events": {
+      "flash": 54,
+      "end_pose_held": true,
+      "tele_seconds": 1.2,
+      "silhouette_cue": "징채가 머리 위로 솟음"
+     }
+    },
+    {
+     "name": "Slam",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "dust": 6,
+      "shake": 6
+     }
+    },
+    {
+     "name": "PounceWindup",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": false,
+     "events": {
+      "flash": 42,
+      "end_pose_held": true,
+      "tele_seconds": 1.0,
+      "silhouette_cue": "납작하게 웅크려 두 팔을 뒤로 활짝"
+     }
+    },
+    {
+     "name": "Pounce",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "hit": 8,
+      "grab": 12,
+      "note": "몸 이동 6m는 코드가 한다. 이 동작은 몸을 길게 늘여 앞으로 뻗은 모습만 그린다"
+     }
+    },
+    {
+     "name": "Call",
+     "frames": 49,
+     "length_sec": 0.8,
+     "loop": false,
+     "events": {
+      "flash": 14,
+      "strike": 28,
+      "howl_from": 28,
+      "howl_to": 44,
+      "spawn_motes": 30,
+      "tele_seconds": 0.8,
+      "sound": "cut.jing",
+      "silhouette_cue": "징을 얼굴 앞으로 들고 징채를 뒤로 당김"
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2,
+      "recover_start": 5,
+      "knockback_hint_m": 1.0
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 17,
+     "length_sec": 0.267,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 7,
+      "recover_start": 11,
+      "knockback_hint_m": 1.3
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "peak": 4,
+      "sway_peaks": [
+       9,
+       14,
+       19,
+       24
+      ],
+      "recover_start": 24,
+      "knockback_hint_m": 3.5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "thud": 14,
+      "bounce": 19,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "note": "처결 대기 반복"
+     }
+    },
+    {
+     "name": "Tendo",
+     "frames": 48,
+     "length_sec": 0.783,
+     "loop": false,
+     "events": {
+      "lift": 10,
+      "glow": 24,
+      "burst": 36,
+      "gone": 47,
+      "hide_after": 47
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "crack": 5,
+      "shatter": 9,
+      "gone": 13,
+      "hide_after": 13
+     }
+    }
+   ],
+   "bones": [
+    "Root",
+    "Body",
+    "ArmL",
+    "ArmR"
+   ]
   }
  },
  "files": [
@@ -399,78 +565,6 @@
     0.97,
     0.5
    ]
-  },
-  {
-   "file": "soul_wail_fresh.glb",
-   "skins": 1,
-   "joints": 4,
-   "animations": [
-    "Float",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Hit1",
-    "Hit2",
-    "Stagger",
-    "KneelHold",
-    "Tendo",
-    "Pahon"
-   ],
-   "size_kb": 138
-  },
-  {
-   "file": "soul_wail_day.glb",
-   "skins": 1,
-   "joints": 4,
-   "animations": [
-    "Float",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Hit1",
-    "Hit2",
-    "Stagger",
-    "KneelHold",
-    "Tendo",
-    "Pahon"
-   ],
-   "size_kb": 138
-  },
-  {
-   "file": "soul_wail_old.glb",
-   "skins": 1,
-   "joints": 4,
-   "animations": [
-    "Float",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Hit1",
-    "Hit2",
-    "Stagger",
-    "KneelHold",
-    "Tendo",
-    "Pahon"
-   ],
-   "size_kb": 138
-  },
-  {
-   "file": "soul_wail_lump.glb",
-   "skins": 1,
-   "joints": 4,
-   "animations": [
-    "Float",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Hit1",
-    "Hit2",
-    "Stagger",
-    "KneelHold",
-    "Tendo",
-    "Pahon"
-   ],
-   "size_kb": 138
   },
   {
    "file": "soul_mote_fresh.glb",
@@ -488,7 +582,7 @@
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 61
+   "size_kb": 62
   },
   {
    "file": "soul_mote_day.glb",
@@ -506,7 +600,7 @@
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 61
+   "size_kb": 62
   },
   {
    "file": "soul_mote_old.glb",
@@ -524,7 +618,7 @@
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 61
+   "size_kb": 62
   },
   {
    "file": "soul_mote_lump.glb",
@@ -542,7 +636,7 @@
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 61
+   "size_kb": 62
   },
   {
    "file": "soul_buried_fresh.glb",
@@ -580,7 +674,7 @@
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 163
+   "size_kb": 162
   },
   {
    "file": "soul_buried_old.glb",
@@ -599,7 +693,7 @@
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 163
+   "size_kb": 162
   },
   {
    "file": "soul_buried_lump.glb",
