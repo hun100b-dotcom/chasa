@@ -190,13 +190,39 @@ public class MiniMap : MonoBehaviour
 
     void DrawBig()
     {
+        // 아트 큰 지도 틀(1536×864, 지도 창 1104×700 이 왼쪽 위 64,96 에 뚫림, 오른쪽 범례 칸 300×700 이 1196,96)을 화면 80% 로 띄운다
+        var bf = SpriteLib.Texture("ui/map_bigmap_frame");
+        Box(new Rect(0, 0, Screen.width, Screen.height), new Color(0, 0, 0, 0.7f));
+        if (bf == null) { DrawBigPlain(); return; }
+        float k = Mathf.Min(Screen.width * 0.8f / 1536f, Screen.height * 0.8f / 864f);
+        var fr = new Rect((Screen.width - 1536f * k) * 0.5f, (Screen.height - 864f * k) * 0.5f, 1536f * k, 864f * k);
+        var win = new Rect(fr.x + 64f * k, fr.y + 96f * k, 1104f * k, 700f * k);
+        float size = 700f * k;
+        var r = new Rect(win.x + (win.width - size) * 0.5f, win.y, size, size);   // 지도는 정사각이라 창 가운데에 맞춘다
+        Box(win, new Color(0.10f, 0.09f, 0.08f, 1f));
+        float scale = size / WorldM;
+        if (ready) GUI.DrawTexture(r, baseTex);
+        foreach (var z in zones)
+        {
+            var c = new Vector2((z.Value.xMin + z.Value.xMax) * 0.5f, (z.Value.yMin + z.Value.yMax) * 0.5f);
+            var sp = new Vector2(r.x + c.x * scale, r.yMax - c.y * scale);
+            Frame(new Rect(r.x + z.Value.xMin * scale, r.yMax - z.Value.yMax * scale, z.Value.width * scale, z.Value.height * scale), 1f, new Color(0.2f, 0.1f, 0.05f, 0.35f));
+            GUI.color = new Color(0.15f, 0.07f, 0.03f, 0.9f); GUI.Label(new Rect(sp.x - 70, sp.y - 12, 140, 24), z.Key, label); GUI.color = Color.white;
+        }
+        DrawMarkers(r, Vector2.zero, scale, 0f, 0f, true);
+        GUI.DrawTexture(fr, bf);
+        var lg = SpriteLib.Texture("ui/map_bigmap_legend"); if (lg != null) GUI.DrawTexture(new Rect(fr.x + 1196f * k, fr.y + 96f * k, 300f * k, 700f * k), lg);
+        var tt = SpriteLib.Texture("ui/map_bigmap_title"); if (tt != null) GUI.DrawTexture(new Rect(fr.x + 618f * k - 150f * k, fr.y + 36f * k, 300f * k, 54f * k), tt);
+        GUI.Label(new Rect(fr.x, fr.yMax + 6f, fr.width, 22f), "M · Esc 닫기", label);
+    }
+
+    void DrawBigPlain()
+    {
         float size = Mathf.Min(Screen.width - 80f, Screen.height - 120f);
         var r = new Rect((Screen.width - size) * 0.5f, 60f, size, size);
-        Box(new Rect(0, 0, Screen.width, Screen.height), new Color(0, 0, 0, 0.7f));
         Box(new Rect(r.x - 6, r.y - 6, r.width + 12, r.height + 12), new Color(0.10f, 0.09f, 0.08f, 1f));
         float scale = size / WorldM;
         if (ready) GUI.DrawTexture(r, baseTex);
-        // 구역 이름
         foreach (var z in zones)
         {
             var c = new Vector2((z.Value.xMin + z.Value.xMax) * 0.5f, (z.Value.yMin + z.Value.yMax) * 0.5f);
@@ -207,7 +233,7 @@ public class MiniMap : MonoBehaviour
         DrawMarkers(r, Vector2.zero, scale, 0f, 0f, true);
         Frame(r, 2f, new Color(0.83f, 0.66f, 0.31f, 1f));
         GUI.Label(new Rect(r.x, 14f, r.width, 36f), "필드 지도", title);
-        GUI.Label(new Rect(r.x, r.yMax + 10f, r.width, 22f), "● 혼   붉은 네모 보스   ! 단서   흰 화살표 나   M·Esc 닫기", label);
+        GUI.Label(new Rect(r.x, r.yMax + 10f, r.width, 22f), "M · Esc 닫기", label);
     }
 
     // 큰 지도(big=true): 북쪽이 위, 화면 = r 안의 절대 좌표. 작은 지도: 중심(cen) 기준 회전 좌표, 지도 가장자리 밖 표식은 가장자리에 붙인다
