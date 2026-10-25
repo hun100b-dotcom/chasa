@@ -138,6 +138,15 @@ public class Enemy : MonoBehaviour
         baseColor = ChasaPalette.SoulFresh; mat.color = baseColor;
     }
 
+    /// <summary>이름혼으로 만든다(박돌쇠 등): 이름표·고유 혼 상태. 나이에 맞는 색을 입는다</summary>
+    public void MakeNamed(string name, SoulKind kind, float waitBonus)
+    {
+        label = name;
+        soul = Soul.Named(name, kind, Balance.MAEDHIM_NORMAL);
+        soul.WaitBonus = waitBonus;
+        baseColor = KindColor(kind); mat.color = baseColor;
+    }
+
     /// <summary>S1 보스 나루 영감: 크고 느리고 한 방이 아프다</summary>
     public void MakeBoss()
     {

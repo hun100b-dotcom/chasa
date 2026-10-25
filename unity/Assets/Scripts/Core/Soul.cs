@@ -25,6 +25,7 @@ namespace Chasa.Core
         public bool Fierce;          // 얼룩 3개로 소환된 사나운 적
         public bool Boss;            // 보스 여부 (천도에 단서 3개 필요, 보상이 큼)
         public string Name;          // 이름혼/보스의 이름 (무명 혼은 null)
+        public float WaitBonus;      // 인(seal)이 흐리면 처결 대기가 늘어난다(흐림 +0.25 · 없음 +0.5초). 서사 규칙
         public bool Trick;           // 속임수 혼: 무릎 꿇은 척하다 가까이 오면 덮친다 (한 번만)
         public float Fuse;           // 속임수 도화선: 플레이어가 가까이 있는 동안 쌓이는 시간 (화면이 붉은 고리로 보여 줌)
 
@@ -59,6 +60,11 @@ namespace Chasa.Core
         public bool CanTendoWith(int clues) { return CanTendo && (!Boss || clues >= Balance.BOSS_CLUES_REQUIRED); }
 
         public float WaitTimeForKind()
+        {
+            return WaitBase() + WaitBonus;
+        }
+
+        float WaitBase()
         {
             if (Boss) return Balance.BOSS_S1_WAIT;
             switch (Kind)

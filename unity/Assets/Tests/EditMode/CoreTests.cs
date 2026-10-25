@@ -1521,4 +1521,13 @@ public class CoreTests
         Assert.AreEqual(1, ZoneRules.Find(z, 15, 15));
         Assert.AreEqual(-1, ZoneRules.Find(z, 50, 50));
     }
+
+    // ---------- 이름혼 인(seal) ----------
+    [Test]
+    public void Soul_FadedSealLengthensWait()
+    {
+        var clear = Soul.Named("A", SoulKind.Fresh, 1); clear.TakeHit(5);
+        var faded = Soul.Named("B", SoulKind.Fresh, 1); faded.WaitBonus = 0.25f; faded.TakeHit(5);
+        Assert.AreEqual(clear.WaitTotal + 0.25f, faded.WaitTotal, 1e-4f);
+    }
 }

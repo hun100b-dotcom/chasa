@@ -59,6 +59,7 @@ public class GameMain : MonoBehaviour
         if (FieldRules.On)
         {
             judge.camps = new FieldCamps(enemies);
+            judge.named = new NamedSoulSpawns(enemies);
             judge.clock = new WorldClock();
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();

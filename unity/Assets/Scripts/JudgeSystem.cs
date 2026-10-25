@@ -182,7 +182,7 @@ public class JudgeSystem : MonoBehaviour
             ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f));   // 향 내음: 천도 넋 보너스
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
-            if (night.TakeNamedSpawn()) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
+            if (night.TakeNamedSpawn() && clock == null) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
         }
         // 기억 한 줄: 천도해야만 보이는 이야기(파혼엔 없다). 이름혼의 기억은 추리판 사실도 켠다
         if (castTarget.soul.Name == "곽 뱃꾼" && clueBook.Add("B01-D4")) Say("단서 — 곽 뱃꾼의 기억");   // 밤 대체 단서(서사 확정): 천도해야만 얻는다
@@ -490,6 +490,7 @@ public class JudgeSystem : MonoBehaviour
         clock.Tick(dt);
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
+        if (named != null) named.Tick(player.Pos, clock.Daylight);
         night.Clues = Mathf.Min(Balance.BOSS_CLUES_REQUIRED, clueBook.Count("B01-"));   // 1막 첫 보스(나루 영감)의 낮 단서 수 = 보스 천도 조건
         var ph = clock.Consume();
         if (ph.HasValue)
@@ -623,6 +624,7 @@ public class JudgeSystem : MonoBehaviour
     void Hint(HintEvent e) { var t = hints.On(e, Ko.TouchUI); if (t != null) ui?.Hud.Toasts.Add(t); }
     public readonly CutscenePlayer cuts = new CutscenePlayer();   // 나루 영감 실시간 컷신
     bool bossIntroChecked;
+    public NamedSoulSpawns named;               // 첫 세션 이름혼들
     public NpcWorld npcs;                       // 필드의 산 사람(엿듣기·지켜보기)
     public readonly ClueBook clueBook = new ClueBook();
     public WorldClock clock;   // 필드 모드의 흐르는 하루 (없으면 옛 '하룻밤 한 판')
