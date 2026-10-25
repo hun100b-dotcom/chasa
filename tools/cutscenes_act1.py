@@ -61,7 +61,7 @@ b02 = [
    st(3.0, act='월화가 열두째 잔을 들어 잠깐 플레이어 쪽으로 내민다. 그리고 도로 내려놓는다', note='대사 없음. "당집 아이 몫"과 나(F9)를 잇는 손짓 — 말로 풀지 않는다. 카메라는 그녀만 잡고 플레이어 얼굴은 비추지 않는다'),
    st(4.5, cam={'mode': 'pull', 'zoom': 0.9, 'time': 1.5, 'vignette': 0.0}, act='월화가 부채를 접어 굿상 머리에 뉘고, 오방 천 빛으로 흩어진다'),
    st(6.0, act='폐당집 처마 밑에 등 하나가 켜진다(두 번째 쉼터)'),
-   st(7.0, cam={'mode': 'return', 'to': 'player', 'time': 0.5}, ui={'fact_on': 'F12', 'reward': {'neok': 50, 'memory': 'M-B02'}, 'world_change': '폐당집 두 번째 쉼터(귀환 지점)', 'item_spawn': '옥이의 신칼(굿상 머리)'})]},
+   st(7.0, cam={'mode': 'return', 'to': 'player', 'time': 0.5}, ui={'fact_on': 'F12', 'reward': {'neok': 50, 'memory': 'M-B02'}, 'world_change': '폐당집 두 번째 쉼터 · 쉼터 둘레 40 m 혼은 처결 대기 +2초(굿을 끝낸 자리)', 'item_spawn': '옥이의 신칼(굿상 머리)'})]},
  {'id': 'B02-PAHON', 'branch': '파혼', 'trigger': '처결 대기 중 파혼 입력', 'duration': 2.5, 'input_lock': False, 'world': 'run', 'skippable': False,
   'note': '즉시. 폭발로 화면의 잡몹이 밀려나 안전',
   'steps': [
@@ -69,7 +69,7 @@ b02 = [
    st(0.3, ui={'ledger_name': '월화', 'ledger_fx': 'strokes_scatter'}, act='명부의 "월화" 획이 흩어진다'),
    st(0.8, act='붉은 천과 오방 천 조각이 흩날린다. 방울 하나만 굿판 위로 굴러 와 멈춘다(월화의 방울)'),
    st(1.5, act='굿판 바닥에 얼룩이 둥지처럼 번진다', note='대사 없음'),
-   st(2.5, ui={'reward': {'item': '월화의 방울(파혼 반경 +0.5m, 얼룩 위 천도 −0.3초)'}, 'karma': '+3', 'karma_warning': '업 단계 경계를 넘으면 화면 경고', 'world_change': '폐당집 얼룩 둥지', 'item_spawn': '옥이의 신칼(굿상 머리)'})]},
+   st(2.5, ui={'reward': {'coin': 30, 'item': '월화의 방울(파혼 반경 +0.5m, 얼룩 위 천도 −0.3초)'}, 'karma': '+3', 'karma_warning': '업 단계 경계를 넘으면 화면 경고', 'world_change': '폐당집 얼룩 둥지', 'next_day': '얼룩 둥지에서 밤마다 거센 혼 하나', 'closeup': '굴러온 방울(마지막 0.5초)', 'item_spawn': '옥이의 신칼(굿상 머리)'})]},
 ]
 
 # ───────── B-03 서 의원 (② 역병막) ─────────
@@ -99,7 +99,7 @@ b03 = [
    st(3.5, cam={'mode': 'pull', 'zoom': 0.9, 'time': 1.0, 'vignette': 0.0}, act='명부가 저절로 넘어간다. 검은여울 장마다 인 빈 줄들에 흐린 인이 배어 나온다', ui={'ledger_fx': 'region2_seal_missing_to_faded'}),
    st(5.0, act='의원이 탕건을 고쳐 쓰고, 거적 움막 줄을 한 번 돌아본 뒤 약탕 빛으로 흩어진다', note='대사 없음'),
    st(6.5, cam={'mode': 'cut', 'to': 'market_square', 'time': 0.0, 'hold': 0.6}, act='먼 장터 쪽, 주막 기둥에 등 하나'),
-   st(7.0, cam={'mode': 'return', 'to': 'player', 'time': 0.5}, ui={'fact_on': 'F10', 'reward': {'neok': 50, 'memory': 'M-B03'}, 'world_change': '검은여울 이름혼 인 없음 → 흐림(+0.5 → +0.25초) · 장터 장례 장면 추가', 'item_spawn': '씻은 붓(약장 맨 아랫단)'})]},
+   st(7.0, cam={'mode': 'return', 'to': 'player', 'time': 0.5}, ui={'fact_on': 'F10', 'reward': {'neok': 50, 'memory': 'M-B03'}, 'world_change': '검은여울 이름혼 인 없음 → 흐림(+0.5 → +0.25초) · 검은여울 이름혼 천도 넋 ×1.15 · 장터 장례 장면 추가', 'item_spawn': '씻은 붓(약장 맨 아랫단)'})]},
  {'id': 'B03-PAHON', 'branch': '파혼', 'trigger': '처결 대기 중 파혼 입력', 'duration': 2.5, 'input_lock': False, 'world': 'run', 'skippable': False,
   'note': '즉시. 폭발로 화면의 잡몹이 밀려나 안전',
   'steps': [
@@ -107,7 +107,7 @@ b03 = [
    st(0.3, ui={'ledger_name': '서인보', 'ledger_fx': 'strokes_scatter'}, act='명부의 "서인보" 획이 흩어진다. 인 자리는 끝내 비어 있다'),
    st(0.8, act='회복약 다섯 병이 마당에 구른다. 희게 마른 붓 한 자루가 감초 더미 위에 떨어진다'),
    st(1.5, act='번호 칸 바닥의 붉은 선만 잠깐 남았다가 꺼진다', note='대사 없음'),
-   st(2.5, ui={'reward': {'potion': 5}, 'karma': '+3', 'karma_warning': '업 단계 경계를 넘으면 화면 경고', 'world_change': '검은여울 이름혼은 끝까지 인 없음', 'item_spawn': '씻은 붓(약장 터진 자리)'})]},
+   st(2.5, ui={'reward': {'coin': 30, 'potion': 5}, 'karma': '+3', 'karma_warning': '업 단계 경계를 넘으면 화면 경고', 'world_change': '검은여울 이름혼은 끝까지 인 없음', 'next_day': '역병막 터에 깨진 약장. 둘레에 쑥 줍기 3이 날마다 난다', 'closeup': '흩어진 약재 위의 씻은 붓(마지막 0.5초)', 'item_spawn': '씻은 붓(약장 터진 자리)'})]},
 ]
 
 b02 = [sfx_apply(c) for c in b02]

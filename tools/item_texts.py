@@ -199,6 +199,35 @@ for ln in OLD_POOL:
 names = [x['name'] for x in gear + sets + old_set]
 assert len(names) == len(set(names)), '장비 이름 겹침'
 
+# ── 보스 보상 재점검(기획 10-26, 코디 채택)으로 새로 생긴 이름 있는 물건 ──
+# text = 아이템 창 세계관 문장(22자 × 두 줄). memory = growth.json named_season1에 넣을 기억 한 줄 제안(기획이 옮김).
+# 사슬 · 결말 비밀은 건드리지 않는다. "흑월의 붓"은 도감 수집품 → 이름 있는 노리개로 바뀜(시즌 2로 가져감).
+NAMED_NEW = {
+ '도한수의 뱃삯': {'slot': '노리개', 'from': 'B-01 파혼',
+             'text': ['끈만 남은 허리춤 꾸러미', '건네지 못한 손님들의 삯'],
+             'memory': '뱃삯은 건너 준 다음에 받는다. 아직 못 건넨 몫이었다.'},
+ '남은 장부': {'slot': '노리개', 'from': 'B-08 파혼',
+           'text': ['타다 남은 장부 몇 장', '뒷장에는 숫자만 남았다'],
+           'memory': "앞장엔 '손실 열넷'. 뒷장엔 순돌, 막쇠, 개똥이… 열네 사람."},
+ '아낙의 등잔': {'slot': '노리개', 'from': 'B-09 파혼',
+            'text': ['곶 바위에 놓였던 등잔', '기름보다 그을음이 많다'],
+            'memory': '그이 몸은 아직 저 아래 있어요.'},
+ '왕초의 바가지': {'slot': '노리개', 'from': 'B-11 파혼',
+             'text': ['다리 밑 아이들이 돌려 쓰던 것', '밑바닥에 금이 셋 갔다'],
+             'memory': '이름 없는 아이들한테 이름을 지어 주라더라.'},
+ '흑월의 붓': {'slot': '노리개', 'from': 'B-12 천도(시즌 2로 가져감)',
+           'text': ['사슬 대신 눈밭에 남은 붓', '끝이 아직 젖어 있다'],
+           'memory': '숨이 끊기기 전에 이름을 불러 주지 못했다.'},
+}
+NAMED_NEW_RULE = {
+    'names': '기획 이름 그대로 확정(서사 10-26). 「」는 화면에서 쓰지 않는다',
+    'tendo_effects': 'B-09 천도 효과 "등대 빛"은 "곶 불빛"으로(그 시대·그 자리에 등대가 없다). 기획 문서의 "사나운 적"은 화면에서 "거센 혼"',
+}
+
+for k, v in NAMED_NEW.items():
+    check(k, v['text']); assert len(v['memory']) <= 40
+assert not set(NAMED_NEW) & set(names)
+
 data = {
     '_설명': '아이템 설명글(세계관 문장) — 인 · 장비 · 도술. tools/item_texts.py로 생성. 기능 문구(숫자)는 기획 ui-text-table.csv가 정본. 서사 2026-10-26',
     'rules': {
@@ -213,6 +242,7 @@ data = {
                      'pool_rule': '드롭마다 풀에서 한 줄을 고정 배정. 같은 줄이 연달아 나오지 않게', 'set': old_set,
                      'set_place': OLD_SET['_자리']},
     'skills': skills, 'link_skills_s2': LINK_SKILL,
+    'named_boss_new': {'rule': NAMED_NEW_RULE, 'items': [dict(name=k, **v) for k, v in NAMED_NEW.items()]},
 }
 json.dump(data, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('seals', len(seals), '+3색', len(seals3), '| gear', len(gear), '| sets', len(sets), '| old', len(OLD_POOL), '+', len(old_set), '| skills', len(skills), '+이음', len(LINK_SKILL))
