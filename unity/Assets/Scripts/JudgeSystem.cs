@@ -851,6 +851,11 @@ public class JudgeSystem : MonoBehaviour
             var t2 = Resources.Load<TextAsset>("Data/act2_map");
             if (t2 != null) { var f2 = JsonUtility.FromJson<FTargetFile>(t2.text); if (f2 != null && f2.funerals != null) foreach (var x in f2.funerals) funeralTargets[x.name] = x; }
         }
+        if (FieldRules.Act3)   // 3막 장례 좌표는 기획 act3_map.json 의 funerals(모양이 2막과 같다)
+        {
+            var t3 = Resources.Load<TextAsset>("Data/act3_map");
+            if (t3 != null) { var f3 = JsonUtility.FromJson<FTargetFile>(t3.text); if (f3 != null && f3.funerals != null) foreach (var x in f3.funerals) funeralTargets[x.name] = x; }
+        }
     }
     /// <summary>장례 컷의 조건 글자(서사 condition). 지금은 1호 결과만 안다(3호 결과는 아직 따로 세지 않아 false)</summary>
     bool FuneralCond(string c) { return c == "B-01 천도함" ? bossOutcome == 1 : false; }

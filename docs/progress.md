@@ -1207,3 +1207,8 @@
 - 금줄이 닫힌 땅은 안 읽으므로 금줄 너머는 빈 땅(안개)으로 보인다.
 - 주석 속 금지 이름(디아블로) 2곳(OccluderFade.cs, View3D.cs) 삭제.
 - 미확인: 읽는 순간 끊김(동기 읽기), 메모리 실측 → PC 측정 필요.
+
+## 3막 산 사람·이름혼·장례 연결 (코드·QA, 2026-10-25)
+- `tools/build_npc_act3.py` → `npc_flat_act3.json`(일정 8·물건 단서 7·자리 21), `tools/build_named_souls_act3.py` → `named_souls_act3.json`(장례 대상 10명, 자리는 대문 남쪽 8m 임시 — 아트가 자리표를 주면 교체).
+- 장례 컷: `build_funeral_cuts.py` 가 funerals_act3 도 변환(총 54컷). 장례 좌표는 act3_map.funerals 를 JudgeSystem 이 읽는다.
+- NpcWorld·NamedSoulSpawns 가 FieldRules.Act3 일 때 3막 표를 더 읽는다. 미확인: 화면에서 자리·장례 흐름(PC), 3막 단서 규칙(B-05/B-08 천도 조건, SH3-3 해금)은 아직.

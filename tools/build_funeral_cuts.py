@@ -44,6 +44,13 @@ if os.path.exists(p2):
     ids = {f["id"] for f in src["funerals"]}
     assert not any(f["id"] in ids for f in f2), "장례 id 겹침"
     src["funerals"] = src["funerals"] + f2
+# 3막 장례(docs/narrative/funerals_act3.json)도 같다
+p3 = os.path.join(root, "docs", "narrative", "funerals_act3.json")
+if os.path.exists(p3):
+    f3 = json.load(open(p3, encoding="utf-8"))["funerals"]
+    ids = {f["id"] for f in src["funerals"]}
+    assert not any(f["id"] in ids for f in f3), "장례 id 겹침"
+    src["funerals"] = src["funerals"] + f3
 cuts = []
 for f in src["funerals"]:
     for b in f["branches"]:

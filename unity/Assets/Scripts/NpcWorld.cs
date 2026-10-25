@@ -67,6 +67,7 @@ public class NpcWorld
         placeOffset.Clear(); placeAbs.Clear();
         LoadFlat("Data/npc_flat", false);
         if (FieldRules.Act2) LoadFlat("Data/npc_flat_act2", true);   // 2막 땅이 열렸을 때만 2막 산 사람·단서를 세운다(tools/build_npc_act2.py)
+        if (FieldRules.Act3) LoadFlat("Data/npc_flat_act3", true);   // 3막(⑤ 갯마을·⑥ 도성)도 같다(tools/build_npc_act3.py). 금줄이 닫힌 동안은 주인공이 못 가므로 보이지 않는다
         LoadJesa();
     }
 

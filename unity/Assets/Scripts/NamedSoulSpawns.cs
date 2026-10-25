@@ -38,6 +38,12 @@ public class NamedSoulSpawns
             var f2 = t2 != null ? JsonUtility.FromJson<FileData>(t2.text) : null;
             if (f2 != null && f2.souls != null) foreach (var r in f2.souls) { entries.Add(new Entry { row = r }); OffLedger.Add(r.name); }
         }
+        if (FieldRules.Act3)   // 3막 장례 대상 이름혼 10명(tools/build_named_souls_act3.py)
+        {
+            var t3 = Resources.Load<TextAsset>("Data/named_souls_act3");
+            var f3 = t3 != null ? JsonUtility.FromJson<FileData>(t3.text) : null;
+            if (f3 != null && f3.souls != null) foreach (var r in f3.souls) { entries.Add(new Entry { row = r }); OffLedger.Add(r.name); }
+        }
     }
 
     /// <summary>daylight: 하늘 밝기(0=밤). 밤에만 혼이 보인다</summary>
