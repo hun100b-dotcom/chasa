@@ -164,7 +164,7 @@ const JUDGE_RANGE := 2.8              # (임시 해석) 처결하려면 이 거�
 const PAHON_RADIUS := 3.0             # P-002 폭발 반경
 const PAHON_DAMAGE := 35              # P-003 주변 적 맺힘 피해
 const PAHON_KNOCKBACK_DIST := 3.0     # P-004 넉백 거리(m). 속도 = 거리 × 마찰(5.5)로 환산
-const PAHON_COIN := 8                 # P-005 엽전
+const PAHON_COIN := 7                 # P-005 엽전
 const PAHON_KARMA := 1                # P-006 업 누적
 const STAIN_RADIUS := 2.0             # P-007 원념 얼룩 반경
 const STAIN_DURATION := 15.0          # P-008 지속

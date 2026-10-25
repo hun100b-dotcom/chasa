@@ -20,13 +20,17 @@ class RunResult
 
 static class Sim
 {
-    const double Dps = 34.0, HitMove = 0.30, HitBoss = 0.12, HitBossAdds = 0.20, HitCast = 0.75, TravelAvg = 8.0, Approach = 0.6;
+    const double BaseDps = 34.0, HitMove = 0.30, HitBoss = 0.12, HitBossAdds = 0.20, HitCast = 0.75, TravelAvg = 8.0, Approach = 0.6;
     const int Nights = 3;
+    static bool Growth = true;   // 성장(품계 힘 몰기·장비 손보기·얼룩 점수)을 전투에 직접 넣는다. --nogrowth 면 끈다(옛 시뮬)
+    const double MainOptDmg = 0.055;   // 손보기 대상 주옵션을 피해 옵션 평균(기본 6% x 등급 0.5~1.1)으로 가정
+    static readonly int[] EnhCost = { 30, 60, 100, 150, 220 };
     const double RestBelow = 45, ShrineWalk = 14.0;   // 체력이 이 밑이면 서낭당(왕복 약 14초)에서 쉰다
 
     static int Main(string[] args)
     {
-        int runs = args.Length > 0 ? int.Parse(args[0]) : 4000;
+        int runs = args.Length > 0 && !args[0].StartsWith("--") ? int.Parse(args[0]) : 4000;
+        foreach (var a in args) if (a == "--nogrowth") Growth = false;
         Console.WriteLine("1막 시뮬: 첫 밤 " + Nights + "개 + 1호 보스, 각 전략 " + runs + "판. 밤 " + Balance.NIGHT_DURATION + "초, 몫 " + Balance.NIGHT_QUOTA + ", 체력 " + Balance.PLAYER_MAX_HP);
         var results = new Dictionary<Strat, List<RunResult>>();
         foreach (Strat s in Enum.GetValues(typeof(Strat)))
@@ -54,7 +58,7 @@ static class Sim
         Console.WriteLine("| w | " + string.Join(" | ", names) + " | 1등 |");
         Console.WriteLine("|---|---|---|---|---|---|");
         var passRows = new List<string>();
-        foreach (double w in new[] { 0.25, 0.5, 1.0, 1.25, 1.5, 2.0, 4.0 })
+        foreach (double w in new[] { 0.5, 1.0, 1.15, 1.3, 1.45, 2.0 })
         {
             var vals = new List<double>(); int best = 0;
             foreach (Strat s in Enum.GetValues(typeof(Strat)))
@@ -100,6 +104,9 @@ static class Sim
     {
         var res = new RunResult(); var led = new Ledger(); var g = new GrowthState();
         double hp = led.MaxHp; int potions = Balance.FIRST_NIGHT_HEAL; double bonusPool = 0; bool namedTendoed = false;
+        int enhSteps = 0, stainPts = 0, pahonCnt = 0; var slotLv = new int[3]; int spent = 0; double coinAcc = 0;
+        // 지금 공격력: 품계가 오르면 능력치 5점을 전부 힘에(+1%/점), 손보기 한 단계 = 주옵션 +6%(=피해 약 +0.33%)
+        Func<double> dps = () => !Growth ? BaseDps : BaseDps * (1 + GrowthStr(GrowthState.RankFor(led.Neok))) * (1 + Balance.ENHANCE_PCT * MainOptDmg * enhSteps);
         for (int night = 0; night < Nights && hp > 0; night++)
         {
             double t = 0, lastTendoAt = -99, sinceHit = 99; int sentTonight = 0; res.QuotaSeconds[night] = double.NaN;
@@ -118,7 +125,7 @@ static class Sim
                 // 죽여서 무릎 꿇리기
                 double maed = lump ? Balance.MAEDHIM_LUMP : Balance.MAEDHIM_NORMAL;
                 double use = Math.Min(maed - 10, bonusPool); bonusPool -= use;   // 앞선 파혼 폭발이 이미 깎아 둔 몫
-                double kill = (maed - use) / Dps + 0.5;
+                double kill = (maed - use) / dps() + 0.5;
                 double take = (others + 1) * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitMove;
                 Hit(ref hp, ref sinceHit, ref res, take); t += kill; sinceHit = take > 0 ? 0 : sinceHit + kill;
                 if (hp <= 0) break;
@@ -140,7 +147,12 @@ static class Sim
                 else
                 {
                     t += 0.25 + Approach; led.DoPahon(); res.Pahon++;
-                    bonusPool += others * Balance.PAHON_DAMAGE;   // 폭발이 이웃들을 먼저 깎아 둔다
+                    if (Growth)
+                    {
+                        pahonCnt++; if (pahonCnt % Balance.PAHON_STAIN_POINT_EVERY == 0) stainPts++;
+                        coinAcc += Balance.PAHON_COIN * 0.2 * Math.Min(2, stainPts); int whole = (int)coinAcc; led.Coin += whole; coinAcc -= whole;   // 얼룩 점수 -> 노잣돈 2단계(+20%/단계)
+                    }
+                    bonusPool += others * Balance.PAHON_DAMAGE * (Growth ? 1 + 0.1 * Math.Max(0, Math.Min(2, stainPts - 2)) : 1);   // 폭발이 이웃들을 먼저 깎아 둔다(남는 얼룩 점수는 큰 폭발로)
                     if (named) namedDone = true;
                 }
                 hp = Heal(hp, ref potions);
@@ -149,6 +161,13 @@ static class Sim
             res.Seconds += t;
             // 낮: 단서(1호 보스). 지켜보기·만져 보기는 늘, 엿듣기는 업 30 미만일 때만, 밤 대체 단서는 이름혼을 천도했을 때만
             if (night == Nights - 1) { res.Clues = 2 + (Eavesdrop.Mode(led.Karma, true, true) != EavesMode.Closed ? 1 : 0) + (namedTendoed ? 1 : 0); }
+            if (Growth)   // 낮: 가진 엽전으로 칸 셋을 값싼 단계부터 손본다
+                while (true)
+                {
+                    int best = -1; for (int k = 0; k < 3; k++) if (slotLv[k] < Balance.ENHANCE_MAX && (best < 0 || slotLv[k] < slotLv[best])) best = k;
+                    if (best < 0 || led.Coin - spent < EnhCost[slotLv[best]]) break;
+                    spent += EnhCost[slotLv[best]]; slotLv[best]++; enhSteps++;
+                }
             hp = led.MaxHp; potions = Math.Max(potions, Balance.FIRST_NIGHT_HEAL);   // 서낭당·낮에 회복
         }
         res.DiedInNight = hp <= 0;
@@ -156,7 +175,7 @@ static class Sim
         if (hp > 0)
         {
             res.BossFought = true; bool canTendo = Math.Min(res.Clues, Balance.BOSS_CLUES_REQUIRED) >= Balance.BOSS_CLUES_REQUIRED;
-            double kill = Balance.BOSS_S1_MAEDHIM / Dps + 1.0, sinceHit = 99;
+            double kill = Balance.BOSS_S1_MAEDHIM / dps() + 1.0, sinceHit = 99;
             double take = (kill / (Balance.ENEMY_ATTACK_INTERVAL / Balance.BOSS_S1_SPEED_MULT)) * Balance.BOSS_S1_DAMAGE * HitBoss + 2 * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitBossAdds;   // 보스는 예비동작이 길어 읽힌다   // 보스 + 올라오는 혼 2마리
             Hit(ref hp, ref sinceHit, ref res, take); res.Seconds += kill;
             if (hp > 0) hp = Heal(hp, ref potions);
@@ -175,6 +194,8 @@ static class Sim
         res.Died = hp <= 0; res.Neok = led.Neok; res.Memory = led.Memory; res.Coin = led.Coin; res.Karma = led.Karma; res.Rank = GrowthState.RankFor(led.Neok);
         return res;
     }
+
+    static double GrowthStr(int rank) { return 0.05 * Math.Max(0, rank - 1); }   // 품계당 힘 5점 x 1%
 
     static void Hit(ref double hp, ref double sinceHit, ref RunResult res, double dmg) { hp -= dmg; res.Damage += dmg; }
     static double Heal(double hp, ref int potions) { if (hp > 0 && hp <= 35 && potions > 0) { potions--; return Math.Min(Balance.PLAYER_MAX_HP, hp + 40); } return hp; }

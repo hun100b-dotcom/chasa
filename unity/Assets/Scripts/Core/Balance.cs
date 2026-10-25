@@ -97,7 +97,7 @@ public static class Balance
     public const float PAHON_RADIUS = 3.0f;  // P-002 폭발 반경
     public const int PAHON_DAMAGE = 35;  // P-003 주변 적 맺힘 피해
     public const float PAHON_KNOCKBACK_DIST = 3.0f;  // (기획 타격감 분석 10-24, 임시) 파혼 넉백 거리(m) [2.5→3.0]
-    public const int PAHON_COIN = 8;  // P-005 엽전 (기획 4-4절 10-25: 5→8, 임시)
+    public const int PAHON_COIN = 7;  // P-005 엽전 (기획 4-4절 10-25: 5→8→7 시뮬 재판정, 임시)
     public const int PAHON_KARMA = 1;  // P-006 업 누적
     public const float STAIN_RADIUS = 2.0f;  // P-007 원념 얼룩 반경
     public const float STAIN_DURATION = 15.0f;  // P-008 지속
