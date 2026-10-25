@@ -774,3 +774,19 @@
 - 끝까지 보면 `NpcWorld.JesaSeen`(저장됨, Picked의 "jesa:혼") → 천도할 때 기억 끝에 jesa_extra 한 줄. 윤 소사 하드코딩 제거.
 - named_souls에 칠복·허 훈장·장터 넷 추가(좌표는 기획 제안, 아트 걷기 확인 전). 봇은 120m 밖 이름혼을 찾아가지 않음.
 - 미구현: 명부에 '오늘 밤 그 혼의 자리' 표시, 칠복네 개 소품, 박돌쇠 기억 다시 보기 덧붙임, 섭섭이 낮 시간 이동(부엌↔뒤뜰).
+## 2026-10-25 (KST 20:10) [기획·사운드] 1막·2막 장례 효과음 15개
+- 서사 1막 장례 대본(funerals_act1.json)의 sfx_request 6개를 코드 합성으로 만들어 `unity/Assets/Resources/Audio/Sfx/`에 추가.
+  - `amb.market`: 장터 웅성거림, 반복용 13.9초, 말뜻은 안 들림
+  - `cut.kids.clap`: 아이 둘 손뼉 장단, 박자 어긋남
+  - `cut.paper.tear`: 기둥 종이 떼기
+  - `cut.steam.rise`: 시루 김
+  - `cut.brass.tap`: 놋그릇 네 번
+  - `cut.ink.grind`: 먹 갈기
+- 2막 장례 대본(funerals_act2.json) 9개도 추가.
+  - `amb.mine`: 광부촌, 반복용
+  - `cut.pour.liquor`: 세 잔 + 한 잔 더
+  - `cut.hoe.dig`, `cut.chisel.tap`, `cut.sickle.cut`, `cut.tag.unhook`, `cut.coal.sort`
+  - `cut.brush.write`: 중간에 멈춤
+  - `cut.mule.hoof`: 멈춰 섬
+- `tools/sfx_render.py`에 추가, `data/sfx_files.json` 갱신(총 91개). 기존 파일은 그대로(고정 난수).
+- 코드팀 할 일: 장례 대본의 해당 단계 `sfx_request` → `sfx`로 옮기기만 하면 재생된다(파일 이름 = id의 점을 밑줄로).

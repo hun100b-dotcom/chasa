@@ -778,6 +778,252 @@ def _(r):
     return loopify(reverb(air * .9 + hum * .4 + frogs * .35 + insect + drips * .3, 2.5, .35, tone_hz=2500)[:n], .5)
 
 
+# ===== 1막 장례 대본(funerals_act1.json, 4a40857) 추가 요청 6종 =====
+@sfx("amb.market", -24, "세계", "장터 웅성거림: 여러 사람 말소리가 겹쳐 뜻은 안 들림 + 그릇·엽전 달그락 + 수레 삐걱(반복용 14초)", loop=True, use="장날 장터 배경·장터 장례 시작")
+def _(r):
+    sec = 14.4; n = int(sec * SR); buf = np.zeros(n)
+    # 사람 말소리: 짧은 음절(0.08~0.25초)을 사람마다 다른 음높이·모음으로 이어 붙인다 → 많이 겹치면 '웅성웅성'이 된다
+    vowels = [[(750, 4, 1), (1200, 5, .5)], [(450, 4, 1), (1900, 6, .4)], [(320, 4, 1), (2300, 7, .35)], [(550, 4, 1), (900, 5, .6)]]
+    for p in range(14):                                       # 14명이 동시에 떠든다
+        base = r.uniform(110, 260); at = r.uniform(0, 1.0)
+        while at < sec - .3:
+            d = r.uniform(.08, .25); m = int(d * SR)
+            f0 = np.linspace(base * r.uniform(.9, 1.2), base * r.uniform(.8, 1.05), m)
+            y = voice(f0, vowels[r.integers(4)], .2, r, nh=18) * env(m, .015, d * .4, 3, hold=d * .4)
+            place(buf, y * r.uniform(.3, 1) * (.4 + .6 * (p % 4 == 0)), at)
+            at += d + (r.uniform(.02, .08) if r.random() > .15 else r.uniform(.4, 1.5))   # 말하다 가끔 쉰다
+    buf = filt(buf, "low", 2200)                               # 뜻이 들리지 않게 높은 소리(자음)를 깎는다
+    clink = grains(sec, r, 26, lambda r, k: modal(.15, [(r.uniform(1800, 3500), .04, 1), (r.uniform(4000, 6000), .02, .4)], r) * r.uniform(.1, .35))
+    cart = grains(sec, r, 3, lambda r, k: filt(noise(int(.5 * SR), r), "band", r.uniform(500, 800), 6) * env(int(.5 * SR), .1, .2, 3, hold=.15) * .3)
+    floor = filt(noise(n, r), "low", 400) * .08                # 사람 많은 곳의 바닥 웅웅
+    return loopify(reverb(buf + clink * .5 + cart + floor, 1.2, .3, tone_hz=3000)[:n], .5)
+
+
+@sfx("cut.kids.clap", -14, "컷신", "아이 둘의 손뼉 장단: 덩-덩-덕 박자를 흉내 내다 자꾸 어긋남(약 7초)", use="상여 뒤 장터 아이들이 손뼉으로 장단 흉내")
+def _(r):
+    sec = 7.5; buf = np.zeros(int(sec * SR))
+    def clap(r, small):
+        m = int(.06 * SR)
+        x = noise(m, r) * env(m, .0005, .012, 5)
+        f = r.uniform(1300, 1900) if small else r.uniform(1000, 1400)      # 아이 손은 작아서 소리가 높다
+        return filt(x, "band", f, 1.2) + filt(x, "band", f * 2.1, 2) * .4
+    pattern = [0, .5, .75, 1.25]                              # 한 마디(1.5초): 짝—짝짝—짝 (자진모리 비슷한 3·2 느낌)
+    for kid in range(2):
+        drift = 0.0; g = 1.0 if kid == 0 else .7
+        for bar in range(5):
+            for b in pattern:
+                drift += r.normal(0, .025) + (.012 if kid == 1 else 0)    # 둘째 아이는 조금씩 늦어진다 = 박자 어긋남
+                if r.random() < .08: continue                             # 가끔 한 번 빼먹는다
+                place(buf, clap(r, kid == 1) * g * r.uniform(.7, 1), .1 + bar * 1.5 + b + drift)
+    return reverb(buf, .9, .25, tone_hz=4500)
+
+
+@sfx("cut.paper.tear", -15, "컷신", "기둥에 붙은 종이를 떼는 소리: 풀 떨어지며 바스락 찌익— 마지막에 툭 떨어짐(약 1.6초)", use="주막 기둥 종이 떼는 장면")
+def _(r):
+    sec = 1.6; n = int(sec * SR); buf = np.zeros(n)
+    # 한지가 풀에서 떨어질 때 = 아주 짧은 '틱' 알갱이가 점점 촘촘해졌다가 사라짐
+    dens = lambda k, r: .05 + 1.0 * (k / 220) ** .7 + r.uniform(0, .01)
+    tick = lambda r, k: filt(noise(int(.004 * SR), r), "band", r.uniform(1800, 6000), 2.5) * env(int(.004 * SR), .0002, .0012) * r.uniform(.2, 1)
+    buf += grains(sec, r, 220, tick, spread=dens)
+    rip = sweep_filt(noise(int(.9 * SR), r), "band", 1500, 3200, 1.5) * env(int(.9 * SR), .2, .2, 4, hold=.35)
+    place(buf, rip * .35, .1)
+    flap = filt(noise(int(.15 * SR), r), "low", 900) * env(int(.15 * SR), .005, .05, 4)   # 종이가 손에서 펄럭
+    place(buf, flap * .6, 1.15)
+    return reverb(buf, .5, .12)
+
+
+@sfx("cut.steam.rise", -20, "컷신", "시루에 김 오르는 소리: 솥 물 보글보글 + 시루 틈으로 쉬— 새는 김 + 뚜껑 달그락(약 6초)", use="부엌에서 떡을 다시 찌는 장면")
+def _(r):
+    sec = 6.0; n = int(sec * SR); t = T(sec)
+    boil = grains(sec, r, 260, lambda r, k: bubble(.05, r.uniform(250, 700), 1.8, .012) * r.uniform(.2, 1))
+    boil = filt(boil, "low", 1500)                            # 솥 안이라 먹먹하게
+    hiss = filt(filt(noise(n, r), "high", 2500), "low", 9000)
+    hiss = hiss * curve(sec, [(0, .05), (1.5, .5), (3, .8), (6, .7)]) * (1 + .25 * np.sin(2 * np.pi * .7 * t))   # 김이 점점 세지며 일렁임
+    lid = grains(sec, r, 7, lambda r, k: modal(.1, [(r.uniform(900, 1300), .03, 1), (r.uniform(2400, 3000), .02, .5)], r) * .25,
+                 spread=lambda k, r: 3.0 + k * .38 + r.uniform(0, .05))   # 김에 밀려 뚜껑이 달그락
+    return reverb(boil * .7 + hiss * .25 + lid, .7, .2)
+
+
+@sfx("cut.brass.tap", -14, "컷신", "놋그릇을 숟가락으로 두드림: 댕— 긴 놋쇠 울림 네 번, 걸음 박자(약 4.5초)", use="문짝 들것 행렬 앞사람이 놋그릇을 침")
+def _(r):
+    sec = 4.6; buf = np.zeros(int(sec * SR))
+    def bowl(r, g):
+        f = 640 * r.uniform(.995, 1.005)                       # 놋쇠 주발: 기본음 + 정수배가 아닌 높은 울림들, 가까운 두 음이 맥놀이
+        y = modal(1.8, [(f, .9, 1), (f * 1.004, .9, .7), (f * 2.71, .5, .6), (f * 2.716, .5, .4), (f * 5.1, .25, .3), (f * 8.2, .1, .15)], r)
+        place(y, filt(noise(int(.006 * SR), r), "high", 3000) * .8, 0)   # 숟가락 끝이 닿는 짧은 '딱'
+        return y * g
+    for k in range(4):                                         # 걸음에 맞춰 약 0.95초마다
+        place(buf, bowl(r, (1.0, .8, .9, .75)[k]), .02 + k * .95 + r.uniform(-.03, .03))
+    return reverb(buf, 1.4, .25, tone_hz=6000)
+
+
+@sfx("cut.ink.grind", -20, "컷신", "벼루에 먹 가는 소리: 물기 있는 사각사각이 원을 그리며 느리게 반복(약 5초)", use="서당 아이들이 먹을 가는 장면")
+def _(r):
+    sec = 5.2; n = int(sec * SR); t = T(sec)
+    circ = np.sin(2 * np.pi * 1.1 * t)                        # 먹을 원으로 돌림(1초에 1.1바퀴)
+    speed = .35 + .65 * np.abs(circ)                           # 원의 옆구리에서 빨라지고 끝에서 느려짐
+    rub = filt(noise(n, r), "band", 1400, .9) * speed
+    grit = grains(sec, r, 700, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(2500, 5500), 3) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .6))
+    grit = grit * speed
+    wet = filt(noise(n, r), "low", 500) * (.4 + .6 * np.abs(np.sin(2 * np.pi * .55 * t)))    # 물기 머금은 낮은 쓸림
+    stone = filt(rub, "band", 320, 4) * .5                     # 벼루 돌의 짧은 울림
+    y = (rub * .5 + grit * .35 + wet * .25 + stone) * env(n, .25, .4, 3, hold=sec - .9)
+    return reverb(y, .5, .12)
+
+
+# ===== 2막 장례 대본(funerals_act2.json, 822391c) 추가 요청 9종 =====
+def _stone_hit(r, metal=1.0):
+    """돌에 쇠가 박히는 '딱': 높은 쇠 울림(짧게) + 돌 몸통 울림 + 부스러기 잡음"""
+    m = modal(.25, [(r.uniform(2200, 3200), .03 * metal, metal), (r.uniform(4500, 6000), .015, .5 * metal),
+                    (r.uniform(700, 1100), .02, .7), (r.uniform(180, 260), .03, .5)], r)
+    k = int(.01 * SR); place(m, filt(noise(k, r), "high", 2000) * env(k, .0002, .003) * .8, 0)
+    return m
+
+
+@sfx("amb.mine", -20, "세계", "광부촌: 갱 안에서 울려 나오는 먼 곡괭이 소리 + 가끔 구르는 수레 + 낮은 바람·물방울(반복용 15초)", loop=True, use="광부촌·갱 입구 배경")
+def _(r):
+    sec = 15.4; n = int(sec * SR); buf = np.zeros(n)
+    at = .3
+    while at < sec - .5:                                       # 곡괭이질: 두세 번 치고 쉰다
+        for _k in range(r.integers(2, 4)):
+            place(buf, _stone_hit(r) * r.uniform(.4, 1), at); at += r.uniform(.7, .95)
+        at += r.uniform(1.0, 2.5)
+    picks = reverb(filt(buf, "low", 3500), 2.2, .55, tone_hz=2500)[:n]   # 갱(굴)은 울림이 길다
+    cart = np.zeros(n)
+    for c0 in (4.0, 11.0):                                      # 수레 두 번: 구르는 웅웅 + 레일 이음매 덜컹
+        m = int(3.0 * SR)
+        roll = filt(noise(m, r), "low", 220) * np.sin(np.pi * np.linspace(0, 1, m)) ** 1.5
+        place(cart, roll * .8, c0)
+        for j in range(7):
+            place(cart, modal(.12, [(r.uniform(300, 420), .04, 1), (r.uniform(900, 1200), .02, .4)], r) * .35 * np.sin(np.pi * (j + .5) / 7), c0 + .2 + j * .38)
+    cart = reverb(filt(cart, "low", 1500), 1.8, .5, tone_hz=1500)[:n]
+    wind = filt(noise(n, r), "low", 180) * .35
+    drips = grains(sec, r, 8, lambda r, k: bubble(.15, r.uniform(700, 1200), 2, .02) * .3)
+    return loopify(picks * .8 + cart * .7 + wind + drips, .5)
+
+
+@sfx("cut.pour.liquor", -18, "컷신", "잔에 술 따르기: 쪼르륵 차오르며 소리가 높아짐 × 세 잔, 잠시 쉬고 한 잔 더(약 8초)", use="무덤 앞에 술을 붓는 장면")
+def _(r):
+    sec = 8.2; buf = np.zeros(int(sec * SR))
+    def pour(r, d):
+        m = int(d * SR); tt = np.arange(m) / SR
+        stream = filt(noise(m, r), "band", 2200, 1.2) * (.6 + .4 * np.sin(2 * np.pi * 9 * tt + r.uniform(0, 6)))   # 물줄기 쉬—
+        fill = sweep_filt(noise(m, r), "band", 600, 1500, 8)    # 잔이 차면 공기 기둥이 짧아져 울림이 높아진다
+        glug = grains(d, r, int(d * 14), lambda r, k: bubble(.04, r.uniform(500, 1100), 1.6, .01) * r.uniform(.2, .6))
+        return (stream * .25 + fill * .9 + glug * .3) * env(m, .05, .08, 4, hold=d - .15)
+    clink = lambda r: modal(.4, [(2650, .12, 1), (4100, .07, .4), (6900, .03, .2)], r)   # 병 주둥이가 사기잔에 닿는 딩
+    at = .1
+    for k, d in enumerate((1.2, 1.1, 1.2)):
+        place(buf, clink(r) * .35, at); place(buf, pour(r, d), at + .05); at += d + .5
+    at += .9                                                    # 다 부은 뒤 잠깐 멈췄다가 — 한 잔 더(할아버지 몫)
+    place(buf, clink(r) * .25, at); place(buf, pour(r, 1.4) * .9, at + .08)
+    return reverb(buf, .8, .2)
+
+
+@sfx("cut.hoe.dig", -15, "컷신", "호미로 흙 파기: 툭 박히고 슥 긁어 당김 × 네 번, 흙 알갱이 흩어짐(약 4.5초)", use="바위틈 약초 캐는 장면")
+def _(r):
+    sec = 4.6; buf = np.zeros(int(sec * SR))
+    for k in range(4):
+        at = .1 + k * 1.05 + r.uniform(-.05, .05)
+        m = int(.12 * SR)
+        thud = filt(noise(m, r), "low", 700) * env(m, .001, .03, 4) + tone(.12, 150, 90) * env(m, .001, .04, 4) * .6
+        place(buf, thud, at)
+        if k == 2: place(buf, _stone_hit(r, .4) * .35, at + .005)          # 한 번은 돌에 닿아 쨍
+        m2 = int(.35 * SR)
+        scrape = filt(noise(m2, r), "band", 1600, 1.0) * env(m2, .05, .1, 4, hold=.15)
+        place(buf, scrape * .45, at + .15)
+        soil = grains(.4, r, 30, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(1500, 5000), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .5))
+        place(buf, soil * .6, at + .3)
+    return reverb(buf, .6, .12)
+
+
+@sfx("cut.chisel.tap", -14, "컷신", "정으로 돌에 글자 새기기: 망치가 정을 때리는 쨍 + 돌 부스러기, 일정한 박자 열 번(약 5초)", use="성돌에 스승 이름을 새기는 장면")
+def _(r):
+    sec = 5.2; buf = np.zeros(int(sec * SR))
+    for k in range(10):
+        at = .1 + k * .48 + r.uniform(-.02, .02)
+        if k == 5: at += .25                                     # 한 획 끝나고 정을 옮겨 대는 짧은 쉼
+        hit = modal(.5, [(3150 * r.uniform(.99, 1.01), .12, 1), (5240, .06, .5), (1420, .05, .5), (7600, .02, .2)], r)   # 쇠정 울림
+        place(buf, hit * r.uniform(.8, 1), at)
+        place(buf, _stone_hit(r, .2) * .5, at)
+        chips = grains(.15, r, 8, lambda r, k: filt(noise(int(.003 * SR), r), "high", 3500) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .4))
+        place(buf, chips, at + .01)
+    return reverb(buf, .9, .2)
+
+
+@sfx("cut.sickle.cut", -13, "컷신", "낫으로 풀 베기: 숫돌에 한 번 쓱 갈고, 쉭— 서걱 네 번(약 5.5초)", use="무덤 벌초 장면")
+def _(r):
+    sec = 5.6; buf = np.zeros(int(sec * SR))
+    m = int(.8 * SR)                                              # 숫돌질: 쇠가 돌에 미끄러지는 쓱—
+    hone = sweep_filt(noise(m, r), "band", 3500, 5500, 4) * env(m, .1, .2, 4, hold=.4) + tone(.8, 4200) * env(m, .1, .2, 4, hold=.4) * .05
+    place(buf, hone * .5, .05)
+    for k in range(4):
+        at = 1.25 + k * 1.0 + r.uniform(-.05, .05)
+        m = int(.3 * SR)
+        swish = sweep_filt(noise(m, r), "band", 900, 2600, 2) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2   # 낫이 바람을 가름
+        place(buf, swish * .35, at)
+        cut = grains(.12, r, 35, lambda r, k: filt(noise(int(.004 * SR), r), "band", r.uniform(2000, 6000), 2) * env(int(.004 * SR), .0002, .0015) * r.uniform(.2, 1))   # 풀줄기 끊어짐 서걱
+        place(buf, cut, at + .2)
+        place(buf, filt(noise(int(.2 * SR), r), "low", 800) * env(int(.2 * SR), .01, .06, 4) * .3, at + .3)   # 베인 풀이 쓰러짐
+    return reverb(buf, .5, .1)
+
+
+@sfx("cut.tag.unhook", -16, "컷신", "고리에서 나무 목패 떼기: 쇠고리 끽 + 패가 옆 패에 딱 부딪힘 + 손에 쥠(약 1.4초)", use="동료가 순돌의 목패를 떼는 장면")
+def _(r):
+    buf = np.zeros(int(1.5 * SR))
+    m = int(.25 * SR)
+    creak = sweep_filt(noise(m, r), "band", 1800, 2600, 10) * env(m, .03, .08, 4, hold=.1)   # 녹슨 쇠고리 비빔
+    place(buf, creak * .5, .05)
+    wood = lambda r, f: modal(.15, [(f, .03, 1), (f * 2.4, .015, .5), (f * 4.1, .008, .2)], r)   # 마른 나무패 딱
+    place(buf, wood(r, 900) * .9, .3); place(buf, wood(r, 1150) * .5, .38); place(buf, wood(r, 1000) * .3, .44)   # 옆 패들이 흔들려 따라 부딪힘
+    place(buf, modal(.3, [(3300, .08, 1), (5200, .04, .4)], r) * .15, .3)   # 고리 짤랑
+    grab = filt(noise(int(.12 * SR), r), "low", 1200) * env(int(.12 * SR), .005, .04, 4) * .4   # 손에 쥐는 소리
+    place(buf, grab, .85)
+    return reverb(buf, .6, .15)
+
+
+@sfx("cut.coal.sort", -18, "컷신", "평상에서 석탄 고르기: 덩이끼리 달그락 + 나무판에 쓸어 밀기 + 바구니에 툭(약 5초)", use="딸이 어머니 자리에서 석탄을 고르는 장면")
+def _(r):
+    sec = 5.2; n = int(sec * SR); buf = np.zeros(n)
+    lump = lambda r, k: modal(.06, [(r.uniform(1800, 3800), .012, 1), (r.uniform(4500, 7000), .006, .5)], r) * r.uniform(.15, .8)   # 석탄은 가볍고 잘 깨지는 유리 같은 소리
+    for g0 in (.2, 1.6, 3.1):                                    # 한 줌씩 세 번
+        place(buf, grains(.8, r, 14, lump), g0)
+        m = int(.5 * SR)
+        place(buf, filt(noise(m, r), "band", 1100, .8) * env(m, .05, .15, 4, hold=.2) * .2, g0 + .4)   # 판 위에 쓸어 밀기
+        place(buf, filt(noise(int(.1 * SR), r), "low", 600) * env(int(.1 * SR), .002, .03, 4) * .5 + modal(.1, [(420, .03, .4)], r), g0 + 1.1)   # 바구니에 툭
+    return reverb(buf, .5, .12)
+
+
+@sfx("cut.brush.write", -22, "컷신", "붓으로 종이에 쓰기: 붓끝이 닿는 톡 + 사악— 획 긋는 소리 여섯 획, 중간에 한 번 멈춤(약 5초)", use="외상 장부에 이름을 적어 넣는 장면")
+def _(r):
+    sec = 5.0; buf = np.zeros(int(sec * SR))
+    at = .15
+    for k in range(6):
+        d = r.uniform(.25, .55); m = int(d * SR)
+        stroke = filt(filt(noise(m, r), "high", 1800), "low", 6500) * env(m, .02, .08, 4, hold=d - .12) * (1 + .3 * np.sin(np.linspace(0, 3, m)))
+        place(buf, filt(noise(int(.01 * SR), r), "band", 1500, 1) * env(int(.01 * SR), .0005, .004) * .5, at)   # 붓끝 닿음
+        place(buf, stroke * .4, at + .01)
+        at += d + r.uniform(.12, .3)
+        if k == 3: at += 1.0                                    # 모르는 번호 앞에서 붓이 멈춘다
+    return reverb(buf, .4, .08)
+
+
+@sfx("cut.mule.hoof", -15, "컷신", "노새 발굽: 흙길 위 네 발 걸음 따각따각, 갱 입구 앞에서 멈춤(약 6초)", use="풀려난 노새가 상여를 따라가는 장면")
+def _(r):
+    sec = 6.2; buf = np.zeros(int(sec * SR))
+    def clop(r):
+        m = modal(.12, [(r.uniform(380, 520), .025, 1), (r.uniform(1100, 1500), .012, .6), (r.uniform(2400, 3000), .006, .3)], r)   # 단단한 발굽
+        k = int(.05 * SR); place(m, filt(noise(k, r), "low", 1500) * env(k, .001, .015, 4) * .7, 0)   # 흙이 눌리는 퍽
+        return m
+    stride = .62                                                # 걸음: 한 주기에 네 발(좌뒤-좌앞-우뒤-우앞)
+    for s in range(8):
+        for j, off in enumerate((0, .16, .31, .47)):
+            slow = 1 + max(0, s - 5) * .25                       # 마지막 두 걸음은 느려지며 멈춘다
+            place(buf, clop(r) * r.uniform(.6, 1) * (1 - .1 * (j % 2)), .1 + s * stride * slow + off * slow + r.uniform(-.012, .012))
+    place(buf, filt(noise(int(.4 * SR), r), "low", 300) * env(int(.4 * SR), .05, .15, 4) * .3, 5.4)   # 멈춰 서서 코로 푸르르
+    return reverb(buf, .7, .15)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)
