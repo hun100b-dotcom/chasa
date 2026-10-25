@@ -158,15 +158,21 @@ public class FieldManager : MonoBehaviour
         loading.Remove(key);
     }
 
+    const float TileThickness = 0.3f;   // 땅 타일 두께. 아트 표의 높이(z)는 '칸 아랫면' 기준이고 타일 윗면은 그보다 0.3 위다
+
     /// <summary>
-    /// 놓을 높이. 땅 타일과 '고지(+2m) 위 소품'은 땅을 평평하게 두니 0 으로 내리고,
-    /// 한옥 조각(기단 위 벽 0.5 · 지붕 2.9 · 용마루 4.5)은 아트팀이 정한 높이를 그대로 쓴다(안 그러면 지붕이 바닥에 깔림).
+    /// 놓을 높이. 걸어 다니는 바닥(주인공 발)을 높이 0 으로 삼으려고, 타일 윗면이 0 이 되게 타일과 'br_' 조각을 0.3 내린다.
+    /// 그러면 소품(표 z = 칸 아랫면 기준 → 윗면 기준으로 +0.3, 전체를 −0.3 내리니 결국 z 그대로)이 땅에 묻히지 않는다.
+    /// 아주 납작한 것(거적·웅덩이·디딤돌)은 타일 윗면과 겹쳐 깜박이지 않게 2cm 띄운다.
+    /// 고지(+2m) 위 소품은 땅을 평평하게 두므로 2m 내린다. 한옥 조각은 아트가 정한 쌓는 높이 그대로(기단 위 벽 0.5 · 지붕 2.9 · 용마루 4.5).
     /// </summary>
     static float HeightOf(Item it)
     {
-        if (it.t == 1) return 0f;                              // 땅 타일(고지 포함) 평평
-        if (it.n.StartsWith("hanok_")) return it.y;            // 집 조각은 쌓는 높이 그대로
-        return it.y >= 1.5f ? it.y - 2f : it.y;                // 고지(+2m) 위 나무·돌은 평평해진 땅에 맞춰 내림
+        if (it.t == 1) return -TileThickness;                              // 땅 타일(고지 포함) 평평
+        if (it.n.StartsWith("br_")) return it.y - TileThickness;           // 다리·나루터·배 조각은 처음부터 칸 아랫면 기준 → 타일과 같이 내린다
+        if (it.n.StartsWith("hanok_")) return it.y;
+        float y = it.y >= 1.5f ? it.y - 2f : it.y;
+        return y < 0.05f ? 0.02f : y;
     }
 
     /// <summary>모델 하나를 세운다. 재질은 모델 안의 색을 따서 우리 무광 재질로(같은 색은 하나를 나눠 써서 GPU 가 묶어 그린다)</summary>
