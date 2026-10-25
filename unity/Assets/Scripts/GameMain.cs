@@ -331,11 +331,13 @@ public class GameMain : MonoBehaviour
     int zoomStep = 1;   // 0=가깝게 1=기본 2=멀리
     float StepDist(int i) { return i <= 0 ? Balance.CAMERA_DIST_NEAR : i == 1 ? Balance.CAMERA_DIST_MID : Balance.CAMERA_DIST_FAR; }
     void SetZoomStep(int i) { if (i != zoomStep && judge != null) judge.guide.Complete("zoom"); zoomStep = Mathf.Clamp(i, 0, 2); wheelTarget = StepDist(zoomStep) / Mathf.Max(0.1f, camDist); }   // 배율 = 목표 거리 / 기준 거리
+    float lastZoomT = -1f;
     void HandleZoom()
     {
         // 휠 한 칸 = 한 단계(앞으로 굴리면 가깝게). 연속 값이 아니라 단계라서 '딱 3번'만 멈춘다
         float scroll = Input.mouseScrollDelta.y;
-        if (Mathf.Abs(scroll) > 0.01f) SetZoomStep(zoomStep - (scroll > 0f ? 1 : -1));
+        // 트랙패드·부드러운 휠은 한 번 굴림에 이벤트가 여러 개 와서 한꺼번에 두세 단계가 넘어가므로, 0.18초 안에 온 것은 무시한다
+        if (Mathf.Abs(scroll) > 0.01f && Time.unscaledTime - lastZoomT > 0.18f && !MiniMap.OverMini(Input.mousePosition)) { lastZoomT = Time.unscaledTime; SetZoomStep(zoomStep - (scroll > 0f ? 1 : -1)); }
         if (Input.touchCount == 2)
         {
             float dist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);

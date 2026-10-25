@@ -13,7 +13,7 @@ public class Act2BossArena : MonoBehaviour
     public static bool Enabled { get { return FieldRules.Act2; } }   // 2막 땅이 깔려 있으면 보스 넷도 선다(금줄이 닫혀 있는 동안은 닿을 수 없다)
 
     enum Shape { Circle, Sector, Bar, Ring }
-    class Tele { public bool drain; public float drainT; public bool weak; public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
+    class Tele { public string fireSfx; public bool drain; public float drainT; public bool weak; public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
 
     JudgeSystem judge; Enemy boss; BossDef def; Act2Brain brain; Act3Brain brain3;   // 2막(5~8)은 brain, 3막(9~12)은 brain3 — 같은 화면 코드가 둘을 다 그린다
     readonly List<Tele> teles = new List<Tele>();
@@ -78,7 +78,7 @@ public class Act2BossArena : MonoBehaviour
         if (def.Id == 11)   // 별명 부르기: 10초마다 두 혼이 그 이름으로 일어난다
         {
             nickT -= dt;
-            if (nickT <= 0f) { nickT = 10f; SpawnHelper(3, ArenaPoint(0.6f)); SpawnHelper(3, ArenaPoint(0.6f)); judge.Say("왕초가 별명을 부른다"); }
+            if (nickT <= 0f) { nickT = 10f; SpawnHelper(3, ArenaPoint(0.6f)); SpawnHelper(3, ArenaPoint(0.6f)); judge.Say("왕초가 별명을 부른다"); Sfx.Play("sfx.boss.wangcho.rise"); }
         }
     }
 
@@ -94,7 +94,7 @@ public class Act2BossArena : MonoBehaviour
         var c = new Vector3(def.X, 0f, def.Z);
         for (int i = 0; i < Balance.B07_MINERS; i++)
             miners.Add(judge.enemies.SpawnCamp(c + Quaternion.Euler(0f, 72f * i + 18f, 0f) * Vector3.forward * (brain.ArenaRadius > 1f ? brain.ArenaRadius * 0.6f : 8f), i % 2 == 0));
-        judge.Say("광부 혼이 나타났다 — 출구로 보내라");
+        judge.Say("광부 혼이 나타났다 — 출구로 보내라"); Sfx.Play("sfx.boss.chilsung.count");
     }
 
     /// <summary>플레이어가 지금 떠 있는 일자진 예고의 빈칸 안에 서 있나</summary>
@@ -161,7 +161,7 @@ public class Act2BossArena : MonoBehaviour
             // B-07 광부 혼: 천도 = 출구로 보냄(다섯마다 칠성이 멈춤), 파혼 = 보스 맺힘 +10% · 10초 광폭
             miners.Remove(e);
             if (tendo) { brain.OnMinerExit(); judge.Say("광부 " + brain.MinersOut + "명을 내보냈다"); if (brain.Stun > 0f) judge.Say("칠성이 멈칫한다"); }
-            else { brain.OnMinerPahon(); boss.soul.Maedhim = Mathf.Min(boss.soul.MaedhimMax, (int)brain.Maedhim); judge.Say("광부를 깨뜨렸다 — 칠성이 날뛴다!"); }
+            else { brain.OnMinerPahon(); boss.soul.Maedhim = Mathf.Min(boss.soul.MaedhimMax, (int)brain.Maedhim); judge.Say("광부를 깨뜨렸다 — 칠성이 날뛴다!"); Sfx.Play("sfx.boss.chilsung.rage"); }
             return;
         }
         if (brain == null || def == null || def.Id != 5 || !tendo || !soldiers.Contains(e)) return;
@@ -196,7 +196,7 @@ public class Act2BossArena : MonoBehaviour
             case BossAct.CallNames:
                 for (int i = 0; i < m.Count; i++)   // 소환 병사: 보스 둘레(상한은 Act2Brain 이 지킨다). 번호 비율(m.Param)은 아직 화면에 안 쓴다
                     soldiers.Add(judge.enemies.SpawnCamp(bp + Quaternion.Euler(0f, 120f * i + 40f, 0f) * Vector3.forward * 3.5f, i % 2 == 0));
-                Sfx.Play("sfx.boss.daedol.call"); break;
+                Sfx.Play("sfx.boss.daedol.call"); Sfx.PlayLater("sfx.boss.daedol.number", 0.6f); break;   // 이름을 잊어 번호로 부르는 소리
             case BossAct.FlagPlant:
                 Add(new Tele { shape = Shape.Circle, c = bp + dir * 5f, r = m.Radius, warn = 20f, mine = false }, false);
                 DropPoint(ref flagPt, ref flagView);
@@ -221,7 +221,7 @@ public class Act2BossArena : MonoBehaviour
                     int paper = brain.PickNamePaper();
                     for (int i = 0; i < m.Count; i++)
                         Add(new Tele { shape = Shape.Circle, c = bp + Quaternion.Euler(0f, 360f / m.Count * i + Random.value * 40f, 0f) * Vector3.forward * (4f + Random.value * 4f), r = 1.2f, warn = m.Warn, paper = i == paper, mine = true });
-                    Sfx.Play("sfx.boss.yeom.land"); break;
+                    Sfx.Play("sfx.boss.yeom.land"); Sfx.Play("sfx.boss.yeom.throw"); break;   // 숫자 지뢰를 날리는 순간
                 }
             case BossAct.AbacusSweep: Add(new Tele { shape = Shape.Sector, c = bp, dir = dir, r = m.Radius, deg = m.Param, warn = m.Warn }); break;
             // ---- 3막(9~12): 예고 장판 ----
@@ -248,7 +248,7 @@ public class Act2BossArena : MonoBehaviour
                 {
                     var dd = m.Count == 1 ? dir : Quaternion.Euler(0f, i == 0 ? 35f : -35f, 0f) * dir;   // 두 줄이면 X 자로 엇갈린다
                     var cc = m.Count == 1 ? bp + dd * (m.Param * 0.5f) : pp;
-                    Add(new Tele { shape = Shape.Bar, c = cc, dir = dd, len = m.Param, wid = m.Radius, warn = m.Warn });
+                    Add(new Tele { shape = Shape.Bar, c = cc, dir = dd, len = m.Param, wid = m.Radius, warn = m.Warn, fireSfx = "sfx.boss.seonjang.rope.cut" });   // 판정이 나갈 때 줄 끊는 소리
                 }
                 break;
             case BossAct.RopeWrap: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); break;
@@ -318,9 +318,10 @@ public class Act2BossArena : MonoBehaviour
             if (!t.fired && t.t >= t.warn)
             {
                 t.fired = true;
+                if (t.fireSfx != null) Sfx.Play(t.fireSfx);
                 bool inside = Inside(t, judge.player.Pos);
                 if (inside && t.paper) { brain.OnNamePaperStepped(); boss.soul.Maedhim = Mathf.Max(1, (int)brain.Maedhim); }   // 이름 종이: 무해, 보스 맺힘 −2%
-                else if (inside) judge.BossAreaHit(boss, t.weak ? 0.5f : 1f);   // 약해진 파도는 피해 절반
+                else if (inside) { judge.BossAreaHit(boss, t.weak ? 0.5f : 1f); if (t.mine) Sfx.Play("sfx.boss.yeom.burst"); }   // 숫자 칸을 밟아 피해   // 약해진 파도는 피해 절반
                 if (t.view != null) t.view.GetComponent<Renderer>().sharedMaterial.color = new Color(1f, 0.55f, 0.25f, 1f);
             }
             else if (!t.fired && t.view != null)
@@ -329,7 +330,7 @@ public class Act2BossArena : MonoBehaviour
             if (t.drain && t.fired)
             {
                 t.drainT += dt;
-                if (t.drainT >= 1f) { t.drainT -= 1f; if (Inside(t, judge.player.Pos)) { judge.ledger.Neok = Mathf.Max(0, judge.ledger.Neok - 2); judge.BossAreaHit(boss, 8f / Mathf.Max(1, boss.damage)); } }
+                if (t.drainT >= 1f) { t.drainT -= 1f; if (Inside(t, judge.player.Pos)) { Sfx.Play("sfx.boss.heukwol.line.drain"); judge.ledger.Neok = Mathf.Max(0, judge.ledger.Neok - 2); judge.BossAreaHit(boss, 8f / Mathf.Max(1, boss.damage)); } }
             }
             if (t.t >= (t.drain ? t.warn + 6f : t.warn < 19f ? t.warn + 0.25f : t.warn)) { if (t.view != null) Destroy(t.view); teles.RemoveAt(i); }
         }

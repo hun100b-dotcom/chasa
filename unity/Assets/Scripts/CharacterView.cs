@@ -33,7 +33,7 @@ public partial class CharacterPanel
         var b = VTxt(p, text, size, c); b.pickingMode = PickingMode.Position;
         b.style.paddingLeft = 4; b.style.paddingRight = 4; b.style.paddingTop = 3; b.style.paddingBottom = 3; b.style.marginBottom = 2;
         if (bgOn) b.style.backgroundColor = new Color(VInk.r, VInk.g, VInk.b, 0.14f);
-        b.RegisterCallback<ClickEvent>(e => { click(); viewDirty = true; });
+        b.RegisterCallback<ClickEvent>(e => { UiSfx.Click(text); click(); viewDirty = true; });   // 눌림 소리(닫기·취소는 되돌림 소리)
         b.RegisterCallback<PointerEnterEvent>(e => b.style.color = VSeal);
         b.RegisterCallback<PointerLeaveEvent>(e => b.style.color = c);
         return b;

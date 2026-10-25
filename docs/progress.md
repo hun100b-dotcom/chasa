@@ -1535,3 +1535,9 @@
 ## 2026-10-26 03:00 KST — [기획·사운드] 소리 호출 교차 점검
 - `tools/sound_call_check.py` 신설: 코드 브랜치의 소리 id 호출(문자열·자료 json·조합)과 만든 소리 목록을 맞대어 본다.
 - 코드 브랜치(e19e5dd) 결과: 불리는데 파일 없는 id 0개. 만들었지만 안 불리는 소리 190개, 그중 시즌1 범위 27개(보스 패턴음 12, 세계·UI·컷 15 — 옛 소리 2개는 안 써도 됨). 나머지는 시즌2 구역·시즌3·방금 넘긴 소리라 때가 아직 아니다. 보고서는 `docs/sound-call-check.md`.
+
+## 시즌1 미연결 소리 + 휠 줌 다듬기 (코드·QA, 10-26)
+- 보스 소리 연결: 나루 `naru.rise`(컷 뒤 혼 둘), 대돌 `daedol.number`, 칠성 `chilsung.count/rage`, 염 `yeom.throw/burst`, 선장 `seonjang.rope.cut`(판정 때), 왕초 `wangcho.rise`, 흑월 `heukwol.line.drain`(줄 위 매초). 나루 `flood/bigwater`와 선장 `tilt`는 해당 패턴이 코드에 아직 없어 보류.
+- 세계·UI: 메뉴 버튼 `sfx.ui.click/back`(`UiSfx`, 닫기·취소·뒤로는 back), 동틀 녘 `sfx.clock.toll`(나머진 bell), 3막 ⑤ 물때 `sfx.tide.flood`/`amb.tide.ebb`, `sfx.repair.first`(손보기 성공), `sfx.reward.bar.open`(넋·엽전 칸 처음 나타날 때). 보류: `sfx.danger.enter`(원념 짙은 구역 개념이 코드에 없음), `amb.weather.rain_light`, `sfx.card.hover`, `cut.cough`(서사 대본), `cut.jing`.
+- 휠 줌: 트랙패드가 한 번에 두세 단계 넘기던 것을 0.18초 간격으로 막고, 미니맵 위에선 줌하지 않게 함.
+- 사운드 PR #39(1막 주변 소리 22개)는 아직 안 합침.

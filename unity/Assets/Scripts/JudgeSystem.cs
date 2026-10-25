@@ -469,6 +469,8 @@ public class JudgeSystem : MonoBehaviour
         EndCast();
     }
 
+    bool tideEbb, tideKnown;   // 물때가 바뀌는 순간을 알아채려고 직전 값을 기억
+
     void EndCast()
     {
         castTarget = null;
@@ -1032,6 +1034,13 @@ public class JudgeSystem : MonoBehaviour
         chainLeft = Mathf.Max(0f, chainLeft - dt);
         Sfx.NightNow = clock != null && clock.Phase == ClockPhase.Night;
         if (clock != null) TideWater.WorldMinutes = Tide.TotalMinutes(clock.Day, clock.Minutes);   // 썰물·밀물 시계
+        if (clock != null && FieldRules.Act3 && player.Pos.x > 764f)   // 3막 ⑤ 갯마을에 있을 때만 물때 소리
+        {
+            bool ebb = Tide.IsEbb(TideWater.WorldMinutes);
+            if (tideKnown && ebb != tideEbb) Sfx.Play(ebb ? "amb.tide.ebb" : "sfx.tide.flood");   // 썰물 시작 / 밀물 신호
+            tideEbb = ebb; tideKnown = true;
+        }
+        else tideKnown = false;
         weather.state.Override = WeatherRules.Parse(cuts.SceneWeather);   // 서사 컷이 정한 날씨가 무작위보다 우선
         float wxSlow; int wxDrain;
         weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
@@ -1299,7 +1308,7 @@ public class JudgeSystem : MonoBehaviour
                 {
                     player.CommandStop();
                     // 1호: 물에 빠진 혼 2마리가 뱃전을 잡고 올라온다 (대본). 2·3호는 바닥 무늬가 시작된다
-                    if (b.soul.BossId == 1) for (int i = 0; i < 2; i++) enemies.SpawnCamp(b.Pos + new Vector3(i == 0 ? -3f : 3f, 0f, -2.5f), i == 0);
+                    if (b.soul.BossId == 1) { for (int i = 0; i < 2; i++) enemies.SpawnCamp(b.Pos + new Vector3(i == 0 ? -3f : 3f, 0f, -2.5f), i == 0); Sfx.Play("sfx.boss.naru.rise"); }
                 }
             }
         cuts.Tick(dt);
@@ -1468,7 +1477,7 @@ public class JudgeSystem : MonoBehaviour
         var ph = clock.Consume();
         if (ph.HasValue)
         {
-            Sfx.Play("sfx.bell");
+            Sfx.Play(ph.Value == ClockPhase.Dawn ? "sfx.clock.toll" : "sfx.bell");   // 동틀 녘은 큰 종
             if (ph.Value == ClockPhase.Night) Hint(HintEvent.FirstNightfall);
             string n = WorldClock.PhaseName(ph.Value);
             if (ph.Value == ClockPhase.Dawn && funeralDone.Contains("칠복") && funeralDay >= 0) dogHome = true;
@@ -1755,6 +1764,7 @@ public class JudgeSystem : MonoBehaviour
         h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.KarmaHidden = weather.Fx.HideKarma; h.ChainBonus = chainLeft > 0f;
         if (FieldRules.On)   // HUD 하나씩 열기: 처음 얻을 때 숫자가 나타난다(업은 10에 처음 닿을 때)
         {
+            if ((!revNeok && ledger.Neok > 0) || (!revCoin && ledger.Coin > 0)) Sfx.Play("sfx.reward.bar.open");   // 넋 막대·엽전 칸이 처음 나타날 때
             revNeok |= ledger.Neok > 0; revMemory |= ledger.Memory > 0; revCoin |= ledger.Coin > 0; revKarma |= ledger.Karma >= 10;
             h.ShowNeok = revNeok; h.ShowMemory = revMemory; h.ShowCoin = revCoin; h.ShowKarma = revKarma;
         }
