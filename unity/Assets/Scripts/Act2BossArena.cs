@@ -13,7 +13,7 @@ public class Act2BossArena : MonoBehaviour
     public static bool Enabled { get { return FieldRules.Act2; } }   // 2막 땅이 깔려 있으면 보스 넷도 선다(금줄이 닫혀 있는 동안은 닿을 수 없다)
 
     enum Shape { Circle, Sector, Bar, Ring }
-    class Tele { public string fireSfx; public bool drain; public float drainT; public bool weak; public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
+    class Tele { public Vector3 ropeEnd; public bool rope; public string fireSfx; public bool drain; public float drainT; public bool weak; public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
 
     JudgeSystem judge; Enemy boss; BossDef def; Act2Brain brain; Act3Brain brain3;   // 2막(5~8)은 brain, 3막(9~12)은 brain3 — 같은 화면 코드가 둘을 다 그린다
     readonly List<Tele> teles = new List<Tele>();
@@ -54,8 +54,27 @@ public class Act2BossArena : MonoBehaviour
         // B-06 약점: 일자진의 빈칸(안전 자리)에 서서 때리면 피해가 커진다(Balance.B06_GAP_DMG_MULT). 대형이 떠 있는 동안만
         if (brain != null && def.Id == 7) TickMiners(dt);
         if (brain3 != null) TickHelpers(dt);
-        if (brain3 != null && def.Id == 10) TickTilt(dt);
+        if (brain3 != null && def.Id == 10) { TickTilt(dt); TickRope(dt); }
         if (brain != null && def.Id == 6) boss.damageTakenMult = brain.DamageMultAt(PlayerInFormGap());
+    }
+
+    // ---- B-10 약점: 줄 끊기 직후 늘어진 밧줄 끝을 2초 동안 사슬로 끌면 선장이 넘어진다(멈칫 1.5초 + 맺힘 피해 ×1.5 2초) ----
+    void SpawnRopeEnd(Vector3 at)
+    {
+        DropPoint(ref ropePt, ref ropeView);
+        ropePt = MakePoint(at, new Color(0.75f, 0.6f, 0.35f, 1f), 0.55f, () =>
+        {
+            brain3.Stun = Mathf.Max(brain3.Stun, 1.5f); ropeWeakT = 2f;
+            judge.PatternEvent("B-10.weak_rope", boss, true);   // 처음 넘어질 때만 말풍선 "…무겁다."
+            DropPoint(ref ropePt, ref ropeView);
+        }, out ropeView);
+        ropeT = 2f; judge.Say("밧줄 끝 — 끌어당겨라", 2f);
+    }
+    void TickRope(float dt)
+    {
+        if (ropePt != null) { ropeT -= dt; if (ropeT <= 0f) DropPoint(ref ropePt, ref ropeView); }
+        if (ropeWeakT > 0f) ropeWeakT -= dt;
+        if (boss != null) boss.damageTakenMult = ropeWeakT > 0f ? 1.5f : 1f;
     }
 
     // ---- B-10 기운 갑판: 6초마다(맺힘 50% 뒤 4초) 갑판이 좌우로 기울어 1.5초 동안 1.5 m/s 로 미끄러진다 ----
@@ -138,7 +157,7 @@ public class Act2BossArena : MonoBehaviour
     }
 
     // ---- 약점 점(사슬로 낚아챌 자리): 옷(B-09)·횃불(B-12)·깃발(B-05) ----
-    PullPoint clothPt, torchPt, flagPt; GameObject clothView, torchView, flagView;
+    PullPoint clothPt, torchPt, flagPt, ropePt; GameObject clothView, torchView, flagView, ropeView; float ropeT, ropeWeakT;   // 선장 줄 끝(B-10)
     PullPoint MakePoint(Vector3 at, Color col, float size, System.Action onPull, out GameObject view, string model = null)
     {
         GameObject g = null;
@@ -160,7 +179,7 @@ public class Act2BossArena : MonoBehaviour
         return PullPoints.Add(at, 2.5f, onPull);
     }
     void DropPoint(ref PullPoint p, ref GameObject v) { PullPoints.Remove(p); p = null; if (v != null) Destroy(v); v = null; }
-    void DropPoints() { DropPoint(ref clothPt, ref clothView); DropPoint(ref torchPt, ref torchView); DropPoint(ref flagPt, ref flagView); }
+    void DropPoints() { DropPoint(ref ropePt, ref ropeView); DropPoint(ref clothPt, ref clothView); DropPoint(ref torchPt, ref torchView); DropPoint(ref flagPt, ref flagView); }
 
     void Clear() { foreach (var t in teles) if (t.view != null) Destroy(t.view); teles.Clear(); DropPoints(); if (boss != null) boss.damageTakenMult = 1f; }
     void OnDestroy() { DropPoints(); if (judge != null) judge.OnJudged -= OnJudged; }
@@ -274,7 +293,7 @@ public class Act2BossArena : MonoBehaviour
                 {
                     var dd = m.Count == 1 ? dir : Quaternion.Euler(0f, i == 0 ? 35f : -35f, 0f) * dir;   // 두 줄이면 X 자로 엇갈린다
                     var cc = m.Count == 1 ? bp + dd * (m.Param * 0.5f) : pp;
-                    Add(new Tele { shape = Shape.Bar, c = cc, dir = dd, len = m.Param, wid = m.Radius, warn = m.Warn, fireSfx = "sfx.boss.seonjang.rope.cut" });   // 판정이 나갈 때 줄 끊는 소리
+                    Add(new Tele { shape = Shape.Bar, c = cc, dir = dd, len = m.Param, wid = m.Radius, warn = m.Warn, fireSfx = "sfx.boss.seonjang.rope.cut", rope = true, ropeEnd = cc + dd * (m.Param * 0.5f) });   // 판정이 나갈 때 줄 끊는 소리
                 }
                 break;
             case BossAct.RopeWrap: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); break;
@@ -345,6 +364,7 @@ public class Act2BossArena : MonoBehaviour
             {
                 t.fired = true;
                 if (t.fireSfx != null) Sfx.Play(t.fireSfx);
+                if (t.rope && def.Id == 10) SpawnRopeEnd(t.ropeEnd);
                 bool inside = Inside(t, judge.player.Pos);
                 if (inside && t.paper) { brain.OnNamePaperStepped(); boss.soul.Maedhim = Mathf.Max(1, (int)brain.Maedhim); }   // 이름 종이: 무해, 보스 맺힘 −2%
                 else if (inside) { judge.BossAreaHit(boss, t.weak ? 0.5f : 1f); if (t.mine) Sfx.Play("sfx.boss.yeom.burst"); }   // 숫자 칸을 밟아 피해   // 약해진 파도는 피해 절반

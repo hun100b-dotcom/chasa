@@ -74,6 +74,7 @@ public class GameMain : MonoBehaviour
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
             if (judge.camps != null) judge.camps.LonerOverhears(judge.npcs.AddOverhear);
+            RumorData.Load(judge.npcs);   // 2·3막 소문 엿듣기(땅이 열린 막만)
             foreach (var o in SeonangTexts.Overhears)   // 첫 밤 솔고개 엿듣기 15자리: 깨어남부터 그 밤 새벽까지, 박돌쇠 처결 전/후에 맞는 줄만
             {
                 var oc = o;

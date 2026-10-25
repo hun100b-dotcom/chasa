@@ -148,6 +148,16 @@ public class NpcWorld
         builtPhase = -1;
     }
 
+    /// <summary>2·3막 소문 엿듣기(서사 overhear_act2/3). 두 사람의 두 줄. 단서 아님. time: 0 새벽 1 낮 2 저녁 3 밤. 그 집 혼의 장례를 봤으면(echo 혼 처결) 닫는다</summary>
+    public void AddRumor(string id, string place, Vector3 pos, string[] speakers, string[] lines, string half, int time, string echo)
+    {
+        string text = lines.Length > 1 ? lines[0] + "\n" + speakers[1] + ": " + lines[1] : lines[0];
+        System.Func<bool> gate = null;
+        if (!string.IsNullOrEmpty(echo)) gate = () => !(soulDone != null && soulDone(echo));
+        all.Add(new Spot { row = new Row { npc = "rm", name = speakers[0], zone = "Field", place = id + " " + place, time = time, unlock = 1, region = 1, verb = "엿듣기" }, clue = "", line = text, half = half, verb = "엿듣기", label = speakers[0], pos = pos, gate = gate });
+        builtPhase = -1;
+    }
+
     /// <summary>처결 결과로 바뀐 풍경 한 곳을 더한다(예: 보스를 천도하면 나루에 배가 묶여 있다). 다가서면 글이 뜬다. timeSlot: 0 동틀녘 1 낮 2 해질녘 3 밤</summary>
     public void AddScenery(Vector3 pos, string text, int timeSlot)
     {

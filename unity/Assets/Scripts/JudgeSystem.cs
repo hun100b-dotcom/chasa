@@ -140,7 +140,8 @@ public class JudgeSystem : MonoBehaviour
         player.ConsumeAct();   // 후딜·피하기를 끊고 천도 시작
         castTarget = e;
         castT = 0f;
-        castTotal = e.soul.Boss ? Mathf.Max(0.5f, Balance.BOSS_TENDO_CAST_TIME - (snatched.Contains(e.soul.BossId) ? 0.5f : 0f)) : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
+        castTotal = e.soul.Boss ? Mathf.Max(0.5f, Balance.BOSS_TENDO_CAST_TIME - (snatched.Contains(e.soul.BossId) ? 0.5f : 0f)) : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;
+        if (e.soul.Name != null && HasKeepsake("흑월의 붓")) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - 0.2f);   // 흑월의 붓: 이름혼 천도 시전 −0.2초   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
         if (!e.soul.Boss)
         {
             if (interactables != null && e.label != null && interactables.KeepsakeSouls.Contains(e.label)) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.KEEPSAKE_CAST_CUT);   // 유품을 만져 둔 혼
@@ -194,6 +195,18 @@ public class JudgeSystem : MonoBehaviour
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         if (reward != null) reward.Pahon(at, 3 + (ledger.Coin - coinBefore) / 8);   // 엽전이 튀었다가 발밑으로 빨려 든다
         if (numbers != null) numbers.Spawn(at + Vector3.up * 1.7f, ledger.Coin - coinBefore, "coin");
+        // 왕초의 바가지: 파혼 때 둘레 3 m 의 잔넋도 터진다(하나에 엽전 +1)
+        if (HasKeepsake("왕초의 바가지"))
+        {
+            int gourd = 0;
+            foreach (var m in new List<Enemy>(enemies.list))
+            {
+                if (m == null || m == e || !m.alive || m.soul.Boss || m.type != SoulType.Mote) continue;
+                if (new Vector2(m.Pos.x - at.x, m.Pos.z - at.z).magnitude > 3f) continue;
+                m.PlayFinishAnim(false); m.Finish(); gourd++; ledger.Coin += 1; night.RecordCoin(1);
+            }
+            if (gourd > 0) Say("바가지가 울려 잔넋 " + gourd + "마리가 터졌다");
+        }
         // 잔넋 대장 파혼 연쇄(기획 F-1b): 4m 안 같은 무리 잔넋이 함께 깨진다. 엽전은 마리당 ×0.6, 업은 마리당 +0.5 (파혼이 늘 1등이 되지 않게)
         if (e.type == SoulType.Mote && e.leader && e.group != null)
         {
@@ -218,6 +231,7 @@ public class JudgeSystem : MonoBehaviour
             Say(e.label + "을(를) 깨뜨렸다");
             cuts.Play(BossCut(e.soul, "PAHON")); feel.AddShake(1f);   // 6m 대폭발, 판자가 흩어진다
             // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
+            { var ks = ItemDef.BossKeepsake(e.soul.BossId); if (ks != null && lo.Equip(ks)) { lo.lastDrop = "이름 있는 장비: " + ks.Name; lo.lastDropT = 6f; } }   // 서사 확정 노리개(뱃삯·장부·등잔·바가지)
             if (e.soul.BossId <= 1 && Demo.Gear && lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
         }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
@@ -438,6 +452,8 @@ public class JudgeSystem : MonoBehaviour
             // 묻힌 혼은 넋 ×1.25, 넋두리는 기억 조각 +1 (기획 F-1b)
             if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
+            if (castTarget.soul.Name != null && HasKeepsake("흑월의 붓")) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * 0.10f);   // 흑월의 붓: 이름혼 천도 넋 +10%
+            if (castTarget.soul.Boss && castTarget.soul.BossId == 12) { var ks = ItemDef.BossKeepsake(12); if (ks != null && lo.Equip(ks)) { lo.lastDrop = "이름 있는 장비: 흑월의 붓"; lo.lastDropT = 6f; } }   // B-12 천도 보상(시즌 2로 가져감)
             if (castTarget.soul.Name == "박돌쇠") { int bonus = (ledger.Neok - before) * (Balance.NAMED_FIRST_NEOK_MULT - 1); ledger.Neok += bonus; }   // 첫 이름혼은 넋이 크다: 5분 안에 첫 품계(처음 10분 M6)
             if (castTarget.elite)   // 거센 혼 천도: 넋 x3 + 기억 한 줄(두레 좌상 오봉). 잔넋은 EliteArena 가 조용히 흩는다
             {
@@ -522,7 +538,17 @@ public class JudgeSystem : MonoBehaviour
         else if (now) dangerLeaveT = 0f;
     }
 
+    /// <summary>곶 불빛(B-09 망부석 아낙 천도 효과): ⑤ 갯마을 밤에 시야(천도 시전 중 좁아지는 정도)가 10% 덜 줄어든다</summary>
+    float CapeLight { get { bool on = bossTendoIds.Contains(9) && Sfx.NightNow && player.Pos.x > 764f; if (on && !capeSaid) { capeSaid = true; Say("곶 불빛이 길을 비춘다"); } return on ? 1.1f : 1f; } }
+    bool capeSaid;
     bool tideEbb, tideKnown;   // 물때가 바뀌는 순간을 알아채려고 직전 값을 기억
+
+    /// <summary>이름 있는 노리개를 차고 있나(이름으로 찾는다)</summary>
+    bool HasKeepsake(string name)
+    {
+        foreach (var p in new[] { EquipPos.Charm1, EquipPos.Charm2 }) { var it = lo.gear.GetAt(p); if (it != null && it.Name == name) return true; }
+        return false;
+    }
 
     void EndCast()
     {
@@ -1889,7 +1915,7 @@ public class JudgeSystem : MonoBehaviour
         var cam = Camera.main; if (cam == null || inDay || night.Over) return;
         float w = Screen.width, hh = Screen.height;
         float diag = Mathf.Sqrt(w * w + hh * hh);
-        float vr = EdgeWarn.VisionRadius(diag, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO), visionP);
+        float vr = EdgeWarn.VisionRadius(diag, Mathf.Min(1f, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO) * CapeLight), visionP);
         foreach (var e in enemies.list)
         {
             if (!e.alive || !e.atk.Winding) continue;      // 예비동작 중인 적만 (평소 모든 적에 띄우면 어지럽다)
@@ -1955,7 +1981,7 @@ public class JudgeSystem : MonoBehaviour
         {
             var tint = ChasaPalette.MemoryRim;
             float diag = Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
-            float size = Mathf.Lerp(diag * 1.25f, diag * 1.25f * lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO), visionP);   // 반경 60%로
+            float size = Mathf.Lerp(diag * 1.25f, diag * 1.25f * Mathf.Min(1f, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO) * CapeLight), visionP);   // 반경 60%로
             var r = new Rect((Screen.width - size) / 2f, (Screen.height - size) / 2f, size, size);
             GUI.color = new Color(tint.r * 0.35f, tint.g * 0.25f, tint.b * 0.5f, 0.95f * visionP);
             GUI.DrawTexture(r, vignette);

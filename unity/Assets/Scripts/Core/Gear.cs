@@ -185,6 +185,14 @@ namespace Chasa.Core
         public List<Seal> Seals = new List<Seal>();          // 홈에 박은 인(Sockets 개수를 넘지 않는다)
         public List<OptionRoll> Options = new List<OptionRoll>();
 
+        /// <summary>서사 확정 이름 있는 물건 5개(보스 처결 보상 노리개). 효과는 이름으로 JudgeSystem 이 읽는다(왕초의 바가지·흑월의 붓은 구현, 나머지는 기획 효과 확정 대기)</summary>
+        public static ItemDef BossKeepsake(int bossId)
+        {
+            string name = bossId == 1 ? "도한수의 뱃삯" : bossId == 8 ? "남은 장부" : bossId == 9 ? "아낙의 등잔" : bossId == 11 ? "왕초의 바가지" : bossId == 12 ? "흑월의 붓" : null;
+            if (name == null) return null;
+            return new ItemDef { Slot = Slot.Charm, Rarity = Rarity.Rare, Name = name, Named = true };
+        }
+
         /// <summary>시연판의 이름 있는 물건: 파혼 반경 +m (노리개)</summary>
         public static ItemDef MoonflowerBell()
         {
