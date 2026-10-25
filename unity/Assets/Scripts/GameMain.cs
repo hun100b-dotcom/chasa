@@ -289,13 +289,13 @@ public class GameMain : MonoBehaviour
             float p = pd * Mathf.Deg2Rad;
             off = new Vector3(Mathf.Cos(camYaw) * Mathf.Cos(p), Mathf.Sin(p), Mathf.Sin(camYaw) * Mathf.Cos(p)) * camDist;
         }
-        // 깨어날 때(새로 시작 직후) 줌 20 m → 16 m: 0.5초 머물다 2초 동안 처음 빠르고 끝에 천천히 내려온다(assets3d/ui/first10/wake_camera.json)
+        // 깨어날 때(새로 시작 직후) 줌 24 m → 19 m(기본 거리가 16→19 로 바뀜): 0.5초 머물다 2초 동안 처음 빠르고 끝에 천천히 내려온다(assets3d/ui/first10/wake_camera.json)
         float wakeMul = 1f;
         if (TitleScreen.WakeAt >= 0f)
         {
             float u = Mathf.Clamp01((Time.unscaledTime - TitleScreen.WakeAt - 0.5f) / 2f);
             float e = 1f - Mathf.Pow(1f - u, 3f);   // easeOutCubic
-            wakeMul = Mathf.Lerp(20f / 16f, 1f, e);
+            wakeMul = Mathf.Lerp(24f / 19f, 1f, e);
             if (u >= 1f) TitleScreen.WakeAt = -1f;
         }
         cam.transform.position = focus + (View3D.On ? off * ((1f - zoomIn) * wheel * wakeMul) : offset);
@@ -333,6 +333,7 @@ public class GameMain : MonoBehaviour
     }
     float wheel = 1f, wheelTarget = 1f;   // 카메라 거리 배율(작을수록 확대). 휠·핀치로 바뀐다
     float pinchPrev;                      // 두 손가락 사이 이전 거리(폰 확대·축소)
+    Vector3 kbDir;                        // 마지막으로 걷던 방향(키를 뗄 때 이 쪽으로 미끄러진다)
     bool kbMove;                          // 지금 WASD 로 걷는 중인가
 
     /// <summary>휠·핀치로 3단계(가깝게/기본/멀리) 줌. 단계 거리는 balance.json 의 CAMERA_DIST_* (기획 표준: 11/16/20 m)</summary>
@@ -447,14 +448,14 @@ public class GameMain : MonoBehaviour
         if (joyActive) { x = joyAxes.x; z = joyAxes.y; }   // 폰 조이스틱이 눌려 있으면 그 값을 쓴다
         if (Mathf.Abs(x) < 0.01f && Mathf.Abs(z) < 0.01f)
         {
-            if (kbMove) { kbMove = false; player.CommandStop(); }   // 키를 떼면 멈춘다(클릭 이동 중이었다면 건드리지 않음)
+            if (kbMove) { kbMove = false; player.CommandMove(player.Pos + kbDir * Balance.MOVE_STOP_SLIDE_M); }   // 키를 떼면 걷던 방향으로 0.18 m 미끄러지며 멈춘다(한 프레임에 0 이면 뚝 멈춰 보인다. 클릭 이동 중이었다면 건드리지 않음)
             return;
         }
         // 카메라가 바라보는 방향(바닥에 눌러 편 것)이 '위'
         var f = cam.transform.forward; f.y = 0f; f = f.sqrMagnitude < 1e-4f ? Vector3.forward : f.normalized;
         var r = new Vector3(f.z, 0f, -f.x);
         var dir = (f * z + r * x).normalized;
-        kbMove = true;
+        kbMove = true; kbDir = dir;
         player.CommandMove(player.Pos + dir * 2.5f);   // 목표를 계속 앞에 두어, 도착 감속 없이 이어 걷게 한다
     }
 

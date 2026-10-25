@@ -193,19 +193,32 @@ public class ActorModel : MonoBehaviour
         }
     }
 
-    bool wasMoving, kneelHold; float startT, stopT, runTime;
+    bool wasMoving, kneelHold; float startT, stopT, runTime, afterDodgeT;   // afterDodgeT: 구르기 직후 이 시간 안의 출발은 Run_Start 를 건너뛴다
+    /// <summary>들어오는 동작으로 섞는 시간(초). 구르기·달리기 출발/멈춤·공격은 짧게(기획 조작 점검), 나머지는 기본</summary>
+    static float BlendSec(Pose p)
+    {
+        switch (p)
+        {
+            case Pose.Dodge: return Balance.ANIM_BLEND_DODGE;
+            case Pose.RunStart: case Pose.RunStop: return Balance.ANIM_BLEND_RUNSTARTSTOP;
+            case Pose.Attack: case Pose.Attack2: case Pose.Attack3: return Balance.ANIM_BLEND_ATTACK;
+            default: return Balance.ANIM_BLEND_DEFAULT;
+        }
+    }
+
     void HeroUpdate(float dt, bool moving)
     {
         var want = pose == Pose.Idle && moving ? Pose.Walk : pose;
         // 출발·정지 동작(아트 HERO-MOTION): 서 있다가 달리기 시작할 때 Run_Start 9프레임(0.15초), 달리다 멈출 때 Run_Stop 16프레임(0.27초). 주인공만(해당 동작이 있는 모델)
         if (pose == Pose.Idle || pose == Pose.Walk)
         {
-            if (moving && !wasMoving && heroInput.ContainsKey(Pose.RunStart)) startT = 0.15f;
-            if (!moving && wasMoving && heroInput.ContainsKey(Pose.RunStop) && runTime > 0.3f) stopT = 0.27f;
+            if (moving && !wasMoving && heroInput.ContainsKey(Pose.RunStart) && afterDodgeT <= 0f) startT = Balance.RUN_START_SEC;   // 구르기 끝 자세가 달리기 첫 자세와 이어져 Run_Start 가 필요 없다
+            if (!moving && wasMoving && heroInput.ContainsKey(Pose.RunStop) && runTime > 0.3f) stopT = Balance.RUN_STOP_SEC;
             runTime = moving ? runTime + dt : 0f;
         }
         else { startT = 0f; stopT = 0f; runTime = 0f; }
         wasMoving = moving;
+        afterDodgeT = pose == Pose.Dodge ? 0.3f : Mathf.Max(0f, afterDodgeT - dt);
         if (startT > 0f) { startT -= dt; if (!moving) startT = 0f; else want = Pose.RunStart; }
         else if (stopT > 0f) { stopT -= dt; if (moving) stopT = 0f; else want = Pose.RunStop; }
         // 무릎 꿇음(Kneel)이 끝나면 이어서 KneelHold 를 반복한다(아트: 자세가 이어지게 만들어 크로스페이드 불필요). 처결 입력이 오면 자세가 바뀌어 풀린다
@@ -215,14 +228,14 @@ public class ActorModel : MonoBehaviour
         if (want == Pose.Attack) want = atkPose;   // 콤보 2·3타는 전용 동작
         if (want == Pose.Walk && !moving && pose == Pose.Walk) want = Pose.Idle;
         int idx; if (!heroInput.TryGetValue(want, out idx)) idx = 0;
-        if (idx != heroCur) { heroCur = idx; heroT = 0f; heroSpeed = 1f; }   // 새 동작은 처음부터
+        if (idx != heroCur) { heroCur = idx; heroT = 0f; heroSpeed = want == Pose.Dodge ? Balance.DODGE_ANIM_SPEED : 1f; }   // 구르기 클립 0.30초를 DODGE_TIME 0.32초에 맞춰 늘려 재생(무적 구간이 클립 2~14프레임과 겹친다)   // 새 동작은 처음부터
         // 달리기(Run)는 5.5 m/s 에서 1.0배로 재생하면 발이 안 미끄러진다(아트 HERO-MOTION). 다른 속도면 속도 비율만큼 빠르거나 느리게
         heroT += dt * (want == Pose.Walk ? Mathf.Clamp(speed / Mathf.Max(0.1f, Balance.PLAYER_MOVE_SPEED), 0.4f, 1.5f) : 1f);
         // 가중치를 부드럽게 옮긴다 (0.12초 안팎 크로스페이드)
         for (int i = 0; i < mixer.GetInputCount(); i++)
         {
             float w = mixer.GetInputWeight(i), target = i == idx ? 1f : 0f;
-            mixer.SetInputWeight(i, Mathf.MoveTowards(w, target, dt / 0.12f));
+            mixer.SetInputWeight(i, Mathf.MoveTowards(w, target, dt / BlendSec(want)));   // 들어오는 동작에 맞는 섞는 시간(구르기·공격은 짧게 → 누른 즉시 시작해 보인다)
             var pl = heroPlayables[i];
             if (!pl.IsValid()) continue;
             float len = pl.GetAnimationClip().length;

@@ -2537,5 +2537,18 @@ public class CoreTests
         Assert.AreEqual(0f, Tide.EbbRemainMin(30f), 0.01f);      // 밀물 중
     }
 
+    [Test]
+    public void RollFraction_FollowsClipSpeedTable()
+    {
+        Assert.AreEqual(0f, DodgeRules.RollFraction(0f), 1e-5f);
+        Assert.AreEqual(1f, DodgeRules.RollFraction(1f), 1e-5f);            // 합이 1 → 총 거리는 dodgeDistance 그대로
+        float prev = 0f; for (int i = 1; i <= 20; i++) { float f = DodgeRules.RollFraction(i / 20f); Assert.GreaterOrEqual(f, prev); prev = f; }
+        // 처음 한 프레임 구간의 속도는 달리기 속도(5.5)에서 시작: 옛 EaseOut 의 25 m/s 로 튀지 않는다(4 m, 0.32초 기준 초속 = 비율 변화 × 4 / 0.0168초)
+        float v0 = (DodgeRules.RollFraction(1f / 19f) - DodgeRules.RollFraction(0f)) * 4f / (0.32f / 19f);
+        Assert.Less(v0, 7f);
+        float vEnd = (DodgeRules.RollFraction(1f) - DodgeRules.RollFraction(18f / 19f)) * 4f / (0.32f / 19f);
+        Assert.Greater(vEnd, 4f); Assert.Less(vEnd, 7f);                      // 끝도 달리기 속도로 이어진다(0 으로 멈추지 않는다)
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

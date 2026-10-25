@@ -1379,6 +1379,38 @@
   "value": 4.0,
   "note": "(기획 타격감 분석 10-24, 임시) 피하는 거리(m) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
+ "ANIM_BLEND_DODGE": {
+  "value": 0.033,
+  "note": "(기획 조작 점검 10-26) 구르기 동작으로 섞는 시간(초). Run→Roll 2프레임. 지금까지 0.12 일괄이라 구르기가 눈에 늦게 시작했다"
+ },
+ "ANIM_BLEND_RUNSTARTSTOP": {
+  "value": 0.017,
+  "note": "(기획 조작 점검 10-26) 달리기 출발·멈춤 동작으로 섞는 시간(초). Idle↔Start/Stop 0~1프레임"
+ },
+ "ANIM_BLEND_ATTACK": {
+  "value": 0.05,
+  "note": "(기획 조작 점검 10-26) 공격 1·2·3타로 섞는 시간(초). 1타 선딜 0.09초보다 짧아야 팔이 바로 움직인다"
+ },
+ "ANIM_BLEND_DEFAULT": {
+  "value": 0.12,
+  "note": "(기획 조작 점검 10-26) 그 밖의 동작 섞는 시간(초)"
+ },
+ "MOVE_STOP_SLIDE_M": {
+  "value": 0.18,
+  "note": "(기획 조작 점검 10-26) WASD·조이스틱을 떼면 걷던 방향으로 이만큼 미끄러지며 멈춘다(m). Run_Stop 클립 실측 0.18 m"
+ },
+ "DODGE_ANIM_SPEED": {
+  "value": 0.9375,
+  "note": "(기획 조작 점검 10-26) 구르기 클립 재생 배율 = 클립 0.30초 ÷ DODGE_TIME 0.32. 무적 0.03~0.25초가 클립 2~14프레임과 겹친다"
+ },
+ "RUN_START_SEC": {
+  "value": 0.167,
+  "note": "(기획 조작 점검 10-26) Run_Start 동작 시간(초). 클립 10프레임"
+ },
+ "RUN_STOP_SEC": {
+  "value": 0.25,
+  "note": "(기획 조작 점검 10-26) Run_Stop 동작 시간(초)"
+ },
  "DODGE_TIME": {
   "value": 0.32,
   "note": "(기획 타격감 분석 10-24, 임시) 피하기 전체 시간(초)"
@@ -1484,7 +1516,7 @@
   "note": "오르막 기울기가 이 값 이상이면 못 오른다(1.1 = 약 48도). 그 사이는 선형으로 느려짐"
  },
  "FOOTSTEP_STRIDE_M": {
-  "value": 1.15,
+  "value": 1.375,
   "note": "발소리 한 번이 나는 걸음 거리(m)"
  },
  "WEATHER_NIGHT_MID_REROLL": {
@@ -1781,7 +1813,7 @@
  },
  "MOVE_TURN_RADPS": {
   "value": 30.0,
-  "note": "(기획 조작감) 이동·몸 회전 최대 속도(rad/s). 22는 순간 회전처럼 보여 14로 낮춤 | 기획 표준 명세 hud-controls-spec v1(10-25)"
+  "note": "(기획 조작감) 이동·몸 회전 최대 속도(rad/s). 값은 30(0.1초에 180°. 14 로 낮췄다가 클립 실측에 맞춰 30 으로 되돌림) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "MOVE_LEAN_DEG": {
   "value": 3.0,
@@ -1888,7 +1920,7 @@
   "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 플레이어가 이 거리 안이면 뒷걸음(m)"
  },
  "SOULTYPE_WAIL_SIGHT_M": {
-  "value": 16.0,
+  "value": 10.0,
   "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리가 던지기 시작하는 시야 거리(m)"
  },
  "SOULTYPE_WAIL_WINDUP": {
@@ -2040,15 +2072,15 @@
   "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼"
  },
  "CAMERA_DIST_NEAR": {
-  "value": 11.0,
+  "value": 13.0,
   "note": "휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25))"
  },
  "CAMERA_DIST_MID": {
-  "value": 16.0,
+  "value": 19.0,
   "note": "휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25))"
  },
  "CAMERA_DIST_FAR": {
-  "value": 20.0,
+  "value": 24.0,
   "note": "휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25))"
  },
  "CAMERA_PITCH_NEAR": {

@@ -220,13 +220,18 @@ public class Player : MonoBehaviour
     void TickDodge(float dt)
     {
         if (dt <= 0f) return;
-        // 처음 빠르고 끝에서 감속(EaseOut): 순간 이동처럼 튀지 않고 '미끄러져 피하는' 느낌
+        // 구르기 클립의 속도표대로(달리기 속도로 시작 → 최고속 유지 → 달리기 속도로 끝): 몸이 발보다 먼저 튀어 나가지 않고, 끝에서 멈칫하지 않는다
         float t0 = dodgeT, t1 = Mathf.Min(Balance.DODGE_TIME, dodgeT + dt);
-        float p0 = 1f - Mathf.Pow(1f - t0 / Balance.DODGE_TIME, 2f), p1 = 1f - Mathf.Pow(1f - t1 / Balance.DODGE_TIME, 2f);
+        float p0 = DodgeRules.RollFraction(t0 / Balance.DODGE_TIME), p1 = DodgeRules.RollFraction(t1 / Balance.DODGE_TIME);
         Pos += dodgeDir * (dodgeDistance * (p1 - p0));
         ClampToArena();
         dodgeT += dt;
-        if (dodgeT >= Balance.DODGE_TIME) { state = State.Free; comboTimer = Mathf.Max(comboTimer, 0f); }
+        if (dodgeT >= Balance.DODGE_TIME)
+        {
+            state = State.Free; comboTimer = Mathf.Max(comboTimer, 0f);
+            // 구르기가 달리기 속도(5.5)로 끝나므로 이어 달리면 출발 가속을 처음부터 하지 않는다(구르고 나서 덜컥하던 것)
+            walkSpeed = Config.PLAYER_MOVE_SPEED * speedMult * loadout.stats.MoveSpeedMult; lastStepTime = Time.time;
+        }
     }
 
     // ===== 명령 (입력 쪽에서 호출) ================================================

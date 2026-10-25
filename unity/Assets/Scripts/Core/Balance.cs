@@ -371,6 +371,14 @@ public static class Balance
     public const float PLAYER_HIT_INVULN = 0.5f;  // (기획 타격감 분석 10-24, 임시) 피격 직후 무적(초) [0.6→0.5]
     public const bool DODGE_ENABLED = true;  // (기획 타격감 분석 10-24, 임시) 피하기(구르기) 켜기. PC Space, 폰 오른쪽 아래 버튼
     public const float DODGE_DISTANCE = 4.0f;  // (기획 타격감 분석 10-24, 임시) 피하는 거리(m) | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float ANIM_BLEND_DODGE = 0.033f;  // (기획 조작 점검 10-26) 구르기 동작으로 섞는 시간(초). Run→Roll 2프레임. 지금까지 0.12 일괄이라 구르기가 눈에 늦게 시작했다
+    public const float ANIM_BLEND_RUNSTARTSTOP = 0.017f;  // (기획 조작 점검 10-26) 달리기 출발·멈춤 동작으로 섞는 시간(초). Idle↔Start/Stop 0~1프레임
+    public const float ANIM_BLEND_ATTACK = 0.05f;  // (기획 조작 점검 10-26) 공격 1·2·3타로 섞는 시간(초). 1타 선딜 0.09초보다 짧아야 팔이 바로 움직인다
+    public const float ANIM_BLEND_DEFAULT = 0.12f;  // (기획 조작 점검 10-26) 그 밖의 동작 섞는 시간(초)
+    public const float MOVE_STOP_SLIDE_M = 0.18f;  // (기획 조작 점검 10-26) WASD·조이스틱을 떼면 걷던 방향으로 이만큼 미끄러지며 멈춘다(m). Run_Stop 클립 실측 0.18 m
+    public const float DODGE_ANIM_SPEED = 0.9375f;  // (기획 조작 점검 10-26) 구르기 클립 재생 배율 = 클립 0.30초 ÷ DODGE_TIME 0.32. 무적 0.03~0.25초가 클립 2~14프레임과 겹친다
+    public const float RUN_START_SEC = 0.167f;  // (기획 조작 점검 10-26) Run_Start 동작 시간(초). 클립 10프레임
+    public const float RUN_STOP_SEC = 0.25f;  // (기획 조작 점검 10-26) Run_Stop 동작 시간(초)
     public const float DODGE_TIME = 0.32f;  // (기획 타격감 분석 10-24, 임시) 피하기 전체 시간(초)
     public const float DODGE_IFRAME_START = 0.03f;  // (기획 타격감 분석 10-24, 임시) 무적 시작(초)
     public const float DODGE_IFRAME_END = 0.25f;  // (기획 타격감 분석 10-24, 임시) 무적 끝(초) → 무적 0.22초(60fps 13프레임)
@@ -397,7 +405,7 @@ public static class Balance
     public const float MOVE_BRAKE_TIME = 0.06f;  // 도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_SLOPE_SLOW = 0.5f;  // 오르막 기울기(오른 높이÷간 거리)가 이 값을 넘으면 걸음이 느려지기 시작(0.5 = 약 27도)
     public const float MOVE_SLOPE_BLOCK = 1.1f;  // 오르막 기울기가 이 값 이상이면 못 오른다(1.1 = 약 48도). 그 사이는 선형으로 느려짐
-    public const float FOOTSTEP_STRIDE_M = 1.15f;  // 발소리 한 번이 나는 걸음 거리(m)
+    public const float FOOTSTEP_STRIDE_M = 1.375f;  // 발소리 한 번이 나는 걸음 거리(m)
     public const float WEATHER_NIGHT_MID_REROLL = 0.25f;  // 밤 중간(약 11분)에 날씨를 한 번 더 굴릴 확률 (기획서 8절, 임시)
     public const float WEATHER_CLOUDY_GHOST_MULT = 1.15f;  // 흐림: 혼 나오는 수 배율
     public const float WEATHER_RAIN_STAIN_MULT = 0.5f;  // 비: 원념 얼룩 지속 배율
@@ -471,7 +479,7 @@ public static class Balance
     public const int AC_THROWNAME_DMG = 30;  // (액티브 도술 임시) 깨진 이름 던지기 피해
     public const float AC_THROWNAME_WINDOW = 5.0f;  // (액티브 도술 임시) 깨진 이름 던지기: 방금 파혼했다고 칠 시간(초)
     public const float AC_SHADOW_SEC = 10.0f;  // (액티브 도술 임시) 검은 갓의 그림자 지속(초)
-    public const float MOVE_TURN_RADPS = 30.0f;  // (기획 조작감) 이동·몸 회전 최대 속도(rad/s). 22는 순간 회전처럼 보여 14로 낮춤 | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float MOVE_TURN_RADPS = 30.0f;  // (기획 조작감) 이동·몸 회전 최대 속도(rad/s). 값은 30(0.1초에 180°. 14 로 낮췄다가 클립 실측에 맞춰 30 으로 되돌림) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_LEAN_DEG = 3.0f;  // (기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_BANK_DEG = 3.0f;  // (기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_LEAN_SMOOTH = 12.0f;  // (기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)
@@ -498,7 +506,7 @@ public static class Balance
     public const float SOULTYPE_WAIL_KEEP_MIN_M = 7.0f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리가 지키려는 거리 하한(m). 이보다 가까우면 천천히 물러난다
     public const float SOULTYPE_WAIL_KEEP_MAX_M = 9.0f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리가 지키려는 거리 상한(m). 이보다 멀면 다가온다
     public const float SOULTYPE_WAIL_BACKOFF_M = 3.0f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 플레이어가 이 거리 안이면 뒷걸음(m)
-    public const float SOULTYPE_WAIL_SIGHT_M = 16.0f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리가 던지기 시작하는 시야 거리(m)
+    public const float SOULTYPE_WAIL_SIGHT_M = 10.0f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리가 던지기 시작하는 시야 거리(m)
     public const float SOULTYPE_WAIL_WINDUP = 0.7f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리 던지기 선딜(초). 바닥에 궤적 예고선이 보인다
     public const float SOULTYPE_WAIL_INTERVAL = 3.5f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리 던지기 간격(초)
     public const float SOULTYPE_WAIL_ORB_SPEED = 9.0f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 원념 탄 속도(m/s). 직선
@@ -536,9 +544,9 @@ public static class Balance
     public const int SOULTYPE_RAPIDS_MOTE_PCT = 10;  // (필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 잔넋이 될 비율(%)
     public const int SOULTYPE_RAPIDS_WAIL_PCT = 25;  // (필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 넋두리가 될 비율(%)
     public const int SOULTYPE_RAPIDS_BURIED_PCT = 35;  // (필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼
-    public const float CAMERA_DIST_NEAR = 11.0f;  // 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25))
-    public const float CAMERA_DIST_MID = 16.0f;  // 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25))
-    public const float CAMERA_DIST_FAR = 20.0f;  // 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMERA_DIST_NEAR = 13.0f;  // 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMERA_DIST_MID = 19.0f;  // 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMERA_DIST_FAR = 24.0f;  // 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_NEAR = 46.0f;  // 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_MID = 52.0f;  // 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_FAR = 58.0f;  // 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
