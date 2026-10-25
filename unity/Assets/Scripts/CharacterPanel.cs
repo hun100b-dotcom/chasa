@@ -136,7 +136,7 @@ public partial class CharacterPanel : MonoBehaviour
     void DrawIcon(Slot s, ItemDef it, Rect r)
     {
         string rar = it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common";
-        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + Ko.IconKind(s) + "_" + rar;
+        string icon = Ko.IconName(s, rar, it.Named);
         var tex = SpriteLib.Texture("icons/" + icon); var fr = SpriteLib.Texture("icons/frame_" + rar);
         if (tex != null) GUI.DrawTexture(r, tex);
         if (fr != null) GUI.DrawTexture(r, fr);

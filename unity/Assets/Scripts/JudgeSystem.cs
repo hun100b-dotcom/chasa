@@ -1301,7 +1301,7 @@ public class JudgeSystem : MonoBehaviour
         GUI.color = new Color(0, 0, 0, 0.45f); GUI.DrawTexture(r, white); GUI.color = Color.white;
         if (it == null) return;
         string rar = it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common";
-        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + Ko.IconKind(s) + "_" + rar;
+        string icon = Ko.IconName(s, rar, it.Named);
         var tex = SpriteLib.Texture("icons/" + icon);
         var frame = SpriteLib.Texture("icons/frame_" + rar);
         if (tex != null) GUI.DrawTexture(r, tex);

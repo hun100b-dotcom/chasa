@@ -59,6 +59,13 @@ public static class Ko
     public static readonly EquipPos[] PosOrder = { EquipPos.Weapon1, EquipPos.Weapon2, EquipPos.Hat, EquipPos.Robe, EquipPos.Belt, EquipPos.Shoes, EquipPos.Charm1, EquipPos.Charm2 };
 
     /// <summary>아이콘 파일 이름에 쓰는 종류 글자(새 종류는 그림이 아직 없어 노리개 그림을 빌린다)</summary>
+    public static string IconName(Slot s, string rar, bool named)
+    {
+        if (s == Slot.Hat) return "equip_gat";   // 갓·띠·신은 등급 구분 없는 그림 한 장(아트 PR #33)
+        if (s == Slot.Belt) return "equip_tti";
+        if (s == Slot.Shoes) return "equip_sin";
+        return named ? "icon_named_wolhwa_bell" : "icon_" + IconKind(s) + "_" + rar;
+    }
     public static string IconKind(Slot s) { return s == Slot.Weapon ? "weapon" : s == Slot.Robe ? "dopo" : "noriga"; }
 
     /// <summary>장비 등급 이름 (Common/Crafted/Rare = 흔한/손본/귀한)</summary>
