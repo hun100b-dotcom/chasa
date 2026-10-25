@@ -53,7 +53,7 @@ cutscenes = [
    st(3.5, cam={'mode': 'pull', 'zoom': 0.9, 'time': 1.5, 'vignette': 0.0}, act='배가 물 위로 떠오른다. 물안개가 걷힌다. 배가 강 건너로 천천히 간다'),
    st(4.5, act='배 위의 영감이 이쪽을 한 번 돌아본다. 삿갓을 조금 숙인다', line=None, note='대사 없음. 고개 숙임이 인사다'),
    st(5.5, cam={'mode': 'cut', 'to': 'far_sky_over_hub', 'time': 0.0, 'hold': 1.0}, act='먼 하늘. 서낭당 쪽 저편에 나룻불 하나가 켜진다'),
-   st(6.5, cam={'mode': 'return', 'to': 'player', 'time': 0.5}, ui={'fact_on': 'F4', 'reward': {'neok': 5, 'memory': 'M-B01'}, 'world_change': '물막이 골 나루 열림 — 귀환 −17.5%'})]},
+   st(6.5, cam={'mode': 'return', 'to': 'player', 'time': 0.5}, ui={'fact_on': 'F4', 'reward': {'neok': 50, 'memory': 'M-B01'}, 'world_change': '나루 배가 다닌다 — 물막이 골 나루 ↔ 검은여울 나루 45초(기획 s1-boss-reward-check 3절)'})]},
 
  {'id': 'B01-PAHON', 'branch': '파혼', 'trigger': '처결 대기 중 파혼 입력',
   'duration': 2.5, 'input_lock': False, 'world': 'run', 'skippable': False,
@@ -63,7 +63,9 @@ cutscenes = [
    st(0.3, ui={'ledger_name': '도한수', 'ledger_fx': 'strokes_scatter'}, act='명부의 "도한수" 획이 하나씩 흩어진다. 마지막 획까지'),
    st(0.8, act='엽전이 물 위로 쏟아진다(엽전 ×30). 빈 허리끈 하나가 떠내려간다'),
    st(1.5, act='물 위의 얼룩이 천천히 하류로 번진다(큰 얼룩 지대)', note='대사 없음. 소리도 없이 물소리만'),
-   st(2.5, ui={'reward': {'coin': 30}, 'karma': '+3', 'karma_warning': '업 단계 경계를 넘으면 화면 경고', 'world_change': '물막이 골 큰 얼룩 지대(덩어리 +10%p)'})]},
+   st(2.0, cam={'mode': 'close', 'to': 'empty_belt', 'time': 0.0, 'hold': 0.5}, act='클로즈업: 떠내려가는 빈 허리끈', note='무엇을 깨뜨렸나를 남기는 마지막 0.5초(기획 4절)'),
+   st(2.5, ui={'reward': {'coin': 30, 'item': '도한수의 뱃삯(노리개 · 이름 있는 물건)'}, 'karma': '+3', 'karma_warning': '업 단계 경계를 넘으면 화면 경고',
+               'world_change': '물막이 골 큰 얼룩 지대(덩어리 +10%p)', 'next_day': '하류 갈대에 배 판자와 엽전이 걸려 있다(F 줍기 한 번, 엽전 +10). 빈 허리끈 하나'})]},
 ]
 
 cutscenes = [sfx_apply(c) for c in cutscenes]

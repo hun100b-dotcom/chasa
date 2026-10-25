@@ -273,7 +273,7 @@ C12A = {'id': 'C-12A', 'branch': '천도(시즌 1 끝 A판)', 'trigger': 'B-12 �
   st(74.0, beat='떠남', cam={'mode': 'crane', 'dir': 'up', 'time': 6.0, 'framing': '흑월 혼불과 강 하류를 한 화면에'}, act='흑월이 흩어지지 않는다. 혼불이 되어 삼도천 쪽으로 천천히 떠간다', sfx=['cut.dissolve'],
      note='시즌 2 ⑦ 줄에서 다시 만난다'),
   st(82.0, beat='붓', cam={'mode': 'push', 'to': 'snow_brush', 'time': 2.0, 'zoom': 1.5}, act='사슬은 남지 않았다. 눈밭에 붓 한 자루가 남아 있다', req=['cut.snow.settle(눈 위에 가벼운 것이 놓이는 소리)']),
-  st(90.0, cam={'mode': 'fade_out', 'time': 1.0}, ui={'reward': {'memory': 'M-B12', 'collection': '흑월의 붓(장비 아님)'}}, note='다음: C-13(A판)'),
+  st(90.0, cam={'mode': 'fade_out', 'time': 1.0}, ui={'reward': {'memory': 'M-B12', 'item': '흑월의 붓(이름 있는 노리개 · 시즌 2로 가져감)'}}, note='다음: C-13(A판)'),
  ]}
 C12B = {'id': 'C-12B', 'branch': '파혼(시즌 1 끝 B판)', 'trigger': 'B-12 처결 대기 중 파혼 입력', 'duration': 60.0,
  'input_lock': True, 'world': 'pause_enemies', 'skippable': True, 'lines': 0,

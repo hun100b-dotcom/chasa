@@ -251,7 +251,7 @@ C16 = {'id': 'C-16', 'branch': '4막 끝 — 먹지기의 빈 책상', 'trigger'
   st(12.0, beat='쪽지 묶음', cam={'mode': 'close', 'to': 'note_bundle', 'time': 2.0}, act='쪽지 묶음 — 1막부터 명부 여백에서 읽은 쪽지들의 원본. 맨 위는 처음 받은 것',
      ui={'note_card': '불러도 안 들린다.', 'note_card_time': 3.0}, note='묶음 옆면으로 종이 두께가 갈수록 얇아졌다가(2막) 다시 두꺼워지는(3막) 것이 보이게'),
   st(22.0, beat='역병 명단', cam={'mode': 'track', 'to': 'plague_list', 'time': 4.0, 'framing': '누렇게 바랜 명단, 마지막 줄까지'}, act='누렇게 바랜 명단 사본. 마지막 줄이 비어 있다', note='F37. 글자는 읽히지 않게'),
-  st(30.0, beat='한 획', cond='B-12 천도(시즌 1)', cam={'mode': 'close', 'to': 'plague_list_last', 'time': 1.5}, act='빈 마지막 줄에 아주 희미하게 붓 한 획', note='흑월의 붓(도감 수집품)과 같은 결'),
+  st(30.0, beat='한 획', cond='B-12 천도(시즌 1)', cam={'mode': 'close', 'to': 'plague_list_last', 'time': 1.5}, act='빈 마지막 줄에 아주 희미하게 붓 한 획', note='흑월의 붓(이름 있는 노리개)과 같은 결'),
   st(36.0, beat='아홉째 권', cam={'mode': 'push', 'to': 'ninth_page', 'time': 2.0, 'zoom': 1.4}, act='책상 가운데 명부 아홉째 권의 한 장. 인이 찍혀야 할 자리가 비어 있다', note='F38'),
   st(46.0, beat='마지막 쪽지', cam={'mode': 'close', 'to': 'last_note', 'time': 2.0}, act='먹이 아직 마르지 않은 쪽지',
      ui={'note_card': '아홉째 인을 찾으러 간다. 네 쪽지는 여기 두고 간다. 이제 내 쪽지는 네가 읽어라.', 'note_card_time': 7.0}),
