@@ -4696,15 +4696,22 @@ def _(r):
     return loopify(reverb(b, 3.0, .5, tone_hz=1500)[:n], 1.0)
 
 
-@sfx("amb.karma.3", -18, "세계", "업 60 이상: 공기가 탁함 — 바닥에서 지글지글 끓는 잡음 + 느린 맥박 같은 울렁임 + 아주 먼 곳의 깨지는 소리 메아리(반복용 28초)", loop=True, use="업 60 이상. 1·2 위에 겹침. 같이 구역 환경음 전체에 저역 통과 6kHz(맑은 높은 소리가 사라짐)")
+@sfx("amb.karma.3", -24, "세계", "업 60 이상 「빛 없는 길」: 아주 낮은 D-A 5도가 7초 숨으로 천천히 부풀고 + 긴 굴 속을 지나는 어두운 바람 + 9초마다 먼 징이 웅 + 아주 가끔 먼 사슬 고리 하나(반복용 28초) — 탁함·잡음 없이 '어둡지만 넓은 다른 길'", loop=True, use="업 60 이상. amb.karma.1 위에 겹치고 amb.karma.2 는 8초에 걸쳐 뺀다(반음 비빔이 5도와 부딪힘). 구역 환경음 저역 통과 6kHz(귀 닫힘 벌)는 그대로")
 def _(r):
+    # 10-26 다시 만듦: 옛 판은 지글거리는 잡음 + 먼 파혼 메아리라 '벌·오염'으로 들렸다.
+    # 업 칸은 '다른 길'이라는 코디 요청 → 잡음·깨지는 소리를 빼고, 들어섬 소리(sfx.karma.tier.60.enter)와 같은 D-A 5도로 이어 깐다.
+    # 맑은 높은 소리가 사라지는 벌(환경음 6kHz 저역 통과)은 따로 있으니, 이 층은 '어둡지만 넓게'만 맡는다.
     sec = 28.4; n = int(sec * SR); t = T(sec)
-    grit = grains(sec, r, 900, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(400, 1500), 2) * env(int(.003 * SR), .0002, .0015) * r.uniform(.05, .3))
-    throb = filt(noise(n, r), "low", 120) * (.5 + .5 * np.sin(2 * np.pi * .4 * t)) ** 3 * 1.2   # 2.5초마다 울렁
-    b = grit * .6 + throb
-    for at in (9.0, 21.0):
-        place(b, filt(_chain_burst(r, 0), "low", 1800) * .12, at)              # 아주 먼 파혼의 메아리
-    return loopify(reverb(b, 2.5, .4, tone_hz=1800)[:n], 1.0)
+    breath = .55 + .45 * np.sin(2 * np.pi * t / 7.1 - np.pi / 2) ** 2     # 7.1초에 한 번 부푸는 숨(28.4초에 딱 4번 → 이음매 없음)
+    drone = (np.sin(2 * np.pi * 73.4 * t) + .7 * np.sin(2 * np.pi * 110.0 * t + 1) + .25 * np.sin(2 * np.pi * 146.8 * t + 2)
+             + .2 * np.sin(2 * np.pi * 110.35 * t)) * breath                      # D2-A2-D3 + A2 맥놀이(0.35Hz, 아주 느린 울음)
+    wind = sweep_filt(noise(n, r), "band", 250, 520, 1.5) * (.5 + .5 * np.sin(2 * np.pi * t / 9.47) ** 2) * .5   # 굴 바람: 띠가 천천히 오르내림
+    b = drone * .45 + wind
+    for at in (2.0, 11.5, 21.0):
+        place(b, _jing(r, 73.4, 5.0, .6) * .18, at)                       # 먼 징
+    for at in (7.3, 17.6):
+        place(b, filt(_chain_links(r, .2, 1), "low", 1600) * .5, at)        # 먼 사슬 고리 하나(잇단 사슬과 이어짐)
+    return loopify(filt(reverb(b, 3.0, .45, tone_hz=1600)[:n], "low", 2000), 1.0)
 
 
 # ── 원념 얼룩 ──
@@ -6426,6 +6433,102 @@ def _(r):
         k += 1; at += max(.11, .3 - .045 * k)
     return _kneel_warn(r, c)
 
+
+# ===== 업 칸 들어섬·나옴 (코디 요청 10-26, 연결법 docs/karma-tier-sound.md) =====
+# 바람: 업 칸은 '벌'이 아니라 '다른 길'이다. 그래서 실패·거절 소리(내려가는 반음, 버저, 둔탁한 막힘)를 하나도 쓰지 않는다.
+# 소리 말(규칙):
+#  - 들어섬 = 열림: 낮은 숨이 차오르고, 바탕음 위에 '완전5도'(도-솔처럼 비어 있고 넓은 음정)가 피어난다 → "길이 하나 더 열렸다"
+#  - 나옴 = 닫힘이지만 평온: 5도가 먼저 사라지고 바탕음 하나만 남아 가라앉는다(내쉬는 숨) → "원래 길로 돌아왔다". 떨어지는 음은 쓰지 않는다
+#  - 칸이 깊어질수록 바탕음이 낮아진다(물든 눈 D4 → 잇단 사슬 A3 → 빛 없는 길 D3·징 D2). '더 나쁜'이 아니라 '더 깊은' 길
+#  - 칸마다 무엇이 열리는지 소리로 말한다: 물든 눈 = 보임(먹물이 번지며 반짝), 잇단 사슬 = 이어짐(고리가 차례로 울림), 빛 없는 길 = 어둠 속 넓음(징)
+KT_ROOT = {10: 293.66, 30: 220.0, 60: 146.83}    # 칸마다 바탕음(Hz): D4 · A3 · D3
+
+
+def _karma_gate(r, root, sec, opening=True):
+    """업 칸 공통 바탕 한 겹: 낮은 숨 + 바탕음 + 그 위 완전5도.
+    opening=True(들어섬): 숨이 차오르고 5도가 0.35초 늦게 피어남 / False(나옴): 5도가 먼저 꺼지고 바탕음만 남아 가라앉음"""
+    n = int(sec * SR); t = T(sec)
+    if opening:
+        breath = sweep_filt(noise(n, r), "band", 260, 900, 1.2) * env(n, sec * .35, sec * .4, 3, hold=.1) * .35   # 들이쉬는 숨: 띠가 위로 열림
+        body = np.clip(t / .25, 0, 1) * np.exp(-np.clip(t - .4, 0, None) / (sec * .45))
+        fifth = np.clip((t - .35) / .4, 0, 1) * np.exp(-np.clip(t - .9, 0, None) / (sec * .35))
+    else:
+        breath = sweep_filt(noise(n, r), "band", 900, 300, 1.2) * env(n, .12, sec * .45, 3) * .3   # 내쉬는 숨: 띠가 아래로 닫힘(음은 안 떨어짐)
+        body = np.clip(t / .08, 0, 1) * np.exp(-t / (sec * .4))
+        fifth = np.clip(t / .05, 0, 1) * np.exp(-t / .22)                 # 5도가 먼저 사라짐 → 바탕음 하나만 남음
+    # 바탕음: 기본음 + 옥타브 아래(살짝 어긋나 천천히 우는 맥놀이 0.6Hz — 놋 그릇 같은 따뜻한 울음)
+    base = (np.sin(2 * np.pi * root * t) + .5 * np.sin(2 * np.pi * (root / 2 + .3) * t) + .15 * np.sin(2 * np.pi * root * 2 * t)) * body
+    five = (np.sin(2 * np.pi * root * 1.5 * t) + .3 * np.sin(2 * np.pi * root * 3 * t)) * fifth * .55
+    return breath + base * .5 + five
+
+
+def _kt_glint(r, freqs, at0, gap, dec=.6, a=.35):
+    """맑은 놋 방울이 차례로 반짝(정해진 음들). 음은 5음계 안에서만 움직여 어긋남이 없다"""
+    b = _buf(at0 + gap * len(freqs) + dec * 3)
+    for i, f in enumerate(freqs):
+        place(b, _chime(r, f, dec, a * (1 - .12 * i)), at0 + i * gap)
+    return b
+
+
+@sfx("sfx.karma.tier.10.enter", -13, "세계", "업 칸 「물든 눈」 들어섬: 먹물 한 방울이 물에 똑 떨어져 번지고 → 낮은 숨이 차오르며 D-A 5도가 열림 → 높은 방울 셋이 위로 반짝(눈이 뜨임, 1.8초) — 벌이 아니라 '보이는 것이 늘었다'", use="업이 10 이상이 되는 순간(그 파혼 소리 0.5초 뒤). 업 칸 글(karma_tier_texts.json)이 뜰 때")
+def _(r):
+    b = _buf(2.6)
+    place(b, _ink_drop(r, 520, .8), 0)                                    # 먹물 '똑' — 붓 표식 방울과 같은 집안
+    m = int(.9 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 700, 2400, 3) * env(m, .05, .5, 3) * .18, .05)   # 물에 번지는 '스' (위로 퍼짐)
+    place(b, _karma_gate(r, KT_ROOT[10], 1.9, True), .08)
+    place(b, _kt_glint(r, [880, 1174.7, 1318.5], .62, .12, .5, .3), 0)     # A5-D6-E6: 눈이 뜨이며 반짝
+    return reverb(b, 1.6, .3, tone_hz=6000)
+
+
+@sfx("sfx.karma.tier.10.exit", -17, "세계", "업 칸 「물든 눈」 나옴: 방울 하나 맑게 톡 → D-A 5도가 먼저 사그라지고 D 한 음이 내쉬는 숨과 함께 가라앉음(1.3초) — 눈을 감고 원래 길로", use="업이 10 아래로 내려가는 순간(그 천도 끝 소리 1.2초 뒤, 천도 보상 소리와 안 겹치게)")
+def _(r):
+    b = _buf(2.0)
+    place(b, _chime(r, 1174.7, .45, .28), 0)                              # 위 들어섬의 가운데 방울(D6) 하나만
+    place(b, _karma_gate(r, KT_ROOT[10], 1.3, False), .04)
+    return reverb(b, 1.4, .3, tone_hz=5000)
+
+
+@sfx("sfx.karma.tier.30.enter", -12, "세계", "업 칸 「잇단 사슬」 들어섬: 사슬 고리가 차르륵 차례로 이어지며 고리마다 한 음씩 A-E-A-B로 올라감 → 마지막 고리가 팽팽히 당겨져 A-E 5도가 열림(2.0초) — '하나 깨면 옆까지 닿는다'", use="업이 30 이상이 되는 순간(그 파혼 소리 0.5초 뒤)")
+def _(r):
+    b = _buf(2.8)
+    links = lambda k, r: .02 + k * .085 + r.uniform(0, .01)               # 고리들이 일정한 박자로 '이어짐'
+    place(b, _chain_links(r, .7, 8, spread=links, muffle=5000) * .7, 0)
+    place(b, _kt_glint(r, [440, 659.3, 880, 987.8], .03, .17, .55, .32), 0)   # A4-E5-A5-B5: 고리마다 한 음(5음계 안)
+    place(b, _rope_taut(r, .5, 110) * .25, .66)                          # 사슬이 팽팽해짐(A2)
+    place(b, _karma_gate(r, KT_ROOT[30], 2.0, True), .55)
+    return reverb(b, 1.8, .3, tone_hz=5500)
+
+
+@sfx("sfx.karma.tier.30.exit", -17, "세계", "업 칸 「잇단 사슬」 나옴: 사슬이 느슨해지며 고리 몇 개가 사르르 내려앉음 → A-E 5도가 먼저 꺼지고 A 한 음이 가라앉음(1.4초)", use="업이 30 아래로 내려가는 순간(천도 끝 소리 1.2초 뒤)")
+def _(r):
+    b = _buf(2.1)
+    slack = lambda k, r: k * .07 * (1 + k * .15) + r.uniform(0, .01)      # 간격이 점점 벌어짐 = 느슨해짐
+    place(b, _chain_links(r, .6, 5, spread=slack, muffle=3500) * .5, 0)
+    place(b, _chime(r, 659.3, .45, .22), .02)                             # E5 하나(위 들어섬의 둘째 고리 음)
+    place(b, _karma_gate(r, KT_ROOT[30], 1.4, False), .05)
+    return reverb(b, 1.5, .3, tone_hz=4500)
+
+
+@sfx("sfx.karma.tier.60.enter", -11, "세계", "업 칸 「빛 없는 길」 들어섬: 아주 낮은 징이 웅— 부풀고 → 어둠 속 바람이 넓게 열리며 D-A 5도가 깔림 → 멀리서 어두운 방울 둘이 아래로 내려앉지 않고 '그 자리에' 울림(2.6초) — 빛은 없지만 길은 넓다", use="업이 60 이상이 되는 순간(그 파혼 소리 0.6초 뒤). 이어서 바탕 소리 amb.karma.3 이 8초에 걸쳐 들어옴")
+def _(r):
+    b = _buf(3.6)
+    place(b, _jing(r, 73.4, 3.4, .35) * .55, 0)                          # D2 징: 깊고 넓다(꽉 막힌 소리가 아니라 '부푸는' 소리)
+    m = int(2.4 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 180, 700, .9) * env(m, 1.0, .9, 3, hold=.3) * .35, .1)   # 긴 굴 속 바람이 넓어짐
+    place(b, _karma_gate(r, KT_ROOT[60], 2.6, True), .3)
+    place(b, filt(_kt_glint(r, [587.3, 440], 1.15, .38, .9, .22), "low", 2200), 0)   # D5-A4: 빛 없는 방울(높은 반짝임을 걷어 어둡게)
+    return reverb(b, 2.6, .4, tone_hz=2500)
+
+
+@sfx("sfx.karma.tier.60.exit", -16, "세계", "업 칸 「빛 없는 길」 나옴: 징 가장자리를 손으로 쓸 듯 작게 웅 → 굴 바람이 닫히고 D 한 음이 길게 가라앉음(1.8초) — 어둠에서 나와 원래 길로", use="업이 60 아래로 내려가는 순간(천도 끝 소리 1.2초 뒤). 바탕 소리 amb.karma.3 은 같이 8초에 걸쳐 빠짐")
+def _(r):
+    b = _buf(2.6)
+    place(b, _jing(r, 73.4, 2.2, .5) * .3, 0)                            # 세게 치지 않고 부풀기만
+    m = int(1.2 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 600, 200, .9) * env(m, .1, .6, 3) * .25, 0)
+    place(b, _karma_gate(r, KT_ROOT[60], 1.8, False), .1)
+    return reverb(b, 2.0, .35, tone_hz=2500)
 
 # ---------------------------------------------------------------------------
 def main():

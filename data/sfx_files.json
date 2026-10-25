@@ -4790,12 +4790,12 @@
    "id": "amb.karma.3",
    "file": "amb_karma_3",
    "category": "세계",
-   "desc": "업 60 이상: 공기가 탁함 — 바닥에서 지글지글 끓는 잡음 + 느린 맥박 같은 울렁임 + 아주 먼 곳의 깨지는 소리 메아리(반복용 28초)",
-   "use": "업 60 이상. 1·2 위에 겹침. 같이 구역 환경음 전체에 저역 통과 6kHz(맑은 높은 소리가 사라짐)",
+   "desc": "업 60 이상 「빛 없는 길」: 아주 낮은 D-A 5도가 7초 숨으로 천천히 부풀고 + 긴 굴 속을 지나는 어두운 바람 + 9초마다 먼 징이 웅 + 아주 가끔 먼 사슬 고리 하나(반복용 28초) — 탁함·잡음 없이 '어둡지만 넓은 다른 길'",
+   "use": "업 60 이상. amb.karma.1 위에 겹치고 amb.karma.2 는 8초에 걸쳐 뺀다(반음 비빔이 5도와 부딪힘). 구역 환경음 저역 통과 6kHz(귀 닫힘 벌)는 그대로",
    "loop": true,
    "bypass_cast_filter": false,
    "length_sec": 27.4,
-   "peak_dbfs": -18
+   "peak_dbfs": -24
   },
   {
    "id": "sfx.stain.form",
@@ -6688,6 +6688,72 @@
    "bypass_cast_filter": true,
    "length_sec": 1.02,
    "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.karma.tier.10.enter",
+   "file": "sfx_karma_tier_10_enter",
+   "category": "세계",
+   "desc": "업 칸 「물든 눈」 들어섬: 먹물 한 방울이 물에 똑 떨어져 번지고 → 낮은 숨이 차오르며 D-A 5도가 열림 → 높은 방울 셋이 위로 반짝(눈이 뜨임, 1.8초) — 벌이 아니라 '보이는 것이 늘었다'",
+   "use": "업이 10 이상이 되는 순간(그 파혼 소리 0.5초 뒤). 업 칸 글(karma_tier_texts.json)이 뜰 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.49,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.karma.tier.10.exit",
+   "file": "sfx_karma_tier_10_exit",
+   "category": "세계",
+   "desc": "업 칸 「물든 눈」 나옴: 방울 하나 맑게 톡 → D-A 5도가 먼저 사그라지고 D 한 음이 내쉬는 숨과 함께 가라앉음(1.3초) — 눈을 감고 원래 길로",
+   "use": "업이 10 아래로 내려가는 순간(그 천도 끝 소리 1.2초 뒤, 천도 보상 소리와 안 겹치게)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.45,
+   "peak_dbfs": -17
+  },
+  {
+   "id": "sfx.karma.tier.30.enter",
+   "file": "sfx_karma_tier_30_enter",
+   "category": "세계",
+   "desc": "업 칸 「잇단 사슬」 들어섬: 사슬 고리가 차르륵 차례로 이어지며 고리마다 한 음씩 A-E-A-B로 올라감 → 마지막 고리가 팽팽히 당겨져 A-E 5도가 열림(2.0초) — '하나 깨면 옆까지 닿는다'",
+   "use": "업이 30 이상이 되는 순간(그 파혼 소리 0.5초 뒤)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.16,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.karma.tier.30.exit",
+   "file": "sfx_karma_tier_30_exit",
+   "category": "세계",
+   "desc": "업 칸 「잇단 사슬」 나옴: 사슬이 느슨해지며 고리 몇 개가 사르르 내려앉음 → A-E 5도가 먼저 꺼지고 A 한 음이 가라앉음(1.4초)",
+   "use": "업이 30 아래로 내려가는 순간(천도 끝 소리 1.2초 뒤)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.78,
+   "peak_dbfs": -17
+  },
+  {
+   "id": "sfx.karma.tier.60.enter",
+   "file": "sfx_karma_tier_60_enter",
+   "category": "세계",
+   "desc": "업 칸 「빛 없는 길」 들어섬: 아주 낮은 징이 웅— 부풀고 → 어둠 속 바람이 넓게 열리며 D-A 5도가 깔림 → 멀리서 어두운 방울 둘이 아래로 내려앉지 않고 '그 자리에' 울림(2.6초) — 빛은 없지만 길은 넓다",
+   "use": "업이 60 이상이 되는 순간(그 파혼 소리 0.6초 뒤). 이어서 바탕 소리 amb.karma.3 이 8초에 걸쳐 들어옴",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 5.72,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.karma.tier.60.exit",
+   "file": "sfx_karma_tier_60_exit",
+   "category": "세계",
+   "desc": "업 칸 「빛 없는 길」 나옴: 징 가장자리를 손으로 쓸 듯 작게 웅 → 굴 바람이 닫히고 D 한 음이 길게 가라앉음(1.8초) — 어둠에서 나와 원래 길로",
+   "use": "업이 60 아래로 내려가는 순간(천도 끝 소리 1.2초 뒤). 바탕 소리 amb.karma.3 은 같이 8초에 걸쳐 빠짐",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.93,
+   "peak_dbfs": -16
   }
  ],
  "footsteps": {
