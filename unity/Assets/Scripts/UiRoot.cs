@@ -99,7 +99,7 @@ public class UiRoot : MonoBehaviour
         // 장부·밤 글자: 배경 위에서도 읽히게 짙은 반투명 판 위에 둔다
         var texts = new VisualElement { pickingMode = PickingMode.Ignore }; texts.style.marginTop = 6; Panel(texts); note.Add(texts);
         ledger = Line(texts, 15); night = Line(texts, 15);
-        BuildGuide(); BuildBossArea(); BuildCards(); BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
+        BuildGuide(); BuildBossArea(); BuildCards(); BuildToasts(); BuildStamp(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
     }
 
     // ---- 아트팀 UI 그림(Resources/Sprites/ui). 없으면 null 이라 부르는 쪽이 옛 색 도형으로 대신 그린다(그림 없이도 돈다)
@@ -137,6 +137,29 @@ public class UiRoot : MonoBehaviour
         toastBox = new VisualElement { name = "toasts", pickingMode = PickingMode.Ignore };
         toastBox.style.position = Position.Absolute; toastBox.style.left = U(24); toastBox.style.bottom = U(140); toastBox.style.flexDirection = FlexDirection.Column;
         root.Add(toastBox);
+    }
+
+    // ---- 품계 승급 인: 화면 가운데에 붉은 글자가 쾅 찍힌다(처음 10분 M6) ----
+    VisualElement stampBox; Label stampTitle, stampSub;
+    void BuildStamp()
+    {
+        stampBox = new VisualElement { name = "stamp", pickingMode = PickingMode.Ignore };
+        stampBox.style.position = Position.Absolute; stampBox.style.left = 0; stampBox.style.right = 0; stampBox.style.top = Length.Percent(32);
+        stampBox.style.alignItems = Align.Center; stampBox.style.display = DisplayStyle.None;
+        stampTitle = Line(stampBox, 56); stampTitle.style.color = new Color(0.86f, 0.12f, 0.1f); stampTitle.style.unityFontStyleAndWeight = FontStyle.Bold;
+        stampSub = Line(stampBox, 28); stampSub.style.color = new Color(0.95f, 0.85f, 0.6f);
+        root.Add(stampBox);
+    }
+    void RefreshStamp()
+    {
+        if (stampBox == null) return;
+        bool on = Hud.StampAge >= 0f;
+        stampBox.style.display = on ? DisplayStyle.Flex : DisplayStyle.None;
+        if (!on) return;
+        stampTitle.text = Hud.StampTitle; stampSub.text = Hud.StampSub;
+        float a = Hud.StampAge, k = Mathf.Clamp01(a / 0.15f);               // 처음 0.15초에 크게→제 크기로 쾅
+        stampBox.style.scale = new Scale(Vector2.one * Mathf.Lerp(1.7f, 1f, k));
+        stampBox.style.opacity = Mathf.Clamp01((Balance.RANKUP_STAMP_SEC - a) / 0.25f);   // 마지막 0.25초에 사라짐
     }
 
     /// <summary>아래쪽 기술 줄: 가운데 아래에 무기 / E 천도 / R 파혼 / Q 끌기 / 피하기 충전 칸</summary>
@@ -423,7 +446,7 @@ public class UiRoot : MonoBehaviour
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshGuide(); RefreshBossArea();
         if (cardRow != null) cardRow.style.display = Hud.JudgeCard && !Ko.TouchUI ? DisplayStyle.Flex : DisplayStyle.None;   // 폰은 처결 버튼 자체가 카드 역할
-        RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
+        RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshStamp(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         if (hpFill != null)
         {
             hpFill.style.width = Length.Percent(Hud.HpRatio * 100f);

@@ -29,6 +29,16 @@ public static class Ko
     }
 
     /// <summary>장비 칸 이름</summary>
+    /// <summary>품계 → 계급명. 2품계 = 종9품에서 시작해 종·정 번갈아 정1품까지(2~19품계), 그 위는 정1품</summary>
+    public static string RankTitle(int rank)
+    {
+        if (rank < 2) return "견습";
+        int i = rank - 2;                      // 0 = 종9품
+        if (i >= 18) return "정1품";
+        int grade = 9 - i / 2;                 // 9,9,8,8,...,1,1
+        return ((i % 2 == 0) ? "종" : "정") + grade + "품";
+    }
+
     public static string SlotName(Slot s)
     {
         switch (s)

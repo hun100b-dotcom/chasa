@@ -714,4 +714,9 @@ public static class Balance
     public const float PAHON_RECOVER_DODGE_FROM = 0.1f;  // (타격감 권장값 10-25, 기획) (타격감 분석 10-24)  [신규]
     public const float CAGE_DAMAGE_MULT = 1.5f;  // (균형 2차 10-25) 쇠사슬 울 안 적이 받는 피해 배율
     public const float SEAL_CRAFT_HOLD_S = 0.6f;  // (기획 명세 §8) 인 만들기 버튼 누르고 있기(초)
+    public const int NAMED_FIRST_NEOK_MULT = 5;  // 처음 10분 M6: 첫 이름혼(박돌쇠) 천도 넋 배수 → 50(5분 안 품계 2)
+    public const int NAMED_FIRST_PAHON_COIN = 35;  // 처음 10분 M6: 첫 이름혼 파혼 추가 엽전(기본 5 + 35 = 40, 첫 손보기가 바로 열림)
+    public const float RANKUP_STAMP_SEC = 1.0f;  // 처음 10분 M6: 품계 승급 인 연출 길이(초)
+    public const float FIGHT_END_SLOW_SEC = 0.25f;  // 처음 10분 M8: 싸움 마지막 처결 느리게 시간(초)
+    public const float FIGHT_END_SLOW_SCALE = 0.5f;  // 처음 10분 M8: 느리게 배율
 }

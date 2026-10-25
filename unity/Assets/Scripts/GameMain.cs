@@ -106,6 +106,7 @@ public class GameMain : MonoBehaviour
         }
         player.onHitLanded = () => judge.guide.Complete("hit");   // 첫 타가 맞으면 '때리기' 안내가 닫힌다
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
+        judge.reward = gameObject.AddComponent<RewardFx>(); judge.reward.Target = () => player.Pos;   // 처결 보상이 몸으로 들어오는 연출
         if (View3D.On)
         {
             // 새 화면: 진짜 조명(등불·혼불·달빛). 화면 위 어둠 막은 필요 없다

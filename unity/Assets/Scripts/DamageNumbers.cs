@@ -21,12 +21,12 @@ public class DamageNumbers : MonoBehaviour
         while (items.Count >= Balance.DMG_NUM_MAX) items.RemoveAt(0);   // 한 화면 최대 개수: 가장 오래된 것부터 지운다
         items.Add(new Item
         {
-            text = value.ToString(),
+            text = kind == "neok" || kind == "coin" ? "+" + value : value.ToString(),   // 보상 숫자는 + 를 붙인다
             pos = new Vector2(sp.x, Screen.height - sp.y), // 화면 글자는 위가 0 → y 뒤집기
             vel = new Vector2(Random.Range(-Config.NUMBER_SPREAD_SPEED, Config.NUMBER_SPREAD_SPEED),
                               -Random.Range(Config.NUMBER_POP_SPEED_MIN, Config.NUMBER_POP_SPEED_MAX)),
-            size = Mathf.Min(Config.NUMBER_FONT_MAX, Config.NUMBER_FONT_BASE + value * Config.NUMBER_FONT_PER_DAMAGE),
-            color = kind == "heavy" ? Config.NUMBER_COLOR_HEAVY : kind == "pull" ? Config.NUMBER_COLOR_PULL : Config.NUMBER_COLOR_NORMAL,
+            size = kind == "neok" || kind == "coin" ? 22f : Mathf.Min(Config.NUMBER_FONT_MAX, Config.NUMBER_FONT_BASE + value * Config.NUMBER_FONT_PER_DAMAGE),
+            color = kind == "neok" ? new Color(0.45f, 0.95f, 0.9f) : kind == "coin" ? new Color(1f, 0.72f, 0.28f) : kind == "heavy" ? Config.NUMBER_COLOR_HEAVY : kind == "pull" ? Config.NUMBER_COLOR_PULL : Config.NUMBER_COLOR_NORMAL,
         });
     }
 

@@ -45,6 +45,7 @@ namespace Chasa.Core
         public string SayText;                                                   // 화면 가운데 위쪽 짧은 한마디(시전이 끊겼다 등). null 이면 안 보임
         public bool ShowExp; public float ExpRatio; public int Rank;                // 경험치(품계) 막대: 처음 넋을 얻은 뒤에 열린다
         public string AreaText; public float AreaAlpha;                          // 지역 진입 알림(화면 위 가운데 큰 글씨, 알파 0~1)
+        public float StampAge = -1f; public string StampTitle, StampSub;           // 품계 승급 인 연출: 나이(초, -1 이면 없음) · 큰 글 · 계급명
         public bool JudgeCard;                                   // 첫 처결 카드(천도·파혼 두 장)를 하단에 띄운다
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 

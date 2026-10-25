@@ -2846,5 +2846,25 @@
  "SEAL_CRAFT_HOLD_S": {
   "value": 0.6,
   "note": "(기획 명세 §8) 인 만들기 버튼 누르고 있기(초)"
+ },
+ "NAMED_FIRST_NEOK_MULT": {
+  "value": 5,
+  "note": "처음 10분 M6: 첫 이름혼(박돌쇠) 천도 넋 배수 → 50(5분 안 품계 2)"
+ },
+ "NAMED_FIRST_PAHON_COIN": {
+  "value": 35,
+  "note": "처음 10분 M6: 첫 이름혼 파혼 추가 엽전(기본 5 + 35 = 40, 첫 손보기가 바로 열림)"
+ },
+ "RANKUP_STAMP_SEC": {
+  "value": 1.0,
+  "note": "처음 10분 M6: 품계 승급 인 연출 길이(초)"
+ },
+ "FIGHT_END_SLOW_SEC": {
+  "value": 0.25,
+  "note": "처음 10분 M8: 싸움 마지막 처결 느리게 시간(초)"
+ },
+ "FIGHT_END_SLOW_SCALE": {
+  "value": 0.5,
+  "note": "처음 10분 M8: 느리게 배율"
  }
 }

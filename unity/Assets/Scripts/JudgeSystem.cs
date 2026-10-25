@@ -17,6 +17,7 @@ public class JudgeSystem : MonoBehaviour
     public EnemyManager enemies;
     public HitFeel feel;
     public DamageNumbers numbers;
+    public RewardFx reward;   // 처결 보상 흡수 연출(혼불·엽전)
     public Camera cam;
 
     CharacterPanel panel;
@@ -169,6 +170,7 @@ public class JudgeSystem : MonoBehaviour
     void DoPahon(Enemy e)
     {
         var at = e.Pos;
+        LastJudgeSlow(e);
         if (OnJudged != null) OnJudged(e, false);
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
@@ -186,7 +188,10 @@ public class JudgeSystem : MonoBehaviour
         float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;   // 낚아챈 보스는 파혼 엽전 x1.2
         float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult * snatchMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
         int coinAdd = Mathf.FloorToInt(coinX); coinFrac = coinX - coinAdd; ledger.Coin += coinAdd;
+        if (e.soul.Name == "박돌쇠") { ledger.Coin += Balance.NAMED_FIRST_PAHON_COIN; }   // 첫 이름혼 파혼: 엽전이 커서 첫 손보기가 바로 열린다(처음 10분 M6)
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
+        if (reward != null) reward.Pahon(at, 3 + (ledger.Coin - coinBefore) / 8);   // 엽전이 튀었다가 발밑으로 빨려 든다
+        if (numbers != null) numbers.Spawn(at + Vector3.up * 1.7f, ledger.Coin - coinBefore, "coin");
         // 잔넋 대장 파혼 연쇄(기획 F-1b): 4m 안 같은 무리 잔넋이 함께 깨진다. 엽전은 마리당 ×0.6, 업은 마리당 +0.5 (파혼이 늘 1등이 되지 않게)
         if (e.type == SoulType.Mote && e.leader && e.group != null)
         {
@@ -249,6 +254,52 @@ public class JudgeSystem : MonoBehaviour
         }
     }
 
+    /// <summary>품계가 올랐다: 화면 가운데에 붉은 품계 인이 1초 찍힌다(처음 10분 M6). 글자 알림은 그대로 곁들인다</summary>
+    void OnRankUp()
+    {
+        Sfx.Play("sfx.ui.rank.up");
+        if (ui == null) return;
+        ui.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank);
+        ui.Hud.StampTitle = "품계 " + growth.Rank; ui.Hud.StampSub = Ko.RankTitle(growth.Rank); ui.Hud.StampAge = 0f;
+        flashColor = new Color(0.05f, 0.02f, 0.02f); flashA = 0.35f;   // 화면이 살짝 어두워진다
+    }
+
+    // ---- 싸움 끝 신호(처음 10분 M7·M8) ----
+    bool fightOn; int fJudged, fStartNeok, fStartCoin, fStartMem;
+    /// <summary>플레이어 둘레 18m 안에 아직 처결이 남은 혼(보스 제외)이 몇인가. except 는 방금 처결하는 혼</summary>
+    int FightLeft(Enemy except)
+    {
+        int n = 0;
+        foreach (var o in enemies.list)
+        {
+            if (o == null || o == except || o.soul.Boss || !o.Targetable) continue;
+            if (!(o.alive || o.kneeling || o.sending)) continue;
+            if (new Vector2(o.Pos.x - player.Pos.x, o.Pos.z - player.Pos.z).magnitude > 18f) continue;
+            n++;
+        }
+        return n;
+    }
+    /// <summary>싸움이 시작되면 장부를 적어 두고, 다 끝나면 한 줄로 정리해 보여 준다</summary>
+    void TickFight()
+    {
+        int left = FightLeft(null);
+        if (!fightOn && left > 0 && enemies.list.Exists(o => o.alive && !o.soul.Boss && new Vector2(o.Pos.x - player.Pos.x, o.Pos.z - player.Pos.z).magnitude < 12f && o.soul.State == SoulState.Active))
+        { fightOn = true; fJudged = 0; fStartNeok = ledger.Neok; fStartCoin = ledger.Coin; fStartMem = ledger.Memory; }
+        if (fightOn && left == 0 && !Casting)
+        {
+            fightOn = false;
+            int dn = ledger.Neok - fStartNeok, dc = ledger.Coin - fStartCoin, dm = ledger.Memory - fStartMem;
+            if (dn > 0 || dc > 0 || dm > 0) { Sfx.Play("sfx.fight.end"); Say("정리 — 넋 +" + dn + " · 엽전 +" + dc + " · 기억 " + dm); }   // 징 한 번(소리는 사운드팀 파일이 오면 난다)
+        }
+    }
+    /// <summary>방금 처결로 싸움의 마지막 혼이 끝났나? 그렇다면 0.25초 절반 속도로 느리게(천도·파혼 똑같이)</summary>
+    void LastJudgeSlow(Enemy e)
+    {
+        if (!fightOn) return;
+        fJudged++;   // 혼 하나뿐인 작은 싸움엔 느려짐을 쓰지 않는다(둘 이상일 때만)
+        if (fJudged >= 2 && FightLeft(e) == 0) feel.SlowMo(Balance.FIGHT_END_SLOW_SEC, Balance.FIGHT_END_SLOW_SCALE);
+    }
+
     int gainedExtra;   // 한 줄 꿰기로 덤으로 간 혼이 준 넋(알림용)
     /// <summary>천도로 얻은 넋을 그 혼이 있던 구역의 빛깔 주머니에도 쌓는다(인 만들기 재료). 품계용 넋과는 별개로 쓴다</summary>
     void CreditSoulColor(Vector3 at, int amount)
@@ -267,6 +318,7 @@ public class JudgeSystem : MonoBehaviour
         TendoSuccessAt = Time.time;
         if (castTarget.soul.Name != null && funeralCut.ContainsKey(castTarget.soul.Name)) { funeralPending[castTarget.soul.Name] = 1; funeralBorn[castTarget.soul.Name] = clock != null && clock.Phase == ClockPhase.Day ? clock.Day : -1; }   // 천도: 다음 낮 그 집 장례
         weather.ClearPlague(tp);   // 역병 안개: 천도한 자리 반경 4m 가 15초 걷힌다
+        LastJudgeSlow(castTarget);
         castTarget.PlayFinishAnim(true);   // 천도 동작(일어남→빛 알갱이→숨김)
         castTarget.Finish();
         tendoToday++;                                                    // 혼불 발 수
@@ -293,8 +345,11 @@ public class JudgeSystem : MonoBehaviour
             // 묻힌 혼은 넋 ×1.25, 넋두리는 기억 조각 +1 (기획 F-1b)
             if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
+            if (castTarget.soul.Name == "박돌쇠") { int bonus = (ledger.Neok - before) * (Balance.NAMED_FIRST_NEOK_MULT - 1); ledger.Neok += bonus; }   // 첫 이름혼은 넋이 크다: 5분 안에 첫 품계(처음 10분 M6)
             int gained = ledger.Neok - before;
-            if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank); }   // 품계 상승 알림
+            if (reward != null) reward.Tendo(tp, 1 + gained / 30);   // 혼불이 날아와 가슴에 든다
+            if (numbers != null) numbers.Spawn(tp + Vector3.up * 1.7f, gained, "neok");
+            if (growth.AddNeok(gained) > 0) OnRankUp();   // 품계 상승: 인이 찍히는 연출
             CreditSoulColor(tp, gained); night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (OnJudged != null) OnJudged(castTarget, true);
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
@@ -1227,6 +1282,7 @@ public class JudgeSystem : MonoBehaviour
         // 처결 대기가 끝까지 지나 일어선 혼 = '처결 못 함'(장례 대상이면 다음 낮 장례로). 읽고 바로 지워 한 번만 센다
         foreach (var e in enemies.list) if (e.soul.TimedOut) { e.soul.TimedOut = false; Sfx.Play("sfx.wait.expire"); MarkUnjudged(e); }
         TickWaitTick(dt);
+        TickFight();
         TickHeukwol();
         var ph = clock.Consume();
         if (ph.HasValue)
@@ -1542,6 +1598,7 @@ public class JudgeSystem : MonoBehaviour
         }
         pNeok = ledger.Neok; pMemory = ledger.Memory; pCoin = ledger.Coin; pKarma = ledger.Karma; pDrop = lo.lastDrop; toastReady = true;
         h.Toasts.Tick(Time.unscaledDeltaTime);
+        if (h.StampAge >= 0f) { h.StampAge += Time.unscaledDeltaTime; if (h.StampAge > Balance.RANKUP_STAMP_SEC) h.StampAge = -1f; }
         ui.Refresh(!inDay && !night.Over && !CharacterPanel.Open && !SettingsPanel.Open);
     }
     int pNeok, pMemory, pCoin, pKarma; string pDrop; bool toastReady;
