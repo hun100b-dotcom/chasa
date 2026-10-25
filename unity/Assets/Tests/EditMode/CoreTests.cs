@@ -1983,5 +1983,22 @@ public class CoreTests
         Assert.AreEqual(1, l.Items.Count);
     }
 
+    [Test]
+    public void Interact_Pick_NearestThenKindOrder()
+    {
+        var l = new System.Collections.Generic.List<InteractCand>
+        {
+            new InteractCand { Kind = InteractKind.Rest, Dist = 1.0f },
+            new InteractCand { Kind = InteractKind.SoulPath, Dist = 1.2f },
+            new InteractCand { Kind = InteractKind.Pickup, Dist = 1.4f },
+        };
+        Assert.AreEqual(2, Interact.Pick(l), "0.5m 안 동률 → 줍기가 먼저");
+        l[2] = new InteractCand { Kind = InteractKind.Pickup, Dist = 1.9f };
+        Assert.AreEqual(1, Interact.Pick(l), "줍기가 0.5m 넘게 멀면 넋길(쉬기와 동률 → 넋길 우선)");
+        l[0] = new InteractCand { Kind = InteractKind.Rest, Dist = 0.3f };
+        Assert.AreEqual(0, Interact.Pick(l), "쉬기가 0.5m 넘게 가까우면 쉬기");
+        Assert.AreEqual(-1, Interact.Pick(new System.Collections.Generic.List<InteractCand> { new InteractCand { Kind = InteractKind.Touch, Dist = 2f } }), "만져 보기는 1.5m 밖이면 없음");
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

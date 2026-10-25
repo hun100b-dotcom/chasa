@@ -638,6 +638,7 @@ public class JudgeSystem : MonoBehaviour
         }
         if (!played && (Input.anyKeyDown || Input.GetMouseButtonDown(0) || Input.touchCount > 0)) { played = true; enemies.graceT = Balance.NIGHT_GRACE; }
         enemies.holdFire = !played;
+        UpdateInteract(dt);
         if (!night.Over) HandleKeys();   // 결과 화면에서는 무기 교체·공격 키가 먹지 않는다(QA B4)
         if (!night.Over) overT = 0f;
         if (night.Over)
@@ -798,6 +799,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>지금 넋길을 탈 수 있나 (필드·밤·서낭당 곁·행동 가능). 서낭당 번호를 돌려준다(없으면 -1)</summary>
     /// <summary>폰 '상호작용' 버튼을 보일 때인가(서낭당 곁 밤)</summary>
     public bool CanSoulPathNow { get { return SoulPathStop() >= 0; } }
+    public bool CanInteractNow { get { return Target != InteractKind.None; } }
     /// <summary>도술 칸 i 의 남은 재사용 대기(초). 이름이 없으면 0</summary>
     public float SkillLeft(int slot) { string n = ActiveNameAt(slot); return n == null ? 0f : lo.active.Left(n); }
 
@@ -805,6 +807,60 @@ public class JudgeSystem : MonoBehaviour
     {
         if (clock == null || Casting || !player.CanActNow() || !SoulPath.Available(clock.Daylight)) return -1;
         return SoulPath.NearIndex(player.Pos.x, player.Pos.z, FieldRules.Shrines);
+    }
+
+    // ---- F 상호작용(기획 npc-interaction-spec §2): 줍기 2m · 만져 보기 1.5m(2초 누르기) · 넋길 3m · 쉬기 3m ----
+    /// <summary>줍기·만져 보기 자리. 배치 데이터가 생기면 여기에 더한다(OnUse 가 실제 동작)</summary>
+    public class InteractSpot { public InteractKind Kind; public Vector3 Pos; public System.Action OnUse; public bool Done; }
+    public readonly List<InteractSpot> interactSpots = new List<InteractSpot>();
+    public InteractKind Target = InteractKind.None;       // 지금 F 가 향하는 대상(안내·폰 버튼 글자가 이것을 따른다)
+    public float TouchHold;                                // 만져 보기 누른 시간(초)
+    InteractSpot targetSpot;
+    readonly List<InteractCand> candBuf = new List<InteractCand>();
+
+    float NearestShrineDist()
+    {
+        float best = float.MaxValue;
+        foreach (var sh in FieldRules.Shrines) { float d = Mathf.Sqrt((sh[0] - player.Pos.x) * (sh[0] - player.Pos.x) + (sh[1] - player.Pos.z) * (sh[1] - player.Pos.z)); if (d < best) best = d; }
+        return best;
+    }
+
+    /// <summary>매 프레임: 후보를 모아 대상 하나를 고르고, 만져 보기는 F 를 누르고 있는 동안 진행시킨다</summary>
+    void UpdateInteract(float dt)
+    {
+        candBuf.Clear(); targetSpot = null;
+        if (clock != null && !Casting && player.CanActNow())
+        {
+            for (int i = 0; i < interactSpots.Count; i++)
+            {
+                var sp = interactSpots[i]; if (sp.Done) continue;
+                candBuf.Add(new InteractCand { Kind = sp.Kind, Id = i, Dist = Mathf.Sqrt((sp.Pos.x - player.Pos.x) * (sp.Pos.x - player.Pos.x) + (sp.Pos.z - player.Pos.z) * (sp.Pos.z - player.Pos.z)) });
+            }
+            float sd = NearestShrineDist();
+            if (SoulPathStop() >= 0) candBuf.Add(new InteractCand { Kind = InteractKind.SoulPath, Id = -1, Dist = sd });
+            candBuf.Add(new InteractCand { Kind = InteractKind.Rest, Id = -1, Dist = sd });
+        }
+        int pick = Interact.Pick(candBuf);
+        Target = pick < 0 ? InteractKind.None : candBuf[pick].Kind;
+        if (pick >= 0 && candBuf[pick].Id >= 0) targetSpot = interactSpots[candBuf[pick].Id];
+        if (Target == InteractKind.Touch && (Input.GetKey(KeyCode.F) || TouchControls.UseHeld))
+        {
+            TouchHold += dt;
+            if (TouchHold >= Balance.TOUCH_TIME) { TouchHold = 0f; targetSpot.Done = true; if (targetSpot.OnUse != null) targetSpot.OnUse(); }
+        }
+        else TouchHold = 0f;
+    }
+
+    /// <summary>F(또는 폰 버튼) 한 번 누름. 만져 보기는 누르고 있어야 해서 여기서는 하지 않는다</summary>
+    public void CommandInteract()
+    {
+        switch (Target)
+        {
+            case InteractKind.Pickup: targetSpot.Done = true; if (targetSpot.OnUse != null) targetSpot.OnUse(); break;
+            case InteractKind.SoulPath: CommandSoulPath(); break;
+            case InteractKind.Rest: ledger.Hp = ledger.MaxHp; Say("서낭당에서 숨을 골랐다"); break;   // 임시 효과(기획이 쉬기 규칙을 주면 교체)
+            case InteractKind.None: if (npcs != null) npcs.DismissSubtitle(); break;
+        }
     }
 
     /// <summary>넋길: 다음 서낭당으로 즉시 이동</summary>
@@ -855,7 +911,7 @@ public class JudgeSystem : MonoBehaviour
     void HandleKeys()
     {
         if (Input.GetKeyDown(KeyCode.E)) CommandTendo();
-        if (Input.GetKeyDown(KeyCode.F)) { if (SoulPathStop() >= 0) CommandSoulPath(); else if (npcs != null) npcs.DismissSubtitle(); }   // F: 넋길(밤에 서낭당 곁에서), 아니면 들은 말 창 닫기
+        if (Input.GetKeyDown(KeyCode.F)) CommandInteract();   // F: 가장 알맞은 대상 하나(줍기·만져 보기·넋길·쉬기), 없으면 들은 말 창 닫기
         if (Input.GetKeyDown(KeyCode.Alpha1)) UseSkill(0);
         if (Input.GetKeyDown(KeyCode.Alpha2)) UseSkill(1);
         if (Input.GetKeyDown(KeyCode.Alpha3)) UseSkill(2);
@@ -1015,7 +1071,11 @@ public class JudgeSystem : MonoBehaviour
         h.SubCutMemory = cuts.LineVisible && cuts.LineStyle == "memory" ? "“" + cuts.LineText + "”" : null;
         if (memLineT > 0f) memLineT -= Time.unscaledDeltaTime;
         h.SubMemLine = memLineT > 0f ? "“" + memLine + "”" : null; h.SubMemLineAlpha = Mathf.Clamp01(memLineT / 0.8f);
-        h.SubNpc = npcs != null && npcs.SubtitleT > 0f ? npcs.Subtitle : null; h.SubNpcName = npcs != null ? npcs.SubtitleName : null; h.SubNpcAlpha = npcs != null ? Mathf.Clamp01(npcs.SubtitleT / 0.6f) : 0f;
+        h.SubNpc = npcs != null && npcs.SubtitleT > 0f ? npcs.Subtitle : null; h.SubNpcName = npcs != null ? npcs.SubtitleName : null;
+        // 무릎 꿇은 혼이 3m 안이면 F 안내를 숨긴다(그 순간엔 E·R 이 주인공, 기획 §2-2). F 를 눌러도 동작은 한다
+        bool kneelNear = enemies.NearestKneeling(player.Pos, 3f) != null;
+        h.InteractLabel = Target != InteractKind.None && !kneelNear ? Interact.Label(Target) : null;
+        h.InteractRatio = Target == InteractKind.Touch ? Mathf.Clamp01(TouchHold / Balance.TOUCH_TIME) : 0f; h.SubNpcAlpha = npcs != null ? Mathf.Clamp01(npcs.SubtitleT / 0.6f) : 0f;
         // 경험치(품계) 막대: 처음 넋을 얻은 뒤에만(하나씩 열기)
         h.ShowExp = revNeok && FieldRules.On; h.Rank = growth.Rank;
         { int lo0 = GrowthState.NeokForRank(growth.Rank), hi0 = GrowthState.NeokForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.TotalNeok - lo0) / (hi0 - lo0); }

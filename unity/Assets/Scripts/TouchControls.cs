@@ -14,6 +14,7 @@ using UnityEngine;
 
 public class TouchControls : MonoBehaviour
 {
+    public static bool UseHeld;   // 상호작용 버튼을 누르고 있나(만져 보기는 2초 누르기)
     public static bool Active;   // 이 조작이 켜져 있나(옛 IMGUI 도술 줄·넋길 버튼을 숨기는 데 쓴다)
     static TouchControls inst;
     public static Rect[] JudgeRects;   // 천도·파혼 버튼(GUI 좌표). 보일 때만 채워지며, 조이스틱·이동 클릭보다 먼저 눌린다
@@ -23,7 +24,7 @@ public class TouchControls : MonoBehaviour
     public Action<int> onSkill;
     public Func<int, string> skillLabel;             // 도술 i 의 이름(없으면 null)
     public Func<int, float> skillLeft;               // 도술 i 의 남은 대기(초). 0 = 쓸 수 있음
-    public Func<bool> canInteract, hasPull;
+    public Func<bool> canInteract, hasPull; public Func<string> interactLabel;
 
     struct Btn { public string id; public Vector2 center; public float r, visual; public string text; public Color color; }   // 좌표는 GUI 좌표(위가 0)
     readonly System.Collections.Generic.List<Btn> btns = new System.Collections.Generic.List<Btn>();
@@ -57,7 +58,7 @@ public class TouchControls : MonoBehaviour
         }
         Add("dodge", ac + new Vector2(-136f * s, 63f * s), 104f * s, "피하기", new Color(0.30f, 0.34f, 0.46f), s);
         if (hasPull != null && hasPull()) { float a = 135f * Mathf.Deg2Rad; Add("pull", ac + new Vector2(Mathf.Cos(a), -Mathf.Sin(a)) * 130f * s, 104f * s, "끌기", new Color(0.55f, 0.42f, 0.16f), s); }
-        if (canInteract != null && canInteract()) Add("use", ac + new Vector2(0f, -140f * s), 104f * s, "넋길", new Color(0.85f, 0.78f, 0.62f), s);
+        if (canInteract != null && canInteract()) Add("use", ac + new Vector2(0f, -140f * s), 104f * s, interactLabel != null ? interactLabel() : "상호작용", new Color(0.85f, 0.78f, 0.62f), s);
     }
 
     void Add(string id, Vector2 c, float diameter, string text, Color col, float s)
@@ -71,7 +72,7 @@ public class TouchControls : MonoBehaviour
         Active = Ko.TouchUI;
         if (!Active) return;
         Layout();
-        bool atk = false; var down = new bool[btns.Count];
+        bool atk = false; UseHeld = false; var down = new bool[btns.Count];
         for (int t = 0; t < Input.touchCount; t++)
         {
             var tc = Input.GetTouch(t);
@@ -80,7 +81,7 @@ public class TouchControls : MonoBehaviour
             for (int i = 0; i < btns.Count; i++)
             {
                 if ((p - btns[i].center).magnitude > btns[i].r) continue;
-                down[i] = true; if (btns[i].id == "atk") atk = true;
+                down[i] = true; if (btns[i].id == "atk") atk = true; if (btns[i].id == "use") UseHeld = true;
                 break;
             }
         }

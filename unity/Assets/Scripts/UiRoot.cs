@@ -164,7 +164,7 @@ public class UiRoot : MonoBehaviour
     // ---- 처음 5분 안내 띠: 하단 중앙, 스킬바 위. 키 그림 + 글자 22px, 행동하면 초록 체크 ----
     VisualElement guideBox, guideKeyBox; Label guideKey, guideText, guideTick; string lastGuide;
     // ---- 보스 체력바(위 가운데) · 지역 진입 알림 --------------------------------------
-    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill, castBox, castFill; Label expLabel, sayLabel, subSfx, subCutMem, subMemLine, subNpc, subNpcName; VisualElement subNpcBand; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
+    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill, castBox, castFill; Label expLabel, sayLabel, subSfx, subCutMem, subMemLine, subNpc, subNpcName, interactLabel; VisualElement subNpcBand, interactBar; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
     void BuildBossArea()
     {
         bossBox = new VisualElement { name = "boss", pickingMode = PickingMode.Ignore };
@@ -194,6 +194,11 @@ public class UiRoot : MonoBehaviour
         subSfx = SubLine(root, 18, new Color(0.85f, 0.85f, 0.85f, 0.85f), false); subSfx.style.bottom = U(150);
         subCutMem = SubLine(root, 22, new Color(0.79f, 0.69f, 1f), true); subCutMem.style.bottom = U(230);
         subMemLine = SubLine(root, 22, new Color(0.79f, 0.69f, 1f), true); subMemLine.style.top = Length.Percent(18);
+        // F 안내: 하단 중앙 "[F] 줍기". 만져 보기는 아래 막대가 2초 동안 찬다
+        interactLabel = Line(root, 18); interactLabel.style.position = Position.Absolute; interactLabel.style.left = Length.Percent(50); interactLabel.style.width = U(300); interactLabel.style.marginLeft = -U(150);
+        interactLabel.style.bottom = U(150); interactLabel.style.unityTextAlign = TextAnchor.MiddleCenter; interactLabel.style.color = new Color(0.953f, 0.906f, 0.827f);
+        interactLabel.style.backgroundColor = new Color(0.06f, 0.05f, 0.05f, 0.6f); interactLabel.style.display = DisplayStyle.None;
+        interactBar = new VisualElement { pickingMode = PickingMode.Ignore }; interactBar.style.height = U(5); interactBar.style.backgroundColor = new Color(1f, 0.82f, 0.3f); interactBar.style.alignSelf = Align.FlexStart; interactLabel.Add(interactBar);
         // 들은 말 창(기획 npc-interaction-spec §3): 하단 중앙, 이름 탭 + '(들린 말)' + 본문. 선택지 없음, 게임은 멈추지 않는다
         subNpcBand = new VisualElement { pickingMode = PickingMode.Ignore };
         subNpcBand.style.position = Position.Absolute; subNpcBand.style.left = Length.Percent(50); subNpcBand.style.width = U(1152); subNpcBand.style.marginLeft = -U(576); subNpcBand.style.bottom = U(190);
@@ -236,6 +241,9 @@ public class UiRoot : MonoBehaviour
         expBox.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None; expLabel.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None;
         if (Hud.ShowExp) { expFill.style.width = Length.Percent(Mathf.Clamp01(Hud.ExpRatio) * 100f); expLabel.text = "품계 " + Hud.Rank; }
         ShowSub(subSfx, Hud.SubSfx, 1f); ShowSub(subCutMem, Hud.SubCutMemory, 1f); ShowSub(subMemLine, Hud.SubMemLine, Hud.SubMemLineAlpha);
+        bool hasIx = !string.IsNullOrEmpty(Hud.InteractLabel) && !Ko.TouchUI;   // 폰은 버튼 글자가 대신한다
+        interactLabel.style.display = hasIx ? DisplayStyle.Flex : DisplayStyle.None;
+        if (hasIx) { interactLabel.text = "[F] " + Hud.InteractLabel; interactBar.style.width = Length.Percent(100f * Hud.InteractRatio); interactBar.style.display = Hud.InteractRatio > 0f ? DisplayStyle.Flex : DisplayStyle.None; }
         bool npcSub = Hud.SubNpc != null && Hud.SubNpcAlpha > 0.01f; subNpcBand.style.display = npcSub ? DisplayStyle.Flex : DisplayStyle.None;
         if (npcSub) { subNpc.text = Hud.SubNpc; subNpcBand.style.opacity = Hud.SubNpcAlpha; bool hasName = !string.IsNullOrEmpty(Hud.SubNpcName); subNpcName.text = hasName ? Hud.SubNpcName : ""; subNpcName.style.display = hasName ? DisplayStyle.Flex : DisplayStyle.None; }
         bool casting = Hud.CastRatio >= 0f; castBox.style.display = casting ? DisplayStyle.Flex : DisplayStyle.None;
