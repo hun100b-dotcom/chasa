@@ -103,9 +103,35 @@
    "bulgeunjae": "붉은재 싸움터(2막 ③)",
    "soegol": "쇳골 광산(2막 ④)",
    "gaetmaeul": "갯마을 포구(3막 ⑤)",
-   "doseong": "도성 아랫마을(3막 ⑥)"
+   "doseong": "도성 아랫마을(3막 ⑥)",
+   "below_water": "6막 물 밑(①⑤⑦ 아래층)",
+   "below_earth": "7막 흙 밑(③④②⑥ 아래층)",
+   "below_ink": "8막 먹 밑(⑧⑨⑩ 아래층)"
   },
   "region_crossfade_sec": 4.0,
-  "temp_list": "data/bgm_temp.json"
+  "temp_list": "data/bgm_temp.json",
+  "below": {
+   "_설명": "시즌3 아래층(백의 밤, 밤에만 열림). 관할 번호 → 곡 이름 앞부분. day_a 는 없음: 찾으면 _night 를 쓴다.",
+   "1": "below_water",
+   "5": "below_water",
+   "7": "below_water",
+   "3": "below_earth",
+   "4": "below_earth",
+   "2": "below_earth",
+   "6": "below_earth",
+   "8": "below_ink",
+   "9": "below_ink",
+   "10": "below_ink"
+  },
+  "s3_special": {
+   "bgm_s3_rising": "새벽 물 차오름 2분(반복, 크기 0.5→1.0)",
+   "bgm_s3_knot": "B-23 매듭 전투",
+   "bgm_s3_imyeong": "B-27 이명/흑월의 몸 전투",
+   "bgm_s3_mybaek": "B-31 나의 백 전투",
+   "bgm_s3_open": "C-21 여는 장면",
+   "bgm_s3_end_a": "C-31A",
+   "bgm_s3_end_b": "C-31B",
+   "bgm_s3_end_c": "C-31C"
+  }
  }
 }

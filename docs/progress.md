@@ -1311,3 +1311,9 @@
 - 인 15종 이름·효과(`SealEffects`, 큰 인 2배), 장비 홈에 박기, 가방(`sealBag`, 저장 `bag`), 박힌 인은 아이템 글자 10번째 칸. `Loadout.CraftSeal/InsertSeal`. 테스트 198.
 - 인 전용 능력치 4개(방어·도술 재사용·무기 기술 재사용·사나운 적 피해)는 값만 쌓이고 쓰는 쪽은 아직 안 이었다.
 - 아직 없는 것: 인 만들기·박기 화면(실제 화면은 UI Toolkit 인물 창이라 화면 명세 확인 후), 세트 효과, 이름 있는 물건 추가.
+
+## 2026-10-25 밤 — [기획·사운드] 시즌3 「백의 밤」 소리·BGM
+- 효과음 83개 추가(총 342): 아래층 구역 환경음 21(`amb.below.*`), 물 빠짐·차오름·실·눕히기·깨뜨리기·저편 불 장치음 12, 보스 B-21~B-31 전투음 50(`sfx.boss.yun/seven/knot/armies/chilseong/plague/imyeong/byeoru/halmi/mother/mybaek.*`). 기존 소리 파일은 그대로.
+- 임시 대역 BGM 17곡(`bgm_below_{water,earth,ink}_{night,combat,finish}`, `bgm_s3_*` 8곡). `data/bgm.json` naming 에 `below`(관할→곡 이름)·`s3_special` 추가.
+- Gemini 지시문 46~62 추가(총 62). `docs/sound-direction.md` 에 시즌3 절, `docs/bgm-temp.md` 에 시즌3 표와 BgmPlayer 제안.
+- 남은 일: 서사의 시즌3 컷신 대본이 나오면 `cutscene_audio_s3` 소리 대본. 코드팀: ZoneAmbient 아래층 구역 연결, 물 주기 훅, B-27·B-30 타이머 맞춤.

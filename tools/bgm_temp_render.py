@@ -512,7 +512,7 @@ def song_night(rng, R):
 
 
 def song_combat(rng, R):
-    bpm = {"bulgeunjae": 108, "soegol": 120, "gaetmaeul": 112, "doseong": 132}[next(k for k, v in REGIONS.items() if v is R)]
+    bpm = R.get("combat_bpm") or {"bulgeunjae": 108, "soegol": 120, "gaetmaeul": 112, "doseong": 132}[next(k for k, v in REGIONS.items() if v is R)]
     cyc = 4 * 60 / bpm
     sec = fit(44, cyc); cycles = int(round(sec / cyc))
     mx = Mix(sec)
@@ -774,10 +774,139 @@ def guid(s):
     return hashlib.md5(("chasa-bgm-temp:" + s).encode()).hexdigest()
 
 
+# ---- 시즌3 「백의 밤」 아래층 곡(지시문 46~54) ----
+# 아래층은 밤에만 열린다 → 낮 곡(day_a)은 만들지 않는다. 코드가 day_a 를 찾으면 night 로 대신 쓸 것(docs/bgm-temp.md).
+# 규칙: 위층 같은 막의 곡보다 한 단계 느리고 낮다(물이 빠진 바닥 = 무겁고 갇힌 곳). 사람 목소리 없음.
+BELOW = {
+    #               으뜸음        빠르기   조         밤 가락(lead)  받침 현          특이 악기   싸움 빠르기
+    "below_water": dict(tonic=50, bpm=60, mode=GYEMYEON, lead="daegeum", pl="gayageum", extra="jing",    combat_bpm=100, name="6막 물 밑(①⑤⑦)"),
+    "below_earth": dict(tonic=55, bpm=66, mode=GYEMYEON, lead="piri",    pl="geomungo", extra="nagak",   combat_bpm=112, name="7막 흙 밑(③④②⑥)"),
+    "below_ink":   dict(tonic=51, bpm=56, mode=PYEONG,   lead="haegeum", pl="geomungo", extra="kkwaeng", combat_bpm=104, name="8막 먹 밑(⑧⑨⑩)"),
+}
+for bk, R in BELOW.items():
+    SONGS[f"bgm_{bk}_night"] = (lambda R: lambda rng: song_night(rng, R))(R)
+    SONGS[f"bgm_{bk}_combat"] = (lambda R: lambda rng: song_combat(rng, R))(R)
+    SONGS[f"bgm_{bk}_finish"] = (lambda R: lambda rng: song_finish(rng, R))(R)
+
+
+# ---- 시즌3 특별 곡(지시문 55~62) ----
+def s3_rising(rng):
+    """새벽 물 차오름(2분, 반복용): 장단은 없고, 낮은 북이 심장처럼 점점 잦아지는 느낌을 30초 한 바퀴에 담는다.
+    코드는 물 차오름 2분 동안 이 곡을 깔고 크기를 0.5→1.0 으로 키운다(amb.water.rising 과 같은 곡선)"""
+    tn = 50; mx = Mix(32.0)
+    lay_drone(mx, rng, [tn - 12, tn - 11], 32.0, "ajaeng", gain=0.2, rev=0.45)      # 반음 부딪는 드론 = 불안
+    t, gap = 0.0, 1.6
+    while t < 31.5:
+        mx.add(buk(rng, 0.9), t, 0.0, 0.5, 0.3); t += gap; gap = max(0.8, gap * 0.97)
+    for k in range(4):
+        mx.add(pluck(rng, tn + [0, 3, 1, 0][k], 3.0, "geomungo", vib=0.4, bend=-1.0 if k == 2 else 0), 2 + k * 7.5, -0.3, 0.3, 0.45)
+    return mx, -18.0
+
+
+def s3_knot(rng):
+    """B-23 매듭(반복용): 수천 가닥 실 = 해금·아쟁이 같은 음을 조금씩 어긋나게 길게 긋는다. 중중모리가 감기고 풀리듯"""
+    tn = 50; md = GYEMYEON; bpm = 84
+    jd = JANGDAN["jungjung"]; cyc = jd["beats"] * 60 / bpm; sec = fit(60, cyc); cycles = int(round(sec / cyc))
+    mx = Mix(sec)
+    lay_drone(mx, rng, [tn - 12, tn - 5, tn + 1], sec, "ajaeng", gain=0.2, rev=0.4)
+    play_jangdan(mx, rng, "jungjung", bpm, 0, sec, gain=0.5, rev=0.2, accent_first=1.2)
+    for k in range(cycles):
+        mx.add(buk(rng, 1.2), k * cyc, 0.0, 0.7, 0.25)
+        if k % 4 == 0: mx.add(jing(rng, tn - 12, 4.0), k * cyc, 0.0, 0.3, 0.4)
+    mel = make_melody(rng, tn, md, tn + 5, tn + 20, cyc, cycles - 1, t0=cyc, cells=[1 / 3, 1 / 3, 1 / 3], rest=0.15)
+    mx.add(phrase(rng, mel, "haegeum"), 0, 0.2, 0.42, 0.3)
+    mx.add(phrase(rng, [(m[0] + 0.12, m[1], m[2] - 12, m[3]) for m in mel if int(m[0] / cyc) % 2 == 1], "ajaeng"), 0, -0.2, 0.3, 0.3)   # 실이 겹쳐 엉킴
+    return mx, -16.0
+
+
+def s3_imyeong(rng):
+    """B-27 이명/흑월의 몸(반복용): 시즌1 흑월 결전과 같은 D음·같은 큰 북 — 그러나 한 단계 낮고 차갑다. 언 땅 = 편경 같은 높은 쇠"""
+    tn = 50; md = GYEMYEON; bpm = 92
+    cyc = 4 * 60 / bpm; sec = fit(56, cyc); cycles = int(round(sec / cyc))
+    mx = Mix(sec)
+    lay_drone(mx, rng, [tn - 24, tn - 12], sec, "ajaeng", gain=0.22, rev=0.4)
+    play_jangdan(mx, rng, "jajinmori", bpm, 0, sec, gain=0.5, rev=0.2, accent_first=1.3)
+    b = buk(rng, 1.6)
+    for k in range(cycles):
+        mx.add(b, k * cyc, 0.0, 0.85, 0.25)
+        if k % 2: mx.add(bell(rng, tn + 36, 2.0), k * cyc + cyc * 0.5, 0.35, 0.12, 0.5)    # 언 땅의 높은 쇠
+    mel = make_melody(rng, tn, md, tn - 2, tn + 15, cyc * 2, cycles // 2, cells=[0.25, 0.25, 0.25, 0.25], rest=0.2)
+    mx.add(phrase(rng, mel, "piri"), 0, 0.1, 0.45, 0.3)
+    return mx, -16.0
+
+
+def s3_mybaek(rng):
+    """B-31 나의 백(반복용): 물속. 박이 흐릿한 진양 위에 대금 — 1막 솔고개 첫 곡과 같은 으뜸음(A)으로 돌아와 처음과 끝을 잇는다"""
+    tn = 57; md = GYEMYEON; bpm = 52
+    beat = 60 / bpm; cyc = 24 * beat; sec = fit(84, cyc); cycles = int(round(sec / cyc))
+    mx = Mix(sec)
+    lay_drone(mx, rng, [tn - 24, tn - 12, tn - 5], sec, "saenghwang", gain=0.2, rev=0.6)
+    play_jangdan(mx, rng, "jinyang", bpm, 0, sec, gain=0.3, rev=0.45, skip=0.2)
+    for k in range(cycles):
+        mx.add(buk(rng, 1.0), k * cyc, 0.0, 0.5, 0.45)
+        mx.add(jing(rng, tn - 12, 6.0), k * cyc + cyc * 0.5, 0.0, 0.25, 0.6)
+    mel = make_melody(rng, tn, md, tn - 2, tn + 14, cyc / 2, cycles * 2, cells=[0.3, 0.2, 0.3, 0.2], rest=0.25)
+    mx.add(phrase(rng, mel, "daegeum"), 0, 0.12, 0.45, 0.6)
+    return mx, -16.0
+
+
+def s3_open(rng):
+    """시즌3 여는 장면(C-21, 약 70초): 물 빠진 강바닥. 장단 없이 아쟁 드론, 가야금이 물방울처럼 떨어지고, 끝에 사슬이 바닥에 닿는 징 한 번"""
+    tn = 50; md = GYEMYEON
+    mx = Mix(70, loop=False, tail=8)
+    lay_drone(mx, rng, [tn - 12, tn - 5], 64, "ajaeng", gain=0.15, rev=0.6)
+    sc = scale_notes(tn, md, tn + 7, tn + 26)
+    for k in range(14):
+        mx.add(pluck(rng, sc[rng.integers(len(sc))], 3.0, "gayageum", vib=0.3), 4 + k * 3.6 + rng.uniform(0, 1), rng.uniform(-0.4, 0.4), 0.2, 0.65)
+    mel = make_melody(rng, tn, md, tn + 5, tn + 19, 10.0, 3, t0=24.0, cells=[0.4, 0.3, 0.3], rest=0.3)
+    mx.add(phrase(rng, mel, "daegeum"), 0, 0.15, 0.36, 0.6)
+    mx.add(jing(rng, tn - 12, 7.0), 60.0, 0.0, 0.5, 0.6)
+    return mx, -20.0
+
+
+def s3_end_a(rng):
+    """결말 A 이름을 부르다(약 4분 중 앞부분 대역 150초): 평조로 밝아짐. 상여 소리처럼 느린 중모리 → 해금·대금이 함께, 끝에 맺음(으뜸음)"""
+    tn = 57; md = PYEONG; bpm = 60
+    jd = JANGDAN["jungmori"]; cyc = jd["beats"] * 60 / bpm; sec = fit(144, cyc); cycles = int(round(sec / cyc))
+    mx = Mix(sec + 8, loop=False, tail=8)
+    lay_drone(mx, rng, [tn - 12, tn - 5], sec, gain=0.14, rev=0.5)
+    play_jangdan(mx, rng, "jungmori", bpm, cyc * 2, sec - cyc * 3, gain=0.32, rev=0.35, skip=0.15)
+    mel = make_melody(rng, tn, md, tn, tn + 19, cyc, cycles - 3, t0=cyc, rest=0.25)
+    mx.add(phrase(rng, mel, "daegeum"), 0, 0.15, 0.42, 0.5)
+    ans = make_melody(rng, tn, md, tn + 7, tn + 24, cyc, cycles, rest=0.4)
+    mx.add(phrase(rng, [m for m in ans if int(m[0] / cyc) % 3 == 2 and m[0] > cyc * 4], "haegeum"), 0, -0.2, 0.32, 0.5)
+    mx.add(pluck(rng, tn - 12, 7.0, "gayageum", vib=0.3), sec - 1.0, 0.0, 0.4, 0.6)        # 맺음: 으뜸음
+    return mx, -20.0
+
+
+def s3_end_b(rng):
+    """결말 B 번진 명부(대역 110초): 같은 가락이 계면조로 — 먹이 번지듯 음이 끝마다 흘러내림(꺾는 소리). 맺지 않고 5도에서 멈춤"""
+    tn = 57; md = GYEMYEON
+    mx = Mix(110, loop=False, tail=8)
+    lay_drone(mx, rng, [tn - 12], 104, "saenghwang", gain=0.14, rev=0.6)
+    mel = make_melody(rng, tn, md, tn, tn + 15, 9.0, 10, t0=6.0, cells=[0.35, 0.3, 0.35], rest=0.3)
+    mx.add(phrase(rng, [(a, b, c, "d") for a, b, c, d in mel], "haegeum"), 0, 0.1, 0.4, 0.55)
+    for k in range(9): mx.add(pluck(rng, tn - 12 + [0, 7, 5, 3][k % 4], 5.0, "geomungo", vib=0.35, bend=-1.0), 4 + k * 11, -0.3, 0.32, 0.55)
+    mx.add(pluck(rng, tn + 7, 6.0, "gayageum", vib=0.4), 100.0, 0.2, 0.3, 0.65)
+    return mx, -20.0
+
+
+def s3_end_c(rng):
+    """결말 C 다음 검은 갓(대역 80초): 가락 없음. 아쟁 한 음과 먼 큰 북이 느리게 — 다음 회차 1막의 첫 북으로 이어지는 문턱"""
+    tn = 50
+    mx = Mix(80, loop=False, tail=8)
+    mx.add(phrase(rng, [(1.0, 36.0, tn - 12, ""), (38.0, 36.0, tn - 12, "")], "ajaeng"), 0, -0.1, 0.3, 0.55)
+    for k in range(8): mx.add(buk(rng, 1.3), 6 + k * 8.5, 0.0, 0.45 + k * 0.03, 0.5)
+    return mx, -20.0
+
+
+SONGS.update({"bgm_s3_rising": s3_rising, "bgm_s3_knot": s3_knot, "bgm_s3_imyeong": s3_imyeong, "bgm_s3_mybaek": s3_mybaek,
+              "bgm_s3_open": s3_open, "bgm_s3_end_a": s3_end_a, "bgm_s3_end_b": s3_end_b, "bgm_s3_end_c": s3_end_c})
+
 def render(sid, preview=None):
     rng = np.random.default_rng(zlib.crc32(sid.encode()))
     mx, target = SONGS[sid](rng)
-    x = mx.render(rt=3.2 if "combat" in sid or "heukwol" in sid else 4.2)
+    x = mx.render(rt=3.2 if any(k in sid for k in ("combat", "heukwol", "knot", "imyeong")) else 4.2)
     x = circ(hp, x, mx.loop, 35)
     if not mx.loop:   # 반복하지 않는 곡은 끝을 3초에 걸쳐 닫는다
         f = int(3.0 * SR); x[:, -f:] *= np.linspace(1, 0, f) ** 2
