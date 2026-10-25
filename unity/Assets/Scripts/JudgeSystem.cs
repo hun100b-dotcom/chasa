@@ -342,7 +342,7 @@ public class JudgeSystem : MonoBehaviour
             e.soul.WaitLeft = e.soul.WaitTotal;
         }
         if (!Demo.Gear) return;   // 시연판 기본 구성: 장비 드롭 없음
-        var it = Loot.Roll(() => Random.value, e.soul.Fierce, FieldRules.On ? RingLoot.RingAt(e.Pos.x, e.Pos.z, FieldZones.NameAt(e.Pos.x, e.Pos.z) == "검은여울") : 0);   // 필드에선 위치로 고리를 정해 등급 표를 쓴다
+        var it = Loot.Roll(() => Random.value, e.soul.Fierce, FieldRules.On ? RingLoot.RingAt(e.Pos.x, e.Pos.z, FieldZones.NameAt(e.Pos.x, e.Pos.z) == "검은여울") : 0, lo.gear.DropKinds());   // 필드에선 위치로 고리를 정해 등급 표를 쓴다
         if (it == null) return;
         string txt = Loadout.Describe(it);
         if (lo.Equip(it))
@@ -579,6 +579,7 @@ public class JudgeSystem : MonoBehaviour
     void MarkBossDone(int id)
     {
         if (id < 1 || id > 12 || id == 4 || clock == null || !bossDoneIds.Add(id)) return;
+        if (id <= 2 && !lo.gear.FirstRingBossDone) { lo.gear.FirstRingBossDone = true; lo.lastDrop = "새 장비 자리가 열렸다: 갓 · 띠"; lo.lastDropT = 6f; }   // 1막 보스 처결 뒤 갓·띠 자리(기획 성장 표)
         if (id <= 3 && bossDoneIds.Contains(1) && bossDoneIds.Contains(2) && bossDoneIds.Contains(3) && allDoneDay < 0) { allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }
         if (id >= 5 && bossDoneIds.Contains(5) && bossDoneIds.Contains(6) && bossDoneIds.Contains(7) && bossDoneIds.Contains(8) && act2DoneDay < 0) act2DoneDay = clock.Day;   // 2막 마지막 일
     }
@@ -586,6 +587,7 @@ public class JudgeSystem : MonoBehaviour
     {
         if (!FieldRules.On || !FieldRules.Act2 || clock == null) return;
         if (allDoneDay < 0 && (Application.absoluteURL ?? "").Contains("hk=")) { bossDoneIds.Add(1); bossDoneIds.Add(2); bossDoneIds.Add(3); allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }   // 검사용 ?hk=1: 1막 보스 셋을 이미 처결한 것으로 친다(흑월 1차를 바로 본다)
+        if (!lo.gear.Act2Entered && FieldRules.Act2Open && player.Pos.z > FieldRules.Size + 4f) { lo.gear.Act2Entered = true; lo.lastDrop = "새 장비 자리가 열렸다: 신 · 노리개 2"; lo.lastDropT = 6f; }   // 2막 땅에 첫 발 — 신·노리개 둘째 자리
         if (enterDay < 0 && FieldZones.CurrentName == "검은여울") enterDay = clock.Day;   // ② 검은여울 첫 진입(5일 안전장치의 기준)
         int hn = Act2Gate.HeukwolNight(allDoneDay, allDoneAtNight, enterDay);
         bool open = FieldRules.Act2Open || clock.Day >= Act2Gate.OpenDay(allDoneDay, allDoneAtNight, enterDay);
@@ -1299,7 +1301,7 @@ public class JudgeSystem : MonoBehaviour
         GUI.color = new Color(0, 0, 0, 0.45f); GUI.DrawTexture(r, white); GUI.color = Color.white;
         if (it == null) return;
         string rar = it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common";
-        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + (s == Slot.Weapon ? "weapon" : s == Slot.Robe ? "dopo" : "noriga") + "_" + rar;
+        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + Ko.IconKind(s) + "_" + rar;
         var tex = SpriteLib.Texture("icons/" + icon);
         var frame = SpriteLib.Texture("icons/frame_" + rar);
         if (tex != null) GUI.DrawTexture(r, tex);

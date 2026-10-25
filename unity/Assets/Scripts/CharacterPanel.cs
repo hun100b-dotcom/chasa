@@ -77,27 +77,34 @@ public partial class CharacterPanel : MonoBehaviour
     {
         GUI.Label(new Rect(box.x + 16, y, 500, 28), "손에 든 무기: " + lo.Def.Name + "  (Tab으로 교체)", title);
         y += 36;
-        for (int s = 0; s < 3; s++)
+        foreach (var pos in Ko.PosOrder)
         {
-            var slot = (Slot)s;
-            var it = lo.gear.Get(slot);
-            var icon = new Rect(box.x + 16, y, 64, 64);
+            var slot = Equipment.KindOf(pos);
+            var it = lo.gear.GetAt(pos);
+            var icon = new Rect(box.x + 16, y, 48, 48);
+            if (!lo.gear.IsOpen(pos))
+            {
+                // 아직 열리지 않은 자리: 흐리게 '잠김'만 보여 줘 앞으로 늘어날 것을 알린다
+                GUI.color = new Color(1, 1, 1, 0.45f);
+                GUI.Label(new Rect(box.x + 76, y + 10, box.width - 110, 24), Ko.PosName(pos) + ": 잠김", body);
+                GUI.color = Color.white; y += 56; continue;
+            }
             GUI.color = new Color(0, 0, 0, 0.4f); GUI.DrawTexture(icon, white); GUI.color = Color.white;
-            string label = Ko.SlotName(slot) + ": ";
+            string label = Ko.PosName(pos) + ": ";
             if (it == null) label += "(비어 있음)";
             else
             {
                 DrawIcon(slot, it, icon);
                 label += Ko.ItemName(it) + (it.Gradient ? "  [기울기: " + Ko.TiltName(it) + "]" : "");
             }
-            GUI.Label(new Rect(box.x + 92, y, box.width - 110, 24), label, body);
+            GUI.Label(new Rect(box.x + 76, y, box.width - 110, 24), label, body);
             if (it != null)
             {
                 string opts = "";
                 foreach (var o in it.Options) opts += OptText(o) + "   ";
-                GUI.Label(new Rect(box.x + 92, y + 24, box.width - 110, 40), opts, body);
+                GUI.Label(new Rect(box.x + 76, y + 22, box.width - 110, 34), opts, body);
             }
-            y += 76;
+            y += 56;
         }
     }
 
@@ -129,7 +136,7 @@ public partial class CharacterPanel : MonoBehaviour
     void DrawIcon(Slot s, ItemDef it, Rect r)
     {
         string rar = it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common";
-        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + (s == Slot.Weapon ? "weapon" : s == Slot.Robe ? "dopo" : "noriga") + "_" + rar;
+        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + Ko.IconKind(s) + "_" + rar;
         var tex = SpriteLib.Texture("icons/" + icon); var fr = SpriteLib.Texture("icons/frame_" + rar);
         if (tex != null) GUI.DrawTexture(r, tex);
         if (fr != null) GUI.DrawTexture(r, fr);

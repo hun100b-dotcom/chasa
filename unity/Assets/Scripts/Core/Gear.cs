@@ -112,7 +112,7 @@ namespace Chasa.Core
     }
 
     // ---------------------------------------------------------------- 장비
-    public enum Slot { Weapon, Robe, Charm }                 // 무기 / 도포 / 노리개
+    public enum Slot { Weapon, Robe, Charm, Hat, Belt, Shoes }   // 무기 / 도포 / 노리개 / 갓 / 띠 / 신 (앞 셋은 옛 저장과 번호가 같다. 자리는 EquipPos 8개: 무기·노리개는 둘씩)
     public enum Rarity { Common, Crafted, Rare }             // 흔한 / 손본 / 귀한
     public enum Opt
     {
@@ -286,11 +286,57 @@ namespace Chasa.Core
         }
     }
 
-    /// <summary>장착 세 칸. 같은 칸의 새 물건이 더 귀하면(같으면 옵션 점수가 높으면) 바꿔 낀다</summary>
+    /// <summary>
+    /// 장착 여덟 자리(EquipPos: 무기 2·갓·도포·띠·신·노리개 2). 같은 종류 물건은 열린 빈 자리에 먼저 끼고,
+    /// 자리가 다 찼으면 가장 못한 자리의 것보다 나을 때만 바꿔 낀다. 갓·띠는 1막 보스 하나를 보낸 뒤, 신·노리개 둘째는 2막에 들어선 뒤에 열린다.
+    /// 옛 코드(Get/Put/Remove(Slot))는 그 종류의 첫 자리(무기1·도포·노리개1)를 가리킨다 — 옛 저장과 화면이 그대로 돈다.
+    /// </summary>
     public class Equipment
     {
-        readonly ItemDef[] slots = new ItemDef[3];
-        public ItemDef Get(Slot s) { return slots[(int)s]; }
+        readonly ItemDef[] pos = new ItemDef[8];
+        public bool FirstRingBossDone, Act2Entered;   // 열린 자리 판단(EquipLayout.IsOpen). JudgeSystem 이 진행에 맞춰 켠다
+
+        /// <summary>물건 종류가 들어갈 수 있는 자리들(앞쪽이 첫 자리)</summary>
+        public static EquipPos[] PositionsOf(Slot s)
+        {
+            switch (s)
+            {
+                case Slot.Weapon: return new[] { EquipPos.Weapon1, EquipPos.Weapon2 };
+                case Slot.Robe: return new[] { EquipPos.Robe };
+                case Slot.Charm: return new[] { EquipPos.Charm1, EquipPos.Charm2 };
+                case Slot.Hat: return new[] { EquipPos.Hat };
+                case Slot.Belt: return new[] { EquipPos.Belt };
+                default: return new[] { EquipPos.Shoes };
+            }
+        }
+        /// <summary>자리의 물건 종류</summary>
+        public static Slot KindOf(EquipPos p)
+        {
+            switch (p)
+            {
+                case EquipPos.Weapon1: case EquipPos.Weapon2: return Slot.Weapon;
+                case EquipPos.Hat: return Slot.Hat;
+                case EquipPos.Robe: return Slot.Robe;
+                case EquipPos.Belt: return Slot.Belt;
+                case EquipPos.Shoes: return Slot.Shoes;
+                default: return Slot.Charm;
+            }
+        }
+        public bool IsOpen(EquipPos p) { return EquipLayout.IsOpen(p, FirstRingBossDone, Act2Entered); }
+        /// <summary>지금 드롭에 나올 수 있는 물건 종류(열린 자리가 있는 종류)</summary>
+        public Slot[] DropKinds()
+        {
+            var l = new List<Slot>();
+            foreach (Slot k in new[] { Slot.Weapon, Slot.Robe, Slot.Charm, Slot.Hat, Slot.Belt, Slot.Shoes })
+                foreach (var p in PositionsOf(k)) if (IsOpen(p)) { l.Add(k); break; }
+            return l.ToArray();
+        }
+
+        public ItemDef GetAt(EquipPos p) { return pos[(int)p]; }
+        public void PutAt(EquipPos p, ItemDef it) { pos[(int)p] = it; }
+        public void RemoveAt(EquipPos p) { pos[(int)p] = null; }
+
+        public ItemDef Get(Slot s) { return pos[(int)PositionsOf(s)[0]]; }
 
         public static int Score(ItemDef it)
         {
@@ -300,24 +346,31 @@ namespace Chasa.Core
             return s;
         }
 
-        /// <summary>새 물건이 지금 것보다 나으면 장착하고 true. (시연판은 자동 비교 — 버리는 쪽은 사라진다)</summary>
+        /// <summary>새 물건이 들어갈 자리를 골라 장착하고 true. 빈 열린 자리가 있으면 거기, 없으면 가장 못한 자리를 이길 때만 바꿔 낀다</summary>
         public bool TryEquip(ItemDef it)
         {
-            if (Score(it) <= Score(slots[(int)it.Slot])) return false;
-            slots[(int)it.Slot] = it;
-            return true;
+            EquipPos worst = EquipPos.Weapon1; int worstScore = int.MaxValue; bool any = false;
+            foreach (var p in PositionsOf(it.Slot))
+            {
+                if (!IsOpen(p)) continue;
+                var cur = pos[(int)p];
+                if (cur == null) { pos[(int)p] = it; return true; }
+                int sc = Score(cur); if (!any || sc < worstScore) { any = true; worst = p; worstScore = sc; }
+            }
+            if (!any || Score(it) <= worstScore) return false;
+            pos[(int)worst] = it; return true;
         }
 
-        /// <summary>저장 불러오기용: 비교 없이 그 칸에 그대로 넣는다(null 이면 비움)</summary>
-        public void Put(Slot s, ItemDef it) { slots[(int)s] = it; }
+        /// <summary>저장 불러오기용: 비교 없이 그 종류의 첫 자리에 그대로 넣는다(null 이면 비움)</summary>
+        public void Put(Slot s, ItemDef it) { pos[(int)PositionsOf(s)[0]] = it; }
 
-        /// <summary>그 칸을 비운다 (풀기·분해에 쓴다)</summary>
-        public void Remove(Slot s) { slots[(int)s] = null; }
+        /// <summary>그 종류의 첫 자리를 비운다 (풀기·분해에 쓴다)</summary>
+        public void Remove(Slot s) { pos[(int)PositionsOf(s)[0]] = null; }
 
         public GearStats Stats()
         {
             var st = new GearStats();
-            foreach (var it in slots) if (it != null) st.Add(it);
+            foreach (var it in pos) if (it != null) st.Add(it);
             return st;
         }
     }
@@ -328,7 +381,7 @@ namespace Chasa.Core
     /// </summary>
     public static class Loot
     {
-        static readonly Slot[] SlotPool = { Slot.Weapon, Slot.Robe, Slot.Charm };
+        static readonly Slot[] SlotPool = { Slot.Weapon, Slot.Robe, Slot.Charm };   // 기본(옛 시연판) 물건 종류. 열린 자리가 늘면 Equipment.DropKinds 를 kindPool 로 넘긴다
 
         /// <summary>true 면 시연판 밖 기울기 5종도 드롭에 나온다 (QA 검증 뒤 켠다)</summary>
         public static bool AllTilts = false;
@@ -341,10 +394,10 @@ namespace Chasa.Core
             return list.Count == 1 ? list[0] : list[(int)(rand() * list.Count) % list.Count];
         }
 
-        public static ItemDef Roll(Func<float> rand, bool fierce) { return Roll(rand, fierce, 0); }
+        public static ItemDef Roll(Func<float> rand, bool fierce) { return Roll(rand, fierce, 0, null); }
 
         /// <summary>ring 1~6 이면 고리별 등급 표(RingLoot), 0 이면 시연판 고정 확률. 난수를 쓰는 순서는 같다(기존 결과 유지)</summary>
-        public static ItemDef Roll(Func<float> rand, bool fierce, int ring)
+        public static ItemDef Roll(Func<float> rand, bool fierce, int ring, Slot[] kindPool = null)
         {
             if (!fierce && rand() >= Balance.DROP_CHANCE) return null;
             Rarity r;
@@ -354,7 +407,8 @@ namespace Chasa.Core
             else if (x < Balance.DROP_RARITY_RARE + Balance.DROP_RARITY_CRAFTED) r = Rarity.Crafted;
             else r = Rarity.Common;
 
-            var it = new ItemDef { Slot = SlotPool[(int)(rand() * 3f) % 3], Rarity = r };
+            var kinds = kindPool != null && kindPool.Length > 0 ? kindPool : SlotPool;
+            var it = new ItemDef { Slot = kinds[(int)(rand() * kinds.Length) % kinds.Length], Rarity = r };
             it.Name = r + " " + it.Slot;
             int n = r == Rarity.Common ? (rand() < 0.5f ? 0 : 1) : r == Rarity.Crafted ? 1 + (rand() < 0.5f ? 0 : 1) : 3;
             // 시연판 옵션 8종 중 고르기. 중복 없이 n 개.

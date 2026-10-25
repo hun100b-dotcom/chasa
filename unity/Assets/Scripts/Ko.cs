@@ -31,8 +31,35 @@ public static class Ko
     /// <summary>장비 칸 이름</summary>
     public static string SlotName(Slot s)
     {
-        return s == Slot.Weapon ? "무기" : s == Slot.Robe ? "도포" : "노리개";
+        switch (s)
+        {
+            case Slot.Weapon: return "무기";
+            case Slot.Robe: return "도포";
+            case Slot.Hat: return "갓";
+            case Slot.Belt: return "띠";
+            case Slot.Shoes: return "신";
+            default: return "노리개";
+        }
     }
+
+    /// <summary>장비 자리 이름. 같은 종류가 둘인 자리(무기·노리개)는 1·2 를 붙여 구분한다</summary>
+    public static string PosName(EquipPos p)
+    {
+        switch (p)
+        {
+            case EquipPos.Weapon1: return "무기 1";
+            case EquipPos.Weapon2: return "무기 2";
+            case EquipPos.Charm1: return "노리개 1";
+            case EquipPos.Charm2: return "노리개 2";
+            default: return SlotName(Equipment.KindOf(p));
+        }
+    }
+
+    /// <summary>자리 화면에 보여 줄 순서(무기·갓·도포·띠·신·노리개)</summary>
+    public static readonly EquipPos[] PosOrder = { EquipPos.Weapon1, EquipPos.Weapon2, EquipPos.Hat, EquipPos.Robe, EquipPos.Belt, EquipPos.Shoes, EquipPos.Charm1, EquipPos.Charm2 };
+
+    /// <summary>아이콘 파일 이름에 쓰는 종류 글자(새 종류는 그림이 아직 없어 노리개 그림을 빌린다)</summary>
+    public static string IconKind(Slot s) { return s == Slot.Weapon ? "weapon" : s == Slot.Robe ? "dopo" : "noriga"; }
 
     /// <summary>장비 등급 이름 (Common/Crafted/Rare = 흔한/손본/귀한)</summary>
     public static string RarityName(Rarity r)

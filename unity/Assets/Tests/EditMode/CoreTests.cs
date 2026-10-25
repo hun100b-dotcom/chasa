@@ -2353,5 +2353,47 @@ public class CoreTests
         Assert.IsFalse(new SealSet(0).Insert(s));   // 흔한 등급은 홈이 없다
     }
 
+    static ItemDef 시험물건(Slot k, Rarity r) { return new ItemDef { Slot = k, Rarity = r, Name = "시험" }; }
+
+    [Test]
+    public void Equipment_무기_노리개는_둘째_자리까지_채우고_갓은_해금_전엔_못_낀다()
+    {
+        var eq = new Equipment();
+        Assert.IsTrue(eq.TryEquip(시험물건(Slot.Weapon, Rarity.Common))); Assert.IsTrue(eq.TryEquip(시험물건(Slot.Weapon, Rarity.Common)));
+        Assert.IsNotNull(eq.GetAt(EquipPos.Weapon1)); Assert.IsNotNull(eq.GetAt(EquipPos.Weapon2));
+        Assert.IsFalse(eq.TryEquip(시험물건(Slot.Hat, Rarity.Rare)), "1막 보스 전엔 갓 자리가 닫혀 있다");
+        eq.FirstRingBossDone = true; Assert.IsTrue(eq.TryEquip(시험물건(Slot.Hat, Rarity.Common)));
+        Assert.IsTrue(eq.TryEquip(시험물건(Slot.Charm, Rarity.Common))); Assert.IsFalse(eq.TryEquip(시험물건(Slot.Charm, Rarity.Common)), "노리개 둘째 자리는 2막 진입 뒤");
+        eq.Act2Entered = true; Assert.IsTrue(eq.TryEquip(시험물건(Slot.Charm, Rarity.Common)));
+        // 가득 찬 뒤에는 더 나은 것만 가장 못한 자리를 대신한다
+        Assert.IsFalse(eq.TryEquip(시험물건(Slot.Weapon, Rarity.Common))); Assert.IsTrue(eq.TryEquip(시험물건(Slot.Weapon, Rarity.Rare)));
+    }
+
+    [Test]
+    public void Equipment_DropKinds_열린_종류만()
+    {
+        var eq = new Equipment();
+        Assert.AreEqual(3, eq.DropKinds().Length);
+        eq.FirstRingBossDone = true; Assert.AreEqual(5, eq.DropKinds().Length);
+        eq.Act2Entered = true; Assert.AreEqual(6, eq.DropKinds().Length);
+    }
+
+    [Test]
+    public void SaveGame_장비_8자리_왕복과_옛_3칸_저장_옮겨담기()
+    {
+        var g = new GrowthState(); var l = new Ledger(); var eq = new Equipment(); var cb = new ClueBook();
+        eq.FirstRingBossDone = true; eq.Act2Entered = true;
+        eq.PutAt(EquipPos.Hat, 시험물건(Slot.Hat, Rarity.Rare)); eq.PutAt(EquipPos.Charm2, 시험물건(Slot.Charm, Rarity.Crafted));
+        var back = SaveGame.Deserialize(SaveGame.Serialize(SaveGame.Capture(g, l, eq, cb)));
+        var eq2 = new Equipment(); SaveGame.Apply(back, new GrowthState(), new Ledger(), eq2, new ClueBook());
+        Assert.AreEqual(Rarity.Rare, eq2.GetAt(EquipPos.Hat).Rarity); Assert.AreEqual(Slot.Charm, eq2.GetAt(EquipPos.Charm2).Slot);
+        Assert.IsTrue(eq2.FirstRingBossDone && eq2.Act2Entered);
+        // 옛 저장: gear0(무기)·gear1(도포)·gear2(노리개) 만 있다
+        var txt = "v=1\nx=1\nz=1\nmin=1\ngear0=1|옛 사슬|0|0||0|0|0|\ngear1=-\ngear2=2|옛 노리개|0|0||0|0|0|\n";
+        var old = SaveGame.Deserialize(txt); Assert.IsNotNull(old);
+        var eq3 = new Equipment(); SaveGame.Apply(old, new GrowthState(), new Ledger(), eq3, new ClueBook());
+        Assert.AreEqual("옛 사슬", eq3.GetAt(EquipPos.Weapon1).Name); Assert.IsNull(eq3.GetAt(EquipPos.Robe)); Assert.AreEqual("옛 노리개", eq3.GetAt(EquipPos.Charm1).Name);
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }
