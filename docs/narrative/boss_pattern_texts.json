@@ -15,24 +15,26 @@
      "bubble": "…한 사람만 더.",
      "bubble_reuse": true,
      "warn": "물이 분다 — 발 디딜 곳이 줄어든다!",
-     "sfx": "sfx.boss.naru.bigwater"
+     "sfx": "sfx.boss.naru.flood"
     },
     {
      "event": "flood",
      "when": "물살 밀기 예고(처음 한 번만 글자, 소리는 매번)",
      "warn": "물살 — 띠 밖으로!",
-     "sfx": "sfx.boss.naru.flood"
+     "sfx": "sfx.boss.naru.current"
     },
     {
      "event": "stain_merge",
      "when": "물에 뜬 파혼 얼룩 셋이 모여 거센 혼이 일어설 때(매번)",
      "warn": "얼룩 셋이 모여 일어선다!",
+     "sfx": "sfx.boss.naru.bigwater",
      "note": "기획 문서의 \"큰물귀신\"은 화면에 쓰지 않는다(결말 낱말). 이름 띠는 \"물에 뜬 얼룩\""
     },
     {
      "event": "weak_tilt",
      "when": "휩쓸기 뒤 배가 기울어 1.5초 무방비(처음 한 번만 글자)",
-     "warn": "배가 기울었다"
+     "warn": "배가 기울었다",
+     "sfx": "sfx.boss.naru.weak"
     }
    ]
   },
@@ -52,13 +54,14 @@
      "when": "맺힘 50% — 기울기 주기 6초 → 4초로 바뀔 때(한 번)",
      "bubble": "붙들어라… 다 붙들어.",
      "warn": "폭풍 — 갑판이 더 자주 기운다!",
-     "sfx_note": "전용 소리 없음 — sfx.boss.seonjang.tilt를 두 번 겹쳐 쓴다"
+     "sfx": "sfx.boss.seonjang.storm"
     },
     {
      "event": "weak_rope",
      "when": "줄 끊기 뒤 늘어진 밧줄 끝을 사슬로 끌어 선장이 넘어질 때(처음 한 번만 말풍선)",
      "bubble": "…무겁다.",
      "warn": "밧줄 끝 — 끌어당겨라",
+     "sfx": "sfx.boss.seonjang.rope.pull",
      "note": "처음 넘어질 때 한 번. 말풍선이 진실(F24)을 앞질러 말하지 않게 한 낱말"
     }
    ]
