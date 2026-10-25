@@ -516,7 +516,7 @@ public static class Balance
     public const float CAMERA_PITCH_NEAR = 46.0f;  // 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_MID = 52.0f;  // 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_FAR = 58.0f;  // 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
-    public const float CAMP_DENSITY_MULT = 1.0f;  // 군집 인원 전체 배율(1.0=그대로). 첫 30분 난이도 조정용: 코디 지시로 봇이 첫 보스까지 2번 이하 쓰러지게 0.7~0.8 까지 낮춘다(10-25)
+    public const float CAMP_DENSITY_MULT = 0.75f;  // 군집 인원 전체 배율(1.0=그대로). 첫 30분 난이도 조정용: 코디 지시로 봇이 첫 보스까지 2번 이하 쓰러지게 0.7~0.8 까지 낮춘다(10-25) | 10-25 PC: 무적 없이 시작 45초 만에 쓰러짐 → 0.75
     public const float FOG_DENSITY_MULT = 0.6f;  // 안개 농도 전체 배율(아트 검수 10-25: 1920 화면이 뿌옇다 → -40%)
     public const float CLOUD_SHADOW_MULT = 0.5f;  // 땅 구름 그림자 세기 배율(아트 검수: 대비 -50%)
     public const int DMG_NUM_MAX = 6;  // 화면 데미지 숫자 최대 개수(겹침 방지)

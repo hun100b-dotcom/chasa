@@ -70,6 +70,13 @@ public class GameMain : MonoBehaviour
             judge.npcs.onClue = () => judge.HintClue();
             judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)
             var cu = (Application.absoluteURL ?? "").ToLowerInvariant();
+            // 검수용 시각 고정: ?time=day|dusk|night|dawn 이면 그 시간대 한가운데에서 시작하고 첫 5분 시계 정지를 푼다(아트·PC 캡처용)
+            foreach (var tn in new[] { "dawn", "day", "dusk", "night" })
+                if (cu.Contains("time=" + tn))
+                {
+                    float st = tn == "dawn" ? 1f : tn == "day" ? Balance.CLOCK_DAWN_MIN + Balance.CLOCK_DAY_MIN * 0.5f : tn == "dusk" ? Balance.CLOCK_DAWN_MIN + Balance.CLOCK_DAY_MIN + Balance.CLOCK_DUSK_MIN * 0.5f : WorldClock.DayLength - Balance.CLOCK_NIGHT_MIN + 8f;
+                    judge.clock.Minutes = st; judge.introFrozen = false;
+                }
             int ci = cu.IndexOf("clock=");
             float sp; if (ci >= 0 && float.TryParse(new string(cu.Substring(ci + 6).TakeWhile(char.IsDigit).ToArray()), out sp) && sp > 0f) judge.clock.Speed = sp;   // 주소 ?clock=10 이면 10배속(한 바퀴 검사용)
         }
