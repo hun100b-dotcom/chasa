@@ -17,6 +17,7 @@ public class JudgeSystem : MonoBehaviour
     public EnemyManager enemies;
     public HitFeel feel;
     public DamageNumbers numbers;
+    public LootDrop loot;     // 바닥에 떨어진 장비(빛줄기·이름표·자동 줍기)
     public RewardFx reward;   // 처결 보상 흡수 연출(혼불·엽전)
     public Camera cam;
 
@@ -406,17 +407,35 @@ public class JudgeSystem : MonoBehaviour
             e.soul.WaitLeft = e.soul.WaitTotal;
         }
         if (!Demo.Gear) return;   // 시연판 기본 구성: 장비 드롭 없음
-        var it = Loot.Roll(() => Random.value, e.soul.Fierce, FieldRules.On ? RingLoot.RingAt(e.Pos.x, e.Pos.z, FieldZones.NameAt(e.Pos.x, e.Pos.z) == "검은여울") : 0, lo.gear.DropKinds());   // 필드에선 위치로 고리를 정해 등급 표를 쓴다
+        ItemDef it;
+        if (!firstGearGiven && ++kneelCount >= 2 && FieldRules.On)
+        {
+            // 첫 장비는 확정(처음 10분 M4): 두 번째로 무릎 꿇은 혼이 흔한 노리개를 떨군다. 처결 방식과 무관
+            var seq = new Queue<float>(new[] { 0f, 0.99f, 0.5f });   // 드롭 통과 → 흔한 등급 → 첫 칸
+            it = Loot.Roll(() => seq.Count > 0 ? seq.Dequeue() : 0.9f, false, 0, new[] { Slot.Charm });
+        }
+        else it = Loot.Roll(() => Random.value, e.soul.Fierce, FieldRules.On ? RingLoot.RingAt(e.Pos.x, e.Pos.z, FieldZones.NameAt(e.Pos.x, e.Pos.z) == "검은여울") : 0, lo.gear.DropKinds());   // 필드에선 위치로 고리를 정해 등급 표를 쓴다
         if (it == null) return;
+        firstGearGiven = true;
+        string nm = Ko.ItemName(it, Ko.FamilyOf(it.Slot, it.Slot == Slot.Weapon ? (WeaponId?)lo.weapon : null));
+        if (loot != null) loot.Add(it, e.Pos, nm);   // 바닥에 떨어진다: 가까이 가면 줍는다
+        else PickLoot(it, e.Pos);
+    }
+    bool firstGearGiven; int kneelCount;
+
+    /// <summary>바닥 장비를 주웠다: 지금 것보다 낫거나 빈 칸이면 끼고, 아니면 가방(알림)만. 줍는 자리에 빛줄기를 한 번 더 남긴다</summary>
+    public void PickLoot(ItemDef it, Vector3 at)
+    {
         string txt = Loadout.Describe(it);
         if (lo.Equip(it))
         {
             ledger.SetMaxHp(lo.stats.MaxHp);
-            lo.lastDrop = "얻어서 찼다: " + txt;
+            lo.lastDrop = "주워서 찼다: " + txt;
         }
-        else lo.lastDrop = "얻었다(지금 것이 낫다): " + txt;
+        else lo.lastDrop = "주웠다(지금 것이 낫다): " + txt;
         lo.lastDropT = 5f;
-        TimedSprite.Spawn("fx/loot_" + (it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common"), e.Pos, 3f);   // 드롭 빛줄기
+        Sfx.Play("sfx.ui.confirm");
+        TimedSprite.Spawn("fx/loot_" + (it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common"), at, 1.5f);   // 줍는 순간의 빛
     }
 
     // ===== 액티브 도술: 1~4키는 명부(성장)에서 칸에 올린 액티브. 처음엔 붙잡아 부르기·휘감기·터뜨리기가 끼워져 있다 =====
