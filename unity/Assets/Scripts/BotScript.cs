@@ -27,6 +27,7 @@ public class BotScript : MonoBehaviour
 
     float t;                       // 실제 경과(초)
     float speed, maxReal; bool god;
+    bool overLogged; int deaths; float fightSince = -1f, ignoreFightUntil;   // 결과 화면 처리 / 같은 싸움에 너무 오래 매이면 잠깐 무시
     string goalName = ""; Vector3 goalPos; bool hasGoal;
     float lastProgressT, lastMoveCheckT; Vector3 lastMovePos; float goalSince; int unstucks;
     int lastScore = -1; ClockPhase lastPhase = (ClockPhase)(-1); string lastCut = "";
@@ -73,10 +74,13 @@ public class BotScript : MonoBehaviour
         }
         else if (lastCut != "") { Log("컷 끝 " + lastCut + " (" + (t - cutStartT).ToString("0") + "초)"); lastCut = ""; }
         judge.StartPlaying();
+        // 쓰러졌거나 동이 터서 결과 화면이 뜨면(god=0): 문제로 적고 다시 시작한다(예전엔 Space 를 안 눌러 28분을 멈춰 있었다)
+        if (judge.NightOver) { if (!overLogged) { overLogged = true; deaths++; Issue("결과 화면(쓰러짐·동틈) #" + deaths + " — 다시 시작"); } if (judge.BotRestart()) { overLogged = false; hasGoal = false; lastProgressT = t; } return; }
         // ② 진척 감시
         int sc = Score();
         if (sc != lastScore) { lastScore = sc; lastProgressT = t; }
         if (t - lastProgressT > 60f) { Stuck(); lastProgressT = t; }
+        if (deaths >= 5) { Finish("5번 쓰러져 중단"); return; }
         if (t > maxReal) { Finish("시간 초과(" + maxReal + "초)"); return; }
         if (judge.BossOutcomeNow != 0) { Finish(judge.BossOutcomeNow == 1 ? "보스 천도 성공" : "보스 파혼"); return; }
         // ③ 무엇을 할까
@@ -123,14 +127,20 @@ public class BotScript : MonoBehaviour
     /// <summary>가까이(25m) 서 있는 혼은 때리고, 무릎 꿇은 혼은 천도한다. 했으면 true</summary>
     bool TickFight()
     {
-        Enemy near = null, kneel = null; float nd = 25f, kd = 30f;
+        // 한 싸움에 25초 넘게 매이면(덩어리 혼 무리처럼 끝이 안 나는 곳) 20초는 싸움을 무시하고 목표로 간다(god 일 땐 맞아도 괜찮다)
+        if (t < ignoreFightUntil) return false;
+        Enemy near = null, kneel = null, lumpKneel = null; float nd = 25f, kd = 30f, ld = 6f;
         foreach (var e in enemies.list)
         {
             if (e == null || e.soul.Boss) continue;
             float d = Vector3.Distance(e.Pos, player.Pos);
             if (e.kneeling && judge.CanTendoNow(e) && d < kd) { kd = d; kneel = e; }
+            else if (e.kneeling && e.alive && d < ld) { ld = d; lumpKneel = e; }   // 무릎 꿇었지만 천도 못 하는 혼(덩어리 등) → 파혼으로 치운다
             else if (e.alive && !e.kneeling && d < nd) { nd = d; near = e; }
         }
+        if (kneel == null && lumpKneel != null) { player.CommandStop(); judge.CommandPahon(); return true; }
+        if (kneel == null && near == null) fightSince = -1f;
+        else { if (fightSince < 0f) fightSince = t; if (t - fightSince > 25f) { Log("한 싸움 25초 넘음 → 20초 무시하고 목표로"); ignoreFightUntil = t + 20f; fightSince = -1f; return false; } }
         if (kneel != null)
         {
             if (kd > Balance.JUDGE_RANGE * 0.8f) { player.CommandMove(kneel.Pos); return true; }
@@ -208,7 +218,7 @@ public class BotScript : MonoBehaviour
         var sb = new StringBuilder();
         sb.Append("{\"결과\":\"").Append(why).Append("\",\"실제초\":").Append(t.ToString("0")).Append(",\"게임\":\"").Append(Stamp()).Append("\"");
         sb.Append(",\"단서\":").Append(ClueCount()).Append(",\"넋\":").Append(judge.ledger.Neok).Append(",\"기억\":").Append(judge.ledger.Memory).Append(",\"업\":").Append(judge.ledger.Karma);
-        sb.Append(",\"막힘순간이동\":").Append(unstucks).Append(",\"컷\":").Append(cutsSeen).Append(",\"문제\":[");
+        sb.Append(",\"쓰러짐\":").Append(deaths).Append(",\"막힘순간이동\":").Append(unstucks).Append(",\"컷\":").Append(cutsSeen).Append(",\"문제\":[");
         for (int i = 0; i < issues.Count; i++) { if (i > 0) sb.Append(','); sb.Append('"').Append(issues[i].Replace("\"", "'")).Append('"'); }
         sb.Append("]}");
         Debug.Log("[BOT-REPORT] " + sb);

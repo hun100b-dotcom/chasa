@@ -40,12 +40,17 @@ Shader "Chasa/TerrainSplat"
         #pragma surface surf Lambert fullforwardshadows
         #pragma target 3.0
 
-        sampler2D _SplatA, _SplatB, _T0, _T1, _T2, _T3, _T4;
+        // 텍스처 13장을 각자 샘플러로 읽으면 샘플러 16개 한도를 넘어(웹/GLES3 빌드 오류) 샘플러는 _T0 하나를 모두가 나눠 쓴다(텍스처 자체는 따로)
+        #include "HLSLSupport.cginc"
+        UNITY_DECLARE_TEX2D(_T0);
+        UNITY_DECLARE_TEX2D_NOSAMPLER(_SplatA); UNITY_DECLARE_TEX2D_NOSAMPLER(_SplatB);
+        UNITY_DECLARE_TEX2D_NOSAMPLER(_T1); UNITY_DECLARE_TEX2D_NOSAMPLER(_T2); UNITY_DECLARE_TEX2D_NOSAMPLER(_T3); UNITY_DECLARE_TEX2D_NOSAMPLER(_T4);
+        #define S(tex, uv) UNITY_SAMPLE_TEX2D_SAMPLER(tex, _T0, uv)
         float4 _TileM;
         float _TileM4, _WorldSize;
-        sampler2D _D0, _D1, _D2, _D3, _D4;
+        UNITY_DECLARE_TEX2D_NOSAMPLER(_D0); UNITY_DECLARE_TEX2D_NOSAMPLER(_D1); UNITY_DECLARE_TEX2D_NOSAMPLER(_D2); UNITY_DECLARE_TEX2D_NOSAMPLER(_D3); UNITY_DECLARE_TEX2D_NOSAMPLER(_D4);
         float _DetailTileM, _DetailAmount, _DetailNear, _DetailFar;
-        sampler2D _CloudTex; float _CloudAmount; float4 _CloudScroll;
+        UNITY_DECLARE_TEX2D_NOSAMPLER(_CloudTex); float _CloudAmount; float4 _CloudScroll;
 
         struct Input { float3 worldPos; };
 
@@ -53,17 +58,17 @@ Shader "Chasa/TerrainSplat"
         {
             float2 wxz = IN.worldPos.xz;
             float2 suv = wxz / _WorldSize;
-            fixed4 a = tex2D(_SplatA, suv);
-            fixed4 b = tex2D(_SplatB, suv);
+            fixed4 a = S(_SplatA, suv);
+            fixed4 b = S(_SplatB, suv);
             float sum = a.r + a.g + a.b + a.a + b.r;
             float4 wa = a; float wb = b.r;
             if (sum < 0.0001) { wa = float4(0, 1, 0, 0); wb = 0; sum = 1; }   // 아무것도 안 칠한 자리 = 풀
             wa /= sum; wb /= sum;
-            fixed3 c = tex2D(_T0, wxz / _TileM.x).rgb * wa.x
-                     + tex2D(_T1, wxz / _TileM.y).rgb * wa.y
-                     + tex2D(_T2, wxz / _TileM.z).rgb * wa.z
-                     + tex2D(_T3, wxz / _TileM.w).rgb * wa.w
-                     + tex2D(_T4, wxz / _TileM4).rgb * wb;
+            fixed3 c = S(_T0, wxz / _TileM.x).rgb * wa.x
+                     + S(_T1, wxz / _TileM.y).rgb * wa.y
+                     + S(_T2, wxz / _TileM.z).rgb * wa.z
+                     + S(_T3, wxz / _TileM.w).rgb * wa.w
+                     + S(_T4, wxz / _TileM4).rgb * wb;
             // 가까울 때(약 18~32m)만 잔무늬(이랑·자갈 알갱이)를 섞는다. 멀리선 큰 타일만 보여 반복 무늬가 덜 티 난다
             if (_DetailAmount > 0.001)
             {
@@ -71,15 +76,15 @@ Shader "Chasa/TerrainSplat"
                 if (k > 0.001)
                 {
                     float2 duv = wxz / _DetailTileM;
-                    fixed3 d = tex2D(_D0, duv).rgb * wa.x + tex2D(_D1, duv).rgb * wa.y + tex2D(_D2, duv).rgb * wa.z
-                             + tex2D(_D3, duv).rgb * wa.w + tex2D(_D4, duv).rgb * wb;
+                    fixed3 d = S(_D0, duv).rgb * wa.x + S(_D1, duv).rgb * wa.y + S(_D2, duv).rgb * wa.z
+                             + S(_D3, duv).rgb * wa.w + S(_D4, duv).rgb * wb;
                     c = lerp(c, d, k);   // 잔무늬 평균 명도가 층 그림과 비슷하다고 아트가 맞춰 줌 → 색을 섞어도 밝기가 안 튄다
                 }
             }
             // 구름 그림자: 흑백 그림(흰=햇빛, 검=그림자)을 바람 방향으로 천천히 흘려 땅 색에 곱한다
             if (_CloudAmount > 0.001)
             {
-                float cs = tex2D(_CloudTex, (wxz + _CloudScroll.xy * _Time.y) / 200.0).r;
+                float cs = S(_CloudTex, (wxz + _CloudScroll.xy * _Time.y) / 200.0).r;
                 c *= lerp(1.0, lerp(0.55, 1.0, cs), _CloudAmount);
             }
             o.Albedo = c;

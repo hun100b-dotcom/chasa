@@ -568,6 +568,9 @@ public class JudgeSystem : MonoBehaviour
         if (dayScreen.Pack.Dawn > 0) { dayScreen.Pack.Dawn--; night.WarnTime += Balance.SHOP_DAWN_EARLY; }   // 새벽 부적: 경고가 일찍
     }
 
+    /// <summary>자동 플레이 봇 전용: 결과 화면이면 Space 대신 다시 시작. 했으면 true</summary>
+    public bool BotRestart() { if (!night.Over || overT <= 1.2f) return false; RestartNight(); return true; }
+
     /// <summary>결과 화면에서 낮으로. 어젯밤 이름혼을 천도했으면 장례가 열린다</summary>
     void StartDay()
     {
@@ -1192,14 +1195,14 @@ public class JudgeSystem : MonoBehaviour
                 string an = ActiveNameAt(i); if (an == null) continue;
                 sk += (i + 1) + ":" + an + (lo.active.Ready(an) ? "" : "(" + Mathf.CeilToInt(lo.active.Left(an)) + "s)") + "   ";
             }
-            GUI.Label(new Rect(12, 118, 800, 24), sk, small);
+            GUI.Label(new Rect(12, 122, 800, 24), sk, small);   // 96줄(밤·천도·단서)과 겹치지 않게 아래로(PC 검증 지적)
         }
         if (Demo.Gear)
         {
-            GUI.Label(new Rect(12, 140, 900, 24), "장비  무기:" + GearName(Slot.Weapon) + "  도포:" + GearName(Slot.Robe) + "  노리개:" + GearName(Slot.Charm), small);
-            if (lo.lastDropT > 0f) GUI.Label(new Rect(12, 162, 900, 24), lo.lastDrop, small);
+            GUI.Label(new Rect(12, 148, 900, 24), "장비  무기:" + GearName(Slot.Weapon) + "  도포:" + GearName(Slot.Robe) + "  노리개:" + GearName(Slot.Charm), small);
+            if (lo.lastDropT > 0f) GUI.Label(new Rect(12, 170, 900, 24), lo.lastDrop, small);
             // 장비 아이콘 세 칸 (그림이 있을 때만): 등급 테두리 + 칸별 아이콘
-            for (int si = 0; si < 3; si++) DrawGearIcon((Slot)si, new Rect(12 + si * 56, 190, 52, 52));
+            for (int si = 0; si < 3; si++) DrawGearIcon((Slot)si, new Rect(12 + si * 56, 198, 52, 52));
         }
         if (ui == null) GUI.Label(new Rect(12, 52, 700, 24), "E: 천도(넋을 보냄)   R: 파혼(넋을 깸)", small);
         if (ui == null)
