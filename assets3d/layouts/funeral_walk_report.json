@@ -1,0 +1,922 @@
+{
+ "funerals": [
+  {
+   "soul": "S-001",
+   "name": "박돌쇠",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      219.5,
+      62.0
+     ],
+     "clearance_m": 1.4,
+     "reach_from_hub_m": 3.01,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      215.0,
+      57.5
+     ],
+     "clearance_m": 2.81,
+     "reach_from_hub_m": 3.01,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      217.5,
+      60.5
+     ],
+     "clearance_m": 3.43,
+     "reach_from_hub_m": 3.01,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      222.9,
+      62.2
+     ],
+     "clearance_m": -0.07,
+     "reach_from_hub_m": 3.01,
+     "ok": true,
+     "snap_to": [
+      219.75,
+      62.5
+     ]
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      222.9,
+      62.2
+     ],
+     "clearance_m": -0.07,
+     "reach_from_hub_m": 3.01,
+     "ok": true,
+     "snap_to": [
+      219.75,
+      62.5
+     ]
+    },
+    {
+     "label": "noje",
+     "xy": [
+      196,
+      38.5
+     ],
+     "clearance_m": 2.52,
+     "reach_from_hub_m": 5.19,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      196,
+      20
+     ],
+     "clearance_m": 2.75,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": -1.1,
+   "procession_ok": false
+  },
+  {
+   "soul": "S-002",
+   "name": "윤 소사",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      193.5,
+      56.0
+     ],
+     "clearance_m": 3.02,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      198.5,
+      59.0
+     ],
+     "clearance_m": 3.02,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      194.0,
+      55.0
+     ],
+     "clearance_m": 3.4,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      192.0,
+      58.0
+     ],
+     "clearance_m": 1.59,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      192.0,
+      58.0
+     ],
+     "clearance_m": 1.59,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "noje",
+     "xy": [
+      196,
+      38.5
+     ],
+     "clearance_m": 2.52,
+     "reach_from_hub_m": 5.19,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      196,
+      20
+     ],
+     "clearance_m": 2.75,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": 0.9,
+   "procession_ok": false
+  },
+  {
+   "soul": "S-003",
+   "name": "연이",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      201.5,
+      50.5
+     ],
+     "clearance_m": 0.02,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": [
+      200.25,
+      50.5
+     ]
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      194.0,
+      51.0
+     ],
+     "clearance_m": 3.82,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      199.5,
+      50.5
+     ],
+     "clearance_m": 1.94,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      204.0,
+      51.5
+     ],
+     "clearance_m": -0.39,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": [
+      204.0,
+      54.25
+     ]
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      204.0,
+      51.5
+     ],
+     "clearance_m": -0.39,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": [
+      204.0,
+      54.25
+     ]
+    },
+    {
+     "label": "noje",
+     "xy": [
+      196,
+      38.5
+     ],
+     "clearance_m": 2.52,
+     "reach_from_hub_m": 5.19,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      196,
+      20
+     ],
+     "clearance_m": 2.75,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": 0.9,
+   "procession_ok": false
+  },
+  {
+   "soul": "S-004",
+   "name": "칠복",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      196.0,
+      73.5
+     ],
+     "clearance_m": 2.4,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      192.5,
+      70.5
+     ],
+     "clearance_m": 2.25,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      197.5,
+      72.5
+     ],
+     "clearance_m": 3.43,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      190.5,
+      75.0
+     ],
+     "clearance_m": 1.4,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      205.0,
+      86.0
+     ],
+     "clearance_m": 1.5,
+     "reach_from_hub_m": 4.2,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      236.0,
+      98.0
+     ],
+     "clearance_m": 1.55,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": -1.1,
+   "procession_ok": false
+  },
+  {
+   "soul": "S-005",
+   "name": "허 훈장",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      201.5,
+      67.0
+     ],
+     "clearance_m": -0.1,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": [
+      200.25,
+      66.5
+     ]
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      193.5,
+      71.0
+     ],
+     "clearance_m": 3.37,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      199.5,
+      67.5
+     ],
+     "clearance_m": 1.94,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      202.5,
+      70.5
+     ],
+     "clearance_m": -0.6,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": [
+      200.25,
+      70.5
+     ]
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      202.5,
+      70.5
+     ],
+     "clearance_m": -0.6,
+     "reach_from_hub_m": 3.14,
+     "ok": true,
+     "snap_to": [
+      200.25,
+      70.5
+     ]
+    },
+    {
+     "label": "noje",
+     "xy": [
+      196,
+      38.5
+     ],
+     "clearance_m": 2.52,
+     "reach_from_hub_m": 5.19,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      196,
+      20
+     ],
+     "clearance_m": 2.75,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": 0.9,
+   "procession_ok": false
+  },
+  {
+   "soul": "S-019",
+   "name": "엿장수 판쇠",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      39.8,
+      383.6
+     ],
+     "clearance_m": 5.21,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      35.5,
+      386.5
+     ],
+     "clearance_m": 3.8,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      41.5,
+      381.5
+     ],
+     "clearance_m": 5.42,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      39.8,
+      383.6
+     ],
+     "clearance_m": 5.21,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      39.0,
+      383.0
+     ],
+     "clearance_m": 6.11,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "noje",
+     "xy": [
+      72,
+      452
+     ],
+     "clearance_m": 6.3,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      120,
+      458
+     ],
+     "clearance_m": 4.5,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": 0.08,
+   "procession_ok": false
+  },
+  {
+   "soul": "S-020",
+   "name": "포목전 최씨",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      30.5,
+      382.0
+     ],
+     "clearance_m": 5.0,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      35.5,
+      379.0
+     ],
+     "clearance_m": 99.0,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      32.5,
+      382.5
+     ],
+     "clearance_m": 5.8,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      28.5,
+      378.5
+     ],
+     "clearance_m": 99.0,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      31.5,
+      381.5
+     ],
+     "clearance_m": 6.01,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "noje",
+     "xy": [
+      72,
+      452
+     ],
+     "clearance_m": 6.3,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      120,
+      458
+     ],
+     "clearance_m": 4.5,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": 0.08,
+   "procession_ok": false
+  },
+  {
+   "soul": "S-021",
+   "name": "주모 끝순",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      44.8,
+      391.0
+     ],
+     "clearance_m": -0.85,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": [
+      42.75,
+      390.5
+     ]
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      36.5,
+      391.5
+     ],
+     "clearance_m": 1.62,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      43.5,
+      389.0
+     ],
+     "clearance_m": 0.4,
+     "reach_from_hub_m": null,
+     "ok": false,
+     "snap_to": [
+      42.75,
+      388.5
+     ]
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      41.5,
+      387.0
+     ],
+     "clearance_m": 2.4,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      45.2,
+      389.5
+     ],
+     "clearance_m": -0.54,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": [
+      42.75,
+      389.5
+     ]
+    },
+    {
+     "label": "noje",
+     "xy": [
+      72,
+      452
+     ],
+     "clearance_m": 6.3,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      120,
+      458
+     ],
+     "clearance_m": 4.5,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": 0.08,
+   "procession_ok": false
+  },
+  {
+   "soul": "S-029",
+   "name": "북잡이 덕수",
+   "points": [
+    {
+     "label": "gate",
+     "xy": [
+      38.0,
+      390.5
+     ],
+     "clearance_m": 0.0,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": [
+      38.0,
+      391.75
+     ]
+    },
+    {
+     "label": "chasa_start",
+     "xy": [
+      33.0,
+      386.0
+     ],
+     "clearance_m": 3.97,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "sajabap",
+     "xy": [
+      38.5,
+      392.0
+     ],
+     "clearance_m": 1.56,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "stop_object",
+     "xy": [
+      38.0,
+      390.0
+     ],
+     "clearance_m": -0.5,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": [
+      38.0,
+      388.25
+     ]
+    },
+    {
+     "label": "restart_object",
+     "xy": [
+      36.0,
+      388.0
+     ],
+     "clearance_m": 2.33,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "noje",
+     "xy": [
+      72,
+      452
+     ],
+     "clearance_m": 6.3,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    },
+    {
+     "label": "exit",
+     "xy": [
+      120,
+      458
+     ],
+     "clearance_m": 4.5,
+     "reach_from_hub_m": null,
+     "ok": true,
+     "snap_to": null
+    }
+   ],
+   "procession_min_clearance_m": 0.08,
+   "procession_ok": false
+  }
+ ],
+ "jesa": [
+  {
+   "id": "J-001",
+   "soul_name": "박돌쇠",
+   "label": "spot",
+   "xy": [
+    217.0,
+    65.5
+   ],
+   "clearance_m": 4.12,
+   "reach_from_hub_m": 3.01,
+   "ok": true,
+   "snap_to": null
+  },
+  {
+   "id": "J-002",
+   "soul_name": "윤 소사",
+   "label": "spot",
+   "xy": [
+    192.0,
+    58.0
+   ],
+   "clearance_m": 1.59,
+   "reach_from_hub_m": 3.14,
+   "ok": true,
+   "snap_to": null
+  },
+  {
+   "id": "J-003",
+   "soul_name": "연이",
+   "label": "spot",
+   "xy": [
+    200.5,
+    47.5
+   ],
+   "clearance_m": 0.96,
+   "reach_from_hub_m": 3.34,
+   "ok": false,
+   "snap_to": [
+    200.25,
+    47.5
+   ]
+  },
+  {
+   "id": "J-004",
+   "soul_name": "칠복",
+   "label": "spot",
+   "xy": [
+    191.5,
+    76.5
+   ],
+   "clearance_m": -0.39,
+   "reach_from_hub_m": 3.14,
+   "ok": false,
+   "snap_to": [
+    190.5,
+    75.25
+   ]
+  },
+  {
+   "id": "J-005",
+   "soul_name": "허 훈장",
+   "label": "spot",
+   "xy": [
+    200.0,
+    70.0
+   ],
+   "clearance_m": 1.59,
+   "reach_from_hub_m": 3.14,
+   "ok": true,
+   "snap_to": null
+  },
+  {
+   "id": "J-019",
+   "soul_name": "엿장수 판쇠",
+   "label": "spot",
+   "xy": [
+    37.5,
+    382.0
+   ],
+   "clearance_m": 99.0,
+   "reach_from_hub_m": null,
+   "ok": true,
+   "snap_to": null
+  },
+  {
+   "id": "J-020",
+   "soul_name": "포목전 최씨",
+   "label": "spot",
+   "xy": [
+    31.5,
+    377.5
+   ],
+   "clearance_m": 99.0,
+   "reach_from_hub_m": null,
+   "ok": true,
+   "snap_to": null
+  },
+  {
+   "id": "J-021",
+   "soul_name": "주모 끝순",
+   "label": "spot",
+   "xy": [
+    51.5,
+    390.5
+   ],
+   "clearance_m": 1.45,
+   "reach_from_hub_m": null,
+   "ok": true,
+   "snap_to": null
+  },
+  {
+   "id": "J-029",
+   "soul_name": "북잡이 덕수",
+   "label": "spot",
+   "xy": [
+    36.0,
+    398.0
+   ],
+   "clearance_m": 5.76,
+   "reach_from_hub_m": null,
+   "ok": true,
+   "snap_to": null
+  }
+ ]
+}

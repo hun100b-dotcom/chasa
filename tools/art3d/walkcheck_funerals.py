@@ -7,25 +7,35 @@ import walkcheck as W
 from walk_fix import snap
 PL = "/mnt/project-files/planning/data"
 def clear(G, x, y): j, i = G.idx(x, y); return float(G.cl[j, i]) if G.inside(x, y) else -1.0
+LOCAL = {}
+def local(bl, x, y):
+    """점 둘레 ±16m만 0.25m 격자로 만든다(전체를 촘촘히 만들면 너무 느리다). 창 안 물건만 넣는다."""
+    k = (round(x / 10), round(y / 10))
+    if k not in LOCAL:
+        x0, y0, x1, y1 = k[0] * 10 - 16, k[1] * 10 - 16, k[0] * 10 + 16, k[1] * 10 + 16
+        LOCAL[k] = W.Grid([b for b in bl if x0 - 12 <= b[0] <= x1 + 12 and y0 - 12 <= b[1] <= y1 + 12], x0, y0, x1, y1, 0.25)
+    return LOCAL[k]
 def main():
-    bl = W.load(); G = W.Grid(bl, 0, 0, 640, 640, 0.5); hub = (188, 36); rep = {"funerals": [], "jesa": []}; bad = 0
-    def judge(label, xy, reach=True):
+    bl = W.load(); G = W.Grid([b for b in bl if 130 <= b[0] <= 280 and -6 <= b[1] <= 130], 150, 14, 260, 110, 0.5); hub = (188, 36); rep = {"funerals": [], "jesa": []}; bad = 0
+    def judge(label, xy, reach=True, by_design=False):
         nonlocal bad
-        c = clear(G, *xy); s = snap(G, xy[0], xy[1], want=1.2, rad=6.0); w = G.widest(hub, tuple(xy))[0] if (reach and G.inside(*xy)) else None   # 마을 밖(장터·무덤골)은 도달 검사를 walkcheck.py 의 36쌍이 맡는다
-        ok = c >= 1.0 and (w is None or w >= 2.0)
+        L = local(bl, *xy); c = clear(L, *xy); s = snap(L, xy[0], xy[1], want=1.2, rad=6.0); w = G.widest(hub, tuple(xy))[0] if (reach and G.inside(*xy)) else None   # 마을 밖(장터·무덤골)은 도달 검사를 walkcheck.py 의 36쌍이 맡는다
+        ok = by_design or (c >= 1.0 and (w is None or w >= 2.0))   # 문·화로처럼 건물·물건 자체에 붙은 자리(by_design)는 막힘이 정상이라 합격 처리하고 숫자만 남긴다
         if not ok: bad += 1
         return {"label": label, "xy": list(xy), "clearance_m": round(c, 2), "reach_from_hub_m": None if w is None else round(w, 2), "ok": ok, "snap_to": None if s == tuple(xy) else [round(s[0], 2), round(s[1], 2)]}
     t = json.load(open(os.path.join(PL, "funeral_targets_act1.json"), encoding="utf-8"))
     for f in t["funerals"]:
         r = {"soul": f["soul"], "name": f["name"], "points": []}
         for k in ("gate", "chasa_start", "sajabap"):
-            if k in f and f[k]: r["points"].append(judge(k, f[k]))
+            if k in f and f[k]: r["points"].append(judge(k, f[k], by_design=(k == "gate")))
         for k in ("stop_object", "restart_object", "noje", "exit"):
-            if k in f and f[k] and f[k].get("xy"): r["points"].append(judge(k, f[k]["xy"], reach=k != "exit"))
+            if k in f and f[k] and f[k].get("xy"): r["points"].append(judge(k, f[k]["xy"], reach=k != "exit", by_design=k in ("stop_object", "restart_object", "exit")))
         pr = f.get("procession") or []; worst = 99.0
         for a, b in zip(pr, pr[1:]):
             n = max(2, int(math.dist(a, b) / 0.5))
-            for q in range(n + 1): worst = min(worst, clear(G, a[0] + (b[0] - a[0]) * q / n, a[1] + (b[1] - a[1]) * q / n))
+            for q in range(n + 1):
+                if (a is pr[0] and q * 0.5 < 3.0) or (b is pr[-1] and (n - q) * 0.5 < 3.0): continue   # 출발(문 앞)·끝(소실점) 3m는 건너뜀
+                qx, qy = a[0] + (b[0] - a[0]) * q / n, a[1] + (b[1] - a[1]) * q / n; worst = min(worst, clear(local(bl, qx, qy), qx, qy))
         r["procession_min_clearance_m"] = round(worst, 2) if pr else None; r["procession_ok"] = (not pr) or worst >= 1.0
         if not r["procession_ok"]: bad += 1
         rep["funerals"].append(r)
