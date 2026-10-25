@@ -248,7 +248,7 @@
    "file": "sfx_ui_rank_up",
    "category": "UI",
    "desc": "품계 오름: 먹물 한 방울 똑 → 물에 번지는 쏴아(부풂) → 편경 세 음 차례로 + 작은 북 둥(2.4초)",
-   "use": "넋이 차서 품계가 오를 때(한 번에 여러 품이 올라도 한 번만)",
+   "use": "처결이 쌓여 품계가 오를 때(한 번에 여러 품이 올라도 한 번만)",
    "loop": false,
    "bypass_cast_filter": false,
    "length_sec": 3.87,
@@ -6424,6 +6424,50 @@
    "bypass_cast_filter": false,
    "length_sec": 0.91,
    "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.exec.card.open",
+   "file": "sfx_exec_card_open",
+   "category": "UI",
+   "desc": "첫 처결 카드 두 장이 나란히 뜸: 한지 두 장이 양쪽에서 같은 크기로 스윽·스윽 + 아주 낮은 나무 한 번 톡(0.45초). 천도·파혼 어느 쪽으로도 기울지 않게 같은 높이",
+   "use": "처음 10분 1:20 첫 처결 카드(exec_card_tendo·pahon) 뜰 때 한 번. 무릎 소리(sfx.kneel) 0.25초 뒤. 고르면 기존 천도·파혼 소리",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.76,
+   "peak_dbfs": -17
+  },
+  {
+   "id": "sfx.bind.row.break",
+   "file": "sfx_bind_row_break",
+   "category": "처결",
+   "desc": "덩어리 맺힘 한 줄이 다 깎임: 꼬인 새끼줄 한 가닥이 툭 끊기는 소리 + 낮은 둥(0.45초) — 아직 한 줄 남았다는 뜻",
+   "use": "덩어리 혼 머리 위 두 줄 막대(bind_world_frame2)에서 첫 줄이 0이 되는 순간 한 번. 둘째 줄이 0이면 평소 무릎 소리",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.76,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.soulpath.light",
+   "file": "sfx_soulpath_light",
+   "category": "세계",
+   "desc": "넋길 혼불이 켜짐(해 질 때): 새끼줄 혼불 다섯이 하나씩 후— 후— 피어남, 낮은 음에서 차례로 올라감(1.6초)",
+   "use": "밤이 되어 넋길이 열리는 순간, 서낭당 40m 안에 있을 때만 3D로 한 번(미니맵 아이콘이 icon_soulpath_off → 열림으로 바뀌는 때). 최대 25m",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.67,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "sfx.soulpath.travel",
+   "file": "sfx_soulpath_travel",
+   "category": "세계",
+   "desc": "넋길을 탐: 혼불 줄을 따라 몸이 쑥 빨려 감 — 낮은 바람이 휘익 높아졌다 내려앉고, 끝에 새끼줄 삐걱 + 혼불 하나 후(1.4초)",
+   "use": "JudgeSystem.CommandSoulPath 에서 지금 쓰는 sfx.tendo.done 대신(천도 소리를 쓰면 '처결했다'로 들림)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.62,
+   "peak_dbfs": -14
   }
  ],
  "footsteps": {

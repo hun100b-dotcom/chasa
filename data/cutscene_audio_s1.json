@@ -2,7 +2,9 @@
  "_설명": "시즌1 컷신 44컷(docs/narrative/cutscenes_s1.json)의 '소리 대본' 덧칠표 (기획·사운드, 2026-10-25) — 생성: tools/cutscene_audio_s1.py",
  "music_files": {
   "_설명": "시즌1 끝 컷에서 부를 곡(아직 없음 — 오너 Gemini 지시문 21~25). 없으면 fallback. 파일이 생기면 Resources/Audio/BGM/<id>",
-  "bgm_s1_heukwol": "21 흑월 결전(성문 밖 눈밭, 전투)",
+  "bgm_s1_heukwol": "21 흑월 결전(성문 밖 눈밭, 전투) — 1회용 원본. 싸움 중에는 아래 둘을 쓴다",
+  "bgm_s1_heukwol_fight": "64 흑월 2차 싸움(1·2단계, 180초 반복)",
+  "bgm_s1_heukwol_flood": "65 흑월 2차 큰물(3단계, 120초 반복)",
   "bgm_s1_finale_a": "22 천도 A판 — 큰물 밤의 기억(가장 중요한 곡)",
   "bgm_s1_finale_b": "23 파혼 B판 — 빈 눈밭",
   "bgm_s1_dawn": "24 시즌1 마지막 새벽(서낭당)",
@@ -660,7 +662,7 @@
    "8.0": {
     "music": {
      "op": "play",
-     "id": "bgm_s1_heukwol",
+     "id": "bgm_s1_heukwol_fight",
      "fade": 1.0,
      "fallback": "combat"
     }
@@ -693,6 +695,12 @@
     ],
     "replace": {
      "amb.rain": "amb.weather.rain.heavy"
+    },
+    "music": {
+     "op": "play",
+     "id": "bgm_s1_heukwol_flood",
+     "fade": 2.0,
+     "fallback": "combat"
     }
    },
    "1.0": {
@@ -713,7 +721,7 @@
      }
     ],
     "music": {
-     "op": "duck",
+     "op": "end",
      "to": 0.3,
      "fade": 1.5
     }

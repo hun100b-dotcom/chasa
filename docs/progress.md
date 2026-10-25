@@ -1634,3 +1634,10 @@
 - 보스 맺힘 800 → 싸움 약 3.3~4분인데 전투 곡 41.85초가 4~6번 되풀이됨 → 오너 곡 「Storm on the High Ridge」 전체로
   1막 보스 곡 bgm_solgogae_boss(142.65초, -16 LUFS) 만듦. 2단계(맺힘 50%↓)는 지금 전투 곡(절정)으로 3초 교차. data/bgm.json layers.boss.
 - 미리듣기 2쪽 v4에 14개 추가.
+
+## 2026-10-26 KST — [기획·사운드] 2·3막 보스·흑월 2차 BGM 길이 + 처음 10분 UI 소리
+- 2·3막 보스(맺힘 960~1440, 3~5분)가 지역 전투 곡 44초를 4~7번 되풀이 → 지역별 보스 곡 1단계 150초·2단계 90초 임시 대역 8개(tools/bgm_temp_render.py song_boss·song_boss_p2).
+- 흑월 2차(1800, 6~8분): 옛 66초 곡은 1회용이라 반복하면 끊김 → bgm_s1_heukwol_fight 180초·_flood 120초. 컷 지시 고침(tools/cutscene_audio_s1.py: INTRO→fight, P3→flood, KNEEL op end).
+- 찾은 고장: 컷 끝 resume 이 지정 곡을 지워 결전 곡이 싸움 중에 꺼짐(B-20 bigdam 도 같음). BgmPlayer 고침 제안 docs/boss-pattern-sound.md 6절.
+- UI 소리 4개: sfx.exec.card.open·sfx.bind.row.break·sfx.soulpath.light·sfx.soulpath.travel(넋길 이동이 sfx.tendo.done 을 쓰던 것 대신). 7절. 총 588개.
+- sfx.ui.rank.up 쓰임 문구: "처결이 쌓여 품계가 오를 때"(품계 규칙 변경).

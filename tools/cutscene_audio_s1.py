@@ -94,13 +94,16 @@ CUTS["B12-INTRO"] = {
     0.0: {"add": [{"id": "amb.snow.wind", "loop": True}], "music": {"op": "silence", "fade": 1.5}},
     2.5: {"add": [{"id": "cut.chain.drag", "gain": 0.5}]},                                         # 사슬 끝이 눈에 줄을 남김(작게)
     6.0: {"add": [{"id": "sfx.boss.heukwol.steal", "gain": 0.6}]},                                 # 천도하는 손짓
-    8.0: {"music": {"op": "play", "id": "bgm_s1_heukwol", "fade": 1.0, "fallback": "combat"}}}
+    # 싸움 곡은 반복되는 bgm_s1_heukwol_fight(180초). 옛 bgm_s1_heukwol(66초, 빨라지다 닫히는 1회용)은 반복하면 66초마다 끊겨서 바꿈(10-26)
+    8.0: {"music": {"op": "play", "id": "bgm_s1_heukwol_fight", "fade": 1.0, "fallback": "combat"}}}
 CUTS["B12-P2"] = {0.0: {"music": {"op": "duck", "to": 0.75, "fade": 0.1}, "note": "전투 쪽 sfx.boss.heukwol.line.draw 와 겹치지 않게, 이 컷에서는 대본 cut.chain.drag 만"},
                   2.5: {"music": {"op": "resume", "fade": 1.2}}}
-CUTS["B12-P3"] = {0.0: {"add": ["sfx.boss.heukwol.flood", {"stop": "amb.snow.wind", "fade": 2.0}], "replace": {"amb.rain": "amb.weather.rain.heavy"}},
+CUTS["B12-P3"] = {0.0: {"add": ["sfx.boss.heukwol.flood", {"stop": "amb.snow.wind", "fade": 2.0}], "replace": {"amb.rain": "amb.weather.rain.heavy"},
+                        "music": {"op": "play", "id": "bgm_s1_heukwol_flood", "fade": 2.0, "fallback": "combat"}},   # 큰물 단계: 더 낮고 무거운 120초 반복
                   1.0: {"add": [{"id": "cut.lantern.light", "gain": 0.5}]}}                         # 물 위 횃불 하나
 CUTS["B12-KNEEL"] = {
-    0.0: {"add": [{"stop": "amb.weather.rain.heavy", "fade": 2.5}], "music": {"op": "duck", "to": 0.3, "fade": 1.5}},
+    # end = 결전 곡을 내리고(to 배율로 줄임) 원래 층으로. duck 이면 컷 끝 resume 뒤에 결전 곡이 다시 살아난다(10-26)
+    0.0: {"add": [{"stop": "amb.weather.rain.heavy", "fade": 2.5}], "music": {"op": "end", "to": 0.3, "fade": 1.5}},
     1.5: {"replace": {"cut.chain.wrap": "sfx.boss.heukwol.chain.down"}, "note": "전투 쪽 chain.down 은 이 컷이 대신 튼다(두 번 울리지 않게)"},
     2.8: {"music": {"op": "silence", "fade": 0.5}, "note": "흑월의 한 줄. 이 줄 뒤로 처결할 때까지 음악 없음 — 눈바람만"},
     5.6: {"add": [{"id": "amb.snow.wind", "loop": True}]}}
@@ -149,7 +152,9 @@ SILENT_BY_DESIGN = (
 
 MUSIC_FILES = {
     "_설명": "시즌1 끝 컷에서 부를 곡(아직 없음 — 오너 Gemini 지시문 21~25). 없으면 fallback. 파일이 생기면 Resources/Audio/BGM/<id>",
-    "bgm_s1_heukwol": "21 흑월 결전(성문 밖 눈밭, 전투)",
+    "bgm_s1_heukwol": "21 흑월 결전(성문 밖 눈밭, 전투) — 1회용 원본. 싸움 중에는 아래 둘을 쓴다",
+    "bgm_s1_heukwol_fight": "64 흑월 2차 싸움(1·2단계, 180초 반복)",
+    "bgm_s1_heukwol_flood": "65 흑월 2차 큰물(3단계, 120초 반복)",
     "bgm_s1_finale_a": "22 천도 A판 — 큰물 밤의 기억(가장 중요한 곡)",
     "bgm_s1_finale_b": "23 파혼 B판 — 빈 눈밭",
     "bgm_s1_dawn": "24 시즌1 마지막 새벽(서낭당)",

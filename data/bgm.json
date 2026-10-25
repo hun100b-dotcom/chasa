@@ -35,14 +35,46 @@
   },
   "boss": {
    "clips": [
-    "bgm_solgogae_boss"
+    "bgm_<지역>_boss"
    ],
    "loop": true,
-   "when": "1막 보스(맺힘 800)와 싸우는 동안. 보스 맺힘이 50% 이하로 떨어지면(나루 큰물·선장 폭풍 같은 2단계) combat 곡(같은 노래의 절정 부분)으로 3초 교차. 보스 곡이 없으면 combat 를 그대로 쓴다",
-   "phase2_clip": "bgm_solgogae_combat",
+   "when": "보스와 싸우는 동안(가장 가까운 보스가 30m 안). 보스 맺힘 50% 이하면 phase2_clip 으로 3초 교차. 보스 곡이 없는 지역은 combat 그대로",
+   "phase2_clip": "bgm_<지역>_boss_p2 (없으면 bgm_<지역>_combat)",
    "phase2_at_maedhim_frac": 0.5,
    "phase2_crossfade_sec": 3.0,
-   "_왜": "보스 맺힘 1200→800(10-25)으로 싸움이 약 3.3~4분. 41.85초 전투 곡만 쓰면 4~6번 되풀이돼 귀에 걸림. 142.65초 보스 곡 1바퀴 + 2단계 절정 곡으로 바꾸면 되풀이가 1~2번으로 줄어든다(docs/boss-pattern-sound.md)"
+   "_왜": "보스 맺힘이 800~1440이라 싸움이 3~5분. 44초 전투 곡만 쓰면 5~7번 되풀이됨. 1단계 150초 곡 1바퀴 이하 + 2단계 90초 곡 1~2바퀴로 줄인다(docs/boss-pattern-sound.md 4·6절)",
+   "by_region": {
+    "solgogae": {
+     "bosses": "B-01~B-04(맺힘 800, B-04 960은 50%에서 물러남)",
+     "fight_min": "3~4 (B-04 약 2)",
+     "p1": "bgm_solgogae_boss 142.65초(오너 곡)",
+     "p2": "bgm_solgogae_combat 41.85초(같은 곡 절정)"
+    },
+    "bulgeunjae": {
+     "bosses": "B-05·B-06(960·1120)",
+     "fight_min": "3~4",
+     "p1": "bgm_bulgeunjae_boss 150초(임시)",
+     "p2": "bgm_bulgeunjae_boss_p2 90.5초(임시)"
+    },
+    "soegol": {
+     "bosses": "B-07·B-08(1120·960)",
+     "fight_min": "3~4",
+     "p1": "bgm_soegol_boss 149초(임시)",
+     "p2": "bgm_soegol_boss_p2 89.5초(임시)"
+    },
+    "gaetmaeul": {
+     "bosses": "B-09·B-10(1280·1440)",
+     "fight_min": "3~4 · B-10 4~5",
+     "p1": "bgm_gaetmaeul_boss 151초(임시)",
+     "p2": "bgm_gaetmaeul_boss_p2 89.5초(임시)"
+    },
+    "doseong": {
+     "bosses": "B-11(1280)",
+     "fight_min": "3~4",
+     "p1": "bgm_doseong_boss 150초(임시)",
+     "p2": "bgm_doseong_boss_p2 90.4초(임시)"
+    }
+   }
   },
   "finish": {
    "clips": [
@@ -158,5 +190,12 @@
    "id": "bgm_title",
    "gemini_prompt": 63
   }
+ },
+ "heukwol_2": {
+  "_설명": "B-12 흑월 2차(맺힘 1800, 6~8분). 지역 층이 아니라 컷이 곡을 지정한다(data/cutscene_audio_s1.json)",
+  "B12-INTRO 끝": "bgm_s1_heukwol_fight 180초 반복(1·2단계, 약 4분 = 1.3바퀴)",
+  "B12-P3(큰물)": "bgm_s1_heukwol_flood 120초 반복(3단계, 2~4분 = 1~2바퀴)",
+  "B12-KNEEL": "op end(결전 곡을 내림) → 2.8초 silence",
+  "주의": "지금 코드는 컷이 끝날 때 resume 이 지정 곡을 지워 결전 곡이 싸움 중에 살아남지 못한다 → BgmPlayer 고침 필요(docs/boss-pattern-sound.md 6절)"
  }
 }

@@ -394,7 +394,7 @@ def _(r):
     return reverb(buf, 1.0, .25)
 
 
-@sfx("sfx.ui.rank.up", -12, "UI", "품계 오름: 먹물 한 방울 똑 → 물에 번지는 쏴아(부풂) → 편경 세 음 차례로 + 작은 북 둥(2.4초)", use="넋이 차서 품계가 오를 때(한 번에 여러 품이 올라도 한 번만)")
+@sfx("sfx.ui.rank.up", -12, "UI", "품계 오름: 먹물 한 방울 똑 → 물에 번지는 쏴아(부풂) → 편경 세 음 차례로 + 작은 북 둥(2.4초)", use="처결이 쌓여 품계가 오를 때(한 번에 여러 품이 올라도 한 번만)")
 def _(r):
     sec = 2.6; n = int(sec * SR); buf = np.zeros(n)
     place(buf, bubble(.08, 900, 1.9, .018) * .6, 0)                                  # 먹물이 물에 똑
@@ -6165,6 +6165,52 @@ def _(r):
     for k in range(3): place(b, _wood_tap(r, 2000 + 80 * k, .01, .5), k * .06)
     place(b, modal(.4, [(r.uniform(3300, 3600), .08, 1), (r.uniform(5600, 6100), .04, .4)], r) * .4, .25)
     return reverb(b, .5, .15)
+
+
+
+# ── 처음 10분 화면 요소 소리(2026-10-26, 아트 PR #47 처결 카드·맺힘 막대·넋길 안내에 맞춤) ──
+@sfx("sfx.exec.card.open", -17, "UI", "첫 처결 카드 두 장이 나란히 뜸: 한지 두 장이 양쪽에서 같은 크기로 스윽·스윽 + 아주 낮은 나무 한 번 톡(0.45초). 천도·파혼 어느 쪽으로도 기울지 않게 같은 높이", use="처음 10분 1:20 첫 처결 카드(exec_card_tendo·pahon) 뜰 때 한 번. 무릎 소리(sfx.kneel) 0.25초 뒤. 고르면 기존 천도·파혼 소리")
+def _(r):
+    # 왜 두 장을 같은 크기로: 처결은 옳고 그름이 아니라 선택이라, 소리도 한쪽이 더 반짝이면 안 된다
+    b = _buf(.6)
+    place(b, _paper(r, .15, 1300, 5200) * .65, 0.0)
+    place(b, _paper(r, .15, 1300, 5200) * .65, .06)
+    place(b, _wood_tap(r, 520, .05, .5), .17)
+    return reverb(b, .5, .14)
+
+
+@sfx("sfx.bind.row.break", -15, "처결", "덩어리 맺힘 한 줄이 다 깎임: 꼬인 새끼줄 한 가닥이 툭 끊기는 소리 + 낮은 둥(0.45초) — 아직 한 줄 남았다는 뜻", use="덩어리 혼 머리 위 두 줄 막대(bind_world_frame2)에서 첫 줄이 0이 되는 순간 한 번. 둘째 줄이 0이면 평소 무릎 소리")
+def _(r):
+    b = _buf(.6)
+    snap = _sum(_creak(r, .08, 260, 60, 1400) * .5, _paper(r, .05, 2500, 8000) * .8)
+    place(b, snap, 0.0)
+    place(b, _thump(r, .2, 95, 400) * .7, .03)
+    place(b, _rope_taut(r, .25, 82) * .25, .05)
+    return reverb(b, .6, .16)
+
+
+@sfx("sfx.soulpath.light", -20, "세계", "넋길 혼불이 켜짐(해 질 때): 새끼줄 혼불 다섯이 하나씩 후— 후— 피어남, 낮은 음에서 차례로 올라감(1.6초)", use="밤이 되어 넋길이 열리는 순간, 서낭당 40m 안에 있을 때만 3D로 한 번(미니맵 아이콘이 icon_soulpath_off → 열림으로 바뀌는 때). 최대 25m")
+def _(r):
+    b = _buf(2.0)
+    for k, f in enumerate((174.6, 196.0, 220.0, 233.1, 261.6)):
+        m = int(.7 * SR)
+        puff = filt(noise(m, r), "band", 900 + 250 * k, 1.2) * env(m, .05, .45, 3) * .35
+        hum = np.sin(2 * np.pi * f * T(.7)) * env(m, .12, .5, 2) * .25
+        place(b, puff + hum, k * .22)
+    return reverb(b, 1.4, .3)
+
+
+@sfx("sfx.soulpath.travel", -14, "세계", "넋길을 탐: 혼불 줄을 따라 몸이 쑥 빨려 감 — 낮은 바람이 휘익 높아졌다 내려앉고, 끝에 새끼줄 삐걱 + 혼불 하나 후(1.4초)", use="JudgeSystem.CommandSoulPath 에서 지금 쓰는 sfx.tendo.done 대신(천도 소리를 쓰면 '처결했다'로 들림)")
+def _(r):
+    sec = 1.5; n = int(sec * SR)
+    w = sweep_filt(noise(n, r), "band", 300, 1800, 1.5) * env(n, .5, .9, 2.5)
+    w = w * np.concatenate([np.linspace(.2, 1, n // 2), np.linspace(1, .3, n - n // 2)])
+    b = _buf(1.9)
+    place(b, w * .8, 0.0)
+    place(b, _creak(r, .35, 200, 22, 700) * .3, 1.05)
+    m = int(.5 * SR)
+    place(b, np.sin(2 * np.pi * 220 * T(.5)) * env(m, .05, .4, 2) * .25, 1.15)
+    return reverb(b, 1.1, .25)
 
 
 # ---------------------------------------------------------------------------

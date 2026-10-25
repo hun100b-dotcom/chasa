@@ -119,3 +119,70 @@ No vocals, no Western drum kit, no synth. Around 3 minutes, steady tempo so it c
 ```
 
 (ip_scan.py 로 검사: 다른 작품·작곡가 이름 없음.)
+
+## 6. 2·3막 보스와 흑월 2차 BGM 길이 점검 (10-26 추가)
+
+| 보스 | 맺힘 | 목표 싸움 | 지금 곡 | 되풀이 | 고침 |
+|---|---|---|---|---|---|
+| B-05·B-06 (③ 붉은재) | 960·1120 | 3~4분 | `bgm_bulgeunjae_combat` 44.4초 | 4~6번 | `bgm_bulgeunjae_boss` 150초 → 2단계 `_boss_p2` 90.5초 |
+| B-07·B-08 (④ 쇳골) | 1120·960 | 3~4분 | `bgm_soegol_combat` 44초 | 4~6번 | `bgm_soegol_boss` 149초 → `_boss_p2` 89.5초 |
+| B-09·B-10 (⑤ 갯마을) | 1280·1440 | 3~4 · **4~5분** | `bgm_gaetmaeul_combat` 45초 | 4~7번 | `bgm_gaetmaeul_boss` 151초 → `_boss_p2` 89.5초 |
+| B-11 (⑥ 도성) | 1280 | 3~4분 | `bgm_doseong_combat` 43.6초 | 4~6번 | `bgm_doseong_boss` 150초 → `_boss_p2` 90.4초 |
+| **B-12 흑월 2차** (⑥ 성문 밖) | 1800 | **6~8분** | 컷이 `bgm_s1_heukwol` 66초를 지정 | 아래 '고장' 참고 | `bgm_s1_heukwol_fight` 180초(1·2단계) → 큰물 `bgm_s1_heukwol_flood` 120초 |
+
+- 바꾼 뒤에는 1단계 곡이 1바퀴 이하, 2단계 곡이 1~2바퀴만 돈다. 흑월 2차 6~8분은 싸움 곡 약 1.3바퀴, 큰물 곡 1~2바퀴.
+- 1단계 곡은 "조용히 시작 → 차오름 → 절정 → 한 번 숨 → 다시 몰아침" 흐름이다. 2단계는 처음부터 거세게 가고, 앞뒤 절반의 가락이 다르다.
+- 모두 **임시 대역**(코드 합성, `tools/bgm_temp_render.py`, -16 LUFS)이다. 진짜 곡을 `Audio/BGM/<같은 이름>.ogg`로 넣으면 그것이 먼저 쓰인다.
+- 규칙 정리: `data/bgm.json`의 `layers.boss.by_region`, `heukwol_2`.
+
+### 흑월 2차에서 찾은 고장 2개 (코드팀)
+
+1. **결전 곡이 싸움 중에 꺼진다.**
+   - B12-INTRO가 8.0초에 `play bgm_s1_heukwol`을 보낸다.
+   - 그런데 컷이 끝나면 `CutscenePlayer`가 `resume`을 보내고, `BgmPlayer`의 `resume`은 `playId = null`로 지정 곡을 지운다.
+   - 그래서 싸움이 시작되면 ⑥ 지역 전투 곡으로 돌아간다. B12-P2의 `resume`도 같은 일을 한다.
+   - 시즌2 B-20 `bigdam`도 같은 구조라 같은 고장이 있다.
+2. **옛 `bgm_s1_heukwol`은 1회용 곡이다.**
+   - 이 곡은 60에서 100으로 빨라지다가 끝 3초에서 닫힌다.
+   - 반복하면 66초마다 소리가 끊기고 느린 처음으로 돌아간다.
+   - 그래서 컷 지시를 반복용 `_fight`·`_flood`로 바꿨다(`tools/cutscene_audio_s1.py` → `data/cutscene_audio_s1.json`).
+   - 이 바뀐 지시가 실제 컷 표에 들어가려면 `build_cutscenes_s1.py`를 한 번 다시 돌려야 한다.
+
+```csharp
+// BgmPlayer.Command — 결전 곡은 컷이 끝나도 남기고, 'end' 가 올 때만 내린다
+// (왜) 컷 끝마다 오는 resume 이 결전 곡을 지워 흑월·물막이 바닥 싸움 내내 지역 전투 곡이 나오던 것을 막는다
+static bool FightLoop(string id) => id != null && (id.Contains("heukwol") || id.Contains("bigdam") || id.Contains("knot") || id.Contains("imyeong") || id.Contains("mybaek"));
+case "resume": mixTarget = 1f; forceLayer = null; if (!FightLoop(playId)) playId = null; break;
+case "end":    playId = null; forceLayer = null; mixTarget = Mathf.Clamp01(to); break;   // B12-KNEEL 0.0초가 보낸다(0.3배로 줄이며 내림)
+// 반복 판단도 같은 함수로: loop = FightLoop(playId);
+```
+
+- `end`를 모르는 지금 코드는 이 명령을 그냥 넘긴다. 그래서 먼저 데이터만 들어가도 고장 나지 않는다.
+- 시즌2·3 결전 곡(`bigdam`·`knot`·`imyeong`·`mybaek`)의 길이 점검은 그 막을 구현할 때 같은 방식으로 하겠다.
+
+## 7. 처음 10분 화면 요소(아트 PR #47) UI 소리 점검
+
+| 화면 요소 | 지금 소리 | 판단 | 고침 |
+|---|---|---|---|
+| 첫 처결 카드 두 장(1:20, `exec_card_tendo`·`pahon`) | 없음(무릎 소리만) | 화면 아래에 큰 카드가 뜨는데 조용해서, 뜬 줄 모를 수 있다 | **sfx.exec.card.open**(새): 한지 두 장이 같은 크기로 스윽·스윽. 무릎 소리 0.25초 뒤. 천도·파혼 어느 쪽으로도 기울지 않게 같은 높이로 냈다 |
+| 카드 고름(E·R·탭) | 천도 시전 / 파혼 소리 | 맞음 | 그대로. 폰에서 카드에 손가락을 올릴 때는 `sfx.card.hover` 재사용 |
+| 일반 혼 머리 위 맺힘 막대 | 타격음 | 맞음. 막대가 줄 때마다 소리를 내면 너무 시끄럽다 | 그대로 |
+| 덩어리 두 줄 막대(`bind_world_frame2`) | 없음 | 첫 줄이 다 깎여도 "아직 한 줄 남았다"를 귀로 알 수 없다 | **sfx.bind.row.break**(새): 새끼줄 한 가닥이 툭 끊김 + 낮은 둥. 첫 줄이 0이 될 때 한 번 |
+| 미니맵 대기 혼 고리(`icon_soul_wait`) | 무릎 소리 + 대기 똑딱 | 맞음. 지도 아이콘은 일부러 소리를 내지 않는다(겹치면 시끄러움) | 그대로 |
+| 넋길 낮→밤(`icon_soulpath_off` → 열림) | 없음(1막). 2·3막은 저녁 징 | 1막에서는 넋길이 열린 줄 모른다 | **sfx.soulpath.light**(새): 혼불 다섯이 하나씩 후—. 해 질 때 서낭당 40m 안에서만 3D로 한 번 |
+| 넋길 안내 `[F]`(`prompt_soulpath`) | 없음 | 맞음. 안내가 뜰 때는 조용한 편이 낫다 | 낮에 F를 누르면 아무 일이 없으니 `sfx.ui.deny`를 제안 |
+| 넋길을 탐(`CommandSoulPath`) | **`sfx.tendo.done`** | **틀림.** 천도 끝 소리라 "처결했다"로 들린다 | **sfx.soulpath.travel**(새): 혼불 줄 따라 쑥 빨려 감 → 새끼줄 삐걱 |
+| 처결 고리 먹 받침 | — | 그림만 바뀜 | 소리 없음 |
+
+```csharp
+// JudgeSystem — (1) 첫 처결 카드: 카드를 띄우는 곳에서
+Sfx.PlayDelayed("sfx.exec.card.open", 0.25f);                 // 2D, 무릎 소리 다음
+// (2) 덩어리 첫 줄이 0이 되는 순간(줄이 바뀌는 판단 바로 뒤)
+Sfx.Play("sfx.bind.row.break", enemy.Pos);
+// (3) CommandSoulPath: Sfx.Play("sfx.tendo.done") → 바꿈
+Sfx.Play("sfx.soulpath.travel");
+// (4) 넋길이 열리는 순간(낮→밤, FieldManager 가 넋길 모델을 _off → 켜짐으로 바꾸는 곳)
+if (가장 가까운 서낭당까지 < 40f) Sfx.Play("sfx.soulpath.light", 서낭당위치);
+// (5) 낮에 서낭당 곁에서 F: SoulPathStop() < 0 이고 서낭당 곁이면
+Sfx.Play("sfx.ui.deny");
+```
