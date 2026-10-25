@@ -836,6 +836,171 @@
    "bypass_cast_filter": false,
    "length_sec": 14.9,
    "peak_dbfs": -27
+  },
+  {
+   "id": "amb.market",
+   "file": "amb_market",
+   "category": "세계",
+   "desc": "장터 웅성거림: 여러 사람 말소리가 겹쳐 뜻은 안 들림 + 그릇·엽전 달그락 + 수레 삐걱(반복용 14초)",
+   "use": "장날 장터 배경·장터 장례 시작",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 13.9,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "cut.kids.clap",
+   "file": "cut_kids_clap",
+   "category": "컷신",
+   "desc": "아이 둘의 손뼉 장단: 덩-덩-덕 박자를 흉내 내다 자꾸 어긋남(약 7초)",
+   "use": "상여 뒤 장터 아이들이 손뼉으로 장단 흉내",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 8.21,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "cut.paper.tear",
+   "file": "cut_paper_tear",
+   "category": "컷신",
+   "desc": "기둥에 붙은 종이를 떼는 소리: 풀 떨어지며 바스락 찌익— 마지막에 툭 떨어짐(약 1.6초)",
+   "use": "주막 기둥 종이 떼는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.67,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "cut.steam.rise",
+   "file": "cut_steam_rise",
+   "category": "컷신",
+   "desc": "시루에 김 오르는 소리: 솥 물 보글보글 + 시루 틈으로 쉬— 새는 김 + 뚜껑 달그락(약 6초)",
+   "use": "부엌에서 떡을 다시 찌는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 6.67,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "cut.brass.tap",
+   "file": "cut_brass_tap",
+   "category": "컷신",
+   "desc": "놋그릇을 숟가락으로 두드림: 댕— 긴 놋쇠 울림 네 번, 걸음 박자(약 4.5초)",
+   "use": "문짝 들것 행렬 앞사람이 놋그릇을 침",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 5.63,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "cut.ink.grind",
+   "file": "cut_ink_grind",
+   "category": "컷신",
+   "desc": "벼루에 먹 가는 소리: 물기 있는 사각사각이 원을 그리며 느리게 반복(약 5초)",
+   "use": "서당 아이들이 먹을 가는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 5.41,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "amb.mine",
+   "file": "amb_mine",
+   "category": "세계",
+   "desc": "광부촌: 갱 안에서 울려 나오는 먼 곡괭이 소리 + 가끔 구르는 수레 + 낮은 바람·물방울(반복용 15초)",
+   "use": "광부촌·갱 입구 배경",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 14.9,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "cut.pour.liquor",
+   "file": "cut_pour_liquor",
+   "category": "컷신",
+   "desc": "잔에 술 따르기: 쪼르륵 차오르며 소리가 높아짐 × 세 잔, 잠시 쉬고 한 잔 더(약 8초)",
+   "use": "무덤 앞에 술을 붓는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 8.18,
+   "peak_dbfs": -18
+  },
+  {
+   "id": "cut.hoe.dig",
+   "file": "cut_hoe_dig",
+   "category": "컷신",
+   "desc": "호미로 흙 파기: 툭 박히고 슥 긁어 당김 × 네 번, 흙 알갱이 흩어짐(약 4.5초)",
+   "use": "바위틈 약초 캐는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.22,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "cut.chisel.tap",
+   "file": "cut_chisel_tap",
+   "category": "컷신",
+   "desc": "정으로 돌에 글자 새기기: 망치가 정을 때리는 쨍 + 돌 부스러기, 일정한 박자 열 번(약 5초)",
+   "use": "성돌에 스승 이름을 새기는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 5.51,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "cut.sickle.cut",
+   "file": "cut_sickle_cut",
+   "category": "컷신",
+   "desc": "낫으로 풀 베기: 숫돌에 한 번 쓱 갈고, 쉭— 서걱 네 번(약 5.5초)",
+   "use": "무덤 벌초 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 5.0,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "cut.tag.unhook",
+   "file": "cut_tag_unhook",
+   "category": "컷신",
+   "desc": "고리에서 나무 목패 떼기: 쇠고리 끽 + 패가 옆 패에 딱 부딪힘 + 손에 쥠(약 1.4초)",
+   "use": "동료가 순돌의 목패를 떼는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.36,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "cut.coal.sort",
+   "file": "cut_coal_sort",
+   "category": "컷신",
+   "desc": "평상에서 석탄 고르기: 덩이끼리 달그락 + 나무판에 쓸어 밀기 + 바구니에 툭(약 5초)",
+   "use": "딸이 어머니 자리에서 석탄을 고르는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.73,
+   "peak_dbfs": -18
+  },
+  {
+   "id": "cut.brush.write",
+   "file": "cut_brush_write",
+   "category": "컷신",
+   "desc": "붓으로 종이에 쓰기: 붓끝이 닿는 톡 + 사악— 획 긋는 소리 여섯 획, 중간에 한 번 멈춤(약 5초)",
+   "use": "외상 장부에 이름을 적어 넣는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.99,
+   "peak_dbfs": -22
+  },
+  {
+   "id": "cut.mule.hoof",
+   "file": "cut_mule_hoof",
+   "category": "컷신",
+   "desc": "노새 발굽: 흙길 위 네 발 걸음 따각따각, 갱 입구 앞에서 멈춤(약 6초)",
+   "use": "풀려난 노새가 상여를 따라가는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 6.08,
+   "peak_dbfs": -15
   }
  ],
  "footsteps": {

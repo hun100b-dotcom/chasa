@@ -789,3 +789,19 @@
 - `tools/check_act2_data.py`: 서사 2막 기억·장례가 1막과 같은 구조인지, 일정표 없는 산 사람(npc_act2는 barks·link_soul만)을 알려 줌. 현재 통과.
 - 기억 변환기가 2막 혼 40명을 같은 표에 합침(공용 줄은 합치지 않음), 장례 변환기가 2막 장례 8개 컷을 만듦(집 좌표는 2막 지도 대기라 아직 안 열림, 조건 "B-05 천도함"은 미연결).
 - 칠복네 빈 개집 모델(prop_gaejip_empty)을 (200.5,61)에 세움. 유품 K-004 빈 개집·누렁이는 기획 좌표·장면 확정 대기.
+## 2026-10-25 (KST 20:10) [기획·사운드] 1막·2막 장례 효과음 15개
+- 서사 1막 장례 대본(funerals_act1.json)의 sfx_request 6개를 코드 합성으로 만들어 `unity/Assets/Resources/Audio/Sfx/`에 추가.
+  - `amb.market`: 장터 웅성거림, 반복용 13.9초, 말뜻은 안 들림
+  - `cut.kids.clap`: 아이 둘 손뼉 장단, 박자 어긋남
+  - `cut.paper.tear`: 기둥 종이 떼기
+  - `cut.steam.rise`: 시루 김
+  - `cut.brass.tap`: 놋그릇 네 번
+  - `cut.ink.grind`: 먹 갈기
+- 2막 장례 대본(funerals_act2.json) 9개도 추가.
+  - `amb.mine`: 광부촌, 반복용
+  - `cut.pour.liquor`: 세 잔 + 한 잔 더
+  - `cut.hoe.dig`, `cut.chisel.tap`, `cut.sickle.cut`, `cut.tag.unhook`, `cut.coal.sort`
+  - `cut.brush.write`: 중간에 멈춤
+  - `cut.mule.hoof`: 멈춰 섬
+- `tools/sfx_render.py`에 추가, `data/sfx_files.json` 갱신(총 91개). 기존 파일은 그대로(고정 난수).
+- 코드팀 할 일: 장례 대본의 해당 단계 `sfx_request` → `sfx`로 옮기기만 하면 재생된다(파일 이름 = id의 점을 밑줄로).
