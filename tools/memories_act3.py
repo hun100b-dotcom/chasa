@@ -72,6 +72,20 @@ for s in d['souls']:
         'nickname': MUJEOK.get(s['id']),         # 엿듣기로 듣는 별명. null + mujeok=true면 B-11 천도 뒤에만
     })
 rows.sort(key=lambda r: (r['region'], r['boss'], r['id']))
+# 땅의 새 규칙 혼 기억(기획 act3-entry-10min 10-26): 3막 첫 10분은 낮이고 이름혼은 밤에만 선다.
+# 첫 물 혼(⑤) · 첫 무적 혼(⑥, 별명을 듣고 천도)의 천도에서 generic 대신 그 땅 줄이 나오게 해 3막 첫 기억을 2분 안으로.
+# 단서 없음 · 조각 1 · 한 판에 한 줄 한 번. 3막 보스 단서 낱말 금지.
+FIELD_POOL = {
+    'water': ['물이 들어오는 소리를 세다가 잊었다.',
+              '그물이 무거웠다. 그 뒤는 생각나지 않는다.',
+              '뭍 쪽에서 누가 부르는 것 같았는데.'],
+    'mujeok': ['이름은 몰라도 다들 그렇게 불렀다. 그걸로 됐다.',
+               '누가 불러 주면 돌아봤다. 그게 내 이름이었다.',
+               '장터에선 별명이 이름보다 빨랐다.'],
+}
+for _v in FIELD_POOL.values():
+    for _ln in _v:
+        assert len(_ln) <= 40 and not any(w in _ln for w in ('만선호', '선장', '헛묘', '장부', '빗', '왕초', '서생', '방', '붓', '마흔', '일곱', '동이')), _ln
 out = {
     '_설명': '3막(⑤ 갯마을 · ⑥ 도성) 천도 기억 조각. 원본 soul_memories.json에서 tools/memories_act3.py로 생성. 손으로 고치지 말 것.',
     'source_version': d.get('_version'),
@@ -82,10 +96,12 @@ out = {
         'water': '물 혼: 천도 캐스팅 −0.5초(하한 0.5초). 밀물 신호 뒤 20초 안에 못 붙잡으면 그 밤은 사라진다(넋 0·기억 0). 다음 썰물 밤에 난파 여울로 다시 떠오른다',
         'mujeok': '무적 혼: 기본 천도 불가(파혼만). 낮에 그 별명을 엿들었으면 그 밤 천도 가능. nickname이 null이면 B-11 천도 뒤에만. B-11 천도 뒤엔 전원 가능',
         'generic': '이름 없는 무작위 혼은 generic 줄에서 뽑는다(미스터리 없음, 한 판에 한 줄 한 번)',
+        'field_pool': '필드의 물 혼 · 무적 혼(이름혼 아님)을 천도하면 generic 대신 field_pool[water/mujeok]에서 한 줄(한 판에 한 줄 한 번, 다 쓰면 generic). 단서 없음, 조각 1',
         'jesa_extra': '낮에 그 집 제사를 지켜본 뒤 천도하면 기억 끝에 덧붙는 한 줄. 기억 조각 수에 세지 않는다. 장례 대상 이름혼만 있다',
         'pahon': '파혼하면 기억 조각 없음, 그 혼의 fact 출처 하나를 잃는다(추리판에 번진 먹 자국)'},
     'souls': rows,
     'generic': {k: v for k, v in d['generic_pool'].items() if not k.startswith('_')},
+    'field_pool': FIELD_POOL,
     'facts': {k: d['facts'][k] for k in ['F%d' % i for i in range(23, 31)]},
 }
 json.dump(out, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

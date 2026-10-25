@@ -1567,3 +1567,6 @@
 
 ## 2026-10-26 서사 — 2막 처음 10분 문구 점검
 - `docs/narrative/ACT2-ENTRY-TEXT.md`(기획 act2-entry-10min v1 기준): 2막 엿듣기 열림을 "밤 뒤 낮" → "처음 들어선 때부터"로, R2-09 새벽 → 낮. 2막 쉼터 셋 문구 새로(`seonang_texts.json` shrines_act2). 숫자 혼 천도 기억 풀(`memories_act2.json` numbered)로 2막 첫 기억을 약 2분 안으로. 금줄 앞 "명부에 아직 이 관할이 없다" 확인.
+
+## 2026-10-26 서사 — 3막 처음 10분 문구 점검
+- `docs/narrative/ACT3-ENTRY-TEXT.md`(기획 act3-entry-10min v1): 큰길 별명 엿듣기가 무적 혼을 여는 장면이 안 이어지던 것(별명이 밤 이름혼 것뿐 · "그날 밤" 열림 · 엿듣기 밤 뒤 열림)을 고침 — ⑥ 필드 군집 13곳 무적 혼 별명 26 + 자리를 말하는 낮 엿듣기 13(`field_nicknames_act3.json`), 열림 "들은 때부터". 3막 쉼터 셋 문구, 물 혼 · 무적 혼 기억 풀(field_pool).

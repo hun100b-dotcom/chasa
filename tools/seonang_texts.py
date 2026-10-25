@@ -70,6 +70,25 @@ SEONANG_ACT2 = [
   'rest_night': ['성안이 조용하다', '아무도 수를 세지 않는다'],
   'note': '천도해야만 열리는 쉼터라 after_boss 없음. 밤 줄은 엿듣기 R2-05(성안에서 수 세는 소리)의 맺음'},
 ]
+# ── 1-3) 3막 쉼터 셋(act3_map.json shrines, 기획 act3-entry-10min 10-26) ──
+# 3막 보스 단서 낱말(만선호 · 선장 · 헛묘 · 장부 · 빗 · 왕초 · 서생 · 방 · 붓 · 마흔 · 일곱)은 쓰지 않는다.
+SEONANG_ACT3 = [
+ {'id': 'SH3-1', 'zone': '⑤ 포구 서낭당(포구 어귀)',
+  'first_touch': ['서낭 장대 매듭에 손이 지나간다', '바닥 조개껍데기만 손에 닿는다'],
+  'rest_day': ['물때 말뚝 눈금이 볕에 마른다', '갈매기가 장대 끝에 앉았다'],
+  'rest_night': ['선창 끝에서 등 하나가 흔들린다', '파도가 서낭 발치까지 온다'],
+  'after_boss': {'boss': 'B-09', 'tendo': '장대 끝 천이 바다를 등졌다', 'pahon': '장대 끝 천이 곶 쪽으로 찢겼다'},
+  'note': '조개껍데기는 아무도 놓지 않은 것이라 닿는다(세계 이치)'},
+ {'id': 'SH3-2', 'zone': '⑥ 저잣거리 서낭당(큰길 동쪽 어귀)',
+  'first_touch': ['금줄에 꽂힌 엽전에 손이 지나간다', '나무뿌리 흙만 손바닥에 닿는다'],
+  'rest_day': ['저잣거리 웅성임이 여기까지 온다', '떨이 외치는 소리가 멀다'],
+  'rest_night': ['좌판 걷힌 자리에 바람만 돈다', '성문 닫는 북소리가 멀리 난다']},
+ {'id': 'SH3-3', 'zone': '⑥ 다리 밑 서낭(B-11 천도 뒤 열림)',
+  'first_touch': ['아이들이 쌓은 돌에 손이 지나간다', '낡은 거적 한 장만 손에 닿는다'],
+  'rest_day': ['다리 위로 수레가 덜컹 지난다', '기둥 맨 밑 칸이 비어 있다'],
+  'rest_night': ['둔치에 모닥불 자국이 남았다', '아이들 웃음이 다리 위로 샌다'],
+  'note': '거적은 죽은 이의 것이라 닿는다. 맨 밑 칸은 B11-D1(비워 둔 칸)의 맺음 — 천도 뒤에만 열리는 쉼터라 단서가 아니다'},
+]
 SEONANG_RULE = {
     'first_touch': '그 서낭당에서 F(쉬기·넋길·만져 보기 무엇이든)를 처음 누를 때 한 번. 화면 하단 월드 안내 자리, 두 줄 3초. 저장(seonangTouched)',
     'rest': '쉬기를 마친 뒤 기존 줄 "서낭당에 이름을 걸어 두었다" 다음 0.6초 뒤에 한 줄 2.5초. 낮이면 rest_day, 밤이면 rest_night에서 하나(직전과 다른 줄)',
@@ -155,13 +174,15 @@ def chk(t, n, toast=False):
 
 seen = set()
 ACT2_BAN = ('서른일곱', '일곱', '위패', '열셋', '열넷', '반장', '앞장', '뒷장', '머릿수', '술 붓')
-for s in SEONANG + SEONANG_ACT2:
+ACT3_BAN = ('만선호', '선장', '헛묘', '장부', '빗', '왕초', '서생', '방', '붓', '마흔', '일곱')
+for s in SEONANG + SEONANG_ACT2 + SEONANG_ACT3:
     assert len(s['first_touch']) <= 2
     toasts = s['first_touch'] + s['rest_day'] + s['rest_night'] + ([s['rest_halmi']] if 'rest_halmi' in s else [])
     if 'after_boss' in s: toasts += [s['after_boss']['tendo'], s['after_boss']['pahon']]
     for t in toasts:
         chk(t, 22, True); assert t not in seen, t; seen.add(t)
         if s in SEONANG_ACT2: assert not any(w in t for w in ACT2_BAN), t
+        if s in SEONANG_ACT3: assert not any(w in t for w in ACT3_BAN), t
 chk(DEATH_WAKE, 22, True)
 ids = set()
 for o in FIRST_NIGHT:
@@ -177,7 +198,7 @@ def pos(o):
 
 data = {
     '_설명': '서낭당 5곳 문구(처음 만져 볼 때 · 쉬기) + 첫 밤 솔고개 엿듣기 보강. tools/seonang_texts.py로 생성. 서사 2026-10-26',
-    'seonang': {'rule': SEONANG_RULE, 'death_wake': DEATH_WAKE, 'shrines': SEONANG, 'shrines_act2': SEONANG_ACT2},
+    'seonang': {'rule': SEONANG_RULE, 'death_wake': DEATH_WAKE, 'shrines': SEONANG, 'shrines_act2': SEONANG_ACT2, 'shrines_act3': SEONANG_ACT3},
     'first_night_overhear': {'rule': FIRST_NIGHT_RULE, 'spots': [
         dict({'id': o['id'], 'near': o['near'], 'pos': pos(o), 'through_wall': o['through'], 'cond': o['cond'],
               'lines': [{'speaker': sp, 'text': ln} for sp, ln in o['lines']], 'line_half': o['half'], 'clue': None},
