@@ -19,7 +19,9 @@ public class AudioImportRules : AssetPostprocessor
         s.compressionFormat = AudioCompressionFormat.Vorbis;
         s.quality = bgm ? 0.4f : 0.45f;
         s.sampleRateSetting = AudioSampleRateSetting.OptimizeSampleRate;
+        // 음악은 처음 틀 때 불러온다(시작이 빨라진다). Unity 6.3 부터 미리 불러오기는 플랫폼별 SampleSettings 안의 값이다
+        // (AudioImporter.preloadAudioData 는 없어진 값이라 쓰면 컴파일 에러 — PC 확인)
+        s.preloadAudioData = !bgm;
         a.SetOverrideSampleSettings("WebGL", s);
-        a.preloadAudioData = !bgm;   // 음악은 처음 틀 때 불러온다(시작이 빨라진다)
     }
 }
