@@ -228,7 +228,7 @@ public static class Balance
     public const float CLUE_PICK_RADIUS = 1.6f;  // (시연판 임시) 낮 단서를 줍는 거리(m). 시연판은 마을에 놓인 3개를 걸어가 줍는다
     public const float WEAPON_SWAP_TIME = 0.5f;  // (시연판 임시) 기획서 6절 초안: 무기 바꿔 들기 시간(초)
     public const float MACE_PAHON_KNOCKBACK_MULT = 1.5f;  // (시연판 임시) 기획서 6절 초안: 육모방망이: 파혼 넉백 +50%
-    public const float MACE_PAHON_DAMAGE_MULT = 1.2f;  // (시연판 임시) 기획서 6절 초안: 육모방망이: 파혼 피해 +20%
+    public const float MACE_PAHON_DAMAGE_MULT = 0.9f;  // (시연판 임시) 기획서 6절 초안: 육모방망이: 파혼 피해 +20% (10-25 시뮬: 땅울림 넣고도 파혼만이 앞서 1.2→0.9로 낮춤, 넉백 1.5는 그대로)
     public const float MACE_QUAKE_RADIUS = 4.0f;  // (시연판 임시) 기획서 6절 초안: 육모방망이 Q 땅울림 반경(m)
     public const int MACE_QUAKE_DAMAGE = 20;  // (시연판 임시) 기획서 6절 초안: 땅울림 맺힘 피해
     public const float MACE_QUAKE_STUN = 0.8f;  // (시연판 임시) 기획서 6절 초안: 땅울림 기절(초). 서 있는 적에게만, 무릎 꿇은 혼의 대기 시간과 무관

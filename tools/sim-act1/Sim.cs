@@ -160,7 +160,12 @@ static class Sim
                 bool named = !namedDone && night == Nights - 1 && sentTonight >= Balance.NIGHT_QUOTA - 1 && !lump;   // 몫의 마지막은 이름혼(곽 뱃꾼 대용)
                 // 죽여서 무릎 꿇리기
                 double maed = lump ? Balance.MAEDHIM_LUMP : Balance.MAEDHIM_NORMAL;
-                double use = Math.Min(maed - 10, bonusPool); bonusPool -= use;   // 앞선 파혼 폭발이 이미 깎아 둔 몫
+                double use = Math.Min(maed - 10, bonusPool); bonusPool -= use;
+                if (Wd.Id == WeaponId.Mace)   // 땅울림(Q, 6초마다): 접근하며 한 번 — 목표 20 + 주변 적마다 20(다음 싸움에서 이미 깎인 몫으로 쌓임), 기절 0.8초 동안 안 맞음
+                {
+                    double q = Math.Min(maed - 10 - use, Balance.MACE_QUAKE_DAMAGE); use += q;
+                    bonusPool += Balance.MACE_QUAKE_DAMAGE * others;
+                }   // 앞선 파혼 폭발이 이미 깎아 둔 몫
                 double kill = (maed - use) / (dps() * WR(Wd.Id) * (1 + WG(Wd.Id) * Math.Min(others, 2))) + 0.5;
                 double take = (others + 1) * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitMove * WTake(Wd.Id);
                 Hit(ref hp, ref sinceHit, ref res, take); t += kill; sinceHit = take > 0 ? 0 : sinceHit + kill;

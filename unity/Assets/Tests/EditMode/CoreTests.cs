@@ -487,7 +487,7 @@ public class CoreTests
     [Test]
     public void Weapon_MaceLeansPahon()
     {
-        Assert.Greater(WeaponDef.Mace.PahonDamageMult, WeaponDef.Chain.PahonDamageMult);
+        Assert.GreaterOrEqual(WeaponDef.Mace.PahonDamageMult, 0.9f);   // 10-25 시뮬로 1.2→0.9 (땅울림 포함 판정). 방망이의 파혼 맛은 넉백 배율이 맡는다
         Assert.Greater(WeaponDef.Mace.PahonKnockbackMult, WeaponDef.Chain.PahonKnockbackMult);
         Assert.AreEqual(WeaponDef.Mace, WeaponDef.Get(WeaponId.Mace));
         // 무기 3계열 추가: 정의가 서로 구별되고, Q 기술·관통 상한이 기획대로인지

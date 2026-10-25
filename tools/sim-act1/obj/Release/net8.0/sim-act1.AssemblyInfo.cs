@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sim-act1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ce772e225621636c5b7da7943879a709cdb00312")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b0b142ad0b531a24d399fe8b1a28c12e374db12")]
 [assembly: System.Reflection.AssemblyProductAttribute("sim-act1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sim-act1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

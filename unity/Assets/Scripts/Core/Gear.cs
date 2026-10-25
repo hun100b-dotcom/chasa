@@ -35,7 +35,7 @@ namespace Chasa.Core
             PahonKnockbackMult = Balance.MACE_PAHON_KNOCKBACK_MULT,
             PahonDamageMult = Balance.MACE_PAHON_DAMAGE_MULT,
             HasQuake = true,
-            Taste = "파혼이 강하다(멀리·세게) · 땅울림(Q) · 근접 한 방"
+            Taste = "파혼 넉백이 멀다 · 땅울림(Q) · 근접 한 방"
         };
 
         // 시연판 이후 무기 3계열 (기획서 6절 임시값). 콤보 숫자는 Unity 쪽 WeaponTable 에 있다.
