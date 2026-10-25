@@ -268,6 +268,7 @@ public class JudgeSystem : MonoBehaviour
         castTarget.Finish();
         tendoToday++;                                                    // 혼불 발 수
         if (escortArmed) { escortT = Balance.AC_ESCORT_SEC; escortArmed = false; }   // 배웅길: 천도 직후 적이 느려진다
+        if (!castTarget.soul.Boss && growth.ActiveBar.Contains("일곱 이름") && ++sevenCount >= 7) { sevenCount = 0; sevenLeft = 2; Say("일곱 이름 — 다음 천도 둘이 빨라진다"); }
         TieProgress(castTarget, 1);                                      // 한 줄 꿰기: 묶은 둘 중 하나는 천도·하나는 파혼하면 둘 다 보상 +5%
         if (castTarget.soul.Boss)
         {
@@ -368,6 +369,7 @@ public class JudgeSystem : MonoBehaviour
 
     // 도술이 남기는 짧은 상태들
     bool nameLightArmed, escortArmed; int sevenLeft;   // sevenLeft: 일곱 이름이 남긴 '하한 천도' 횟수(쓰면 2)
+    int sevenCount;                                    // 일곱 이름: 센 천도 수(파혼이 끼어도 안 지워진다)
     float coinFrac;                                    // 파혼 엽전 배수의 소수점 누적(엽전 7에 +5% 가 반올림으로 0이 되지 않게)
     Enemy tiedA, tiedB; int tiedKinds;                 // 한 줄 꿰기: 묶은 둘과 지금까지 한 일(1 천도·2 파혼)
     //          // 다음 천도에 걸리는 것(이름 비추기·배웅길·일곱 이름)
@@ -476,7 +478,7 @@ public class JudgeSystem : MonoBehaviour
             }
             case "이름 비추기": nameLightArmed = true; Say("다음 천도가 빨라진다"); return true;
             case "배웅길": escortArmed = true; Say("다음 천도 뒤 적이 느려진다"); return true;
-            case "일곱 이름": sevenLeft = 2; Say("다음 천도 둘은 하한까지 빨라진다"); return true;
+            case "일곱 이름": Say("일곱 이름 " + sevenCount + "/7 (천도 7번마다 다음 둘이 빨라진다)"); return false;   // 세는 도술: 눌러 쓰는 게 아니라 칸에 넣어 두면 켜진다
             case "여럿 끌기": // 가까운 일반 적 셋을 한꺼번에 끌어온다
             {
                 var near = AliveNear(player.Pos, Balance.AC_MULTIPULL_RANGE, false);

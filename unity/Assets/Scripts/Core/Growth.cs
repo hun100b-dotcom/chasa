@@ -37,7 +37,7 @@ namespace Chasa.Core
             new SkillNode("고마운 넋", Branch.Call, false, "천도 넋 +6/+12%"),
             new SkillNode("곁을 지킴", Branch.Call, false, "천도 중 받는 피해 -10/-20%"),
             new SkillNode("몫을 채움", Branch.Call, false, "그날 명부 몫을 채우면 이동 속도 +8%"),
-            new SkillNode("일곱 이름", Branch.Call, true, "쓰면 다음 천도 2번이 0.5초 (30초)", true),
+            new SkillNode("일곱 이름", Branch.Call, true, "칸에 넣어 두면 천도 7번마다 다음 2번이 0.5초 (센다)", true),
             // 줄 갈래 (싸움·제어)
             new SkillNode("휘감기", Branch.Chain, true, "4m 안 혼 1.5초 묶기 (8초)"),
             new SkillNode("여럿 끌기", Branch.Chain, true, "적 셋을 한꺼번에 끌어온다 (8초)"),
