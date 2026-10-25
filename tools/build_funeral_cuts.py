@@ -10,6 +10,9 @@ root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 src = json.load(open(os.path.join(root, "docs", "narrative", "funerals_act1.json"), encoding="utf-8"))
 ZOOM = {"quarter": 1.0, "slow_zoom_in": 1.3, "low_move": 1.3, "side_track": 1.15, "tilt_up": 1.0, "move": 1.3, "pull_out": 0.9, "follow": 1.2, "close": 1.6, "fade_in": 1.2, "fade_out": 1.2, "black": 1.2}
 
+# 사운드팀이 만든 소리 id 모음. 대본의 sfx_request 가운데 여기 있는 것은 sfx 로 옮겨 실제로 틀고, 아직 없는 것은 건너뛴다
+have = {x["id"] for x in json.load(open(os.path.join(root, "data", "sfx_files.json"), encoding="utf-8"))["sounds"]}
+
 def convert(cid, b, lock):
     out = []
     for st in b["steps"]:
@@ -19,7 +22,11 @@ def convert(cid, b, lock):
             row["cam"] = "pan"; row["camTo"] = "funeral"; row["camTime"] = cam.get("time", 2.0)
             if mode in ZOOM: row["zoom"] = ZOOM[mode]
         if st.get("control"): row["ctl"] = st["control"]
-        if st.get("sfx"): row["sfx"] = st["sfx"]
+        ids = list(st.get("sfx", []))
+        for rq in st.get("sfx_request", []):
+            i = rq.split("(")[0].strip()   # "amb.rooster(먼 닭울음)" → amb.rooster
+            if i in have and i not in ids: ids.append(i)
+        if ids: row["sfx"] = ids
         if st.get("condition"): row["cond"] = st["condition"]
         out.append(row)
     out.append({"t": max(0.0, b["duration"] - 0.5), "cam": "return", "camTime": 1.5})
