@@ -208,10 +208,15 @@ public class CharacterPanel : MonoBehaviour
                 int lv = g.LevelOf(n.Name);
                 bool can = g.CanLearn(n.Name);
                 bool locked = n.Deep && g.BranchPoints(br) < SkillTree.DeepNeeds;
-                string label = (n.Active ? "[기] " : "[패] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
+                int barAt = n.Active ? g.ActiveBar.IndexOf(n.Name) : -1;
+                string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[기] ") : "[패] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
                 var r = new Rect(x, yy, colW, 26);
                 GUI.color = lv > 0 ? Color.white : (can ? new Color(1f, 1f, 1f, 0.9f) : new Color(1f, 1f, 1f, 0.45f));
-                if (GUI.Button(r, label)) { g.Learn(n.Name); judge.RefreshGrowth(); }   // 배우면 패시브 효과가 바로 붙는다
+                if (GUI.Button(r, label))
+                {
+                    if (n.Active && lv > 0) g.ToggleBar(n.Name);   // 배운 액티브는 누르면 칸에 올렸다 내렸다
+                    else { g.Learn(n.Name); judge.RefreshGrowth(); }
+                }   // 배우면 패시브 효과가 바로 붙는다
                 GUI.color = Color.white;
                 if (r.Contains(Event.current.mousePosition)) hoverDesc = n.Name + ": " + n.Desc;
                 yy += 28;
@@ -220,7 +225,7 @@ public class CharacterPanel : MonoBehaviour
         y += 28 + 9 * 28 + 6;
 
         // 4) 설명 한 줄 + 액티브 칸 + 장비 칸
-        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), hoverDesc.Length > 0 ? hoverDesc : "도술 이름을 누르면 점수 1을 써서 배운다. [기]=액티브(한 번) [패]=패시브(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)", small);
+        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), hoverDesc.Length > 0 ? hoverDesc : "도술을 누르면 점수 1을 써서 배운다(배운 액티브는 누르면 칸에 올리고 내림). [기]=액티브 [패]=패시브(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)", small);
         y += 26;
         string bar4 = "";
         for (int i = 0; i < SkillTree.ActiveSlots; i++) bar4 += "[" + (i + 1) + ": " + (i < g.ActiveBar.Count ? g.ActiveBar[i] : "빈 칸") + "]  ";

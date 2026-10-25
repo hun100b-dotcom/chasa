@@ -1566,5 +1566,125 @@
  "B03_CLOSED_DMG_MULT": {
   "value": 0.25,
   "note": "(2호 보스 임시) 약점이 닫혀 있을 때 보스가 받는 피해 배율(그냥 때려서는 잘 안 닳는다)"
+ },
+ "ACD_SOULFIRE": {
+  "value": 6.0,
+  "note": "(액티브 도술 임시) 혼불 날리기 재사용(초)"
+ },
+ "ACD_NAMELIGHT": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 이름 비추기 재사용"
+ },
+ "ACD_ESCORT": {
+  "value": 10.0,
+  "note": "(액티브 도술 임시) 배웅길 재사용"
+ },
+ "ACD_SEVEN": {
+  "value": 30.0,
+  "note": "(액티브 도술 임시) 일곱 이름 재사용(깊은 도술)"
+ },
+ "ACD_MULTIPULL": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 여럿 끌기 재사용"
+ },
+ "ACD_KNOTDASH": {
+  "value": 7.0,
+  "note": "(액티브 도술 임시) 매듭 걸음 재사용"
+ },
+ "ACD_TIE": {
+  "value": 15.0,
+  "note": "(액티브 도술 임시) 한 줄 꿰기 재사용"
+ },
+ "ACD_CAGE": {
+  "value": 40.0,
+  "note": "(액티브 도술 임시) 쇠사슬 울 재사용(깊은 도술)"
+ },
+ "ACD_WRATH": {
+  "value": 14.0,
+  "note": "(액티브 도술 임시) 원념 두르기 재사용"
+ },
+ "ACD_STAINRIDE": {
+  "value": 12.0,
+  "note": "(액티브 도술 임시) 얼룩 타기 재사용"
+ },
+ "ACD_THROWNAME": {
+  "value": 6.0,
+  "note": "(액티브 도술 임시) 깨진 이름 던지기 재사용"
+ },
+ "ACD_SHADOW": {
+  "value": 45.0,
+  "note": "(액티브 도술 임시) 검은 갓의 그림자 재사용(깊은 도술)"
+ },
+ "AC_SOULFIRE_DMG": {
+  "value": 25,
+  "note": "(액티브 도술 임시) 혼불 한 발 맺힘 피해"
+ },
+ "AC_SOULFIRE_MAX": {
+  "value": 5,
+  "note": "(액티브 도술 임시) 혼불 최대 발 수(기본 1 + 그날 천도한 혼 수)"
+ },
+ "AC_SOULFIRE_RANGE": {
+  "value": 14.0,
+  "note": "(액티브 도술 임시) 혼불이 닿는 거리(m)"
+ },
+ "AC_NAMELIGHT_SEC": {
+  "value": 0.4,
+  "note": "(액티브 도술 임시) 다음 천도 캐스팅 단축(초)"
+ },
+ "AC_ESCORT_SEC": {
+  "value": 3.0,
+  "note": "(액티브 도술 임시) 배웅길 지속(초): 천도 직후 적 이동 감소"
+ },
+ "AC_ESCORT_SLOW": {
+  "value": 0.3,
+  "note": "(액티브 도술 임시) 배웅길 적 이동 감소 비율"
+ },
+ "AC_MULTIPULL_N": {
+  "value": 3,
+  "note": "(액티브 도술 임시) 여럿 끌기: 끌어오는 적 수"
+ },
+ "AC_MULTIPULL_RANGE": {
+  "value": 12.0,
+  "note": "(액티브 도술 임시) 여럿 끌기 거리(m)"
+ },
+ "AC_DASH_DIST": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 매듭 걸음 돌진 거리(m, 지나는 동안 무적)"
+ },
+ "AC_TIE_RANGE": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 한 줄 꿰기: 묶을 둘째 혼을 찾는 거리(m)"
+ },
+ "AC_CAGE_RADIUS": {
+  "value": 5.0,
+  "note": "(액티브 도술 임시) 쇠사슬 울 반경(m)"
+ },
+ "AC_CAGE_STUN": {
+  "value": 3.0,
+  "note": "(액티브 도술 임시) 쇠사슬 울 고정 시간(초)"
+ },
+ "AC_WRATH_SEC": {
+  "value": 5.0,
+  "note": "(액티브 도술 임시) 원념 두르기 지속(초)"
+ },
+ "AC_STAINRIDE_SEC": {
+  "value": 6.0,
+  "note": "(액티브 도술 임시) 얼룩 타기 지속(초)"
+ },
+ "AC_STAINRIDE_MOVE": {
+  "value": 0.15,
+  "note": "(액티브 도술 임시) 얼룩 타기 이동 +%"
+ },
+ "AC_THROWNAME_DMG": {
+  "value": 40,
+  "note": "(액티브 도술 임시) 깨진 이름 던지기 피해"
+ },
+ "AC_THROWNAME_WINDOW": {
+  "value": 5.0,
+  "note": "(액티브 도술 임시) 깨진 이름 던지기: 방금 파혼했다고 칠 시간(초)"
+ },
+ "AC_SHADOW_SEC": {
+  "value": 10.0,
+  "note": "(액티브 도술 임시) 검은 갓의 그림자 지속(초)"
  }
 }

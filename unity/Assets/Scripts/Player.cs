@@ -186,8 +186,25 @@ public class Player : MonoBehaviour
         if (dir.sqrMagnitude < 1e-4f) dir = U.Dir(facing);
         dodgeDir = dir.normalized;
         facing = Mathf.Atan2(dodgeDir.z, dodgeDir.x);
-        dodgeCharges -= 1f; dodgeT = 0f;
+        dodgeCharges -= 1f; dodgeT = 0f; dodgeDistance = Balance.DODGE_DISTANCE;
         state = State.Dodge;
+        moveTarget = null; chaseTarget = null; hasBuffered = false; bufferedAim = null; atk = null;
+        chain.gameObject.SetActive(false);
+        Sfx.Play("sfx.dodge");
+        return true;
+    }
+
+    float dodgeDistance = Balance.DODGE_DISTANCE;   // 이번 피하기가 가는 거리(매듭 걸음은 더 멀다)
+
+    /// <summary>매듭 걸음: 사슬을 걸어 바라보는(또는 가고 싶은) 쪽으로 dist 만큼 돌진. 피하기와 같은 무적 구간을 쓰고 피하기 충전은 쓰지 않는다</summary>
+    public bool CommandKnotDash(float dist, Vector3? aim)
+    {
+        if (Busy || state == State.Pull || state == State.Dodge) return false;
+        if (locked) return false;
+        Vector3 dir = aim.HasValue ? new Vector3(aim.Value.x - Pos.x, 0, aim.Value.z - Pos.z) : moveTarget.HasValue ? new Vector3(moveTarget.Value.x - Pos.x, 0, moveTarget.Value.z - Pos.z) : U.Dir(facing);
+        if (dir.sqrMagnitude < 1e-4f) dir = U.Dir(facing);
+        dodgeDir = dir.normalized; facing = Mathf.Atan2(dodgeDir.z, dodgeDir.x);
+        dodgeT = 0f; dodgeDistance = dist; state = State.Dodge;
         moveTarget = null; chaseTarget = null; hasBuffered = false; bufferedAim = null; atk = null;
         chain.gameObject.SetActive(false);
         Sfx.Play("sfx.dodge");
@@ -200,7 +217,7 @@ public class Player : MonoBehaviour
         // 처음 빠르고 끝에서 감속(EaseOut): 순간 이동처럼 튀지 않고 '미끄러져 피하는' 느낌
         float t0 = dodgeT, t1 = Mathf.Min(Balance.DODGE_TIME, dodgeT + dt);
         float p0 = 1f - Mathf.Pow(1f - t0 / Balance.DODGE_TIME, 2f), p1 = 1f - Mathf.Pow(1f - t1 / Balance.DODGE_TIME, 2f);
-        Pos += dodgeDir * (Balance.DODGE_DISTANCE * (p1 - p0));
+        Pos += dodgeDir * (dodgeDistance * (p1 - p0));
         ClampToArena();
         dodgeT += dt;
         if (dodgeT >= Balance.DODGE_TIME) { state = State.Free; comboTimer = Mathf.Max(comboTimer, 0f); }

@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     public bool respawnReady;
 
     float speed, flash, deathT, spawnT, pulledT;
+    public float slowMult = 1f;        // 이동 감소 배율(배웅길: 천도 직후 적이 느려진다)
     Material mat;
     ActorSprite spr;               // 아트팀 그림(없으면 색 도형으로 대신)
     Renderer bodyRenderer;
@@ -226,7 +227,7 @@ public class Enemy : MonoBehaviour
         var d = new Vector2(playerPos.x - Pos.x, playerPos.z - Pos.z);
         float dist = d.magnitude;
         if (dist > Config.ENEMY_STOP_DISTANCE)
-            Pos += new Vector3(d.x / dist, 0, d.y / dist) * speed * dt;
+            Pos += new Vector3(d.x / dist, 0, d.y / dist) * speed * slowMult * dt;
     }
 
     void TickPulled(float dt, Vector3 playerPos)

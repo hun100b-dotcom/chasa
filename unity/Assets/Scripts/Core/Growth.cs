@@ -79,6 +79,22 @@ namespace Chasa.Core
         public readonly Dictionary<string, int> Learned = new Dictionary<string, int>();
         public readonly List<string> ActiveBar = new List<string>();   // 배운 액티브 중 칸에 올린 것(최대 4)
 
+        /// <summary>시작 상태(기획): 옛 고정 도술 셋 = 각 갈래의 첫 액티브가 공짜로 배워져 1·2·3칸에 끼워져 있다</summary>
+        public GrowthState()
+        {
+            foreach (var n in new[] { "붙잡아 부르기", "휘감기", "터뜨리기" }) { Learned[n] = 1; ActiveBar.Add(n); }
+        }
+
+        /// <summary>배운 액티브를 칸에 올리고 내린다(칸은 넷까지). 바뀌었으면 true</summary>
+        public bool ToggleBar(string name)
+        {
+            var s = SkillTree.Find(name);
+            if (s == null || !s.Active || LevelOf(name) < 1) return false;
+            if (ActiveBar.Remove(name)) return true;
+            if (ActiveBar.Count >= SkillTree.ActiveSlots) return false;
+            ActiveBar.Add(name); return true;
+        }
+
         /// <summary>그 품계에 닿기까지 필요한 누적 넋(임시 곡선). 2품계 40, 10품계 약 1080, 40품계 약 9740, 50품계 약 13700</summary>
         public static int NeokForRank(int rank)
         {
@@ -171,6 +187,49 @@ namespace Chasa.Core
             s.PahonRadiusM += 0.2f * g.LevelOf("큰 폭발");
             s.PahonKnockbackPct += 0.2f * g.LevelOf("세찬 넉백");
             s.PahonCoinPct += 0.2f * g.LevelOf("노잣돈");
+        }
+    }
+}
+
+namespace Chasa.Core
+{
+    /// <summary>액티브 도술의 재사용 대기(이름으로 찾는다). 수치는 balance.json 의 ACD_* / SKILL_*_COOLDOWN (임시값)</summary>
+    public class ActiveCooldowns
+    {
+        readonly System.Collections.Generic.Dictionary<string, float> left = new System.Collections.Generic.Dictionary<string, float>();
+
+        public static float Cooldown(string name)
+        {
+            switch (name)
+            {
+                case "붙잡아 부르기": return Balance.SKILL_HOLD_COOLDOWN;
+                case "휘감기": return Balance.SKILL_BIND_COOLDOWN;
+                case "터뜨리기": return Balance.SKILL_BURST_COOLDOWN;
+                case "혼불 날리기": return Balance.ACD_SOULFIRE;
+                case "이름 비추기": return Balance.ACD_NAMELIGHT;
+                case "배웅길": return Balance.ACD_ESCORT;
+                case "일곱 이름": return Balance.ACD_SEVEN;
+                case "여럿 끌기": return Balance.ACD_MULTIPULL;
+                case "매듭 걸음": return Balance.ACD_KNOTDASH;
+                case "한 줄 꿰기": return Balance.ACD_TIE;
+                case "쇠사슬 울": return Balance.ACD_CAGE;
+                case "원념 두르기": return Balance.ACD_WRATH;
+                case "얼룩 타기": return Balance.ACD_STAINRIDE;
+                case "깨진 이름 던지기": return Balance.ACD_THROWNAME;
+                case "검은 갓의 그림자": return Balance.ACD_SHADOW;
+                default: return 10f;
+            }
+        }
+
+        public float Left(string name) { float v; return left.TryGetValue(name, out v) ? v : 0f; }
+        public bool Ready(string name) { return Left(name) <= 0f; }
+        public float Ratio(string name) { float l = Left(name); return l <= 0f ? 0f : l / Cooldown(name); }
+        public bool Start(string name) { if (!Ready(name)) return false; left[name] = Cooldown(name); return true; }
+
+        public void Tick(float dt)
+        {
+            var keys = new System.Collections.Generic.List<string>(left.Keys);
+            foreach (var k in keys) { float v = left[k] - dt; if (v <= 0f) left.Remove(k); else left[k] = v; }
         }
     }
 }

@@ -1564,7 +1564,7 @@ public class CoreTests
     [Test]
     public void Growth_DeepSkillNeedsTenInBranch()
     {
-        var g = new GrowthState { SkillPointsEarned = 30 };
+        var g = new GrowthState { SkillPointsEarned = 30 }; g.Learned.Clear(); g.ActiveBar.Clear();   // 시작 도술 셋을 비우고 규칙만 본다
         Assert.IsFalse(g.CanLearn("일곱 이름"));                                        // 부름 갈래 점수 0
         foreach (var n in new[] { "붙잡아 부르기", "혼불 날리기", "이름 비추기", "배웅길" }) Assert.IsTrue(g.Learn(n));   // 액티브 4 (점수 4)
         foreach (var n in new[] { "오래 부르기", "고마운 넋", "곁을 지킴" }) { Assert.IsTrue(g.Learn(n)); Assert.IsTrue(g.Learn(n)); }   // 패시브 3×2 (점수 6) → 합 10
@@ -1574,7 +1574,7 @@ public class CoreTests
     [Test]
     public void Growth_PassiveMaxTwoLevelsActiveOnce_AndBarHoldsFour()
     {
-        var g = new GrowthState { SkillPointsEarned = 20 };
+        var g = new GrowthState { SkillPointsEarned = 20 }; g.Learned.Clear(); g.ActiveBar.Clear();
         Assert.IsTrue(g.Learn("휘감기")); Assert.IsFalse(g.Learn("휘감기"));            // 액티브는 한 번
         Assert.IsTrue(g.Learn("단단한 손")); Assert.IsTrue(g.Learn("단단한 손")); Assert.IsFalse(g.Learn("단단한 손"));   // 패시브는 두 단계
         foreach (var n in new[] { "여럿 끌기", "매듭 걸음", "한 줄 꿰기", "터뜨리기" }) g.Learn(n);
@@ -1659,5 +1659,20 @@ public class CoreTests
         for (int i = 0; i < Balance.B03_WEAK_STREAK; i++) w.WaveResolved(false);
         Assert.IsTrue(w.Open); Assert.AreEqual(Balance.B03_WEAK_DMG_MULT, w.DamageMult);
         w.Tick(Balance.B03_WEAK_TIME + 0.1f); Assert.IsFalse(w.Open); Assert.AreEqual(Balance.B03_CLOSED_DMG_MULT, w.DamageMult);
+    }
+
+    [Test] public void Growth_StartingKitAndBarToggleAndCooldowns()
+    {
+        var g = new GrowthState();
+        CollectionAssert.AreEqual(new[] { "붙잡아 부르기", "휘감기", "터뜨리기" }, g.ActiveBar);   // 처음엔 옛 도술 셋이 끼워져 있다
+        Assert.AreEqual(0, g.SkillPointsSpent);                                               // 점수는 쓰지 않았다
+        g.SkillPointsEarned = 1; Assert.IsTrue(g.Learn("혼불 날리기")); Assert.AreEqual(4, g.ActiveBar.Count);
+        g.SkillPointsEarned = 2; g.Learn("이름 비추기"); Assert.AreEqual(4, g.ActiveBar.Count);   // 칸이 차 있으면 올라가지 않는다
+        Assert.IsFalse(g.ToggleBar("이름 비추기"));                                           // 칸이 가득
+        Assert.IsTrue(g.ToggleBar("휘감기")); Assert.IsTrue(g.ToggleBar("이름 비추기"));      // 내리고 올리기
+        Assert.IsFalse(g.ToggleBar("오래 부르기"));                                           // 패시브는 칸에 안 올린다
+        var cd = new ActiveCooldowns();
+        Assert.IsTrue(cd.Start("혼불 날리기")); Assert.IsFalse(cd.Ready("혼불 날리기"));
+        cd.Tick(Balance.ACD_SOULFIRE + 0.1f); Assert.IsTrue(cd.Ready("혼불 날리기"));
     }
 }
