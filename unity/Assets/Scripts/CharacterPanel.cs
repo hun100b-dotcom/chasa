@@ -13,7 +13,10 @@ public class CharacterPanel : MonoBehaviour
     public Texture2D white;
     int tab = 3;                             // 0 장비 1 도술 2 능력치 3 명부(책). 기본은 명부
     static readonly string[] TabNames = { "장비", "도술", "능력치", "명부" };
-    string hoverDesc = "";                   // 명부에서 마우스를 올린 도술의 설명
+    string hoverDesc = "";
+    // 명부 책 색(코디 결정 10-25): 글자는 먹색, 강조는 붉은 인. 책 그림(한지 바탕)이 있을 때만 쓴다
+    static readonly Color Ink = new Color32(0x1E, 0x1A, 0x17, 255), Seal = new Color32(0xB5, 0x47, 0x3F, 255);
+    bool bookMode; GUIStyle bookBtn;                   // 명부에서 마우스를 올린 도술의 설명
 
     // 명부 탭은 시연판 설정과 무관하게 항상 열린다. 옛 세 탭(장비·도술·능력치)은 DEMO_PANEL 이 켜졌을 때만 보인다
     public void Toggle() { Open = !Open; if (Open && !Demo.Panel) tab = 3; }
@@ -33,11 +36,21 @@ public class CharacterPanel : MonoBehaviour
         // 명부는 도술 27칸을 세 줄로 늘어놓아야 해서 더 크게 쓴다
         float w = Mathf.Min(Screen.width - 24f, tab == 3 ? 940f : 640f), h = Mathf.Min(Screen.height - 24f, tab == 3 ? 600f : 440f);
         var box = new Rect((Screen.width - w) / 2f, (Screen.height - h) / 2f, w, h);
-        GUI.color = new Color(0.05f, 0.06f, 0.1f, 0.94f); GUI.DrawTexture(box, white); GUI.color = Color.white;
+        var bookTex = tab == 3 ? SpriteLib.Texture("ui/ui_book_spread") : null;
+        bookMode = bookTex != null;
+        if (bookMode) GUI.DrawTexture(box, bookTex, ScaleMode.StretchToFill);   // 펼친 책(한지·가운데 붉은 실)
+        else { GUI.color = new Color(0.05f, 0.06f, 0.1f, 0.94f); GUI.DrawTexture(box, white); GUI.color = Color.white; }
 
         var title = new GUIStyle(GUI.skin.label) { fontSize = 20, fontStyle = FontStyle.Bold };
         var body = new GUIStyle(GUI.skin.label) { fontSize = 16 };
-        title.normal.textColor = ChasaPalette.Hanji; body.normal.textColor = ChasaPalette.Hanji;
+        title.normal.textColor = bookMode ? Seal : ChasaPalette.Hanji; body.normal.textColor = bookMode ? Ink : ChasaPalette.Hanji;
+        if (bookMode)
+        {
+            // 책 안 버튼: 바탕 없이 먹색 글자, 올리면 붉은 인 색. (기본 버튼은 어두운 회색 바탕이라 한지 위에서 튄다)
+            bookBtn = new GUIStyle(GUI.skin.button) { fontSize = 13, alignment = TextAnchor.MiddleLeft };
+            bookBtn.normal.background = null; bookBtn.hover.background = null; bookBtn.active.background = null; bookBtn.focused.background = null;
+            bookBtn.normal.textColor = Ink; bookBtn.hover.textColor = Seal; bookBtn.active.textColor = Seal; bookBtn.focused.textColor = Ink;
+        }
 
         // 탭 막대
         int slot0 = 0;   // 보이는 탭 칸 번호(옛 탭이 숨겨져도 간격이 벌어지지 않게)
@@ -47,11 +60,12 @@ public class CharacterPanel : MonoBehaviour
             var r = new Rect(box.x + 12 + slot0++ * 120, box.y + 10, 112, 36);
             if (GUI.Button(r, TabNames[i] + (tab == i ? " *" : ""))) tab = i;
         }
-        if (GUI.Button(new Rect(box.xMax - 100, box.y + 10, 88, 36), "닫기")) Open = false;
+        if (GUI.Button(new Rect(box.xMax - 100, box.y + 6, 88, 30), "닫기")) Open = false;
 
         float y = box.y + 60;
         var st = lo.stats;
-        if (tab == 3) DrawBook(box, y, body, title);
+        if (tab == 3 && bookMode) DrawBook(new Rect(box.x + 44, box.y + 40, box.width - 88, box.height - 80), box.y + 52, body, title);   // 한지 안쪽 여백(약 40px)을 피해 그린다
+        else if (tab == 3) DrawBook(box, y, body, title);
         else if (tab == 0) DrawEquip(box, y, lo, body, title);
         else if (tab == 1) DrawSkills(box, y, lo, body, title);
         else DrawStats(box, y, lo, st, body, title);
@@ -179,8 +193,8 @@ public class CharacterPanel : MonoBehaviour
         GUI.Label(new Rect(box.x + 16, y, 420, 28), "품계 " + g.Rank + "품   넋 " + g.TotalNeok + (g.Rank >= GrowthState.MaxRank ? "" : " / " + next), title);
         GUI.Label(new Rect(box.x + 460, y + 2, box.width - 480, 24), "도술 점수 " + g.SkillPointsFree + (g.StainPointsFree > 0 ? " (+얼룩 전용 " + g.StainPointsFree + ")" : "") + "   능력치 점수 " + g.StatPointsFree, body);
         var bar = new Rect(box.x + 16, y + 30, box.width - 32, 8);
-        GUI.color = new Color(0, 0, 0, 0.6f); GUI.DrawTexture(bar, white);
-        GUI.color = ChasaPalette.CheondoGlow; GUI.DrawTexture(new Rect(bar.x, bar.y, bar.width * frac, bar.height), white);
+        GUI.color = bookMode ? new Color(Ink.r, Ink.g, Ink.b, 0.18f) : new Color(0, 0, 0, 0.6f); GUI.DrawTexture(bar, white);
+        GUI.color = bookMode ? Seal : ChasaPalette.CheondoGlow; GUI.DrawTexture(new Rect(bar.x, bar.y, bar.width * frac, bar.height), white);
         GUI.color = Color.white;
         y += 50;
 
@@ -189,7 +203,7 @@ public class CharacterPanel : MonoBehaviour
         {
             float x = box.x + 16 + i * 220;
             GUI.Label(new Rect(x, y, 150, 26), GrowthState.StatNames[i] + " " + g.Stats[i], body);
-            if (g.StatPointsFree > 0 && GUI.Button(new Rect(x + 120, y, 36, 28), "+")) { g.AddStat(i); judge.RefreshGrowth(); }   // 점수를 쓰면 전투 수치를 다시 계산
+            if (g.StatPointsFree > 0 && GUI.Button(new Rect(x + 120, y, 36, 28), "+", bookMode ? bookBtn : GUI.skin.button)) { g.AddStat(i); judge.RefreshGrowth(); }   // 점수를 쓰면 전투 수치를 다시 계산
         }
         y += 40;
 
@@ -212,7 +226,7 @@ public class CharacterPanel : MonoBehaviour
                 string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[기] ") : "[패] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
                 var r = new Rect(x, yy, colW, 26);
                 GUI.color = lv > 0 ? Color.white : (can ? new Color(1f, 1f, 1f, 0.9f) : new Color(1f, 1f, 1f, 0.45f));
-                if (GUI.Button(r, label))
+                if (GUI.Button(r, label, bookMode ? bookBtn : GUI.skin.button))
                 {
                     if (n.Active && lv > 0) g.ToggleBar(n.Name);   // 배운 액티브는 누르면 칸에 올렸다 내렸다
                     else { g.Learn(n.Name); judge.RefreshGrowth(); }

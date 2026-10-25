@@ -1009,6 +1009,23 @@ public class JudgeSystem : MonoBehaviour
                 float ratio = Mathf.Clamp01((float)so.Maedhim / Mathf.Max(1, so.MaedhimMax));
                 int rows = so.Kind == SoulKind.Lump ? 2 : 1;
                 float wBar = named ? 72f : 56f;
+                // 아트 맺힘 막대(틀 96x14 / 보스 금테 / 덩어리 두 줄 96x28 + 홈 88x8): 있으면 그림으로, 없으면 아래 색 막대
+                var gFrame = SpriteLib.Texture("ui/" + (rows == 2 ? "ui_bar_gyeol_frame_x2" : so.Boss ? "ui_bar_gyeol_frame_gold" : "ui_bar_gyeol_frame"));
+                var gFill = SpriteLib.Texture("ui/ui_bar_gyeol_fill"); var gGhost = SpriteLib.Texture("ui/ui_bar_gyeol_ghost");
+                if (gFrame != null && gFill != null && gGhost != null)
+                {
+                    float k = (named ? 80f : 64f) / 96f, fw = 96f * k, fh = gFrame.height * k;
+                    var fr = new Rect(sp.x - fw * 0.5f, Screen.height - sp.y - fh * 0.5f, fw, fh);
+                    GUI.DrawTexture(fr, gFrame);
+                    for (int r2 = 0; r2 < rows; r2++)
+                    {
+                        float rr = rows == 1 ? ratio : Mathf.Clamp01(ratio * 2f - (rows - 1 - r2));
+                        var slot = new Rect(fr.x + 4f * k, fr.y + (rows == 1 ? 3f : 4f + r2 * 12f) * k, 88f * k, 8f * k);
+                        GUI.DrawTexture(slot, gGhost);
+                        GUI.DrawTextureWithTexCoords(new Rect(slot.x, slot.y, slot.width * rr, slot.height), gFill, new Rect(0f, 0f, rr, 1f));   // 비율만큼만 잘라 그린다(찌그러지지 않게)
+                    }
+                    continue;
+                }
                 for (int r = 0; r < rows; r++)
                 {
                     // 두 줄이면 위 줄이 먼저 닳는다: 전체 비율을 줄마다 절반씩 나눠 채운다
@@ -1173,6 +1190,11 @@ public class JudgeSystem : MonoBehaviour
             var rT = new Rect(24, Screen.height - 110, 110, 90); var rP = new Rect(148, Screen.height - 110, 130, 90);
             bool artT = DrawArt(rT, TouchHeld(rT) && nearTendo ? "ui_btn_cheondo_pressed" : "ui_btn_cheondo", nearTendo);
             if (GUI.Button(rT, "천도", artT ? artBs : bs)) CommandTendo();
+            if (Casting && artT)   // 길게 누르기 고리: 천도 시전이 진행될수록 버튼 둘레 고리가 진해지며 커진다(원형 채움은 못 써서 투명도+크기로 대신)
+            {
+                float cp = Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)), rs2 = 100f + 24f * cp;
+                DrawArt(new Rect(rT.center.x - rs2 * 0.5f, rT.center.y - rs2 * 0.5f, rs2, rs2), "ui_btn_hold_ring", true, 0.35f + 0.65f * cp);
+            }
             GUI.enabled = wasEnabled && nearKneel;
             bool artP = DrawArt(rP, TouchHeld(rP) && nearKneel ? "ui_btn_pahon_pressed" : "ui_btn_pahon", nearKneel);
             if (GUI.Button(rP, "파혼", artP ? artBs : bs)) CommandPahon();
