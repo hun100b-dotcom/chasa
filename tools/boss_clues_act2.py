@@ -115,6 +115,23 @@ BOSSES = {
  },
 }
 
+# 기획 2막 지도(act2_map.json)의 좌표와 구역을 붙인다(10-25). 자리 이름은 서사가 정했고 지도가 그 이름을 그대로 썼다.
+# 왜 지도에서 읽나: 좌표는 아트가 지형을 깔며 옮길 수 있어서, 숫자를 여기 따로 적어 두면 어긋난다.
+MAP = '/mnt/project-files/planning/openworld/act2/act2_map.json'
+if os.path.exists(MAP):
+    amap = json.load(open(MAP, encoding='utf-8'))
+    xy = {c['id']: c['xy'] for c in amap['boss_clues']}
+    places = amap['places']
+    for b in BOSSES.values():
+        for c in b['clues']:
+            if c['id'] in xy:
+                c['xy'] = [{'place': q['place'], 'x': q['x'], 'y': q['y']} for q in xy[c['id']]]
+                z = places.get(xy[c['id']][0]['place'], {}).get('zone')
+                if z: c['zone'] = z   # 지도 구역 이름을 따른다(예: 아랫마을은 FortressVillage)
+    MAP_NOTE = '좌표 xy는 기획 act2_map.json(x=동, y=북, m)에서 붙임. 아트가 옮기면 그 파일이 우선'
+else:
+    MAP_NOTE = '지도 없음(좌표 미정)'
+
 data = {
  '_설명': '2막 보스 한(恨) 구조와 단서 사슬. tools/boss_clues_act2.py로 생성. 서사 2026-10-25. 1막 보스 단서(npc_act1.json의 boss_clues)와 같은 틀에 han·belief·truth·points_to를 더했다',
  'rules': {
@@ -122,7 +139,8 @@ data = {
   'karma': '업 10: 엿듣기는 line_half, 만져 보기는 글 반만(단서 인정) / 업 30: 보스 엿듣기 닫힘, 단서 물건은 "손이 미끄러진다" / 업 60: 소문까지 닫힘',
   'structure': 'belief(보스가 믿는 것) → 단서 셋이 각각 그 믿음의 빈틈을 비춘다(points_to) → 천도 기억이 truth를 보여 준다. 단서는 정답을 말하지 않고 플레이어가 먼저 짐작하게 한다',
   'numbers': '보스의 숫자(서른일곱·일곱·열셋·열넷)는 단서 물건과 단서 대사에만 쓴다. barks·장례 자막에는 쓰지 않는다',
-  'npc': 'npc는 npc_act2.json의 산 사람 id. 2막 지도가 나오면 schedule에 이 단서 대사를 옮긴다',
+  'npc': 'npc는 npc_act2.json의 산 사람 id. 단서 대사는 npc_act2 schedule에도 같은 글자로 들어 있다',
+  'map': MAP_NOTE,
  },
  'boss_clues': BOSSES,
 }
