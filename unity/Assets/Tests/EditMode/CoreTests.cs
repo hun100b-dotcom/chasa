@@ -1294,4 +1294,23 @@ public class CoreTests
         a.ForceWindup();
         Assert.IsTrue(a.Winding);
     }
+
+    // ---------- 필드 적 군집 ----------
+    [Test]
+    public void Camp_SpawnsOnlyWhenNearAndReady()
+    {
+        Assert.IsTrue(CampRules.ShouldSpawn(false, CampRules.ActivateDist - 1f, 0f));
+        Assert.IsFalse(CampRules.ShouldSpawn(false, CampRules.ActivateDist + 1f, 0f));   // 멀면 안 선다
+        Assert.IsFalse(CampRules.ShouldSpawn(false, 10f, 5f));                           // 재등장 대기 중
+        Assert.IsFalse(CampRules.ShouldSpawn(true, 10f, 0f));                            // 이미 서 있음
+    }
+
+    [Test]
+    public void Camp_ReleaseHasHysteresis()
+    {
+        Assert.Greater(CampRules.ReleaseDist, CampRules.ActivateDist);                   // 경계에서 깜박이지 않게 끄는 거리가 더 크다
+        Assert.IsFalse(CampRules.ShouldRelease(true, CampRules.ActivateDist + 10f));
+        Assert.IsTrue(CampRules.ShouldRelease(true, CampRules.ReleaseDist + 1f));
+        Assert.IsFalse(CampRules.ShouldRelease(false, 999f));
+    }
 }

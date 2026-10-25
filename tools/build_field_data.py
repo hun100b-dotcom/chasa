@@ -49,6 +49,21 @@ out = {"size": f["grid"]["tiles"][0] * TILE, "tile": TILE, "items": items, "mark
 with open(os.path.join(res, "Data", "field.json"), "w", encoding="utf-8") as fp:
     json.dump(out, fp, ensure_ascii=False, separators=(",", ":"))
 
+# 적 군집 자리(아트 구역표 field_5x5_zones.json): 데이터에 한 번 굽는다. 인원은 size_hint "중(5~7)" 의 가운데 값
+import re
+zp = os.path.join(art, "layouts", "field_5x5_zones.json")
+camps = []
+if os.path.exists(zp):
+    zs = json.load(open(zp, encoding="utf-8"))
+    for zn in zs["zones"]:
+        for c in zn.get("enemy_camps", []):
+            nums = [int(v) for v in re.findall(r"\d+", c.get("size_hint", "5"))]
+            n = round(sum(nums) / len(nums)) if nums else 5
+            camps.append({"x": c["x"], "z": c["y"], "r": c["radius_m"], "n": n, "zone": zn["name"], "theme": zn.get("enemy_theme", "")})
+with open(os.path.join(res, "Data", "field_camps.json"), "w", encoding="utf-8") as fp:
+    json.dump({"camps": camps}, fp, ensure_ascii=False, separators=(",", ":"))
+print("군집", len(camps))
+
 # 모델 모으기: 어느 폴더에 있든 이름으로 찾는다(풀밭은 코드가 쓰니 항상 포함)
 used.add("terrain_tile_grass")
 dst = os.path.join(res, "Models", "Field"); os.makedirs(dst, exist_ok=True)

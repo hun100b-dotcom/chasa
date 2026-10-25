@@ -401,6 +401,7 @@ public class JudgeSystem : MonoBehaviour
         }
         night.Tick(dt);
         TickClues();
+        if (camps != null) camps.Tick(dt, player.Pos);   // 필드: 가까운 군집만 세운다
         enemySpawnPause = Mathf.Max(0f, enemySpawnPause - dt);
         enemies.spawnPaused = enemySpawnPause > 0f || (Casting && castTarget.soul.Boss);   // 보스 천도 중·직후엔 잡몹이 새로 나오지 않는다
         // 귀환: 서낭당 위에 서면 즉시. 단 출발 직후(몫을 하나도 못 채움)에는 자동 귀환하지 않는다 — 밤을 시작도 못 하고 끝나는 것 방지
@@ -537,6 +538,7 @@ public class JudgeSystem : MonoBehaviour
 
     // ===== 화면 ====================================================================
     /// <summary>화면에 보일 값을 모아(HudState) 새 화면(UI Toolkit)에 넘긴다</summary>
+    public FieldCamps camps;   // 필드 모드에서만 있다
     SoulMarkers soulMarkers;
     void LateUpdate()
     {

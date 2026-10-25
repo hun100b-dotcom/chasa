@@ -45,7 +45,7 @@ public class GameMain : MonoBehaviour
         BuildStage();
         var startPos = FieldRules.On ? new Vector3(FieldRules.StartX, 0f, FieldRules.StartZ) : Vector3.zero;
         if (FieldRules.On) focus = startPos;   // 카메라가 원점에서 날아오지 않게 시작 위치에서 시작
-        enemies.SpawnAll(startPos);
+        if (!FieldRules.On) enemies.SpawnAll(startPos);   // 필드에선 군집(FieldCamps)이 가까이 갈 때 세운다
         numbers = gameObject.AddComponent<DamageNumbers>();
         numbers.cam = cam;
         marker = ClickMarker.Create();
@@ -55,6 +55,7 @@ public class GameMain : MonoBehaviour
         player.chain = ChainVisual.Create();
         // 처결(천도·파혼): 규칙은 Core, 화면 연결은 JudgeSystem
         judge = gameObject.AddComponent<JudgeSystem>();
+        if (FieldRules.On) judge.camps = new FieldCamps(enemies);
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
         if (View3D.On)
         {

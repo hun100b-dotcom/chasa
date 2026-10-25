@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public bool kneeling => soul.State == SoulState.Kneel;       // 처결 대기 중 (천도·파혼 선택 가능)
     public bool sending => soul.State == SoulState.Sending;      // 천도 캐스팅 받는 중
     public bool gone => soul.State == SoulState.Gone;            // 떠났거나 터짐
+    public bool camp;                                            // 필드 군집 소속: 처결되면 사라진다(제자리 재등장 없음)
     public bool extra;                                           // 얼룩 3개로 소환된 추가 적 (한 번 처리하면 사라짐)
     public float stun;             // 남은 기절 시간
     public AttackClock atk = new AttackClock();   // 공격 시계(쿨다운·예비동작) — 규칙은 Core에 있다
@@ -353,6 +354,20 @@ public class EnemyManager
         return best;
     }
 
+    /// <summary>필드 군집의 혼 하나를 세운다 (처결되면 그냥 사라진다: Respawn 하지 않음)</summary>
+    public Enemy SpawnCamp(Vector3 at, bool a)
+    {
+        var e = Enemy.Create(a, at);
+        e.camp = true;
+        e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        e.onKneel = () => onEnemyKneel?.Invoke(e);
+        list.Add(e);
+        return e;
+    }
+
+    /// <summary>목록에서 빼고 화면 부품도 지운다</summary>
+    public void Remove(Enemy e) { if (e == null) return; list.Remove(e); Object.Destroy(e.gameObject); }
+
     public void SpawnAll(Vector3 playerPos)
     {
         for (int i = 0; i < Config.ENEMY_COUNT; i++)
@@ -383,6 +398,7 @@ public class EnemyManager
             e.Tick(dt, playerPos);
             if (e.gone && e.respawnReady)
             {
+                if (e.camp) { toRemove.Add(e); continue; }   // 필드 군집의 혼은 처결되면 끝(다시 서는 건 군집 규칙이 정한다)
                 if (spawnPaused && !e.extra) continue;   // 스폰 정지 중엔 대기
                 if (e.extra) { toRemove.Add(e); continue; }   // 소환된 적은 한 번 처리하면 끝 (계속 늘어나지 않게)
                 e.Respawn(SpawnPoint(playerPos, Random.value * U.TAU));
