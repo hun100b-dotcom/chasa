@@ -2011,5 +2011,82 @@ public class CoreTests
         Assert.AreEqual(-1, Interact.Pick(new System.Collections.Generic.List<InteractCand> { new InteractCand { Kind = InteractKind.Touch, Dist = 2f } }), "만져 보기는 1.5m 밖이면 없음");
     }
 
+
+    // ---- 2막 보스 4종 상태머신 뼈대 ----
+    static System.Collections.Generic.List<BossMove> RunBrain(Act2Brain b, float sec, float dt = 0.1f)
+    {
+        var l = new System.Collections.Generic.List<BossMove>();
+        for (float t = 0f; t < sec; t += dt) { var m = b.Tick(dt); if (m.Act != BossAct.None) l.Add(m); }
+        return l;
+    }
+
+    [Test]
+    public void Act2Boss_B05_CallsNames_CapAndNumberShare()
+    {
+        var b = new Act2Brain(5, () => 0.5f);
+        var l = RunBrain(b, 9f);
+        Assert.IsTrue(l.Exists(m => m.Act == BossAct.CallNames && m.Count == 2), "8초마다 병사 2");
+        b.Soldiers = 3;
+        var l2 = RunBrain(b, 8.5f);
+        Assert.IsTrue(l2.Exists(m => m.Act == BossAct.CallNames && m.Count == 1), "상한 4 → 남는 자리 1만");
+        b.Soldiers = 4;
+        Assert.IsFalse(RunBrain(b, 8.5f).Exists(m => m.Act == BossAct.CallNames), "자리가 없으면 안 부른다");
+        RunBrain(b, 200f);
+        Assert.AreEqual(70, b.NumberSharePct, "번호 비율 상한 70%");
+        b.Stun = 0f; b.OnCalledSoulTendo(); Assert.AreEqual(2f, b.Stun, 1e-4f, "불린 병사 천도 → 2초 멈춤");
+        Assert.AreEqual(BossAct.None, b.Tick(0.1f).Act);
+    }
+
+    [Test]
+    public void Act2Boss_B05_FlagPlantOnceAtHalf()
+    {
+        var b = new Act2Brain(5, () => 0.5f);
+        b.Maedhim = b.MaedhimMax * 0.4f;
+        var l = RunBrain(b, 30f);
+        Assert.AreEqual(1, l.FindAll(m => m.Act == BossAct.FlagPlant).Count, "50% 이하에서 깃발 꽂기 한 번");
+        Assert.IsTrue(b.FlagPlanted); b.OnFlagPulled(); Assert.IsFalse(b.FlagPlanted);
+    }
+
+    [Test]
+    public void Act2Boss_B06_FormationsCycle_FastDoubles()
+    {
+        var b = new Act2Brain(6, () => 0.5f);
+        var l = RunBrain(b, 40f);
+        Assert.AreEqual(BossAct.LineForm, l[0].Act); Assert.AreEqual(BossAct.CraneForm, l[1].Act); Assert.AreEqual(BossAct.CircleForm, l[2].Act);
+        Assert.AreEqual(1.2f, l[0].Warn, 1e-4f);
+        b.Maedhim = b.MaedhimMax * 0.4f;
+        var f = RunBrain(b, 8f);
+        Assert.GreaterOrEqual(f.Count, 2, "50% 뒤 대형 둘 연속"); Assert.IsTrue(f[0].Fast); Assert.AreEqual(0.9f, f[0].Warn, 1e-4f);
+        Assert.AreEqual(1.5f, b.DamageMultAt(true), 1e-4f); Assert.AreEqual(1f, b.DamageMultAt(false), 1e-4f);
+    }
+
+    [Test]
+    public void Act2Boss_B07_MinersStunPahonFrenzyArenaShrinks()
+    {
+        var b = new Act2Brain(7, () => 0.5f);
+        for (int i = 0; i < 4; i++) b.OnMinerExit();
+        Assert.AreEqual(0f, b.Stun, 1e-4f); b.OnMinerExit(); Assert.AreEqual(2.5f, b.Stun, 1e-4f, "다섯째 광부가 나가면 2.5초 멈춤");
+        b.Maedhim = b.MaedhimMax * 0.5f; float before = b.Maedhim; float add = b.OnMinerPahon();
+        Assert.AreEqual(before + add, b.Maedhim, 1e-3f); Assert.AreEqual(b.MaedhimMax * 0.1f, add, 1e-3f); Assert.AreEqual(10f, b.Frenzy, 1e-4f);
+        b.Stun = 0f; b.Tick(0.1f); Assert.Less(b.ArenaRadius, 14f); Assert.GreaterOrEqual(b.ArenaRadius, 10f);
+        b.Maedhim = b.MaedhimMax * 0.4f; b.Frenzy = 0f; b.Stun = 0f;
+        var l = RunBrain(b, 20f);
+        Assert.IsTrue(l.Exists(m => m.Act == BossAct.RockFall && m.Count == 5), "50% 뒤 낙석 5");
+    }
+
+    [Test]
+    public void Act2Boss_B08_MinesPapersCrouch()
+    {
+        var b = new Act2Brain(8, () => 0.99f);
+        var l = RunBrain(b, 20f);
+        Assert.IsTrue(l.Exists(m => m.Act == BossAct.NumberMines && m.Count == 4 && m.Param == 4f));
+        Assert.IsTrue(l.Exists(m => m.Act == BossAct.AbacusSweep));
+        Assert.IsFalse(l.Exists(m => m.Act == BossAct.LedgerFlip), "장부 넘기기는 50% 뒤부터");
+        Assert.AreEqual(3, b.PickNamePaper(), "종이 칸은 0~3 안");
+        float hp = b.Maedhim; b.OnNamePaperStepped(); b.OnNamePaperStepped();
+        Assert.AreEqual(0f, b.Stun, 1e-4f); b.OnNamePaperStepped(); Assert.AreEqual(3f, b.Stun, 1e-4f, "세 장째 3초 웅크림");
+        Assert.Less(b.Maedhim, hp);
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }
