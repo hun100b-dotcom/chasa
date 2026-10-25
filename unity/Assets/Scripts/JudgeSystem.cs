@@ -997,6 +997,25 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>안내를 띄울 상황을 보고 요청하고, 화면 값(HudState)을 채운다. 컷신·낮 화면·창이 열려 있으면 쉰다</summary>
+    // ---- 보스 체력바·지역 진입 알림 값 채우기 ----
+    string lastArea; float areaT = -1f;
+    void FillBossArea(HudState h)
+    {
+        h.BossName = null;
+        foreach (var e in enemies.list)
+        {
+            if (e == null || !e.soul.Boss || !e.alive && !e.kneeling) continue;
+            if (new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > 45f) continue;   // 가까이 가야 막대가 뜬다
+            h.BossName = e.label; h.BossKneel = e.kneeling; h.BossRatio = e.soul.MaedhimMax <= 0 ? 0f : (float)e.soul.Maedhim / e.soul.MaedhimMax;
+            break;
+        }
+        string zn = FieldRules.On ? FieldZones.CurrentName : null;
+        if (!string.IsNullOrEmpty(zn) && zn != lastArea) { lastArea = zn; areaT = 0f; }   // 구역이 바뀌면 4초 알림
+        if (areaT >= 0f && !cuts.Active) { areaT += Time.unscaledDeltaTime; if (areaT > 4f) areaT = -1f; }
+        h.AreaText = areaT >= 0f ? lastArea : null;
+        h.AreaAlpha = areaT < 0f ? 0f : Mathf.Min(areaT / 0.5f, (4f - areaT) / 1f, 1f);   // 0.5초 나타나고 1초 사라진다
+    }
+
     void GuideTick(HudState h)
     {
         if (!guideLoaded) LoadGuide();
@@ -1063,6 +1082,7 @@ public class JudgeSystem : MonoBehaviour
         var h = ui.Hud;
         FillEdges(h);
         GuideTick(h);
+        FillBossArea(h);
         if (clock != null)
         {
             h.Peaceful = clock.Daylight > 0.6f && !Casting && !AnyEnemyNear(25f);

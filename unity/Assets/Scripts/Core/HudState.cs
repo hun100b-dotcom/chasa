@@ -37,6 +37,8 @@ namespace Chasa.Core
         public readonly System.Collections.Generic.List<EdgeMark> Edges = new System.Collections.Generic.List<EdgeMark>();   // 화면 가장자리 경고(시야 밖 공격 예고)
         // 처음 5분 안내(화면 하단 중앙 띠). GuideText 가 null 이면 안 보인다
         public string GuideText, GuideKey; public bool GuideCheck, GuideRemind;
+        public string BossName; public float BossRatio; public bool BossKneel;   // 보스 체력(맺힘) 막대: 이름이 null 이면 안 보인다
+        public string AreaText; public float AreaAlpha;                          // 지역 진입 알림(화면 위 가운데 큰 글씨, 알파 0~1)
         public bool JudgeCard;                                   // 첫 처결 카드(천도·파혼 두 장)를 하단에 띄운다
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 

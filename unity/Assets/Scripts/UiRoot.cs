@@ -97,7 +97,7 @@ public class UiRoot : MonoBehaviour
         // 장부·밤 글자: 배경 위에서도 읽히게 짙은 반투명 판 위에 둔다
         var texts = new VisualElement { pickingMode = PickingMode.Ignore }; texts.style.marginTop = 6; Panel(texts); note.Add(texts);
         ledger = Line(texts, 15); night = Line(texts, 15);
-        BuildGuide(); BuildCards(); BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
+        BuildGuide(); BuildBossArea(); BuildCards(); BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
     }
 
     // ---- 아트팀 UI 그림(Resources/Sprites/ui). 없으면 null 이라 부르는 쪽이 옛 색 도형으로 대신 그린다(그림 없이도 돈다)
@@ -161,6 +161,36 @@ public class UiRoot : MonoBehaviour
 
     // ---- 처음 5분 안내 띠: 하단 중앙, 스킬바 위. 키 그림 + 글자 22px, 행동하면 초록 체크 ----
     VisualElement guideBox, guideKeyBox; Label guideKey, guideText, guideTick; string lastGuide;
+    // ---- 보스 체력바(위 가운데) · 지역 진입 알림 --------------------------------------
+    VisualElement bossBox, bossFill, areaBox; Label bossName, areaLabel;
+    void BuildBossArea()
+    {
+        bossBox = new VisualElement { name = "boss", pickingMode = PickingMode.Ignore };
+        bossBox.style.position = Position.Absolute; bossBox.style.left = 0; bossBox.style.right = 0; bossBox.style.top = U(48);
+        bossBox.style.alignItems = Align.Center; bossBox.style.display = DisplayStyle.None;
+        bossName = Line(bossBox, 22); bossName.style.color = new Color(0.95f, 0.9f, 0.8f); bossName.style.marginBottom = U(6);
+        var frame = new VisualElement { pickingMode = PickingMode.Ignore };   // 틀: 어두운 판에 붉은 채움
+        frame.style.width = U(700); frame.style.height = U(18); frame.style.backgroundColor = new Color(0.05f, 0.04f, 0.05f, 0.85f);
+        frame.style.borderTopWidth = 2; frame.style.borderBottomWidth = 2; frame.style.borderLeftWidth = 2; frame.style.borderRightWidth = 2;
+        var bc = new Color(0.78f, 0.66f, 0.45f); frame.style.borderTopColor = bc; frame.style.borderBottomColor = bc; frame.style.borderLeftColor = bc; frame.style.borderRightColor = bc;
+        bossFill = new VisualElement { pickingMode = PickingMode.Ignore }; bossFill.style.height = Length.Percent(100); bossFill.style.backgroundColor = new Color(0.72f, 0.16f, 0.14f);
+        frame.Add(bossFill); bossBox.Add(frame); root.Add(bossBox);
+        areaBox = new VisualElement { name = "area", pickingMode = PickingMode.Ignore };
+        areaBox.style.position = Position.Absolute; areaBox.style.left = 0; areaBox.style.right = 0; areaBox.style.top = U(220);
+        areaBox.style.alignItems = Align.Center; areaBox.style.display = DisplayStyle.None;
+        areaLabel = Line(areaBox, 44); areaLabel.style.color = new Color(0.96f, 0.92f, 0.82f);
+        areaLabel.style.backgroundColor = new Color(0f, 0f, 0f, 0.45f); areaLabel.style.paddingLeft = U(40); areaLabel.style.paddingRight = U(40); areaLabel.style.paddingTop = U(8); areaLabel.style.paddingBottom = U(8);
+        areaBox.Add(areaLabel); root.Add(areaBox);
+    }
+    void RefreshBossArea()
+    {
+        if (bossBox == null) return;
+        bool boss = Hud.BossName != null; bossBox.style.display = boss ? DisplayStyle.Flex : DisplayStyle.None;
+        if (boss) { bossName.text = Hud.BossName + (Hud.BossKneel ? "  — 무릎 꿇음" : ""); bossFill.style.width = Length.Percent(Mathf.Clamp01(Hud.BossRatio) * 100f); }
+        bool area = Hud.AreaText != null && Hud.AreaAlpha > 0.01f; areaBox.style.display = area ? DisplayStyle.Flex : DisplayStyle.None;
+        if (area) { areaLabel.text = Hud.AreaText; areaBox.style.opacity = Hud.AreaAlpha; }
+    }
+
     void BuildGuide()
     {
         guideBox = new VisualElement { name = "guide", pickingMode = PickingMode.Ignore };
@@ -316,7 +346,7 @@ public class UiRoot : MonoBehaviour
         float refW = Ko.TouchUI ? 960f : 1280f, refH = Ko.TouchUI ? 540f : 720f; float pscale = Mathf.Sqrt((Screen.width / refW) * (Screen.height / refH));
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
-        RefreshGuide();
+        RefreshGuide(); RefreshBossArea();
         if (cardRow != null) cardRow.style.display = Hud.JudgeCard && !Ko.TouchUI ? DisplayStyle.Flex : DisplayStyle.None;   // 폰은 처결 버튼 자체가 카드 역할
         RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         if (hpFill != null)
