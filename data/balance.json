@@ -2866,5 +2866,109 @@
  "FIGHT_END_SLOW_SCALE": {
   "value": 0.5,
   "note": "처음 10분 M8: 느리게 배율"
+ },
+ "ELITE_MAEDHIM": {
+  "value": 300,
+  "note": "거센 혼(처음 10분 M10) 맺힘(보통 혼의 3배)"
+ },
+ "ELITE_SCALE": {
+  "value": 1.3,
+  "note": "거센 혼(처음 10분 M10) 몸 크기 배율"
+ },
+ "ELITE_KNOCKBACK_MULT": {
+  "value": 0.5,
+  "note": "거센 혼(처음 10분 M10) 넉백 배율"
+ },
+ "ELITE_JUDGE_WAIT": {
+  "value": 7,
+  "note": "거센 혼(처음 10분 M10) 처결 대기(초)"
+ },
+ "ELITE_SLAM_TELE": {
+  "value": 1.2,
+  "note": "거센 혼(처음 10분 M10) 내려치기 예고(초)"
+ },
+ "ELITE_SLAM_R": {
+  "value": 2.5,
+  "note": "거센 혼(처음 10분 M10) 내려치기 반경(m)"
+ },
+ "ELITE_SLAM_DMG": {
+  "value": 18,
+  "note": "거센 혼(처음 10분 M10) 내려치기 피해"
+ },
+ "ELITE_POUNCE_TELE": {
+  "value": 1.0,
+  "note": "거센 혼(처음 10분 M10) 덮치기 예고(초)"
+ },
+ "ELITE_POUNCE_LEN": {
+  "value": 6,
+  "note": "거센 혼(처음 10분 M10) 덮치기 띠 길이(m)"
+ },
+ "ELITE_POUNCE_W": {
+  "value": 1.6,
+  "note": "거센 혼(처음 10분 M10) 덮치기 띠 폭(m)"
+ },
+ "ELITE_POUNCE_DMG": {
+  "value": 12,
+  "note": "거센 혼(처음 10분 M10) 덮치기 피해"
+ },
+ "ELITE_POUNCE_HOLD": {
+  "value": 1.0,
+  "note": "거센 혼(처음 10분 M10) 덮치기 붙잡힘(초)"
+ },
+ "ELITE_CALL_AT": {
+  "value": 0.5,
+  "note": "거센 혼(처음 10분 M10) 부르기가 나오는 맺힘 비율"
+ },
+ "ELITE_MOTES": {
+  "value": 3,
+  "note": "거센 혼(처음 10분 M10) 부르는 잔넋 수"
+ },
+ "ELITE_MOTE_MAEDHIM": {
+  "value": 30,
+  "note": "거센 혼(처음 10분 M10) 잔넋 맺힘"
+ },
+ "ELITE_MOTE_DMG": {
+  "value": 4,
+  "note": "거센 혼(처음 10분 M10) 잔넋 공격력"
+ },
+ "ELITE_MOTE_INTERVAL": {
+  "value": 2.6,
+  "note": "거센 혼(처음 10분 M10) 잔넋 공격 주기(초)"
+ },
+ "ELITE_PATTERN_GAP": {
+  "value": 4,
+  "note": "거센 혼(처음 10분 M10) 패턴 사이 간격(초)"
+ },
+ "ELITE_TENDO_NEOK_MULT": {
+  "value": 3,
+  "note": "거센 혼(처음 10분 M10) 천도 넋 배수"
+ },
+ "ELITE_PAHON_COIN_MULT": {
+  "value": 3,
+  "note": "거센 혼(처음 10분 M10) 파혼 엽전 배수"
+ },
+ "ELITE_PAHON_RADIUS": {
+  "value": 4.5,
+  "note": "거센 혼(처음 10분 M10) 파혼 폭발 반경(m)"
+ },
+ "ELITE_MOTE_COIN": {
+  "value": 2,
+  "note": "거센 혼(처음 10분 M10) 파혼 폭발에 터진 잔넋마다 엽전"
+ },
+ "ELITE_STAIN_SCALE": {
+  "value": 1.5,
+  "note": "거센 혼(처음 10분 M10) 파혼 뒤 큰 얼룩 배율(아직 미연결)"
+ },
+ "ELITE_NIGHT_CHANCE": {
+  "value": 0.3,
+  "note": "거센 혼(처음 10분 M10) 첫 만남 뒤 구역마다 밤 출현 확률(아직 미연결)"
+ },
+ "ELITE_FIRST_SEC": {
+  "value": 420,
+  "note": "거센 혼(처음 10분 M10) 첫 거센 혼이 늦어도 나오는 시각(초)"
+ },
+ "ELITE_FIRST_AWAY": {
+  "value": 60,
+  "note": "거센 혼(처음 10분 M10) 첫 거센 혼: 이름혼 자리에서 이만큼 멀어지면 나온다(m)"
  }
 }

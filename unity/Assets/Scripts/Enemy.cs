@@ -159,7 +159,7 @@ public class Enemy : MonoBehaviour
         atk.Interrupt();                // 맞으면 예비동작이 끊긴다 (때리는 쪽이 이득)
         // 무게 배율: 보스는 안 밀리고(0), 덩어리·사나운 적은 덜 밀린다
         float weight = soul.Boss ? Balance.WEIGHT_BOSS : soul.Kind == SoulKind.Lump ? Balance.WEIGHT_LUMP : soul.Fierce ? Balance.WEIGHT_FIERCE : 1f;
-        vel = dir * knockback * weight;          // '덮어쓰기': 연타해도 무한히 빨라지지 않는다
+        vel = dir * knockback * weight * knockMult;          // '덮어쓰기': 연타해도 무한히 빨라지지 않는다
         if (soul.TakeHit(damage))
         {
             if (!dropRolled) { dropRolled = true; onKneel?.Invoke(); }
@@ -231,6 +231,32 @@ public class Enemy : MonoBehaviour
         // 1호 보랏빛 / 2호 오방 천(붉은 자주) / 3호 약탕 갈색 — 3D 모델이 없을 때의 색 도형 대역
         baseColor = id == 2 ? new Color(0.72f, 0.25f, 0.38f) : id == 3 ? new Color(0.45f, 0.33f, 0.20f) : new Color(0.55f, 0.42f, 0.78f);
         mat.color = baseColor;
+    }
+
+    public bool elite;                      // 거센 혼(첫 강적): 맺힘 300, 패턴 셋, 이름 띠. EliteArena 가 움직임을 맡는다
+    public bool eliteMote;                  // 거센 혼이 부른 잔넋(천도하면 조용히 흩어지고, 파혼 폭발에 함께 터진다)
+    public float knockMult = 1f;            // 맞았을 때 밀림 배율(거센 혼 0.5)
+
+    /// <summary>거센 혼으로 만든다(처음 10분 M10). 보통 공격은 없고(사거리 0), 예고 있는 패턴만 쓴다</summary>
+    public void MakeElite()
+    {
+        elite = true; extra = true; label = "거센 혼";
+        soul = new Soul(SoulKind.Year) { MaedhimMax = Balance.ELITE_MAEDHIM, Maedhim = Balance.ELITE_MAEDHIM };
+        damage = Balance.ELITE_SLAM_DMG;
+        knockMult = Balance.ELITE_KNOCKBACK_MULT;
+        speed *= 0.85f;
+        atk.Range = 0f;   // 몸으로 때리지 않는다(패턴만)
+        baseColor = new Color(0.62f, 0.12f, 0.12f); mat.color = baseColor;
+    }
+
+    /// <summary>거센 혼이 부른 잔넋: 맺힘 30, 공격 4, 주기 2.6초</summary>
+    public void MakeEliteMote()
+    {
+        SetType(SoulType.Mote);
+        eliteMote = true; extra = true;
+        soul.MaedhimMax = Balance.ELITE_MOTE_MAEDHIM; soul.Maedhim = Balance.ELITE_MOTE_MAEDHIM;
+        damage = Balance.ELITE_MOTE_DMG;
+        atk.Interval = Balance.ELITE_MOTE_INTERVAL; atk.Cooldown = atk.Interval;
     }
 
     public float cageUntil;                 // 쇠사슬 울에 갇힌 시각(이 시각까지 받는 피해 +50%)
@@ -519,6 +545,28 @@ public class EnemyManager
     {
         var e = Enemy.Create(true, at, 1.6f);
         e.MakeBoss(id);
+        e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        e.onKneel = () => onEnemyKneel?.Invoke(e);
+        list.Add(e);
+        return e;
+    }
+
+    /// <summary>거센 혼(첫 강적): 보통 혼의 1.3배 크기</summary>
+    public Enemy SpawnElite(Vector3 at)
+    {
+        var e = Enemy.Create(true, at, Balance.ELITE_SCALE);
+        e.MakeElite(); e.camp = true;
+        e.onHitPlayer = () => onPlayerHit?.Invoke(e);
+        e.onKneel = () => onEnemyKneel?.Invoke(e);
+        list.Add(e);
+        return e;
+    }
+
+    /// <summary>거센 혼이 부르는 잔넋</summary>
+    public Enemy SpawnEliteMote(Vector3 at)
+    {
+        var e = Enemy.Create(true, at);
+        e.MakeEliteMote(); e.camp = true;
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
         e.onKneel = () => onEnemyKneel?.Invoke(e);
         list.Add(e);
