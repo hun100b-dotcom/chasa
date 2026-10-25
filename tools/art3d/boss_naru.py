@@ -23,8 +23,13 @@ def naru(attack=False):
     water = [cyl("mist", 3.1, 3.1, 0.04, (0, 0, 0), mat("chain", 0.5), 12), cyl("water", 2.2, 2.2, 0.05, (0, 0, 0), "water", 12)]
     ox, oy = 0, 0.9
     man = [cyl("robe", 0.44, 0.22, 1.0, (ox, oy, 0.18), "robe", 8), cyl("torso", 0.22, 0.2, 0.4, (ox, oy, 1.1), "robe", 8), box("belt", (0.48, 0.3, 0.07), (ox, oy, 1.1), "ink")]
-    head = [sphere("head", 0.13, (ox, oy, 1.6), "old_skin", 6, 4), cone := cyl("sagat", 0.66, 0.05, 0.3, (ox, oy, 1.66), "sagat", 10),
+    head = [sphere("head", 0.13, (ox, oy, 1.6), "old_skin", 6, 4), cone := cyl("sagat", 1.0, 0.05, 0.34, (ox, oy, 1.66), "sagat", 10),
             box("beard", (0.14, 0.05, 0.3), (ox, oy - 0.12, 1.42), "beard"), box("eyeL", (0.025, 0.02, 0.025), (ox + 0.05, oy - 0.12, 1.62), "hanji"), box("eyeR", (0.025, 0.02, 0.025), (ox - 0.05, oy - 0.12, 1.62), "hanji")]
+    # 50° 쿼터뷰에서는 배·영감·삿대가 모두 같은 세로줄에 겹쳐 '긴 막대'로만 읽혔다(점검 sil_elite_boss.png).
+    # 그래서 옆으로 튀어나오는 모양 둘을 더한다: ① 어깨를 덮는 넓은 짚 도롱이(종 모양, 배 폭보다 넓음) ② 고물 기둥에서 옆으로 뻗은 나룻불 장대와 등(뱃사공 표지).
+    head += [cyl("capeStraw", 0.78, 0.3, 0.62, (ox, oy, 0.98), "reed", 10)]
+    boat += [limb("lampPost", (0.5, 1.45, 0.35), (0.5, 1.45, 1.55), 0.035, 0.03, "wood_dark", 4), limb("lampArm", (0.5, 1.45, 1.55), (1.3, 1.4, 1.95), 0.03, 0.025, "wood_dark", 4),
+             box("lamp", (0.2, 0.2, 0.28), (1.3, 1.4, 1.75), "gold"), box("lampCap", (0.26, 0.26, 0.05), (1.3, 1.4, 1.93), "wood_dark")]
     # 팔과 삿대
     shL, shR = (ox + 0.22, oy, 1.4), (ox - 0.22, oy, 1.4)
     if attack:   # 예비동작: 삿대를 크게 뒤로 젖힘

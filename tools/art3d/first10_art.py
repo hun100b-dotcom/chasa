@@ -292,7 +292,9 @@ def fog_tile(seed, w=2048, h=512):
     for cell, wt in ((300, 0.5), (140, 0.3), (60, 0.2)):
         gw = max(2, w // cell); gh = max(2, h // cell); g = r.rand(gh + 1, gw).astype(np.float32); g = np.concatenate([g, g[:, :1]], axis=1)         # 가로로 이어지게 첫 열을 끝에 복사
         acc += wt * np.asarray(Image.fromarray((g * 255).astype(np.uint8)).resize((w, h), Image.BICUBIC), np.float32) / 255
-    yy = np.linspace(0, 1, h)[:, None]; band = np.exp(-((yy - 0.55) / 0.28) ** 2)
+    # 이음매 지우기: 첫 열 복사만으로는 값만 이어지고 기울기가 끊겨 x=끝에서 가는 세로 선이 보였다(타이틀 점검). 반폭만큼 굴린 그림과 섞어(가장자리 0 · 가운데 1 창) 양 끝이 원래 그림의 가운데에서 온 값끼리 맞닿게 한다.
+    x = np.linspace(0, 1, w, endpoint=False)[None, :]; win = np.sin(np.pi * x) ** 2; acc = acc * win + np.roll(acc, w // 2, axis=1) * (1 - win)
+    yy = np.linspace(0, 1, h)[:, None]; band = np.exp(-((yy - 0.55) / 0.28) ** 2) * np.clip((1 - yy) / 0.12, 0, 1) * np.clip(yy / 0.1, 0, 1)   # 위아래 끝은 완전히 투명하게(가로 줄 방지)
     a = np.clip((acc - 0.35) * 2.2, 0, 1) * band * 0.5
     rgb = np.dstack([np.full((h, w), 150, np.float32), np.full((h, w), 168, np.float32), np.full((h, w), 200, np.float32)])
     return Image.fromarray(np.dstack([rgb, a * 255]).astype(np.uint8), "RGBA")
