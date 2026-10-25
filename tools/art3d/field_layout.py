@@ -302,7 +302,10 @@ scatter("폐당집 터", (66, 62, 78, 76), DEAD + ROCK, 40, lvl=1); scatter("폐
 # 보스 싸움터 3곳(boss_arenas.py): 둘레를 비워야 바닥 무늬와 예고 장판이 읽힌다. 억새만 남기고 걷어 낸다. (보스 좌표는 코드팀 Boss.cs)
 ARENA_CLEAR = [(404.0, 288.0, 19.0), (580.0, 521.0, 11.5), (46.0, 453.0, 9.8)]
 _n0 = len(props)
-props[:] = [p for p in props if p["prop"] == "nature_silvergrass_a" or not any((p["x"] - x) ** 2 + (p["y"] - y) ** 2 < r * r for x, y, r in ARENA_CLEAR)]
+# 안개 소품(폭 7m)은 가장자리 너머에 있어도 마당 위로 덮이므로 반지름을 6m 더 넓혀 치운다(10-25 서 의원 마당 서쪽 회색 판 문제)
+MIST_MARGIN = 6.0
+_rr = lambda p, r: r + MIST_MARGIN if p["prop"].startswith("prop_mist_") else r
+props[:] = [p for p in props if p["prop"] == "nature_silvergrass_a" or not any((p["x"] - x) ** 2 + (p["y"] - y) ** 2 < _rr(p, r) ** 2 for x, y, r in ARENA_CLEAR)]
 print("보스 싸움터 비움:", _n0 - len(props), "개 제거")
 
 # ── 6) 표식: 동선·거점(코드팀이 NPC·서낭당·굴 입구·혼 무리 자리로 쓴다) ──────────────
