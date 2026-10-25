@@ -1399,3 +1399,27 @@
 - 거센 혼 파혼 큰 얼룩(x1.5): `StainSet`에 얼룩별 배율, 판정·그림 크기 반영.
 - 비교: 장비를 주울 때 "↑ 낫다 / ↓ 못하다 / = 같다 / 새 칸" 알림(▲▼는 글꼴에 없어 ↑↓).
 - 안 한 것: M2 깨어날 때 카메라, M14 로딩 화면, 징 소리(사운드 id가 오면), 거센 혼 구역별 밤 출현, 전투층은 기존 BGM 감독이 처리(별도 한 단계 위 없음). 사운드팀 처음 10분 소리 오면 연결.
+## 2026-10-25 밤 — [기획·사운드] 시즌3 「백의 밤」 소리·BGM
+- 효과음 83개 추가(총 342): 아래층 구역 환경음 21(`amb.below.*`), 물 빠짐·차오름·실·눕히기·깨뜨리기·저편 불 장치음 12, 보스 B-21~B-31 전투음 50(`sfx.boss.yun/seven/knot/armies/chilseong/plague/imyeong/byeoru/halmi/mother/mybaek.*`). 기존 소리 파일은 그대로.
+- 임시 대역 BGM 17곡(`bgm_below_{water,earth,ink}_{night,combat,finish}`, `bgm_s3_*` 8곡). `data/bgm.json` naming 에 `below`(관할→곡 이름)·`s3_special` 추가.
+- Gemini 지시문 46~62 추가(총 62). `docs/sound-direction.md` 에 시즌3 절, `docs/bgm-temp.md` 에 시즌3 표와 BgmPlayer 제안.
+- 남은 일: 서사의 시즌3 컷신 대본이 나오면 `cutscene_audio_s3` 소리 대본. 코드팀: ZoneAmbient 아래층 구역 연결, 물 주기 훅, B-27·B-30 타이머 맞춤.
+
+## 2026-10-25 밤 — [기획·사운드] 소리 용량 예산 + 시즌3 컷신 소리 대본
+- `tools/audio_budget.py` 신설. 효과음 368개와 곡 47곡의 최고점·트루 피크·음량·고음 비율을 재고, AAC(웹)·Vorbis(폰)로 시험 변환해 크기를 잰다. 결과는 `docs/audio-budget.md`(보고서)와 `data/audio_packs.json`(막별 묶음표, 소리별 가져오기 종류)이다.
+- 지금 설정(Vorbis 품질 100%, 전부 Resources)으로는 약 159MB가 첫 화면에 한꺼번에 온다. 권장 설정에서는 전체 약 45MB가 되고, 첫 화면은 공통+1막만 받는다. 코드팀 할 일은 `docs/audio-delivery-plan.md`에 정리했다.
+- 클리핑 0개. 트루 피크가 −1dB를 넘은 것은 `bgm_solgogae_finish`(−0.8) 하나. 요령방울 타격 2개를 4dB 내렸다.
+- 시즌3 컷신 89컷 소리 대본: `tools/cutscene_audio_s3.py` → `data/cutscene_audio_s3.json`(80컷 232박자). 서사가 요청한 새 소리 26개를 `sfx_render.py`에 추가했다(총 368개).
+
+## 2026-10-26 새벽 — [기획·사운드] 시즌3 장례 소리 20개
+- 서사 요청(funerals_s3.json, PR #32) 20개 중 이미 있던 3개(`amb.dawn.still`·`cut.chain.fall`·`cut.seal.set`)를 뺀 17개를 `sfx_render.py`에 만들었다.
+- 덤으로 3개: 먹방 1초 끊김용 `cut.ink.grind.room`(반복)·`cut.ink.grind.stop`, 멀리서 인 아홉 번 `cut.seal.set.nine`. 효과음은 모두 388개. 다시 잰 전체 용량은 웹 46.0MB(+0.8), 첫 화면 7.7MB.
+- `data/funeral_audio_s3.json` 신설: FUN-B28 먹방 20.0의 끊김 박자, FUN-S-276의 인 아홉 번 바꿔 끼우기. 끊긴 1초는 앞 소리보다 −77dB(사실상 무음)인 것을 쟀다.
+- `audio_budget.py`: 시즌3 장례(FUN-S-181~300)에 쓰는 소리를 관할에 따라 6·7·8막 묶음에 넣도록 고쳤다.
+
+## 2026-10-26 새벽 — [기획·사운드] 처음 10분에 빠진 소리 31개 + 타이틀 곡
+- 기획 `first-10min-benchmark`의 소리 몫(M1·M3·M4·M6·M7·M8·M9·M10)과 서사 요청 `cut.jing`·`cut.jing.crack`을 `sfx_render.py`에 만들었다. 효과음은 모두 419개.
+- 품계 인 `sfx.rank.seal`, 손보기 `sfx.repair.first`, 혼불·엽전 흡수 4개(천도·파혼이 같은 길이·크기), 장비 빛줄기 4등급 + 떨어짐·줍기(등급이 오를수록 음이 하나씩 늘어남), 도술 카드 6개, 거센 혼 8개(등장·내려치기·덮치기·부르기·잔넋), 싸움 끝 징·슬로, 타이틀 환경음·새로 시작.
+- 타이틀 곡 `bgm_title` 임시 대역(반복 64초)을 `bgm_temp_render.py`에 추가했고, Gemini 지시문 63번을 썼다. `data/bgm.json`의 naming에 title 항목을 넣었다.
+- 코드팀용 연결표 `docs/first-10min-sound-hookup.md`: 어느 순간에 어떤 id를 부르는지 정리했다. Sfx.cs는 손대지 않았다.
+- 용량 다시 잼: 새 소리는 모두 공통 묶음(첫 화면)에 들어간다. 결과는 `docs/audio-budget.md`.

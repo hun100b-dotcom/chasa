@@ -87,3 +87,20 @@ if (regionCheck <= 0f && judge.player != null)
 위의 `fadeLen = 4f` 가 Switch 의 교차 시간에 덮어쓰이지 않게 하려면, `Switch(...)` 를 부를 때 `curId == null` 이면 4초를 넘겨 주면 된다.
 
 **함께 볼 것.** `Start()` 의 `loadedAny` 는 지금 솔고개 곡만 보고 정해진다. 지역 곡 기준으로 해도 결과는 같다. 임시 곡이 있으니 2막·3막에서도 항상 참이다.
+
+## 시즌3 「백의 밤」 대역 곡 (2026-10-25 밤, 지시문 46~62)
+
+| 곡 이름 | 쓰는 곳 | 길이 | 반복 |
+|---|---|---|---|
+| bgm_below_water_night / _combat / _finish | 6막 ①⑤⑦ 아래층 | 96 / 43 / 7초 | 반복 / 반복 / 1회 |
+| bgm_below_earth_night / _combat / _finish | 7막 ③④②⑥ 아래층 | 87 / 45 / 7초 | 반복 / 반복 / 1회 |
+| bgm_below_ink_night / _combat / _finish | 8막 ⑧⑨⑩ 아래층 | 103 / 44 / 7초 | 반복 / 반복 / 1회 |
+| bgm_s3_rising | 새벽 물 차오름 2분 | 32초 | 반복(크기 0.5→1.0) |
+| bgm_s3_knot · bgm_s3_imyeong · bgm_s3_mybaek | B-23 · B-27 · B-31 전투 | 60 · 55 · 83초 | 반복 |
+| bgm_s3_open | C-21 여는 장면 | 78초 | 1회 |
+| bgm_s3_end_a · _b · _c | 결말 A · B · C | 160 · 118 · 88초 | 1회 |
+
+**코드팀 제안(BgmPlayer, 고치는 건 코드팀).**
+- 아래층에 있으면 지역 대신 `data/bgm.json` 의 `naming.below[관할 번호]` 로 `LoadRegion(...)` 을 부른다. 아래층은 밤에만 열리므로 `day_a` 가 없다. 위 `LoadRegion` 에 `if (dayA == null) dayA = night;` 한 줄을 더하면 된다.
+- 보스 곡(knot·imyeong·mybaek)은 그 보스 싸움 동안 combat 층을 대신한다. 끝나면 지역 combat 으로 돌아간다.
+- `bgm_s3_rising` 은 물 차오름 2분 동안 night 위에 겹쳐 깔고(layer), 크기를 0.5→1.0 으로 키운다. 다 차면 2초에 걸쳐 내린다.

@@ -1,6 +1,51 @@
 {
  "_설명": "임시 대역 BGM(코드 합성, tools/bgm_temp_render.py). 파일은 Resources/Audio/BGM/Temp/<id>.ogg. 진짜 곡을 Resources/Audio/BGM/<id>.ogg 로 넣으면 그것이 먼저 쓰인다(코드 수정 불필요).",
  "clips": {
+  "bgm_below_earth_combat": {
+   "sec": 45.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_below_earth_finish": {
+   "sec": 7.0,
+   "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_below_earth_night": {
+   "sec": 87.27,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_below_ink_combat": {
+   "sec": 43.85,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_below_ink_finish": {
+   "sec": 7.0,
+   "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_below_ink_night": {
+   "sec": 102.86,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_below_water_combat": {
+   "sec": 43.2,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_below_water_finish": {
+   "sec": 7.0,
+   "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_below_water_night": {
+   "sec": 96.0,
+   "loop": true,
+   "lufs": -20.0
+  },
   "bgm_bulgeunjae_combat": {
    "sec": 44.44,
    "loop": true,
@@ -106,6 +151,46 @@
    "loop": false,
    "lufs": -20.0
   },
+  "bgm_s3_end_a": {
+   "sec": 160.0,
+   "loop": false,
+   "lufs": -20.0
+  },
+  "bgm_s3_end_b": {
+   "sec": 118.0,
+   "loop": false,
+   "lufs": -20.0
+  },
+  "bgm_s3_end_c": {
+   "sec": 88.0,
+   "loop": false,
+   "lufs": -20.0
+  },
+  "bgm_s3_imyeong": {
+   "sec": 54.78,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_s3_knot": {
+   "sec": 60.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_s3_mybaek": {
+   "sec": 83.08,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_s3_open": {
+   "sec": 78.0,
+   "loop": false,
+   "lufs": -20.0
+  },
+  "bgm_s3_rising": {
+   "sec": 32.0,
+   "loop": true,
+   "lufs": -18.0
+  },
   "bgm_soegol_combat": {
    "sec": 44.0,
    "loop": true,
@@ -123,6 +208,11 @@
   },
   "bgm_soegol_night": {
    "sec": 96.0,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_title": {
+   "sec": 64.0,
    "loop": true,
    "lufs": -20.0
   }

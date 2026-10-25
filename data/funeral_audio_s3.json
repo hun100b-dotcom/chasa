@@ -1,0 +1,71 @@
+{
+ "_설명": "시즌3 장례 대본(docs/narrative/funerals_s3.json)의 '소리 대본' 덧칠표 — 특별히 손볼 박자만 (기획·사운드, 2026-10-26 새벽). 형식은 cutscene_audio_s3.json 과 같음: 장면 id → 박자(t) → add / replace / music. 나머지 박자는 대본의 sfx 그대로 재생",
+ "cuts": {
+  "FUN-B28-LAY": {
+   "0.0": {
+    "replace": {
+     "cut.ink.grind": "cut.ink.grind.room"
+    },
+    "add": [
+     {
+      "id": "cut.ink.grind.room",
+      "loop": true
+     }
+    ],
+    "note": "먹방 전체가 가는 소리를 반복으로 깔아 둔다(한 번짜리 cut.ink.grind 대신)"
+   },
+   "12.0": {
+    "add": [
+     {
+      "id": "cut.tool.set",
+      "gain": 0.6
+     },
+     {
+      "id": "cut.tool.set",
+      "delay": 1.3,
+      "gain": 0.5
+     }
+    ],
+    "note": "일꾼들이 먹을 벼루에 눕혀 둠 — 아주 작게. 반복음은 그대로(아직 다른 손들이 감)"
+   },
+   "20.0": {
+    "add": [
+     {
+      "stop": "cut.ink.grind.room",
+      "fade": 0.0
+     },
+     "cut.ink.grind.stop",
+     {
+      "id": "cut.footstep.leave",
+      "delay": 2.1,
+      "gain": 0.6
+     }
+    ],
+    "music": {
+     "op": "silence",
+     "fade": 0.3
+    },
+    "note": "깊은 박자 ②. 반복음을 페이드 없이 끄고 같은 순간 cut.ink.grind.stop 을 튼다 → 0.5초 뒤 뚝, 20.5~21.5 정확히 1초 고요, 21.5부터 세 사람만 다시 감. 이 1초 동안 다른 소리(음악·환경음·UI)를 하나도 내지 말 것. amb.dawn.still 도 20.0~21.5 동안 0으로 내렸다가 되돌림. 2.1초 뒤 cut.footstep.leave(몇 사람은 줄 쪽으로 나감)"
+   },
+   "28.0": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "FUN-S-276-LAY": {
+   "10.0": {
+    "replace": {
+     "cut.seal.set": "cut.seal.set.nine"
+    },
+    "note": "'멀리서 인 찍는 소리가 아홉 번' — 한 번짜리를 아홉 번 부르지 말고 아홉 번이 든 파일 하나로"
+   }
+  }
+ },
+ "notes": [
+  "cut.chain.scratch: 반쪽 장례(-HALF)는 F를 눌렀을 때만 재생. 누르지 않으면 아무 소리도 없음(벌 없음)",
+  "저승 새벽 장례(⑧⑨⑩)에는 amb.crow.far·amb.river.morning·amb.rooster 같은 산 것 소리를 쓰지 않는다 — 이승 낮 장례 전용",
+  "깨뜨린 백(-BREAK, 0초)은 소리도 없음"
+ ]
+}
