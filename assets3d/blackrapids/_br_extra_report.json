@@ -1,0 +1,145 @@
+[
+ {
+  "name": "br_x_wrecked_boat",
+  "label": "엎어진 배",
+  "tris": 214,
+  "size_m": [
+   3.9,
+   2.15,
+   0.8
+  ],
+  "min_z": -0.02
+ },
+ {
+  "name": "br_x_net_posts",
+  "label": "그물 말뚝",
+  "tris": 256,
+  "size_m": [
+   3.8,
+   0.13,
+   2.0
+  ],
+  "min_z": -0.002
+ },
+ {
+  "name": "br_x_driftwood",
+  "label": "떠내려온 통나무",
+  "tris": 216,
+  "size_m": [
+   4.8,
+   1.19,
+   1.01
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "br_x_mossy_boulder",
+  "label": "이끼 낀 큰 돌",
+  "tris": 206,
+  "size_m": [
+   2.4,
+   1.75,
+   1.4
+  ],
+  "min_z": -0.15
+ },
+ {
+  "name": "br_x_drowned_cart",
+  "label": "잠긴 수레",
+  "tris": 164,
+  "size_m": [
+   3.23,
+   1.76,
+   1.16
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "br_x_fish_trap",
+  "label": "통발",
+  "tris": 110,
+  "size_m": [
+   1.32,
+   0.64,
+   0.8
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "br_x_heron",
+  "label": "왜가리",
+  "tris": 122,
+  "size_m": [
+   0.24,
+   0.9,
+   1.09
+  ],
+  "min_z": -0.001
+ },
+ {
+  "name": "br_x_dead_reeds",
+  "label": "마른 갈대 무더기",
+  "tris": 384,
+  "size_m": [
+   1.79,
+   1.7,
+   1.81
+  ],
+  "min_z": -0.007
+ },
+ {
+  "name": "br_x_broken_fence",
+  "label": "부러진 울타리",
+  "tris": 124,
+  "size_m": [
+   3.23,
+   0.86,
+   1.11
+  ],
+  "min_z": -0.004
+ },
+ {
+  "name": "br_x_cloth_line",
+  "label": "흰 천 줄",
+  "tris": 132,
+  "size_m": [
+   3.11,
+   0.12,
+   1.8
+  ],
+  "min_z": -0.001
+ },
+ {
+  "name": "br_x_washing_stone",
+  "label": "빨래 돌판",
+  "tris": 128,
+  "size_m": [
+   2.1,
+   1.42,
+   0.32
+  ],
+  "min_z": -0.003
+ },
+ {
+  "name": "br_x_buoy_lamp",
+  "label": "부표 등",
+  "tris": 100,
+  "size_m": [
+   0.62,
+   0.62,
+   1.83
+  ],
+  "min_z": -0.404
+ },
+ {
+  "name": "br_x_salt_ring",
+  "label": "소금 선",
+  "tris": 296,
+  "size_m": [
+   2.21,
+   2.29,
+   0.08
+  ],
+  "min_z": 0.0
+ }
+]
