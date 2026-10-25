@@ -1240,8 +1240,8 @@
   "note": "(QA M6 조정) 첫 밤 생존: 첫 밤 시작 때 당할미가 쥐여 주는 회복약 수(H 키)"
  },
  "DEMO_WEAPONS": {
-  "value": false,
-  "note": "(코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: Tab 무기 교체(육모방망이 등) 켜기 true"
+  "value": true,
+  "note": "(코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: Tab 무기 교체(육모방망이 등) 켜기 true (10-25 오너 지시로 켬: 무기 5계열 실사용)"
  },
  "DEMO_SKILLS": {
   "value": false,
@@ -1758,5 +1758,33 @@
  "PAHON_STAIN_POINT_EVERY": {
   "value": 15,
   "note": "(기획 4-4절 10-25, 임시) 파혼 이만큼마다 얼룩 갈래 전용 도술 점수 1"
+ },
+ "CHAIN_CHAIN_WINDOW_ADD": {
+  "value": 0.5,
+  "note": "(무기 5계열 맛, 임시) 철삭: 연속 천도 창 +초 (이어 가는 맛)"
+ },
+ "BELL_CAST_MULT": {
+  "value": 0.85,
+  "note": "(무기 5계열 맛, 임시) 요령방울: 천도 시전 시간 배율 (소리가 넋을 달랜다)"
+ },
+ "BELL_PAHON_DAMAGE_MULT": {
+  "value": 0.85,
+  "note": "(무기 5계열 맛, 임시) 요령방울: 파혼 피해 배율"
+ },
+ "TRIDENT_PAHON_KNOCKBACK_MULT": {
+  "value": 1.25,
+  "note": "(무기 5계열 맛, 임시) 삼지창: 파혼 넉백 배율 (꿰어 날린다)"
+ },
+ "TRIDENT_PAHON_DAMAGE_MULT": {
+  "value": 1.1,
+  "note": "(무기 5계열 맛, 임시) 삼지창: 파혼 피해 배율"
+ },
+ "BRUSH_NEOK_PCT": {
+  "value": 0.12,
+  "note": "(무기 5계열 맛, 임시) 명부 붓: 천도 넋 +% (기록하는 맛)"
+ },
+ "BRUSH_PAHON_DAMAGE_MULT": {
+  "value": 0.7,
+  "note": "(무기 5계열 맛, 임시) 명부 붓: 파혼 피해 배율 (먹이 번져 약하다)"
  }
 }

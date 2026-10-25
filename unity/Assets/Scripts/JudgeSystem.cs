@@ -129,7 +129,7 @@ public class JudgeSystem : MonoBehaviour
         player.ConsumeAct();   // 후딜·피하기를 끊고 천도 시작
         castTarget = e;
         castT = 0f;
-        castTotal = e.soul.Boss ? Balance.BOSS_TENDO_CAST_TIME : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult);   // 연속 천도면 0.8초, 보스는 2.0초
+        castTotal = e.soul.Boss ? Balance.BOSS_TENDO_CAST_TIME : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
         if (!e.soul.Boss)
         {
             if (nameLightArmed) { castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.AC_NAMELIGHT_SEC); nameLightArmed = false; }   // 이름 비추기
@@ -240,7 +240,7 @@ public class JudgeSystem : MonoBehaviour
         {
             int before = ledger.Neok;
             ledger.CompleteTendo();
-            ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f));   // 향 내음: 천도 넋 보너스
+            ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f + lo.Def.NeokPct));   // 향 내음: 천도 넋 보너스
             int gained = ledger.Neok - before;
             if (growth.AddNeok(gained) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
@@ -252,7 +252,7 @@ public class JudgeSystem : MonoBehaviour
         if (castTarget.soul.Name == "곽 뱃꾼" && clueBook.Add("B01-D4")) Say("단서 — 곽 뱃꾼의 기억");   // 밤 대체 단서(서사 확정): 천도해야만 얻는다
         string fact; var ml = memories.Collect(castTarget.soul, out fact);
         if (ml != null) { memLine = ml; memLineT = 5f; if (fact != null) ui?.Hud.Toasts.Add("추리판 " + fact + " 켜짐"); }
-        chainLeft = lo.stats.ChainWindow;   // 젖은 소매가 있으면 창이 길다
+        chainLeft = lo.stats.ChainWindow + lo.Def.ChainWindowAddS;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
         Sfx.Play("sfx.tendo.done");
         feel.SlowMo(Balance.TENDO_COMPLETE_SLOWMO, Balance.TENDO_COMPLETE_SLOWMO_SCALE);   // 멈춤이 아니라 느림 = 보냄
@@ -656,7 +656,7 @@ public class JudgeSystem : MonoBehaviour
         if (clock == null || ledger.Dead) return false;
         var s = SaveGame.Capture(growth, ledger, lo.gear, clueBook);
         s.X = player.Pos.x; s.Z = player.Pos.z; s.ClockDay = clock.Day; s.ClockMinutes = clock.Minutes;
-        s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon;
+        s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         return SaveStore.Write(SaveGame.Serialize(s));
     }
 
@@ -668,7 +668,7 @@ public class JudgeSystem : MonoBehaviour
         if (s == null) return false;
         if (Casting) EndCast();
         SaveGame.Apply(s, growth, ledger, lo.gear, clueBook);
-        lo.weapon = s.Weapon; lo.other = s.Weapon == WeaponId.Chain ? WeaponId.Mace : WeaponId.Chain;
+        lo.weapon = s.Weapon; lo.other = s.Other == s.Weapon ? (s.Weapon == WeaponId.Chain ? WeaponId.Mace : WeaponId.Chain) : s.Other;
         RefreshGrowth();
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);

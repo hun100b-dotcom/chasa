@@ -312,7 +312,7 @@ public static class Balance
     public const float REGEN_PER_SEC = 2.0f;  // (QA M6 조정) 첫 밤 생존: 맞지 않는 동안 초당 체력 회복
     public const float SHRINE_HEAL_PER_SEC = 12.0f;  // (QA M6 조정) 첫 밤 생존: 서낭당 원 안에서 초당 체력 회복(맞은 직후에도). 서낭당 = 안전한 쉼터
     public const int FIRST_NIGHT_HEAL = 2;  // (QA M6 조정) 첫 밤 생존: 첫 밤 시작 때 당할미가 쥐여 주는 회복약 수(H 키)
-    public const bool DEMO_WEAPONS = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: Tab 무기 교체(육모방망이 등) 켜기 true
+    public const bool DEMO_WEAPONS = true;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: Tab 무기 교체(육모방망이 등) 켜기 true (10-25 오너 지시로 켬: 무기 5계열 실사용)
     public const bool DEMO_SKILLS = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 도술 1/2/3 켜기 true
     public const bool DEMO_GEAR = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 장비 드롭·장착·월화 방울 켜기 true
     public const bool DEMO_DAY = false;  // (코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 낮 화면·서낭당 켜기 true
@@ -442,4 +442,11 @@ public static class Balance
     public const int ENHANCE_COST_4 = 150;  // (기획 4-4절 10-25, 임시) 장비 손보기 4단계 엽전
     public const int ENHANCE_COST_5 = 220;  // (기획 4-4절 10-25, 임시) 장비 손보기 5단계 엽전
     public const int PAHON_STAIN_POINT_EVERY = 15;  // (기획 4-4절 10-25, 임시) 파혼 이만큼마다 얼룩 갈래 전용 도술 점수 1
+    public const float CHAIN_CHAIN_WINDOW_ADD = 0.5f;  // (무기 5계열 맛, 임시) 철삭: 연속 천도 창 +초 (이어 가는 맛)
+    public const float BELL_CAST_MULT = 0.85f;  // (무기 5계열 맛, 임시) 요령방울: 천도 시전 시간 배율 (소리가 넋을 달랜다)
+    public const float BELL_PAHON_DAMAGE_MULT = 0.85f;  // (무기 5계열 맛, 임시) 요령방울: 파혼 피해 배율
+    public const float TRIDENT_PAHON_KNOCKBACK_MULT = 1.25f;  // (무기 5계열 맛, 임시) 삼지창: 파혼 넉백 배율 (꿰어 날린다)
+    public const float TRIDENT_PAHON_DAMAGE_MULT = 1.1f;  // (무기 5계열 맛, 임시) 삼지창: 파혼 피해 배율
+    public const float BRUSH_NEOK_PCT = 0.12f;  // (무기 5계열 맛, 임시) 명부 붓: 천도 넋 +% (기록하는 맛)
+    public const float BRUSH_PAHON_DAMAGE_MULT = 0.7f;  // (무기 5계열 맛, 임시) 명부 붓: 파혼 피해 배율 (먹이 번져 약하다)
 }

@@ -19,6 +19,14 @@ public class Loadout
     public string lastDrop = "";                            // 가장 최근 드롭 안내 글자
     public float lastDropT;
 
+    public static readonly WeaponId[] AllWeapons = { WeaponId.Chain, WeaponId.Mace, WeaponId.Bell, WeaponId.Trident, WeaponId.Brush };   // 5계열 모두 고를 수 있다
+
+    /// <summary>손에 들 무기를 고른다. 등에 멘 것과 같으면 둘을 맞바꾼다(같은 무기 두 자루는 안 됨)</summary>
+    public void SetHand(WeaponId w) { if (w == weapon) return; if (w == other) other = weapon; weapon = w; swapLeft = 0f; }
+
+    /// <summary>등에 멜 무기를 고른다. 손에 든 것과 같으면 둘을 맞바꾼다</summary>
+    public void SetBack(WeaponId w) { if (w == other) return; if (w == weapon) weapon = other; other = w; }
+
     public WeaponDef Def { get { return WeaponDef.Get(weapon); } }
 
     public void Tick(float dt)

@@ -22,24 +22,29 @@ namespace Chasa.Core
         public bool HasQuake;                   // 이 무기의 Q 기술이 땅울림인가
         public bool HasPull;                    // 이 무기의 Q 기술이 철삭 견인인가 (사슬만)
         public bool Projectile;                 // 휘두름 대신 날아가는 먹물(투사체)을 쏘는가 (명부 붓)
+        public float CastTimeMult = 1f;         // 천도 시전 시간 배율(요령방울 등)
+        public float NeokPct;                   // 천도 넋 +%(명부 붓)
+        public float ChainWindowAddS;           // 연속 천도 창 +초(철삭)
+        public string Taste = "";               // 명부에 보일 한 줄: 이 무기의 천도·파혼 맛
         public int MaxHits;                     // 한 번 휘두를 때 맞는 적 수 상한 (0 = 제한 없음, 삼지창 관통 3 등)
 
-        public static readonly WeaponDef Chain = new WeaponDef { Id = WeaponId.Chain, Name = "철삭", HasQuake = false, HasPull = true };
+        public static readonly WeaponDef Chain = new WeaponDef { Id = WeaponId.Chain, Name = "철삭", HasQuake = false, HasPull = true, ChainWindowAddS = Balance.CHAIN_CHAIN_WINDOW_ADD, Taste = "균형 · 견인(Q) · 연속 천도 창이 길다" };
         public static readonly WeaponDef Mace = new WeaponDef
         {
             Id = WeaponId.Mace, Name = "육모방망이",
             PahonKnockbackMult = Balance.MACE_PAHON_KNOCKBACK_MULT,
             PahonDamageMult = Balance.MACE_PAHON_DAMAGE_MULT,
-            HasQuake = true
+            HasQuake = true,
+            Taste = "파혼이 강하다(멀리·세게) · 땅울림(Q) · 근접 한 방"
         };
 
         // 시연판 이후 무기 3계열 (기획서 6절 임시값). 콤보 숫자는 Unity 쪽 WeaponTable 에 있다.
         // 요령방울: 짧은 원 범위 — 여러 마리를 한꺼번에 흔든다
-        public static readonly WeaponDef Bell = new WeaponDef { Id = WeaponId.Bell, Name = "요령방울" };
+        public static readonly WeaponDef Bell = new WeaponDef { Id = WeaponId.Bell, Name = "요령방울", CastTimeMult = Balance.BELL_CAST_MULT, PahonDamageMult = Balance.BELL_PAHON_DAMAGE_MULT, Taste = "천도가 빠르다 · 파혼은 약하다 · 원 범위로 여럿을 흔든다" };
         // 삼지창: 가늘고 긴 찌르기 — 줄지은 적을 최대 3마리까지 꿰뚫는다
-        public static readonly WeaponDef Trident = new WeaponDef { Id = WeaponId.Trident, Name = "삼지창", MaxHits = 3 };
+        public static readonly WeaponDef Trident = new WeaponDef { Id = WeaponId.Trident, Name = "삼지창", MaxHits = 3, PahonKnockbackMult = Balance.TRIDENT_PAHON_KNOCKBACK_MULT, PahonDamageMult = Balance.TRIDENT_PAHON_DAMAGE_MULT, Taste = "파혼이 날카롭다 · 줄지은 셋을 꿰뚫는다" };
         // 명부 붓: 멀리서 한 마리 — 먹물 투사체(날아가는 것)를 쏜다. 사거리는 콤보 표의 reach
-        public static readonly WeaponDef Brush = new WeaponDef { Id = WeaponId.Brush, Name = "명부 붓", MaxHits = 1, Projectile = true };
+        public static readonly WeaponDef Brush = new WeaponDef { Id = WeaponId.Brush, Name = "명부 붓", MaxHits = 1, Projectile = true, NeokPct = Balance.BRUSH_NEOK_PCT, PahonDamageMult = Balance.BRUSH_PAHON_DAMAGE_MULT, Taste = "멀리서 쏜다 · 천도 넋이 많다 · 파혼은 약하다" };
 
         public static WeaponDef Get(WeaponId id)
         {

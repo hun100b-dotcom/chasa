@@ -245,8 +245,22 @@ public class CharacterPanel : MonoBehaviour
         for (int i = 0; i < SkillTree.ActiveSlots; i++) bar4 += "[" + (i + 1) + ": " + (i < g.ActiveBar.Count ? g.ActiveBar[i] : "빈 칸") + "]  ";
         GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "액티브 칸  " + bar4, small);
         y += 26;
-        string eq = "";
-        for (int i = 0; i < SlotLabels.Length; i++) eq += SlotLabels[i] + (SlotLive[i] ? "" : "(준비 중)") + "   ";
-        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "장비 칸 7 · 등급 5   " + eq, small);
+        // 무기 2자루: 손에 든 것 / 등에 멘 것(Tab 으로 바꿔 듦). 다섯 계열 모두 고를 수 있다
+        var lo = judge.player.loadout;
+        var bst = bookMode ? bookBtn : GUI.skin.button;
+        for (int row = 0; row < 2; row++)
+        {
+            bool hand = row == 0;
+            GUI.Label(new Rect(box.x + 16, y, 70, 26), hand ? "손에 든" : "등에 멘", small);
+            for (int i = 0; i < Loadout.AllWeapons.Length; i++)
+            {
+                var wid = Loadout.AllWeapons[i];
+                bool held = (hand ? lo.weapon : lo.other) == wid;
+                var wr = new Rect(box.x + 90 + i * 128, y, 124, 26);
+                if (GUI.Button(wr, (held ? "● " : "") + WeaponDef.Get(wid).Name, bst)) { if (hand) lo.SetHand(wid); else lo.SetBack(wid); }
+            }
+            y += 28;
+        }
+        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "지금 든 " + lo.Def.Name + " — " + lo.Def.Taste, small);
     }
 }
