@@ -1,0 +1,44 @@
+{
+ "region": 10,
+ "name": "⑩ 열째 관할",
+ "origin_m": [
+  200,
+  -640
+ ],
+ "size_x_m": 640,
+ "size_z_m": 640,
+ "size": 640,
+ "height_res_x": 641,
+ "height_res_z": 641,
+ "splat_res_x": 640,
+ "splat_res_z": 640,
+ "height_min_m": -3.0,
+ "height_max_m": 8.0,
+ "layer_tile_m": [
+  6,
+  6,
+  6,
+  6,
+  6
+ ],
+ "water_surface_m": 0.0,
+ "base_ground_m": 0.3,
+ "layers": {
+  "dirt": "재 섞인 흙",
+  "grass": "은빛 마른 풀",
+  "gravel": "먹돌·바위",
+  "paddy": "먹(splat_a A)",
+  "leaf": "종이 가루(splat_b R)",
+  "splat_b.G": "물거품",
+  "splat_b.B": "젖음"
+ },
+ "note": "terrain_s2.py가 만든다. 행 0=남쪽(월드 y=origin_m[1]). 저승 좌표계(⑦~⑩ 공통).",
+ "arena_slope": {
+  "B-19": 0.0,
+  "B-20": 0.0
+ },
+ "arena_ground_m": {
+  "B-19": 0.3,
+  "B-20": -1.5
+ }
+}
