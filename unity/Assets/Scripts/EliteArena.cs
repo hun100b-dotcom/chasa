@@ -41,6 +41,7 @@ public class EliteArena : MonoBehaviour
         if (judge == null || e == null) { Destroy(gameObject); return; }
         if (e.gone) { ClearTeles(); if (ring != null) Destroy(ring.gameObject); Destroy(gameObject, 0.1f); return; }
         TickRing();
+        { string an = ""; foreach (var tl in teles) if (!tl.fired) { an = tl.pounce ? "strike" : "attack"; break; } e.eliteAnim = an; }
         float dist = new Vector2(judge.player.Pos.x - e.Pos.x, judge.player.Pos.z - e.Pos.z).magnitude;
         bool fight = e.alive && dist < 30f && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
         if (!fight) { if (!e.alive) ClearTeles(); return; }

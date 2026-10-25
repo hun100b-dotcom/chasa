@@ -1428,3 +1428,8 @@
 - 사운드 PR #36(srga8o) 합침. 연결: 품계 인 `sfx.rank.seal`, 보상 `sfx.reward.honbul/coin.pop/coin.gather`, 장비 `sfx.drop.land`+등급 빛줄기 소리·`sfx.pickup.gear`, 카드 `sfx.card.rise/flip/pick/scatter/reroll`, 거센 혼 `sfx.elite.appear/slam(.telegraph)/pounce(.telegraph)/call`·`sfx.mote.spawn`·`cut.jing.crack`, 싸움 끝 `sfx.fight.end.jing/slow`, 새로 시작 `sfx.title.start`.
 - 아직: 타이틀 곡 `bgm_title`·`amb.title.fog` 반복 재생(BgmPlayer 손대야 함), `sfx.repair.first`·`sfx.reward.bar.open`·`sfx.card.hover`, 전투층 한 단계 위·2초 내림, 슬로 중 저역 통과 필터.
 - IP: VISION·ENGINE-COMPARISON·TECH-DESIGN-UI-FEEL·progress 문서의 작품명 정리, check_s1.py 허용 표시, ip-scan.mjs 금지어 확장(검사 통과).
+
+## 거센 혼 모델·타이틀 곡 (코드·QA, 10-26)
+- 아트 PR #35(d439f08) 합침(충돌 파일은 아트 것 채택). 거센 혼 `soul_elite_*` 연결: models.json `elite_*`(Attack=SlamWindup, Attack2=PounceWindup, Attack3=Call), 예고 중엔 `Enemy.eliteAnim`으로 동작이 바뀜. 모델이 이미 1.3배라 그림 배율 1.0(충돌 반경만 1.3). 기본 혼 Windup→Attack 이음은 PC에서 확인 필요.
+- 타이틀: `bgm_title` 반복 + `amb.title.fog` 반복, 시작하면 2초 페이드 아웃, 그동안 BgmPlayer는 조용.
+- 미연결: Slam/Pounce/Call 본 동작(포즈 이름 한계: 예고만 연결), 거센 혼 구역별 출현.

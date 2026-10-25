@@ -302,6 +302,11 @@ public class ActorModel : MonoBehaviour
         { s.key = BossModelKey(name); s.height = 2.2f; s.body = new Color(0.30f, 0.25f, 0.35f); s.accent = new Color(0.9f, 0.3f, 0.3f); s.legs = false; s.glow = 0.4f; }
         else if (name.Contains("boss"))  // 나루 영감: 크고 보랏빛, 뿔 없이 긴 도포
         { s.key = "boss"; s.height = 3.2f; s.body = new Color(0.40f, 0.30f, 0.60f); s.accent = new Color(0.8f, 0.7f, 1f); s.legs = false; s.glow = 0.5f; }
+        else if (name.Contains("soul_elite"))   // 거센 혼(첫 강적): 모델이 이미 1.3배(코드 배율 1.0). 키 = elite_<등급>
+        {
+            string gr = name.Contains("_lump") ? "lump" : name.Contains("_old") ? "old" : name.Contains("_fresh") ? "fresh" : "day";
+            s.key = "elite_" + gr; s.height = 1.8f; s.legs = false; s.glow = 0.5f; s.body = new Color(0.62f, 0.12f, 0.12f); s.accent = new Color(0.95f, 0.8f, 0.4f);
+        }
         else if (name.Contains("soul_wail") || name.Contains("soul_mote") || name.Contains("soul_buried"))   // 필드 혼 3유형: 키 = <유형>_<등급> (모델은 models.json, 없으면 이 도형 대역)
         {
             string ty = name.Contains("soul_wail") ? "wail" : name.Contains("soul_mote") ? "mote" : "buried";

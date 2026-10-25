@@ -88,7 +88,7 @@ public class BgmPlayer : MonoBehaviour
 
     void Update()
     {
-        if (!loadedAny || judge == null || !judge.FieldMode || judge.InDay) { Silence(); return; }
+        if (!loadedAny || judge == null || !judge.FieldMode || judge.InDay || TitleScreen.Open) { Silence(); return; }   // 타이틀 곡은 TitleScreen 이 따로 튼다
         float dt = Time.unscaledDeltaTime;   // 슬로모션 중에도 음악은 같은 속도로
         regionCheck -= dt;
         if (regionCheck <= 0f && judge.player != null) { regionCheck = 0.5f; LoadRegion(RegionKeyAt(judge.player.Pos.x, judge.player.Pos.z)); }   // 0.5초마다 지역을 본다

@@ -234,6 +234,7 @@ public class Enemy : MonoBehaviour
     }
 
     public bool elite;                      // 거센 혼(첫 강적): 맺힘 300, 패턴 셋, 이름 띠. EliteArena 가 움직임을 맡는다
+    public string eliteAnim = "";           // 거센 혼 예고 동작 꼬리표("", "attack", "strike")
     public bool eliteMote;                  // 거센 혼이 부른 잔넋(천도하면 조용히 흩어지고, 파혼 폭발에 함께 터진다)
     public float knockMult = 1f;            // 맞았을 때 밀림 배율(거센 혼 0.5)
 
@@ -451,6 +452,8 @@ public class Enemy : MonoBehaviour
             string b = soul.BossId == 2 ? "boss_b02" : soul.BossId == 3 ? "boss_b03" : soul.BossId >= 4 ? Bosses.Get(soul.BossId).Model : "boss_naru";
             n = "boss/" + b + (atk.Winding ? "_attack" : down && soul.BossId > 1 ? "_kneel" : "_idle");
         }
+        else if (elite)   // 거센 혼: 예고 동작은 EliteArena 가 eliteAnim 으로 알려 준다(attack = 내려치기 준비, strike = 덮치기 준비)
+            n = "enemies/soul_elite_day" + (down ? "_kneel" : eliteAnim.Length > 0 ? "_" + eliteAnim : "");
         else if (soul.Fierce) n = "enemies/soul_fierce";
         else if (type != SoulType.Plain)
         {

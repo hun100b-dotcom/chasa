@@ -2701,6 +2701,286 @@
     0.1,
     0.9
    ]
+  },
+  {
+   "key": "elite_fresh",
+   "path": "Models/Soul/soul_elite_fresh",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "SlamWindup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "PounceWindup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Call"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "KneelHold"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "elite_day",
+   "path": "Models/Soul/soul_elite_day",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "SlamWindup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "PounceWindup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Call"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "KneelHold"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "elite_old",
+   "path": "Models/Soul/soul_elite_old",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "SlamWindup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "PounceWindup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Call"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "KneelHold"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "elite_lump",
+   "path": "Models/Soul/soul_elite_lump",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "SlamWindup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "PounceWindup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Call"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "KneelHold"
+   ],
+   "yaw": 180
   }
  ],
  "props": [

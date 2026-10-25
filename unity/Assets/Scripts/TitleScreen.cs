@@ -23,14 +23,35 @@ public class TitleScreen : MonoBehaviour
         return true;
     }
 
-    void Start() { Open = true; }
+    // 타이틀 곡(반복 64초)과 안개 환경음: 시작하면 2초에 걸쳐 내려간다. 진짜 곡(BGM/)을 먼저, 없으면 임시 대역(BGM/Temp/)
+    AudioSource music, fog;
+    void Start()
+    {
+        Open = true;
+        var clip = Resources.Load<AudioClip>("Audio/BGM/bgm_title") ?? Resources.Load<AudioClip>("Audio/BGM/Temp/bgm_title");
+        var amb = Resources.Load<AudioClip>("Audio/Sfx/amb_title_fog");
+        if (clip != null) { music = gameObject.AddComponent<AudioSource>(); music.clip = clip; music.loop = true; music.volume = 0.5f * SaveStore.Settings.Master * SaveStore.Settings.Bgm; music.spatialBlend = 0f; music.Play(); }
+        if (amb != null) { fog = gameObject.AddComponent<AudioSource>(); fog.clip = amb; fog.loop = true; fog.volume = 0.5f * SaveStore.Settings.Master * SaveStore.Settings.Sfx; fog.spatialBlend = 0f; fog.Play(); }
+    }
+
+    /// <summary>시작을 누르면 이 컴포넌트는 사라지지만 소리는 2초에 걸쳐 줄이고 끈다</summary>
+    class FadeOut : MonoBehaviour
+    {
+        public AudioSource[] src; float t;
+        void Update() { t += Time.unscaledDeltaTime; foreach (var s in src) if (s != null) s.volume = Mathf.Max(0f, s.volume - s.volume * Time.unscaledDeltaTime / Mathf.Max(0.05f, 2f - t)); if (t >= 2f) Destroy(gameObject); }
+    }
 
     void Update() { if (Open) t += Time.unscaledDeltaTime; }
 
     void Begin(bool fresh)
     {
         if (fresh) SaveStore.Delete();   // 새로 시작: 옛 저장을 지운다(이어하기 칸은 저장이 있을 때만 있다)
-        Open = false; Destroy(this);
+        Open = false;
+        var fo = new GameObject("TitleFade").AddComponent<FadeOut>();
+        var list = new System.Collections.Generic.List<AudioSource>();
+        foreach (var a in new[] { music, fog }) if (a != null) { var n = fo.gameObject.AddComponent<AudioSource>(); n.clip = a.clip; n.loop = true; n.time = a.time; n.volume = a.volume; n.spatialBlend = 0f; n.Play(); list.Add(n); }
+        fo.src = list.ToArray();
+        Destroy(this);
         Sfx.Play(fresh ? "sfx.title.start" : "sfx.ui.confirm");
     }
 
