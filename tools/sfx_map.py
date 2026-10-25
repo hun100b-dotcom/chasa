@@ -90,7 +90,12 @@ MADE = {'amb.market', 'amb.mine', 'amb.rain', 'amb.rooster', 'cut.bellows', 'cut
         'cut.bones.crumble', 'cut.chain.taut', 'cut.chain.fall', 'cut.rewind.soft', 'cut.thread.reel', 'cut.soil.shift',
         'cut.hull.beach', 'cut.hull.scrape', 'cut.earth.drum', 'cut.straw.tie', 'cut.rope.taut', 'cut.rope.fall',
         'cut.pole.lay', 'cut.lime.step', 'cut.lime.crack', 'cut.gate.close', 'cut.cloth.wave', 'cut.book.set',
-        'amb.wind.dry', 'amb.ondol.fire', 'vo.far.reply', 'sfx.baek.kneel', 'sfx.baek.break', 'sfx.farlight.on'}
+        'amb.wind.dry', 'amb.ondol.fire', 'vo.far.reply', 'sfx.baek.kneel', 'sfx.baek.break', 'sfx.farlight.on',
+        # PR #36 7534a05(시즌3 장례 요청 17개 + 장례 전용 3개) · cut.seal.set은 시즌1부터 main에 있음(3872585)
+        'amb.crow.far', 'amb.river.morning', 'cut.bell.shaman', 'cut.bell.small', 'cut.chain.scratch', 'cut.flint.strike',
+        'cut.footstep.leave', 'cut.kiln.light', 'cut.knife.carve', 'cut.stake.drive', 'cut.stone.roll', 'cut.tag.sway',
+        'cut.tool.set', 'cut.water.still', 'cut.well.bucket', 'mus.boat.answer', 'vo.sumbi', 'cut.seal.set',
+        'cut.seal.set.nine', 'cut.ink.grind.room', 'cut.ink.grind.stop'}
 
 def promote(cut):
     """steps의 sfx_request 가운데 이제 있는 소리를 sfx로 옮긴다. 괄호 속 연출 메모는 sfx_note에 남긴다."""

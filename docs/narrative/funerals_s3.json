@@ -45,12 +45,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -192,12 +193,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -233,11 +235,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "cut.stake.drive(메로 말뚝 박는 둔한 소리, 세 번)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(어두운 흙탕 갈색)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(어두운 흙탕 갈색)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.stake.drive"
+       ],
+       "sfx_note": [
+        "cut.stake.drive(메로 말뚝 박는 둔한 소리, 세 번)"
+       ]
       },
       {
        "t": 30.0,
@@ -272,11 +277,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "cut.stake.drive(메로 말뚝 박는 둔한 소리, 세 번)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(어두운 흙탕 갈색)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(어두운 흙탕 갈색)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.stake.drive"
+       ],
+       "sfx_note": [
+        "cut.stake.drive(메로 말뚝 박는 둔한 소리, 세 번)"
+       ]
       },
       {
        "t": 8.0,
@@ -333,12 +341,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -516,12 +525,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -663,12 +673,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -810,12 +821,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -957,12 +969,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -1115,12 +1128,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -1156,11 +1170,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "cut.kiln.light(숯가마에 불 넣는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(숯 검정)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(숯 검정)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.kiln.light"
+       ],
+       "sfx_note": [
+        "cut.kiln.light(숯가마에 불 넣는 소리)"
+       ]
       },
       {
        "t": 30.0,
@@ -1195,11 +1212,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "cut.kiln.light(숯가마에 불 넣는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(숯 검정)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(숯 검정)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.kiln.light"
+       ],
+       "sfx_note": [
+        "cut.kiln.light(숯가마에 불 넣는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -1582,11 +1602,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "vo.sumbi(숨비소리, 휘파람 같은 긴 숨. 여럿이 한 번씩)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(물빛 청록)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(물빛 청록)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "vo.sumbi"
+       ],
+       "sfx_note": [
+        "vo.sumbi(숨비소리, 휘파람 같은 긴 숨. 여럿이 한 번씩)"
+       ]
       },
       {
        "t": 30.0,
@@ -1621,11 +1644,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "vo.sumbi(숨비소리, 휘파람 같은 긴 숨. 여럿이 한 번씩)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(물빛 청록)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(물빛 청록)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "vo.sumbi"
+       ],
+       "sfx_note": [
+        "vo.sumbi(숨비소리, 휘파람 같은 긴 숨. 여럿이 한 번씩)"
+       ]
       },
       {
        "t": 8.0,
@@ -1742,11 +1768,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "mus.boat.answer(뱃노래 받는 소리만, 가사 안 들리게)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(바랜 쪽빛)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(바랜 쪽빛)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "mus.boat.answer"
+       ],
+       "sfx_note": [
+        "mus.boat.answer(뱃노래 받는 소리만, 가사 안 들리게)"
+       ]
       },
       {
        "t": 30.0,
@@ -1781,11 +1810,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "mus.boat.answer(뱃노래 받는 소리만, 가사 안 들리게)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(바랜 쪽빛)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(바랜 쪽빛)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "mus.boat.answer"
+       ],
+       "sfx_note": [
+        "mus.boat.answer(뱃노래 받는 소리만, 가사 안 들리게)"
+       ]
       },
       {
        "t": 8.0,
@@ -1880,11 +1912,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "cut.flint.strike(부싯돌 치는 소리, 두 번)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(등잔 노랑)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(등잔 노랑)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.flint.strike"
+       ],
+       "sfx_note": [
+        "cut.flint.strike(부싯돌 치는 소리, 두 번)"
+       ]
       },
       {
        "t": 30.0,
@@ -1919,11 +1954,14 @@
         "to": "grave"
        },
        "caption": "[흙 덮는 소리]",
-       "sfx_request": [
-        "cut.flint.strike(부싯돌 치는 소리, 두 번)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(등잔 노랑)이 화면 가장자리에 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 기억 색(등잔 노랑)이 화면 가장자리에 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.flint.strike"
+       ],
+       "sfx_note": [
+        "cut.flint.strike(부싯돌 치는 소리, 두 번)"
+       ]
       },
       {
        "t": 8.0,
@@ -2363,12 +2401,13 @@
        },
        "caption": "[바람] [먼 까마귀]",
        "sfx": [
-        "amb.wind.gust"
+        "amb.wind.gust",
+        "amb.crow.far"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.crow.far(먼 까마귀 한 번)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -2510,11 +2549,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -2589,12 +2631,13 @@
        },
        "caption": "[바람] [먼 까마귀]",
        "sfx": [
-        "amb.wind.gust"
+        "amb.wind.gust",
+        "amb.crow.far"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.crow.far(먼 까마귀 한 번)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -2736,11 +2779,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -2779,12 +2825,13 @@
        },
        "caption": "[바람] [먼 까마귀]",
        "sfx": [
-        "amb.wind.gust"
+        "amb.wind.gust",
+        "amb.crow.far"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.crow.far(먼 까마귀 한 번)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -2926,11 +2973,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -2981,12 +3031,13 @@
        },
        "caption": "[바람] [먼 까마귀]",
        "sfx": [
-        "amb.wind.gust"
+        "amb.wind.gust",
+        "amb.crow.far"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.crow.far(먼 까마귀 한 번)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -3128,11 +3179,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -3230,11 +3284,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(송진 갈색)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(송진 갈색)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 26.0,
@@ -3277,11 +3334,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(송진 갈색)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(송진 갈색)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -3340,11 +3400,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -3418,11 +3481,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(화약 잿빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(화약 잿빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 26.0,
@@ -3465,11 +3531,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(화약 잿빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(화약 잿빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -3528,11 +3597,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -3606,11 +3678,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(녹슨 쇠빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(녹슨 쇠빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 26.0,
@@ -3653,11 +3728,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(녹슨 쇠빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(녹슨 쇠빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -3716,11 +3794,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -3794,11 +3875,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(갱 물빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(갱 물빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 26.0,
@@ -3841,11 +3925,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(갱 물빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(갱 물빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -3904,11 +3991,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -3982,11 +4072,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(막걸리 흰빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(막걸리 흰빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 26.0,
@@ -4029,11 +4122,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(막걸리 흰빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(막걸리 흰빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -4092,11 +4188,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -4182,11 +4281,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(석탄 검정)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(석탄 검정)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 26.0,
@@ -4229,11 +4331,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(석탄 검정)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(석탄 검정)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -4292,11 +4397,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -4394,11 +4502,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(갱 물빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(갱 물빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 26.0,
@@ -4441,11 +4552,14 @@
         "time": 1.5
        },
        "caption": "[새기는 소리]",
-       "sfx_request": [
-        "cut.knife.carve(칼로 나무 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(갱 물빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 글자는 읽히지 않을 만큼 작게. 기억 색(갱 물빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.knife.carve"
+       ],
+       "sfx_note": [
+        "cut.knife.carve(칼로 나무 새기는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -4504,11 +4618,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -4692,11 +4809,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -4880,11 +5000,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -5068,11 +5191,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -5256,11 +5382,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -5444,11 +5573,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -5632,11 +5764,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -5820,11 +5955,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -6008,11 +6146,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -6196,11 +6337,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -6384,11 +6528,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -6573,11 +6720,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -6761,11 +6911,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -6948,11 +7101,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -7135,11 +7291,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -7322,11 +7481,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -7509,11 +7671,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -7696,11 +7861,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -7883,11 +8051,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -8081,11 +8252,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -8268,11 +8442,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -8455,11 +8632,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -8655,11 +8835,14 @@
         "to": "marker",
         "time": 1.0
        },
-       "sfx_request": [
-        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
-       ],
        "control": "none",
-       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다"
+       "note": "반쪽(F51). 누르지 않으면 아무 일도 없다(벌 없음). 지나가던 산 사람 하나가 그 줄을 보고 고개를 갸웃한다",
+       "sfx": [
+        "cut.chain.scratch"
+       ],
+       "sfx_note": [
+        "cut.chain.scratch(사슬 끝으로 돌 · 나무를 긋는 가는 소리)"
+       ]
       },
       {
        "t": 14.0,
@@ -8726,12 +8909,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -8771,12 +8957,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -8872,12 +9061,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -8917,12 +9109,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -9018,12 +9213,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -9063,12 +9261,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -9164,12 +9365,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(종이 누런빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -9209,12 +9413,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(종이 누런빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -9310,12 +9517,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -9355,12 +9565,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -9456,12 +9669,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(아궁이 주홍)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -9501,12 +9717,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(아궁이 주홍)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -9602,12 +9821,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(종이 누런빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -9647,12 +9869,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(종이 누런빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -9748,12 +9973,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(연한 먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -9793,12 +10021,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(연한 먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -9894,12 +10125,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -9939,12 +10173,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -10040,12 +10277,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(녹슨 놋빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -10085,12 +10325,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(녹슨 놋빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -10186,12 +10429,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -10231,12 +10477,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -10332,13 +10581,17 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)",
-        "cut.seal.set(인 찍는 소리, 아홉 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set",
+        "cut.seal.set.nine"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)",
+        "cut.seal.set.nine(멀리서 인 찍는 소리 아홉 번, 한 파일)"
+       ]
       },
       {
        "t": 10.0,
@@ -10347,12 +10600,15 @@
         "mode": "low_move",
         "to": "left_thing"
        },
-       "sfx_request": [
-        "cut.seal.set(인 찍는 소리, 아홉 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ② 대신. 남은 물건만 움직인다",
-       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)"
+       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)",
+       "sfx": [
+        "cut.seal.set.nine"
+       ],
+       "sfx_note": [
+        "cut.seal.set.nine(멀리서 인 찍는 소리 아홉 번, 한 파일)"
+       ]
       },
       {
        "t": 17.0,
@@ -10381,13 +10637,17 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)",
-        "cut.seal.set(인 찍는 소리, 아홉 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(먹빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.tool.set",
+        "cut.seal.set.nine"
+       ],
+       "sfx_note": [
+        "cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)",
+        "cut.seal.set.nine(멀리서 인 찍는 소리 아홉 번, 한 파일)"
+       ]
       },
       {
        "t": 0.0,
@@ -10396,12 +10656,15 @@
         "mode": "low_move",
         "to": "left_thing"
        },
-       "sfx_request": [
-        "cut.seal.set(인 찍는 소리, 아홉 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ② 대신. 남은 물건만 움직인다",
-       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)"
+       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)",
+       "sfx": [
+        "cut.seal.set.nine"
+       ],
+       "sfx_note": [
+        "cut.seal.set.nine(멀리서 인 찍는 소리 아홉 번, 한 파일)"
+       ]
       },
       {
        "t": 8.0,
@@ -10485,12 +10748,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(돌빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -10531,12 +10797,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(돌빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -10631,12 +10900,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(아랫목 주홍)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -10677,12 +10949,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(아랫목 주홍)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -10777,12 +11052,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(아랫목 주홍)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -10823,12 +11101,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(아랫목 주홍)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -10923,12 +11204,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(짚 누런빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -10969,12 +11253,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(짚 누런빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -11069,12 +11356,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(개울 물빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -11115,12 +11405,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(개울 물빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -11215,12 +11508,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(나무 빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -11261,12 +11557,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(나무 빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -11361,13 +11660,17 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)",
-        "cut.bell.shaman(무당 방울, 한 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(방울 놋빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave",
+        "cut.bell.shaman"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)",
+        "cut.bell.shaman(무당 방울, 한 번)"
+       ]
       },
       {
        "t": 10.0,
@@ -11376,12 +11679,15 @@
         "mode": "low_move",
         "to": "left_thing"
        },
-       "sfx_request": [
-        "cut.bell.shaman(무당 방울, 한 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ② 대신. 남은 물건만 움직인다",
-       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)"
+       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)",
+       "sfx": [
+        "cut.bell.shaman"
+       ],
+       "sfx_note": [
+        "cut.bell.shaman(무당 방울, 한 번)"
+       ]
       },
       {
        "t": 17.0,
@@ -11411,13 +11717,17 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)",
-        "cut.bell.shaman(무당 방울, 한 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(방울 놋빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave",
+        "cut.bell.shaman"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)",
+        "cut.bell.shaman(무당 방울, 한 번)"
+       ]
       },
       {
        "t": 0.0,
@@ -11426,12 +11736,15 @@
         "mode": "low_move",
         "to": "left_thing"
        },
-       "sfx_request": [
-        "cut.bell.shaman(무당 방울, 한 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ② 대신. 남은 물건만 움직인다",
-       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)"
+       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)",
+       "sfx": [
+        "cut.bell.shaman"
+       ],
+       "sfx_note": [
+        "cut.bell.shaman(무당 방울, 한 번)"
+       ]
       },
       {
        "t": 8.0,
@@ -11515,13 +11828,17 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)",
-        "cut.bell.small(작은 종, 한 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(종 놋빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave",
+        "cut.bell.small"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)",
+        "cut.bell.small(작은 종, 한 번)"
+       ]
       },
       {
        "t": 10.0,
@@ -11530,12 +11847,15 @@
         "mode": "low_move",
         "to": "left_thing"
        },
-       "sfx_request": [
-        "cut.bell.small(작은 종, 한 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ② 대신. 남은 물건만 움직인다",
-       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)"
+       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)",
+       "sfx": [
+        "cut.bell.small"
+       ],
+       "sfx_note": [
+        "cut.bell.small(작은 종, 한 번)"
+       ]
       },
       {
        "t": 17.0,
@@ -11565,13 +11885,17 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)",
-        "cut.bell.small(작은 종, 한 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(종 놋빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave",
+        "cut.bell.small"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)",
+        "cut.bell.small(작은 종, 한 번)"
+       ]
       },
       {
        "t": 0.0,
@@ -11580,12 +11904,15 @@
         "mode": "low_move",
         "to": "left_thing"
        },
-       "sfx_request": [
-        "cut.bell.small(작은 종, 한 번)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ② 대신. 남은 물건만 움직인다",
-       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)"
+       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)",
+       "sfx": [
+        "cut.bell.small"
+       ],
+       "sfx_note": [
+        "cut.bell.small(작은 종, 한 번)"
+       ]
       },
       {
        "t": 8.0,
@@ -11669,12 +11996,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(인주 붉은빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -11715,12 +12045,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(인주 붉은빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -11815,12 +12148,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(돌빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -11861,12 +12197,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(돌빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -11961,12 +12300,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(인주 붉은빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -12007,12 +12349,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(인주 붉은빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -12107,12 +12452,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(바랜 쪽빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -12153,12 +12501,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(바랜 쪽빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -13266,13 +13617,17 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)",
-        "cut.well.bucket(두레박 줄 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(우물 물빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave",
+        "cut.well.bucket"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)",
+        "cut.well.bucket(두레박 줄 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -13281,12 +13636,15 @@
         "mode": "low_move",
         "to": "left_thing"
        },
-       "sfx_request": [
-        "cut.well.bucket(두레박 줄 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ② 대신. 남은 물건만 움직인다",
-       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)"
+       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)",
+       "sfx": [
+        "cut.well.bucket"
+       ],
+       "sfx_note": [
+        "cut.well.bucket(두레박 줄 소리)"
+       ]
       },
       {
        "t": 17.0,
@@ -13315,13 +13673,17 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)",
-        "cut.well.bucket(두레박 줄 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(우물 물빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave",
+        "cut.well.bucket"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)",
+        "cut.well.bucket(두레박 줄 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -13330,12 +13692,15 @@
         "mode": "low_move",
         "to": "left_thing"
        },
-       "sfx_request": [
-        "cut.well.bucket(두레박 줄 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ② 대신. 남은 물건만 움직인다",
-       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)"
+       "condition": "그 혼이 이미 없음(시즌 2에서 천도 — 이미 줄에 있다 / 파혼 — 주인 없는 백)",
+       "sfx": [
+        "cut.well.bucket"
+       ],
+       "sfx_note": [
+        "cut.well.bucket(두레박 줄 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -13416,12 +13781,16 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
+       "control": "walk",
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(우물 물빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.footstep.leave",
+        "cut.water.still"
+       ],
+       "sfx_note": [
         "cut.footstep.leave(맨발 걸음이 멀어진다)",
         "cut.water.still(물이 잔잔해지는 소리)"
-       ],
-       "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(우물 물빛)이 한 번 번졌다 사라진다"
+       ]
       },
       {
        "t": 17.0,
@@ -13450,12 +13819,16 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
+       "control": "walk",
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(우물 물빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.footstep.leave",
+        "cut.water.still"
+       ],
+       "sfx_note": [
         "cut.footstep.leave(맨발 걸음이 멀어진다)",
         "cut.water.still(물이 잔잔해지는 소리)"
-       ],
-       "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(우물 물빛)이 한 번 번졌다 사라진다"
+       ]
       },
       {
        "t": 8.0,
@@ -13536,12 +13909,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(나무 빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -13581,12 +13957,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(나무 빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -13678,12 +14057,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(나무 빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 10.0,
@@ -13723,12 +14105,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.footstep.leave(맨발 걸음이 멀어진다)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(나무 빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.footstep.leave"
+       ],
+       "sfx_note": [
+        "cut.footstep.leave(맨발 걸음이 멀어진다)"
+       ]
       },
       {
        "t": 0.0,
@@ -13802,12 +14187,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -13817,10 +14203,13 @@
         "height": "low"
        },
        "caption": "[돌 굴리는 소리] [발소리]",
-       "sfx_request": [
-        "cut.stone.roll(큰 돌을 굴리는 둔한 소리)"
+       "control": "walk",
+       "sfx": [
+        "cut.stone.roll"
        ],
-       "control": "walk"
+       "sfx_note": [
+        "cut.stone.roll(큰 돌을 굴리는 둔한 소리)"
+       ]
       },
       {
        "t": 13.0,
@@ -13914,12 +14303,13 @@
        },
        "caption": "[바람] [먼 닭울음] [물 흐르는 소리]",
        "sfx": [
-        "amb.rooster"
+        "amb.rooster",
+        "amb.river.morning"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.river.morning(아침 강물, 잔잔함)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -14137,12 +14527,13 @@
        },
        "caption": "[바람] [먼 까마귀]",
        "sfx": [
-        "amb.wind.gust"
+        "amb.wind.gust",
+        "amb.crow.far"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.crow.far(먼 까마귀 한 번)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -14163,10 +14554,13 @@
         "height": "low"
        },
        "caption": "[돌 세우는 소리] [발소리]",
-       "sfx_request": [
-        "cut.stone.roll(큰 돌을 굴리는 둔한 소리)"
+       "control": "walk",
+       "sfx": [
+        "cut.stone.roll"
        ],
-       "control": "walk"
+       "sfx_note": [
+        "cut.stone.roll(큰 돌을 굴리는 둔한 소리)"
+       ]
       },
       {
        "t": 20.0,
@@ -14271,11 +14665,14 @@
         "time": 6.0
        },
        "caption": "[목패 흔들리는 소리]",
-       "sfx_request": [
-        "cut.tag.sway(나무 목패가 서로 부딪는 소리)"
-       ],
        "control": "none",
-       "note": "깊은 박자 ①. 시즌 1부터 걸려 있던 그 열넷"
+       "note": "깊은 박자 ①. 시즌 1부터 걸려 있던 그 열넷",
+       "sfx": [
+        "cut.tag.sway"
+       ],
+       "sfx_note": [
+        "cut.tag.sway(나무 목패가 서로 부딪는 소리)"
+       ]
       },
       {
        "t": 12.0,
@@ -14467,8 +14864,7 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind",
-        "amb.dawn.still"
+        "cut.ink.grind.room"
        ],
        "control": "none",
        "sfx_note": [
@@ -14504,7 +14900,10 @@
         "time": 2.0
        },
        "control": "walk",
-       "note": "깊은 박자 ②. 먹 가는 소리가 끊기는 1초가 핵심 — 사운드팀 확인"
+       "note": "깊은 박자 ②. 먹 가는 소리가 끊기는 1초가 핵심 — 사운드팀 확인",
+       "sfx": [
+        "cut.ink.grind.stop"
+       ]
       },
       {
        "t": 28.0,

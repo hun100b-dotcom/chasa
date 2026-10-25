@@ -252,7 +252,7 @@ DAWN = {
 DAWN_SFX = {'InkSilt': 'cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)', 'QuarterCellar': 'cut.tool.set(붓 · 먹 · 열쇠를 내려놓는 작은 소리)',
             'Ondol': 'cut.footstep.leave(맨발 걸음이 멀어진다)', 'SealFloor': 'cut.footstep.leave(맨발 걸음이 멀어진다)',
             'ChainRoots': 'cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)', 'WellBottom': 'cut.footstep.leave(맨발 걸음이 멀어진다)'}
-DAWN_SPECIAL = {'S-283': 'cut.bell.shaman(무당 방울, 한 번)', 'S-284': 'cut.bell.small(작은 종, 한 번)', 'S-276': 'cut.seal.set(인 찍는 소리, 아홉 번)',
+DAWN_SPECIAL = {'S-283': 'cut.bell.shaman(무당 방울, 한 번)', 'S-284': 'cut.bell.small(작은 종, 한 번)', 'S-276': 'cut.seal.set.nine(멀리서 인 찍는 소리 아홉 번, 한 파일)',
                 'S-297': 'cut.well.bucket(두레박 줄 소리)', 'S-298': 'cut.water.still(물이 잔잔해지는 소리)'}
 
 # 무리(group) 장례 — 무리의 백이 다 처결된 이튿날 한 번에. 보스 장례와 겹치면 보스 장례가 이것이다
@@ -564,6 +564,15 @@ BOSSES += [
            n1='깊은 박자 ①. 명부 첫 줄의 번진 먹은 이름이 되지 않았지만 더 번지지 않는다(B-30 눕힘 컷)',
            n2='깊은 박자 ②. 사공의 이름 · 얼굴 클로즈업 금지. 입술이 움직이지 않는 것만'),
 ]
+
+# FUN-B28 소리(사운드 PR #36 7534a05): 첫 박자는 먹방 반복음, 20초 박자에 "먹 가는 소리가 1초 끊김" 전용 소리.
+# 반복음을 끄는 때와 음악을 0으로 내리는 일은 사운드의 data/funeral_audio_s3.json에 있다
+for _b in BOSSES:
+    if _b['id'] == 'FUN-B28':
+        _st = _b['branches'][0]['steps']
+        _st[0]['sfx'] = ['cut.ink.grind.room']
+        _s20 = [x for x in _st if x['t'] == 20.0][0]
+        _s20['sfx'] = _s20.get('sfx', []) + ['cut.ink.grind.stop']
 
 
 # ───────────────── 만들기 · 자체 검사 ─────────────────
