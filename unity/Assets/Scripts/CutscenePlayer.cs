@@ -17,6 +17,8 @@ public class CutscenePlayer
     CutPlayback cur;
     float holdSkip;                          // 건너뛰기 버튼을 누르고 있는 시간
 
+    public string CurId { get { return cur != null ? cur.Data.id : ""; } }          // 자동 플레이 테스트가 본다
+    public float CurDuration { get { return cur != null ? cur.Data.duration : 0f; } }
     public bool Active { get { return cur != null && !cur.Done; } }
     /// <summary>입력을 막아야 하나 (잠금 컷 재생 중)</summary>
     public bool InputLocked { get { return Active && cur.Data.@lock && !cur.Walk; } }   // 서사 control=walk 구간은 잠금이 풀려 걸을 수 있다

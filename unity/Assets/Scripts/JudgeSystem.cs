@@ -85,6 +85,7 @@ public class JudgeSystem : MonoBehaviour
     }
 
     public bool Casting => castTarget != null;
+    public int BossOutcomeNow => bossOutcome;   // 자동 플레이 테스트(BotScript)가 보는 값: 0 아직 · 1 천도 · 2 파혼
     public int KneelEvents;   // 무릎 꿇은 횟수 누계(BGM 용)
     public bool FieldMode { get { return clock != null; } }   // 필드(흐르는 하루)에서만 BGM 을 쓴다
 

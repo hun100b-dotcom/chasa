@@ -33,6 +33,13 @@ public class NamedSoulSpawns
     }
 
     /// <summary>daylight: 하늘 밝기(0=밤). 밤에만 혼이 보인다</summary>
+    /// <summary>자동 플레이 테스트용: 아직 처결 안 된 이름혼의 자리</summary>
+    public void PendingPositions(List<KeyValuePair<Vector3, string>> into)
+    {
+        into.Clear();
+        foreach (var e in entries) if (!e.done) into.Add(new KeyValuePair<Vector3, string>(new Vector3(e.row.x, 0f, e.row.z), e.row.name));
+    }
+
     public float AppearMult = 1f;   // 안개 +50%: 나타나는 거리 배율
 
     public void Tick(Vector3 playerPos, float daylight)

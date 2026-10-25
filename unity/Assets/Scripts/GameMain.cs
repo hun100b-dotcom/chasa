@@ -90,7 +90,8 @@ public class GameMain : MonoBehaviour
         var settingsPanel = gameObject.AddComponent<SettingsPanel>(); settingsPanel.judge = judge; settingsPanel.white = Texture2D.whiteTexture;   // 설정 화면(O)
         Sfx.Create(judge);   // 효과음 재생기
         BgmPlayer.Create(judge);   // BGM 재생기(층 교차). 필드에서만 소리를 낸다
-        if (DemoScript.Wanted()) { var ds = gameObject.AddComponent<DemoScript>(); ds.player = player; ds.enemies = enemies; ds.judge = judge; }   // ?demo=1 자동 연출
+        if (BotScript.Wanted()) { var bs = gameObject.AddComponent<BotScript>(); bs.player = player; bs.enemies = enemies; bs.judge = judge; }   // ?bot=1 첫 세션 자동 플레이 테스트
+        else if (DemoScript.Wanted()) { var ds = gameObject.AddComponent<DemoScript>(); ds.player = player; ds.enemies = enemies; ds.judge = judge; }   // ?demo=1 자동 연출
     }
 
     // -------------------------------------------------------------------------

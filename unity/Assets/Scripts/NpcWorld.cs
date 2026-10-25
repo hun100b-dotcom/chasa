@@ -115,6 +115,16 @@ public class NpcWorld
         }
     }
 
+    /// <summary>자동 플레이 테스트용: 지금 켜진 자리 중 아직 못 얻은 단서가 달린 곳의 좌표·이름을 모은다</summary>
+    public void PendingClues(List<KeyValuePair<Vector3, string>> into)
+    {
+        into.Clear();
+        foreach (var s in spots) if (!string.IsNullOrEmpty(s.clue) && !book.Has(s.clue)) into.Add(new KeyValuePair<Vector3, string>(s.pos, s.clue + " " + s.label + "@" + s.row.place));
+    }
+
+    /// <summary>자동 플레이 테스트용: 켜진 자리 수(단서 없는 것 포함)</summary>
+    public int ActiveSpots { get { return spots.Count; } }
+
     /// <summary>시간대나 밤 수가 바뀌면 켜진 자리를 다시 고른다</summary>
     void Rebuild(int ph, int night)
     {
