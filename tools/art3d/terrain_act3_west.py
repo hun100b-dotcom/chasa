@@ -10,7 +10,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.join(HERE, "..
 OUT = os.path.join(ROOT, "assets3d", "terrain_act3_west")
 MAP = json.load(open("/mnt/project-files/planning/openworld/act3/act3_map.json", encoding="utf-8")) if os.path.exists("/mnt/project-files/planning/openworld/act3/act3_map.json") else json.load(open(os.path.join(ROOT, "data", "art", "act3_map.json"), encoding="utf-8"))
 X0, Y0, W, H = -640, 0, 640, 640      # 월드 원점(남서 모서리)과 크기(m)
-HMIN, HMAX = -1.5, 9.0
+HMIN, HMAX = -7.0, 9.0
 xs = np.arange(W + 1, dtype=np.float64) + X0; ys = np.arange(H + 1, dtype=np.float64) + Y0
 X, Y = np.meshgrid(xs, ys)           # 모양 (641, 769), 행 0 = 남쪽
 
@@ -78,6 +78,9 @@ def build_height():
         mask = 1 - sstep(2.6, 7.5, d2)
         if rid == "R3-2": mask = mask * (1 - np.exp(-((X + 382) / 14.0) ** 2) * 0.0)
         h = mix(h, mask, prof + 0.03 * n1)
+    # 해안 길 비탈(R3-6의 ⑥ 쪽 끝): y=0 해안 바닥 -6.5m에서 성문 밖 마당 1.0m까지 올라간다. 양쪽은 가파른 벼랑
+    ramp = [(-420, 0), (-446, 70), (-470, 140), (-500, 185)]; dr, sr, Lr = poly_dist(ramp)
+    h = mix(h, (1 - sstep(4.0, 9.0, dr)) * (Y < 190), -6.5 + 7.5 * sstep(0, 1, sr / Lr) + 0.03 * n1)
     # 큰 다리 둑길: 상판 윗면이 둔치보다 3.6m 높아서 다리 양끝(|dx|≥20)은 3.9m 높이로 올리고 바깥으로 24m에 걸쳐 1.0으로 내린다. 다리 축은 y=400, 상판 폭 6m(둑길 폭 ±7m)
     dx = np.abs(X + 380.0); tt = np.clip((44.0 - dx) / 24.0, 0, 1); gate_ = sstep(14, 18, dx)
     h = mix(h, (1 - sstep(5.0, 11.0, np.abs(Y - 400.0))) * gate_ * (dx < 46), 1.0 + 2.9 * tt)
@@ -166,7 +169,7 @@ if __name__ == "__main__":
     for b in MAP["boss_arenas"]:
         if b["x"] < 0: flat[b["boss"]] = round(float(sl[int(b["y"] - Y0), int(b["x"] - X0)]), 3)
     json.dump({"origin_m": [X0, Y0], "size_x_m": W, "size_z_m": H, "size": W, "height_res_x": W + 1, "height_res_z": H + 1, "splat_res_x": W, "splat_res_z": H, "height_min_m": HMIN, "height_max_m": HMAX, "layer_tile_m": [6, 6, 6, 6, 6],
-               "river_floor_m": -0.6, "bridge_axis_y_m": 400, "bridge_deck_top_m": 3.9, "dry_bank_under_bridge_m": 0.3, "wall_x_m": WALL_X,
+               "river_floor_m": -0.6, "coast_ramp_points": [[-420, 0], [-446, 70], [-470, 140], [-500, 185]], "bridge_axis_y_m": 400, "bridge_deck_top_m": 3.9, "dry_bank_under_bridge_m": 0.3, "wall_x_m": WALL_X,
                "layers": {"dirt": "흙길·마른 흙", "grass": "마른 풀", "gravel": "자갈·성벽 돌", "paddy": "장터 다진 마당(splat_a A)", "leaf": "눈(splat_b R, 성문 밖)", "splat_b.G": "물가 거품", "splat_b.B": "젖은 둔치"},
                "note": "아트 terrain_act3_west.py가 만든다. 행 0=남쪽(월드 y 0). 큰내 물판은 tide_water 말고 1막 river_water 같은 물을 x≈-380 따라 폭 14m로 깐다(물높이 -0.1).", "slope_at_shrines_and_arenas": flat}, open(os.path.join(OUT, "terrain.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("기울기", flat)

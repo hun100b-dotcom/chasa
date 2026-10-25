@@ -3382,6 +3382,15 @@
    "prop": "tide_water",
    "file": "assets3d/act3/tide_water.glb",
    "x": 992,
+   "y": 96,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 992,
    "y": 352,
    "rot": 0,
    "z": -0.5,

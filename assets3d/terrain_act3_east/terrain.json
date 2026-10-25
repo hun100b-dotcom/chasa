@@ -10,7 +10,7 @@
  "height_res_z": 1025,
  "splat_res_x": 512,
  "splat_res_z": 1024,
- "height_min_m": -3.0,
+ "height_min_m": -7.0,
  "height_max_m": 10.0,
  "layer_tile_m": [
   6,
@@ -22,6 +22,21 @@
  "tide_low_m": -0.5,
  "tide_high_m": 0.6,
  "sea_floor_m": -2.5,
+ "south_bay_floor_m": -6.5,
+ "coast_ramp_points": [
+  [
+   1040,
+   110
+  ],
+  [
+   1014,
+   60
+  ],
+  [
+   988,
+   0
+  ]
+ ],
  "layers": {
   "dirt": "마른 흙·갯벌 흙",
   "grass": "갯풀",
