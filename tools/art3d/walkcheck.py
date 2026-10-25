@@ -43,6 +43,9 @@ def load(extra_removed=()):
     ep = os.path.join(LAY, "act1_extra.json")   # 1막 추가 소품(개집·북틀 등, place_act1_extra.py)
     if os.path.exists(ep):
         for p in json.load(open(ep, encoding="utf-8"))["props"]: add(p["prop"], p["x"], p["y"])
+    lp = os.path.join(LAY, "act1_life.json")   # 1막 생활 소품(place_act1_life.py)
+    if os.path.exists(lp):
+        for p in json.load(open(lp, encoding="utf-8"))["props"]: add(p["prop"], p["x"], p["y"])
     return out
 
 def points():

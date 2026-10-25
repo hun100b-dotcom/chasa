@@ -109,16 +109,16 @@ def detail_tiles(C, n=512):
 def water_tiles(n=256, dark=False):
     """개울물 4m 타일: 흐름 방향이 세로(남북)로 길게 늘어진 잔물결·반사 줄 + 흩어진 거품 알갱이. RGBA(알파=투명도)와 노멀.
     Unity에서는 uv를 흐름 방향으로 흘리면 흐르는 물이 되고, Blender 정지 장면에서는 줄무늬가 흐름을 암시한다."""
-    h = 0.5 * fb(n, 22, 5, 201, 4) + 0.35 * fb(n, 34, 8, 202, 3) + 0.2 * pnoise(n, 60, 14, 203)   # 가로 칸 많고 세로 칸 적음 = 세로(남북)로 길쭉한 줄
+    h = 0.5 * fb(n, 12, 2, 201, 4) + 0.3 * fb(n, 20, 3, 202, 3) + 0.2 * pnoise(n, 36, 6, 203)   # 가로 칸 많고 세로 칸 적음 = 세로(남북)로 길고 부드러운 줄(2026-10-25: 비 내리듯 짧은 줄 → 흐르는 긴 결로)
     h = (h - h.min()) / (h.max() - h.min())
     streak = np.clip((h - 0.55) * 3.2, 0, 1)                           # 반사가 맺히는 가는 줄(물결 마루)
-    deep = np.array([0.045, 0.12, 0.18], np.float32); mid = np.array([0.10, 0.23, 0.30], np.float32); sky = np.array([0.55, 0.72, 0.82], np.float32)
+    deep = np.array([0.07, 0.20, 0.27], np.float32); mid = np.array([0.15, 0.36, 0.42], np.float32); sky = np.array([0.70, 0.84, 0.90], np.float32)   # 흙탕 갈색이 비치던 어두운 물 → 맑은 청록
     col = _mixc(np.broadcast_to(deep, (n, n, 3)), np.broadcast_to(mid, (n, n, 3)), np.clip(h * 1.3, 0, 1))
-    col = _mixc(col, np.broadcast_to(sky, (n, n, 3)), streak * 0.32)                               # 하늘빛 반사 줄
+    col = _mixc(col, np.broadcast_to(sky, (n, n, 3)), streak * 0.42)                               # 하늘빛 반사 줄
     d1, edge, v = worley(n, 14, 204, 0.9)
     bub = (np.clip(1 - d1 * 2.6, 0, 1) ** 2.0) * (v > 0.93) * (pnoise(n, 8, 3, 205) > 0.5)        # 드문 거품 알갱이
     col = _mixc(col, np.broadcast_to(np.array([0.92, 0.96, 0.95], np.float32), (n, n, 3)), np.clip(bub * 1.2, 0, 1) * 0.8)
-    alpha = np.clip(0.50 + 0.14 * h + 0.2 * streak + 0.35 * bub, 0, 0.95)
+    alpha = np.clip(0.68 + 0.12 * h + 0.15 * streak + 0.3 * bub, 0, 0.95)   # 바닥 흙이 덜 비치게 불투명도 올림
     if dark:   # 큰 강: 더 깊고 어둡고 덜 비침
         col = col * np.array([0.85, 0.92, 1.0], np.float32); alpha = np.clip(alpha + 0.1, 0, 0.95)
     rgba = np.concatenate([col, alpha[..., None]], -1)
