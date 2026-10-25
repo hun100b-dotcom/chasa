@@ -1,4 +1,4 @@
-"""혼 동작 4개(60fps): Float(떠돌기, 반복 90f) / Windup(공격 예고 33f=0.55초, 번쩍 신호 f21) / Attack(공격 18f, 명중 f5) / Kneel(무릎 꿇음 36f, 끝 자세 유지).
+"""혼 동작(60fps; 아래 4개 + hit_react.py의 Hit1·Hit2·Stagger·Tendo·Pahon, Kneel은 그쪽 것으로 대체): Float(떠돌기, 반복 90f) / Windup(공격 예고 33f=0.55초, 번쩍 신호 f21) / Attack(공격 18f, 명중 f5) / Kneel(무릎 꿇음 36f, 끝 자세 유지).
 혼은 팔다리가 없는 덩어리라 '몸 전체'를 눌러 늘이고 기울이는 방식(스쿼시·스트레치)으로 표현한다. 뼈는 Root(제자리 이동)와 Body(눌림·기울기) 둘뿐.
 기본 4종과 지역 변형 12종 모두 같은 동작을 담는다."""
 import sys, os, json
@@ -7,6 +7,7 @@ from lib3d import *
 from characters import souls, rig, to_group
 from soul_variants import variant, REGIONS, BASE
 import anim
+import hit_react as hr
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets3d")
 BONES = [("Root", None, (0, 0, 0), (0, 0, 0.2)), ("Body", "Root", (0, 0, 0), (0, 0, 0.6))]
 
@@ -21,6 +22,7 @@ def clips():
     C["Attack"] = ([(0, w2), (4, lunge), (6, lunge), (12, {"Root": {"l": (0, -0.3, 0)}, **B((8, 0, 0), (1.04, 1.04, 0.94))}), (18, {})], "LINEAR", False, {"hit": 5})
     kn = {**B((24, 0, 0), (1.14, 1.14, 0.55)), "Root": {"l": (0, 0, 0)}}; kn2 = {**B((26, 0, 0), (1.15, 1.15, 0.53))}
     C["Kneel"] = ([(0, {}), (10, B((-6, 0, 0), (1.06, 1.06, 0.82))), (20, kn), (36, kn2)], "BEZIER", False, {"end_pose_held": True})
+    C.update(hr.soul_clips("basic"))   # 피격 3단계·다듬은 무릎·천도로 흩어짐·파혼으로 깨짐(hit_react.py)
     return C
 
 if __name__ == "__main__":

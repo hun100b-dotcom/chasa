@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from lib3d import *
 from characters import rig, to_group
 import anim
+import hit_react as hr
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets3d")
 GRADES = {"fresh": ("soul_fresh", 0.55, 0.7, 3.2), "day": ("soul_day", 0.62, 0.55, 3.0), "old": ("soul_old", 0.7, 0.25, 1.1), "lump": ("soul_lump", 0.6, 0.6, 2.8)}   # 색키, 겉껍질 알파, 겉껍질 발광, 핵 발광
 WON = "#B04FD0"     # 원념(던지는 구) 색: 자주빛 보라. 주황 아님
@@ -87,6 +88,7 @@ def clips_wail():
     C["Attack"] = ([(0, w3), (5, th), (9, {**B(r=(14, 0, -6), l=(0, -0.12, 0)), "Arm": S(r=(-150, 0, 0)), "Orb": S(s=(0.01, 0.01, 0.01))}), (22, {"Orb": S(s=(0.1, 0.1, 0.1))})], "LINEAR", False, {"release": 5, "release_bone": "Orb", "projectile": "fx_wonnyeom_orb"})
     kn = {**B(r=(26, 0, 0), s=(1.14, 1.14, 0.55)), "Arm": S(r=(8, 0, 12)), "Orb": S(s=(0.01, 0.01, 0.01))}
     C["Kneel"] = ([(0, {}), (10, {**B(r=(-6, 0, 0), s=(1.06, 1.06, 0.82)), "Arm": S(r=(30, 0, 0)), "Orb": S(s=(0.3, 0.3, 0.3))}), (22, kn), (40, {**kn, "Body": S(r=(28, 0, 0), s=(1.15, 1.15, 0.53))})], "BEZIER", False, {"end_pose_held": True})
+    C.update(hr.soul_clips("wail"))   # 피격·무릎·천도·파혼 (hit_react.py)
     return C
 
 def clips_mote():
@@ -98,6 +100,7 @@ def clips_mote():
     C["Attack"] = ([(0, sq3), (4, lung), (6, lung), (14, {})], "LINEAR", False, {"hit": 4})
     pop = B(r=(18, 0, 0), s=(1.3, 1.3, 0.3))
     C["Kneel"] = ([(0, {}), (6, B(r=(-8, 0, 0), s=(1.1, 1.1, 0.8))), (14, pop), (24, B(r=(20, 0, 0), s=(1.34, 1.34, 0.26)))], "BEZIER", False, {"end_pose_held": True})
+    C.update(hr.soul_clips("mote"))   # 피격·무릎·천도·파혼 (hit_react.py)
     return C
 
 def clips_buried():
@@ -116,6 +119,7 @@ def clips_buried():
     kn = {"Body": S(l=(0, 0, -0.6), r=(34, 0, 0), s=(1.1, 1.1, 0.6)), "ArmL": S(r=(10, 0, 14)), "ArmR": S(r=(10, 0, -14))}
     C["Kneel"] = ([(0, {}), (12, {"Body": S(l=(0, 0, -0.25), r=(14, 0, 0), s=(1.05, 1.05, 0.85)), "ArmL": S(r=(-20, 0, 8)), "ArmR": S(r=(-20, 0, -8))}), (26, kn), (40, {**kn, "Body": S(l=(0, 0, -0.7), r=(38, 0, 0), s=(1.12, 1.12, 0.56))})], "BEZIER", False, {"end_pose_held": True})
     C["Sink"] = ([(0, full), (10, {**up, "Root": S(s=(1.05, 1.05, 0.9))}), (22, {**sunk, "Root": S(s=(1.1, 1.1, 0.8))}), (30, sunk)], "BEZIER", False, {"ground_dust_at": 22})
+    C.update(hr.soul_clips("buried"))   # 피격·무릎·천도·파혼 (hit_react.py)
     return C
 
 TYPES = {"wail": (wail, B_WAIL, clips_wail, "넋두리", "원념을 던지는 원거리 혼"), "mote": (mote, B_MOTE, clips_mote, "잔넋", "작게 무리 짓는 혼"), "buried": (buried, B_BURIED, clips_buried, "묻힌 혼", "땅에서 솟는 혼")}
