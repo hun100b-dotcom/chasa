@@ -151,6 +151,7 @@ public class Enemy : MonoBehaviour
         barT = 3f;
         if (!alive || !Targetable) return false;
         if (boundT > 0f && BoundBonus > 0f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * (1f + BoundBonus)));
+        if (Time.time < cageUntil) damage = Mathf.Max(1, Mathf.RoundToInt(damage * Balance.CAGE_DAMAGE_MULT));   // 쇠사슬 울 안: 받는 피해 +50%
         if (damageTakenMult != 1f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * damageTakenMult));   // 보스 전용: 약점 창 규칙
         flash = 1f;
         stun = Mathf.Max(stun, stunTime);
@@ -232,6 +233,7 @@ public class Enemy : MonoBehaviour
         mat.color = baseColor;
     }
 
+    public float cageUntil;                 // 쇠사슬 울에 갇힌 시각(이 시각까지 받는 피해 +50%)
     public float damageTakenMult = 1f;     // 받는 피해 배율(서 의원: 약점이 닫혀 있으면 0.25)
 
     /// <summary>얼룩 3개가 겹쳐 소환된 사나운 적 (P-010, P-011)</summary>

@@ -2838,5 +2838,9 @@
  "PAHON_RECOVER_DODGE_FROM": {
   "value": 0.1,
   "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24)  [신규]"
+ },
+ "CAGE_DAMAGE_MULT": {
+  "value": 1.5,
+  "note": "(균형 2차 10-25) 쇠사슬 울 안 적이 받는 피해 배율"
  }
 }

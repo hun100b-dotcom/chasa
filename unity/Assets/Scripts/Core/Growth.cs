@@ -37,17 +37,17 @@ namespace Chasa.Core
             new SkillNode("고마운 넋", Branch.Call, false, "천도 넋 +6/+12%"),
             new SkillNode("곁을 지킴", Branch.Call, false, "천도 중 받는 피해 -10/-20%"),
             new SkillNode("몫을 채움", Branch.Call, false, "그날 명부 몫을 채우면 이동 속도 +8%"),
-            new SkillNode("일곱 이름", Branch.Call, true, "연속 천도 7회째 다음 천도는 하한 0.5초로 끝난다", true),
+            new SkillNode("일곱 이름", Branch.Call, true, "쓰면 다음 천도 2번이 0.5초 (30초)", true),
             // 줄 갈래 (싸움·제어)
             new SkillNode("휘감기", Branch.Chain, true, "4m 안 혼 1.5초 묶기 (8초)"),
             new SkillNode("여럿 끌기", Branch.Chain, true, "적 셋을 한꺼번에 끌어온다 (8초)"),
             new SkillNode("매듭 걸음", Branch.Chain, true, "사슬을 걸어 8m 돌진, 지나는 동안 피격 없음 (7초)"),
-            new SkillNode("한 줄 꿰기", Branch.Chain, true, "무릎 꿇은 혼 둘을 한 줄로 묶어 함께 천도 또는 함께 파혼"),
+            new SkillNode("한 줄 꿰기", Branch.Chain, true, "혼 둘을 한 줄로 꿰어, 하나는 천도·하나는 파혼하면 둘 다 보상 +5%"),
             new SkillNode("단단한 손", Branch.Chain, false, "공격 속도 +8/+16%"),
             new SkillNode("긴 사슬", Branch.Chain, false, "무기 사거리 +0.4/+0.8m"),
             new SkillNode("묶인 자", Branch.Chain, false, "묶인 적이 받는 맺힘 피해 +30%"),
             new SkillNode("손에 익음", Branch.Chain, false, "지금 든 무기 계열의 특성 하나 강화"),
-            new SkillNode("쇠사슬 울", Branch.Chain, true, "반경 5m 원 안의 적 3초 고정 (20초)", true),
+            new SkillNode("쇠사슬 울", Branch.Chain, true, "5m 안 혼 3초 묶기 · 받는 피해 +50% (20초)", true),
             // 얼룩 갈래 (파혼 쪽)
             new SkillNode("터뜨리기", Branch.Stain, true, "가까운 얼룩 하나를 터뜨려 없앤다 · 2.5m 피해 30 · 업은 그대로 (9초)"),
             new SkillNode("원념 두르기", Branch.Stain, true, "5초 동안 업 단계만큼 공격 +5/10/15/20% (10초)"),
@@ -57,7 +57,7 @@ namespace Chasa.Core
             new SkillNode("세찬 넉백", Branch.Stain, false, "파혼 넉백 +20/+40%"),
             new SkillNode("노잣돈", Branch.Stain, false, "파혼 엽전 +7/+14%"),
             new SkillNode("마른 얼룩", Branch.Stain, false, "얼룩 지속 -15/-30%"),
-            new SkillNode("검은 갓의 그림자", Branch.Stain, true, "10초간 파혼 폭발이 주변 무릎 꿇은 혼까지 깨뜨린다. 깨진 혼마다 업 +1", true),
+            new SkillNode("검은 갓의 그림자", Branch.Stain, true, "10초 동안 파혼이 곁의 무릎 꿇은 혼까지 깨뜨린다 · 깨진 혼마다 엽전, 업 +1", true),
         };
 
         public static SkillNode Find(string name) { foreach (var s in All) if (s.Name == name) return s; return null; }

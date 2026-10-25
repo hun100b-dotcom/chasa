@@ -140,7 +140,7 @@ public class JudgeSystem : MonoBehaviour
         {
             if (interactables != null && e.label != null && interactables.KeepsakeSouls.Contains(e.label)) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.KEEPSAKE_CAST_CUT);   // 유품을 만져 둔 혼
             if (nameLightArmed) { castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.AC_NAMELIGHT_SEC); nameLightArmed = false; }   // 이름 비추기
-            if (sevenArmed) { castTotal = Balance.CAST_MIN_TIME; sevenArmed = false; }                                                          // 일곱 이름: 하한까지
+            if (sevenLeft > 0) { castTotal = Balance.CAST_MIN_TIME; sevenLeft--; }                                                          // 일곱 이름: 하한까지
         }
         player.locked = true;
         player.facing = Mathf.Atan2(e.Pos.z - player.Pos.z, e.Pos.x - player.Pos.x);
@@ -177,10 +177,12 @@ public class JudgeSystem : MonoBehaviour
         e.Finish();
         int coinBefore = ledger.Coin;
         ledger.DoPahon(e.soul.Boss);
+        TieProgress(e, 2);
         if (growth.AddPahon()) ui?.Hud.Toasts.Add("얼룩 도술 점수 +1");   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN;
-        ledger.Coin += Mathf.RoundToInt(baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult - baseCoin);
+        float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
+        int coinAdd = Mathf.FloorToInt(coinX); coinFrac = coinX - coinAdd; ledger.Coin += coinAdd;
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         // 잔넋 대장 파혼 연쇄(기획 F-1b): 4m 안 같은 무리 잔넋이 함께 깨진다. 엽전은 마리당 ×0.6, 업은 마리당 +0.5 (파혼이 늘 1등이 되지 않게)
         if (e.type == SoulType.Mote && e.leader && e.group != null)
@@ -216,6 +218,7 @@ public class JudgeSystem : MonoBehaviour
                 if (o == e || !o.kneeling || o.soul.Boss) continue;
                 if (new Vector2(o.Pos.x - at.x, o.Pos.z - at.z).magnitude > radius + o.radius) continue;
                 o.soul.TryPahon(); o.Finish(); ledger.DoPahon(false); numbers.Spawn(o.HeadPosition, 0, "heavy");
+                int sc = Mathf.RoundToInt(Balance.PAHON_COIN * lo.stats.CoinMult * lo.stats.PahonCoinMult); ledger.Coin += sc; night.RecordCoin(sc);   // 함께 깨진 혼도 엽전을 낸다(균형 2차)
             }
         foreach (var o in enemies.list)
         {
@@ -265,18 +268,7 @@ public class JudgeSystem : MonoBehaviour
         castTarget.Finish();
         tendoToday++;                                                    // 혼불 발 수
         if (escortArmed) { escortT = Balance.AC_ESCORT_SEC; escortArmed = false; }   // 배웅길: 천도 직후 적이 느려진다
-        if (tiedSecond != null)                                          // 한 줄 꿰기: 묶은 둘째 혼도 함께 간다
-        {
-            var t2 = tiedSecond; tiedSecond = null;
-            if (t2.kneeling && t2 != castTarget)
-            {
-                t2.soul.BeginSending(); t2.Finish();
-                int nb = ledger.Neok; ledger.CompleteTendo(); gainedExtra = ledger.Neok - nb;
-                if (growth.AddNeok(gainedExtra) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank); }
-                night.RecordTendo(gainedExtra); CreditSoulColor(t2.Pos, gainedExtra);
-                Say("한 줄로 함께 천도했다");
-            }
-        }
+        TieProgress(castTarget, 1);                                      // 한 줄 꿰기: 묶은 둘 중 하나는 천도·하나는 파혼하면 둘 다 보상 +5%
         if (castTarget.soul.Boss)
         {
             if (castTarget.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
@@ -375,9 +367,11 @@ public class JudgeSystem : MonoBehaviour
     public string ActiveNameAt(int slot) { return slot >= 0 && slot < growth.ActiveBar.Count ? growth.ActiveBar[slot] : null; }
 
     // 도술이 남기는 짧은 상태들
-    bool nameLightArmed, escortArmed, sevenArmed;          // 다음 천도에 걸리는 것(이름 비추기·배웅길·일곱 이름)
+    bool nameLightArmed, escortArmed; int sevenLeft;   // sevenLeft: 일곱 이름이 남긴 '하한 천도' 횟수(쓰면 2)
+    float coinFrac;                                    // 파혼 엽전 배수의 소수점 누적(엽전 7에 +5% 가 반올림으로 0이 되지 않게)
+    Enemy tiedA, tiedB; int tiedKinds;                 // 한 줄 꿰기: 묶은 둘과 지금까지 한 일(1 천도·2 파혼)
+    //          // 다음 천도에 걸리는 것(이름 비추기·배웅길·일곱 이름)
     float escortT, wrathT, rideT, shadowT;                  // 배웅길 느림·원념 두르기·얼룩 타기·검은 갓의 그림자 남은 시간
-    Enemy tiedSecond;                                       // 한 줄 꿰기로 묶은 둘째 혼(첫째를 천도하면 함께 간다)
     float lastPahonAt = -99f;                               // 마지막 파혼 시각(깨진 이름 던지기)
     int tendoToday;                                         // 오늘 천도한 혼 수(혼불 발 수)
     ClockPhase lastPhase;
@@ -482,7 +476,7 @@ public class JudgeSystem : MonoBehaviour
             }
             case "이름 비추기": nameLightArmed = true; Say("다음 천도가 빨라진다"); return true;
             case "배웅길": escortArmed = true; Say("다음 천도 뒤 적이 느려진다"); return true;
-            case "일곱 이름": sevenArmed = true; Say("다음 천도는 하한까지 빨라진다"); return true;
+            case "일곱 이름": sevenLeft = 2; Say("다음 천도 둘은 하한까지 빨라진다"); return true;
             case "여럿 끌기": // 가까운 일반 적 셋을 한꺼번에 끌어온다
             {
                 var near = AliveNear(player.Pos, Balance.AC_MULTIPULL_RANGE, false);
@@ -500,13 +494,13 @@ public class JudgeSystem : MonoBehaviour
                     if (e.kneeling && !e.soul.Boss && e.soul.CanTendo && new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude <= Balance.AC_TIE_RANGE) ks.Add(e);
                 if (ks.Count < 2) { Say("무릎 꿇은 혼 둘이 필요하다"); return false; }
                 ks.Sort((x, y) => (x.Pos - player.Pos).sqrMagnitude.CompareTo((y.Pos - player.Pos).sqrMagnitude));
-                tiedSecond = ks[1]; Say("두 혼을 한 줄로 묶었다"); return true;
+                tiedA = ks[0]; tiedB = ks[1]; tiedKinds = 0; Say("두 혼을 한 줄로 꿰었다 — 하나는 천도, 하나는 파혼"); return true;
             }
             case "쇠사슬 울": // 반경 5m 적 3초 고정(보스 제외)
             {
                 var near = AliveNear(player.Pos, Balance.AC_CAGE_RADIUS, false);
                 if (near.Count == 0) { Say("반경 안에 아무도 없다"); return false; }
-                foreach (var e in near) { e.stun = Mathf.Max(e.stun, Balance.AC_CAGE_STUN); e.boundT = Balance.AC_CAGE_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; }
+                foreach (var e in near) { e.stun = Mathf.Max(e.stun, Balance.AC_CAGE_STUN); e.boundT = Balance.AC_CAGE_STUN; e.cageUntil = Time.time + Balance.AC_CAGE_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; }
                 GroundFx.Play(player.Pos, Balance.AC_CAGE_RADIUS, "fx/fx_bind_", 3, 0.8f);
                 Say(name); return true;
             }
@@ -635,6 +629,20 @@ public class JudgeSystem : MonoBehaviour
         }
     }
     void RemoveEnemy(Enemy e) { if (e == null) return; enemies.list.Remove(e); Destroy(e.gameObject); }
+
+    /// <summary>한 줄 꿰기: 묶은 둘 중 하나를 천도하고 다른 하나를 파혼하면 둘 다 보상 +5%(소수점 누적). 같은 종류만 하면 아무 일도 없다</summary>
+    void TieProgress(Enemy who, int kind)
+    {
+        if (tiedA == null || (who != tiedA && who != tiedB)) return;
+        tiedKinds |= kind;
+        if (tiedKinds != 3) return;
+        tiedA = tiedB = null; tiedKinds = 0;
+        coinFrac += Balance.PAHON_COIN * 0.05f;
+        neokFrac += Balance.TENDO_NEOK * 0.05f;
+        int n = Mathf.FloorToInt(neokFrac); neokFrac -= n; if (n > 0) { ledger.Neok += n; growth.AddNeok(n); }
+        Say("한 줄 꿰기 보상");
+    }
+    float neokFrac;
 
     // ---- 처결 대기 긴장음: 남은 시간 비율에 맞춰 똑딱 간격이 1.0초 → 0.15초로 줄어든다(사운드팀 표) ----
     float waitTickT, waitPulseT; Enemy waitFor; bool waitFinalDone;

@@ -40,14 +40,14 @@ public static class WeaponTable
             windup = 0.26f, swing = 0.14f, recover = 0.42f, hitStopFrames = 6, shake = 0.9f, knockback = 17f, stun = 0.9f, lunge = 1.4f },
     };
 
-    // 명부 붓: 기획 10/10/18, 투사체. 지금은 좁고 긴 휘두름으로 대신(실제 투사체는 다음 단계)
+    // 명부 붓: 기획 10/10/18 → 균형 2차(초당 지수 88)로 12/12/21, 투사체. 지금은 좁고 긴 휘두름으로 대신(실제 투사체는 다음 단계)
     public static readonly ComboStep[] Brush =
     {
-        new ComboStep { name = "1 stroke", damage = 10, reach = 6.0f, sweepDeg = 14f, startOffsetDeg = 7f, dir = 1,
+        new ComboStep { name = "1 stroke", damage = 12, reach = 6.0f, sweepDeg = 14f, startOffsetDeg = 7f, dir = 1,
             windup = 0.14f, swing = 0.1f, recover = 0.2f, hitStopFrames = 1, shake = 0.25f, knockback = 6f, stun = 0.25f, lunge = 0f },
-        new ComboStep { name = "2 stroke", damage = 10, reach = 6.0f, sweepDeg = 14f, startOffsetDeg = 7f, dir = -1,
+        new ComboStep { name = "2 stroke", damage = 12, reach = 6.0f, sweepDeg = 14f, startOffsetDeg = 7f, dir = -1,
             windup = 0.14f, swing = 0.1f, recover = 0.2f, hitStopFrames = 1, shake = 0.25f, knockback = 6f, stun = 0.25f, lunge = 0f },
-        new ComboStep { name = "3 seal", damage = 18, reach = 6.5f, sweepDeg = 14f, startOffsetDeg = 7f, dir = 1,
+        new ComboStep { name = "3 seal", damage = 21, reach = 6.5f, sweepDeg = 14f, startOffsetDeg = 7f, dir = 1,
             windup = 0.24f, swing = 0.12f, recover = 0.38f, hitStopFrames = 4, shake = 0.6f, knockback = 10f, stun = 0.7f, lunge = 0f },
     };
 

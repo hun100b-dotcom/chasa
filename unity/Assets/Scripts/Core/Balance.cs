@@ -712,4 +712,5 @@ public static class Balance
     public const float CANCEL_RECOVER_START = 0.0f;  // (타격감 권장값 10-25, 기획) (타격감 분석 10-24) 후딜 시작부터 다음 타·견인·피하기·도술·처결로 끊기 허용(후딜 비율) [신규]
     public const float CANCEL_RECOVER_MOVE = 0.6f;  // (타격감 권장값 10-25, 기획) (타격감 분석 10-24) 이동으로 끊기는 후딜 60% 지난 뒤부터 [신규]
     public const float PAHON_RECOVER_DODGE_FROM = 0.1f;  // (타격감 권장값 10-25, 기획) (타격감 분석 10-24)  [신규]
+    public const float CAGE_DAMAGE_MULT = 1.5f;  // (균형 2차 10-25) 쇠사슬 울 안 적이 받는 피해 배율
 }
