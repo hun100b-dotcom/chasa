@@ -15,14 +15,14 @@ using Chasa.Core;
 
 public class NpcWorld
 {
-    [System.Serializable] class Row { public string npc, name, zone, place, verb, line, half, clue; public int region, unlock, time; }
+    [System.Serializable] class Row { public string npc, name, zone, place, verb, line, half, clue; public string[] barks; public int region, unlock, time; }
     [System.Serializable] class ClueRow { public string boss, id, verb, zone, place, npc, what; public int time; }
     [System.Serializable] class PlaceRow { public string place; public float ox, oz, ax, az; public int abs; }
     [System.Serializable] class FileData { public Row[] entries; public ClueRow[] clues; public PlaceRow[] places; }
 
     class Spot
     {
-        public Row row; public string clue, line, half, verb, label; public Vector3 pos; public GameObject view; public NpcActor actor; public bool isObject; public DwellTimer dwell = new DwellTimer();
+        public Row row; public string clue, line, half, verb, label; public Vector3 pos; public GameObject view; public NpcActor actor; public bool isObject; public float barkT, barkCool; public string bark; public DwellTimer dwell = new DwellTimer();
     }
 
     const float NoticeRadius = 3.5f;     // 이 거리 안이면 듣는다
@@ -49,7 +49,8 @@ public class NpcWorld
     public readonly HeardLog Log = new HeardLog();       // 들은 말 기록(명부 '들은 말' 탭용)
     public float DwellRatio;                             // 지금 듣는 중인 자리의 진행(0~1). 화면 고리용
     public Vector3 DwellPos;
-    public string Subtitle; public float SubtitleT;      // JudgeSystem 이 화면에 그린다
+    public string Subtitle, SubtitleName; public float SubtitleT;   // SubtitleName: 이름 탭(없으면 사물·풍경)
+    public System.Func<float, bool> enemyWithin;         // 이 거리(m) 안에 싸우는 혼이 있나. 6m 안이면 들은 말 창이 접힌다      // JudgeSystem 이 화면에 그린다
 
     public NpcWorld(ClueBook book, System.Func<int> karma, System.Func<int> nightNo)
     {
@@ -108,6 +109,7 @@ public class NpcWorld
     public void Tick(float dt, Vector3 playerPos, ClockPhase phase)
     {
         SubtitleT = Mathf.Max(0f, SubtitleT - dt);
+        if (SubtitleT > 0.3f && enemyWithin != null && enemyWithin(6f)) SubtitleT = 0.3f;   // 적이 6m 안에 오면 0.3초 안에 접는다(게임은 멈추지 않는다)
         int ph = (int)phase, night = nightNo();
         if (ph != builtPhase || night != builtNight) Rebuild(ph, night);
         bool dwelling = false;
@@ -117,6 +119,13 @@ public class NpcWorld
             if (s.view != null) s.view.SetActive(d < SpawnRadius);
             if (s.actor != null) { s.actor.hasLook = d < 12f; s.actor.lookAt = playerPos; s.actor.talking = d <= NoticeRadius + 1f; }   // 가까우면 돌아보고 말하는 동작
             // 엿듣기·지켜보기는 원 안에 머무르면 저절로(엿듣기 3m 6초, 업 10 이상 2m · 지켜보기 6m 15초). 그 밖(만져 보기·사물)은 예전처럼 가까이 오면
+            // 지나가는 혼잣말(barks): 8m 안을 지날 때 30% 확률, 같은 사람은 60초에 한 번. 기록하지 않는다(기획 §3-1)
+            s.barkT = Mathf.Max(0f, s.barkT - dt); s.barkCool = Mathf.Max(0f, s.barkCool - dt);
+            if (d < 8f && s.barkCool <= 0f && s.row.barks != null && s.row.barks.Length > 0 && !s.isObject)
+            {
+                s.barkCool = 60f;
+                if (Random.value < 0.3f) { s.bark = s.row.barks[Random.Range(0, s.row.barks.Length)]; s.barkT = 2.5f; }
+            }
             bool eaves = Eavesdrop.IsEavesVerb(s.verb), watch = s.verb == "지켜보기";
             if (eaves || watch)
             {
@@ -189,11 +198,11 @@ public class NpcWorld
         var mode = Eavesdrop.Mode(karma(), Eavesdrop.IsEavesVerb(s.verb), bossClue);
         if (mode == EavesMode.Closed)
         {
-            Say("…갑자기 춥네.");                                           // 귀가 닫혔다: 사람이 말을 접고 떠난다
+            Say("…갑자기 춥네.", s.isObject ? null : s.label);                                           // 귀가 닫혔다: 사람이 말을 접고 떠난다
             return;
         }
         string text = mode == EavesMode.Half && !string.IsNullOrEmpty(s.half) ? s.half : s.line;
-        if (!string.IsNullOrEmpty(text)) { Say((s.isObject ? "" : s.label + ": ") + "「" + text + "」"); Log.Add(s.label, s.row.place, text, s.clue, s.row.time); }
+        if (!string.IsNullOrEmpty(text)) { Say(text + (mode == EavesMode.Half ? " …" : ""), s.isObject ? null : s.label); Log.Add(s.label, s.row.place, text, s.clue, s.row.time); }
         if (!string.IsNullOrEmpty(s.clue) && book.Add(s.clue))
         {
             Sfx.Play("sfx.clue");
@@ -202,5 +211,43 @@ public class NpcWorld
         }
     }
 
-    void Say(string t) { Subtitle = t; SubtitleT = 4f; }
+    /// <summary>월드 위 표시(IMGUI): 12m 안 대상의 귀·눈 아이콘(단서면 금색·소문이면 흰색), 듣는 중 진행 고리, 머리 위 말풍선</summary>
+    public void DrawWorld(Camera cam, Vector3 playerPos, Texture2D white)
+    {
+        if (cam == null) return;
+        var iconSt = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 15, fontStyle = FontStyle.Bold };
+        var barkSt = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 18 };
+        foreach (var s in spots)
+        {
+            if (s.isObject && s.verb != "엿듣기" && s.verb != "지켜보기") continue;
+            float d = new Vector2(s.pos.x - playerPos.x, s.pos.z - playerPos.z).magnitude;
+            var sp = cam.WorldToScreenPoint(s.pos + Vector3.up * (s.isObject ? 1.0f : 2.3f));
+            if (sp.z < 0f) continue;
+            float x = sp.x, y = Screen.height - sp.y;
+            bool eaves = Eavesdrop.IsEavesVerb(s.verb), watch = s.verb == "지켜보기";
+            bool done = heard.Contains(HeardKey(s));
+            if ((eaves || watch) && d < 12f && !done)
+            {
+                bool gold = !string.IsNullOrEmpty(s.clue) && !book.Has(s.clue);
+                var c = gold ? new Color(1f, 0.82f, 0.3f) : Color.white;
+                GUI.color = new Color(0.06f, 0.05f, 0.05f, 0.6f); GUI.DrawTexture(new Rect(x - 13, y - 13, 26, 26), white);
+                GUI.color = c; GUI.Label(new Rect(x - 13, y - 13, 26, 26), eaves ? "귀" : "눈", iconSt);
+                float need = eaves ? Balance.EAVESDROP_TIME : Balance.WATCH_TIME;
+                float r = s.dwell.Ratio(need);
+                if (r > 0f) { GUI.DrawTexture(new Rect(x - 13, y + 15, 26f * r, 3), white); }   // 진행 막대(고리 대신 가는 막대)
+                GUI.color = Color.white;
+            }
+            if (s.barkT > 0f && s.bark != null)
+            {
+                GUI.color = new Color(0.953f, 0.906f, 0.827f, Mathf.Clamp01(s.barkT / 0.5f));
+                GUI.Label(new Rect(x - 120, y - 44, 240, 26), s.bark, barkSt);
+                GUI.color = Color.white;
+            }
+        }
+    }
+
+    void Say(string t, string name) { Subtitle = t; SubtitleName = name; SubtitleT = 6f; }
+
+    /// <summary>들은 말 창을 닫는다(F·클릭·Space)</summary>
+    public void DismissSubtitle() { if (SubtitleT > 0.3f) SubtitleT = 0.3f; }
 }

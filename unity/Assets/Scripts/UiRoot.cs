@@ -164,7 +164,7 @@ public class UiRoot : MonoBehaviour
     // ---- 처음 5분 안내 띠: 하단 중앙, 스킬바 위. 키 그림 + 글자 22px, 행동하면 초록 체크 ----
     VisualElement guideBox, guideKeyBox; Label guideKey, guideText, guideTick; string lastGuide;
     // ---- 보스 체력바(위 가운데) · 지역 진입 알림 --------------------------------------
-    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill, castBox, castFill; Label expLabel, sayLabel, subSfx, subCutMem, subMemLine, subNpc; VisualElement subNpcBand; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
+    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill, castBox, castFill; Label expLabel, sayLabel, subSfx, subCutMem, subMemLine, subNpc, subNpcName; VisualElement subNpcBand; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
     void BuildBossArea()
     {
         bossBox = new VisualElement { name = "boss", pickingMode = PickingMode.Ignore };
@@ -194,11 +194,15 @@ public class UiRoot : MonoBehaviour
         subSfx = SubLine(root, 18, new Color(0.85f, 0.85f, 0.85f, 0.85f), false); subSfx.style.bottom = U(150);
         subCutMem = SubLine(root, 22, new Color(0.79f, 0.69f, 1f), true); subCutMem.style.bottom = U(230);
         subMemLine = SubLine(root, 22, new Color(0.79f, 0.69f, 1f), true); subMemLine.style.top = Length.Percent(18);
+        // 들은 말 창(기획 npc-interaction-spec §3): 하단 중앙, 이름 탭 + '(들린 말)' + 본문. 선택지 없음, 게임은 멈추지 않는다
         subNpcBand = new VisualElement { pickingMode = PickingMode.Ignore };
-        subNpcBand.style.position = Position.Absolute; subNpcBand.style.left = Length.Percent(15); subNpcBand.style.right = Length.Percent(15); subNpcBand.style.bottom = U(190);
-        subNpcBand.style.alignItems = Align.Center; subNpcBand.style.backgroundColor = new Color(0.06f, 0.05f, 0.05f, 0.55f); subNpcBand.style.display = DisplayStyle.None;
-        subNpc = Line(subNpcBand, 22); subNpc.style.color = new Color(0.953f, 0.906f, 0.827f); subNpc.style.whiteSpace = WhiteSpace.Normal; subNpc.style.unityTextAlign = TextAnchor.MiddleCenter;
-        subNpc.style.paddingTop = U(8); subNpc.style.paddingBottom = U(8); root.Add(subNpcBand);
+        subNpcBand.style.position = Position.Absolute; subNpcBand.style.left = Length.Percent(50); subNpcBand.style.width = U(1152); subNpcBand.style.marginLeft = -U(576); subNpcBand.style.bottom = U(190);
+        subNpcBand.style.alignItems = Align.Center; subNpcBand.style.backgroundColor = new Color(0.06f, 0.05f, 0.05f, 0.7f); subNpcBand.style.display = DisplayStyle.None;
+        subNpcBand.style.paddingTop = U(10); subNpcBand.style.paddingBottom = U(16);
+        subNpcName = Line(subNpcBand, 17); subNpcName.style.color = new Color(1f, 0.82f, 0.3f); subNpcName.style.unityFontStyleAndWeight = FontStyle.Bold;
+        var hear = Line(subNpcBand, 11); hear.text = "(들린 말)"; hear.style.color = new Color(0.6f, 0.58f, 0.55f);
+        subNpc = Line(subNpcBand, 20); subNpc.style.color = new Color(0.953f, 0.906f, 0.827f); subNpc.style.whiteSpace = WhiteSpace.Normal; subNpc.style.unityTextAlign = TextAnchor.MiddleCenter;
+        subNpc.style.paddingTop = U(6); subNpc.style.paddingLeft = U(40); subNpc.style.paddingRight = U(40); root.Add(subNpcBand);
         bossName = Line(bossBox, 24); bossName.style.color = new Color(0.95f, 0.9f, 0.8f); bossName.style.marginBottom = U(6);
         var frame = new VisualElement { pickingMode = PickingMode.Ignore };   // 틀: 어두운 판에 붉은 채움
         frame.style.width = U(960); frame.style.height = U(20); frame.style.backgroundColor = new Color(0.05f, 0.04f, 0.05f, 0.85f);
@@ -233,7 +237,7 @@ public class UiRoot : MonoBehaviour
         if (Hud.ShowExp) { expFill.style.width = Length.Percent(Mathf.Clamp01(Hud.ExpRatio) * 100f); expLabel.text = "품계 " + Hud.Rank; }
         ShowSub(subSfx, Hud.SubSfx, 1f); ShowSub(subCutMem, Hud.SubCutMemory, 1f); ShowSub(subMemLine, Hud.SubMemLine, Hud.SubMemLineAlpha);
         bool npcSub = Hud.SubNpc != null && Hud.SubNpcAlpha > 0.01f; subNpcBand.style.display = npcSub ? DisplayStyle.Flex : DisplayStyle.None;
-        if (npcSub) { subNpc.text = Hud.SubNpc; subNpcBand.style.opacity = Hud.SubNpcAlpha; }
+        if (npcSub) { subNpc.text = Hud.SubNpc; subNpcBand.style.opacity = Hud.SubNpcAlpha; bool hasName = !string.IsNullOrEmpty(Hud.SubNpcName); subNpcName.text = hasName ? Hud.SubNpcName : ""; subNpcName.style.display = hasName ? DisplayStyle.Flex : DisplayStyle.None; }
         bool casting = Hud.CastRatio >= 0f; castBox.style.display = casting ? DisplayStyle.Flex : DisplayStyle.None;
         if (casting) castFill.style.width = Length.Percent(Mathf.Clamp01(Hud.CastRatio) * 100f);
         bool say = Hud.SayText != null; sayLabel.style.display = say ? DisplayStyle.Flex : DisplayStyle.None; if (say) sayLabel.text = Hud.SayText;

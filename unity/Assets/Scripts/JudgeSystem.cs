@@ -855,7 +855,7 @@ public class JudgeSystem : MonoBehaviour
     void HandleKeys()
     {
         if (Input.GetKeyDown(KeyCode.E)) CommandTendo();
-        if (Input.GetKeyDown(KeyCode.F)) CommandSoulPath();   // F: 넋길(밤에 서낭당 곁에서)
+        if (Input.GetKeyDown(KeyCode.F)) { if (SoulPathStop() >= 0) CommandSoulPath(); else if (npcs != null) npcs.DismissSubtitle(); }   // F: 넋길(밤에 서낭당 곁에서), 아니면 들은 말 창 닫기
         if (Input.GetKeyDown(KeyCode.Alpha1)) UseSkill(0);
         if (Input.GetKeyDown(KeyCode.Alpha2)) UseSkill(1);
         if (Input.GetKeyDown(KeyCode.Alpha3)) UseSkill(2);
@@ -1015,7 +1015,7 @@ public class JudgeSystem : MonoBehaviour
         h.SubCutMemory = cuts.LineVisible && cuts.LineStyle == "memory" ? "“" + cuts.LineText + "”" : null;
         if (memLineT > 0f) memLineT -= Time.unscaledDeltaTime;
         h.SubMemLine = memLineT > 0f ? "“" + memLine + "”" : null; h.SubMemLineAlpha = Mathf.Clamp01(memLineT / 0.8f);
-        h.SubNpc = npcs != null && npcs.SubtitleT > 0f ? npcs.Subtitle : null; h.SubNpcAlpha = npcs != null ? Mathf.Clamp01(npcs.SubtitleT / 0.6f) : 0f;
+        h.SubNpc = npcs != null && npcs.SubtitleT > 0f ? npcs.Subtitle : null; h.SubNpcName = npcs != null ? npcs.SubtitleName : null; h.SubNpcAlpha = npcs != null ? Mathf.Clamp01(npcs.SubtitleT / 0.6f) : 0f;
         // 경험치(품계) 막대: 처음 넋을 얻은 뒤에만(하나씩 열기)
         h.ShowExp = revNeok && FieldRules.On; h.Rank = growth.Rank;
         { int lo0 = GrowthState.NeokForRank(growth.Rank), hi0 = GrowthState.NeokForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.TotalNeok - lo0) / (hi0 - lo0); }
@@ -1211,6 +1211,7 @@ public class JudgeSystem : MonoBehaviour
         // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
         weather.DrawOverlay(player.Pos);   // 비 줄기(HUD 보다 아래)
+        if (npcs != null) npcs.DrawWorld(Camera.main, player.Pos, white);   // 귀·눈 아이콘, 진행, 지나가는 혼잣말
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
         if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)

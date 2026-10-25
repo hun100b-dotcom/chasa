@@ -12,7 +12,7 @@ public class CharacterPanel : MonoBehaviour
     public JudgeSystem judge;
     public Texture2D white;
     int tab = 3;                             // 0 장비 1 도술 2 능력치 3 명부(책). 기본은 명부
-    static readonly string[] TabNames = { "장비", "도술", "능력치", "명부" };
+    static readonly string[] TabNames = { "장비", "도술", "능력치", "명부", "들은 말" };
     string hoverDesc = "";
     // 명부 책 색(코디 결정 10-25): 글자는 먹색, 강조는 붉은 인. 책 그림(한지 바탕)이 있을 때만 쓴다
     static readonly Color Ink = new Color32(0x1E, 0x1A, 0x17, 255), Seal = new Color32(0xB5, 0x47, 0x3F, 255);
@@ -54,7 +54,7 @@ public class CharacterPanel : MonoBehaviour
 
         // 탭 막대
         int slot0 = 0;   // 보이는 탭 칸 번호(옛 탭이 숨겨져도 간격이 벌어지지 않게)
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
             if (i < 3 && !Demo.Panel) continue;
             var r = new Rect(box.x + 12 + slot0++ * 120, box.y + 10, 112, 36);
@@ -66,6 +66,7 @@ public class CharacterPanel : MonoBehaviour
         var st = lo.stats;
         if (tab == 3 && bookMode) DrawBook(new Rect(box.x + 44, box.y + 40, box.width - 88, box.height - 80), box.y + 52, body, title);   // 한지 안쪽 여백(약 40px)을 피해 그린다
         else if (tab == 3) DrawBook(box, y, body, title);
+        else if (tab == 4) DrawHeard(box, y, body, title);
         else if (tab == 0) DrawEquip(box, y, lo, body, title);
         else if (tab == 1) DrawSkills(box, y, lo, body, title);
         else DrawStats(box, y, lo, st, body, title);
@@ -131,6 +132,28 @@ public class CharacterPanel : MonoBehaviour
         var tex = SpriteLib.Texture("icons/" + icon); var fr = SpriteLib.Texture("icons/frame_" + rar);
         if (tex != null) GUI.DrawTexture(r, tex);
         if (fr != null) GUI.DrawTexture(r, fr);
+    }
+
+    static readonly string[] SlotNames = { "새벽", "낮", "저녁", "밤" };
+    Vector2 heardScroll;
+
+    /// <summary>들은 말 탭: 엿듣고 지켜본 말을 시간대·자리와 함께 보여 준다. 단서가 있으면 금색 점(기획 §3-2)</summary>
+    void DrawHeard(Rect box, float y, GUIStyle body, GUIStyle title)
+    {
+        var log = judge.npcs != null ? judge.npcs.Log : null;
+        if (log == null || log.Items.Count == 0) { GUI.Label(new Rect(box.x + 16, y, box.width - 32, 60), "아직 들은 말이 없다. 산 사람 곁에 가만히 서 있으면 들린다.", body); return; }
+        var view = new Rect(box.x + 12, y, box.width - 24, box.height - (y - box.y) - 12);
+        var content = new Rect(0, 0, view.width - 24, log.Items.Count * 62f);
+        heardScroll = GUI.BeginScrollView(view, heardScroll, content);
+        for (int i = 0; i < log.Items.Count; i++)
+        {
+            var e = log.Items[log.Items.Count - 1 - i];   // 최근 것이 위
+            bool clue = !string.IsNullOrEmpty(e.Clue);
+            if (clue) { GUI.color = new Color(1f, 0.82f, 0.3f); GUI.Label(new Rect(0, i * 62f, 20, 24), "●", body); GUI.color = Color.white; }
+            GUI.Label(new Rect(22, i * 62f, content.width - 22, 24), e.Who + "  (" + SlotNames[Mathf.Clamp(e.Slot, 0, 3)] + " · " + e.Place + ")", title);
+            GUI.Label(new Rect(22, i * 62f + 24, content.width - 22, 36), e.Text, body);
+        }
+        GUI.EndScrollView();
     }
 
     void DrawSkills(Rect box, float y, Loadout lo, GUIStyle body, GUIStyle title)

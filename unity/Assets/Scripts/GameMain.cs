@@ -70,6 +70,11 @@ public class GameMain : MonoBehaviour
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
             // 10m 안에 싸우는 혼이 있으면 엿듣기·지켜보기 진행이 멈춘다(기획 npc-interaction-spec §2-3)
+            judge.npcs.enemyWithin = r =>
+            {
+                foreach (var x in judge.enemies.list) if (x.alive && (x.Pos - judge.player.Pos).sqrMagnitude < r * r) return true;
+                return false;
+            };
             judge.npcs.inCombat = () =>
             {
                 foreach (var x in judge.enemies.list) if (x.alive && (x.Pos - judge.player.Pos).sqrMagnitude < 100f) return true;

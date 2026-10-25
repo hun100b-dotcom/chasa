@@ -17,6 +17,7 @@ for n in src["npcs"]:
             "npc": n["id"], "name": n["name"], "region": n["region"], "unlock": n.get("unlock_night", 1),
             "time": TIME[s["time"]], "zone": s["zone"], "place": s["place"], "verb": s.get("verb", ""),
             "line": s.get("line", ""), "half": s.get("line_half", ""), "clue": s.get("clue") or "",
+            "barks": n.get("barks", {}).get(s["time"], []),   # 지나가며 들리는 혼잣말(단서 아님)
         })
 clues = []
 for boss, b in src["boss_clues"].items():
