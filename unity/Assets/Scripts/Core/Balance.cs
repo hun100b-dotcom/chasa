@@ -308,7 +308,7 @@ public static class Balance
     public const int SOCKET_COST_2 = 240;  // (시연판 임시) 기획서 부록 B 낮: 홈 뚫기 둘째 엽전
     public const int SOCKET_MAX = 2;  // (시연판 임시) 기획서 부록 B 낮: 장비 한 개의 인 홈 최대 수
     public const float NIGHT_GRACE = 4.0f;  // (QA 버그 B1) 밤 시작·첫 입력 뒤 이 시간 동안 적이 공격 준비를 시작하지 않는다(그 뒤 첫 공격은 ENEMY_ATTACK_INTERVAL 뒤). 서낭당에서 가만히 서 있다 죽는 것 방지
-    public const float REGEN_DELAY = 4.0f;  // (QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다
+    public const float REGEN_DELAY = 3.0f;  // (QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다
     public const float REGEN_PER_SEC = 2.0f;  // (QA M6 조정) 첫 밤 생존: 맞지 않는 동안 초당 체력 회복
     public const float SHRINE_HEAL_PER_SEC = 12.0f;  // (QA M6 조정) 첫 밤 생존: 서낭당 원 안에서 초당 체력 회복(맞은 직후에도). 서낭당 = 안전한 쉼터
     public const int FIRST_NIGHT_HEAL = 2;  // (QA M6 조정) 첫 밤 생존: 첫 밤 시작 때 당할미가 쥐여 주는 회복약 수(H 키)
@@ -510,7 +510,7 @@ public static class Balance
     public const float CAMERA_PITCH_NEAR = 46.0f;  // 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_MID = 52.0f;  // 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_FAR = 58.0f;  // 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
-    public const float CAMP_DENSITY_MULT = 0.6f;  // 군집 인원 전체 배율(1.0=그대로). 첫 30분 난이도 조정용: 코디 지시로 봇이 첫 보스까지 2번 이하 쓰러지게 0.7~0.8 까지 낮춘다(10-25) | 10-25 PC: 무적 없이 시작 45초 만에 쓰러짐 → 0.75 | 10-25 PC 재측정: a271cff 에서도 봇 5번 쓰러짐·무입력 40초 → 0.6
+    public const float CAMP_DENSITY_MULT = 1.0f;  // 군집 인원 전체 배율. 10-25 기획: 구역 고리별 배율(CAMP_DENSITY_RING1~3)로 대체돼 1.0
     public const float FOG_DENSITY_MULT = 0.6f;  // 안개 농도 전체 배율(아트 검수 10-25: 1920 화면이 뿌옇다 → -40%)
     public const float CLOUD_SHADOW_MULT = 0.5f;  // 땅 구름 그림자 세기 배율(아트 검수: 대비 -50%)
     public const int DMG_NUM_MAX = 6;  // 화면 데미지 숫자 최대 개수(겹침 방지)
@@ -523,4 +523,14 @@ public static class Balance
     public const float MOTE_CHAIN_KARMA = 0.5f;  // 함께 깨진 잔넋 한 마리당 업(소수는 모았다가 1이 되면 반영)
     public const int WAIL_TENDO_MEMORY = 1;  // 넋두리를 천도하면 기억 조각 추가
     public const float BURIED_TENDO_NEOK_MULT = 1.25f;  // 묻힌 혼을 천도하면 넋 배율
+    public const int ATTACK_TOKENS = 3;  // 동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음)
+    public const int ATTACK_TOKENS_INTRO = 2;  // 첫 5분(시계 정지 중) 공격 차례 수
+    public const float TOKEN_WAIT_RING_M = 4.5f;  // 차례를 못 받은 혼이 플레이어 둘레에서 기다리는 거리(m)
+    public const float CAMP_DENSITY_RING1 = 0.5f;  // 고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)
+    public const float CAMP_DENSITY_RING2 = 0.7f;  // 고리2(물막이 골·폐당집)
+    public const float CAMP_DENSITY_RING3 = 0.8f;  // 검은여울
+    public const float NAMED_NEAR_M = 40.0f;  // 이름혼 자리 둘레(m): 이 안 군집은 인원 ×0.5, 최대 NAMED_NEAR_CAP 마리
+    public const int NAMED_NEAR_CAP = 3;  // 이름혼 둘레 군집 인원 상한
+    public const int MOTE_GROUP_MIN_RING1 = 3;  // 고리1 잔넋 무리 크기 최소
+    public const int MOTE_GROUP_MAX_RING1 = 4;  // 고리1 잔넋 무리 크기 최대(3~4). 그 밖은 3~5
 }

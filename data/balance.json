@@ -1224,7 +1224,7 @@
   "note": "(QA 버그 B1) 밤 시작·첫 입력 뒤 이 시간 동안 적이 공격 준비를 시작하지 않는다(그 뒤 첫 공격은 ENEMY_ATTACK_INTERVAL 뒤). 서낭당에서 가만히 서 있다 죽는 것 방지"
  },
  "REGEN_DELAY": {
-  "value": 4.0,
+  "value": 3.0,
   "note": "(QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다"
  },
  "REGEN_PER_SEC": {
@@ -2032,8 +2032,8 @@
   "note": "멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))"
  },
  "CAMP_DENSITY_MULT": {
-  "value": 0.6,
-  "note": "군집 인원 전체 배율(1.0=그대로). 첫 30분 난이도 조정용: 코디 지시로 봇이 첫 보스까지 2번 이하 쓰러지게 0.7~0.8 까지 낮춘다(10-25) | 10-25 PC: 무적 없이 시작 45초 만에 쓰러짐 → 0.75 | 10-25 PC 재측정: a271cff 에서도 봇 5번 쓰러짐·무입력 40초 → 0.6"
+  "value": 1.0,
+  "note": "군집 인원 전체 배율. 10-25 기획: 구역 고리별 배율(CAMP_DENSITY_RING1~3)로 대체돼 1.0"
  },
  "FOG_DENSITY_MULT": {
   "value": 0.6,
@@ -2082,5 +2082,45 @@
  "BURIED_TENDO_NEOK_MULT": {
   "value": 1.25,
   "note": "묻힌 혼을 천도하면 넋 배율"
+ },
+ "ATTACK_TOKENS": {
+  "value": 3,
+  "note": "동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음)"
+ },
+ "ATTACK_TOKENS_INTRO": {
+  "value": 2,
+  "note": "첫 5분(시계 정지 중) 공격 차례 수"
+ },
+ "TOKEN_WAIT_RING_M": {
+  "value": 4.5,
+  "note": "차례를 못 받은 혼이 플레이어 둘레에서 기다리는 거리(m)"
+ },
+ "CAMP_DENSITY_RING1": {
+  "value": 0.5,
+  "note": "고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)"
+ },
+ "CAMP_DENSITY_RING2": {
+  "value": 0.7,
+  "note": "고리2(물막이 골·폐당집)"
+ },
+ "CAMP_DENSITY_RING3": {
+  "value": 0.8,
+  "note": "검은여울"
+ },
+ "NAMED_NEAR_M": {
+  "value": 40.0,
+  "note": "이름혼 자리 둘레(m): 이 안 군집은 인원 ×0.5, 최대 NAMED_NEAR_CAP 마리"
+ },
+ "NAMED_NEAR_CAP": {
+  "value": 3,
+  "note": "이름혼 둘레 군집 인원 상한"
+ },
+ "MOTE_GROUP_MIN_RING1": {
+  "value": 3,
+  "note": "고리1 잔넋 무리 크기 최소"
+ },
+ "MOTE_GROUP_MAX_RING1": {
+  "value": 4,
+  "note": "고리1 잔넋 무리 크기 최대(3~4). 그 밖은 3~5"
  }
 }
