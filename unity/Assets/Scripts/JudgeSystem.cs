@@ -415,6 +415,7 @@ public class JudgeSystem : MonoBehaviour
             CreditSoulColor(castTarget.Pos, g); night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
             Say(castTarget.label + "을(를) 보냈다"); if (castTarget.soul.BossId <= 1) bossOutcome = 1;
+            bossTendoIds.Add(castTarget.soul.BossId);   // 천도로 보낸 보스: 넋길에 그 마당 가장자리 도착점이 생긴다
             MarkBossDone(castTarget.soul.BossId);
             if (cuts.Play(BossCut(castTarget.soul, "TENDO"))) { player.CommandStop(); enemies.graceT = Mathf.Max(enemies.graceT, 7f); }   // 7초 컷: 입력 잠김·적 멈춤
         }
@@ -761,6 +762,25 @@ public class JudgeSystem : MonoBehaviour
     readonly HashSet<int> bossDoneIds = new HashSet<int>();   // 처결한 1막 보스 번호(1~3)
     int allDoneDay = -1; bool allDoneAtNight; int enterDay = -1; int act2DoneDay = -1; bool gate3Announced;   // act2DoneDay: 2막 보스 넷을 모두 처결한 하루(3막 금줄은 그 다음 새벽에 풀린다)
     bool heukwolSpawned, heukwolRetreated, gateAnnounced, heukwolWarned; Enemy heukwol; float gateToastT;
+    readonly HashSet<int> bossTendoIds = new HashSet<int>();   // 천도로 처결한 보스 번호(넋길 추가 도착점)
+    /// <summary>넋길 정류장: 서낭당들 + 천도로 보낸 보스의 마당 가장자리(반경 + 4m, 가까운 서낭당 쪽 = 들어오는 방향). 밤에만 쓴다</summary>
+    List<float[]> SoulStops(out List<string> names)
+    {
+        var stops = new List<float[]>(FieldRules.Shrines); names = new List<string>(FieldRules.ShrineNames);
+        var ids = new List<int>(bossTendoIds); ids.Sort();
+        foreach (var id in ids)
+        {
+            if (id < 1 || id == 4 || id > Bosses.Count) continue;
+            var bd = Bosses.Get(id); float best = float.MaxValue; float[] near = null;
+            foreach (var sh in FieldRules.Shrines) { float d = new Vector2(sh[0] - bd.X, sh[1] - bd.Z).magnitude; if (d < best) { best = d; near = sh; } }
+            if (near == null) continue;
+            var dir = new Vector2(near[0] - bd.X, near[1] - bd.Z).normalized;
+            float r = (id <= 3 ? 16f : id == 12 ? 18f : id >= 9 ? 15f : 14f) + 4f;   // 마당 반경(보스마다) + 4m
+            stops.Add(new[] { bd.X + dir.x * r, bd.Z + dir.y * r }); names.Add(bd.Name + "의 마당 어귀");
+        }
+        return stops;
+    }
+
     void MarkBossDone(int id)
     {
         if (id < 1 || id > 12 || id == 4 || clock == null || !bossDoneIds.Add(id)) return;
@@ -1124,7 +1144,7 @@ public class JudgeSystem : MonoBehaviour
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
         s.Picked.Add("cp:" + cardPicks);   // 도술 카드 몇 번 골랐나
         if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
-        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); foreach (var bi in bossDoneIds) s.Picked.Add("bd:" + bi); if (act2DoneDay >= 0) s.Picked.Add("a2d:" + act2DoneDay); if (allDoneDay >= 0) s.Picked.Add("ad:" + allDoneDay + ":" + (allDoneAtNight ? 1 : 0)); if (enterDay >= 0) s.Picked.Add("ed:" + enterDay); if (heukwolSpawned) s.Picked.Add("hks:1"); if (gateAnnounced) s.Picked.Add("ga:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
+        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); foreach (var bi in bossDoneIds) s.Picked.Add("bd:" + bi); foreach (var bt in bossTendoIds) s.Picked.Add("bt:" + bt); if (act2DoneDay >= 0) s.Picked.Add("a2d:" + act2DoneDay); if (allDoneDay >= 0) s.Picked.Add("ad:" + allDoneDay + ":" + (allDoneAtNight ? 1 : 0)); if (enterDay >= 0) s.Picked.Add("ed:" + enterDay); if (heukwolSpawned) s.Picked.Add("hks:1"); if (gateAnnounced) s.Picked.Add("ga:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
         if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
         return SaveStore.Write(SaveGame.Serialize(s));
     }
@@ -1145,7 +1165,7 @@ public class JudgeSystem : MonoBehaviour
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
         funeralPending.Clear(); funeralDone.Clear(); funeralNoneShown.Clear(); funeralBorn.Clear(); parkUnjudged = false; dogHome = false; funeralDay = -1;
-        bossDoneIds.Clear(); allDoneDay = -1; allDoneAtNight = false; enterDay = -1; act2DoneDay = -1; gate3Announced = false; heukwolSpawned = false; heukwolRetreated = false; gateAnnounced = false; heukwolWarned = false; heukwol = null;
+        bossDoneIds.Clear(); bossTendoIds.Clear(); allDoneDay = -1; allDoneAtNight = false; enterDay = -1; act2DoneDay = -1; gate3Announced = false; heukwolSpawned = false; heukwolRetreated = false; gateAnnounced = false; heukwolWarned = false; heukwol = null;
         cardPicks = 0; cardPicksLoaded = false;
         foreach (var pk in s.Picked)
         {
@@ -1153,6 +1173,7 @@ public class JudgeSystem : MonoBehaviour
             else if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
             else if (pk == "pu:1") parkUnjudged = true;
             else if (pk == "dh:1") dogHome = true;
+            else if (pk.StartsWith("bt:")) { int bt; if (int.TryParse(pk.Substring(3), out bt)) bossTendoIds.Add(bt); }
             else if (pk.StartsWith("bd:")) { int bi; if (int.TryParse(pk.Substring(3), out bi)) bossDoneIds.Add(bi); }
             else if (pk.StartsWith("ad:")) { var q = pk.Split(':'); int d0; if (q.Length == 3 && int.TryParse(q[1], out d0)) { allDoneDay = d0; allDoneAtNight = q[2] == "1"; } }
             else if (pk.StartsWith("ed:")) int.TryParse(pk.Substring(3), out enterDay);
@@ -1281,7 +1302,7 @@ public class JudgeSystem : MonoBehaviour
     int SoulPathStop()
     {
         if (clock == null || Casting || !player.CanActNow() || !SoulPath.Available(clock.Daylight)) return -1;
-        return SoulPath.NearIndex(player.Pos.x, player.Pos.z, FieldRules.Shrines);
+        List<string> nm; return SoulPath.NearIndex(player.Pos.x, player.Pos.z, SoulStops(out nm).ToArray());
     }
 
     // ---- F 상호작용(기획 npc-interaction-spec §2): 줍기 2m · 만져 보기 1.5m(2초 누르기) · 넋길 3m · 쉬기 3m ----
@@ -1389,15 +1410,17 @@ public class JudgeSystem : MonoBehaviour
     {
         int at = SoulPathStop();
         if (at < 0) return;
-        int to = SoulPath.Next(at, FieldRules.Shrines.Length);
-        // 2막 금줄이 닫혀 있으면 2막 서낭당(z 640 이상)은 건너뛰고 1막 처음으로 돌아간다
-        for (int guard = 0; guard < FieldRules.Shrines.Length && ShrineLocked(FieldRules.Shrines[to]); guard++) to = SoulPath.Next(to, FieldRules.Shrines.Length);
-        var s = FieldRules.Shrines[to];
-        var dest = new Vector3(s[0], 0f, s[1] - 3f);   // 서낭당 바로 앞(남쪽)에 선다
+        List<string> nm; var stops = SoulStops(out nm);
+        int to = SoulPath.Next(at, stops.Count);
+        // 2막 금줄이 닫혀 있으면 2막 서낭당(z 640 이상)은 건너뛰고 처음으로 돌아간다
+        for (int guard = 0; guard < stops.Count && ShrineLocked(stops[to]); guard++) to = SoulPath.Next(to, stops.Count);
+        var s = stops[to];
+        bool extra = to >= FieldRules.Shrines.Length;   // 보스 마당 어귀: 서낭당 앞이 아니라 그 자리에 선다
+        var dest = new Vector3(s[0], 0f, extra ? s[1] : s[1] - 3f);   // 서낭당 바로 앞(남쪽)에 선다
         player.CommandStop(); player.Pos = dest;
         if (onTeleport != null) onTeleport(dest);
         Sfx.Play("sfx.tendo.done");
-        Say("넋길 — " + FieldRules.ShrineNames[to]);
+        Say("넋길 — " + nm[to]);
     }
 
     /// <summary>세계 시계를 흘리고, 단계가 바뀌면 종을 울리고 알린다</summary>

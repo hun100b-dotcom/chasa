@@ -1433,3 +1433,9 @@
 - 아트 PR #35(d439f08) 합침(충돌 파일은 아트 것 채택). 거센 혼 `soul_elite_*` 연결: models.json `elite_*`(Attack=SlamWindup, Attack2=PounceWindup, Attack3=Call), 예고 중엔 `Enemy.eliteAnim`으로 동작이 바뀜. 모델이 이미 1.3배라 그림 배율 1.0(충돌 반경만 1.3). 기본 혼 Windup→Attack 이음은 PC에서 확인 필요.
 - 타이틀: `bgm_title` 반복 + `amb.title.fog` 반복, 시작하면 2초 페이드 아웃, 그동안 BgmPlayer는 조용.
 - 미연결: Slam/Pounce/Call 본 동작(포즈 이름 한계: 예고만 연결), 거센 혼 구역별 출현.
+
+## 외톨이 야영지 + 넋길 추가 도착지 (코드·QA, 10-26)
+- 외톨이 야영지: `field_camps.json` 7곳에 `loner:true`. 혼 하나가 무릎 꿇은 채 홀로 있는 자리(`FieldCamps.CampRow.loner`). 기획 감사 반영.
+- 넋길: 이름 있는 혼 외에 천도로 풀린 보스 자리(`bt:id`, 저장에 얹음)도 도착지로 이어진다. `JudgeSystem.SoulStops`가 둘을 합쳐 `CommandSoulPath`·`SoulPathStop`이 쓴다.
+- 클라우드 점검 통과(NUnit 202 + 컴파일). 화면 확인은 PC에서.
+- 남음: 깨진 이름 "먹이 번져 읽히지 않는다" 표시, 비켜선 백 규칙, 옛 차사 한 벌 문구, 장비 등급 모양(⑦).

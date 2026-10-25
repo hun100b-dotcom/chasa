@@ -9,7 +9,7 @@ using Chasa.Core;
 
 public class FieldCamps
 {
-    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; }
+    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public bool loner; }
     [System.Serializable] class CampFile { public CampRow[] camps; }
 
     class Camp
@@ -104,6 +104,20 @@ public class FieldCamps
             }
             var e = enemies.SpawnCamp(new Vector3(x, 0f, z), i % 2 == 0, type);
             c.members.Add(e);
+        }
+        // 외톨이 야영지(기획 감사 보강): 무리에서 12~16m 떨어진 곳에 무릎 꿇은 혼 1~2. 싸우지 않고 혼자 처결 대기 중이라 무리의 공격권에 들지 않는다
+        if (c.row.loner)
+        {
+            int lone = Random.value < 0.5f ? 1 : 2;
+            for (int k = 0; k < lone; k++)
+            {
+                float a = Random.value * Mathf.PI * 2f, rr = c.row.r + 12f + Random.value * 4f;
+                float lx = c.row.x + Mathf.Cos(a) * rr, lz = c.row.z + Mathf.Sin(a) * rr;
+                MapLayout.PushOut(ref lx, ref lz, Config.ENEMY_RADIUS + 1f);
+                var l = enemies.SpawnCamp(new Vector3(lx, 0f, lz), k % 2 == 0);
+                l.soul.Trick = false; l.soul.TakeHit(l.soul.MaedhimMax + 1);   // 맺힘 0 → 무릎 꿇음
+                c.members.Add(l);
+            }
         }
     }
 
