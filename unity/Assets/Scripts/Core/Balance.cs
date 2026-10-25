@@ -366,4 +366,10 @@ public static class Balance
     public const float MOVE_ACCEL = 60.0f;  // 걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1
     public const float MOVE_START_FRAC = 0.4f;  // 걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발)
     public const float MOVE_BRAKE_TIME = 0.1f;  // 도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터)
+    public const float CLOCK_DAWN_MIN = 2.0f;  // (기획 3단계) 하루 40분 중 동틀녘 길이(분). 출발값, QA 시뮬레이션으로 확정
+    public const float CLOCK_DAY_MIN = 14.0f;  // 낮 길이(분)
+    public const float CLOCK_DUSK_MIN = 2.0f;  // 해질녘 길이(분)
+    public const float CLOCK_NIGHT_MIN = 22.0f;  // 밤 길이(분)
+    public const float CLOCK_START_MIN = 16.0f;  // 게임 시작 시각(하루 안의 분). 16 = 해질녘 시작
+    public const float MOON_DAYS = 7.0f;  // 달 주기(일). 보름=가운데 날, 그믐=첫날
 }

@@ -23,6 +23,8 @@ namespace Chasa.Core
         // 시각 고리(오른쪽 위 해시계): TimeOfDay 0~1 = 하루 중 위치(0=해질녘 시작, 0.5=한밤, 1=동틀녘), IsDawn=붉은 구간.
         // 지금은 밤 남은 시간에서 만들고, 3단계(월드 시계)가 오면 그 값으로 바꾼다
         public float TimeOfDay; public bool IsDawn;
+        public float Daylight; public bool FullMoon, NewMoon;   // 하늘 밝기(0~1)와 달 (시각 고리가 해/달 모양을 고름)
+        public string ClockLabel;                                // 필드 모드의 시간대 글자('해질녘 · 보름달'). null 이면 옛 밤 타이머 글자
         // 아래쪽 기술 줄
         public float DodgeCharges; public int DodgeMax;     // 피하기 충전(소수는 충전 중인 칸)
         public float PullCd;                                // 끌어당김 남은 시간(초, 0이면 쓸 수 있음)
@@ -47,6 +49,13 @@ namespace Chasa.Core
         public string NightLine()
         {
             var sb = new StringBuilder();
+            if (ClockLabel != null)
+            {
+                // 흐르는 하루: 남은 초 대신 시간대. 명부 몫(천도 수)과 단서만 남긴다
+                sb.Append(ClockLabel).Append("   천도 ").Append(Sent).Append('/').Append(Quota).Append("   단서 ").Append(Clues).Append('/').Append(CluesNeeded);
+                if (BossDone) sb.Append("   나루 영감 끝");
+                return sb.ToString();
+            }
             sb.Append("밤 ").Append(SecondsLeft).Append("초   천도 ").Append(Sent).Append('/').Append(Quota)
               .Append("   단서 ").Append(Clues).Append('/').Append(CluesNeeded);
             if (BossDone) sb.Append("   나루 영감 끝");

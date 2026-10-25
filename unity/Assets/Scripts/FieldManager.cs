@@ -100,7 +100,7 @@ public class FieldManager : MonoBehaviour
             if (pool[i].enabled && poolLamp[i] != null)
             {
                 float f = poolLamp[i].flicker == 1 ? 0.85f + 0.15f * Mathf.PerlinNoise(Time.time * 7f, i * 3.1f) : 1f;
-                pool[i].intensity = poolLamp[i].intensity * 1.6f * f;
+                pool[i].intensity = poolLamp[i].intensity * 1.6f * f * (1f - 0.9f * Chasa.Core.SkyState.Daylight);   // 낮엔 등불이 거의 안 보이게
             }
     }
 

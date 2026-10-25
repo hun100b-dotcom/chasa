@@ -6,6 +6,7 @@
 //   AI가 텍스트 파일만 고쳐서 개발하기 위해서다. Unity 씬 파일은 사람이 편집기로 배치하는 게
 //   기본이라 AI가 직접 다루기 어렵다. 그래서 씬은 비워 두고 게임이 켜질 때 코드로 전부 만든다.
 // =============================================================================
+using System.Linq;
 using UnityEngine;
 using Chasa.Core;
 
@@ -55,7 +56,14 @@ public class GameMain : MonoBehaviour
         player.chain = ChainVisual.Create();
         // 처결(천도·파혼): 규칙은 Core, 화면 연결은 JudgeSystem
         judge = gameObject.AddComponent<JudgeSystem>();
-        if (FieldRules.On) judge.camps = new FieldCamps(enemies);
+        if (FieldRules.On)
+        {
+            judge.camps = new FieldCamps(enemies);
+            judge.clock = new WorldClock();
+            var cu = (Application.absoluteURL ?? "").ToLowerInvariant();
+            int ci = cu.IndexOf("clock=");
+            float sp; if (ci >= 0 && float.TryParse(new string(cu.Substring(ci + 6).TakeWhile(char.IsDigit).ToArray()), out sp) && sp > 0f) judge.clock.Speed = sp;   // 주소 ?clock=10 이면 10배속(한 바퀴 검사용)
+        }
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
         if (View3D.On)
         {
@@ -192,6 +200,7 @@ public class GameMain : MonoBehaviour
         // 줌(타격 펀치·천도 캐스팅)은 직교에선 화면 크기, 원근에선 카메라 거리로 만든다
         float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f;
         wheel = Mathf.Lerp(wheel, wheelTarget, 1f - Mathf.Exp(-Balance.CAMERA_WHEEL_SMOOTH * Time.unscaledDeltaTime));   // 휠 줌은 부드럽게 따라간다
+        if (judge.clock != null) ClockSky.Apply(sun, cam, judge.clock);   // 하늘·햇빛이 시계를 따른다
         cam.transform.position = focus + (View3D.On ? offset * ((1f - zoomIn) * wheel) : offset);
         cam.transform.LookAt(View3D.On ? focus + Vector3.up * 0.9f : focus);   // 3D 에선 발밑이 아니라 가슴께를 본다
         cam.transform.Rotate(0f, 0f, feel.GetShakeRoll(), Space.Self);   // 충격이 클 때만 화면이 살짝 기울었다 돌아온다

@@ -1313,4 +1313,65 @@ public class CoreTests
         Assert.IsTrue(CampRules.ShouldRelease(true, CampRules.ReleaseDist + 1f));
         Assert.IsFalse(CampRules.ShouldRelease(false, 999f));
     }
+
+    // ---------- 흐르는 하루 (3단계) ----------
+    [Test]
+    public void Clock_DayIsFortyMinutes()
+    {
+        Assert.AreEqual(40f, WorldClock.DayLength, 1e-4f);
+    }
+
+    [Test]
+    public void Clock_PhasesInOrder()
+    {
+        Assert.AreEqual(ClockPhase.Dawn, WorldClock.PhaseAt(0.5f));
+        Assert.AreEqual(ClockPhase.Day, WorldClock.PhaseAt(Balance.CLOCK_DAWN_MIN + 1f));
+        Assert.AreEqual(ClockPhase.Dusk, WorldClock.PhaseAt(Balance.CLOCK_DAWN_MIN + Balance.CLOCK_DAY_MIN + 0.5f));
+        Assert.AreEqual(ClockPhase.Night, WorldClock.PhaseAt(30f));
+    }
+
+    [Test]
+    public void Clock_DaylightRisesAtDawnAndFallsAtDusk()
+    {
+        Assert.AreEqual(0f, WorldClock.DaylightAt(30f), 1e-4f);                          // 한밤
+        Assert.AreEqual(1f, WorldClock.DaylightAt(10f), 1e-4f);                          // 한낮
+        Assert.Greater(WorldClock.DaylightAt(1.5f), WorldClock.DaylightAt(0.5f));        // 동틀녘엔 올라감
+        Assert.Greater(WorldClock.DaylightAt(16.5f), WorldClock.DaylightAt(17.5f));      // 해질녘엔 내려감
+    }
+
+    [Test]
+    public void Clock_FullDayWrapsAndCountsDays()
+    {
+        var c = new WorldClock(0f);
+        c.Tick(WorldClock.DayLength * 60f + 1f);
+        Assert.AreEqual(1, c.Day);
+        Assert.Less(c.Minutes, 1f);
+    }
+
+    [Test]
+    public void Clock_ReportsPhaseChangeOnce()
+    {
+        var c = new WorldClock(Balance.CLOCK_DAWN_MIN + Balance.CLOCK_DAY_MIN - 0.01f);
+        c.Tick(0.01f * 60f - 0.0001f); Assert.IsNull(c.Consume());                       // 아직 낮
+        c.Tick(1f);
+        Assert.AreEqual(ClockPhase.Dusk, c.Consume());                                       // 해질녘 종
+        Assert.IsNull(c.Consume());                                                        // 한 번만
+    }
+
+    [Test]
+    public void Clock_MoonCycleIsSevenDays()
+    {
+        var c = new WorldClock();
+        Assert.IsTrue(c.NewMoon);
+        c.Day = (int)Balance.MOON_DAYS / 2; Assert.IsTrue(c.FullMoon);
+        c.Day = (int)Balance.MOON_DAYS; Assert.IsTrue(c.NewMoon);                          // 한 바퀴 돌면 다시 그믐
+    }
+
+    [Test]
+    public void Clock_TenTimesSpeedRunsADayInFourMinutes()
+    {
+        var c = new WorldClock(0f) { Speed = 10f };
+        for (int i = 0; i < 240 * 20; i++) c.Tick(0.05f);                                  // 실제 240초 = 4분
+        Assert.AreEqual(1, c.Day);
+    }
 }

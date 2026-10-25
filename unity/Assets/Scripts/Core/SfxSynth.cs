@@ -47,7 +47,7 @@ namespace Chasa.Core
         {
             "sfx.hit.chain", "sfx.hit.heavy", "sfx.enemy.telegraph", "sfx.kneel",
             "sfx.tendo.cast", "sfx.tendo.done", "sfx.pahon.burst", "amb.field",
-            "sfx.player.hurt", "sfx.clue", "sfx.dodge",
+            "sfx.player.hurt", "sfx.clue", "sfx.dodge", "sfx.bell",
         };
 
         /// <summary>id 로 레시피를 찾는다 (없으면 null)</summary>
@@ -107,6 +107,11 @@ namespace Chasa.Core
                     r = R(-12, 260,
                         Noise(Filt.Band, 400, 1800, 1.2f, 30, 220, 0.9f),
                         Tone(220, 150, 20, 200, 0.15f));
+                    return true;
+                case "sfx.bell":   // 인정·파루 종: 낮고 긴 울림 (정수배가 아닌 배음 = 쇠종)
+                    r = R(-7, 2800,
+                        Chord(new[] { 196f, 392f * 1.01f, 588f * 1.03f, 1013f }, 4, 2800, 0.6f, 1.5f),
+                        Tone(98, 96, 4, 1800, 0.4f));
                     return true;
                 case "sfx.clue":   // 대금 같은 숨 섞인 한 음
                     r = R(-11, 450,

@@ -242,11 +242,22 @@ public class UiRoot : MonoBehaviour
 
     void RefreshTimeRing()
     {
-        // 해질녘(0)은 왼쪽 아래(7시 방향)에서 시작해 한밤(0.5)에 꼭대기, 동틀녘(1)은 오른쪽 아래(5시 방향)에 닿는다
-        float deg = Mathf.Lerp(-120f, 120f, Mathf.Clamp01(Hud.TimeOfDay));
+        float deg;
+        if (Hud.ClockLabel != null)
+        {
+            // 흐르는 하루: 한밤(밤의 가운데)이 꼭대기, 시계 방향으로 돈다
+            float midnight = (Balance.CLOCK_DAWN_MIN + Balance.CLOCK_DAY_MIN + Balance.CLOCK_DUSK_MIN + Balance.CLOCK_NIGHT_MIN * 0.5f) / WorldClock.DayLength;
+            deg = Mathf.Repeat(Hud.TimeOfDay - midnight, 1f) * 360f;
+        }
+        else deg = Mathf.Lerp(-120f, 120f, Mathf.Clamp01(Hud.TimeOfDay));   // 옛 한 판: 해질녘 왼쪽 아래 → 동틀녘 오른쪽 아래
         float a = deg * Mathf.Deg2Rad, rad = RingSize / 2f, r = rad - 2f - 16f;
-        ringMarker.style.left = rad - 2f + Mathf.Sin(a) * r - 7f;
-        ringMarker.style.top = rad - 2f - Mathf.Cos(a) * r - 7f;
-        ringMarker.style.backgroundColor = Hud.IsDawn ? new Color(0.95f, 0.3f, 0.25f) : Color.Lerp(new Color(1f, 0.85f, 0.5f), new Color(0.8f, 0.88f, 1f), Mathf.Clamp01(Hud.TimeOfDay * 2f));   // 노을 금색 → 달 청백
+        float msz = Hud.ClockLabel != null && Hud.Daylight < 0.5f && Hud.FullMoon ? 20f : 14f;   // 보름달 밤엔 표시가 커진다
+        ringMarker.style.width = msz; ringMarker.style.height = msz;
+        ringMarker.style.left = rad - 2f + Mathf.Sin(a) * r - msz / 2f;   // 크기가 달라도 중심이 어긋나지 않게
+        ringMarker.style.top = rad - 2f - Mathf.Cos(a) * r - msz / 2f;
+        ringMarker.style.backgroundColor = Hud.IsDawn ? new Color(0.95f, 0.3f, 0.25f)
+            : Hud.ClockLabel != null ? Color.Lerp(new Color(0.8f, 0.88f, 1f), new Color(1f, 0.85f, 0.45f), Hud.Daylight)   // 밤 달 청백 → 낮 해 금색
+            : Color.Lerp(new Color(1f, 0.85f, 0.5f), new Color(0.8f, 0.88f, 1f), Mathf.Clamp01(Hud.TimeOfDay * 2f));
+   // 노을 금색 → 달 청백
     }
 }

@@ -399,7 +399,8 @@ public class JudgeSystem : MonoBehaviour
             if (Demo.Day && Input.GetKeyDown(KeyCode.D)) StartDay();
             return;
         }
-        night.Tick(dt);
+        if (clock == null) night.Tick(dt);     // 옛 방식: 밤 타이머. 필드에선 시한이 없다(시계가 흐를 뿐)
+        else TickClock(dt);
         TickClues();
         if (camps != null) camps.Tick(dt, player.Pos);   // 필드: 가까운 군집만 세운다
         enemySpawnPause = Mathf.Max(0f, enemySpawnPause - dt);
@@ -427,6 +428,21 @@ public class JudgeSystem : MonoBehaviour
         float target = Casting ? 1f : 0f;
         visionP = Mathf.MoveTowards(visionP, target, realDt / Mathf.Max(0.01f, Balance.TENDO_VISION_BLEND));
         UpdateStainViews();
+    }
+
+    /// <summary>세계 시계를 흘리고, 단계가 바뀌면 종을 울리고 알린다</summary>
+    void TickClock(float dt)
+    {
+        clock.Tick(dt);
+        var ph = clock.Consume();
+        if (ph.HasValue)
+        {
+            Sfx.Play("sfx.bell");
+            string n = WorldClock.PhaseName(ph.Value);
+            Say(ph.Value == ClockPhase.Dusk ? "인정 — 해가 진다" : ph.Value == ClockPhase.Dawn ? "파루 — 동이 튼다" : n + "이 되었다");
+        }
+        // 검사용: ] 로 배속 순환(1→10→60→1)
+        if (debugKeys && Input.GetKeyDown(KeyCode.RightBracket)) clock.Speed = clock.Speed < 5f ? 10f : clock.Speed < 30f ? 60f : 1f;
     }
 
     void HandleKeys()
@@ -538,6 +554,7 @@ public class JudgeSystem : MonoBehaviour
 
     // ===== 화면 ====================================================================
     /// <summary>화면에 보일 값을 모아(HudState) 새 화면(UI Toolkit)에 넘긴다</summary>
+    public WorldClock clock;   // 필드 모드의 흐르는 하루 (없으면 옛 '하룻밤 한 판')
     public FieldCamps camps;   // 필드 모드에서만 있다
     SoulMarkers soulMarkers;
     void LateUpdate()
@@ -551,7 +568,12 @@ public class JudgeSystem : MonoBehaviour
         if (ui == null) return;
         var h = ui.Hud;
         FillEdges(h);
-        h.TimeOfDay = Mathf.Clamp01(1f - night.TimeLeft / Mathf.Max(1f, Balance.NIGHT_DURATION)); h.IsDawn = night.Warning;
+        if (clock != null)
+        {
+            h.TimeOfDay = clock.DayFraction; h.IsDawn = clock.Reddish; h.Daylight = clock.Daylight; h.FullMoon = clock.FullMoon; h.NewMoon = clock.NewMoon;
+            h.ClockLabel = WorldClock.PhaseName(clock.Phase) + (clock.FullMoon ? " · 보름달" : clock.NewMoon ? " · 그믐" : "") + (clock.Speed > 1.5f ? "  x" + (int)clock.Speed : "");
+        }
+        else { h.TimeOfDay = Mathf.Clamp01(1f - night.TimeLeft / Mathf.Max(1f, Balance.NIGHT_DURATION)); h.IsDawn = night.Warning; h.Daylight = 0f; h.ClockLabel = null; }
         h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.ChainBonus = chainLeft > 0f;
         h.Hp = ledger.Hp; h.MaxHp = ledger.MaxHp; h.Heal = dayScreen.Pack.Heal;
         h.SecondsLeft = Mathf.CeilToInt(night.TimeLeft); h.Sent = night.Sent; h.Quota = Balance.NIGHT_QUOTA;

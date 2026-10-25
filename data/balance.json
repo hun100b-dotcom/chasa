@@ -1454,5 +1454,29 @@
  "MOVE_BRAKE_TIME": {
   "value": 0.1,
   "note": "도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터)"
+ },
+ "CLOCK_DAWN_MIN": {
+  "value": 2.0,
+  "note": "(기획 3단계) 하루 40분 중 동틀녘 길이(분). 출발값, QA 시뮬레이션으로 확정"
+ },
+ "CLOCK_DAY_MIN": {
+  "value": 14.0,
+  "note": "낮 길이(분)"
+ },
+ "CLOCK_DUSK_MIN": {
+  "value": 2.0,
+  "note": "해질녘 길이(분)"
+ },
+ "CLOCK_NIGHT_MIN": {
+  "value": 22.0,
+  "note": "밤 길이(분)"
+ },
+ "CLOCK_START_MIN": {
+  "value": 16.0,
+  "note": "게임 시작 시각(하루 안의 분). 16 = 해질녘 시작"
+ },
+ "MOON_DAYS": {
+  "value": 7.0,
+  "note": "달 주기(일). 보름=가운데 날, 그믐=첫날"
  }
 }

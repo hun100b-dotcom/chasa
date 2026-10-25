@@ -86,11 +86,11 @@ public class NightLights : MonoBehaviour
             lantern.transform.position = player.Pos + Vector3.up * 2.6f;
             lantern.color = Color.Lerp(Warm, Violet, cast);
             lantern.range = Mathf.Lerp(12f, 7f, cast);
-            lantern.intensity = Mathf.Lerp(2.0f, 1.4f, cast);
+            lantern.intensity = Mathf.Lerp(2.0f, 1.4f, cast) * (1f - 0.8f * Chasa.Core.SkyState.Daylight);
         }
         // 불꽃 깜빡임: 느린 숨결 + 빠른 떨림을 섞는다
         for (int i = 0; i < lamps.Count; i++)
-            lamps[i].intensity = lampBase[i] * (1f + 0.10f * Mathf.Sin(t * 4.1f + lampSeed[i]) + 0.06f * Mathf.Sin(t * 11.7f + lampSeed[i] * 2f));
+            lamps[i].intensity = lampBase[i] * (1f - 0.9f * Chasa.Core.SkyState.Daylight) * (1f + 0.10f * Mathf.Sin(t * 4.1f + lampSeed[i]) + 0.06f * Mathf.Sin(t * 11.7f + lampSeed[i] * 2f));
         // 혼불
         if (enemies != null)
             foreach (var e in enemies.list)
