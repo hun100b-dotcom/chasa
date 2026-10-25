@@ -670,6 +670,70 @@ SONGS.update({"bgm_s1_heukwol": s1_heukwol, "bgm_s1_finale_a": s1_finale_a, "bgm
               "bgm_s1_dawn": s1_dawn, "bgm_s1_credits": s1_credits})
 
 
+# ---- 시즌2 컷신 곡(지시문 42~45, cutscene_audio_s2.json 의 play) ----
+# 저승 규칙: 박이 흐릿하고, 사람 목소리 없이, 울림을 길고 어둡게. E 계면조(⑦ 삼도천과 같은 음)
+def s2_open(rng):
+    """시즌2 여는 장면: 먹빛으로 검어지는 강. 장단 없이 생황 드론 위로 대금이 드문드문, 끝에 아쟁이 낮게 받침"""
+    tn = 52; md = GYEMYEON
+    mx = Mix(64, loop=False, tail=9)
+    lay_drone(mx, rng, [tn - 12, tn - 5], 60, gain=0.16, rev=0.6)
+    mel = make_melody(rng, tn, md, tn + 7, tn + 22, 9.0, 5, t0=4.0, cells=[0.4, 0.25, 0.35], rest=0.35)
+    mx.add(phrase(rng, mel, "daegeum"), 0, 0.15, 0.4, 0.6)
+    mx.add(phrase(rng, [(36.0, 12.0, tn - 12, ""), (48.5, 10.0, tn - 5, "")], "ajaeng"), 0, -0.2, 0.3, 0.55)
+    for k in range(6): mx.add(pluck(rng, tn + [0, 7, 3, 10, 5, 12][k], 4.0, "gayageum", vib=0.35, bend=(-1 if k % 3 == 2 else 0)), 8 + k * 8.5, 0.3, 0.22, 0.65)
+    return mx, -20.0
+
+
+def s2_bigdam(rng):
+    """물막이 바닥 결전(B-20): 느리고 무거운 자진모리 + 큰 북 + 징, 아쟁이 긁어 울고, 웅웅 드론이 짓누름. 반복용"""
+    tn = 52; md = GYEMYEON; bpm = 96
+    cyc = 4 * 60 / bpm; sec = fit(64, cyc); cycles = int(round(sec / cyc))
+    mx = Mix(sec)
+    lay_drone(mx, rng, [tn - 24, tn - 12, tn - 5], sec, "ajaeng", gain=0.22, rev=0.4)
+    play_jangdan(mx, rng, "jajinmori", bpm, 0, sec, gain=0.5, rev=0.2, accent_first=1.3)
+    b = buk(rng, 1.6)
+    for k in range(cycles):
+        mx.add(b, k * cyc, 0.0, 0.85, 0.25)
+        if k % 2: mx.add(b, k * cyc + cyc * 0.5, 0.0, 0.5, 0.25)
+        if k % 4 == 0: mx.add(jing(rng, tn - 12, 5.0), k * cyc, 0.0, 0.38, 0.4)
+    mel = make_melody(rng, tn, md, tn - 2, tn + 15, cyc * 2, cycles // 2, cells=[0.25, 0.25, 1 / 6, 1 / 6, 1 / 6], rest=0.15)
+    mel = [m for m in mel if int(m[0] / (cyc * 2)) % 4 != 0]
+    mx.add(phrase(rng, mel, "ajaeng"), 0, -0.1, 0.5, 0.35)
+    return mx, -16.0
+
+
+def s2_finale_a(rng):
+    """풀어내기판: 강이 흐른다 — 가야금이 물처럼 잘게 흐르고 해금이 길게. 64초에 뚝 멈췄다가(배가 돌아옴) 대금 한 음, 마지막은 맺지 않음"""
+    tn = 52; md = PYEONG
+    mx = Mix(104, loop=False, tail=9)
+    lay_drone(mx, rng, [tn - 12, tn - 5], 62, gain=0.13, rev=0.5)
+    sc = scale_notes(tn, md, tn + 7, tn + 24)
+    t = 8.0
+    while t < 62:   # 흐르는 물: 잘게 펼쳐지는 가야금
+        for j in range(4): mx.add(pluck(rng, sc[(int(t * 3) + j * 2) % len(sc)], 1.6, "gayageum", vib=0.15), t + j * 0.32, rng.uniform(-0.4, 0.4), 0.16, 0.5)
+        t += 2.6
+    mel = make_melody(rng, tn, md, tn + 7, tn + 22, 8.0, 6, t0=12.0, cells=[0.35, 0.2, 0.25, 0.2], rest=0.2)
+    mx.add(phrase(rng, [m for m in mel if m[0] + m[1] < 63], "haegeum"), 0, -0.15, 0.42, 0.5)
+    mx.d[:, int(64.0 * SR): int(70.0 * SR)] *= 0.0; mx.w[:, int(64.0 * SR): int(70.0 * SR)] *= 0.0   # 음악도 멈춘다(대본)
+    mx.add(phrase(rng, [(76.0, 10.0, tn + 12, "v")], "daegeum"), 0, 0.0, 0.45, 0.6)
+    mx.add(drone(rng, [tn - 12], 26), 76, 0.0, 0.14, 0.55)
+    mx.add(pluck(rng, tn + 5, 6.0, "gayageum", vib=0.4), 90.0, 0.2, 0.28, 0.65)       # 4도에서 멈춤 — 맺지 않음
+    return mx, -20.0
+
+
+def s2_finale_b(rng):
+    """파혼판: 사나운 강이 지나간 빈 기슭. 아쟁 낮은 한 음 + 거문고가 드문드문 무겁게. 차갑게"""
+    tn = 52; md = GYEMYEON
+    mx = Mix(48, loop=False, tail=8)
+    mx.add(phrase(rng, [(0.5, 22, tn - 12, ""), (23.0, 22, tn - 12, "")], "ajaeng"), 0, -0.1, 0.32, 0.55)
+    for k, m in enumerate([tn - 12, tn - 5, tn - 9, tn - 12, tn - 7]):
+        mx.add(pluck(rng, m, 6.0, "geomungo", vib=0.35, bend=(-1 if k == 2 else 0)), 3 + k * 8.5, -0.25, 0.42, 0.55)
+    return mx, -20.0
+
+
+SONGS.update({"bgm_s2_open": s2_open, "bgm_s2_bigdam": s2_bigdam, "bgm_s2_finale_a": s2_finale_a, "bgm_s2_finale_b": s2_finale_b})
+
+
 META_AUDIO = """fileFormatVersion: 2
 guid: {guid}
 AudioImporter:

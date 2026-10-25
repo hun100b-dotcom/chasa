@@ -1261,3 +1261,7 @@
 - `Core/GearPlan.cs`(새): 장비 자리 8개(EquipPos)와 열리는 때(시작 4 → 1막 보스 하나 뒤 갓·띠 → 2막 진입 신·노리개2), 칸별 인 홈(흔한 0·손본 1·귀한/이름 있는 2, 무기·갓·도포만), 고리 1~6 드롭 등급 표(RingLoot), 오방색 넋 주머니(SoulWallet)·인 15종(작은 300·큰 900, 두 빛깔 반반)·인 박기(SealSet). 수치 원본 balance.json(RING*_DROP_*, SEAL_*). 테스트 7개(192개 통과).
 - `Loot.Roll(rand, fierce, ring)`: 고리를 주면 표를 쓰고 0 이면 시연판 확률(기존 결과 그대로). 필드에서는 위치로 고리를 정해 쓴다(JudgeSystem).
 - 아직: 화면(DayScreen·CharacterPanel)과 저장(SaveGame)은 옛 3칸 그대로 — 규칙이 굳은 뒤 새 자리로 옮긴다. 넋 빛깔 쌓기(구역 혼 천도 → 빛깔), 한 벌 효과, 이름 있는 물건 연결도 다음 일.
+## 2026-10-25 밤 — [사운드] 시즌2 컷신 54컷 소리 대본 + 요청 소리 10개 + 컷신 곡 임시 4 (기획·사운드)
+- 대본(서사 cutscenes_s2.json)의 sfx_request 10개: `cut.knife.notch`·`cut.door.slide`·`cut.paper.set`·`cut.wire.untie`·`cut.seal.thud`·`amb.dawn.still`·`amb.names.many`·`cut.names.release`·`cut.river.flow`·`cut.river.rush`(반복형). 서사 sfx_map.promote가 옮기면 된다.
+- 소리 대본 `tools/cutscene_audio_s2.py` → `data/cutscene_audio_s2.json`: 47컷 143박자(대본 박자와 전부 맞음 검사). 저승 규칙대로 C-18 `amb.dawn.birds`→`amb.dawn.still`, 광산 임시 소리 → `amb.inkroom`·`amb.sealcave`. 보스전 도중 맺힘 컷은 resume 대신 duck 1.0(전투 층 유지).
+- 컷 곡 4자리(bgm_s2_open·bigdam·finale_a·finale_b): Gemini 지시문 42~45 + 임시 대역 합성(Temp). 효과음 총 259개, 기존 파일 변화 없음. 미리듣기 v18, 지시문 v6.
