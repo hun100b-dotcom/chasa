@@ -7,7 +7,7 @@ public static class Balance
     public const float CAMERA_VIEW_HEIGHT = 16.0f;  // 화면 세로로 보이는 월드 길이 (작을수록 확대)
     public const float CAMERA_FOLLOW_SMOOTHNESS = 8.0f;  // 카메라가 따라가는 부드러움
     public const float ARENA_HALF_SIZE = 14.0f;  // 28 x 28 정사각형 바닥
-    public const float PLAYER_MOVE_SPEED = 9.0f;
+    public const float PLAYER_MOVE_SPEED = 6.0f;
     public const float PLAYER_RADIUS = 0.5f;
     public const float PLAYER_TURN_SPEED = 22.0f;  // 몸 돌리는 속도(라디안/초)
     public const float PLAYER_HAND_HEIGHT = 1.0f;  // 사슬이 시작되는 손 높이
@@ -363,7 +363,7 @@ public static class Balance
     public const float CAMERA_WHEEL_MAX = 1.8f;  // 마우스 휠 최대 축소 배율(카메라 거리의 180%)
     public const float CAMERA_WHEEL_STEP = 0.12f;  // 휠 한 칸당 배율 변화
     public const float CAMERA_WHEEL_SMOOTH = 10.0f;  // 휠 줌이 따라가는 부드러움(클수록 빠름)
-    public const float MOVE_ACCEL = 45.0f;  // (오너 피드백) 걷기 가속(m/s²). 클수록 기민, 작을수록 묵직
+    public const float MOVE_ACCEL = 60.0f;  // 걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1
     public const float MOVE_START_FRAC = 0.4f;  // 걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발)
-    public const float MOVE_BRAKE_TIME = 0.15f;  // 목표 도착 전 이 시간(초)만큼 미리 감속해 미끄러지듯 멈춤
+    public const float MOVE_BRAKE_TIME = 0.1f;  // 도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터)
 }

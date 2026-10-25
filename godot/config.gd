@@ -21,7 +21,7 @@ const CAMERA_FOLLOW_SMOOTHNESS := 8.0 # 카메라가 따라가는 부드러움
 const ARENA_HALF_SIZE := 14.0         # 28 x 28 정사각형 바닥
 
 # --- 3) 플레이어 ---------------------------------------------------------------
-const PLAYER_MOVE_SPEED := 9.0
+const PLAYER_MOVE_SPEED := 6.0
 const PLAYER_RADIUS := 0.5
 const PLAYER_TURN_SPEED := 22.0       # 몸 돌리는 속도(라디안/초)
 const PLAYER_HAND_HEIGHT := 1.0       # 사슬이 시작되는 손 높이
