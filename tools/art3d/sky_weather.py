@@ -20,11 +20,11 @@ K = [
  (0.0, "#0B1226", "#121C38", "#1C2A4A", "#8FA8E8", 0.35, "#16213E", "#1A2644", 1.0, 1.0, 1.0),
  (4.0, "#0E1730", "#1E2950", "#3A3F66", "#8FA0D8", 0.30, "#1A2444", "#2A3252", 1.0, 0.8, 0.8),
  (5.5, "#2C3A6B", "#7A6A8A", "#D9946B", "#FFC49A", 0.60, "#3A3F66", "#9A8296", 0.9, 0.3, 0.2),   # 새벽: 보랏빛 → 지평선 살구색
- (7.0, "#5E86B8", "#9DB8CC", "#E8CFA8", "#FFE6C0", 1.05, "#6A7A94", "#B8C4C8", 0.7, 0.0, 0.0),
- (10.0, "#5B8FC4", "#9CC0DA", "#D4E2E8", "#FFF4DC", 1.35, "#7A8BA4", "#C4D2D8", 0.5, 0.0, 0.0),
- (12.5, "#4F86C2", "#92BADA", "#CFE0EA", "#FFFFFF", 1.5, "#8294AC", "#C8D8E0", 0.45, 0.0, 0.0),
- (16.0, "#5683B8", "#A0B8CC", "#E6D6B4", "#FFEBC4", 1.25, "#7C879C", "#CCC8B8", 0.55, 0.0, 0.0),
- (18.0, "#46598E", "#B98E8C", "#E39A62", "#FFB070", 0.85, "#5A5470", "#B89080", 0.8, 0.1, 0.1),   # 저녁놀: 탁한 주황(파혼 주황과 구분되게 낮은 채도)
+ (7.0, "#5E86B8", "#9DB8CC", "#E8CFA8", "#FFE6C0", 0.82, "#4C586E", "#A4B0B6", 0.7, 0.0, 0.0),
+ (10.0, "#5B8FC4", "#9CC0DA", "#D4E2E8", "#FFF4DC", 0.98, "#546178", "#B0C0C8", 0.5, 0.0, 0.0),
+ (12.5, "#4F86C2", "#92BADA", "#CFE0EA", "#FFF8EC", 1.05, "#586680", "#B4C4CE", 0.45, 0.0, 0.0),
+ (16.0, "#5683B8", "#A0B8CC", "#E6D6B4", "#FFE6B8", 0.92, "#525C72", "#B8B4A6", 0.55, 0.0, 0.0),
+ (18.0, "#46598E", "#B98E8C", "#E39A62", "#FFB070", 0.72, "#4A4660", "#A67E70", 0.8, 0.1, 0.1),   # 저녁놀: 탁한 주황(파혼 주황과 구분되게 낮은 채도)
  (19.5, "#26305C", "#5A4A7A", "#A9606A", "#C88898", 0.5, "#3A3258", "#6A4E66", 1.0, 0.5, 0.6),
  (21.0, "#101A38", "#1C2646", "#33375A", "#8FA6E4", 0.38, "#18223F", "#202A4A", 1.0, 0.95, 1.0),
  (24.0, "#0B1226", "#121C38", "#1C2A4A", "#8FA8E8", 0.35, "#16213E", "#1A2644", 1.0, 1.0, 1.0),
@@ -180,8 +180,8 @@ def clock_json():
              "clear": {"sky": "clear", "cloud": "cumulus", "cloud_cover": 0.25, "light_mult": 1.0, "fog_mult": 1.0, "rain": 0.0, "ambient_tint": "#FFFFFF"},
              "cloudy": {"sky": "clear", "cloud": "cumulus", "cloud_cover": 0.7, "light_mult": 0.8, "fog_mult": 1.2, "rain": 0.0, "ambient_tint": "#E6ECF4"},
              "rain": {"sky": "overcast", "cloud": "storm", "cloud_cover": 0.95, "light_mult": 0.55, "fog_mult": 1.6, "rain": 1.0, "ground_wet": 1.0, "ambient_tint": "#C8D2E0", "rain_layers": [{"texture": "rain_streaks_far.png", "scroll_uv_per_s": [0.05, -1.3], "tile_m": 40}, {"texture": "rain_streaks_near.png", "scroll_uv_per_s": [0.12, -2.4], "tile_m": 12}], "splash": "rain_splash_sheet.png (8프레임, 초당 14프레임, 땅 위 무작위 점)"},
-             "fog": {"sky": "fog", "cloud": "cirrus", "cloud_cover": 0.4, "light_mult": 0.7, "fog_mult": 3.0, "rain": 0.0, "ambient_tint": "#D8E0E4", "fog_layers": [{"texture": "fog_noise.png", "scroll_uv_per_s": [0.01, 0.004], "tile_m": 90}, {"texture": "fog_noise.png", "scroll_uv_per_s": [-0.006, 0.007], "tile_m": 55}], "puffs": "mist_puffs.png (4종, 바닥 가까이 띄움)"},
-             "plague_mist": {"sky": "fog", "cloud": "cirrus", "cloud_cover": 0.5, "light_mult": 0.6, "fog_mult": 2.5, "rain": 0.0, "ambient_tint": "#B8C8BC", "fog_color_override": "#46564F", "note": "검은여울 구역 전용. 안개 색은 layouts/field_5x5_zones.json fog와 같게"}},
+             "fog": {"sky": "fog", "cloud": "cirrus", "cloud_cover": 0.4, "light_mult": 0.7, "fog_mult": 2.0, "rain": 0.0, "ambient_tint": "#D8E0E4", "fog_layers": [{"texture": "fog_noise.png", "scroll_uv_per_s": [0.01, 0.004], "tile_m": 90}, {"texture": "fog_noise.png", "scroll_uv_per_s": [-0.006, 0.007], "tile_m": 55}], "puffs": "mist_puffs.png (4종, 바닥 가까이 띄움)"},
+             "plague_mist": {"sky": "fog", "cloud": "cirrus", "cloud_cover": 0.5, "light_mult": 0.6, "fog_mult": 1.7, "rain": 0.0, "ambient_tint": "#B8C8BC", "fog_color_override": "#46564F", "note": "검은여울 구역 전용. 안개 색은 layouts/field_5x5_zones.json fog와 같게"}},
          "keyframes": keys}
     json.dump(j, open(os.path.join(OUT, "sky_clock.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
