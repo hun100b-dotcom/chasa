@@ -63,6 +63,9 @@ def inwin(x, y, win, m=0.0): return win[0] - m <= x <= win[2] + m and win[1] - m
 COVER_ON = os.environ.get("FS_COVER", "1") == "1"   # 바닥 채움 소품(field_cover.json). 전후 비교용으로 FS_COVER=0 이면 끈다
 COVER = json.load(open(os.path.join(A3, "layouts", "field_cover.json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", "field_cover.json")) else []
 
+LIFE_ON = os.environ.get("FS_LIFE", "1") == "1"
+LIFE = json.load(open(os.path.join(A3, "layouts", "act1_life.json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", "act1_life.json")) else []
+
 def build(win):
     """win=(x0,y0,x1,y1) m. 창 안 타일·장식·구조물·마을·밤 소품을 조립한다."""
     x0, y0, x1, y1 = win
@@ -78,6 +81,9 @@ def build(win):
         if inwin(p["x"], p["y"], win, 4): put(p["prop"], p["x"], p["y"], p.get("gz", p.get("z", 0) + 0.3), p["rot"])
     if COVER_ON:
         for p in COVER:
+            if inwin(p["x"], p["y"], win, 1): put(p["prop"], p["x"], p["y"], 0.3, p["rot"], lights=False)
+    if LIFE_ON:   # 1막 생활 소품(act1_life.json): 전후 비교용으로 FS_LIFE=0 이면 끈다
+        for p in LIFE:
             if inwin(p["x"], p["y"], win, 1): put(p["prop"], p["x"], p["y"], 0.3, p["rot"], lights=False)
     for s in FIELD.get("structures", []):
         if "pieces" in s:
@@ -287,7 +293,7 @@ def run(key):
     if "cam" in cfg: camera_persp(*cfg["cam"][:2], cfg["cam"][2], sz)
     else: camera(cfg["center"], cfg["ortho"], sz)
     if os.environ.get("FS_TEST"): bpy.context.scene.cycles.samples = 16
-    path = os.path.join(A3, "previews", f"scene_{key}{('_h' + HOUR) if HOUR else ('_day' if DAY else '')}.png"); render(path)
+    path = os.path.join(A3, "previews", f"scene_{key}{('_h' + HOUR) if HOUR else ('_day' if DAY else '')}{os.environ.get('FS_TAG', '')}.png"); render(path)
     print(key, "객체", stats["objs"], "조명", len(placed_lights), "초", round(time.time() - t0)); return path
 
 if __name__ == "__main__":
