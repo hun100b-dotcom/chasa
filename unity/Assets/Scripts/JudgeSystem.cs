@@ -573,7 +573,7 @@ public class JudgeSystem : MonoBehaviour
     void TickHeukwol()
     {
         if (!FieldRules.On || !FieldRules.Act2 || clock == null) return;
-        if (allDoneDay < 0 && (Application.absoluteURL ?? "").Contains("hk=1")) { bossDoneIds.Add(1); bossDoneIds.Add(2); bossDoneIds.Add(3); allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }   // 검사용 ?hk=1: 1막 보스 셋을 이미 처결한 것으로 친다(흑월 1차를 바로 본다)
+        if (allDoneDay < 0 && (Application.absoluteURL ?? "").Contains("hk=")) { bossDoneIds.Add(1); bossDoneIds.Add(2); bossDoneIds.Add(3); allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }   // 검사용 ?hk=1: 1막 보스 셋을 이미 처결한 것으로 친다(흑월 1차를 바로 본다)
         if (enterDay < 0 && FieldZones.CurrentName == "검은여울") enterDay = clock.Day;   // ② 검은여울 첫 진입(5일 안전장치의 기준)
         int hn = Act2Gate.HeukwolNight(allDoneDay, allDoneAtNight, enterDay);
         bool open = FieldRules.Act2Open || clock.Day >= Act2Gate.OpenDay(allDoneDay, allDoneAtNight, enterDay);
@@ -595,6 +595,7 @@ public class JudgeSystem : MonoBehaviour
             var bd = Bosses.Get(4);
             heukwol = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), 4);
             Say("무덤골에 갓끈 검은 차사가 서 있다");
+            if ((Application.absoluteURL ?? "").Contains("hk=2")) heukwol.soul.Maedhim = (int)(heukwol.soul.MaedhimMax * 0.52f);   // 검사용 ?hk=2: 맺힘 52% 로 시작 → 몇 대만 쳐도 절반을 넘어 물러나는 장면(너는 아직 모른다·새벽 금줄 해제)이 나온다
         }
         if (heukwol != null)
         {

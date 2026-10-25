@@ -248,6 +248,7 @@ public class GameMain : MonoBehaviour
         if (judge.cuts.Active)
         {
             goal = CutTarget(judge.cuts.CamTarget);
+            goal.y = GroundTerrain.HeightAt(goal.x, goal.z);   // 컷 목표는 높이 0 으로 오는데, 2막 고지대(최대 14m)에서 그대로 쓰면 카메라가 땅속에 들어가 화면이 갈색 한 장이 된다 → 목표 지점의 땅 높이로 올린다
             focus = Vector3.Lerp(focus, goal, 1f - Mathf.Exp(-3f / Mathf.Max(0.15f, judge.cuts.CamTime) * dt));
             goal = focus;
         }
