@@ -40,6 +40,10 @@ for s in f["structures"]:
         for q in s["pieces"]: add(q["piece"], q["x"], q["y"], q.get("rot", 0), q.get("z", 0.0))
     else:
         add(s["piece"], s["x"], s["y"], s.get("rot", 0), s.get("z", 0.0))
+# 폐당집 서낭당(⑤): 아트 배치표에 마커가 없어 코드가 정한 자리 — 폐당집 입구 마커(ruin) 서쪽 6 m, 같은 터 높이(10-26)
+if not any("pyedang" in str(s_.get("piece", "")) for s_ in f["structures"]):
+    _r = next((m for m in f["markers"] if m["kind"] == "ruin"), None)
+    if _r: add("prop_seonangdang_pyedang", _r["x"] - 6.0, _r["y"], 0, _r.get("z", 0.0))
 # 마을(원점이 필드의 (ox, oy))
 for b in v["buildings"]:
     for q in b["pieces"]: add(q["piece"], q["x"] + ox, q["y"] + oy, q.get("rot", 0), q.get("z", 0.0))

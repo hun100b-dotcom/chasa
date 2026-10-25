@@ -155,6 +155,7 @@ namespace Chasa.Core
             if (name == "terrain_rock_medium") return 1.3f;
             if (name == "terrain_rock_cluster") return 2.0f;
             if (name.StartsWith("terrain_bush")) return 0f;
+            if (name.StartsWith("prop_seonangdang")) return 2.2f;   // 구역별 서낭당 5종도 같은 몸통 자리
             switch (name)
             {
                 case "prop_seonangdang": return 2.2f;

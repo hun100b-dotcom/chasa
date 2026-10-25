@@ -1462,3 +1462,8 @@
 ## 2·3막 보스 보상 고정값 고침 (코드·QA, 10-26)
 - 기획 `act2-3-boss-reward-check` 1절 반영: 보스 천도 넋 = 50×고리÷1.25, 파혼 엽전 = 30×고리÷1.25 (B-05·08 60/36, B-06·07 70/42, B-09·11 80/48, B-10·12 90/54). 1막 보스는 60/30 그대로. `Bosses.NeokFor/CoinFor`, `Ledger.CompleteBossTendo(id)`·`DoPahon(boss,id)`, balance 키 3개. 테스트 203개.
 - 3절의 오래 남는 효과(이름 불린 병사·노리개 등)는 서사 확인 대기라 아직.
+
+## 서낭당 5곳 외형 + 넋길 입구 (코드·QA, 10-26)
+- 아트 PR #37 합침(충돌 없음). field.json 서낭당 4곳을 구역별 모델(`_solgogae/_boritdeul/_mulmagi/_geomeun`)로 바꾸고, **폐당집 서낭당은 입구 마커(580,552) 서쪽 6 m (574,552), 터 높이 2.0**으로 정했다(`build_field_data.py`에도 같은 규칙). 마을 쪽 겹친 옛 서낭당 하나(186,39)는 그대로 둠.
+- 넋길 입구 `prop_soulpath_gate`를 정류장 3곳(292,144)(368,352)(576,496)에 놓고, `FieldManager.TickGates`가 밤엔 불 켜진 판, 낮엔 `_off` 판으로 바꿔 끼운다(`Sfx.NightNow` 기준). 등(`prop_soulpath_lamp`)은 자리표가 없어 아직 안 놓음.
+- 주의: `build_field_data.py`를 다시 돌리면 field_camps.json의 외톨이 표시(loner)가 사라진다 — 돌린 뒤 다시 확인할 것.

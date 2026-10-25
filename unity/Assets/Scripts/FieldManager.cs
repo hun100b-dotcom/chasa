@@ -109,6 +109,7 @@ public class FieldManager : MonoBehaviour
 
     void Update()
     {
+        TickGates();
         if (player == null || data == null) return;
         if (cover != null && cover.player == null) cover.player = player;   // GameMain 이 player 를 Awake 뒤에 넣어 준다
         int cx = FieldRules.ChunkX(player.Pos.x), cz = FieldRules.ChunkZ(player.Pos.z);
@@ -224,6 +225,19 @@ public class FieldManager : MonoBehaviour
     }
 
     /// <summary>모델 하나를 세운다. 재질은 모델 안의 색을 따서 우리 무광 재질로(같은 색은 하나를 나눠 써서 GPU 가 묶어 그린다)</summary>
+    readonly List<GameObject[]> gatePairs = new List<GameObject[]>();   // [밤 판, 낮 판] 짝
+    bool gateNight;
+    /// <summary>시각이 바뀌면 넋길 입구 판을 갈아 끼운다(청크가 사라진 짝은 목록에서 뺀다)</summary>
+    void TickGates()
+    {
+        bool night = Sfx.NightNow;
+        if (night == gateNight && gatePairs.Count == 0) return;
+        gatePairs.RemoveAll(g => g[0] == null || g[1] == null);
+        if (night == gateNight) return;
+        gateNight = night;
+        foreach (var g in gatePairs) { g[0].SetActive(night); g[1].SetActive(!night); }
+    }
+
     void Place(Transform parent, string name, float x, float y, float z, int rot)
     {
         GameObject prefab;
@@ -231,6 +245,19 @@ public class FieldManager : MonoBehaviour
         if (prefab == null) return;
         var inst = Instantiate(prefab, parent);
         inst.transform.SetPositionAndRotation(new Vector3(x, y, z), Quaternion.Euler(0f, -rot, 0f));   // 유니티 yaw = -rot (아트 약속)
+        // 넋길 혼불 줄 입구·등: 밤엔 불 켜진 판, 낮엔 `_off`(꺼진 잿빛) 판을 바꿔 끼운다(아트 SEONANG-SET.md). 같은 자리에 두 판을 놓고 시각에 따라 하나만 켠다
+        if (name == "prop_soulpath_gate" || name == "prop_soulpath_lamp")
+        {
+            GameObject offPrefab; string offName = name + "_off";
+            if (!prefabs.TryGetValue(offName, out offPrefab)) { offPrefab = Resources.Load<GameObject>("Models/Field/" + offName); prefabs[offName] = offPrefab; }
+            if (offPrefab != null)
+            {
+                var off = Instantiate(offPrefab, parent);
+                off.transform.SetPositionAndRotation(inst.transform.position, inst.transform.rotation);
+                gatePairs.Add(new GameObject[] { inst, off });
+                bool night = Sfx.NightNow; inst.SetActive(night); off.SetActive(!night);
+            }
+        }
         BridgeDeckFade.Register(name, inst);   // 3막: 썰물 물판·큰 다리 상판 동작 붙이기(해당 이름일 때만)
         // 지붕·처마·용마루·굴뚝은 카메라와 주인공 사이를 가리면 비켜 준다(큰 기와집 지붕이 보스를 가리던 문제)
         if (name.StartsWith("hanok_") && (name.Contains("roof") || name.Contains("eave") || name.Contains("ridge") || name.Contains("chimney")))
