@@ -280,7 +280,16 @@ public class GameMain : MonoBehaviour
             float p = pd * Mathf.Deg2Rad;
             off = new Vector3(Mathf.Cos(camYaw) * Mathf.Cos(p), Mathf.Sin(p), Mathf.Sin(camYaw) * Mathf.Cos(p)) * camDist;
         }
-        cam.transform.position = focus + (View3D.On ? off * ((1f - zoomIn) * wheel) : offset);
+        // 깨어날 때(새로 시작 직후) 줌 20 m → 16 m: 0.5초 머물다 2초 동안 처음 빠르고 끝에 천천히 내려온다(assets3d/ui/first10/wake_camera.json)
+        float wakeMul = 1f;
+        if (TitleScreen.WakeAt >= 0f)
+        {
+            float u = Mathf.Clamp01((Time.unscaledTime - TitleScreen.WakeAt - 0.5f) / 2f);
+            float e = 1f - Mathf.Pow(1f - u, 3f);   // easeOutCubic
+            wakeMul = Mathf.Lerp(20f / 16f, 1f, e);
+            if (u >= 1f) TitleScreen.WakeAt = -1f;
+        }
+        cam.transform.position = focus + (View3D.On ? off * ((1f - zoomIn) * wheel * wakeMul) : offset);
         cam.transform.LookAt(View3D.On ? focus + Vector3.up * 0.9f : focus);   // 3D 에선 발밑이 아니라 가슴께를 본다
         cam.transform.Rotate(0f, 0f, feel.GetShakeRoll(), Space.Self);   // 충격이 클 때만 화면이 살짝 기울었다 돌아온다
         var s = feel.GetShakeOffset(); // 화면 기준 오른쪽/위쪽으로 밀어 평행하게 떨림

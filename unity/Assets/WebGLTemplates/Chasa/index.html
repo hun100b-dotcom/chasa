@@ -23,6 +23,8 @@
     #barbox { position: absolute; left: 50%; top: 90%; width: var(--bw); aspect-ratio: 1024 / 64; transform: translate(-50%, -50%); background: url(TemplateData/loading_bar_frame.png) center / 100% 100% no-repeat; }
     #clip { position: absolute; left: 0; top: 50%; height: 62.5%; transform: translateY(-50%); width: 0%; overflow: hidden; transition: width .2s; }
     #clip img { display: block; width: var(--bw); height: 100%; max-width: none; }   /* 채움 그림은 막대 전체 폭 그대로 두고 왼쪽부터 잘라 보인다 */
+    /* 팁 판: 막대 위(화면 높이 82%)에 판 그림, 그 위에 팁 한 줄(22px 기준, 화면이 작으면 줄어듦) */
+    #tip { position: absolute; left: 50%; top: 82%; width: min(80vw, 960px); aspect-ratio: 960 / 64; transform: translate(-50%, -50%); background: url(TemplateData/loading_tip_plate.png) center / 100% 100% no-repeat; display: none; align-items: center; justify-content: center; font-size: clamp(14px, 2.2vw, 22px); color: #e8dfc8; text-shadow: 0 1px 3px #000; }
     #msg { position: absolute; left: 0; right: 0; top: calc(90% + 28px); font-size: 13px; opacity: .8; text-align: center; padding: 0 24px; text-shadow: 0 1px 3px #000; }
     /* 세로로 들고 있을 때: 가로로 돌려 달라는 안내(게임은 가로 화면 기준) */
     #rotate { display: none; position: absolute; inset: 0; z-index: 9; background: rgba(11,13,20,.94); color: #d8d2c4;
@@ -33,7 +35,7 @@
 <body>
   <div id="unity-container">
     <canvas id="unity-canvas" tabindex="-1"></canvas>
-    <div id="loading"><div id="barbox"><div id="clip"><img src="TemplateData/loading_bar_fill.png" alt=""></div></div><div id="msg">불러오는 중… 처음 한 번만 오래 걸리고, 다음부터는 저장된 것을 씁니다.</div></div>
+    <div id="loading"><div id="tip"></div><div id="barbox"><div id="clip"><img src="TemplateData/loading_bar_fill.png" alt=""></div></div><div id="msg">불러오는 중… 처음 한 번만 오래 걸리고, 다음부터는 저장된 것을 씁니다.</div></div>
     <div id="rotate"><div>폰을 가로로 돌려 주세요<br><small>가로 화면에서 가장 잘 보입니다</small></div></div>
   </div>
   <script src="Build/{{{ LOADER_FILENAME }}}"></script>
@@ -64,7 +66,12 @@
         matchWebGLToCanvasSize: true
       };
       var fill = document.getElementById("clip"), loading = document.getElementById("loading"), msg = document.getElementById("msg");
-      loading.style.backgroundImage = "url(TemplateData/loading_" + (1 + Math.floor(Math.random() * 3)) + ".jpg)";   // 구역 그림 3장 중 하나
+      // 구역 그림(솔고개~아룻청 7장) 중 하나 + 그 구역의 팁 한 줄. 팁이 없는 구역은 판을 숨긴다
+      var zones = [{"n": 1, "t": ["서낭당에서 쉬면 몸을 추스른다", "바닥 빛줄기 색이 장비 등급이다", "[Space]로 구르면 공격을 피한다"]}, {"n": 2, "t": ["둘러싸이면 한 방향으로 빠져나가자", "혼이 꿇으면 [E] 천도 [R] 파혼", "꿇은 혼은 10초 안에 처결하자"]}, {"n": 3, "t": ["땅이 꿈틀하면 발밑을 보자", "예고가 뜨면 0.5초 안에 구르자", "이름 띠가 붙은 혼은 강하다"]}, {"n": 4, "t": ["[Q]로 먼 혼을 끌어올 수 있다", "얼룩을 밟으면 걸음이 느려진다", "밤에는 서낭당에서 넋길을 탄다"]}, {"n": 5, "t": ["돌다리에선 물가로 밀리지 말자", "[M]으로 지도를 펼쳐 길을 본다", "강한 혼 앞에선 먼저 숨을 고르자"]}, {"n": 6, "t": ["새벽 틈에 줄 가운데를 들어 보자", "배웅하는 혼은 서두르지 않는다", "파혼 뒤 이름 쪽지를 잡아 보자", "돌아선 혼은 둘째부터 쪽지가 떨어진다", "가루는 바람 방향으로 흩어진다", "나룻불이 켜지면 한 칸 나아간 것"]}, {"n": 7, "t": ["물이 빠지면 둑 계단이 열린다", "물이 차서 떠밀려도 잃는 건 없다", "원념의 실을 끊으면 백이 꿇는다", "[E] 눕히기 [R] 깨뜨리기", "빈 이름 칸은 낮에 단서를 찾자", "눕힌 업은 물에 씻겨 나간다"]}];
+      var zone = zones[Math.floor(Math.random() * zones.length)];
+      loading.style.backgroundImage = "url(TemplateData/loading_" + zone.n + ".jpg)";
+      var tip = document.getElementById("tip");
+      if (zone.t.length) { tip.textContent = zone.t[Math.floor(Math.random() * zone.t.length)]; tip.style.display = "flex"; }
       var rot = document.getElementById("rotate"); if (mobile) rot.classList.add("on");
       createUnityInstance(canvas, config, function (p) { fill.style.width = (p * 100) + "%"; })
         .then(function (inst) { loading.style.display = "none"; window.unityInstance = inst; })

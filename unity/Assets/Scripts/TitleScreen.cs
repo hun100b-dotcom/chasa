@@ -10,6 +10,7 @@ using UnityEngine;
 public class TitleScreen : MonoBehaviour
 {
     public static bool Open;
+    public static float WakeAt = -1f;   // 새로 시작한 순간(unscaled 시각). 카메라가 20→16 m 로 내려오는 기준. 이어하기는 -1 이라 연출 없음
     float t;
     GUIStyle label;
 
@@ -47,6 +48,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (fresh) SaveStore.Delete();   // 새로 시작: 옛 저장을 지운다(이어하기 칸은 저장이 있을 때만 있다)
         Open = false;
+        WakeAt = fresh ? Time.unscaledTime : -1f;
         var fo = new GameObject("TitleFade").AddComponent<FadeOut>();
         var list = new System.Collections.Generic.List<AudioSource>();
         foreach (var a in new[] { music, fog }) if (a != null) { var n = fo.gameObject.AddComponent<AudioSource>(); n.clip = a.clip; n.loop = true; n.time = a.time; n.volume = a.volume; n.spatialBlend = 0f; n.Play(); list.Add(n); }
