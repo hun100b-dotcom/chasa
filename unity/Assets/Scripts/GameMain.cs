@@ -33,8 +33,10 @@ public class GameMain : MonoBehaviour
         // 구역을 이어 붙인 넓은 필드: 설정값 또는 주소에 ?zones 가 있으면 켠다 (꺼져 있으면 마을 한 곳 = 기존 동작)
         if (DemoScript.Wanted()) Random.InitState(7);   // 비교 영상용: 같은 장면이 매번 똑같이(난수 씨앗 고정)
         View3D.Init();   // 주소의 ?v=3d / ?cam=a|b|c 를 읽는다
-        // 5×5 넓은 필드(아트팀 조립): 주소 ?field 로 켠다(검증 뒤 기본값으로). 켜지면 옛 구역 시험판(?zones)은 쓰지 않는다
-        FieldRules.On = (Application.absoluteURL ?? "").ToLowerInvariant().Contains("field");
+        // 5×5 넓은 필드(아트팀 조립): 이제 기본값. 옛 솔고개 한 구역으로 돌아가려면 주소에 ?field=0 (오너 지시로 옛 코드는 지우지 않고 남겨 둠)
+        // 켜지면 옛 구역 시험판(?zones)은 쓰지 않는다
+        var fieldUrl = (Application.absoluteURL ?? "").ToLowerInvariant();
+        FieldRules.On = !(fieldUrl.Contains("field=0") || fieldUrl.Contains("field=off"));
         if (FieldRules.On) { FieldManager.ApplyMarkers(); MapLayout.Blockers.Clear(); }   // 마을 옛 충돌표는 비우고 필드 소품 충돌을 쓴다
         World.Enabled = !FieldRules.On && (Balance.WORLD_ZONES || Application.absoluteURL.Contains("zones"));
         var url = Application.absoluteURL;
