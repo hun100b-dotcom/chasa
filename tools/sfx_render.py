@@ -6530,6 +6530,90 @@ def _(r):
     place(b, _karma_gate(r, KT_ROOT[60], 1.8, False), .1)
     return reverb(b, 2.0, .35, tone_hz=2500)
 
+# ===== 2막 들어섬(금줄 끊김 · 고개 넘음) + 장비 새 칸 열림 (코디 요청 10-26, 연결법 docs/act2-entry-sound.md) =====
+# 흐름(planning/controls/act2-entry-10min.md): 0:00 금줄 끊김 → 1막 바탕이 고개 100 m에 걸쳐 빠짐 → 0:07 금줄 넘음, 구역 이름 띠 + 2막 곡
+#  → 0:31 첫 서낭당 쉬기 → 장비 새 칸 둘(신·노리개) 1초 연출.
+# 끊김은 '막혔던 것이 풀림'이라 시원하게, 넘음은 '새 땅의 첫 숨'이라 넓게. 둘 다 무섭지 않게 둔다(2막 첫 10분은 낮, 산 사람의 때).
+@sfx("sfx.geumjul.snap", -9, "세계", "금줄이 끊김: 새끼줄이 끼이익 팽팽해지다 '툭!' 끊어지고 → 끼워 둔 한지 조각들이 확 부는 바람에 사락사락 위로 흩날려 멀어짐 → 고개 너머로 트인 바람(2.8초)", use="2막 금줄(R2-1 · R2-2)이 풀린 뒤 처음 금줄 앞 8 m에 섰을 때 한 번. 금줄 자리 3D(최소 3m·최대 30m). 한지가 날아가는 그림과 같이")
+def _(r):
+    b = _buf(3.4)
+    place(b, _rope_taut(r, .55, 82) * .8, 0)                             # 짚 새끼줄이 버티다
+    place(b, _creak(r, .45, 150, 26, 800) * .5, .05)
+    m = int(.12 * SR)                                                     # '툭!' — 짚 섬유가 한꺼번에 끊김(높은 바삭 + 낮은 탁)
+    place(b, (filt(noise(m, r), "band", 2600, 1.2) * env(m, .0008, .03, 4) + tone(.12, 210, 90) * env(m, .001, .04) * .6), .55)
+    place(b, _crinkle(r, .25, 18, (1800, 5000), (.2, .7)), .56)   # 짚 올이 바스스
+    sec = 2.4; n = int(sec * SR); t = T(sec)
+    gust = np.clip(t / .3, 0, 1) * np.exp(-np.clip(t - .5, 0, None) / 1.0)   # 끊긴 순간 확 부는 바람
+    place(b, sweep_filt(noise(n, r), "band", 350, 1300, .7) * gust * .55, .55)
+    strips = grains(1.8, r, 70, lambda r, k: _paper(r, r.uniform(.04, .1), 2500, 7500) * r.uniform(.15, .5) * (1 - k / 80))   # 한지 조각이 흩날림
+    place(b, sweep_filt(strips, "low", 9000, 2500, .7), .6)               # 멀어질수록 높은 사각임이 사라짐
+    place(b, filt(noise(int(1.6 * SR), r), "low", 260) * env(int(1.6 * SR), .5, .7, 3) * .35, 1.2)   # 고개 너머로 트인 낮은 바람
+    return reverb(b, 1.4, .22, tone_hz=6000)
+
+
+@sfx("amb.geumjul.cut", -28, "세계", "끊긴 금줄: 장승에 남은 새끼줄 끝이 바람에 가끔 톡 부딪히고, 남은 한지 한두 장이 사락(반복용 14초) — 이제 열린 문", loop=True, use="금줄이 풀린 뒤 두 금줄 자리(102,660)·(445,640) 3D. 최소 2m·최대 12m. 끊김 소리가 끝난 3초 뒤부터")
+def _(r):
+    sec = 14.4; n = int(sec * SR); g = _gust_curve(sec, r, 2, .2)
+    wind = filt(noise(n, r), "band", 380, .6) * (.4 + .6 * g) * .5
+    paper = grains(sec, r, 16, lambda r, k: _paper(r, r.uniform(.05, .12), 2500, 6500) * r.uniform(.1, .35)) * (.3 + .7 * g)
+    taps = np.zeros(n)
+    for at in (2.2, 6.9, 7.3, 11.6):                                     # 줄 끝이 장승에 톡(나무)
+        place(taps, _wood_tap(r, 520, .025, .35), at)
+    return loopify(reverb(wind + paper + taps, 1.0, .2)[:n], .6)
+
+
+def _pass_open(r, sec):
+    """고개를 넘는 순간 공통 한 겹: 막혔던 바람이 확 트이며 넓어짐(낮은 쪽에서 위로 열리는 숨) + 산 아래로 퍼지는 울림"""
+    n = int(sec * SR)
+    air = sweep_filt(noise(n, r), "band", 220, 1100, .8) * env(n, sec * .25, sec * .45, 3, hold=sec * .1) * .5
+    low = filt(noise(n, r), "low", 180) * env(n, sec * .3, sec * .5, 3) * .35
+    return air + low
+
+
+def _pipe(r, sec, f0, f1, vib=.012):
+    """짧은 피리 숨 한 마디: 숨소리 섞인 겹리드 음(배음 많고 코 먹은 소리)"""
+    n = int(sec * SR); t = T(sec)
+    ff = f0 * (f1 / f0) ** np.clip(t / (sec * .35), 0, 1) * (1 + vib * np.sin(2 * np.pi * 5.2 * t) * np.clip(t / .3, 0, 1))
+    ph = 2 * np.pi * np.cumsum(ff) / SR
+    reed = sum(a * np.sin(k * ph) for k, a in ((1, 1), (2, .55), (3, .45), (4, .25), (5, .15)))
+    breath = filt(noise(n, r), "band", f1 * 2, 2) * .2
+    return filt(reed + breath, "low", 3500) * env(n, .08, sec * .3, 3, hold=sec * .4)
+
+
+@sfx("sfx.region.enter.bulgeunjae", -11, "세계", "붉은재 싸움터 들어섬: 고갯마루 바람이 확 트이고 → 먼 진고(큰 북) 둥…둥 두 번 → 피리 한 마디가 4도 위로 올라가 길게(2.6초) — 옛 싸움터, 그러나 지금은 아침", use="구역 이름 띠 '붉은재 싸움터'가 펼쳐질 때(띠 0.5초 펼침과 같이, 2막 처음 한 번). 이 소리 1.0초 뒤 2막 필드 곡이 들어옴")
+def _(r):
+    b = _buf(3.4)
+    place(b, _pass_open(r, 2.4), 0)
+    place(b, reverb(_drum(r, 62, .45, .7), 2.0, .5, tone_hz=1800), .35)    # 먼 진고: 산에 울려 멀게
+    place(b, reverb(_drum(r, 62, .45, .5), 2.0, .5, tone_hz=1800), .85)
+    place(b, _pipe(r, 1.8, 392, 523.3) * .35, .7)                          # G4 → C5(완전4도 위) 피리
+    return reverb(b, 1.8, .3, tone_hz=5000)
+
+
+@sfx("sfx.region.enter.soegol", -11, "세계", "쇳골 광산 들어섬: 산길 바람이 트이고 → 먼 곡괭이 쇳소리 땅·땅·땅이 골짜기에 메아리 → 낮은 피리 한 마디(2.6초) — 사람이 일하는 산", use="구역 이름 띠 '쇳골 광산'이 펼쳐질 때(2막 처음 한 번). 1.0초 뒤 2막 필드 곡")
+def _(r):
+    b = _buf(3.4)
+    place(b, _pass_open(r, 2.4), 0)
+    pick = lambda: modal(.4, [(1900 * r.uniform(.98, 1.02), .05, 1), (2750, .03, .5), (620, .06, .4)], r)
+    for i, at in enumerate((.35, .62, .89)):                              # 곡괭이 셋, 멀수록 작게
+        place(b, reverb(filt(pick(), "low", 3500) * (.5 - i * .1), 1.6, .55, tone_hz=2500), at)
+    place(b, _pipe(r, 1.8, 293.7, 392) * .33, .85)                         # D4 → G4(완전4도 위), 붉은재보다 낮게
+    return reverb(b, 1.8, .3, tone_hz=4500)
+
+
+@sfx("sfx.equip.slot.open", -8, "UI", "장비 새 칸 둘이 열림(1초 연출): 봉한 한지가 '사악' 찢기며 칸 하나 툭 → 0.35초 뒤 둘째 칸 툭 → 옥 편경 두 음이 화음으로 맑게 울리고 길게(1.0초 + 꼬리 1.5초) — 품계 인과 같은 크기", use="새 장비 자리가 열릴 때 한 번: 2막 첫 서낭당 쉬기(신·노리개 2), 1막 보스 처결 뒤(갓·띠). 화면 가운데 칸 두 개가 차례로 열리는 그림과 같이. 다른 소리 0.6배(품계 인과 같은 규칙)")
+def _(r):
+    b = _buf(2.8)
+    for i, at in enumerate((0.0, .35)):                                    # 칸 하나마다: 봉한 종이 찢김 + 빗장 툭
+        place(b, _paper(r, .18, 1800, 7000, .01) * .6, at)
+        place(b, _wood_tap(r, 700 + i * 120, .035, .9), at + .12)
+        place(b, _thump(r, .1, 140, 500) * .4, at + .12)
+    place(b, _chime(r, 784, .9, .55), .5)                                  # G5
+    place(b, _chime(r, 1174.7, .9, .4), .52)                               # D6 — 5도 화음(짝이 맞음)
+    m = int(1.2 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 600, 2200, 1.5) * env(m, .3, .5, 3) * .15, .4)   # 몸을 감싸는 짧은 바람
+    return reverb(b, 1.5, .28, tone_hz=7000)
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)

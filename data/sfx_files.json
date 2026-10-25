@@ -6754,6 +6754,61 @@
    "bypass_cast_filter": false,
    "length_sec": 3.93,
    "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.geumjul.snap",
+   "file": "sfx_geumjul_snap",
+   "category": "세계",
+   "desc": "금줄이 끊김: 새끼줄이 끼이익 팽팽해지다 '툭!' 끊어지고 → 끼워 둔 한지 조각들이 확 부는 바람에 사락사락 위로 흩날려 멀어짐 → 고개 너머로 트인 바람(2.8초)",
+   "use": "2막 금줄(R2-1 · R2-2)이 풀린 뒤 처음 금줄 앞 8 m에 섰을 때 한 번. 금줄 자리 3D(최소 3m·최대 30m). 한지가 날아가는 그림과 같이",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.15,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "amb.geumjul.cut",
+   "file": "amb_geumjul_cut",
+   "category": "세계",
+   "desc": "끊긴 금줄: 장승에 남은 새끼줄 끝이 바람에 가끔 톡 부딪히고, 남은 한지 한두 장이 사락(반복용 14초) — 이제 열린 문",
+   "use": "금줄이 풀린 뒤 두 금줄 자리(102,660)·(445,640) 3D. 최소 2m·최대 12m. 끊김 소리가 끝난 3초 뒤부터",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 13.8,
+   "peak_dbfs": -28
+  },
+  {
+   "id": "sfx.region.enter.bulgeunjae",
+   "file": "sfx_region_enter_bulgeunjae",
+   "category": "세계",
+   "desc": "붉은재 싸움터 들어섬: 고갯마루 바람이 확 트이고 → 먼 진고(큰 북) 둥…둥 두 번 → 피리 한 마디가 4도 위로 올라가 길게(2.6초) — 옛 싸움터, 그러나 지금은 아침",
+   "use": "구역 이름 띠 '붉은재 싸움터'가 펼쳐질 때(띠 0.5초 펼침과 같이, 2막 처음 한 번). 이 소리 1.0초 뒤 2막 필드 곡이 들어옴",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.65,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.region.enter.soegol",
+   "file": "sfx_region_enter_soegol",
+   "category": "세계",
+   "desc": "쇳골 광산 들어섬: 산길 바람이 트이고 → 먼 곡괭이 쇳소리 땅·땅·땅이 골짜기에 메아리 → 낮은 피리 한 마디(2.6초) — 사람이 일하는 산",
+   "use": "구역 이름 띠 '쇳골 광산'이 펼쳐질 때(2막 처음 한 번). 1.0초 뒤 2막 필드 곡",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.52,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.equip.slot.open",
+   "file": "sfx_equip_slot_open",
+   "category": "UI",
+   "desc": "장비 새 칸 둘이 열림(1초 연출): 봉한 한지가 '사악' 찢기며 칸 하나 툭 → 0.35초 뒤 둘째 칸 툭 → 옥 편경 두 음이 화음으로 맑게 울리고 길게(1.0초 + 꼬리 1.5초) — 품계 인과 같은 크기",
+   "use": "새 장비 자리가 열릴 때 한 번: 2막 첫 서낭당 쉬기(신·노리개 2), 1막 보스 처결 뒤(갓·띠). 화면 가운데 칸 두 개가 차례로 열리는 그림과 같이. 다른 소리 0.6배(품계 인과 같은 규칙)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.83,
+   "peak_dbfs": -8
   }
  ],
  "footsteps": {
