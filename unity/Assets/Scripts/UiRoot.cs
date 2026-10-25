@@ -532,6 +532,7 @@ public class UiRoot : MonoBehaviour
         if (Ko.TouchUI) return;
         pullMax = Mathf.Max(pullMax, Hud.PullCd);
         SetSlot(0, true, Hud.PullCd > 0.05f ? Hud.PullCd / pullMax : 0f, Hud.PullCd, null);
+        if (!string.IsNullOrEmpty(Hud.QName)) bTxt[0].text = Hud.QName;   // 무기마다 Q 이름이 다르다(끌기·땅울림·세우기·꽂기·이름)
         for (int i = 0; i < 4; i++)
         {
             var sv = Hud.Slots[i]; bool has = sv.Name != null;

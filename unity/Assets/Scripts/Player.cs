@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
     float bufferAge;                                         // 저장된 공격 입력의 나이(초)
     bool hasDodgeBuffer; Vector3? dodgeBufferAim; float dodgeBufferAge;   // 눌러둔 피하기(우선순위 최고)
     PullRun pullRun;
+    public static int HandLevel;       // 손에 익음 단계(0~3). 든 무기 특성 강화: 요령 둔화 +5/10/15%p · 삼지창 고정 +0.2/0.4/0.6초 · 붓 표식 +2/4/6초
+    public float fenceT; Vector3 fenceAt;   // 삼지창 울타리: 남은 초·세운 자리
     public static float MaceStunAdd;   // 손에 익음(육모방망이): 타격 기절 +0.1/0.2/0.3초. JudgeSystem 이 채운다
     public static float PullCdMult = 1f;   // JudgeSystem 이 도술 「손에 익음」 단계로 채운다
     float pullCooldown;
@@ -289,6 +291,81 @@ public class Player : MonoBehaviour
     /// <summary>파혼 몸 동작(JudgeSystem 이 파혼을 터뜨릴 때 부른다)</summary>
     public void PlayPahonAnim() { spr?.PlayPahon(); }
 
+    /// <summary>무기마다 다른 맞은 뒤 효과: 요령=둔화 25%(3타는 1.5배 길게) · 붓=먹 표식 +1(최대 3, 시간이 지나면 사라진다)</summary>
+    void ApplyWeaponTrait(Enemy e, int step)
+    {
+        if (e == null) return;
+        if (loadout.weapon == WeaponId.Bell && !e.soul.Boss)
+        {
+            e.weaponSlowAmt = Balance.BELL_SLOW + 0.05f * HandLevel;
+            e.weaponSlowT = Balance.BELL_SLOW_SEC * (step == Steps.Length ? 1.5f : 1f);
+        }
+        else if (loadout.weapon == WeaponId.Brush)
+        {
+            e.ink = Mathf.Min(Balance.BRUSH_MARK_MAX, e.ink + 1);
+            e.inkT = Balance.BRUSH_MARK_SEC + 2f * HandLevel;
+        }
+    }
+
+    /// <summary>요령방울 Q 불러 세우기: 둘레 6m 무릎 꿇은 혼들의 처결 대기가 3초 멈춘다(포위돼도 천도할 틈을 번다)</summary>
+    public bool CommandCall()
+    {
+        if (Busy || state != State.Free || !loadout.Def.HasCall || loadout.quakeCd > 0f) return false;
+        loadout.quakeCd = Balance.BELL_CALL_COOLDOWN;
+        int n = 0;
+        foreach (var e in enemies.list)
+        {
+            if (!e.kneeling || e.soul.Boss) continue;
+            if (new Vector2(e.Pos.x - Pos.x, e.Pos.z - Pos.z).magnitude > Balance.BELL_CALL_RADIUS) continue;
+            e.soul.PauseT = Balance.BELL_CALL_PAUSE; n++;
+        }
+        feel.AddShake(0.3f);
+        return true;
+    }
+
+    /// <summary>삼지창 Q 꽂아 버티기: 창을 꽂은 자리 반경 2.5m 안으로 일반 적이 4초 못 들어온다(그 안에서 천도를 지킨다)</summary>
+    public bool CommandFence()
+    {
+        if (Busy || state != State.Free || !loadout.Def.HasFence || loadout.quakeCd > 0f) return false;
+        loadout.quakeCd = Balance.TRIDENT_FENCE_COOLDOWN;
+        fenceT = Balance.TRIDENT_FENCE_SEC; fenceAt = Pos;
+        moveTarget = null; chaseTarget = null;
+        feel.HitStop(3); feel.AddShake(0.5f);
+        return true;
+    }
+
+    /// <summary>울타리가 서 있는 동안 일반 적을 경계 밖으로 밀어낸다(보스는 못 막는다)</summary>
+    void TickFence(float dt)
+    {
+        if (fenceT <= 0f) return;
+        fenceT -= dt;
+        foreach (var e in enemies.list)
+        {
+            if (!e.alive || e.soul.Boss) continue;
+            var d = new Vector2(e.Pos.x - fenceAt.x, e.Pos.z - fenceAt.z); float m = d.magnitude;
+            if (m >= Balance.TRIDENT_FENCE_RADIUS + e.radius) continue;
+            var o = m > 0.01f ? d / m : Vector2.right;
+            e.Pos = new Vector3(fenceAt.x + o.x * (Balance.TRIDENT_FENCE_RADIUS + e.radius), e.Pos.y, fenceAt.z + o.y * (Balance.TRIDENT_FENCE_RADIUS + e.radius));
+        }
+    }
+
+    /// <summary>명부 붓 Q 이름 쓰기: 조준 쪽 12m 안, 먹 표식이 3개인 적의 이름을 미리 써 둔다(그 혼은 천도 시전 −0.4초). 대상이 없으면 재사용을 쓰지 않는다</summary>
+    public bool CommandInkName(Vector3? aim)
+    {
+        if (Busy || state != State.Free || !loadout.Def.HasInkName || loadout.quakeCd > 0f) return false;
+        Enemy best = null; float bd = 1e9f; var at = aim ?? Pos + U.Dir(facing) * 4f;
+        foreach (var e in enemies.list)
+        {
+            if (!e.alive && !e.kneeling || e.soul.Boss || e.ink < Balance.BRUSH_MARK_MAX || e.nameWritten) continue;
+            if (new Vector2(e.Pos.x - Pos.x, e.Pos.z - Pos.z).magnitude > Balance.BRUSH_NAME_RANGE) continue;
+            float d = new Vector2(e.Pos.x - at.x, e.Pos.z - at.z).magnitude; if (d < bd) { bd = d; best = e; }
+        }
+        if (best == null) return false;
+        best.nameWritten = true; loadout.quakeCd = Balance.BRUSH_NAME_COOLDOWN; best.ink = 0;
+        numbers.Spawn(best.HeadPosition, 0, "normal");
+        return true;
+    }
+
     public bool CommandQuake()
     {
         if (Busy || state != State.Free || !loadout.Def.HasQuake || loadout.quakeCd > 0f) return false;
@@ -361,6 +438,7 @@ public class Player : MonoBehaviour
         UpdateSprite(dt);
         chain.trail.Tick(dt);
         TickBolts(dt);
+        TickFence(dt);
     }
 
     /// <summary>먹물 한 방 발사: 휘두름이 시작되는 순간 손에서 정면으로</summary>
@@ -606,7 +684,10 @@ public class Player : MonoBehaviour
         float mix = Config.FEEL_KNOCKBACK_TANGENT_MIX * cfg.dir; // 바깥 + 휘두른 방향(접선) → 쓸려 날아감
         var dir = new Vector3(rx - rz * mix, 0, rz + rx * mix).normalized;
         int dmg = Mathf.Max(1, Mathf.RoundToInt(cfg.damage * loadout.stats.DamageMult * (1f + Random.Range(-Config.DAMAGE_VARIANCE, Config.DAMAGE_VARIANCE))));
-        bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun + MaceStunAdd);
+        float extraStun = MaceStunAdd;
+        if (loadout.weapon == WeaponId.Trident && a.step == Steps.Length) extraStun += Balance.TRIDENT_HOLD_SEC + 0.2f * HandLevel;   // 꿰찌르기: 꽂힌 적이 1초(+손에 익음) 못 움직인다
+        bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun + extraStun);
+        if (!killed) ApplyWeaponTrait(e, a.step);
         onHitLanded?.Invoke();
         if (!killed) e.ReactHit(a.step);   // 맞은 동작: 1타 약·2타 중·3타 강(아트 맞는 동작)
         // 손맛 5요소: 맞은 놈만 굳기(국소 히트스톱) · 처치/마지막 타격만 전체 정지 · 흔들림 · 줌 펀치 · 맞은 방향 카메라 밀림

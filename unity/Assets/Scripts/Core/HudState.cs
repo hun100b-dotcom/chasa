@@ -30,6 +30,7 @@ namespace Chasa.Core
         // 아래쪽 기술 줄
         public float DodgeCharges; public int DodgeMax;     // 피하기 충전(소수는 충전 중인 칸)
         public float PullCd;                                // 끌어당김 남은 시간(초, 0이면 쓸 수 있음)
+        public string QName;                                // Q 칸에 보일 이름(무기별: 끌어당김/땅울림/불러 세우기 등)
         public string WeaponName = "";
         /// <summary>도술 4칸(이름 없으면 빈 칸). Cd = 남은 비율 0~1, CdSec = 남은 초</summary>
         public sealed class SkillSlotView { public string Name; public float Cd, CdSec; }

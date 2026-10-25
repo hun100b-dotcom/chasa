@@ -185,6 +185,9 @@ public partial class CharacterPanel : MonoBehaviour
             GUI.Label(new Rect(box.x + 40, y + 28, box.width - 56, 28), desc[i], body);
             y += 72;
         }
+        if (lo.Def.HasCall) GUI.Label(new Rect(box.x + 16, y, box.width - 32, 26), "[Q] 불러 세우기 (요령방울)  반경 " + Balance.BELL_CALL_RADIUS + "m 무릎 꿇은 혼의 대기 " + Balance.BELL_CALL_PAUSE + "초 멈춤, 재사용 " + Balance.BELL_CALL_COOLDOWN + "초", body);
+        if (lo.Def.HasFence) GUI.Label(new Rect(box.x + 16, y, box.width - 32, 26), "[Q] 꽂아 버티기 (삼지창)  " + Balance.TRIDENT_FENCE_SEC + "초간 반경 " + Balance.TRIDENT_FENCE_RADIUS + "m 안으로 일반 적 못 들어옴, 재사용 " + Balance.TRIDENT_FENCE_COOLDOWN + "초", body);
+        if (lo.Def.HasInkName) GUI.Label(new Rect(box.x + 16, y, box.width - 32, 26), "[Q] 이름 쓰기 (명부 붓)  표식 3개인 적의 이름을 써 둠(천도 시전 −" + Balance.BRUSH_NAME_CAST_CUT + "초), 재사용 " + Balance.BRUSH_NAME_COOLDOWN + "초", body);
         if (lo.Def.HasQuake)
             GUI.Label(new Rect(box.x + 16, y, box.width - 32, 26), "[Q] 땅울림 (육모방망이)  반경 " + Balance.MACE_QUAKE_RADIUS + "m, 기절 " + Balance.MACE_QUAKE_STUN + "초, 재사용 " + Balance.MACE_QUAKE_COOLDOWN + "초", body);
     }

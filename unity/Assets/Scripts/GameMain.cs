@@ -471,7 +471,7 @@ public class GameMain : MonoBehaviour
             bool over = !MiniMap.BigOpen && !CharacterPanel.Open && !SettingsPanel.Open && enemies.Pick(hray, Ground(hray), Config.ENEMY_PICK_RADIUS * 1.3f) != null;
             CursorFx.Set(over ? CursorFx.Kind.Attack : CursorFx.Kind.Default);
         }
-        if (Input.GetKeyDown(KeyCode.Q)) { if (player.loadout.Def.HasQuake) player.CommandQuake(); else if (player.loadout.Def.HasPull) SkillPull(mouse); }   // Q: 철삭=견인 / 육모방망이=땅울림 / 그 외 무기는 없음
+        if (Input.GetKeyDown(KeyCode.Q)) { if (player.loadout.Def.HasQuake) player.CommandQuake(); else if (player.loadout.Def.HasPull) SkillPull(mouse); else if (player.loadout.Def.HasCall) player.CommandCall(); else if (player.loadout.Def.HasFence) player.CommandFence(); else if (player.loadout.Def.HasInkName) player.CommandInkName(Ground(cam.ScreenPointToRay(mouse))); }   // Q: 철삭=견인 / 육모방망이=땅울림 / 그 외 무기는 없음
         if (Input.GetKeyDown(KeyCode.Space)) SkillDodge(mouse); // Space: 피하기(구르기). 휘두르기는 마우스 클릭으로 충분하다(기획 타격감 분석)
         if (Input.GetMouseButtonDown(1) && !OverTouchButtons(mouse)) SkillSwing(mouse);   // 우클릭: 커서 방향으로 그 자리에서 즉시 공격(명세 v1.2). 견인은 Q 만
 

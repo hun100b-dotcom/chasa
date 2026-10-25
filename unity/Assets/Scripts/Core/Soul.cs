@@ -66,6 +66,7 @@ namespace Chasa.Core
         public bool Alive { get { return State == SoulState.Active; } }
         public bool Kneeling { get { return State == SoulState.Kneel; } }
         /// <summary>덩어리는 천도 불가 → 파혼만 (W-004)</summary>
+        public float PauseT;         // 처결 대기가 멈춰 있는 남은 시간(요령방울 Q 불러 세우기)
         public bool Water;           // 물 혼(3막 ⑤): 천도 시전 −0.5초(하한 0.5초). 밀물 신호 뒤 20초 안에 못 보내면 그 밤 가라앉아 사라진다
         public bool Mujeok;          // 무적 혼(3막 ⑥, 기획 act3-souls): B-11 천도 전엔 파혼만 된다(별명을 들어 풀리는 길은 아직 없다)
         public static bool MujeokLocked = true;   // JudgeSystem 이 매 프레임 알려 준다: B-11 을 아직 천도하지 않았나
@@ -138,6 +139,7 @@ namespace Chasa.Core
         public void Tick(float dt)
         {
             if (State != SoulState.Kneel || Frozen) return;
+            if (PauseT > 0f) { PauseT -= dt; return; }   // 불러 세운 동안은 대기 시간이 흐르지 않는다
             WaitLeft -= dt;
             if (WaitLeft <= 0f)
             {

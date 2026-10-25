@@ -59,6 +59,8 @@ public class Enemy : MonoBehaviour
     float speed, flash, deathT, spawnT, pulledT;
     public static float BoundBonus;   // 묶인 자 패시브: 묶인 적이 받는 피해 +%
     public float boundT;               // 묶임 남은 시간(휘감기·쇠사슬 울)
+    public float weaponSlowT, weaponSlowAmt;   // 요령방울 타격 둔화(남은 초·비율)
+    public int ink; public float inkT; public bool nameWritten;   // 명부 붓 먹 표식 수·남은 초, 이름을 써 둔 혼(천도 시전 단축)
     public float slowMult = 1f;        // 이동 감소 배율(배웅길: 천도 직후 적이 느려진다)
     Material mat;
     float deathHold = Config.ENEMY_DEATH_HOLD, deathShrink = Config.ENEMY_DEATH_SHRINK;   // 천도·파혼 모델 동작이 있으면 그 길이만큼 몸을 유지(동작이 스스로 흩어지는 모양)

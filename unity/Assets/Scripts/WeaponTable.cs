@@ -37,7 +37,7 @@ public static class WeaponTable
         new ComboStep { name = "2 thrust", damage = 14, reach = 4.4f, sweepDeg = 24f, startOffsetDeg = 12f, dir = -1,
             windup = 0.16f, swing = 0.12f, recover = 0.22f, hitStopFrames = 3, shake = 0.5f, knockback = 12f, stun = 0.4f, lunge = 1.0f },
         new ComboStep { name = "3 skewer", damage = 24, reach = 4.8f, sweepDeg = 24f, startOffsetDeg = 12f, dir = -1,
-            windup = 0.26f, swing = 0.14f, recover = 0.42f, hitStopFrames = 6, shake = 0.9f, knockback = 17f, stun = 0.9f, lunge = 1.4f },
+            windup = 0.26f, swing = 0.14f, recover = 0.42f, hitStopFrames = 6, shake = 0.9f, knockback = 0f, stun = 0f, lunge = 1.4f }   // 기절 대신 Player.HitEnemy 가 꽂힌 적을 TRIDENT_HOLD_SEC(1초)+손에 익음만큼 고정한다(기획 appendix-2: 넉백 0·고정 1초),
     };
 
     // 명부 붓: 기획 10/10/18 → 균형 2차(초당 지수 88)로 12/12/21, 투사체. 지금은 좁고 긴 휘두름으로 대신(실제 투사체는 다음 단계)

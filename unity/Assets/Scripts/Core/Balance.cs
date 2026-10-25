@@ -381,6 +381,21 @@ public static class Balance
     public const float RUN_STOP_SEC = 0.25f;  // (기획 조작 점검 10-26) Run_Stop 동작 시간(초)
     public const int RANK_A = 180;  // (기획 s1-curve3-check 10-26) 품계 문턱 계수: 처결 셈 = RANK_A × (품계−1)². 품계는 천도·파혼 처결 셈으로 오른다(옛 75는 천도 넋만 셌다)
     public const int RANK_2_TALLY = 75;  // (기획 first-5-minutes v2) 품계 2만 처결 셈 75 — 혼 셋과 박돌쇠(80)를 처결하면 천도든 파혼이든 5분 무렵 품계 2(첫 성장 보장)
+    public const float BELL_SLOW = 0.25f;  // (기획 section6·appendix-2) 요령방울 타격 둔화: 적 이동 −25%
+    public const float BELL_SLOW_SEC = 1.0f;  // (appendix-2) 요령 1·2타 둔화 지속(초). 3타는 ×1.5
+    public const float BELL_CALL_RADIUS = 6.0f;  // (appendix-2) 요령 Q 불러 세우기 반경(m)
+    public const float BELL_CALL_PAUSE = 3.0f;  // (appendix-2) 불러 세우기: 무릎 꿇은 혼의 처결 대기가 멈추는 시간(초)
+    public const float BELL_CALL_COOLDOWN = 10.0f;  // (appendix-2) 불러 세우기 재사용(초)
+    public const float TRIDENT_HOLD_SEC = 1.0f;  // (appendix-2) 삼지창 3타 꿰찌르기: 꽂힌 적이 못 움직이는 시간(초)
+    public const float TRIDENT_FENCE_SEC = 4.0f;  // (appendix-2) 삼지창 Q 꽂아 버티기: 울타리가 서 있는 시간(초)
+    public const float TRIDENT_FENCE_RADIUS = 2.5f;  // (appendix-2) 꽂아 버티기 울타리 반경(m): 일반 적이 못 들어온다
+    public const float TRIDENT_FENCE_COOLDOWN = 14.0f;  // (appendix-2) 꽂아 버티기 재사용(초)
+    public const int BRUSH_MARK_MAX = 3;  // (appendix-2) 명부 붓 먹 표식 최대 수
+    public const float BRUSH_MARK_SEC = 2.0f;  // (section6 손에 익음) 먹 표식이 남는 시간(초). 손에 익음 +2/4/6초
+    public const float BRUSH_NAME_CAST_CUT = 0.4f;  // (appendix-2) 이름을 써 둔 혼의 천도 시전 단축(초, 하한 CAST_MIN_TIME)
+    public const float BRUSH_NAME_COOLDOWN = 6.0f;  // (appendix-2) 이름 쓰기 재사용(초)
+    public const float BRUSH_NAME_SPLASH_RADIUS = 4.0f;  // (appendix-2) 표식 있는 혼을 파혼하면 먹이 튀어 표식 +1 이 가는 반경(m)
+    public const float BRUSH_NAME_RANGE = 12.0f;  // (appendix-2) 이름 쓰기가 닿는 거리(m)
     public const float DODGE_TIME = 0.32f;  // (기획 타격감 분석 10-24, 임시) 피하기 전체 시간(초)
     public const float DODGE_IFRAME_START = 0.03f;  // (기획 타격감 분석 10-24, 임시) 무적 시작(초)
     public const float DODGE_IFRAME_END = 0.25f;  // (기획 타격감 분석 10-24, 임시) 무적 끝(초) → 무적 0.22초(60fps 13프레임)

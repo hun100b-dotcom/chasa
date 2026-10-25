@@ -141,6 +141,7 @@ public class JudgeSystem : MonoBehaviour
         castTarget = e;
         castT = 0f;
         castTotal = e.soul.Boss ? Mathf.Max(0.5f, Balance.BOSS_TENDO_CAST_TIME - (snatched.Contains(e.soul.BossId) ? 0.5f : 0f)) : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;
+        if (e.nameWritten) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.BRUSH_NAME_CAST_CUT);   // 붓으로 이름을 써 둔 혼: 천도 시전 −0.4초
         if (e.soul.Water) castTotal = Mathf.Max(Balance.WATER_SOUL_CAST_FLOOR_S, castTotal - Balance.WATER_SOUL_CAST_REDUCE_S);   // 물 혼: 천도 시전 −0.5초(하한 0.5초)
         if (HasKeepsake("도한수의 뱃삯")) castTotal += Balance.BAETSAK_TENDO_CAST_ADD;   // 뱃삯: 천도 시전 +0.1초(기울기)
         if (e.soul.Name != null && HasKeepsake("흑월의 붓")) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - 0.2f);   // 흑월의 붓: 이름혼 천도 시전 −0.2초   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
@@ -188,6 +189,8 @@ public class JudgeSystem : MonoBehaviour
         ledger.DoPahon(e.soul.Boss, e.soul.BossId);
         TieProgress(e, 2);
         growth.AddPahon();
+        if (lo.weapon == WeaponId.Brush && e.ink > 0)   // 명부 붓 파혼: 표식 있는 혼이 터지면 먹이 튀어 둘레 4m 적에게 표식 +1
+            foreach (var o in enemies.list) if (o != null && o != e && o.alive && new Vector2(o.Pos.x - e.Pos.x, o.Pos.z - e.Pos.z).magnitude <= Balance.BRUSH_NAME_SPLASH_RADIUS) { o.ink = Mathf.Min(Balance.BRUSH_MARK_MAX, o.ink + 1); o.inkT = Balance.BRUSH_MARK_SEC + 2f * growth.LevelOf("손에 익음"); }
         Tally(e);   // 처결 셈: 파혼은 그 혼의 기본 천도 넋(고리 배율 포함, 업 감쇠 전)만큼   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Bosses.CoinFor(e.soul.BossId) : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3
@@ -726,7 +729,13 @@ public class JudgeSystem : MonoBehaviour
         float slow = escortT > 0f ? 1f - Balance.AC_ESCORT_SLOW : 1f;
         if (escortT > 0f) escortT -= dt;
         // 배웅길은 천도한 자리 반경 AC_ESCORT_RADIUS(3m) 안의 적만 느리게 한다(옛: 맵의 모든 적)
-        foreach (var e in enemies.list) e.slowMult = e.soul.Boss || escortT <= 0f || new Vector2(e.Pos.x - escortAt.x, e.Pos.z - escortAt.z).magnitude > Balance.AC_ESCORT_RADIUS ? 1f : slow;   // 보스는 느려지지 않는다
+        foreach (var e in enemies.list)
+        {
+            float esc = e.soul.Boss || escortT <= 0f || new Vector2(e.Pos.x - escortAt.x, e.Pos.z - escortAt.z).magnitude > Balance.AC_ESCORT_RADIUS ? 1f : slow;   // 보스는 느려지지 않는다
+            e.slowMult = esc * (e.weaponSlowT > 0f ? 1f - e.weaponSlowAmt : 1f);   // 요령방울 둔화는 배웅길과 곱해진다
+            if (e.weaponSlowT > 0f) e.weaponSlowT -= dt;
+            if (e.inkT > 0f) { e.inkT -= dt; if (e.inkT <= 0f) e.ink = 0; }   // 먹 표식은 시간이 지나면 사라진다
+        }
     }
 
     /// <summary>도술 1~4키. 효과가 없었으면(대상 없음 등) 재사용 대기를 쓰지 않는다</summary>
@@ -1639,6 +1648,7 @@ public class JudgeSystem : MonoBehaviour
         { var nb = NearestBoss(); float want = nb != null && Vector3.Distance(nb.Pos, player.Pos) < 24f ? 0.5f : 1f; ClockSky.ArenaFog = Mathf.MoveTowards(ClockSky.ArenaFog, want, dt * 0.5f); }   // 마당에 들어서면 2초에 걸쳐 안개가 반으로
         Enemy.IntroCalm = FieldRules.On && introFrozen && introT < 25f;
         Player.PullCdMult = lo.weapon == WeaponId.Chain ? 1f - 0.1f * growth.LevelOf("손에 익음") : 1f;   // 손에 익음: 든 무기 특성 강화(철삭만 연결, 나머지 무기 특성은 구현 대기)
+        Player.HandLevel = growth.LevelOf("손에 익음");
         Player.MaceStunAdd = lo.weapon == WeaponId.Mace ? 0.1f * growth.LevelOf("손에 익음") : 0f;   // 육모방망이: 기절 +0.1/0.2/0.3초(삼지창·요령·붓은 그 무기의 기본 특성이 아직 없어 대기)
         Enemy.FierceMult = lo.stats.FierceMult;   // 거센 혼·덩어리·보스 피해 옵션
         Enemy.TokenMax = FieldRules.On ? (Enemy.IntroCalm ? 1 : introFrozen ? Balance.ATTACK_TOKENS_INTRO : Balance.ATTACK_TOKENS) : int.MaxValue;   // 동시에 때리는 혼 수 제한
@@ -1968,7 +1978,7 @@ public class JudgeSystem : MonoBehaviour
         h.SecondsLeft = Mathf.CeilToInt(night.TimeLeft); h.Sent = night.Sent; h.Quota = Balance.NIGHT_QUOTA;
         h.Clues = night.Clues; h.CluesNeeded = Balance.BOSS_CLUES_REQUIRED;
         h.BossDone = night.BossDone; h.QuotaDone = night.QuotaDone; h.Warning = night.Warning;
-        h.DodgeCharges = player.DodgeCharges; h.DodgeMax = Balance.DODGE_CHARGES; h.PullCd = player.PullCooldown; h.WeaponName = lo.Def.Name;
+        h.DodgeCharges = player.DodgeCharges; h.DodgeMax = Balance.DODGE_CHARGES; h.PullCd = lo.Def.HasPull ? player.PullCooldown : lo.quakeCd; h.QName = lo.Def.HasPull ? "끌기" : lo.Def.HasQuake ? "땅울림" : lo.Def.HasCall ? "세우기" : lo.Def.HasFence ? "꽂기" : lo.Def.HasInkName ? "이름" : ""; h.WeaponName = lo.Def.Name;
         for (int si = 0; si < h.Slots.Length; si++)   // 도술 4칸 표시값(HUD 가 그림으로 그린다)
         {
             string sn = ActiveNameAt(si); var sv = h.Slots[si];
