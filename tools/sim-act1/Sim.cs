@@ -30,6 +30,7 @@ static class Sim
     // 날씨(기획서 8절). null = 날씨 무시(옛 시뮬). Fixed = 밤 세 개를 같은 날씨로, Mixed = 솔고개 가중치로 밤마다(+밤 중간 25% 다시) 굴림
     static Weather? WxFixed = null; static bool WxMixed = false; static double PTendo = 0.5;
     static WeatherEffect Fx = WeatherRules.Effect(Weather.Clear, true);
+    static double MixMote = 0, MixWail = 0, MixBuried = 0;   // 혼 3유형 비율(%) — 0 이면 옛 시뮬(보통 혼만). --types 표가 구역별로 채운다
     static bool Growth = true;   // 성장(품계 힘 몰기·장비 손보기·얼룩 점수)을 전투에 직접 넣는다. --nogrowth 면 끈다(옛 시뮬)
     const double MainOptDmg = 0.055;   // 손보기 대상 주옵션을 피해 옵션 평균(기본 6% x 등급 0.5~1.1)으로 가정
     static readonly int[] EnhCost = { 30, 60, 100, 150, 220 };
@@ -41,6 +42,7 @@ static class Sim
         foreach (var a in args) if (a == "--nogrowth") Growth = false;
         if (Array.IndexOf(args, "--weapons") >= 0) return WeaponTable(runs);
         if (Array.IndexOf(args, "--weather") >= 0) return WeatherTable(runs);
+        if (Array.IndexOf(args, "--types") >= 0) return TypesTable(runs);
         Console.WriteLine("1막 시뮬: 첫 밤 " + Nights + "개 + 1호 보스, 각 전략 " + runs + "판. 밤 " + Balance.NIGHT_DURATION + "초, 몫 " + Balance.NIGHT_QUOTA + ", 체력 " + Balance.PLAYER_MAX_HP);
         var results = new Dictionary<Strat, List<RunResult>>();
         foreach (Strat s in Enum.GetValues(typeof(Strat)))
@@ -184,6 +186,60 @@ static class Sim
         Console.WriteLine("| " + vm[0].ToString("0.0") + " | " + vm[1].ToString("0.0") + " | " + vm[2].ToString("0.0") + " | " + vm[3].ToString("0.0") + " | " + nm[bm] + " | " + (bm == 2 ? "O" : "X") + " | " + ((mh - ml) / mh <= 0.20 ? "O" : "X") + " (" + ((vm[0] - vm[1]) / mh * 100).ToString("0") + "%) | " + (psurv >= 0.95 && pboss >= 0.95 ? "O" : "X") + "(생존" + (psurv * 100).ToString("0") + "%) | " + (rm[0] >= rm[1] && rm[0] >= rm[2] && rm[0] >= rm[3] ? "O" : "X") + " |");
         return 0;
     }
+    /// <summary>혼 3유형 판정표(기획서 부록 F-1b): 구역별 순수 전략·최적 천도 비율, 잔넋 구역 vs 묻힌 혼 구역 비교, 1막 전체 ①~④</summary>
+    static int TypesTable(int runs)
+    {
+        const double w = 1.3;
+        var zones = new (string n, double m, double wl, double b)[] {
+            ("솔고개", Balance.SOULTYPE_SOLGOGAE_MOTE_PCT, Balance.SOULTYPE_SOLGOGAE_WAIL_PCT, Balance.SOULTYPE_SOLGOGAE_BURIED_PCT),
+            ("보릿들", Balance.SOULTYPE_BORIT_MOTE_PCT, Balance.SOULTYPE_BORIT_WAIL_PCT, Balance.SOULTYPE_BORIT_BURIED_PCT),
+            ("물막이 골", Balance.SOULTYPE_MULMAGI_MOTE_PCT, Balance.SOULTYPE_MULMAGI_WAIL_PCT, Balance.SOULTYPE_MULMAGI_BURIED_PCT),
+            ("폐당집", Balance.SOULTYPE_PYEDANG_MOTE_PCT, Balance.SOULTYPE_PYEDANG_WAIL_PCT, Balance.SOULTYPE_PYEDANG_BURIED_PCT),
+            ("검은여울", Balance.SOULTYPE_RAPIDS_MOTE_PCT, Balance.SOULTYPE_RAPIDS_WAIL_PCT, Balance.SOULTYPE_RAPIDS_BURIED_PCT),
+            ("(유형 없음·옛 시뮬)", 0, 0, 0) };
+        Console.WriteLine("혼 3유형 시뮬 (철삭, w=" + w + ", 각 전략 " + runs + "판). 가치/분 = (넋+기억x4+엽전xw)/분. 비율은 잔넋/넋두리/묻힌 혼(%), 나머지 보통");
+        Console.WriteLine("| 구역 | 비율 | 천도만 | 파혼만 | 섞기(상황) | 섞기(반반) | 1등 | 천도-파혼 차이 | 최적 천도 비율 | 생존(천/파/섞) | 위험(천/파/섞) |");
+        Console.WriteLine("|---|---|---|---|---|---|---|---|---|---|---|");
+        string[] nm = { "천도만", "파혼만", "섞기(상황)", "섞기(반반)" };
+        var bestP = new double[zones.Length];
+        for (int zi = 0; zi < zones.Length; zi++)
+        {
+            MixMote = zones[zi].m; MixWail = zones[zi].wl; MixBuried = zones[zi].b;
+            var v = new double[4]; var risk = new double[3]; var surv = new double[3]; int k = 0;
+            foreach (Strat st in Enum.GetValues(typeof(Strat)))
+            {
+                PTendo = 0.5; var L = RunMany(st, runs); v[k] = ValuePerMin(L, w);
+                if (k < 3) { risk[k] = RiskPerMin(L); surv[k] = Avg(L, r => r.Died ? 0 : 1); }
+                k++;
+            }
+            int b = 0; for (int i = 1; i < 4; i++) if (v[i] > v[b]) b = i;
+            double hi = Math.Max(v[0], v[1]);
+            double bp = 0, bv = -1;
+            for (double p = 0; p <= 1.0001; p += 0.1) { PTendo = p; var L = RunMany(Strat.CoinFlip, runs); double vv = ValuePerMin(L, w); if (vv > bv) { bv = vv; bp = p; } }
+            bestP[zi] = bp; PTendo = 0.5;
+            Console.WriteLine("| " + zones[zi].n + " | " + zones[zi].m + "/" + zones[zi].wl + "/" + zones[zi].b + " | " + v[0].ToString("0.0") + " | " + v[1].ToString("0.0") + " | " + v[2].ToString("0.0") + " | " + v[3].ToString("0.0") + " | " + nm[b] + " | " + ((v[0] - v[1]) / hi * 100).ToString("0") + "% | " + (bp * 100).ToString("0") + "% | " + surv[0].ToString("0.00") + "/" + surv[1].ToString("0.00") + "/" + surv[2].ToString("0.00") + " | " + risk[0].ToString("0.0") + "/" + risk[1].ToString("0.0") + "/" + risk[2].ToString("0.0") + " |");
+        }
+        double d = Math.Abs(bestP[0] - bestP[4]) * 100;
+        Console.WriteLine("\n① 잔넋 많은 구역(솔고개) vs 묻힌 혼 많은 구역(검은여울) 최적 천도 비율 15%p 이상 차이: " + (d >= 15 ? "O" : "X") + " (솔고개 " + (bestP[0] * 100).ToString("0") + "% / 검은여울 " + (bestP[4] * 100).ToString("0") + "% → " + d.ToString("0") + "%p)");
+        // ② 1막 전체: 다섯 구역 평균 비율로 4-4절 기준 ①~④
+        MixMote = 0; MixWail = 0; MixBuried = 0; for (int zi = 0; zi < 5; zi++) { MixMote += zones[zi].m / 5; MixWail += zones[zi].wl / 5; MixBuried += zones[zi].b / 5; }
+        var vm = new double[4]; var rm = new double[4]; double psurv = 0, pboss = 0; int q = 0;
+        foreach (Strat st in Enum.GetValues(typeof(Strat)))
+        {
+            PTendo = 0.5; var L = RunMany(st, runs); vm[q] = ValuePerMin(L, w); rm[q] = RiskPerMin(L);
+            if (st == Strat.PahonOnly) { psurv = Avg(L, r => r.Died ? 0 : 1); pboss = Avg(L, r => r.BossFought ? 1 : 0); }
+            q++;
+        }
+        int bm = 0; for (int i = 1; i < 4; i++) if (vm[i] > vm[bm]) bm = i;
+        double mh = Math.Max(vm[0], vm[1]), ml = Math.Min(vm[0], vm[1]);
+        Console.WriteLine("\n② 1막 전체(다섯 구역 평균 비율: 잔넋 " + MixMote.ToString("0") + "/넋두리 " + MixWail.ToString("0") + "/묻힌 혼 " + MixBuried.ToString("0") + "%):");
+        Console.WriteLine("| 천도만 | 파혼만 | 섞기(상황) | 섞기(반반) | 1등 | ① 섞기 1등 | ② 천도·파혼 20% 안 | ③ 파혼만 생존·보스 | ④ 위험 천도만 최대 |");
+        Console.WriteLine("|---|---|---|---|---|---|---|---|---|");
+        Console.WriteLine("| " + vm[0].ToString("0.0") + " | " + vm[1].ToString("0.0") + " | " + vm[2].ToString("0.0") + " | " + vm[3].ToString("0.0") + " | " + nm[bm] + " | " + (bm == 2 ? "O" : "X") + " | " + ((mh - ml) / mh <= 0.20 ? "O" : "X") + " (" + ((vm[0] - vm[1]) / mh * 100).ToString("0") + "%) | " + (psurv >= 0.95 && pboss >= 0.95 ? "O" : "X") + " (생존 " + psurv.ToString("0.00") + ", 보스 " + pboss.ToString("0.00") + ") | " + (rm[0] >= rm[1] && rm[0] >= rm[2] && rm[0] >= rm[3] ? "O" : "X") + " |");
+        MixMote = MixWail = MixBuried = 0;
+        return 0;
+    }
+
     static double Max(double[] a) { double m = a[0]; foreach (var x in a) if (x > m) m = x; return m; }
 
     static double Avg(List<RunResult> L, Func<RunResult, double> f) { double s = 0; foreach (var r in L) s += f(r); return s / L.Count; }
@@ -237,8 +293,19 @@ static class Sim
                     double q = Math.Min(maed - 10 - use, Balance.MACE_QUAKE_DAMAGE); use += q;
                     bonusPool += Balance.MACE_QUAKE_DAMAGE * others;
                 }   // 앞선 파혼 폭발이 이미 깎아 둔 몫
-                double kill = (maed - use) / (dps() * WR(Wd.Id) * (1 + WG(Wd.Id) * Math.Min(others, 2))) + 0.5;
+                // 혼 3유형(기획서 부록 F-1b, 임시): 0 보통 / 1 넋두리 / 2 잔넋 무리 / 3 묻힌 혼
+                int ty = 0, moteN = 0;
+                if (!lump && !named && (MixMote + MixWail + MixBuried) > 0) { double rr = rng.NextDouble() * 100; ty = rr < MixMote ? 2 : rr < MixMote + MixWail ? 1 : rr < MixMote + MixWail + MixBuried ? 3 : 0; }
+                if (ty == 2) moteN = 3 + rng.Next(3);
+                if (ty == 1) maed *= Balance.SOULTYPE_WAIL_HP;
+                double groupHp = ty == 2 ? moteN * Balance.SOULTYPE_MOTE_HP * maed : maed;   // 잔넋 무리는 맺힘 합
+                double crowd = others + (ty == 2 ? moteN - 1 : 0);                          // 사슬 휘두르기가 한꺼번에 맞히는 주변 수
+                double kill = (groupHp - use) / (dps() * WR(Wd.Id) * (1 + WG(Wd.Id) * Math.Min(crowd, 2))) + 0.5;
+                if (ty == 1) kill += 1.0;   // 거리를 지키는 혼을 쫓아가거나 견인으로 끌어와야 한다
                 double take = (others + 1) * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitMove * WTake(Wd.Id);
+                if (ty == 1) take = ((kill / Balance.SOULTYPE_WAIL_INTERVAL) * Balance.SOULTYPE_WAIL_DAMAGE * HitMove * 0.85 + others * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitMove) * WTake(Wd.Id);   // 탄은 직선이라 읽기 쉽다(0.85)
+                else if (ty == 2) take = (moteN * (kill / Balance.SOULTYPE_MOTE_INTERVAL) * Balance.SOULTYPE_MOTE_DAMAGE * HitMove + others * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitMove) * WTake(Wd.Id);
+                else if (ty == 3) take = ((kill / (Balance.SOULTYPE_BURIED_REBURY_S + 2)) * Balance.SOULTYPE_BURIED_DAMAGE * 0.5 + others * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitMove) * WTake(Wd.Id);   // 매복 한 번에 반쯤 맞는다
                 Hit(ref hp, ref sinceHit, ref res, take); t += kill; sinceHit = take > 0 ? 0 : sinceHit + kill;
                 if (hp <= 0) break;
                 hp = Heal(hp, ref potions);
@@ -250,16 +317,20 @@ static class Sim
                     bool chain = t - lastTendoAt <= Balance.TENDO_CHAIN_WINDOW + Wd.ChainWindowAddS;
                     double cast = CoreRules.CastTime(chain) * Wd.CastTimeMult;
                     double dmg = others * (cast / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * Fx.CastHit;
+                    if (ty == 1) dmg += (cast / Balance.SOULTYPE_WAIL_INTERVAL) * Balance.SOULTYPE_WAIL_DAMAGE * Fx.CastHit * 0.5;   // 외는 동안 멀리서 던진다
+                    else if (ty == 2) dmg += (moteN - 1) * Math.Max(0, cast - Balance.SOULTYPE_MOTE_RATTLE_S) / Balance.SOULTYPE_MOTE_INTERVAL * Balance.SOULTYPE_MOTE_DAMAGE * Fx.CastHit;   // 대장이 떠나면 2초 혼란
+                    else if (ty == 3) dmg += (cast / (Balance.SOULTYPE_BURIED_REBURY_S + 2)) * Balance.SOULTYPE_BURIED_DAMAGE * Fx.CastHit;   // 옆 무덤이 솟아 시전을 끊을 위험
                     if (Fx.StandDrain > 0 && !(t < fogClearUntil)) dmg += Fx.StandDrain * cast;   // 역병 안개: 서서 외는 동안 초당 1
                     Hit(ref hp, ref sinceHit, ref res, dmg); t += cast + Approach; if (dmg > 0) sinceHit = 0;
                     if (hp <= 0) break;
-                    { int nb = led.Neok; led.CompleteTendo(); led.Neok += (int)Math.Round((led.Neok - nb) * Wd.NeokPct); } res.Tendo++; sentTonight++; lastTendoAt = t; fogClearUntil = t + Balance.WEATHER_PLAGUE_CLEAR_SEC;   // 천도 자리 안개 15초 걷힘
+                    { int nb = led.Neok; led.CompleteTendo(); led.Neok += (int)Math.Round((led.Neok - nb) * Wd.NeokPct); if (ty == 2) { for (int f = 1; f < moteN; f++) { t += CoreRules.CastTime(true) * Wd.CastTimeMult; led.Neok += (int)Math.Round((led.Neok - nb) * 0.4); } } } res.Tendo++;   // 잔넋 무리: 대장 1 + 나머지는 넋 ×0.4(기억 없음) sentTonight++; lastTendoAt = t; fogClearUntil = t + Balance.WEATHER_PLAGUE_CLEAR_SEC;   // 천도 자리 안개 15초 걷힘
                     if (named) { namedDone = true; namedTendoed = true; }
                     if (sentTonight == Balance.NIGHT_QUOTA) res.QuotaSeconds[night] = t;
                 }
                 else
                 {
                     t += 0.25 + Approach; led.DoPahon(); res.Pahon++;
+                    if (ty == 2) led.Coin += (int)Math.Round((double)Balance.PAHON_COIN * (moteN - 1));   // 대장 파혼이 4m 안 잔넋을 함께 파혼(엽전은 마리마다)
                     if (Growth)
                     {
                         pahonCnt++; if (pahonCnt % Balance.PAHON_STAIN_POINT_EVERY == 0) stainPts++;
