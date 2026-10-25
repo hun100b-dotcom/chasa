@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
     float bufferAge;                                         // 저장된 공격 입력의 나이(초)
     bool hasDodgeBuffer; Vector3? dodgeBufferAim; float dodgeBufferAge;   // 눌러둔 피하기(우선순위 최고)
     PullRun pullRun;
+    public static float PullCdMult = 1f;   // JudgeSystem 이 도술 「손에 익음」 단계로 채운다
     float pullCooldown;
     float chainLag;
     // ---- 피하기(구르기) ----
@@ -684,7 +685,7 @@ public class Player : MonoBehaviour
         StraightChain(hand, Vector3.Lerp(r.from, hand, p2), 0.1f);
         if (r.t >= Config.PULL_RETRACT_TIME)
         {
-            state = State.Free; pullRun = null; pullCooldown = Config.PULL_COOLDOWN;
+            state = State.Free; pullRun = null; pullCooldown = Config.PULL_COOLDOWN * PullCdMult;   // 손에 익음(철삭): 견인 재사용 −10/20/30%
             chain.gameObject.SetActive(false);
         }
     }

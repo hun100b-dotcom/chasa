@@ -19,7 +19,7 @@ namespace Chasa.Core
         public float X, Z;                       // 플레이어 위치(월드 m)
         public int ClockDay; public float ClockMinutes;
         public int Neok, Memory, Coin, Ore, Karma, TendoTotal, Hp;   // 장부(+ 체력)
-        public int TotalNeok, SkillPointsEarned, SkillPointsSpent, StatPointsEarned, PahonCount, StainPointsEarned, StainPointsSpent;
+        public int TotalNeok, SkillPointsEarned, SkillPointsSpent, StatPointsEarned, PahonCount, StainPointsEarned, StainPointsSpent, JudgeTally;
         public int[] Stats = new int[4];
         public Dictionary<string, int> Learned = new Dictionary<string, int>();
         public List<string> ActiveBar = new List<string>();
@@ -77,7 +77,7 @@ namespace Chasa.Core
             w("v", s.Version); w("x", F(s.X)); w("z", F(s.Z)); w("day", s.ClockDay); w("min", F(s.ClockMinutes));
             w("neok", s.Neok); w("memory", s.Memory); w("coin", s.Coin); w("ore", s.Ore); w("karma", s.Karma); w("tendo", s.TendoTotal); w("hp", s.Hp);
             w("totalneok", s.TotalNeok); w("skE", s.SkillPointsEarned); w("skS", s.SkillPointsSpent); w("stE", s.StatPointsEarned);
-            w("pahon", s.PahonCount); w("stainE", s.StainPointsEarned); w("stainS", s.StainPointsSpent);
+            w("tally", s.JudgeTally); w("pahon", s.PahonCount); w("stainE", s.StainPointsEarned); w("stainS", s.StainPointsSpent);
             w("stats", string.Join(",", s.Stats));
             var l = new List<string>(); foreach (var kv in s.Learned) l.Add(Clean(kv.Key) + ":" + kv.Value); w("learned", string.Join(",", l));
             var a = new List<string>(); foreach (var n in s.ActiveBar) a.Add(Clean(n)); w("bar", string.Join(",", a));
@@ -103,7 +103,7 @@ namespace Chasa.Core
                 var s = new SaveSnapshot { X = PF(d["x"]), Z = PF(d["z"]), ClockDay = I("day"), ClockMinutes = PF(d["min"]),
                     Neok = I("neok"), Memory = I("memory"), Coin = I("coin"), Ore = I("ore"), Karma = I("karma"), TendoTotal = I("tendo"), Hp = I("hp"),
                     TotalNeok = I("totalneok"), SkillPointsEarned = I("skE"), SkillPointsSpent = I("skS"), StatPointsEarned = I("stE"),
-                    PahonCount = I("pahon"), StainPointsEarned = I("stainE"), StainPointsSpent = I("stainS"), BossOutcome = I("boss"), NamedOutcome = I("named"), OpeningSeen = I("opening") == 1, FuneralShown = I("funeral") == 1, Weapon = (WeaponId)I("weapon"), Other = d.ContainsKey("other") ? (WeaponId)I("other") : WeaponId.Mace };
+                    JudgeTally = d.ContainsKey("tally") ? I("tally") : I("totalneok"), PahonCount = I("pahon"), StainPointsEarned = I("stainE"), StainPointsSpent = I("stainS"), BossOutcome = I("boss"), NamedOutcome = I("named"), OpeningSeen = I("opening") == 1, FuneralShown = I("funeral") == 1, Weapon = (WeaponId)I("weapon"), Other = d.ContainsKey("other") ? (WeaponId)I("other") : WeaponId.Mace };
                 var st = d.ContainsKey("stats") ? d["stats"].Split(',') : new string[0];
                 for (int i = 0; i < s.Stats.Length; i++) s.Stats[i] = i < st.Length ? int.Parse(st[i]) : GrowthState.StatBase;
                 if (d.ContainsKey("learned") && d["learned"].Length > 0)
@@ -139,7 +139,7 @@ namespace Chasa.Core
             {
                 Neok = l.Neok, Memory = l.Memory, Coin = l.Coin, Ore = l.Ore, Karma = l.Karma, TendoTotal = l.TendoTotal, Hp = l.Hp,
                 TotalNeok = g.TotalNeok, SkillPointsEarned = g.SkillPointsEarned, SkillPointsSpent = g.SkillPointsSpent, StatPointsEarned = g.StatPointsEarned,
-                PahonCount = g.PahonCount, StainPointsEarned = g.StainPointsEarned, StainPointsSpent = g.StainPointsSpent
+                PahonCount = g.PahonCount, StainPointsEarned = g.StainPointsEarned, StainPointsSpent = g.StainPointsSpent, JudgeTally = g.JudgeTally
             };
             for (int i = 0; i < 4; i++) s.Stats[i] = g.Stats[i];
             foreach (var kv in g.Learned) s.Learned[kv.Key] = kv.Value;
@@ -156,7 +156,7 @@ namespace Chasa.Core
             l.Neok = s.Neok; l.Memory = s.Memory; l.Coin = s.Coin; l.Ore = s.Ore; l.Karma = s.Karma; l.TendoTotal = s.TendoTotal;
             g.TotalNeok = s.TotalNeok; g.Rank = GrowthState.RankFor(s.TotalNeok);
             g.SkillPointsEarned = s.SkillPointsEarned; g.SkillPointsSpent = s.SkillPointsSpent; g.StatPointsEarned = s.StatPointsEarned;
-            g.PahonCount = s.PahonCount; g.StainPointsEarned = s.StainPointsEarned; g.StainPointsSpent = s.StainPointsSpent;
+            g.JudgeTally = s.JudgeTally; g.PahonCount = s.PahonCount; g.StainPointsEarned = s.StainPointsEarned; g.StainPointsSpent = s.StainPointsSpent;
             for (int i = 0; i < 4; i++) g.Stats[i] = s.Stats[i];
             g.Learned.Clear(); foreach (var kv in s.Learned) g.Learned[kv.Key] = kv.Value;
             g.ActiveBar.Clear(); g.ActiveBar.AddRange(s.ActiveBar);

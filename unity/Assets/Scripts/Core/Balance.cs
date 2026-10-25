@@ -280,6 +280,8 @@ public static class Balance
     public const float NUMBERED_BLUR_WAIT_ADD = 0.25f;  // B-08 천도 뒤 숫자 혼이 흐림이 되어 대기 +초
     public const float NUMBERED_NEOK_MULT = 1.3f;  // 숫자 혼 천도 넋 배수
     public const float RING_COIN_SHARE = 0.6f;  // (기획 act1-enemy-check) 필드 혼 엽전은 고리 보상 배율 증가분의 60%만 받는다
+    public const int AC_ESCORT_RADIUS = 3;  // (기획 dosul-check 1) 배웅길: 천도 끝난 자리 반경 m 안의 적만 느려진다
+    public const int AC_CAGE_BOSS_STUN = 1;  // 쇠사슬 울: 보스도 이만큼(초) 묶인다
     public const float CAP_COIN_PCT = 0.5f;  // (시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%
     public const float DROP_RARITY_RARE = 0.08f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 귀한 확률
     public const float DROP_RARITY_CRAFTED = 0.3f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 손본 확률(귀한 제외). 나머지는 흔한

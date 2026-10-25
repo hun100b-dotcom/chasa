@@ -1021,6 +1021,8 @@
  "NUMBERED_BLUR_WAIT_ADD": {"value": 0.25, "note": "B-08 천도 뒤 숫자 혼이 흐림이 되어 대기 +초"},
  "NUMBERED_NEOK_MULT": {"value": 1.3, "note": "숫자 혼 천도 넋 배수"},
  "RING_COIN_SHARE": {"value": 0.6, "note": "(기획 act1-enemy-check) 필드 혼 엽전은 고리 보상 배율 증가분의 60%만 받는다"},
+ "AC_ESCORT_RADIUS": {"value": 3, "note": "(기획 dosul-check 1) 배웅길: 천도 끝난 자리 반경 m 안의 적만 느려진다"},
+ "AC_CAGE_BOSS_STUN": {"value": 1, "note": "쇠사슬 울: 보스도 이만큼(초) 묶인다"},
  "CAP_COIN_PCT": {
   "value": 0.5,
   "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%"

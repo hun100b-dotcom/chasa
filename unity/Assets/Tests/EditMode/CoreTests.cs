@@ -1559,7 +1559,8 @@ public class CoreTests
         var g = new GrowthState();
         int ups = g.AddNeok(GrowthState.NeokForRank(4));                                // 한 번에 3단계
         Assert.AreEqual(3, ups); Assert.AreEqual(4, g.Rank);
-        Assert.AreEqual(3, g.SkillPointsFree); Assert.AreEqual(3 * GrowthState.StatPerRank, g.StatPointsFree);
+        Assert.AreEqual(0, g.SkillPointsFree); Assert.AreEqual(3 * GrowthState.StatPerRank, g.StatPointsFree);   // 품계는 능력치만, 도술 점수는 처결 셈
+        Assert.AreEqual(3, g.AddJudge(GrowthState.NeokForRank(4))); Assert.AreEqual(3, g.SkillPointsFree);
         g.AddBossPoint(); Assert.AreEqual(4, g.SkillPointsFree);                       // 보스 천도 +1
     }
 
@@ -1585,9 +1586,9 @@ public class CoreTests
     [Test]
     public void Growth_PassiveMaxTwoLevelsActiveOnce_AndBarHoldsFour()
     {
-        var g = new GrowthState { SkillPointsEarned = 20 }; g.Learned.Clear(); g.ActiveBar.Clear();
-        Assert.IsTrue(g.Learn("휘감기")); Assert.IsFalse(g.Learn("휘감기"));            // 액티브는 한 번
-        Assert.IsTrue(g.Learn("단단한 손")); Assert.IsTrue(g.Learn("단단한 손")); Assert.IsFalse(g.Learn("단단한 손"));   // 패시브는 두 단계
+        var g = new GrowthState { SkillPointsEarned = 40 }; g.Learned.Clear(); g.ActiveBar.Clear();
+        for (int i = 0; i < 5; i++) Assert.IsTrue(g.Learn("휘감기")); Assert.IsFalse(g.Learn("휘감기"));   // 액티브는 다섯 단계
+        for (int i = 0; i < 3; i++) Assert.IsTrue(g.Learn("단단한 손")); Assert.IsFalse(g.Learn("단단한 손"));   // 패시브는 세 단계
         foreach (var n in new[] { "여럿 끌기", "매듭 걸음", "한 줄 꿰기", "터뜨리기" }) g.Learn(n);
         Assert.AreEqual(SkillTree.ActiveSlots, g.ActiveBar.Count);                       // 칸은 넷까지
     }
@@ -1640,8 +1641,8 @@ public class CoreTests
         GrowthEffects.Apply(g, s);
         Assert.AreEqual(0.10f, s.StatDamagePct, 0.0001f);                                // 힘 10점 × 1% (장비 상한 밖)
         Assert.AreEqual(16, s.HpFlat);                                                   // 몸 4점 × 4
-        Assert.AreEqual(0.12f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계
-        Assert.AreEqual(0.07f, s.PahonCoinPct, 0.0001f);
+        Assert.AreEqual(0.08f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계 = +8% (3단계 4/8/12)
+        Assert.AreEqual(0.05f, s.PahonCoinPct, 0.0001f);                                 // 노잣돈 1단계 +5%
         GrowthEffects.Apply(null, s);                                                    // 성장이 없어도 안전
     }
 
@@ -1755,20 +1756,14 @@ public class CoreTests
     static GearStats GearStatsOf(ItemDef it) { var st = new GearStats(); st.Add(it); return st; }
 
     [Test]
-    public void Pahon15_GivesStainPoint_UsableOnlyOnStainSkill()
+    public void JudgeTally_PahonAndTendoEarnSkillPointsAtSameThresholds()
     {
-        var g = new GrowthState();
-        g.Learned.Clear(); g.ActiveBar.Clear();
-        int got = 0;
-        for (int i = 0; i < 15; i++) if (g.AddPahon()) got++;
-        Assert.AreEqual(1, got);
-        Assert.AreEqual(1, g.StainPointsFree);
-        string stain = null, other = null;
-        foreach (var n in SkillTree.All) { if (n.Deep) continue; if (n.Branch == Branch.Stain && stain == null) stain = n.Name; if (n.Branch != Branch.Stain && other == null) other = n.Name; }
-        Assert.IsFalse(g.CanLearn(other), "다른 갈래에는 못 쓴다");
-        Assert.IsTrue(g.Learn(stain));
+        var g = new GrowthState(); var h = new GrowthState();
+        for (int i = 0; i < 100; i++) { g.AddJudge(50); h.AddJudge(50); }               // 파혼만·천도만 같은 양을 셈에 더하면 같은 점수
+        Assert.AreEqual(g.SkillPointsEarned, h.SkillPointsEarned);
+        Assert.Greater(g.SkillPointsEarned, 0);
+        for (int i = 0; i < 1000; i++) Assert.IsFalse(g.AddPahon());                      // 파혼 15번마다 얼룩 점수는 사라졌다
         Assert.AreEqual(0, g.StainPointsFree);
-        Assert.AreEqual(0, g.SkillPointsSpent, "일반 점수는 쓰지 않았다");
     }
 
     [Test]

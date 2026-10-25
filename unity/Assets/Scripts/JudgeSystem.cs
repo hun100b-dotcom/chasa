@@ -186,7 +186,8 @@ public class JudgeSystem : MonoBehaviour
         int coinBefore = ledger.Coin;
         ledger.DoPahon(e.soul.Boss, e.soul.BossId);
         TieProgress(e, 2);
-        if (growth.AddPahon()) ui?.Hud.Toasts.Add("얼룩 도술 점수 +1");   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
+        growth.AddPahon();
+        if (growth.AddJudge(Mathf.RoundToInt((e.soul.Boss ? Bosses.NeokFor(e.soul.BossId) : Balance.TENDO_NEOK * (e.soul.Ring > 1 ? RingLoot.RewardMult(e.soul.Ring) : 1f)))) > 0) ui?.Hud.Toasts.Add("도술 점수 +1");   // 처결 셈: 파혼은 그 혼의 기본 천도 넋(고리 배율 포함, 업 감쇠 전)만큼   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Bosses.CoinFor(e.soul.BossId) : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3
         float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;
@@ -313,7 +314,7 @@ public class JudgeSystem : MonoBehaviour
     {
         Sfx.Play("sfx.rank.seal");   // 인이 찍히는 쿵 0.05초·종 0.18초
         if (ui == null) return;
-        ui.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank);
+        ui.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 능력치 +" + GrowthState.StatPerRank);   // 도술 점수는 처결 셈이 따로 준다
         ui.Hud.StampTitle = "품계 " + growth.Rank; ui.Hud.StampSub = Ko.RankTitle(growth.Rank); ui.Hud.StampAge = 0f;
         flashColor = new Color(0.05f, 0.02f, 0.02f); flashA = 0.35f;   // 화면이 살짝 어두워진다
         cardDelay = Mathf.Max(cardDelay, 1.6f);   // 인이 찍히는 걸 본 뒤에 도술 카드가 뜬다
@@ -327,7 +328,7 @@ public class JudgeSystem : MonoBehaviour
         if (ui == null || DosulCards.Open) return;
         if (ui.Hud.CardPick == null) { ui.Hud.CardPick = PickCard; ui.Hud.CardRerollNow = RerollCards; }
         if (!cardsMode || cardPicks >= DosulCards.Rounds) return;
-        DosulCards.ConvertStain(growth);   // 얼룩 점수 3마다 도술 점수 1(처음 다섯 판만)
+        // (옛: 얼룩 점수 3마다 도술 점수 1 — 처결 셈으로 파혼 판도 천도 판과 같은 때 카드가 떠서 필요 없다)
         if (growth.SkillPointsFree <= 0) return;
         if (Casting || cuts.Active || inDay || night.Over || ledger.Dead || CharacterPanel.Open || SettingsPanel.Open || FightLeft(null) > 0) return;
         if (cardDelay > 0f) { cardDelay -= dt; return; }
@@ -448,7 +449,7 @@ public class JudgeSystem : MonoBehaviour
         castTarget.PlayFinishAnim(true);   // 천도 동작(일어남→빛 알갱이→숨김)
         castTarget.Finish();
         tendoToday++;                                                    // 혼불 발 수
-        if (escortArmed) { escortT = Balance.AC_ESCORT_SEC; escortArmed = false; }   // 배웅길: 천도 직후 적이 느려진다
+        if (escortArmed) { escortT = Balance.AC_ESCORT_SEC * escortMult; escortAt = tp; escortArmed = false; }   // 배웅길: 천도 직후 적이 느려진다
         if (!castTarget.soul.Boss && growth.ActiveBar.Contains("일곱 이름") && ++sevenCount >= 7) { sevenCount = 0; sevenLeft = 2; Say("일곱 이름 — 다음 천도 둘이 빨라진다"); }
         TieProgress(castTarget, 1);                                      // 한 줄 꿰기: 묶은 둘 중 하나는 천도·하나는 파혼하면 둘 다 보상 +5%
         if (castTarget.soul.Boss)
@@ -456,6 +457,7 @@ public class JudgeSystem : MonoBehaviour
             if (castTarget.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
             int g = ledger.CompleteBossTendo(castTarget.soul.BossId);
             growth.AddBossPoint();                  // 보스 천도 = 도술 점수 1
+            growth.AddJudge(g);                     // 보스 넋도 처결 셈에 든다
             ui?.Hud.Toasts.Add("도술 점수 +1");
             CreditSoulColor(castTarget.Pos, g); night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
@@ -486,6 +488,7 @@ public class JudgeSystem : MonoBehaviour
             int gained = ledger.Neok - before;
             if (reward != null) reward.Tendo(tp, 1 + gained / 30);   // 혼불이 날아와 가슴에 든다
             if (numbers != null) numbers.Spawn(tp + Vector3.up * 1.7f, gained, "neok");
+            if (growth.AddJudge(gained) > 0) ui?.Hud.Toasts.Add("도술 점수 +1");   // 처결 셈: 천도는 받은 넋
             if (growth.AddNeok(gained) > 0) OnRankUp();   // 품계 상승: 인이 찍히는 연출
             CreditSoulColor(tp, gained); night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (OnJudged != null) OnJudged(castTarget, true);
@@ -682,6 +685,8 @@ public class JudgeSystem : MonoBehaviour
     float coinFrac;                                    // 파혼 엽전 배수의 소수점 누적(엽전 7에 +5% 가 반올림으로 0이 되지 않게)
     Enemy tiedA, tiedB; int tiedKinds;                 // 한 줄 꿰기: 묶은 둘과 지금까지 한 일(1 천도·2 파혼)
     //          // 다음 천도에 걸리는 것(이름 비추기·배웅길·일곱 이름)
+    Vector3 escortAt; float escortMult = 1f;   // 배웅길: 천도 끝난 자리와 효과 배율
+    float rideMult = 1f;
     float escortT, wrathT, rideT, shadowT;                  // 배웅길 느림·원념 두르기·얼룩 타기·검은 갓의 그림자 남은 시간
     float lastPahonAt = -99f;                               // 마지막 파혼 시각(깨진 이름 던지기)
     int tendoToday;                                         // 오늘 천도한 혼 수(혼불 발 수)
@@ -700,7 +705,8 @@ public class JudgeSystem : MonoBehaviour
         if (clock != null) lastPhase = clock.Phase;
         bool dirty = false;
         if (wrathT > 0f) { wrathT -= dt; if (wrathT <= 0f) { lo.buffDamage = 0f; dirty = true; } }
-        if (rideT > 0f) { rideT -= dt; if (rideT <= 0f) { lo.buffMove = 0f; dirty = true; } }
+        if (rideT > 0f) rideT -= dt;
+        { float rm = rideT > 0f && stains.CountWithin(player.Pos.x, player.Pos.z, 1.2f) > 0 ? Balance.AC_STAINRIDE_MOVE * rideMult : 0f; if (!Mathf.Approximately(rm, lo.buffMove)) { lo.buffMove = rm; dirty = true; } }   // 얼룩 타기: 얼룩 위에서만
         if (shadowT > 0f) shadowT -= dt;
         // 몫을 채움: 그날 명부 몫(천도 NIGHT_QUOTA)을 채우면 이동 속도 +8%/+16% (필드에는 밤 장부가 없어 몫 채움을 night 로 본다)
         float quotaMove = growth.LevelOf("몫을 채움") > 0 && night.QuotaDone ? 0.08f * growth.LevelOf("몫을 채움") : 0f;
@@ -709,7 +715,8 @@ public class JudgeSystem : MonoBehaviour
         if (dirty) lo.Refresh();
         float slow = escortT > 0f ? 1f - Balance.AC_ESCORT_SLOW : 1f;
         if (escortT > 0f) escortT -= dt;
-        foreach (var e in enemies.list) e.slowMult = e.soul.Boss ? 1f : slow;   // 보스는 느려지지 않는다
+        // 배웅길은 천도한 자리 반경 AC_ESCORT_RADIUS(3m) 안의 적만 느리게 한다(옛: 맵의 모든 적)
+        foreach (var e in enemies.list) e.slowMult = e.soul.Boss || escortT <= 0f || new Vector2(e.Pos.x - escortAt.x, e.Pos.z - escortAt.z).magnitude > Balance.AC_ESCORT_RADIUS ? 1f : slow;   // 보스는 느려지지 않는다
     }
 
     /// <summary>도술 1~4키. 효과가 없었으면(대상 없음 등) 재사용 대기를 쓰지 않는다</summary>
@@ -718,7 +725,7 @@ public class JudgeSystem : MonoBehaviour
         if (!SkillsOn || night.Over || ledger.Dead || Casting || player.locked) return;
         string name = ActiveNameAt(slot);
         if (name == null || !lo.active.Ready(name)) return;
-        if (CastActive(name)) lo.active.Start(name);
+        if (CastActive(name)) lo.active.Start(name, growth.LevelOf(name));   // 액티브 단계마다 재사용 −5%
     }
 
     List<Enemy> AliveNear(Vector3 at, float range, bool includeBoss)
@@ -732,6 +739,7 @@ public class JudgeSystem : MonoBehaviour
 
     bool CastActive(string name)
     {
+        float em = ActiveCooldowns.EffectMult(growth.LevelOf(name));   // 액티브 단계마다 효과 +10%(기획 dosul-check 2)
         switch (name)
         {
             case "붙잡아 부르기": // 무릎 꿇은 혼 대기 +3초, 서 있는 적 0.8초 멈칫
@@ -740,7 +748,7 @@ public class JudgeSystem : MonoBehaviour
                 foreach (var e in enemies.list)
                 {
                     if (new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > Balance.SKILL_HOLD_RADIUS) continue;
-                    if (e.kneeling) { e.soul.WaitLeft += Balance.SKILL_HOLD_WAIT_BONUS; e.soul.WaitTotal += Balance.SKILL_HOLD_WAIT_BONUS; n++; }
+                    if (e.kneeling) { e.soul.WaitLeft += Balance.SKILL_HOLD_WAIT_BONUS * em; e.soul.WaitTotal += Balance.SKILL_HOLD_WAIT_BONUS * em; n++; }
                     else if (e.alive) { e.stun = Mathf.Max(e.stun, Balance.SKILL_HOLD_STUN); e.atk.Interrupt(); n++; }
                 }
                 if (n == 0) { Say("반경 안에 아무도 없다"); return false; }
@@ -753,7 +761,7 @@ public class JudgeSystem : MonoBehaviour
                 foreach (var e in enemies.list)
                 {
                     if (!e.alive || new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > Balance.SKILL_BIND_RADIUS + e.radius) continue;
-                    e.stun = Mathf.Max(e.stun, Balance.SKILL_BIND_STUN); e.boundT = Balance.SKILL_BIND_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; n++;
+                    e.stun = Mathf.Max(e.stun, Balance.SKILL_BIND_STUN * em); e.boundT = Balance.SKILL_BIND_STUN * em; e.atk.Interrupt(); e.vel = Vector3.zero; n++;
                 }
                 if (n == 0) { Say("반경 안에 아무도 없다"); return false; }
                 GroundFx.Play(player.Pos, Balance.SKILL_BIND_RADIUS, "fx/fx_bind_", 3, 0.6f);
@@ -768,7 +776,7 @@ public class JudgeSystem : MonoBehaviour
                     if (!e.alive) continue;
                     var d = new Vector3(e.Pos.x - sx, 0, e.Pos.z - sz);
                     if (d.magnitude > Balance.SKILL_BURST_RADIUS + e.radius) continue;
-                    int dmg = Mathf.RoundToInt(Balance.SKILL_BURST_DAMAGE * lo.stats.DamageMult);
+                    int dmg = Mathf.RoundToInt(Balance.SKILL_BURST_DAMAGE * lo.stats.DamageMult * em);
                     e.TakeHit(dmg, d.magnitude > 0.01f ? d.normalized : Vector3.right, 10f, 0.3f);
                     numbers.Spawn(e.HeadPosition, dmg, "heavy");
                 }
@@ -784,14 +792,14 @@ public class JudgeSystem : MonoBehaviour
                 for (int i = 0; i < shots; i++)
                 {
                     var e = near[i % near.Count];
-                    int dmg = Mathf.RoundToInt(Balance.AC_SOULFIRE_DMG * lo.stats.DamageMult);
+                    int dmg = Mathf.RoundToInt(Balance.AC_SOULFIRE_DMG * lo.stats.DamageMult * em);
                     e.TakeHit(dmg, (e.Pos - player.Pos).normalized, 4f, 0.15f);
                     numbers.Spawn(e.HeadPosition, dmg, "normal");
                 }
                 Say("혼불 날리기 x" + shots); return true;
             }
             case "이름 비추기": nameLightArmed = true; Say("다음 천도가 빨라진다"); return true;
-            case "배웅길": escortArmed = true; Say("다음 천도 뒤 적이 느려진다"); return true;
+            case "배웅길": escortArmed = true; escortMult = em; Say("다음 천도 뒤 적이 느려진다"); return true;
             case "일곱 이름": Say("일곱 이름 " + sevenCount + "/7 (천도 7번마다 다음 둘이 빨라진다)"); return false;   // 세는 도술: 눌러 쓰는 게 아니라 칸에 넣어 두면 켜진다
             case "여럿 끌기": // 가까운 일반 적 셋을 한꺼번에 끌어온다
             {
@@ -814,9 +822,9 @@ public class JudgeSystem : MonoBehaviour
             }
             case "쇠사슬 울": // 반경 5m 적 3초 고정(보스 제외)
             {
-                var near = AliveNear(player.Pos, Balance.AC_CAGE_RADIUS, false);
+                var near = AliveNear(player.Pos, Balance.AC_CAGE_RADIUS, true);   // 보스도 1초(AC_CAGE_BOSS_STUN)
                 if (near.Count == 0) { Say("반경 안에 아무도 없다"); return false; }
-                foreach (var e in near) { e.stun = Mathf.Max(e.stun, Balance.AC_CAGE_STUN); e.boundT = Balance.AC_CAGE_STUN; e.cageUntil = Time.time + Balance.AC_CAGE_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; }
+                foreach (var e in near) { if (e.soul.Boss) { e.stun = Mathf.Max(e.stun, Balance.AC_CAGE_BOSS_STUN * em); e.atk.Interrupt(); continue; } e.stun = Mathf.Max(e.stun, Balance.AC_CAGE_STUN * em); e.boundT = Balance.AC_CAGE_STUN; e.cageUntil = Time.time + Balance.AC_CAGE_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; }
                 GroundFx.Play(player.Pos, Balance.AC_CAGE_RADIUS, "fx/fx_bind_", 3, 0.8f);
                 Say(name); return true;
             }
@@ -826,20 +834,20 @@ public class JudgeSystem : MonoBehaviour
                 lo.buffDamage = 0.05f * tier; wrathT = Balance.AC_WRATH_SEC; lo.Refresh();
                 Say("원념 두르기 +" + (5 * tier) + "%"); return true;
             }
-            case "얼룩 타기": lo.buffMove = Balance.AC_STAINRIDE_MOVE; rideT = Balance.AC_STAINRIDE_SEC; lo.Refresh(); Say(name); return true;
+            case "얼룩 타기": rideT = Balance.AC_STAINRIDE_SEC * em; rideMult = em; Say(name); return true;   // 이동 +15%는 얼룩 위에 서 있을 때만(Tick 이 적용)
             case "깨진 이름 던지기": // 방금 파혼한 혼의 파편을 던진다(근사: 최근 파혼 뒤 일정 시간 안)
             {
                 if (Time.time - lastPahonAt > Balance.AC_THROWNAME_WINDOW) { Say("방금 파혼한 혼이 없다"); return false; }
                 var near = AliveNear(player.Pos, Balance.AC_SOULFIRE_RANGE, true);
                 if (near.Count == 0) { Say("던질 대상이 없다"); return false; }
-                int dmg = Mathf.RoundToInt(Balance.AC_THROWNAME_DMG * lo.stats.DamageMult);
+                int dmg = Mathf.RoundToInt(Balance.AC_THROWNAME_DMG * lo.stats.DamageMult * em);
                 near[0].TakeHit(dmg, (near[0].Pos - player.Pos).normalized, 6f, 0.2f);
                 numbers.Spawn(near[0].HeadPosition, dmg, "heavy");
                 lastPahonAt = -99f;
                 ledger.AddKarma(1);   // 대가: 던진 혼은 업이 1 더 쌓인다(파혼 +1과 합쳐 +2). 엽전은 그대로
                 Say(name + " (업 +1 더)"); return true;
             }
-            case "검은 갓의 그림자": shadowT = Balance.AC_SHADOW_SEC; Say("파혼 폭발이 무릎 꿇은 혼까지 깨뜨린다"); return true;
+            case "검은 갓의 그림자": shadowT = Balance.AC_SHADOW_SEC * em; Say("파혼 폭발이 무릎 꿇은 혼까지 깨뜨린다"); return true;
         }
         return false;
     }
@@ -981,7 +989,7 @@ public class JudgeSystem : MonoBehaviour
         tiedA = tiedB = null; tiedKinds = 0;
         coinFrac += Balance.PAHON_COIN * 0.05f;
         neokFrac += Balance.TENDO_NEOK * 0.05f;
-        int n = Mathf.FloorToInt(neokFrac); neokFrac -= n; if (n > 0) { ledger.Neok += n; growth.AddNeok(n); }
+        int n = Mathf.FloorToInt(neokFrac); neokFrac -= n; if (n > 0) { ledger.Neok += n; growth.AddNeok(n); growth.AddJudge(n); }
         Say("한 줄 꿰기 보상");
     }
     float neokFrac;
@@ -1616,6 +1624,7 @@ public class JudgeSystem : MonoBehaviour
         // 처음 5분: 박돌쇠를 처결할 때까지(최대 10분) 시계를 멈춘다 — 시간 압박 없이 배우게(기획 first-5-minutes)
         { var nb = NearestBoss(); float want = nb != null && Vector3.Distance(nb.Pos, player.Pos) < 24f ? 0.5f : 1f; ClockSky.ArenaFog = Mathf.MoveTowards(ClockSky.ArenaFog, want, dt * 0.5f); }   // 마당에 들어서면 2초에 걸쳐 안개가 반으로
         Enemy.IntroCalm = FieldRules.On && introFrozen && introT < 25f;
+        Player.PullCdMult = lo.weapon == WeaponId.Chain ? 1f - 0.1f * growth.LevelOf("손에 익음") : 1f;   // 손에 익음: 든 무기 특성 강화(철삭만 연결, 나머지 무기 특성은 구현 대기)
         Enemy.FierceMult = lo.stats.FierceMult;   // 거센 혼·덩어리·보스 피해 옵션
         Enemy.TokenMax = FieldRules.On ? (Enemy.IntroCalm ? 1 : introFrozen ? Balance.ATTACK_TOKENS_INTRO : Balance.ATTACK_TOKENS) : int.MaxValue;   // 동시에 때리는 혼 수 제한
         FieldCamps.EarlyMaxAlive = introFrozen ? 5 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
