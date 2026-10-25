@@ -79,23 +79,39 @@ public class Sfx : MonoBehaviour
     /// <summary>효과음 한 번 재생. 아직 준비 전이거나 꺼져 있으면 조용히 무시</summary>
     public static void Play(string id) { if (I != null) I.PlayInternal(id); }
 
-    /// <summary>발소리 한 번. 발소리 WAV 는 한 종류뿐이라 땅 재질(흙·풀·자갈·논·낙엽 비율)에 따라 높낮이·크기를 바꿔 구분한다. 물속이면 낮고 첨벙 느낌으로</summary>
+    AudioSource wxLoop; Weather wxNow = Weather.Clear; string wxId;
+    /// <summary>날씨 소리: 비=amb.weather.rain, 흐림=바람, 안개·역병 안개=fog_night. 맑음은 끈다. 바뀌면 서서히(0.5초) 갈아 끼운다</summary>
+    public static void SetWeatherAmbient(Weather w) { if (I != null) I.SetWeatherInternal(w); }
+
+    void SetWeatherInternal(Weather w)
+    {
+        if (wxLoop == null) { wxLoop = gameObject.AddComponent<AudioSource>(); wxLoop.loop = true; wxLoop.playOnAwake = false; wxLoop.volume = 0f; }
+        string id = w == Weather.Rain ? "amb.weather.rain" : w == Weather.Cloudy ? "amb.weather.wind" : (w == Weather.Fog || w == Weather.Plague) ? "amb.weather.fog_night" : null;
+        float target = id == null || muted ? 0f : 0.5f * SaveStore.Settings.Sfx;
+        if (id != null && id != wxId) { var c = Clip(id); if (c != null) { wxLoop.clip = c; wxId = id; if (!wxLoop.isPlaying) wxLoop.Play(); } }
+        wxLoop.volume = Mathf.MoveTowards(wxLoop.volume, target, Time.unscaledDeltaTime * 2f);
+        if (id == null && wxLoop.volume <= 0f && wxLoop.isPlaying) { wxLoop.Stop(); wxId = null; }
+    }
+
+    static readonly string[] StepMat = { "dirt", "grass", "gravel", "paddy", "leaves" };   // 땅 층 순서(흙·풀·자갈·논·낙엽)와 같다
+    int lastStepN;
+
+    /// <summary>발소리 한 번. 가장 많이 밟은 땅 재질(젖은 땅·물이면 water)의 4개 중 직전과 다른 하나를 고른다. 재질 차이·크기는 사운드팀 파일에 맞춰져 있다</summary>
     public static void PlayStep(float[] w, bool wet) { if (I != null) I.PlayStepInternal(w, wet); }
 
     void PlayStepInternal(float[] w, bool wet)
     {
         if (muted || voices == null) return;
-        var c = Clip("sfx.footstep"); if (c == null) return;
-        // 층별 (피치, 크기): 흙 1.0/1.0, 풀 0.9/0.7(부드럽게), 자갈 1.18/1.15(바삭), 논 0.8/0.9(질척), 낙엽 1.08/0.8
-        float[] pit = { 1.00f, 0.90f, 1.18f, 0.80f, 1.08f }, vol = { 1.00f, 0.70f, 1.15f, 0.90f, 0.80f };
-        float sum = 0.0001f, p = 0f, v = 0f;
-        for (int i = 0; i < 5 && i < w.Length; i++) { sum += w[i]; p += w[i] * pit[i]; v += w[i] * vol[i]; }
-        p = sum > 0.01f ? p / sum : 1f; v = sum > 0.01f ? v / sum : 1f;
-        if (wet) { p *= 0.75f; v *= 1.1f; }
+        int top = 1; float best = -1f;   // 비율을 못 읽으면 풀
+        for (int i = 0; i < StepMat.Length && i < w.Length; i++) if (w[i] > best) { best = w[i]; top = i; }
+        string mat = wet ? "water" : StepMat[top];
+        int n; do { n = Random.Range(1, 5); } while (n == lastStepN);   // 같은 소리가 연달아 나오면 기계 같다
+        lastStepN = n;
+        var c = Clip("sfx.step." + mat + "." + n); if (c == null) return;
         AudioSource s = null;
         foreach (var x in voices) if (!x.isPlaying) { s = x; break; }
         if (s == null) return;   // 발소리는 빈 칸이 없으면 그냥 건너뛴다(다른 소리를 뺏지 않는다)
-        s.clip = c; s.pitch = p * (1f + Random.Range(-0.05f, 0.05f)); s.volume = 0.45f * v * SaveStore.Settings.Sfx; s.bypassListenerEffects = false;
+        s.clip = c; s.pitch = 1f + Random.Range(-0.04f, 0.04f); s.volume = 0.45f * SaveStore.Settings.Sfx; s.bypassListenerEffects = false;
         s.Play();
     }
 

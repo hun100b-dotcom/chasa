@@ -216,6 +216,7 @@ public class JudgeSystem : MonoBehaviour
         var tp = castTarget.Pos;   // Finish 뒤엔 혼이 사라질 수 있어 자리를 미리 적어 둔다
         FxMesh.Burst("fx_tendo_pillar", tp, 1f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f));
         FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 1f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f));
+        weather.ClearPlague(tp);   // 역병 안개: 천도한 자리 반경 4m 가 15초 걷힌다
         castTarget.Finish();
         tendoToday++;                                                    // 혼불 발 수
         if (escortArmed) { escortT = Balance.AC_ESCORT_SEC; escortArmed = false; }   // 배웅길: 천도 직후 적이 느려진다
@@ -322,6 +323,7 @@ public class JudgeSystem : MonoBehaviour
     float lastPahonAt = -99f;                               // 마지막 파혼 시각(깨진 이름 던지기)
     int tendoToday;                                         // 오늘 천도한 혼 수(혼불 발 수)
     ClockPhase lastPhase;
+    public readonly WeatherRuntime weather = new WeatherRuntime();   // 날씨 굴림·효과(밤에만)·소리
     float lastQuotaMove;
 
     void TickActives(float dt)
@@ -535,7 +537,7 @@ public class JudgeSystem : MonoBehaviour
     {
         if (ledger.Dead || night.Over || !player.Hurt()) return;
         // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
-        int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult)) : by.damage;
+        int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult * weather.Fx.CastHit / Balance.WEATHER_CLEAR_CAST_HIT)) : by.damage;   // 안개: 천도 중 맞는 피해 ×(0.85/0.75)
         sinceHit = 0f;
         Hint(HintEvent.FirstHurt);
         Sfx.Play("sfx.player.hurt");
@@ -623,11 +625,14 @@ public class JudgeSystem : MonoBehaviour
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
         if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
-        stains.Tick(dt);
+        float wxSlow; int wxDrain;
+        weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
+        stains.Tick(dt * weather.Fx.StainMult);   // 비 오는 밤: 얼룩이 절반만 오래간다
+        if (wxDrain > 0 && !ledger.Dead) { ledger.TakeDamage(wxDrain); if (ledger.Dead) { Say("쓰러졌다"); night.Tick(night.TimeLeft + 1f); } }   // 역병 안개: 서 있으면 체력이 준다
         flashA = Mathf.Max(0f, flashA - realDt * 2.2f);
         sinceHit += dt;
         ledger.Regen(dt, toShrine <= Balance.SHRINE_RADIUS, sinceHit);   // 서낭당 안: 빠른 회복 / 밖: 맞지 않으면 천천히
-        player.speedMult = stains.IsOnStain(player.Pos.x, player.Pos.z) ? 1f - Balance.STAIN_SLOW : 1f;   // 얼룩 위: -20%
+        player.speedMult = 1f - WeatherRules.CombineSlow(wxSlow, stains.IsOnStain(player.Pos.x, player.Pos.z) ? Balance.STAIN_SLOW : 0f);   // 얼룩 위 -20%, 역병 안개 -20%, 겹쳐도 최대 -30%
 
         if (Casting)
         {

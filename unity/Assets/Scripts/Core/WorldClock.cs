@@ -94,7 +94,7 @@ namespace Chasa.Core
     }
 
     /// <summary>지금 하늘 밝기(0~1)를 여러 곳(등불·햇빛)이 같이 읽는 공유값. 시계가 없는 모드에선 0(밤)으로 둔다</summary>
-    public static class SkyState { public static float Daylight; }
+    public static class SkyState { public static float Daylight; public static float LightMult = 1f, FogMult = 1f; }   // 날씨가 곱하는 빛·안개 배율
 
     /// <summary>
     /// 달 주기 효과를 모아 둔 공유값 (기본값 = 효과 없음). 시계가 매 프레임 Set 으로 갱신한다.

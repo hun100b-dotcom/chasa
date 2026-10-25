@@ -1806,4 +1806,16 @@ public class CoreTests
         Assert.IsTrue(WeatherRules.Effect(Weather.Rain, true).HideKarma);
         Assert.AreEqual(Balance.WEATHER_MOVE_SLOW_MAX, WeatherRules.CombineSlow(0.2f, 0.2f), 1e-5f, "겹쳐도 최대 -30%");
     }
+
+    [Test]
+    public void WeatherState_RollsPerZone_OverrideWins()
+    {
+        var ws = new WeatherState(); var rng = new System.Random(3);
+        ws.RollAll(false, rng);
+        Assert.AreNotEqual(Weather.Plague, ws.For("검은여울"), "낮엔 역병 안개 없음");
+        ws.RollAll(true, rng); var snap = ws.Snapshot(); Assert.AreEqual(5, snap.Length);
+        ws.Override = Weather.Rain; Assert.AreEqual(Weather.Rain, ws.For("폐당집"), "서사 지정이 우선"); ws.Override = null;
+        ws.MidNight(rng); Assert.AreEqual(0, ws.MidNight(rng), "밤 중간은 밤마다 한 번만");
+        Assert.AreEqual("역병 안개", WeatherState.Name(Weather.Plague));
+    }
 }
