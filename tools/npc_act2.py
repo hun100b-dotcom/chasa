@@ -57,9 +57,42 @@ NPCS = [
   "barks":{"낮":["캐낸 게 이것뿐이야?","일 안 하나!"]}},
 ]
 
+# ───── 시간표(schedule): 기획 2막 지도(act2_map.json의 npc_schedules)의 자리 이름을 그대로 쓴다(10-25) ─────
+# 왜 지도 파일을 읽나: 자리·좌표는 기획 몫이고 말·동사·단서는 서사 몫이다. 같은 내용을 두 번 적으면 어긋나므로
+# 자리는 지도에서 가져오고, 단서 대사(line/line_half)는 boss_clues_act2.json에서 가져와 붙인다.
+import re
+MAP = '/mnt/project-files/planning/openworld/act2/act2_map.json'
+BC = os.path.join(os.path.dirname(OUT), 'boss_clues_act2.json')
+if os.path.exists(MAP) and os.path.exists(BC):
+    amap = json.load(open(MAP, encoding='utf-8'))
+    clues = {c['id']: c for b in json.load(open(BC, encoding='utf-8'))['boss_clues'].values() for c in b['clues']}
+    places = amap['places']
+    for n in NPCS:
+        key = next((k for k in amap['npc_schedules'] if k.split(' ')[0] == n['id']), None)
+        if not key:
+            continue
+        sched = []
+        for t, rows in amap['npc_schedules'][key].items():
+            for r in rows:
+                e = {'time': t, 'zone': places.get(r['place'], {}).get('zone', n['zone']), 'place': r['place'],
+                     'verb': r.get('verb'), 'clue': r.get('clue')}
+                m = re.search(r'낮 (\d+)~(\d+)분', r.get('memo') or '')
+                if m:  # 낮을 둘로 나눈 사람(사당 노인·교대 광부): 그 동작을 하는 분 범위
+                    e['window_min'] = [int(m.group(1)), int(m.group(2))]
+                c = clues.get(r.get('clue'))
+                if c and c.get('line'):
+                    e['line'], e['line_half'] = c['line'], c['line_half']
+                if r.get('memo'):
+                    e['note'] = r['memo']
+                sched.append(e)
+        n['schedule'] = sched
+        times = {e['time'] for e in sched}
+        n['barks'] = {t: v for t, v in n['barks'].items() if t in times}  # 서 있지 않는 시간대의 말은 뺀다
+        n['unlock'] = '2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)'
+
 data = {
- "_설명": "2막 산 사람 초안(서사 10-25). 지금은 사람 목록과 barks만 있다. schedule·places·line·clue는 2막 지도가 나오면 npc_act1.json과 같은 모양으로 채운다. barks 형식과 뜻은 npc_act1.json과 같다.",
- "_version": 0,
+ "_설명": "2막 산 사람(서사 10-25). schedule의 자리 이름·시간대는 기획 2막 지도(planning/openworld/act2/act2_map.json)와 같고, 좌표는 그 파일의 places에서 찾는다. 단서 대사는 boss_clues_act2.json과 같다. barks 형식과 뜻은 npc_act1.json과 같다. 장례에만 나오는 사람(광부의 며느리 등)은 funerals_act2.json에만 있다.",
+ "_version": 1,
  "zones": {"Fortress":"무너진 산성(아랫마을)","ArrowValley":"화살골","Camp":"군막 터","BigTomb":"큰 무덤",
            "MinerTown":"광부촌","Sorting":"선탄장","MainShaft":"큰 갱도","Collapse":"무너진 막장"},
  "rules": {

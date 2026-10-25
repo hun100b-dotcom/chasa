@@ -193,3 +193,8 @@
 - `tools/boss_clues_act2.py` → `boss_clues_act2.json`: 2막 보스 4(B-05~08). 1막 틀(단서 4 = 낮 3 동사 모두 다름 + 밤 대체 1, 3개면 천도)에 han·belief·truth·points_to를 더함. 엿듣기 대사·반쪽 문장, 만져 보기 한 줄, 밤 대체 기억(원본 그대로) 포함. 산 사람은 npc_act2 id.
 - 1막 B-01~03에도 같은 한 구조(han·belief·truth·decisive·points_to)를 더하고, zone_opens의 밤 번호를 "그 구역에 밤에 처음 들어간 다음 낮"으로 고침.
 - (21:25) 사운드 PR #23 반영: 대본 3개(first_session_scripts, funerals_act1·2)의 sfx_request를 모두 sfx로 옮김(sfx_map.promote). 남은 요청 0.
+
+## 2026-10-25 21:45 KST — 서사: 2막 지도 맞추기
+- `npc_act2.json` v1: 기획 act2_map.json의 자리 이름·시간대로 12명 schedule 채움(단서 대사는 boss_clues_act2에서, 낮을 나눈 사람은 window_min). barks는 서 있는 시간대만.
+- 장례: 노제 자리를 지도대로(① 장승 앞, ② 돌다리 앞, ③ 아랫마을 남쪽 어귀, ④ 목패 걸이 판). 처결 못 함 갈래를 기획 정의대로 20초·산 사람 한 줄·혼마다 한 번으로 바꾸고 1막 8명 + 2막 9명 대사 씀. 2막에 S-071 광부의 아버지 장례 추가(며느리는 역할 이름), jesa_extra 추가.
+- FUNERAL-SEQUENCE §3 노제 자리를 장승 앞으로 고침.
