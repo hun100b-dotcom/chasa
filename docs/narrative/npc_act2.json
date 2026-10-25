@@ -1,6 +1,6 @@
 {
- "_설명": "2막 산 사람 초안(서사 10-25). 지금은 사람 목록과 barks만 있다. schedule·places·line·clue는 2막 지도가 나오면 npc_act1.json과 같은 모양으로 채운다. barks 형식과 뜻은 npc_act1.json과 같다.",
- "_version": 0,
+ "_설명": "2막 산 사람(서사 10-25). schedule의 자리 이름·시간대는 기획 2막 지도(planning/openworld/act2/act2_map.json)와 같고, 좌표는 그 파일의 places에서 찾는다. 단서 대사는 boss_clues_act2.json과 같다. barks 형식과 뜻은 npc_act1.json과 같다. 장례에만 나오는 사람(광부의 며느리 등)은 funerals_act2.json에만 있다.",
+ "_version": 1,
  "zones": {
   "Fortress": "무너진 산성(아랫마을)",
   "ArrowValley": "화살골",
@@ -32,7 +32,48 @@
     "저녁": [
      "불 줄여야지."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "새벽",
+     "zone": "FortressVillage",
+     "place": "술도가",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "낮",
+     "zone": "FortressVillage",
+     "place": "술도가 뒤뜰",
+     "verb": "지켜보기",
+     "clue": "B05-D1",
+     "note": "S-049 장례 전: 빈 술독 서른일곱(손녀는 술독을 닦는다)"
+    },
+    {
+     "time": "낮",
+     "zone": "BigTomb",
+     "place": "큰 무덤 앞",
+     "verb": "지켜보기",
+     "clue": "B05-D1",
+     "note": "S-049 장례 뒤: 큰 무덤에 술 서른일곱 잔 + 한 잔. 둘 중 하나만 선다"
+    },
+    {
+     "time": "저녁",
+     "zone": "FortressVillage",
+     "place": "술도가 마당",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "밤",
+     "zone": "FortressVillage",
+     "place": "술도가",
+     "verb": null,
+     "clue": null,
+     "note": "집 안(안 보임)"
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-302",
@@ -50,7 +91,26 @@
     "저녁": [
      "밥 먹으러 가자."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "낮",
+     "zone": "FortressVillage",
+     "place": "산성 아랫마을 골목",
+     "verb": "엿듣기",
+     "clue": "B05-D2",
+     "line": "깃발 아저씨가 부른다! 대답 안 하면 술래다!",
+     "line_half": "깃발 아저씨가 부른다…"
+    },
+    {
+     "time": "저녁",
+     "zone": "FortressVillage",
+     "place": "아랫마을 우물",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-303",
@@ -67,7 +127,50 @@
     "저녁": [
      "사당 문 걸어야지."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "새벽",
+     "zone": "FortressVillage",
+     "place": "마을 사당",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "낮",
+     "zone": "FortressVillage",
+     "place": "마을 사당",
+     "verb": "지켜보기",
+     "clue": "B06-D1",
+     "window_min": [
+      0,
+      7
+     ],
+     "note": "낮 0~7분: 위패 앞을 쓴다"
+    },
+    {
+     "time": "낮",
+     "zone": "FortressVillage",
+     "place": "마을 사당 앞",
+     "verb": "엿듣기",
+     "clue": "B06-D2",
+     "window_min": [
+      7,
+      14
+     ],
+     "line": "장군은 우리 아버지를 일곱이라고 불렀지. 아버지는 그게 자랑이었대.",
+     "line_half": "장군은 우리 아버지를…",
+     "note": "낮 7~14분: 돌계단에 앉아 이웃과 말한다"
+    },
+    {
+     "time": "저녁",
+     "zone": "FortressVillage",
+     "place": "마을 사당",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-304",
@@ -81,7 +184,32 @@
      "여기 삽주가 있네.",
      "바위가 미끄럽구먼."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "새벽",
+     "zone": "FortressVillage",
+     "place": "약초 아낙 집",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "낮",
+     "zone": "ArrowValley",
+     "place": "화살골 어귀",
+     "verb": null,
+     "clue": null,
+     "note": "S-050 장례 뒤에는 화살골 바위틈까지 들어간다"
+    },
+    {
+     "time": "저녁",
+     "zone": "FortressVillage",
+     "place": "약초 아낙 집",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-305",
@@ -98,7 +226,24 @@
     "저녁": [
      "오늘은 여기까지."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "낮",
+     "zone": "FortressVillage",
+     "place": "석수 일터(쌓다 만 성벽)",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "저녁",
+     "zone": "FortressVillage",
+     "place": "아랫마을 우물",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-306",
@@ -112,7 +257,32 @@
      "풀이 금세 자라네.",
      "낫 갈아 와야겠다."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "새벽",
+     "zone": "FortressVillage",
+     "place": "벌초꾼 집",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "낮",
+     "zone": "BigTomb",
+     "place": "큰 무덤 앞",
+     "verb": null,
+     "clue": null,
+     "note": "벌초. S-052 장례 뒤부터"
+    },
+    {
+     "time": "저녁",
+     "zone": "FortressVillage",
+     "place": "벌초꾼 집",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-401",
@@ -130,7 +300,26 @@
     "저녁": [
      "손이나 씻고 가."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "낮",
+     "zone": "Sorting",
+     "place": "선탄장 평상",
+     "verb": "엿듣기",
+     "clue": "B07-D2",
+     "line": "반장님은 맨 마지막에 나온다고 늘 그랬지.",
+     "line_half": "반장님은 맨 마지막에…"
+    },
+    {
+     "time": "저녁",
+     "zone": "MinerTown",
+     "place": "광부촌 우물가",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-402",
@@ -144,7 +333,25 @@
      "이건 버리는 거고…",
      "엄마는 빨랐는데."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "낮",
+     "zone": "Sorting",
+     "place": "복례 집",
+     "verb": null,
+     "clue": null,
+     "note": "S-068 장례 뒤에는 선탄장 평상 어머니 자리"
+    },
+    {
+     "time": "저녁",
+     "zone": "Sorting",
+     "place": "복례 집",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-403",
@@ -161,7 +368,33 @@
     "저녁": [
      "애들 불러들여야지."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "새벽",
+     "zone": "MinerTown",
+     "place": "광부촌 우물가",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "낮",
+     "zone": "MinerTown",
+     "place": "광부촌 우물가",
+     "verb": "엿듣기",
+     "clue": "B08-D2",
+     "line": "보상은 머릿수로 줬지. 우리 그이는 한 머리였어.",
+     "line_half": "보상은 머릿수로…"
+    },
+    {
+     "time": "저녁",
+     "zone": "MinerTown",
+     "place": "목패 걸이 판",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-404",
@@ -182,7 +415,57 @@
     "밤": [
      "갱 바람 소리 봐라."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "새벽",
+     "zone": "MinerTown",
+     "place": "목패 걸이 판",
+     "verb": null,
+     "clue": null,
+     "note": "목패를 건다"
+    },
+    {
+     "time": "낮",
+     "zone": "MinerTown",
+     "place": "목패 걸이 판",
+     "verb": "지켜보기",
+     "clue": "B07-D1",
+     "window_min": [
+      0,
+      4
+     ],
+     "note": "낮 0~4분만 걸이 앞(그 뒤 갱 입구로 들어감)"
+    },
+    {
+     "time": "낮",
+     "zone": "MainShaft",
+     "place": "갱 입구",
+     "verb": null,
+     "clue": null,
+     "window_min": [
+      4,
+      14
+     ],
+     "note": "낮 4~14분"
+    },
+    {
+     "time": "저녁",
+     "zone": "MinerTown",
+     "place": "국밥집",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "밤",
+     "zone": "MinerTown",
+     "place": "목패 걸이 판",
+     "verb": null,
+     "clue": null,
+     "note": "밤 교대. 산 사람이 밤에 깨어 있는 몇 안 되는 자리"
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-405",
@@ -199,7 +482,31 @@
     "저녁": [
      "솥 씻어야지."
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "새벽",
+     "zone": "MinerTown",
+     "place": "국밥집",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "낮",
+     "zone": "MinerTown",
+     "place": "국밥집",
+     "verb": null,
+     "clue": null
+    },
+    {
+     "time": "저녁",
+     "zone": "MinerTown",
+     "place": "국밥집",
+     "verb": null,
+     "clue": null
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   },
   {
    "id": "N-406",
@@ -213,7 +520,25 @@
      "캐낸 게 이것뿐이야?",
      "일 안 하나!"
     ]
-   }
+   },
+   "schedule": [
+    {
+     "time": "낮",
+     "zone": "MinerTown",
+     "place": "주인집 마루",
+     "verb": "지켜보기",
+     "clue": "B08-D1"
+    },
+    {
+     "time": "저녁",
+     "zone": "MinerTown",
+     "place": "광부촌 어귀",
+     "verb": null,
+     "clue": null,
+     "note": "주인집은 밤에 닫힌다"
+    }
+   ],
+   "unlock": "2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)"
   }
  ]
 }
