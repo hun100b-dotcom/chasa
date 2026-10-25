@@ -65,7 +65,8 @@
    "min": 1.5,
    "max": 10,
    "when": "always",
-   "note": "술도가"
+   "note": "술도가",
+   "art_prop": "a2v_house_sul (98,899)"
   },
   {
    "id": "amb.stonemason",
@@ -74,7 +75,8 @@
    "min": 2,
    "max": 16,
    "when": "day",
-   "note": "석수 일터. S-051 장례 뒤 볼륨 0.6"
+   "note": "석수 일터. S-051 장례 뒤 볼륨 0.6",
+   "art_prop": "a2v_stone_cutter (143,921)"
   },
   {
    "id": "amb.village.shrine",
@@ -137,7 +139,8 @@
    "min": 1.5,
    "max": 10,
    "when": "evening_night",
-   "note": "국밥집. S-069 장례 뒤엔 0.5배"
+   "note": "국밥집. S-069 장례 뒤엔 0.5배",
+   "art_prop": "a2m_soup_house (462,882)"
   },
   {
    "id": "amb.mule.stable",
@@ -146,7 +149,8 @@
    "min": 1,
    "max": 8,
    "when": "day",
-   "note": "노새 마구간"
+   "note": "노새 마구간",
+   "art_prop": "a2m_stable (492,851)"
   }
  ],
  "overhear": {
@@ -360,6 +364,16 @@
     "새벽 교대",
     "저녁 교대"
    ]
+  }
+ },
+ "by_prop": {
+  "_설명": "아트 배치표 assets3d/layouts/act2_extra.json(10-26) 소품마다. 가까운 순 nearest 개",
+  "a2f_persimmon_tree": {
+   "id": "amb.tree.old",
+   "min": 2,
+   "max": 10,
+   "nearest": 2,
+   "note": "감나무: 1막 고목 소리를 작게(0.7배)"
   }
  }
 }
