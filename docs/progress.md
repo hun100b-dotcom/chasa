@@ -347,3 +347,9 @@
 - `Core/BgmDirector.cs`: 전투 8m 진입·4초 뒤 복귀, 낮밤 히스테리시스(0.30/0.40)+8초 교차, 무릎 순간 1회 곡→무음→처결 끝나면 2초 복귀. 테스트 3개(138 통과).
 - `BgmPlayer.cs`: Resources/Audio/BGM 곡을 두 재생기로 교차, 낮 a·b 번갈아(끝 2초 전 교차), 볼륨 1.0, 소리 끔(M) 따름, 필드 모드에서만. 진짜 BGM이 있으면 임시 amb.field 끔(`Sfx.StopAmbient`).
 - PC 확인: .meta 생성, 곡 이음매, 전환 체감. 처결 곡은 천도·파혼 끝 판정을 `Casting||무릎 꿇은 적 있음`으로 근사.
+
+## 2026-10-25 [기획·사운드] 효과음 39개 실제 WAV 파일
+- `tools/sfx_render.py`(numpy·scipy)로 오프라인 합성 → `unity/Assets/Resources/Audio/Sfx/*.wav`, 목록 `data/sfx_files.json`. 게임 안 SfxSynth보다 풍부하게: 울림(잔향), 쇠 맥놀이, 물방울, 나무 쪼개짐·엽전 알갱이.
+- 기존 12개 id 그대로(sfx.hit.chain 등, 최대 크기도 기존 gainDb와 같음) + 기획 문서에만 있던 5개(footstep, ui.click, ui.confirm, danger.enter, clock.toll) + 보스 컷신 B01~B03 장면용 22개(cut.*, amb.river.mist).
+- 코드 연결 요청: `Sfx.Clip(id)`가 `Resources.Load<AudioClip>("Audio/Sfx/"+id.Replace('.','_'))`를 먼저 찾고 없으면 SfxSynth. 컷신 단계에 `sfx` 칸 추가 시 cut.* id 사용.
+- 다시 만들기: `python3 tools/sfx_render.py`(같은 id는 항상 같은 소리).
