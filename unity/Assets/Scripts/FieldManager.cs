@@ -18,12 +18,13 @@ using Chasa.Core;
 
 public class FieldManager : MonoBehaviour
 {
-    [System.Serializable] public class Item { public string n; public float x, y, z; public int r, t; }
+    [System.Serializable] public class Item { public string n; public float x, y, z; public int r, t, k; }   // k: 바닥 채움 소품의 등급(2 = 풀·꽃, 45m 안에서만 그린다)
     [System.Serializable] public class Marker { public string kind, name; public float x, z; }
     [System.Serializable] public class Lamp { public float x, y, z, intensity, range; public string color; public int flicker; }
     [System.Serializable] class FieldFile { public float size, tile; public Item[] items; public Marker[] markers; public Lamp[] lights; }
 
     public Player player;
+    CoverInstancer cover;   // 바닥 채움 소품(cover_*)은 오브젝트 없이 GPU 인스턴싱으로 그린다
     const int ItemsPerFrame = 60;                 // 프레임당 세우는 개수(PC 측정으로 조정)
 
     FieldFile data;
@@ -65,6 +66,7 @@ public class FieldManager : MonoBehaviour
         var ta = Resources.Load<TextAsset>("Data/field");
         if (ta == null) { Debug.LogWarning("field.json 이 없다: 필드를 세우지 못한다"); enabled = false; return; }
         data = JsonUtility.FromJson<FieldFile>(ta.text);
+        cover = gameObject.AddComponent<CoverInstancer>(); cover.player = player;
         // 표에 적힌 항목을 청크별로 묶는다. 풀밭 칸(적히지 않은 8m 칸)은 켤 때 채운다
         foreach (var it in data.items) Bucket(it);
         // 불빛 점광원 풀(진짜 Light 6개를 돌려 쓴다)
@@ -87,6 +89,7 @@ public class FieldManager : MonoBehaviour
     void Update()
     {
         if (player == null || data == null) return;
+        if (cover != null && cover.player == null) cover.player = player;   // GameMain 이 player 를 Awake 뒤에 넣어 준다
         int cx = FieldRules.ChunkIndex(player.Pos.x), cz = FieldRules.ChunkIndex(player.Pos.z);
         int key = FieldRules.Key(cx, cz);
         if (key != curChunk)
@@ -123,6 +126,7 @@ public class FieldManager : MonoBehaviour
         List<Item> items; if (!byChunk.TryGetValue(key, out items)) items = new List<Item>();
         foreach (var it in items)
         {
+            if (it.n.StartsWith("cover_")) { cover.Add(key, it); continue; }   // 바닥 채움 소품: 충돌 없음, 인스턴싱으로
             float r = FieldRules.BlockerRadius(it.n);
             if (r > 0f) bl.Add(new Blocker("stone", it.x, it.z, r));
         }
@@ -134,6 +138,7 @@ public class FieldManager : MonoBehaviour
     void Close(int key)
     {
         Coroutine c; if (loading.TryGetValue(key, out c)) { if (c != null) StopCoroutine(c); loading.Remove(key); }   // 바로 끝난 코루틴은 null 로 남을 수 있다(새 땅: 세울 것이 없는 청크) → null 이면 멈추지 않는다(PC 확인: NullReferenceException)
+        if (cover != null) cover.Remove(key);
         GameObject root; if (roots.TryGetValue(key, out root)) { if (root != null) Destroy(root); roots.Remove(key); }
         List<Blocker> bl; if (blockers.TryGetValue(key, out bl)) { foreach (var b in bl) MapLayout.ZoneBlockers.Remove(b); blockers.Remove(key); }
     }
@@ -159,6 +164,7 @@ public class FieldManager : MonoBehaviour
         foreach (var it in items)
         {
             if (root == null) yield break;
+            if (it.n.StartsWith("cover_")) continue;          // 바닥 채움 소품은 CoverInstancer 가 그린다
             if (GroundTerrain.Active && it.t == 1) continue;   // 옛 땅 타일은 새 땅 메쉬가 대신한다
             if (SkipDecor(it)) continue;                       // 폰: 작은 장식 일부를 건너뛴다
             Place(root.transform, it.n, it.x, HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z), it.z, it.r);   // 소품·집은 땅 높이 위에 붙인다(옛 평지는 +0)
