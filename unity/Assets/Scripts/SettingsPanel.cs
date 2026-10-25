@@ -117,9 +117,9 @@ public class SettingsPanel : MonoBehaviour
         view.Add(box);
     }
 
-    // 실험 스위치: 주소에 ?ui2=1 이 있을 때만 UI Toolkit 설정 화면을 쓴다. 이유: 이 프로젝트는 옛 입력 방식(Input Manager)이라 UI Toolkit 버튼 클릭이
-    // 브라우저에서 정말 오는지 아직 실제로 못 봤다. PC 가 확인하면 기본으로 바꾼다(그 전엔 옛 화면이 안전하다)
-    static readonly bool Ui2 = (Application.absoluteURL ?? "").Contains("ui2=1");
+    // UI Toolkit 설정 화면이 기본이다(PC 가 10-25 ?ui2=1 로 슬라이더·키 목록 버튼 클릭이 되는 것을 확인했다).
+    // 문제가 생기면 주소에 ?ui2=0 을 붙여 옛 화면으로 돌릴 수 있게 남겨 둔다
+    static readonly bool Ui2 = !(Application.absoluteURL ?? "").Contains("ui2=0");
 
     void UpdateView()
     {

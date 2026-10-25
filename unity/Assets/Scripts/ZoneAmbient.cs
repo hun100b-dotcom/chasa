@@ -19,8 +19,13 @@ public class ZoneAmbient : MonoBehaviour
     public static ZoneAmbient Create(System.Func<Vector3> pos)
     {
         var z = new GameObject("ZoneAmbient").AddComponent<ZoneAmbient>(); z.playerPos = pos;
-        var ta = Resources.Load<TextAsset>("Data/act2_map");
-        if (ta != null) { var f = JsonUtility.FromJson<MapFile>(ta.text); if (f != null && f.zones != null) z.zones = f.zones; }
+        var all = new System.Collections.Generic.List<Zone>();
+        foreach (var nm in new[] { "Data/act2_map", "Data/act3_map" })   // 있는 지도만 읽는다
+        {
+            var ta = Resources.Load<TextAsset>(nm);
+            if (ta != null) { var f = JsonUtility.FromJson<MapFile>(ta.text); if (f != null && f.zones != null) all.AddRange(f.zones); }
+        }
+        z.zones = all.ToArray();
         return z;
     }
 
@@ -39,6 +44,13 @@ public class ZoneAmbient : MonoBehaviour
                 case "MinerTown":
                     return Vector3.Distance(new Vector3(p.x, 0f, p.z), MineMouth) < MineWindRange ? new[] { "amb.mine", "amb.mine.wind" } : new[] { "amb.mine" };
                 case "MainShaft": case "Collapse": return new[] { "amb.mine.shaft" };
+                // 3막(사운드 PR #26): 3막 지도(act3_map.json)가 오면 구역 직사각형이 있어야 켜진다. 썰물 겹침·밀물 신호는 물때 시계가 생긴 뒤 연결
+                case "Harbor": return new[] { "amb.harbor" };
+                case "SaltField": return new[] { "amb.saltfield" };
+                case "WreckShoal": return new[] { "amb.wreckshoal" };
+                case "Market": return new[] { "amb.capital.market" };
+                case "BridgeUnder": case "Shacks": return new[] { "amb.bridge.under" };
+                case "CityGate": return new[] { "amb.citygate" };
             }
             return new string[0];
         }

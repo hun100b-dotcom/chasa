@@ -523,7 +523,7 @@ public static class Balance
     public const float MOTE_CHAIN_KARMA = 0.5f;  // 함께 깨진 잔넋 한 마리당 업(소수는 모았다가 1이 되면 반영)
     public const int WAIL_TENDO_MEMORY = 1;  // 넋두리를 천도하면 기억 조각 추가
     public const float BURIED_TENDO_NEOK_MULT = 1.25f;  // 묻힌 혼을 천도하면 넋 배율
-    public const int ATTACK_TOKENS = 3;  // 동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음)
+    public const int ATTACK_TOKENS = 2;  // 동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음) [10-25 PC 봇 쓰러짐 3회>2 → 3에서 2로]
     public const int ATTACK_TOKENS_INTRO = 2;  // 첫 5분(시계 정지 중) 공격 차례 수
     public const float TOKEN_WAIT_RING_M = 4.5f;  // 차례를 못 받은 혼이 플레이어 둘레에서 기다리는 거리(m)
     public const float CAMP_DENSITY_RING1 = 0.5f;  // 고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)
