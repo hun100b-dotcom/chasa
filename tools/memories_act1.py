@@ -22,6 +22,22 @@ AXIS['F2'] = 'background'                     # 큰물 밤(모든 일의 시작)
 ZONE_NIGHTS = {'Village': '2~4', 'Field': '2~4', 'Ravine': '4~6', 'Shrine': '7~10',
                'Market': '13~15', 'Yamen': '14~17', 'Plague': '16~20', 'Graves': '18~22'}
 
+# 제사 집 지켜보기 덧붙임 한 줄(기획 부록 B-4, 서사 10-25).
+# 낮에 그 집 제사를 지켜본 뒤 그 이름혼을 천도하면 기억 끝에 한 줄이 더 붙는다.
+# 왜 이렇게 쓰나: 기억 조각 수(결말 150)에 세지 않는 "덤"이라, 새 F 단서나 보스 단서를 담으면 안 된다.
+# 그래서 사건이 아니라 그 사람의 손버릇·식구·마지막 하루 같은 삶의 결만 쓴다(1인칭, 기억과 같은 목소리).
+JESA_EXTRA = {
+    'S-001': '용득이 놈이 집게를 거꾸로 쥐더라. 한 번 더 가르쳐 줄걸.',
+    'S-002': '그래도 메는 날마다 지었다. 식으면 내가 먹고, 이튿날 또 지었다.',
+    'S-003': '떡은 상가에 두고 왔다. 누가 먹었는지 몰라도 시루는 비어 있었다.',
+    'S-004': '개 이름은 누렁이. 내가 지었다. 부르면 그놈은 꼭 돌아봤다.',
+    'S-005': '졸던 녀석 이름부터 불렀지. 그놈이 제일 크게 대답했다.',
+    'S-019': '가위는 꼭지 놈 주려고 했다. 손이 작아 아직 못 쥐겠지만.',
+    'S-020': '장부 태운 연기가 쪽빛이었다. 곱다고, 그 생각만 했다.',
+    'S-021': '섭섭이한테 국 간은 짜게 하라 일렀다. 일하는 사람들 입이니까.',
+    'S-029': '마지막 장날엔 북을 오래 쳤다. 팔이 저리도록. 그날은 그러고 싶었다.',
+}
+
 rows = []
 for s in d['souls']:
     if s.get('region') not in (1, 2) or s.get('type') == 'baek' or s.get('layer') == 'below':
@@ -38,6 +54,7 @@ for s in d['souls']:
         'mystery': bool(f), 'mystery_axis': AXIS.get(f) if f else None,
         'decisive': s.get('weight') == 'decisive',  # ★ 전모 단서(보스 천도로만)
         'weight': s.get('weight'), 'funeral': s.get('funeral'),
+        'jesa_extra': JESA_EXTRA.get(s['id']),  # 제사 집 지켜보기 덤(조각 수에 안 셈). 없으면 null
     })
 rows.sort(key=lambda r: (r['region'], r['boss'], r['id']))
 out = {
@@ -48,6 +65,7 @@ out = {
         'mystery': 'mystery=true인 혼을 천도하면 그 fact가 추리판에 켜진다. decisive(★)는 보스 천도로만',
         'axis': {'main': '저승이 고장 났다(고장과 원인)', 'mirror': '이승 관아도 이름을 지웠다', 'self': '나는 누구인가', 'background': '큰물 밤'},
         'generic': '이름 없는 무작위 혼은 generic 줄에서 뽑는다(미스터리 없음, 한 판에 한 줄 한 번)',
+        'jesa_extra': '낮에 그 집 제사를 지켜본 뒤 천도하면 기억 끝에 덧붙는 한 줄. 기억 조각 수에 세지 않는다. 장례 대상 이름혼만 있다',
         'pahon': '파혼하면 기억 조각 없음, 그 혼의 fact 출처 하나를 잃는다(추리판에 번진 먹 자국)'},
     'souls': rows,
     'generic': {k: v for k, v in d['generic_pool'].items() if not k.startswith('_')},
