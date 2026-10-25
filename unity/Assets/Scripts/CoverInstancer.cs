@@ -31,7 +31,7 @@ public class CoverInstancer : MonoBehaviour
         List<Inst> l; if (!d.TryGetValue(it.n, out l)) d[it.n] = l = new List<Inst>();
         float y = it.y + GroundTerrain.HeightAt(it.x, it.z);
         var pos = new Vector3(it.x, y, it.z);
-        l.Add(new Inst { pos = pos, world = Matrix4x4.TRS(pos, Quaternion.Euler(0f, -it.r, 0f), Vector3.one), tier2 = it.k >= 2 });   // 유니티 yaw = -rot (아트 약속)
+        l.Add(new Inst { pos = pos, world = Matrix4x4.TRS(pos, Quaternion.Euler(0f, -it.r, 0f), Test ? Vector3.one * 3f : Vector3.one), tier2 = it.k >= 2 });   // 유니티 yaw = -rot (아트 약속)
     }
 
     public void Remove(int key) { chunks.Remove(key); rescan = 0f; lastScan = new Vector3(1e9f, 0f, 1e9f); }
@@ -51,7 +51,7 @@ public class CoverInstancer : MonoBehaviour
                     var src = s < mats.Length ? mats[s] : null; Material m;
                     if (src == null || !matCache.TryGetValue(src, out m))
                     {
-                        m = U.Matte(Props3D.MatColor(src)); m.enableInstancing = true;   // 같은 색은 한 재질을 나눠 쓴다
+                        m = U.Matte(Test ? new Color(1f, 0.1f, 0.8f) : Props3D.MatColor(src)); m.enableInstancing = true;   // 같은 색은 한 재질을 나눠 쓴다
                         if (src != null) matCache[src] = m;
                     }
                     list.Add(new Part { mesh = mf.sharedMesh, sub = s, mat = m, local = prefab.transform.worldToLocalMatrix * mf.transform.localToWorldMatrix });
@@ -60,6 +60,8 @@ public class CoverInstancer : MonoBehaviour
         ps = list.ToArray(); partCache[name] = ps; return ps;
     }
 
+    // 검사용 주소 ?covertest=1: 바닥 소품을 3배 크게 + 분홍색으로 그린다(그려지는데 눈에 안 띄는 건지, 아예 안 그려지는 건지 가르려고)
+    static readonly bool Test = (Application.absoluteURL ?? "").Contains("covertest=1");
     public int DrawnCount { get { int n = 0; foreach (var g in groups.Values) n += g.count; return n; } }   // 지금 그리는 개수(검사용)
     const int Batch = 1023;   // DrawMeshInstanced 한 번에 그릴 수 있는 최대 개수
     void Update()

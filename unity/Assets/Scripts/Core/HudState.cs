@@ -39,6 +39,8 @@ namespace Chasa.Core
         public string GuideText, GuideKey; public bool GuideCheck, GuideRemind;
         public string BossName; public float BossRatio; public bool BossKneel;   // 보스 체력(맺힘) 막대: 이름이 null 이면 안 보인다
         public string QuestTitle; public string[] QuestLines;                      // 퀘스트 추적(왼쪽, 장부 아래). 제목이 null 이면 안 보인다
+        // 화면에 고정된 자막 넷(UiRoot): 소리 자막·컷신 기억 줄·천도 뒤 기억 한 줄·산 사람 대사. 글이 null 이면 안 보인다. Alpha 0~1
+        public string SubSfx, SubCutMemory, SubMemLine, SubNpc; public float SubMemLineAlpha = 1f, SubNpcAlpha = 1f;
         public float CastRatio = -1f;                                            // 천도 시전 막대 0~1 (-1 이면 안 보임)
         public string SayText;                                                   // 화면 가운데 위쪽 짧은 한마디(시전이 끊겼다 등). null 이면 안 보임
         public bool ShowExp; public float ExpRatio; public int Rank;                // 경험치(품계) 막대: 처음 넋을 얻은 뒤에 열린다

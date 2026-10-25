@@ -162,7 +162,7 @@ public class UiRoot : MonoBehaviour
     // ---- 처음 5분 안내 띠: 하단 중앙, 스킬바 위. 키 그림 + 글자 22px, 행동하면 초록 체크 ----
     VisualElement guideBox, guideKeyBox; Label guideKey, guideText, guideTick; string lastGuide;
     // ---- 보스 체력바(위 가운데) · 지역 진입 알림 --------------------------------------
-    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill, castBox, castFill; Label expLabel, sayLabel; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
+    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill, castBox, castFill; Label expLabel, sayLabel, subSfx, subCutMem, subMemLine, subNpc; VisualElement subNpcBand; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
     void BuildBossArea()
     {
         bossBox = new VisualElement { name = "boss", pickingMode = PickingMode.Ignore };
@@ -188,6 +188,15 @@ public class UiRoot : MonoBehaviour
         // 짧은 한마디(예전 IMGUI 화면 가운데 글): 시전이 끊겼다·쓰러졌다 같은 알림
         sayLabel = Line(root, 24); sayLabel.style.position = Position.Absolute; sayLabel.style.left = 0; sayLabel.style.right = 0; sayLabel.style.top = Length.Percent(28);
         sayLabel.style.unityTextAlign = TextAnchor.MiddleCenter; sayLabel.style.color = Color.white; sayLabel.style.display = DisplayStyle.None;
+        // 자막 넷: 소리 자막(아래 가운데, 흐린 흰), 컷신 기억 줄(보랏빛 기울임), 천도 뒤 기억 한 줄(위쪽 보랏빛), 산 사람 대사(한지색 글자 + 먹색 띠)
+        subSfx = SubLine(root, 18, new Color(0.85f, 0.85f, 0.85f, 0.85f), false); subSfx.style.bottom = U(150);
+        subCutMem = SubLine(root, 22, new Color(0.79f, 0.69f, 1f), true); subCutMem.style.bottom = U(230);
+        subMemLine = SubLine(root, 22, new Color(0.79f, 0.69f, 1f), true); subMemLine.style.top = Length.Percent(18);
+        subNpcBand = new VisualElement { pickingMode = PickingMode.Ignore };
+        subNpcBand.style.position = Position.Absolute; subNpcBand.style.left = Length.Percent(15); subNpcBand.style.right = Length.Percent(15); subNpcBand.style.bottom = U(190);
+        subNpcBand.style.alignItems = Align.Center; subNpcBand.style.backgroundColor = new Color(0.06f, 0.05f, 0.05f, 0.55f); subNpcBand.style.display = DisplayStyle.None;
+        subNpc = Line(subNpcBand, 22); subNpc.style.color = new Color(0.953f, 0.906f, 0.827f); subNpc.style.whiteSpace = WhiteSpace.Normal; subNpc.style.unityTextAlign = TextAnchor.MiddleCenter;
+        subNpc.style.paddingTop = U(8); subNpc.style.paddingBottom = U(8); root.Add(subNpcBand);
         bossName = Line(bossBox, 24); bossName.style.color = new Color(0.95f, 0.9f, 0.8f); bossName.style.marginBottom = U(6);
         var frame = new VisualElement { pickingMode = PickingMode.Ignore };   // 틀: 어두운 판에 붉은 채움
         frame.style.width = U(960); frame.style.height = U(20); frame.style.backgroundColor = new Color(0.05f, 0.04f, 0.05f, 0.85f);
@@ -203,11 +212,26 @@ public class UiRoot : MonoBehaviour
         areaSub = Line(areaBox, 20); areaSub.style.color = new Color(0.85f, 0.8f, 0.7f); areaSub.style.marginTop = U(6);   // 아래 부제: 시각
         areaBox.Add(areaLabel); areaBox.Add(areaSub); root.Add(areaBox);
     }
+    Label SubLine(VisualElement parent, int size, Color c, bool italic)
+    {
+        var l = Line(parent, size); l.style.position = Position.Absolute; l.style.left = Length.Percent(15); l.style.right = Length.Percent(15);
+        l.style.whiteSpace = WhiteSpace.Normal; l.style.unityTextAlign = TextAnchor.MiddleCenter; l.style.color = c; l.style.display = DisplayStyle.None;
+        if (italic) l.style.unityFontStyleAndWeight = FontStyle.Italic;
+        return l;
+    }
+    static void ShowSub(Label l, string text, float alpha)
+    {
+        bool on = text != null && alpha > 0.01f; l.style.display = on ? DisplayStyle.Flex : DisplayStyle.None;
+        if (on) { l.text = text; l.style.opacity = alpha; }
+    }
     void RefreshBossArea()
     {
         if (bossBox == null) return;
         expBox.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None; expLabel.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None;
         if (Hud.ShowExp) { expFill.style.width = Length.Percent(Mathf.Clamp01(Hud.ExpRatio) * 100f); expLabel.text = "품계 " + Hud.Rank; }
+        ShowSub(subSfx, Hud.SubSfx, 1f); ShowSub(subCutMem, Hud.SubCutMemory, 1f); ShowSub(subMemLine, Hud.SubMemLine, Hud.SubMemLineAlpha);
+        bool npcSub = Hud.SubNpc != null && Hud.SubNpcAlpha > 0.01f; subNpcBand.style.display = npcSub ? DisplayStyle.Flex : DisplayStyle.None;
+        if (npcSub) { subNpc.text = Hud.SubNpc; subNpcBand.style.opacity = Hud.SubNpcAlpha; }
         bool casting = Hud.CastRatio >= 0f; castBox.style.display = casting ? DisplayStyle.Flex : DisplayStyle.None;
         if (casting) castFill.style.width = Length.Percent(Mathf.Clamp01(Hud.CastRatio) * 100f);
         bool say = Hud.SayText != null; sayLabel.style.display = say ? DisplayStyle.Flex : DisplayStyle.None; if (say) sayLabel.text = Hud.SayText;

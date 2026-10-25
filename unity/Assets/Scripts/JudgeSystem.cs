@@ -1010,6 +1010,12 @@ public class JudgeSystem : MonoBehaviour
         h.BossName = null;
         h.CastRatio = Casting ? Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)) : -1f;   // 시전 막대·짧은 한마디는 UiRoot 가 그린다(예전 IMGUI 는 ui 가 없을 때만)
         h.SayText = toastT > 0f ? toast : null;
+        // 고정 자막 넷도 UiRoot 가 그린다(말풍선만 월드 좌표라 IMGUI 에 남는다)
+        h.SubSfx = cuts.LineVisible && cuts.LineStyle == "sfx" ? cuts.LineText : null;
+        h.SubCutMemory = cuts.LineVisible && cuts.LineStyle == "memory" ? "“" + cuts.LineText + "”" : null;
+        if (memLineT > 0f) memLineT -= Time.unscaledDeltaTime;
+        h.SubMemLine = memLineT > 0f ? "“" + memLine + "”" : null; h.SubMemLineAlpha = Mathf.Clamp01(memLineT / 0.8f);
+        h.SubNpc = npcs != null && npcs.SubtitleT > 0f ? npcs.Subtitle : null; h.SubNpcAlpha = npcs != null ? Mathf.Clamp01(npcs.SubtitleT / 0.6f) : 0f;
         // 경험치(품계) 막대: 처음 넋을 얻은 뒤에만(하나씩 열기)
         h.ShowExp = revNeok && FieldRules.On; h.Rank = growth.Rank;
         { int lo0 = GrowthState.NeokForRank(growth.Rank), hi0 = GrowthState.NeokForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.TotalNeok - lo0) / (hi0 - lo0); }
@@ -1285,7 +1291,8 @@ public class JudgeSystem : MonoBehaviour
         if (cuts.LineVisible && cam != null)
         {
             var cs = new GUIStyle(GUI.skin.label) { fontSize = Ko.TouchUI ? 26 : 22, alignment = TextAnchor.MiddleCenter, wordWrap = true };
-            if (cuts.LineStyle == "sfx")
+            if (ui != null && (cuts.LineStyle == "sfx" || cuts.LineStyle == "memory")) { }   // UiRoot 가 그린다
+            else if (cuts.LineStyle == "sfx")
             {
                 // 소리 자막: 화면 아래 가운데, 흐린 흰 글씨 대괄호(대사가 아니다 — 서사: 소리가 들어오면 접근성 설정에서만 켠다)
                 cs.fontSize = Ko.TouchUI ? 22 : 18; cs.normal.textColor = new Color(0.85f, 0.85f, 0.85f, 0.85f);
@@ -1312,7 +1319,7 @@ public class JudgeSystem : MonoBehaviour
             GUI.color = Color.white; GUI.DrawTexture(new Rect(Screen.width * 0.5f - 79, Screen.height - 23, 158 * cuts.SkipProgress, 6), white);
         }
         // (2.4) 기억 한 줄: 천도 직후 화면 가운데 위, 기억 색(보랏빛)
-        if (memLineT > 0f)
+        if (memLineT > 0f && ui == null)
         {
             memLineT -= Time.unscaledDeltaTime;
             var ms = new GUIStyle(GUI.skin.label) { fontSize = Ko.TouchUI ? 26 : 22, alignment = TextAnchor.MiddleCenter, wordWrap = true, fontStyle = FontStyle.Italic };
@@ -1321,7 +1328,7 @@ public class JudgeSystem : MonoBehaviour
             GUI.Label(new Rect(Screen.width * 0.15f, Screen.height * 0.18f, Screen.width * 0.7f, 90), "“" + memLine + "”", ms);
         }
         // (2.5) 산 사람 대사 자막(엿듣기): 화면 아래 가운데
-        if (npcs != null && npcs.SubtitleT > 0f)
+        if (npcs != null && npcs.SubtitleT > 0f && ui == null)
         {
             var st = new GUIStyle(GUI.skin.label) { fontSize = Mathf.RoundToInt((Ko.TouchUI ? 26 : 22) * Mathf.Max(1f, Screen.height / 720f)), alignment = TextAnchor.MiddleCenter, wordWrap = true };
             st.normal.textColor = new Color(0.953f, 0.906f, 0.827f, Mathf.Clamp01(npcs.SubtitleT / 0.6f));   // 한지색 글자
