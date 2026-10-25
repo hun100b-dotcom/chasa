@@ -1583,8 +1583,8 @@ public class JudgeSystem : MonoBehaviour
         if (npcs != null) npcs.DrawWorld(Camera.main, player.Pos, white);
         if (interactables != null) interactables.DrawWorld(Camera.main, player.Pos, white);   // 귀·눈 아이콘, 진행, 지나가는 혼잣말
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
-        if (vignetteT > 0f) { var vg = SpriteLib.Texture("fx/hit/hit_player_vignette"); if (vg != null) { GUI.color = new Color(1f, 1f, 1f, vignetteT / 0.15f); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), vg, ScaleMode.StretchToFill); GUI.color = Color.white; } }
-        if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
+        if (vignetteT > 0f) { var vg = SpriteLib.Texture("fx/hit/hit_player_vignette"); if (vg != null) { GUI.color = new Color(1f, 1f, 1f, vignetteT / 0.15f * (SaveStore.Settings.ReduceFlash ? 0.5f : 1f)); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), vg, ScaleMode.StretchToFill); GUI.color = Color.white; } }
+        if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA * (SaveStore.Settings.ReduceFlash ? 0.3f : 1f)); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)
         if (visionP > 0.001f)
         {

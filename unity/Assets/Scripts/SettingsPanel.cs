@@ -94,6 +94,7 @@ public class SettingsPanel : MonoBehaviour
             SliderRow(box, "효과음", s.Sfx, 1f, v => s.Sfx = v);
             SliderRow(box, "화면 흔들림", s.Shake, 1.5f, v => s.Shake = v);
             Txt(box, "0 = 흔들림 없음 · 1 = 기본 (멀미가 나면 줄이기)", 13);
+            Btn(box, "번쩍임 줄이기: " + (s.ReduceFlash ? "켜짐" : "꺼짐"), () => s.ReduceFlash = !s.ReduceFlash, true, 220);
             var r1 = new VisualElement { pickingMode = PickingMode.Position }; r1.style.flexDirection = FlexDirection.Row; r1.style.marginTop = 10; box.Add(r1);
             bool field = judge.FieldMode;
             Btn(r1, "조작 키 보기", () => showKeys = true);

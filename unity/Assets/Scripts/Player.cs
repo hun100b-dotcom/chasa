@@ -615,7 +615,7 @@ public class Player : MonoBehaviour
         var hitAt = e.Pos + Vector3.up * 1.0f;
         string wn = loadout.weapon.ToString().ToLowerInvariant();
         StripFx.Billboard("hit_" + wn + (killed || last ? "_big" : ""), 6, killed || last ? 0.3f : 0.2f, hitAt, dir, killed || last ? 3.4f : 2.2f);
-        StripFx.Billboard("hit_flash", 4, 0.12f, hitAt, Vector3.zero, 1.6f);
+        if (!SaveStore.Settings.ReduceFlash) StripFx.Billboard("hit_flash", 4, 0.12f, hitAt, Vector3.zero, 1.6f);   // 번쩍임 줄이기가 켜지면 점광을 끈다
     }
 
     void RecordTrail(AttackRun a, Vector3 hand, float prev, float cur, float radius, float y)

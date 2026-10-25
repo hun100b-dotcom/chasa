@@ -172,20 +172,21 @@ namespace Chasa.Core
     {
         static float Pf(string t) { return float.Parse(t, CultureInfo.InvariantCulture); }
         public float Master = 1f, Bgm = 0.8f, Sfx = 1f, Shake = 1f;
+        public bool ReduceFlash;   // 번쩍임 줄이기(접근성): 화면 번쩍임·피격 테두리·점광을 약하게/끈다
         public static GameSettings Clamp(GameSettings s)
         {
             s.Master = Math.Max(0f, Math.Min(1f, s.Master)); s.Bgm = Math.Max(0f, Math.Min(1f, s.Bgm));
             s.Sfx = Math.Max(0f, Math.Min(1f, s.Sfx)); s.Shake = Math.Max(0f, Math.Min(1.5f, s.Shake));
             return s;
         }
-        public string Serialize() { return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", Master, Bgm, Sfx, Shake); }
+        public string Serialize() { return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3},{4}", Master, Bgm, Sfx, Shake, ReduceFlash ? 1 : 0); }
         public static GameSettings Parse(string text)
         {
             var s = new GameSettings();
             try
             {
                 var p = (text ?? "").Split(',');
-                if (p.Length == 4) { s.Master = Pf(p[0]); s.Bgm = Pf(p[1]); s.Sfx = Pf(p[2]); s.Shake = Pf(p[3]); }
+                if (p.Length == 4 || p.Length == 5) { s.Master = Pf(p[0]); s.Bgm = Pf(p[1]); s.Sfx = Pf(p[2]); s.Shake = Pf(p[3]); s.ReduceFlash = p.Length == 5 && p[4] == "1"; }   // 4칸은 옛 저장
             }
             catch (Exception) { s = new GameSettings(); }
             return Clamp(s);

@@ -2432,5 +2432,12 @@ public class CoreTests
         Assert.AreEqual(1, back.SealBag.Count); Assert.IsNull(Seal.Parse("X99"));
     }
 
+    [Test]
+    public void GameSettings_번쩍임_줄이기_저장_왕복과_옛_4칸_호환()
+    {
+        var on = GameSettings.Parse(new GameSettings { ReduceFlash = true }.Serialize()); Assert.IsTrue(on.ReduceFlash);
+        Assert.IsFalse(GameSettings.Parse("1,0.8,1,1").ReduceFlash, "옛 저장(4칸)은 꺼짐");
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }
