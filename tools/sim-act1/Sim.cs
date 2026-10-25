@@ -22,6 +22,11 @@ static class Sim
 {
     const double BaseDps = 34.0, HitMove = 0.30, HitBoss = 0.12, HitBossAdds = 0.20, HitCast = 0.75, TravelAvg = 8.0, Approach = 0.6;
     const int Nights = 3;
+    static WeaponDef Wd = WeaponDef.Chain;   // 이번 판에 든 무기
+    // 무기별 전투 가정(WeaponTable 콤보 합/시간에서): 단일 목표 초당 피해 비율 r(철삭 1.0 기준)과 주변 적 한 마리당 추가 비율 g(범위·관통), 받는 피해 배율(붓은 멀리서 쏴 덜 맞음)
+    static double WR(WeaponId w) { switch (w) { case WeaponId.Mace: return 0.91; case WeaponId.Bell: return 0.70; case WeaponId.Trident: return 0.78; case WeaponId.Brush: return 0.65; default: return 1.0; } }
+    static double WG(WeaponId w) { switch (w) { case WeaponId.Mace: return 0.15; case WeaponId.Bell: return 0.80; case WeaponId.Trident: return 0.40; case WeaponId.Brush: return 0.0; default: return 0.20; } }
+    static double WTake(WeaponId w) { return w == WeaponId.Brush ? 0.75 : 1.0; }
     static bool Growth = true;   // 성장(품계 힘 몰기·장비 손보기·얼룩 점수)을 전투에 직접 넣는다. --nogrowth 면 끈다(옛 시뮬)
     const double MainOptDmg = 0.055;   // 손보기 대상 주옵션을 피해 옵션 평균(기본 6% x 등급 0.5~1.1)으로 가정
     static readonly int[] EnhCost = { 30, 60, 100, 150, 220 };
@@ -31,6 +36,7 @@ static class Sim
     {
         int runs = args.Length > 0 && !args[0].StartsWith("--") ? int.Parse(args[0]) : 4000;
         foreach (var a in args) if (a == "--nogrowth") Growth = false;
+        if (Array.IndexOf(args, "--weapons") >= 0) return WeaponTable(runs);
         Console.WriteLine("1막 시뮬: 첫 밤 " + Nights + "개 + 1호 보스, 각 전략 " + runs + "판. 밤 " + Balance.NIGHT_DURATION + "초, 몫 " + Balance.NIGHT_QUOTA + ", 체력 " + Balance.PLAYER_MAX_HP);
         var results = new Dictionary<Strat, List<RunResult>>();
         foreach (Strat s in Enum.GetValues(typeof(Strat)))
@@ -85,6 +91,36 @@ static class Sim
         return 0;
     }
 
+    /// <summary>무기 5계열을 각각 돌려 기획 기준 ①~④ 를 w=1.3 에서 판정한다</summary>
+    static int WeaponTable(int runs)
+    {
+        const double w = 1.3;
+        Console.WriteLine("무기별 판정 (w=" + w + ", 각 전략 " + runs + "판). 가치/분 = (넋+기억x4+엽전xw)/분");
+        Console.WriteLine("| 무기 | 천도만 | 파혼만 | 섞기(상황) | 섞기(반반) | 1등 | ① 섞기1등 | ② 천도·파혼 20%안 | ③ 파혼만 생존·보스 | ④ 위험 천도만 최대 | 위험(천/파/섞) |");
+        Console.WriteLine("|---|---|---|---|---|---|---|---|---|---|---|");
+        foreach (var wid in new[] { WeaponId.Chain, WeaponId.Mace, WeaponId.Bell, WeaponId.Trident, WeaponId.Brush })
+        {
+            Wd = WeaponDef.Get(wid);
+            var v = new double[4]; var risk = new double[4]; double pahonSurv = 0, pahonBoss = 0; int k = 0;
+            foreach (Strat s in Enum.GetValues(typeof(Strat)))
+            {
+                var rng = new Random(12345); var L = new List<RunResult>();
+                for (int i = 0; i < runs; i++) L.Add(Play(s, rng));
+                double val = 0, mins = 0, dmg = 0;
+                foreach (var r in L) { val += r.Neok + 4.0 * r.Memory + w * r.Coin; mins += r.Seconds / 60; dmg += r.Damage; }
+                v[k] = val / mins; risk[k] = dmg / mins;
+                if (s == Strat.PahonOnly) { pahonSurv = Avg(L, r => r.Died ? 0 : 1); pahonBoss = Avg(L, r => r.BossFought ? 1 : 0); }
+                k++;
+            }
+            int best = 0; for (int i = 1; i < 4; i++) if (v[i] > v[best]) best = i;
+            string[] nm = { "천도만", "파혼만", "섞기(상황)", "섞기(반반)" };
+            double hi = Math.Max(v[0], v[1]), lo = Math.Min(v[0], v[1]);
+            bool c1 = best == 2, c2 = (hi - lo) / hi <= 0.20, c3 = pahonSurv >= 0.95 && pahonBoss >= 0.95, c4 = risk[0] >= risk[1] && risk[0] >= risk[2] && risk[0] >= risk[3];
+            Console.WriteLine("| " + Wd.Name + " | " + v[0].ToString("0.0") + " | " + v[1].ToString("0.0") + " | " + v[2].ToString("0.0") + " | " + v[3].ToString("0.0") + " | " + nm[best] + " | " + (c1 ? "O" : "X") + " | " + (c2 ? "O" : "X") + " (" + ((v[0] - v[1]) / hi * 100).ToString("0") + "%) | " + (c3 ? "O" : "X") + "(생존" + (pahonSurv * 100).ToString("0") + "%)" + " | " + (c4 ? "O" : "X") + " | " + risk[0].ToString("0") + "/" + risk[1].ToString("0") + "/" + risk[2].ToString("0") + " |");
+        }
+        return 0;
+    }
+
     static double Avg(List<RunResult> L, Func<RunResult, double> f) { double s = 0; foreach (var r in L) s += f(r); return s / L.Count; }
 
     static bool WantTendo(Strat s, Random rng, int others, double hp)
@@ -125,8 +161,8 @@ static class Sim
                 // 죽여서 무릎 꿇리기
                 double maed = lump ? Balance.MAEDHIM_LUMP : Balance.MAEDHIM_NORMAL;
                 double use = Math.Min(maed - 10, bonusPool); bonusPool -= use;   // 앞선 파혼 폭발이 이미 깎아 둔 몫
-                double kill = (maed - use) / dps() + 0.5;
-                double take = (others + 1) * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitMove;
+                double kill = (maed - use) / (dps() * WR(Wd.Id) * (1 + WG(Wd.Id) * Math.Min(others, 2))) + 0.5;
+                double take = (others + 1) * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitMove * WTake(Wd.Id);
                 Hit(ref hp, ref sinceHit, ref res, take); t += kill; sinceHit = take > 0 ? 0 : sinceHit + kill;
                 if (hp <= 0) break;
                 hp = Heal(hp, ref potions);
@@ -135,12 +171,12 @@ static class Sim
                 if (named && s == Strat.TendoOnly) tendo = true;
                 if (tendo)
                 {
-                    bool chain = t - lastTendoAt <= Balance.TENDO_CHAIN_WINDOW;
-                    double cast = CoreRules.CastTime(chain);
+                    bool chain = t - lastTendoAt <= Balance.TENDO_CHAIN_WINDOW + Wd.ChainWindowAddS;
+                    double cast = CoreRules.CastTime(chain) * Wd.CastTimeMult;
                     double dmg = others * (cast / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitCast;
                     Hit(ref hp, ref sinceHit, ref res, dmg); t += cast + Approach; if (dmg > 0) sinceHit = 0;
                     if (hp <= 0) break;
-                    led.CompleteTendo(); res.Tendo++; sentTonight++; lastTendoAt = t;
+                    { int nb = led.Neok; led.CompleteTendo(); led.Neok += (int)Math.Round((led.Neok - nb) * Wd.NeokPct); } res.Tendo++; sentTonight++; lastTendoAt = t;
                     if (named) { namedDone = true; namedTendoed = true; }
                     if (sentTonight == Balance.NIGHT_QUOTA) res.QuotaSeconds[night] = t;
                 }
@@ -152,7 +188,7 @@ static class Sim
                         pahonCnt++; if (pahonCnt % Balance.PAHON_STAIN_POINT_EVERY == 0) stainPts++;
                         coinAcc += Balance.PAHON_COIN * 0.2 * Math.Min(2, stainPts); int whole = (int)coinAcc; led.Coin += whole; coinAcc -= whole;   // 얼룩 점수 -> 노잣돈 2단계(+20%/단계)
                     }
-                    bonusPool += others * Balance.PAHON_DAMAGE * (Growth ? 1 + 0.1 * Math.Max(0, Math.Min(2, stainPts - 2)) : 1);   // 폭발이 이웃들을 먼저 깎아 둔다(남는 얼룩 점수는 큰 폭발로)
+                    bonusPool += others * Balance.PAHON_DAMAGE * Wd.PahonDamageMult * (Growth ? 1 + 0.1 * Math.Max(0, Math.Min(2, stainPts - 2)) : 1);   // 폭발이 이웃들을 먼저 깎아 둔다(남는 얼룩 점수는 큰 폭발로)
                     if (named) namedDone = true;
                 }
                 hp = Heal(hp, ref potions);
@@ -175,7 +211,7 @@ static class Sim
         if (hp > 0)
         {
             res.BossFought = true; bool canTendo = Math.Min(res.Clues, Balance.BOSS_CLUES_REQUIRED) >= Balance.BOSS_CLUES_REQUIRED;
-            double kill = Balance.BOSS_S1_MAEDHIM / dps() + 1.0, sinceHit = 99;
+            double kill = Balance.BOSS_S1_MAEDHIM / (dps() * WR(Wd.Id)) + 1.0, sinceHit = 99;
             double take = (kill / (Balance.ENEMY_ATTACK_INTERVAL / Balance.BOSS_S1_SPEED_MULT)) * Balance.BOSS_S1_DAMAGE * HitBoss + 2 * (kill / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitBossAdds;   // 보스는 예비동작이 길어 읽힌다   // 보스 + 올라오는 혼 2마리
             Hit(ref hp, ref sinceHit, ref res, take); res.Seconds += kill;
             if (hp > 0) hp = Heal(hp, ref potions);

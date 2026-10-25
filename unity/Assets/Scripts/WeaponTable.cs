@@ -18,14 +18,14 @@ public static class WeaponTable
             windup = 0.28f, swing = 0.22f, recover = 0.45f, hitStopFrames = 6, shake = 1.0f, knockback = 18f, stun = 1.2f, lunge = 0f },
     };
 
-    // 요령방울: 기획 10/10/20 (적 3마리 이상일 때 총 피해가 큼). 360° 원 범위, 짧고 빠르다 (임시값)
+    // 요령방울: 10/10/20 에서 12/12/24 로 올림(10-25 시뮬: 단일 목표 약 70%여야 파혼만으로 1호 보스를 눕힘). 적 3마리 이상일 때 총 피해가 큼. 360° 원 범위, 짧고 빠르다 (임시값)
     public static readonly ComboStep[] Bell =
     {
-        new ComboStep { name = "1 ring", damage = 10, reach = 2.6f, sweepDeg = 360f, startOffsetDeg = 30f, dir = 1,
+        new ComboStep { name = "1 ring", damage = 12, reach = 2.6f, sweepDeg = 360f, startOffsetDeg = 30f, dir = 1,
             windup = 0.12f, swing = 0.2f, recover = 0.2f, hitStopFrames = 2, shake = 0.35f, knockback = 9f, stun = 0.3f, lunge = 0f },
-        new ComboStep { name = "2 ring", damage = 10, reach = 2.6f, sweepDeg = 360f, startOffsetDeg = 30f, dir = -1,
+        new ComboStep { name = "2 ring", damage = 12, reach = 2.6f, sweepDeg = 360f, startOffsetDeg = 30f, dir = -1,
             windup = 0.12f, swing = 0.2f, recover = 0.2f, hitStopFrames = 2, shake = 0.35f, knockback = 9f, stun = 0.3f, lunge = 0f },
-        new ComboStep { name = "3 toll", damage = 20, reach = 3.0f, sweepDeg = 360f, startOffsetDeg = 30f, dir = 1,
+        new ComboStep { name = "3 toll", damage = 24, reach = 3.0f, sweepDeg = 360f, startOffsetDeg = 30f, dir = 1,
             windup = 0.22f, swing = 0.24f, recover = 0.4f, hitStopFrames = 5, shake = 0.8f, knockback = 14f, stun = 0.9f, lunge = 0f },
     };
 
