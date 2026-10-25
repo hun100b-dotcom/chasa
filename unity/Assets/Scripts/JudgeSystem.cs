@@ -295,7 +295,12 @@ public class JudgeSystem : MonoBehaviour
     {
         KneelEvents++;   // BGM 재생기가 '무릎 꿇는 순간'을 알아채는 번호표
         Sfx.Play("sfx.kneel");   // 무릎 꿇는 소리 = '지금 고를 때'
-        Hint(HintEvent.FirstKneel);
+        if (!e.soul.Boss && !firstKneelDone && FieldRules.On)
+        {
+            // 첫 처결: 안내 글 대신 화면 하단에 큰 카드 둘(천도·파혼 같은 크기·밝기). 시간 제한 없음(이 혼만 대기가 멈춘다)
+            firstKneelDone = true; firstCardSoul = e; e.soul.Frozen = true; hints.On(HintEvent.FirstKneel, false);
+        }
+        else Hint(HintEvent.FirstKneel);
         if (e.soul.Boss) cuts.Play(BossCut(e.soul, "KNEEL"));   // 영감: "아직… 못 건넸소."
         // 검은 술: 무릎 꿇은 혼의 대기 시간이 짧아진다 (덩어리는 제외, 최소 WAIT_FLOOR)
         if (!e.soul.Boss && e.soul.State == SoulState.Kneel)
@@ -791,7 +796,10 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>세계 시계를 흘리고, 단계가 바뀌면 종을 울리고 알린다</summary>
     void TickClock(float dt)
     {
-        if (!cuts.PauseClock) clock.Tick(dt);   // 오프닝 컷 동안만 시계가 멈춘다
+        // 처음 5분: 박돌쇠를 처결할 때까지(최대 10분) 시계를 멈춘다 — 시간 압박 없이 배우게(기획 first-5-minutes)
+        if (introFrozen && !cuts.Active && !inDay) introT += dt;
+        if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
+        if (!cuts.PauseClock && !introFrozen) clock.Tick(dt);   // 오프닝 컷 동안·첫 5분엔 시계가 멈춘다
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
         ActorModel.HeroShadowOn = clock.Phase != ClockPhase.Day;   // 낮엔 주인공 그림자 없음(산 사람에게 안 보이는 차사)
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
@@ -941,6 +949,12 @@ public class JudgeSystem : MonoBehaviour
     public readonly GuideQueue guide = new GuideQueue();
     [System.Serializable] class GuideFile { public GuideRow[] steps; }
     [System.Serializable] class GuideRow { public string id, pc, touch, key; public bool timed; public float dur; }
+    const string GuidePref = "chasa.guide.done"; int guideSaved;   // 본 안내 목록(브라우저 저장소)
+    public bool introFrozen; float introT;                // 첫 5분 시계 정지(GameMain 이 필드 시작 때 켠다)
+    bool revNeok, revMemory, revCoin, revKarma;           // 장부 항목이 한 번이라도 열렸나
+    bool firstTeleDone;                                   // 첫 예고 특례를 이미 썼나
+    Enemy firstCardSoul;                                  // 처결 카드를 띄우는 첫 무릎 혼(이 혼만 대기 시간이 멈춘다)
+    bool firstKneelDone;
     bool guideLoaded; Vector3 walkFrom; bool walkFromSet; float guideClock;
     void LoadGuide()
     {
@@ -951,6 +965,8 @@ public class JudgeSystem : MonoBehaviour
         foreach (var r in f.steps) guide.Define(new GuideStep { Id = r.id, Pc = r.pc, Touch = r.touch, Key = r.key, Timed = r.timed, Dur = r.dur > 0f ? r.dur : 3f });
         var u = (Application.absoluteURL ?? "").ToLowerInvariant();
         if (u.Contains("guide=off")) guide.Enabled = false;   // 숙련자: 안내 끄기
+        if (u.Contains("guide=reset")) { try { PlayerPrefs.DeleteKey(GuidePref); } catch { } }   // 검수용: 본 안내 기록 지우기
+        try { foreach (var id in PlayerPrefs.GetString(GuidePref, "").Split(',')) if (id.Length > 0) guide.MarkDone(id); } catch { }   // 이어하기: 본 안내는 다시 안 뜬다
     }
 
     /// <summary>안내를 띄울 상황을 보고 요청하고, 화면 값(HudState)을 채운다. 컷신·낮 화면·창이 열려 있으면 쉰다</summary>
@@ -972,18 +988,29 @@ public class JudgeSystem : MonoBehaviour
                     if (e == null || !e.alive || e.gone || e.soul.Boss) continue;
                     float d = Vector3.Distance(e.Pos, player.Pos);
                     if (d < 12f) near = true;
-                    if (d < 10f && e.atk != null && e.atk.Winding) winding = true;
+                    if (d < 10f && e.atk != null && e.atk.Winding)
+                    {
+                        winding = true;
+                        if (!firstTeleDone)   // 첫 혼의 첫 공격 예고: 1.5배 길게 + 화면 0.5초 30% 느리게(이번 한 번만)
+                        {
+                            firstTeleDone = true; e.atk.WindupTime *= 1.5f; e.atk.Windup = e.atk.WindupTime; feel.SlowMo(0.5f, 0.3f);
+                        }
+                    }
                     if (d > 10f && d < 20f) far = true;
                 }
                 if (near) guide.Request("hit");
-                if (winding && guide.IsDone("hit")) guide.Request("dodge");
+                if (winding) guide.Request("dodge");
                 if (far && guide.IsDone("hit")) guide.Request("pull");
                 if (guideClock > 90f && guide.IsDone("hit")) guide.Request("zoom");
             }
             guide.Tick(Time.deltaTime);
+            int nDone = 0; foreach (var _ in guide.DoneIds) nDone++;
+            if (nDone != guideSaved) { guideSaved = nDone; try { PlayerPrefs.SetString(GuidePref, string.Join(",", new List<string>(guide.DoneIds).ToArray())); PlayerPrefs.Save(); } catch { } }
         }
+        if (firstCardSoul != null && (!firstCardSoul.kneeling || firstCardSoul.gone)) { firstCardSoul.soul.Frozen = false; firstCardSoul = null; }   // 처결했으면 카드를 접고 대기 시간을 되돌린다
+        h.JudgeCard = firstCardSoul != null && !quiet;
         var cur = guide.Current;
-        h.GuideText = quiet || cur == null ? null : guide.TextFor(Ko.TouchUI);
+        h.GuideText = quiet || cur == null || h.JudgeCard ? null : guide.TextFor(Ko.TouchUI);
         h.GuideKey = cur != null && !Ko.TouchUI ? cur.Key : null;
         h.GuideCheck = guide.Checking; h.GuideRemind = guide.Reminding;
     }
@@ -1013,10 +1040,15 @@ public class JudgeSystem : MonoBehaviour
         {
             h.Peaceful = clock.Daylight > 0.6f && !Casting && !AnyEnemyNear(25f);
             h.TimeOfDay = clock.DayFraction; h.IsDawn = clock.Reddish; h.Daylight = clock.Daylight; h.FullMoon = clock.FullMoon; h.NewMoon = clock.NewMoon; h.MoonPhase = clock.MoonPhase;
-            h.ClockLabel = WorldClock.PhaseName(clock.Phase) + (clock.FullMoon ? " · 보름달" : clock.NewMoon ? " · 그믐" : "") + (clock.Speed > 1.5f ? "  x" + (int)clock.Speed : "");
+            h.ClockLabel = WorldClock.PhaseName(clock.Phase) + (clock.FullMoon ? " · 보름달" : clock.NewMoon ? " · 그믐" : "") + (clock.Speed > 1.5f ? "  x" + (int)clock.Speed : "") + (introFrozen ? "  · 시간 멈춤" : "");
         }
         else { h.Peaceful = false; h.TimeOfDay = Mathf.Clamp01(1f - night.TimeLeft / Mathf.Max(1f, Balance.NIGHT_DURATION)); h.IsDawn = night.Warning; h.Daylight = 0f; h.ClockLabel = null; }
         h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.KarmaHidden = weather.Fx.HideKarma; h.ChainBonus = chainLeft > 0f;
+        if (FieldRules.On)   // HUD 하나씩 열기: 처음 얻을 때 숫자가 나타난다(업은 10에 처음 닿을 때)
+        {
+            revNeok |= ledger.Neok > 0; revMemory |= ledger.Memory > 0; revCoin |= ledger.Coin > 0; revKarma |= ledger.Karma >= 10;
+            h.ShowNeok = revNeok; h.ShowMemory = revMemory; h.ShowCoin = revCoin; h.ShowKarma = revKarma;
+        }
         h.Hp = ledger.Hp; h.MaxHp = ledger.MaxHp; h.Heal = dayScreen.Pack.Heal;
         h.SecondsLeft = Mathf.CeilToInt(night.TimeLeft); h.Sent = night.Sent; h.Quota = Balance.NIGHT_QUOTA;
         h.Clues = night.Clues; h.CluesNeeded = Balance.BOSS_CLUES_REQUIRED;

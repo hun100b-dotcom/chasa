@@ -318,6 +318,7 @@ public class Player : MonoBehaviour
         // 피하기 무적 구간(시작 직후~끝): 맞지 않는다. 이 짧은 창을 맞추는 것이 피하기의 보상
         if (state == State.Dodge && DodgeRules.Invulnerable(dodgeT)) return false;
         invulnT = Balance.PLAYER_HIT_INVULN;
+        bool wasAttacking = state == State.Attack;
         if (state == State.Attack)
         {
             // 공격 중단: 대기 예약·콤보를 지우고 자유 상태로 (여기서 EndAttack 대신 직접 정리해야 후딜 로직이 안 돈다)
@@ -326,7 +327,8 @@ public class Player : MonoBehaviour
             state = State.Free;
             chain.gameObject.SetActive(false);
         }
-        moveTarget = null; chaseTarget = null;
+        // 걷는 중에 맞았다면 클릭 이동 목표를 지우지 않는다: 클릭은 한 번만 명령을 넣어서, 지우면 맞을 때마다 중간에 멈춰 섰다(PC 실측)
+        if (wasAttacking) { moveTarget = null; chaseTarget = null; }
         return true;
     }
 

@@ -97,7 +97,7 @@ public class UiRoot : MonoBehaviour
         // 장부·밤 글자: 배경 위에서도 읽히게 짙은 반투명 판 위에 둔다
         var texts = new VisualElement { pickingMode = PickingMode.Ignore }; texts.style.marginTop = 6; Panel(texts); note.Add(texts);
         ledger = Line(texts, 15); night = Line(texts, 15);
-        BuildGuide(); BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
+        BuildGuide(); BuildCards(); BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
     }
 
     // ---- 아트팀 UI 그림(Resources/Sprites/ui). 없으면 null 이라 부르는 쪽이 옛 색 도형으로 대신 그린다(그림 없이도 돈다)
@@ -194,6 +194,31 @@ public class UiRoot : MonoBehaviour
         guideBox.style.opacity = guideFade * blink;
     }
     float guideFade;
+
+    // ---- 첫 처결 카드: 스킬바 위 가운데에 같은 크기·같은 밝기의 카드 둘(천도·파혼). 정답을 말하지 않는다 ----
+    VisualElement cardRow;
+    void BuildCards()
+    {
+        cardRow = new VisualElement { name = "judge-cards", pickingMode = PickingMode.Ignore };
+        cardRow.style.position = Position.Absolute; cardRow.style.left = 0; cardRow.style.right = 0; cardRow.style.bottom = U(150);
+        cardRow.style.flexDirection = FlexDirection.Row; cardRow.style.justifyContent = Justify.Center; cardRow.style.display = DisplayStyle.None;
+        cardRow.Add(Card("E", "천도", "보낸다", new Color(0.12f, 0.45f, 0.45f, 0.92f)));
+        cardRow.Add(Card("R", "파혼", "깨뜨린다", new Color(0.62f, 0.25f, 0.12f, 0.92f)));
+        root.Add(cardRow);
+    }
+    VisualElement Card(string key, string name, string sub, Color bg)
+    {
+        var c = new VisualElement { pickingMode = PickingMode.Ignore };
+        c.style.width = U(280); c.style.height = U(96); c.style.marginLeft = U(10); c.style.marginRight = U(10);
+        c.style.backgroundColor = bg; c.style.justifyContent = Justify.Center; c.style.alignItems = Align.Center;
+        var edge = new Color(0.95f, 0.85f, 0.55f, 0.9f);
+        c.style.borderTopWidth = 2; c.style.borderBottomWidth = 2; c.style.borderLeftWidth = 2; c.style.borderRightWidth = 2;
+        c.style.borderTopColor = edge; c.style.borderBottomColor = edge; c.style.borderLeftColor = edge; c.style.borderRightColor = edge;
+        c.style.borderTopLeftRadius = 8; c.style.borderTopRightRadius = 8; c.style.borderBottomLeftRadius = 8; c.style.borderBottomRightRadius = 8;
+        var t = Line(c, 24); t.text = "[" + key + "] " + name; t.style.unityTextAlign = TextAnchor.MiddleCenter;
+        var s2 = Line(c, 18); s2.text = sub; s2.style.unityTextAlign = TextAnchor.MiddleCenter;
+        return c;
+    }
 
     // ---- 스킬바 8칸(기획 표준 v1.1): [Q 견인][1][2][3][4][E 천도][R 파혼][H 회복약], 칸 64px·간격 8px·아래 40px ------------
     const int BarN = 8;
@@ -292,6 +317,7 @@ public class UiRoot : MonoBehaviour
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshGuide();
+        if (cardRow != null) cardRow.style.display = Hud.JudgeCard && !Ko.TouchUI ? DisplayStyle.Flex : DisplayStyle.None;   // 폰은 처결 버튼 자체가 카드 역할
         RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         if (hpFill != null)
         {

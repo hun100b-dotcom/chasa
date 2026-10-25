@@ -217,6 +217,7 @@ public class MiniMap : MonoBehaviour
         GUI.DrawTexture(fr, bf);
         var lg = SpriteLib.Texture("ui/map_bigmap_legend"); if (lg != null) GUI.DrawTexture(new Rect(fr.x + 1196f * k, fr.y + 96f * k, 300f * k, 700f * k), lg);
         var tt = SpriteLib.Texture("ui/map_bigmap_title"); if (tt != null) GUI.DrawTexture(new Rect(fr.x + 618f * k - 150f * k, fr.y + 36f * k, 300f * k, 54f * k), tt);
+        GUI.color = new Color(0.95f, 0.82f, 0.45f, 1f); GUI.Label(new Rect(fr.x + 618f * k - 150f * k, fr.y + 36f * k, 300f * k, 54f * k), "필드 지도", title); GUI.color = Color.white;   // 현판 그림에서 글자가 안 보여 글자로 보강
         GUI.Label(new Rect(fr.x, fr.yMax + 6f, fr.width, 22f), "M · Esc 닫기", label);
     }
 
@@ -265,7 +266,7 @@ public class MiniMap : MonoBehaviour
             var v = p.Value; if (!big && (Mathf.Abs(v.x - cen.x) > half - 4f || Mathf.Abs(v.y - cen.y) > half - 4f)) continue;
             string mi = m.kind == "seonang" ? "seonang" : m.kind == "bridge" ? "bridge" : m.kind == "ferry" ? "ferry" : (m.kind == "village" || m.kind == "doctor") ? "npc" : null;
             if (mi == null || !Icon(mi, v, 17f)) { Box(new Rect(v.x - 5, v.y - 5, 10, 10), new Color(0.05f, 0.06f, 0.08f, 0.9f)); Box(new Rect(v.x - 3.5f, v.y - 3.5f, 7, 7), col); }
-            if (big) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(1, 1, 1, 0.9f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white; }
+            if (big) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(1, 1, 1, 0.85f); GUI.Label(new Rect(v.x - 79, v.y + 7, 160, 20), nm, small); GUI.color = new Color(0.12f, 0.06f, 0.02f, 1f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white;   // 밝은 지도 위에서도 읽히게 짙은 글자 + 연한 그림자 }
         }
         // 보스(붉은 마름모) — 아직 안 나타났어도 자리를 표시한다
         for (int id = 1; id <= Bosses.Count; id++) { var bd = Bosses.Get(id); D(bd.X, bd.Z, new Color(0.95f, 0.15f, 0.12f), s + 6f, "boss"); }

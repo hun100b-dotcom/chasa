@@ -64,6 +64,8 @@ public class GameMain : MonoBehaviour
             judge.camps = new FieldCamps(enemies);
             judge.named = new NamedSoulSpawns(enemies);
             judge.clock = new WorldClock();
+            judge.clock.Minutes = WorldClock.DayLength - Balance.CLOCK_NIGHT_MIN + 3f;   // 첫 5분: 밤이 막 깊어진 때(밤 9시 무렵)에서 시작해 박돌쇠 처결까지 멈춘다
+            judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
             judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)

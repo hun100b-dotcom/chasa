@@ -14,6 +14,7 @@ namespace Chasa.Core
     {
         // 장부
         public int Neok, Memory, Coin, Karma; public bool KarmaHidden;   // KarmaHidden: 비 오는 밤엔 업 표시가 ?로 가려진다(업은 그대로 쌓인다)
+        public bool ShowNeok = true, ShowMemory = true, ShowCoin = true, ShowKarma = true;   // 처음 얻을 때 열리는 항목(필드 모드)
         public bool ChainBonus;                 // 연쇄 천도 창이 열려 있나
         // 몸
         public int Hp, MaxHp, Heal;
@@ -36,6 +37,7 @@ namespace Chasa.Core
         public readonly System.Collections.Generic.List<EdgeMark> Edges = new System.Collections.Generic.List<EdgeMark>();   // 화면 가장자리 경고(시야 밖 공격 예고)
         // 처음 5분 안내(화면 하단 중앙 띠). GuideText 가 null 이면 안 보인다
         public string GuideText, GuideKey; public bool GuideCheck, GuideRemind;
+        public bool JudgeCard;                                   // 첫 처결 카드(천도·파혼 두 장)를 하단에 띄운다
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 
         public float HpRatio { get { return MaxHp <= 0 ? 0f : System.Math.Max(0f, System.Math.Min(1f, (float)Hp / MaxHp)); } }
@@ -45,7 +47,14 @@ namespace Chasa.Core
         /// <summary>1줄: 장부 (넋·기억·엽전·업)</summary>
         public string LedgerLine()
         {
-            return "넋 " + Neok + "   기억 " + Memory + "   엽전 " + Coin + "   업 " + (KarmaHidden ? "?" : Karma + " (" + CoreRules.KarmaTier(Karma) + "단계)") + (ChainBonus ? "   연쇄!" : "");
+            // 하나씩 열기(기획): 처음 얻기 전엔 숨긴다. 기본값은 모두 보임(옛 화면·테스트용)
+            var sb = new StringBuilder();
+            if (ShowNeok) sb.Append("넋 ").Append(Neok).Append("   ");
+            if (ShowMemory) sb.Append("기억 ").Append(Memory).Append("   ");
+            if (ShowCoin) sb.Append("엽전 ").Append(Coin).Append("   ");
+            if (ShowKarma) sb.Append("업 ").Append(KarmaHidden ? "?" : Karma + " (" + CoreRules.KarmaTier(Karma) + "단계)");
+            if (ChainBonus) sb.Append("   연쇄!");
+            return sb.ToString().TrimEnd();
         }
 
         /// <summary>2줄: 체력과 회복약</summary>
