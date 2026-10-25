@@ -7,3 +7,12 @@
 | 신 | (기존) 주홍 높은 코·뒤 술 | 발밑에 번지는 혼불 겹 고리(왼발 조각에 포함) |
 빛줄기 꼭대기 모양(붓 획·세 뿔 관·겹 고리 ◎)과 같은 말을 쓴다: 한 벌=◎, 이름 있는=뿔. 색을 못 봐도 구분된다. 모두 같은 뼈에 묶여 있어 갈아끼우는 규칙은 그대로(후광·고리는 Chest/Head/Foot.L 뼈를 따라감).
 재생성: `python3 tools/art3d/gear.py gat dopo sin` + `python3 tools/art3d/gear_top2_preview.py`.
+
+## 신·노리개 상위 두 등급 (추가)
+점검판: `previews/gear_top2_small.png`(발끝·허리만 크게, 앞·옆), `gear_top2_small_silhouette.png`(검은 실루엣). 재생성: `python3 tools/art3d/gear.py sin norigae` + `python3 tools/art3d/gear_top2_small_preview.py`.
+| 칸 | 이름 있는(t4, 주홍) | 한 벌(t5, 혼불 청록) |
+|---|---|---|
+| 신 | 코가 뿔처럼 위로 말려 오름 + 발목 이름 쪽지 둘 + 뒤꿈치에서 주홍 술이 뒤로 길게 끌림 | 발밑 겹 고리(◎, 왼발 조각) + 발목마다 혼불 고리 + 뒤꿈치에서 흩날리는 투명 혼불 자락 |
+| 노리개 | 방울 위에 세 뿔 관 + 방울 밑에 이름 쪽지 + 더 긴 주홍 술 둘(0.36m) | 혼불 구슬을 두 겹 고리(◎)가 감싸고 불티 셋이 돎 + 아래로 흐르는 투명 혼불 자락 |
+귀한(t3)은 그대로(금 코 장식·금 판+옥)라 실루엣에서 t3 < t4(뿔·쪽지) < t5(고리) 순으로 갈린다. 같은 뼈(Foot.L/R·Hips)에 묶여 갈아끼우는 규칙은 그대로.
+`unity/Assets/Resources/Models/Gear/`에 신·노리개 10+10조각 복사(기존엔 갓·도포·띠만 있었음). 노리개는 _R/_L 둘씩.
