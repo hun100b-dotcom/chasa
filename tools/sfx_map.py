@@ -95,7 +95,9 @@ MADE = {'amb.market', 'amb.mine', 'amb.rain', 'amb.rooster', 'cut.bellows', 'cut
         'amb.crow.far', 'amb.river.morning', 'cut.bell.shaman', 'cut.bell.small', 'cut.chain.scratch', 'cut.flint.strike',
         'cut.footstep.leave', 'cut.kiln.light', 'cut.knife.carve', 'cut.stake.drive', 'cut.stone.roll', 'cut.tag.sway',
         'cut.tool.set', 'cut.water.still', 'cut.well.bucket', 'mus.boat.answer', 'vo.sumbi', 'cut.seal.set',
-        'cut.seal.set.nine', 'cut.ink.grind.room', 'cut.ink.grind.stop'}
+        'cut.seal.set.nine', 'cut.ink.grind.room', 'cut.ink.grind.stop',
+        # PR #36 f0338fb(첫 거센 혼 EL-001 징)
+        'cut.jing', 'cut.jing.crack'}
 
 def promote(cut):
     """steps의 sfx_request 가운데 이제 있는 소리를 sfx로 옮긴다. 괄호 속 연출 메모는 sfx_note에 남긴다."""
