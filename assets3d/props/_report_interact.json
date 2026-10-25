@@ -1,0 +1,212 @@
+[
+ {
+  "name": "prop_keep_tongs",
+  "dir": "props",
+  "tris": 228,
+  "size_m": [
+   0.67,
+   0.34,
+   0.2
+  ],
+  "min_z": 0.0,
+  "children": [
+   "Glow"
+  ]
+ },
+ {
+  "name": "prop_keep_bowl",
+  "dir": "props",
+  "tris": 360,
+  "size_m": [
+   0.57,
+   0.6,
+   0.43
+  ],
+  "min_z": 0.0,
+  "children": [
+   "Glow"
+  ]
+ },
+ {
+  "name": "prop_keep_steamer",
+  "dir": "props",
+  "tris": 370,
+  "size_m": [
+   0.69,
+   0.67,
+   0.74
+  ],
+  "min_z": -0.016,
+  "children": [
+   "Glow"
+  ]
+ },
+ {
+  "name": "prop_keep_lamp",
+  "dir": "props",
+  "tris": 304,
+  "size_m": [
+   0.72,
+   0.36,
+   1.25
+  ],
+  "min_z": 0.0,
+  "children": [
+   "Glow"
+  ]
+ },
+ {
+  "name": "prop_keep_oar",
+  "dir": "props",
+  "tris": 244,
+  "size_m": [
+   0.42,
+   0.49,
+   1.26
+  ],
+  "min_z": -0.012,
+  "children": [
+   "Glow"
+  ]
+ },
+ {
+  "name": "prop_keep_bundle",
+  "dir": "props",
+  "tris": 368,
+  "size_m": [
+   0.8,
+   0.8,
+   0.65
+  ],
+  "min_z": -0.016,
+  "children": [
+   "Glow"
+  ]
+ },
+ {
+  "name": "prop_keep_ash",
+  "dir": "props",
+  "tris": 176,
+  "size_m": [
+   0.99,
+   0.77,
+   0.15
+  ],
+  "min_z": -0.05,
+  "children": []
+ },
+ {
+  "name": "prop_gut_table",
+  "dir": "props",
+  "tris": 548,
+  "size_m": [
+   1.5,
+   0.8,
+   0.99
+  ],
+  "min_z": 0.0,
+  "children": [
+   "Glow"
+  ]
+ },
+ {
+  "name": "prop_burnt_docbox",
+  "dir": "props",
+  "tris": 348,
+  "size_m": [
+   1.1,
+   0.8,
+   0.81
+  ],
+  "min_z": -0.01,
+  "children": [
+   "Glow"
+  ]
+ },
+ {
+  "name": "prop_coin_bundle",
+  "dir": "props",
+  "tris": 512,
+  "size_m": [
+   0.33,
+   0.3,
+   0.2
+  ],
+  "min_z": 0.0,
+  "children": []
+ },
+ {
+  "name": "prop_herb_mugwort",
+  "dir": "props",
+  "tris": 104,
+  "size_m": [
+   0.44,
+   0.46,
+   0.45
+  ],
+  "min_z": -0.001,
+  "children": []
+ },
+ {
+  "name": "prop_seonang_rest",
+  "dir": "props",
+  "tris": 1042,
+  "size_m": [
+   6.14,
+   6.08,
+   1.58
+  ],
+  "min_z": -0.083,
+  "children": [
+   "Light_seonang_rest"
+  ]
+ },
+ {
+  "name": "fx_pickup_pillar_white",
+  "dir": "fx",
+  "tris": 100,
+  "size_m": [
+   0.58,
+   0.6,
+   2.02
+  ],
+  "min_z": 0.0,
+  "children": []
+ },
+ {
+  "name": "fx_pickup_pillar_green",
+  "dir": "fx",
+  "tris": 100,
+  "size_m": [
+   0.58,
+   0.6,
+   2.02
+  ],
+  "min_z": 0.0,
+  "children": []
+ },
+ {
+  "name": "fx_pickup_pillar_gold",
+  "dir": "fx",
+  "tris": 100,
+  "size_m": [
+   0.58,
+   0.6,
+   2.02
+  ],
+  "min_z": 0.0,
+  "children": []
+ },
+ {
+  "name": "fx_pickup_pillar_violet",
+  "dir": "fx",
+  "tris": 100,
+  "size_m": [
+   0.58,
+   0.6,
+   2.02
+  ],
+  "min_z": 0.0,
+  "children": []
+ }
+]

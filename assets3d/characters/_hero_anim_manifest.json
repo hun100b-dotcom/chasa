@@ -480,6 +480,65 @@
    }
   },
   {
+   "name": "Judge",
+   "frames": 151,
+   "length_sec": 2.5,
+   "loop": true,
+   "events": {
+    "note": "처결 대기 자세. Idle에서 6프레임 크로스페이드로 들어간다"
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 1.8,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 2.3,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 1.5,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 0.8,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 20.0,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 20.0,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 27.0,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 27.0,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 1.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 1.4,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 1.2,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 1.0,
+     "ry_max": 0.0
+    }
+   }
+  },
+  {
    "name": "Pahon",
    "frames": 26,
    "length_sec": 0.417,
@@ -2853,7 +2912,7 @@
     ],
     "distance_m": 4.0
    },
-   "roll_lift_max_m": 0.384,
+   "roll_lift_max_m": 0.405,
    "roll_v_mid": 15.22,
    "foot_slide": {
     "max_mm_per_frame": 0.0,
@@ -2871,11 +2930,11 @@
     },
     "Skirt_L": {
      "rx_max": 17.6,
-     "ry_max": 10.5
+     "ry_max": 10.7
     },
     "Skirt_R": {
      "rx_max": 15.7,
-     "ry_max": 7.9
+     "ry_max": 7.6
     },
     "Strap.L1": {
      "rx_max": 24.0,
@@ -2925,6 +2984,7 @@
    "Dodge",
    "Hit",
    "Cast",
+   "Judge",
    "Pahon",
    "Mace_Attack1",
    "Mace_Attack2",
@@ -2960,6 +3020,6 @@
    "Turn180_R",
    "Roll"
   ],
-  "size_kb": 1230
+  "size_kb": 1276
  }
 }
