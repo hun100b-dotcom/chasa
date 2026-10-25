@@ -3,7 +3,7 @@
 # ⑨는 인 없는 혼들(죽어도 아무도 데리러 오지 않아 기다리다 늙은 혼), ⑩은 옛 차사들이 말한다.
 # 이들은 처결 대상이 아니라 배경 무리다(⑨의 이름 있는 혼·⑩ 이름 조각과는 따로). 차사에게 직접 말하지 않는다.
 # ⑨는 새벽 틈이 없다 → 보스 단서 대사는 '언제나' 들린다(먹지기의 흔적 둘레). ⑩은 새벽 틈이 돌아온다.
-# 좌표는 기획 ⑨·⑩ 지도가 나오면 붙인다. 지금은 장소 이름만.
+# 좌표(x, y)는 기획 r8_r10_map.json(10-25)의 places에서 장소 이름으로 읽어 붙인다.
 # 실행: python3 tools/npc_act5.py → docs/narrative/npc_act5.json
 import json, os
 
@@ -12,6 +12,8 @@ ND = os.path.join(HERE, '..', 'docs', 'narrative')
 OUT = os.path.join(ND, 'npc_act5.json')
 S2 = json.load(open(os.path.join(ND, 'season2_outline.json'), encoding='utf-8'))
 CLUES = {c['id']: c for b in S2['boss_clues'].values() for c in b['clues']}
+MAP810 = '/mnt/project-files/planning/openworld/act4/r8_r10_map.json'
+PLACES = {int(k): v['places'] for k, v in json.load(open(MAP810, encoding='utf-8'))['regions'].items()} if os.path.exists(MAP810) else {}
 
 # barks 금지 말: 보스 단서·F 단서와 겹치는 것, 추위, 이름.
 #  ⑨: 인·문지기·졸다·도둑·이마·굴·종 / ⑩: 첫 차사·어미·우물·신발·새끼줄·사공·노·사슬(사슬 무덤 이야기는 단서 몫)
@@ -23,6 +25,7 @@ NPCS = [
  # ───── ⑨ 빈 관할 (인 없는 혼들. 서로 "어이"라고만 부른다) ─────
  {'id': 'N-901', 'name': '장터 끝 혼들', 'region': 9, 'zone': 'SeallessMarket', 'link_soul': None,
   'role': '도장 없는 장터 끝 바위 둘레에 모여 앉은 인 없는 혼들. B-17 이야기는 단서(B17-D1) 대사로만',
+  'special': {'gate_hint': '아랫녘 안개가 내일은 걷히겠어.', 'when': '⑩ 금줄(물막이 둑 남쪽 안개 벽)이 강제로 풀리기 전날 저녁 한 번', 'note': '기획 gates_rule 예고 한 줄'},
   'barks': {'언제나': ['어이, 거기.', '오늘도 안 오네.', '앉아, 앉아.']},
   'schedule': [
    {'time': '언제나', 'place': '장터 끝 바위', 'verb': '엿듣기', 'clue': 'B17-D1', 'note': 'NinthGate에 처음 들어간 다음 밤부터(⑨는 새벽이 없다)'}]},
@@ -58,11 +61,13 @@ fh = S2['boss_clues']['B-20']['force_hint']
 assert fh['npc'] == 'N-1001'
 for p in NPCS:
     p['unlock'] = {9: '⑨ 금줄이 풀린 뒤(4막 끝 C-16 / ⑧ 첫 진입 뒤 7번째 새벽)',
-                   10: '⑩ 금줄이 풀린 뒤(B-18 처결 / ⑨ 첫 진입 뒤 7번째 새벽)'}[p['region']]
+                   10: '⑩ 금줄(물막이 둑 남쪽 안개 벽)이 풀린 뒤(B-18 처결 / ⑨ 첫 진입 뒤 7번째 새벽)'}[p['region']]
     if p['id'] == 'N-1001':
         p['special'] = {'B20_force_hint': fh['line'], 'when': fh['when'], 'note': 'season2_outline B-20 force_hint. 보스 대사 수에 세지 않는 혼잣말'}
     p['clue_lines'] = []
     for e in p['schedule']:
+        pl = PLACES.get(p['region'], {}).get(e['place'])
+        if pl: e['x'], e['y'] = pl['x'], pl['y']
         if e.get('clue'):
             c = CLUES[e['clue']]
             assert c.get('npc') == p['id'], (e['clue'], c.get('npc'))

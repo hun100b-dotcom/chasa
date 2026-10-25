@@ -4,8 +4,7 @@
 #   '줄 선 혼'들이 말한다. 이들은 처결 대상이 아니다(때리면 돌아선 혼이 된다 — B-13 전투 규칙과 같음).
 #   모두 차사에게 직접 말하지 않는다. 들으라는 듯 저희끼리 떠들 뿐이다(SCENARIO-ACT4 §0).
 # 시간표 칸: 시즌 1의 '낮'은 ⑦에서 '새벽 틈'(동트기 직전 새벽)이다. 보스 단서는 새벽 틈에만 들린다.
-# 좌표(x, y): ⑦은 기획 r7_map.json(10-25)의 places에서 장소 이름으로 읽어 붙인다(저승은 좌표 원점이 따로, 0~640×0~560).
-#   ⑧은 지도가 아직 없어 장소 이름만.
+# 좌표(x, y): 기획 r7_map.json·r8_r10_map.json(10-25)의 places에서 장소 이름으로 읽어 붙인다(저승은 이승과 좌표 원점이 따로).
 # ⑧의 말하는 이는 저승 서리·일꾼이다. 그들은 차사를 본다. 아무도 말을 걸지 않는다(F34). 업 높은 차사가 지나가면 말을 멈춘다.
 # 실행: python3 tools/npc_act4.py → docs/narrative/npc_act4.json
 import json, os
@@ -18,8 +17,11 @@ MEMS = {r['id']: r for r in json.load(open(os.path.join(ND, 'memories_act4.json'
 CLUES = {c['id']: c for b in S2['boss_clues'].values() for c in b['clues']}
 MAP7 = '/mnt/project-files/planning/openworld/act4/r7_map.json'
 # 왜 공유 폴더에서 읽나: 지도는 기획 몫이고 원본이 거기 하나다. 없으면(다른 기계) 좌표 없이 만든다.
-PLACES = json.load(open(MAP7, encoding='utf-8'))['places'] if os.path.exists(MAP7) else {}
-if os.path.exists(MAP7): M7 = json.load(open(MAP7, encoding='utf-8'))
+MAP810 = '/mnt/project-files/planning/openworld/act4/r8_r10_map.json'
+PLACES = {}   # {관할 번호: {장소 이름: {x, y}}}
+if os.path.exists(MAP7): PLACES[7] = json.load(open(MAP7, encoding='utf-8'))['places']
+if os.path.exists(MAP810):
+    for k, v in json.load(open(MAP810, encoding='utf-8'))['regions'].items(): PLACES[int(k)] = v['places']
 
 # barks(혼잣말) 규칙 — 1~3막과 같음:
 #  - 시간대마다 0~3줄, 12자 안팎. 단서가 아니다(기록 안 함).
@@ -32,6 +34,7 @@ BANNED_IN_BARKS = ('먼저 가시오', '칼금', '엽전', '노잣돈', '둑', '
 NPCS = [
  {'id': 'N-701', 'name': '줄 선 혼들(줄 가운데)', 'region': 7, 'zone': 'Ferrytown', 'link_soul': None,
   'role': '이승에서 천도되어 나루까지 왔지만 배를 기다리는 혼들. 처결 대상 아님(장애물). B-13 노인 이야기는 단서(B13-D1) 대사로만',
+  'special': {'gate_hint': '윗길 서리들이 내일은 문 연대.', 'when': '⑧ 금줄(명부전 길)이 강제로 풀리기 전날 저녁 한 번', 'note': '기획 gates_rule 예고 한 줄. 대사 수에 세지 않는 혼잣말'},
   'barks': {'밤': ['배 언제 와.', '한 칸도 안 움직였어.', '앞에 누구 있소?'],
             '새벽 틈': ['물안개 걷힌다.', '저기 건너편 보여?']},
   'schedule': [
@@ -71,6 +74,7 @@ NPCS = [
  # ───── ⑧ 명부전 담장 밖 (서리·일꾼. 바쁜 사무실) ─────
  {'id': 'N-801', 'name': '출근하는 서리들', 'region': 8, 'zone': 'ClerkQuarters', 'link_soul': None,
   'role': '숙사 행랑에서 관아로 출근하는 서리들. 차사를 보지만 말을 걸지 않는다. B-15 이야기는 단서(B15-D1) 대사로만',
+  'special': {'gate_hint': '아홉째 칸 뒤 먼지가 내일은 털리겠군.', 'when': '⑨ 금줄(아홉째 칸 뒤 문)이 강제로 풀리기 전날 저녁 한 번', 'note': '기획 gates_rule 예고 한 줄'},
   'barks': {'새벽 틈': ['늦겠네, 서둘러.', '갓끈 똑바로 매.'], '낮': ['오늘 몇 권이오?', '붓 마를 새가 없네.'], '저녁': ['빨래 걷어.', '국 식는다.']},
   'schedule': [
    {'time': '밤', 'place': '숙사 행랑', 'verb': None, 'clue': None, 'note': '등불 아래 밀린 글씨를 쓴다'},
@@ -105,9 +109,10 @@ NPCS = [
 
 # 단서 대사 붙이기 — 원본은 season2_outline.json의 단서 표 하나. 여기서 베껴 오기만 한다(어긋나지 않게).
 for p in NPCS:
-    p['unlock'] = '시즌 2 첫 진입부터(C-14 뒤)' if p['region'] == 7 else '⑧ 금줄이 풀린 뒤(B-14 처결 / ⑦ 첫 진입 뒤 7번째 새벽)'
+    p['unlock'] = '시즌 2 첫 진입부터(C-14 뒤)' if p['region'] == 7 else '⑧ 금줄(명부전 길)이 풀린 뒤(B-14 처결 / ⑦ 첫 진입 뒤 7번째 새벽)'
+    for x in (p.get('special') or {}).get('gate_hint', ''),: assert not any(w in x for w in BANNED_IN_BARKS if w not in ('인',)), x
     for e in p['schedule']:
-        pl = PLACES.get(e['place']) if p['region'] == 7 else None
+        pl = PLACES.get(p['region'], {}).get(e['place'])
         if pl: e['x'], e['y'] = pl['x'], pl['y']
     p['clue_lines'] = []
     for e in p['schedule']:

@@ -58,7 +58,10 @@
       "time": 0.6
      },
      "action": "대돌이 입을 연다. 소리는 들리지 않는다. 그가 입을 열 때마다 땅에서 병사 혼이 하나씩 일어난다",
-     "sfx_request": [
+     "sfx": [
+      "cut.soldier.rise"
+     ],
+     "sfx_note": [
       "cut.soldier.rise(갑옷 혼이 땅에서 일어나는 소리)"
      ]
     },
@@ -198,10 +201,13 @@
       "framing": "봉분을 낮게, 하늘을 크게"
      },
      "action": "큰 무덤 봉분에 이름들이 새겨진다. 빛이 위에서 아래로 한 줄씩",
-     "sfx_request": [
-      "cut.stone.carve(돌에 글이 새겨지는 낮은 소리)"
+     "note": "글자는 읽히지 않게. 수를 세지 않는다",
+     "sfx": [
+      "cut.stone.carve"
      ],
-     "note": "글자는 읽히지 않게. 수를 세지 않는다"
+     "sfx_note": [
+      "cut.stone.carve(돌에 글이 새겨지는 낮은 소리)"
+     ]
     },
     {
      "t": 5.5,
@@ -312,7 +318,10 @@
     {
      "t": 1.6,
      "action": "한가운데 투구를 깊이 쓴 장수. 얼굴이 보이지 않는다. 북이 한 번 울리자 병사 혼들이 대형을 바꾼다",
-     "sfx_request": [
+     "sfx": [
+      "cut.war.drum"
+     ],
+     "sfx_note": [
       "cut.war.drum(큰 북 한 번)"
      ]
     },
@@ -456,7 +465,10 @@
       "framing": "장수 어깨 너머로 병사 얼굴"
      },
      "action": "그가 지나간 병사의 등에서 숫자 패가 떨어진다. 패가 떨어진 혼은 고개를 든다",
-     "sfx_request": [
+     "sfx": [
+      "cut.tag.drop"
+     ],
+     "sfx_note": [
       "cut.tag.drop(나무패 떨어지는 소리)"
      ]
     },
@@ -720,7 +732,10 @@
       "framing": "갱도 끝에 빛 한 점"
      },
      "action": "막장 옆 막혔던 갱도 끝이 열린다. 바람이 들어온다. 바다 냄새 — 화면 가장자리 물빛이 한 번 스친다",
-     "sfx_request": [
+     "sfx": [
+      "amb.sea.wind"
+     ],
+     "sfx_note": [
       "amb.sea.wind(먼 바닷바람)"
      ]
     },
@@ -1002,7 +1017,7 @@
       "reward": {
        "memory": "M-B08"
       },
-      "world_change": "④ 이름혼 전원 인 \"없음 → 흐림\"(천도 캐스팅 가산 +0.5 → +0.25초). 숫자 혼이 이름을 되찾아 천도 가능, 짧은 기억 대신 긴 기억"
+      "world_change": "④ 이름혼 전원 인 \"없음 → 흐림\"(천도 캐스팅 가산 +0.5 → +0.25초). 숫자 혼도 같이 흐림이 되고, 짧은 기억 대신 제 긴 기억을 말한다(숫자 혼은 B-08 전에도 천도할 수 있다 — 인 없음 +0.5초, 기획 act2-souls 시뮬과 같음)"
      }
     }
    ],
@@ -1083,7 +1098,10 @@
       "framing": "아낙의 등 너머로 바다, 수평선을 화면 가운데"
      },
      "action": "곶 끝. 사람 모양 바위에 반쯤 붙은 몸. 젖은 저고리. 손에 남자 옷 한 벌",
-     "sfx_request": [
+     "sfx": [
+      "amb.harbor"
+     ],
+     "sfx_note": [
       "amb.harbor(파도·갈매기·배 삐걱임)"
      ]
     },
@@ -1098,7 +1116,10 @@
       "zoom": 1.05
      },
      "action": "먼 바다에서 파도가 줄지어 일어난다. 파도마다 물 혼 하나씩",
-     "sfx_request": [
+     "sfx": [
+      "cut.wave.row"
+     ],
+     "sfx_note": [
       "cut.wave.row(줄지어 밀려오는 파도)"
      ]
     },
@@ -1351,7 +1372,10 @@
       "framing": "기운 갑판을 수평선과 비스듬히"
      },
      "action": "드러난 여울 바닥, 반쯤 가라앉은 배. 갑판이 기울어 있다",
-     "sfx_request": [
+     "sfx": [
+      "cut.hull.creak"
+     ],
+     "sfx_note": [
       "cut.hull.creak(배 몸체 삐걱임)"
      ]
     },
@@ -1505,7 +1529,10 @@
       "time": 1.0
      },
      "action": "부를 때마다 손에 쥔 밧줄의 매듭이 하나씩 풀린다. 남아 있던 선원 혼이 난간에서 손을 놓고 빛으로 오른다",
-     "sfx_request": [
+     "sfx": [
+      "cut.rope.untie"
+     ],
+     "sfx_note": [
       "cut.rope.untie(젖은 매듭 풀리는 소리)"
      ]
     },
@@ -1625,7 +1652,10 @@
     {
      "t": 2.6,
      "action": "또 한 번. 다른 혼이 일어난다",
-     "sfx_request": [
+     "sfx": [
+      "cut.soul.rise"
+     ],
+     "sfx_note": [
       "cut.soul.rise(혼이 일어나는 낮은 숨소리)"
      ]
     },
@@ -1932,7 +1962,10 @@
       "framing": "닫힌 성문을 화면 왼쪽 위, 눈밭을 크게"
      },
      "action": "닫힌 성문. 성문 밖 눈밭에 팻말 없는 구덩이 무덤들. 그 사이를 혼 열둘이 떠돈다",
-     "sfx_request": [
+     "sfx": [
+      "amb.snow.wind"
+     ],
+     "sfx_note": [
       "amb.snow.wind(눈밭 바람)"
      ]
     },
@@ -1994,7 +2027,10 @@
       "framing": "눈밭을 위에서 — 명단처럼"
      },
      "action": "흑월이 사슬 끝으로 눈밭에 가로줄을 긋는다. 위에서부터 한 줄씩",
-     "sfx_request": [
+     "sfx": [
+      "cut.chain.drag"
+     ],
+     "sfx_note": [
       "cut.chain.drag(사슬이 눈을 긁는 소리)"
      ]
     },
@@ -2074,7 +2110,10 @@
       "time": 1.2
      },
      "action": "물이 빠진다. 새벽빛이 눈밭에 든다",
-     "sfx_request": [
+     "sfx": [
+      "cut.water.recede"
+     ],
+     "sfx_note": [
       "cut.water.recede(물 빠지는 소리)"
      ]
     },
@@ -2204,10 +2243,13 @@
       "framing": "둑을 옆으로, 사람은 실루엣"
      },
      "action": "횃불을 진 젊은이가 물로 들어가 사람을 끌어올린다. 둑에 눕힌다. 다시 들어간다. 또 하나. 또 하나",
-     "sfx_request": [
-      "cut.splash.pull(물에서 사람을 끌어올리는 소리)"
+     "note": "약 2초에 한 사람, 일곱. 수를 글로 세지 않는다. 일곱째(S-120)는 다른 이들보다 조금 오래 비춘다",
+     "sfx": [
+      "cut.splash.pull"
      ],
-     "note": "약 2초에 한 사람, 일곱. 수를 글로 세지 않는다. 일곱째(S-120)는 다른 이들보다 조금 오래 비춘다"
+     "sfx_note": [
+      "cut.splash.pull(물에서 사람을 끌어올리는 소리)"
+     ]
     },
     {
      "t": 26.0,
@@ -2325,7 +2367,10 @@
       "zoom": 1.5
      },
      "action": "사슬은 남지 않았다. 눈밭에 붓 한 자루가 남아 있다",
-     "sfx_request": [
+     "sfx": [
+      "cut.snow.settle"
+     ],
+     "sfx_note": [
       "cut.snow.settle(눈 위에 가벼운 것이 놓이는 소리)"
      ]
     },
@@ -2419,7 +2464,10 @@
       "framing": "닫힌 성문과 눈밭, 아무도 없음"
      },
      "action": "혼 열둘이 떠돌던 자리가 비었다. 눈만 내린다",
-     "sfx_request": [
+     "sfx": [
+      "amb.snow.wind"
+     ],
+     "sfx_note": [
       "amb.snow.wind(눈밭 바람)"
      ]
     },
@@ -2478,7 +2526,10 @@
       "framing": "서낭당 고개, 푸른 새벽빛, 서낭나무를 화면 오른쪽"
      },
      "action": "솔고개 서낭당. 동트기 직전",
-     "sfx_request": [
+     "sfx": [
+      "amb.dawn.birds"
+     ],
+     "sfx_note": [
       "amb.dawn.birds(새벽 새 한두 마리)"
      ]
     },
@@ -2553,10 +2604,13 @@
       "framing": "당할미 옆얼굴, 시선은 화면 밖"
      },
      "action": "바람이 분다. 서낭나무 천 조각이 흔들린다. 당할미가 고개를 든다. 아무 말도 하지 않는다",
-     "sfx_request": [
-      "amb.wind.gust(바람 한 줄기)"
+     "note": "추위 규칙: 지나가는 차사의 한기를 느끼는 사람은 당할미뿐 — 고개를 드는 것으로만. 카메라를 보지 않는다",
+     "sfx": [
+      "amb.wind.gust"
      ],
-     "note": "추위 규칙: 지나가는 차사의 한기를 느끼는 사람은 당할미뿐 — 고개를 드는 것으로만. 카메라를 보지 않는다"
+     "sfx_note": [
+      "amb.wind.gust(바람 한 줄기)"
+     ]
     },
     {
      "t": 44.0,
