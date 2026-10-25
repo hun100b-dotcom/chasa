@@ -15,6 +15,7 @@ Shader "Chasa/Grade"
     float4 _G0, _G1;                 // 청록 글로우: xy 위치(uv), z 반지름(키 단위), w 세기
     float4 _D0, _D1, _D2, _D3;       // 붉은 위험 호: x 방향(라디안), y 불투명도, z 반폭(라디안)
     float2 _NoiseScroll; float2 _ScreenPx;
+    float4 _GradeCS, _GradeTint;     // 검수용 보정 후보(?grade=b·c): x 대비, y 채도, z 밝기 보탬. tint 는 색 곱. 기본(1,1,0)·(1,1,1)은 아무 일도 안 한다
 
     // 32×32×32 LUT 가 1024×32 가로 띠: 칸=파랑, 칸 안 가로=빨강, 위쪽=초록 큰 값
     float3 Lut(sampler2D lut, float3 c)
@@ -65,6 +66,11 @@ Shader "Chasa/Grade"
         if (_W.w > 0.001) g += Lut(_L3, c) * _W.w;
         if (_W.x + _W.y + _W.z + _W.w < 0.001) g = c;
         if (_TendoLut > 0.001) g = lerp(g, Lut(_LT, g), _TendoLut);    // 천도 중 색(채도↓·청록 하이라이트)
+        // 검수용 보정 후보: 대비 → 채도 → 색 곱 → 밝기 보탬 (기본값이면 그대로)
+        g = (g - 0.5) * _GradeCS.x + 0.5;
+        float gl = dot(g, float3(0.299, 0.587, 0.114));
+        g = lerp(float3(gl, gl, gl), g, _GradeCS.y);
+        g = saturate(g * _GradeTint.rgb + _GradeCS.z);
         // 평소 비네트(남청, 순검정 금지)
         float2 q = (uv - 0.5) * float2(_Aspect, 1.0); float dq = length(q) / (0.5 * sqrt(_Aspect * _Aspect + 1.0));
         float vt = saturate((dq - (1.0 - _VigSmooth) * 0.55) / max(0.001, _VigSmooth * 0.8));

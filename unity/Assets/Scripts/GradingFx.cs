@@ -23,6 +23,7 @@ public class GradingFx : MonoBehaviour
     Root data; readonly Dictionary<string, Key> keys = new Dictionary<string, Key>();
     readonly Dictionary<string, Texture2D> luts = new Dictionary<string, Texture2D>();
     Texture2D lutTendo, noise, pattern;
+    Vector4 gradeCS = new Vector4(1f, 1f, 0f, 0f), gradeTint = Vector4.one;   // ?grade=b·c 후보(a 는 기본)
     Material mat; bool ok, neutral; Texture2D lutNeutral;
 
     Weather wxNow = Weather.Clear, wxPrev = Weather.Clear; float wxT = 99f;
@@ -42,6 +43,9 @@ public class GradingFx : MonoBehaviour
         string u = (Application.absoluteURL ?? "").ToLowerInvariant();
         if (u.Contains("grade=off")) return;
         neutral = u.Contains("grade=neutral");
+        // 낮이 희뿌연 문제의 색보정 후보. b: 대비·채도를 조금 올리고 안개 낀 밝기를 눌러 줌 / c: b 보다 강하게 + 따뜻한 쪽
+        if (u.Contains("grade=b")) { gradeCS = new Vector4(1.12f, 1.15f, -0.03f, 0f); }
+        else if (u.Contains("grade=c")) { gradeCS = new Vector4(1.22f, 1.28f, -0.05f, 0f); gradeTint = new Vector4(1.04f, 1.0f, 0.95f, 1f); }
         var sh = Resources.Load<Shader>("Shaders/ChasaGrade");
         var ta = Resources.Load<TextAsset>("Data/grading");
         if (sh == null || !sh.isSupported || ta == null) return;
@@ -194,6 +198,7 @@ public class GradingFx : MonoBehaviour
         else mat.SetVector("_W", W);
         mat.SetTexture("_L0", useLut[0]); mat.SetTexture("_L1", useLut[1]); mat.SetTexture("_L2", useLut[2]); mat.SetTexture("_L3", useLut[3]);
         mat.SetTexture("_LT", lutTendo); mat.SetTexture("_Noise", noise); mat.SetTexture("_Pattern", pattern);
+        mat.SetVector("_GradeCS", gradeCS); mat.SetVector("_GradeTint", gradeTint);
         mat.SetColor("_VigColor", vCol); mat.SetFloat("_VigInt", vInt); mat.SetFloat("_VigSmooth", vSm);
         mat.SetFloat("_TendoLut", 0.6f * tendoK);
         mat.SetFloat("_TendoK", tendoK); mat.SetFloat("_Radius", radius); mat.SetFloat("_Aspect", (float)w / Mathf.Max(1, h)); mat.SetFloat("_PatA", patA);
