@@ -354,7 +354,7 @@
    "skippable": true,
    "lines": 0,
    "walkable": true,
-   "data": "memories_s3.json baek[] (funeral=reverse/carve/group) · season3_outline boss_clues[].clues(verb=거꾸로 장례)",
+   "data": "reverse_clues_s3.json clues[] (백마다 {last}·{middle}·{empty}·{clue_id}) · season3_outline boss_clues[].clues(verb=거꾸로 장례)",
    "note": "대사 0. 산 사람은 차사를 보지 못한다. 장례가 끝에서 처음으로 거꾸로 감긴다. 마지막 컷은 늘 비어 있는 것(6막 = 빈 몸 자리, 7막 = 빈 비석 · 목패 · 팻말). 그 빈 것이 단서다",
    "steps": [
     {
@@ -422,6 +422,7 @@
    "skippable": true,
    "lines": 0,
    "walkable": true,
+   "data": "reverse_clues_s3.json clues[] (백마다 {line_row}·{clue_id}) · season3_outline boss_clues[].clues(거꾸로 명부)",
    "note": "대사 0. ⑦~⑩엔 산 사람이 없어서 장례 대신 명부가 거꾸로 넘어간다. 마지막 장은 몸 칸이 빈 줄",
    "steps": [
     {

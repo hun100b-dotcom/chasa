@@ -178,7 +178,7 @@ COMMON = [
             st(3.0, cam={'mode': 'return', 'to': 'player', 'time': 0.4})]},
  {'id': 'RITE-REVERSE', 'branch': '거꾸로 장례(단서, ①~⑥ 위층 낮)', 'trigger': '그 백의 아래층에 처음 내려간 다음 낮, 위층 장례 자리 가까이', 'duration': 24.0,
   'input_lock': False, 'world': 'run', 'skippable': True, 'lines': 0, 'walkable': True,
-  'data': 'memories_s3.json baek[] (funeral=reverse/carve/group) · season3_outline boss_clues[].clues(verb=거꾸로 장례)',
+  'data': 'reverse_clues_s3.json clues[] (백마다 {last}·{middle}·{empty}·{clue_id}) · season3_outline boss_clues[].clues(verb=거꾸로 장례)',
   'note': '대사 0. 산 사람은 차사를 보지 못한다. 장례가 끝에서 처음으로 거꾸로 감긴다. 마지막 컷은 늘 비어 있는 것(6막 = 빈 몸 자리, 7막 = 빈 비석 · 목패 · 팻말). 그 빈 것이 단서다',
   'steps': [
    st(0.0, beat='#7 끝', cam={'mode': 'fade_in', 'time': 0.8, 'framing': '장례 자리, 산 사람들이 흩어지는 뒷모습'}, act='{last}', ui={'film_fx': 'reverse'},
@@ -188,6 +188,7 @@ COMMON = [
    st(24.0, cam={'mode': 'return', 'to': 'player', 'time': 0.5}, ui={'clue_found': '{clue_id}'})]},
  {'id': 'LEDGER-REVERSE', 'branch': '거꾸로 명부(단서, ⑦~⑩ 새벽 틈)', 'trigger': '그 백의 아래층에 처음 내려간 다음 새벽 틈, 명부 여백이 번진 자리 가까이', 'duration': 16.0,
   'input_lock': False, 'world': 'run', 'skippable': True, 'lines': 0, 'walkable': True,
+  'data': 'reverse_clues_s3.json clues[] (백마다 {line_row}·{clue_id}) · season3_outline boss_clues[].clues(거꾸로 명부)',
   'note': '대사 0. ⑦~⑩엔 산 사람이 없어서 장례 대신 명부가 거꾸로 넘어간다. 마지막 장은 몸 칸이 빈 줄',
   'steps': [
    st(0.0, cam={'mode': 'push', 'to': 'ledger', 'time': 1.0, 'zoom': 1.4}, act='명부 장들이 뒤에서 앞으로 넘어간다', sfx=['cut.ledger.open'], req=['cut.rewind.soft(종이 넘기듯 거꾸로 감기는 부드러운 소리)']),

@@ -1251,3 +1251,9 @@
 - `tools/sfx_map.py` MADE에 PR #34(시즌2 요청 10개, 병합됨)와 PR #36(시즌3 요청 26개 + 백 장치음 3개)을 더함. 대본의 요청 → 있는 소리로 옮겨 다시 생성(cutscenes_s2 · s3, funerals_act3 · s3).
 - cutscenes_s3: 백 장면의 무릎 · 깨뜨리기 · 저편 나룻불 소리를 백 전용(sfx.baek.kneel · sfx.baek.break · sfx.farlight.on)으로 바꿈(사운드 제안).
 - PR #36은 아직 열려 있음 — 병합 전엔 이 id들의 파일이 기본 가지에 없다.
+
+## 2026-10-26 서사 — 시즌 3 백마다의 낮 단서 글(거꾸로 장례 · 거꾸로 명부)
+- 새 생성기 `tools/reverse_clues_s3.py` → `docs/narrative/reverse_clues_s3.json`. cutscenes_s3의 RITE-REVERSE({last}·{middle}·{empty}) 69개, LEDGER-REVERSE({line_row}) 48개, 단서 없음 3개(S-191 무명 · S-259 이미 장례 · S-263은 S-262와 하나).
+- 7막 "빈 것"은 장례 대본(funerals_s3)의 첫 "멈춘 것"과 같은 글(자체 검사) — 단서에서 본 빈자리가 이튿날 장례에서 채워진다.
+- 짝 혼을 천도하지 않았으면 이 단서로 이름을 얻는다(④는 번호도, ⑥은 별명도). 비밀에 닿는 백 8개는 quiet(8막 전 덧붙임 없음).
+- funerals_s3.py는 다른 생성기가 가져다 쓸 때 파일을 쓰지 않게 바꿈. check_s1 33개 파일 0건, IP 새 적중 0.
