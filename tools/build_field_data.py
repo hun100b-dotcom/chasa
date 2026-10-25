@@ -60,8 +60,15 @@ if os.path.exists(zp):
             nums = [int(v) for v in re.findall(r"\d+", c.get("size_hint", "5"))]
             n = round(sum(nums) / len(nums)) if nums else 5
             camps.append({"x": c["x"], "z": c["y"], "r": c["radius_m"], "n": n, "zone": zn["name"], "theme": zn.get("enemy_theme", "")})
+zones_out = []
+if os.path.exists(zp):
+    for zn in zs["zones"]:
+        fg = zn.get("fog") or {}
+        r = zn["rect_m"]
+        zones_out.append({"name": zn["name"], "x0": r[0], "z0": r[1], "x1": r[2], "z1": r[3],
+                          "fog": fg.get("color", "#33405F"), "density": fg.get("density", 0.006)})
 with open(os.path.join(res, "Data", "field_camps.json"), "w", encoding="utf-8") as fp:
-    json.dump({"camps": camps}, fp, ensure_ascii=False, separators=(",", ":"))
+    json.dump({"camps": camps, "zones": zones_out}, fp, ensure_ascii=False, separators=(",", ":"))
 print("군집", len(camps))
 
 # 모델 모으기: 어느 폴더에 있든 이름으로 찾는다(풀밭은 코드가 쓰니 항상 포함)

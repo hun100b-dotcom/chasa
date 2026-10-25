@@ -1511,4 +1511,14 @@ public class CoreTests
         var h = new TutorialHints { Enabled = false };
         Assert.IsNull(h.On(HintEvent.FirstMove, false));
     }
+
+    // ---------- 구역 판정 ----------
+    [Test]
+    public void Zones_FirstMatchWinsAndOutsideIsMinusOne()
+    {
+        var z = new[] { new ZoneRect { X0 = 0, Z0 = 0, X1 = 10, Z1 = 10 }, new ZoneRect { X0 = 5, Z0 = 5, X1 = 20, Z1 = 20 } };
+        Assert.AreEqual(0, ZoneRules.Find(z, 7, 7));      // 겹치면 앞의 구역
+        Assert.AreEqual(1, ZoneRules.Find(z, 15, 15));
+        Assert.AreEqual(-1, ZoneRules.Find(z, 50, 50));
+    }
 }

@@ -211,7 +211,7 @@ public class GameMain : MonoBehaviour
         wheelCut = Mathf.Lerp(wheelCut, judge.cuts.CamZoom, 1f - Mathf.Exp(-4f * dt));   // 컷신 확대 배율도 부드럽게
         float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
         wheel = Mathf.Lerp(wheel, wheelTarget, 1f - Mathf.Exp(-Balance.CAMERA_WHEEL_SMOOTH * Time.unscaledDeltaTime));   // 휠 줌은 부드럽게 따라간다
-        if (judge.clock != null) ClockSky.Apply(sun, cam, judge.clock);   // 하늘·햇빛이 시계를 따른다
+        if (judge.clock != null) ClockSky.Apply(sun, cam, judge.clock, player.Pos, dt);   // 하늘·햇빛이 시계를 따른다
         cam.transform.position = focus + (View3D.On ? offset * ((1f - zoomIn) * wheel) : offset);
         cam.transform.LookAt(View3D.On ? focus + Vector3.up * 0.9f : focus);   // 3D 에선 발밑이 아니라 가슴께를 본다
         cam.transform.Rotate(0f, 0f, feel.GetShakeRoll(), Space.Self);   // 충격이 클 때만 화면이 살짝 기울었다 돌아온다

@@ -14,8 +14,9 @@ public static class ClockSky
     static readonly Color AmbNight = new Color(0.20f, 0.23f, 0.34f), AmbDay = new Color(0.55f, 0.56f, 0.58f);
     static readonly Color FogDay = new Color(0.60f, 0.66f, 0.72f);
 
-    public static void Apply(Light sun, Camera cam, WorldClock clock)
+    public static void Apply(Light sun, Camera cam, WorldClock clock, Vector3 playerPos, float dt)
     {
+        FieldZones.Tick(playerPos, dt);   // 구역별 밤 안개(색·짙기)를 서서히 갈아 끼운다
         float dl = clock.Daylight;
         SkyState.Daylight = dl;
         float red = 1f - Mathf.Abs(dl * 2f - 1f);   // 낮밤 중간에서 1, 한낮·한밤에서 0
@@ -34,9 +35,9 @@ public static class ClockSky
             else sun.transform.rotation = Quaternion.Euler(52f, -35f, 0f);
         }
         RenderSettings.ambientLight = Color.Lerp(AmbNight, AmbDay, dl);
-        var fog = Color.Lerp(View3D.FogColor, Color.Lerp(FogDay, new Color(0.85f, 0.55f, 0.45f), red * 0.5f), dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);
+        var fog = Color.Lerp(FieldZones.NightFog, Color.Lerp(FogDay, new Color(0.85f, 0.55f, 0.45f), red * 0.5f), dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);
         RenderSettings.fogColor = fog;
-        RenderSettings.fogDensity = Mathf.Lerp(0.016f, 0.007f, dl);
+        RenderSettings.fogDensity = Mathf.Lerp(FieldZones.NightDensity, 0.007f, dl);   // 낮엔 구역과 상관없이 옅게
         if (cam != null) cam.backgroundColor = fog;
     }
 }

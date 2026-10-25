@@ -22,7 +22,7 @@ public class NpcWorld
 
     class Spot
     {
-        public Row row; public string clue, line, half, verb, label; public Vector3 pos; public GameObject view; public bool isObject;
+        public Row row; public string clue, line, half, verb, label; public Vector3 pos; public GameObject view; public NpcActor actor; public bool isObject;
     }
 
     const float NoticeRadius = 3.5f;     // 이 거리 안이면 듣는다
@@ -95,6 +95,7 @@ public class NpcWorld
         {
             float d = new Vector2(s.pos.x - playerPos.x, s.pos.z - playerPos.z).magnitude;
             if (s.view != null) s.view.SetActive(d < SpawnRadius);
+            if (s.actor != null) { s.actor.hasLook = d < 12f; s.actor.lookAt = playerPos; s.actor.talking = d <= NoticeRadius + 1f; }   // 가까우면 돌아보고 말하는 동작
             if (d <= NoticeRadius) Notice(s);
         }
     }
@@ -118,6 +119,13 @@ public class NpcWorld
 
     GameObject MakeView(Spot s)
     {
+        // 사람이면 아트의 3D 모델(npc_N101 …)을 먼저 시도한다. 한 칸에 여럿(104·110·204)은 첫 모델(a)을 쓴다
+        if (!s.isObject && s.row.npc != null && s.row.npc.Length > 2)
+        {
+            string id = s.row.npc.Replace("-", "");
+            var actor = NpcActor.Create(root, "Models/Npc/npc_" + id, s.pos) ?? NpcActor.Create(root, "Models/Npc/npc_" + id + "a", s.pos);
+            if (actor != null) { s.actor = actor; actor.gameObject.SetActive(false); return actor.gameObject; }
+        }
         PrimitiveType shape = s.isObject ? PrimitiveType.Cube : PrimitiveType.Capsule;
         var g = GameObject.CreatePrimitive(shape);
         Object.Destroy(g.GetComponent<Collider>());
@@ -148,7 +156,7 @@ public class NpcWorld
         {
             Sfx.Play("sfx.clue");
             if (onClue != null) onClue();
-            if (s.view != null) s.view.GetComponent<Renderer>().sharedMaterial = U.Matte(new Color(0.85f, 0.78f, 0.62f));   // 얻었으니 보랏빛이 꺼진다
+            if (s.view != null && s.actor == null) s.view.GetComponent<Renderer>().sharedMaterial = U.Matte(new Color(0.85f, 0.78f, 0.62f));   // 얻었으니 보랏빛이 꺼진다(도형 대역일 때만)
         }
     }
 
