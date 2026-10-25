@@ -1209,3 +1209,9 @@
 ## 2026-10-25 · 서사 — 사운드 PR #29 반영(컷신 소리 이름 맞춤)
 - `tools/sfx_map.py` MADE에 사운드 저장소(data/sfx_files.json 224개) 중 대본이 요청했던 22개 추가 → cutscenes_s1·s2 다시 생성. 박자(t)는 그대로.
 - 남은 요청: 시즌 1 0개, 시즌 2 10개(amb.dawn.still·amb.names.many·cut.door.slide·cut.knife.notch·cut.names.release·cut.paper.set·cut.river.flow·cut.river.rush·cut.seal.thud·cut.wire.untie).
+
+## 2026-10-25 · 서사 — 시즌 3 "백의 밤" 개요(시즌 2 개요와 같은 틀)
+- `tools/season3_outline.py` → `docs/narrative/season3_outline.json`: 아래층 ①~⑩ 지역·구역, 월드 시계(해 지면 물이 빠져 아래층이 열리고 새벽에 차오름), 보스 B-21~B-31(단서 36, 눕히기/깨뜨리기), 결말 A·B·C로 가는 길(조건·단서 사슬·돌아오는 선택), 시즌 1·2 → 3 연결 33줄, 먹지기·당할미 비트, 컷신 목록, 열린 질문 6.
+- 10-25 결정 반영: 밤 번호 없음, 새벽 틈 8분, B-23·B-31 5일 강제 개방 + 전날 예고 한 줄, 보스 말풍선 0줄, 추위 말은 당할미만(B-27 장판은 "언 그림자"), "이제 노인" 같은 해 넘김 말 지움.
+- 결말 A 전용 이름·의례 말은 이 파일에 쓰지 않는다(endings_s1이 정본, 자체 검사). SCENARIO-ACT6~8 머리에 "이 개요가 기준" 한 줄.
+- 검사 27개 파일 0건, IP 0건(이 PR 파일).
