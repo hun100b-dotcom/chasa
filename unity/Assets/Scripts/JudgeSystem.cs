@@ -241,6 +241,15 @@ public class JudgeSystem : MonoBehaviour
     }
 
     int gainedExtra;   // 한 줄 꿰기로 덤으로 간 혼이 준 넋(알림용)
+    /// <summary>천도로 얻은 넋을 그 혼이 있던 구역의 빛깔 주머니에도 쌓는다(인 만들기 재료). 품계용 넋과는 별개로 쓴다</summary>
+    void CreditSoulColor(Vector3 at, int amount)
+    {
+        if (amount <= 0) return;
+        var c = SoulColors.ForZone(FieldZones.NameAt(at.x, at.z));
+        lo.wallet.Add(c, amount);
+        ui?.Hud.Toasts.Add(SoulColors.KoName(c) + " +" + amount);
+    }
+
     void FinishTendo()
     {
         var tp = castTarget.Pos;   // Finish 뒤엔 혼이 사라질 수 있어 자리를 미리 적어 둔다
@@ -261,7 +270,7 @@ public class JudgeSystem : MonoBehaviour
                 t2.soul.BeginSending(); t2.Finish();
                 int nb = ledger.Neok; ledger.CompleteTendo(); gainedExtra = ledger.Neok - nb;
                 if (growth.AddNeok(gainedExtra) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank); }
-                night.RecordTendo(gainedExtra);
+                night.RecordTendo(gainedExtra); CreditSoulColor(t2.Pos, gainedExtra);
                 Say("한 줄로 함께 천도했다");
             }
         }
@@ -271,7 +280,7 @@ public class JudgeSystem : MonoBehaviour
             int g = ledger.CompleteBossTendo();
             growth.AddBossPoint();                  // 보스 천도 = 도술 점수 1
             ui?.Hud.Toasts.Add("도술 점수 +1");
-            night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
+            CreditSoulColor(castTarget.Pos, g); night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
             Say(castTarget.label + "을(를) 천도했다!"); if (castTarget.soul.BossId <= 1) bossOutcome = 1;
             MarkBossDone(castTarget.soul.BossId);
@@ -287,7 +296,7 @@ public class JudgeSystem : MonoBehaviour
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
             int gained = ledger.Neok - before;
             if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank); }   // 품계 상승 알림
-            night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
+            CreditSoulColor(tp, gained); night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (OnJudged != null) OnJudged(castTarget, true);
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
             if (castTarget.soul.Name == null) introPlainDone++;
@@ -885,6 +894,8 @@ public class JudgeSystem : MonoBehaviour
     {
         if (clock == null || ledger.Dead) return false;
         var s = SaveGame.Capture(growth, ledger, lo.gear, clueBook);
+        System.Array.Copy(lo.wallet.Amount, s.Wallet, 5);   // 빛깔별 넋 주머니
+        foreach (var sl in lo.sealBag) s.SealBag.Add(sl.Text);
         s.X = player.Pos.x; s.Z = player.Pos.z; s.ClockDay = clock.Day; s.ClockMinutes = clock.Minutes;
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
@@ -902,6 +913,9 @@ public class JudgeSystem : MonoBehaviour
         if (s == null) return false;
         if (Casting) EndCast();
         SaveGame.Apply(s, growth, ledger, lo.gear, clueBook);
+        System.Array.Copy(s.Wallet, lo.wallet.Amount, 5);
+        lo.sealBag.Clear(); foreach (var t in s.SealBag) { var sl = Seal.Parse(t); if (sl != null) lo.sealBag.Add(sl); }
+        lo.Refresh();
         lo.weapon = s.Weapon; lo.other = s.Other == s.Weapon ? (s.Weapon == WeaponId.Chain ? WeaponId.Mace : WeaponId.Chain) : s.Other;
         RefreshGrowth();
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);

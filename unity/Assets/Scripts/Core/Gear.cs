@@ -182,6 +182,7 @@ namespace Chasa.Core
         public int Rerolls;                                  // 다시 굴린 횟수 (비용이 오른다)
         public int Plus;                                     // 장비 손보기 단계(0~ENHANCE_MAX). 첫 옵션(주옵션)이 단계마다 +6%
         public int Sockets;                                  // 뚫은 인 홈 수 (최대 SOCKET_MAX)
+        public List<Seal> Seals = new List<Seal>();          // 홈에 박은 인(Sockets 개수를 넘지 않는다)
         public List<OptionRoll> Options = new List<OptionRoll>();
 
         /// <summary>시연판의 이름 있는 물건: 파혼 반경 +m (노리개)</summary>
@@ -199,6 +200,7 @@ namespace Chasa.Core
         public float DamagePct, AttackSpeedPct, CastReducePct, PahonAreaPct, PahonDamagePct, MoveSpeedPct, CoinPct, PahonRadiusM;
         public float TendoNeokPct, PahonCoinPct, WaitAddS, ChainWindowAddS, PahonKnockbackPct, VisionShift, CastDamageReducePct;
         public float ReachAdd, BoundBonus, StainShorten;   // 도술 패시브: 무기 사거리 +m / 묶인 적 받는 피해 +% / 얼룩 지속 단축 비율
+        public float DefensePct, SkillCdReduce, WeaponCdReduce, FiercePct;   // 인 전용: 방어 / 도술 재사용 단축 / 무기 기술 재사용 단축 / 사나운 적 피해 (쓰는 쪽 연결은 순서대로)
         public int HpFlat;
 
         public float DamageMult { get { return 1f + Math.Min(DamagePct, Balance.CAP_DAMAGE_PCT); } }
@@ -255,6 +257,7 @@ namespace Chasa.Core
 
         public void Add(ItemDef it)
         {
+            foreach (var sl in it.Seals) SealEffects.Apply(sl, this);   // 박힌 인의 효과
             for (int oi = 0; oi < it.Options.Count; oi++)
             {
                 var o = it.Options[oi];

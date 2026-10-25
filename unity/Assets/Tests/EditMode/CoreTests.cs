@@ -2395,5 +2395,42 @@ public class CoreTests
         Assert.AreEqual("옛 사슬", eq3.GetAt(EquipPos.Weapon1).Name); Assert.IsNull(eq3.GetAt(EquipPos.Robe)); Assert.AreEqual("옛 노리개", eq3.GetAt(EquipPos.Charm1).Name);
     }
 
+    [Test]
+    public void SoulColors_구역별_빛깔과_저장_왕복()
+    {
+        Assert.AreEqual(SoulColor.Blue, SoulColors.ForZone("솔고개 마을")); Assert.AreEqual(SoulColor.Yellow, SoulColors.ForZone("보릿들"));
+        Assert.AreEqual(SoulColor.Black, SoulColors.ForZone("물막이 골")); Assert.AreEqual(SoulColor.Red, SoulColors.ForZone("검은여울"));
+        Assert.AreEqual(SoulColor.White, SoulColors.ForZone("도성")); Assert.AreEqual(SoulColor.Blue, SoulColors.ForZone(null));
+        var snap = SaveGame.Capture(new GrowthState(), new Ledger(), new Equipment(), new ClueBook()); snap.Wallet[2] = 77; snap.Wallet[3] = 5;
+        var back = SaveGame.Deserialize(SaveGame.Serialize(snap));
+        Assert.AreEqual(77, back.Wallet[2]); Assert.AreEqual(5, back.Wallet[3]); Assert.AreEqual(0, back.Wallet[0]);
+    }
+
+    [Test]
+    public void 인_효과는_장비_합계에_더해지고_큰_인은_2배_홈을_넘지_못한다()
+    {
+        var it = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Crafted, Name = "시험", Sockets = 1 };
+        Assert.IsTrue(SealEffects.Insert(it, EquipPos.Weapon1, new Seal(SoulColor.Blue, SoulColor.Blue, false)));
+        Assert.IsFalse(SealEffects.Insert(it, EquipPos.Weapon1, new Seal(SoulColor.Red, SoulColor.Red, false)), "홈 하나뿐");
+        Assert.IsFalse(SealEffects.Insert(new ItemDef { Sockets = 2 }, EquipPos.Belt, new Seal(SoulColor.Red, SoulColor.Red, false)), "띠는 인 홈이 없다");
+        var st = new GearStats(); st.Add(it); Assert.AreEqual(0.06f, st.AttackSpeedPct, 1e-5f);
+        var big = new GearStats(); SealEffects.Apply(new Seal(SoulColor.Yellow, SoulColor.Yellow, true), big); Assert.AreEqual(60, big.HpFlat);
+        Assert.AreEqual("서두름 인", SealEffects.Name(new Seal(SoulColor.Red, SoulColor.Blue, false)));
+        Assert.AreEqual(15, Seal.AllKinds(false).Count);
+        var names = new System.Collections.Generic.HashSet<string>(); foreach (var k in Seal.AllKinds(false)) names.Add(SealEffects.Name(k));
+        Assert.AreEqual(15, names.Count, "인 이름 15종이 겹치지 않는다");
+    }
+
+    [Test]
+    public void 인_가방과_박힌_인은_저장_왕복()
+    {
+        var eq = new Equipment(); var it = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Rare, Name = "시험", Sockets = 2 };
+        it.Seals.Add(new Seal(SoulColor.Black, SoulColor.Red, true)); eq.PutAt(EquipPos.Weapon1, it);
+        var snap = SaveGame.Capture(new GrowthState(), new Ledger(), eq, new ClueBook()); snap.SealBag.Add(new Seal(SoulColor.Blue, SoulColor.White, false).Text);
+        var back = SaveGame.Deserialize(SaveGame.Serialize(snap));
+        Assert.AreEqual(1, back.Gear[0].Seals.Count); Assert.IsTrue(back.Gear[0].Seals[0].Large); Assert.AreEqual(SoulColor.Black, back.Gear[0].Seals[0].A);
+        Assert.AreEqual(1, back.SealBag.Count); Assert.IsNull(Seal.Parse("X99"));
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

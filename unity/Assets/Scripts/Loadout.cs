@@ -2,6 +2,7 @@
 // Loadout.cs — 플레이어가 지금 들고 낀 것: 든 무기, 도술 쿨다운, 장비. (규칙은 Core/Gear.cs)
 // 왜 한 곳에? Player·JudgeSystem·화면 글자가 모두 같은 장비 합계를 읽어야 서로 값이 어긋나지 않는다.
 // =============================================================================
+using System.Collections.Generic;
 using Chasa.Core;
 
 public class Loadout
@@ -14,6 +15,8 @@ public class Loadout
     public readonly ActiveCooldowns active = new ActiveCooldowns();   // 새 도술 트리 액티브의 재사용 대기(이름으로)
     public float buffDamage, buffMove, buffMovePassive;                       // 도술이 잠깐 얹는 피해·이동 +%(원념 두르기·얼룩 타기). 바꾼 뒤 Refresh 로 반영
     public readonly Equipment gear = new Equipment();
+    public readonly List<Seal> sealBag = new List<Seal>();   // 만들어 둔(아직 안 박은) 인
+    public readonly SoulWallet wallet = new SoulWallet();   // 빛깔별 넋 주머니(인 만들기 재료). 천도한 혼의 구역 빛깔로 쌓인다
     public GearStats stats = new GearStats();               // 장비 합계 + 성장(능력치·패시브). 장착·성장이 바뀔 때만 다시 계산
     public GrowthState growth;                              // 성장 상태(JudgeSystem 이 넣어 준다). 있으면 합계에 얹는다
     public string lastDrop = "";                            // 가장 최근 드롭 안내 글자
@@ -47,6 +50,22 @@ public class Loadout
     }
 
     /// <summary>손보기로 장비가 바뀐 뒤 합계를 다시 계산한다</summary>
+    /// <summary>인 만들기: 넋 주머니에서 깎고 가방에 담는다. 넋이 모자라면 false (아무것도 깎지 않는다)</summary>
+    public bool CraftSeal(SoulColor a, SoulColor b, bool large)
+    {
+        var s = wallet.Craft(a, b, large);
+        if (s == null) return false;
+        sealBag.Add(s); return true;
+    }
+
+    /// <summary>가방의 인 하나를 그 자리 장비 홈에 끼운다. 성공하면 합계를 다시 계산한다</summary>
+    public bool InsertSeal(EquipPos pos, int bagIndex)
+    {
+        if (bagIndex < 0 || bagIndex >= sealBag.Count) return false;
+        if (!SealEffects.Insert(gear.GetAt(pos), pos, sealBag[bagIndex])) return false;
+        sealBag.RemoveAt(bagIndex); Refresh(); return true;
+    }
+
     public void Refresh() { stats = gear.Stats(); GrowthEffects.Apply(growth, stats); stats.DamagePct += buffDamage; stats.MoveSpeedPct += buffMove + buffMovePassive; }   // 장비 합계 위에 성장 효과를 얹는다
 
     public static string Describe(ItemDef it)

@@ -24,6 +24,8 @@ namespace Chasa.Core
         public Dictionary<string, int> Learned = new Dictionary<string, int>();
         public List<string> ActiveBar = new List<string>();
         public ItemDef[] Gear = new ItemDef[8];          // 자리(EquipPos) 순서 8칸. 옛 저장은 3칸(무기·도포·노리개)이라 불러올 때 옮겨 담는다
+        public List<string> SealBag = new List<string>();   // 가방의 인(저장 글자)
+        public int[] Wallet = new int[5];       // 빛깔별 넋 주머니(청·황·흑·적·백)
         public bool GearFirstRing, GearAct2;      // 장비 자리 해금(1막 보스 처결 / 2막 진입). 한 번 열리면 닫히지 않는다
         public List<string> Clues = new List<string>();
         public int BossOutcome, NamedOutcome;     // 보스 결과(1 천도·2 파혼) / 이름혼 박돌쇠 결과
@@ -46,8 +48,10 @@ namespace Chasa.Core
             if (it == null) return "-";
             var o = new StringBuilder();
             foreach (var op in it.Options) { if (o.Length > 0) o.Append(','); o.Append(op.Kind).Append(':').Append(F(op.Value)); }
-            return (int)it.Rarity + "|" + Clean(it.Name) + "|" + (it.Named ? 1 : 0) + "|" + (it.Gradient ? 1 : 0) + "|" + Clean(it.TiltId) + "|" + it.Rerolls + "|" + it.Plus + "|" + it.Sockets + "|" + o;
+            return (int)it.Rarity + "|" + Clean(it.Name) + "|" + (it.Named ? 1 : 0) + "|" + (it.Gradient ? 1 : 0) + "|" + Clean(it.TiltId) + "|" + it.Rerolls + "|" + it.Plus + "|" + it.Sockets + "|" + o + "|" + SealsText(it);
         }
+
+        static string SealsText(ItemDef it) { var l = new List<string>(); foreach (var sl in it.Seals) l.Add(sl.Text); return string.Join(",", l); }
 
         static ItemDef ItemFrom(string text, Slot slot)
         {
@@ -61,6 +65,8 @@ namespace Chasa.Core
                     var kv = pair.Split(':');
                     it.Options.Add(new OptionRoll((Opt)Enum.Parse(typeof(Opt), kv[0]), PF(kv[1])));
                 }
+            if (p.Length > 9 && p[9].Length > 0)
+                foreach (var t in p[9].Split(',')) { var sl = Seal.Parse(t); if (sl != null && it.Seals.Count < it.Sockets) it.Seals.Add(sl); }
             return it;
         }
 
@@ -76,7 +82,7 @@ namespace Chasa.Core
             var l = new List<string>(); foreach (var kv in s.Learned) l.Add(Clean(kv.Key) + ":" + kv.Value); w("learned", string.Join(",", l));
             var a = new List<string>(); foreach (var n in s.ActiveBar) a.Add(Clean(n)); w("bar", string.Join(",", a));
             for (int i = 0; i < s.Gear.Length; i++) w("gp" + i, ItemText(s.Gear[i]));   // 8자리 형식(옛 gear0~2 는 읽기만 한다)
-            w("gu1", s.GearFirstRing ? 1 : 0); w("gu2", s.GearAct2 ? 1 : 0);
+            w("nk", string.Join(",", s.Wallet)); w("bag", string.Join(",", s.SealBag)); w("gu1", s.GearFirstRing ? 1 : 0); w("gu2", s.GearAct2 ? 1 : 0);
             var c = new List<string>(); foreach (var n in s.Clues) c.Add(Clean(n)); w("clues", string.Join(",", c));
             w("boss", s.BossOutcome); w("named", s.NamedOutcome); w("opening", s.OpeningSeen ? 1 : 0); w("funeral", s.FuneralShown ? 1 : 0); w("weapon", (int)s.Weapon); w("other", (int)s.Other);
             if (s.WeatherNow != null) w("wx", string.Join(",", s.WeatherNow)); w("plagueEased", s.PlagueEased ? 1 : 0);
@@ -112,6 +118,8 @@ namespace Chasa.Core
                     for (int i = 0; i < 3; i++)
                         if (d.ContainsKey("gear" + i)) s.Gear[(int)legacy[i]] = ItemFrom(d["gear" + i], Equipment.KindOf(legacy[i]));
                 }
+                if (d.ContainsKey("nk")) { var np = d["nk"].Split(','); for (int i = 0; i < 5 && i < np.Length; i++) s.Wallet[i] = Math.Max(0, int.Parse(np[i])); }
+                if (d.ContainsKey("bag") && d["bag"].Length > 0) foreach (var t in d["bag"].Split(',')) if (Seal.Parse(t) != null) s.SealBag.Add(t);
                 s.GearFirstRing = I("gu1") == 1; s.GearAct2 = I("gu2") == 1;
                 if (d.ContainsKey("clues") && d["clues"].Length > 0) s.Clues.AddRange(d["clues"].Split(','));
                 s.PlagueEased = I("plagueEased") == 1;
