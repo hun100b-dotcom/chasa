@@ -60,6 +60,14 @@ public class ActorModel : MonoBehaviour
         hero = Instantiate(prefab, modelRoot.transform);
         hero.transform.localPosition = Vector3.zero; hero.transform.localRotation = Quaternion.Euler(0f, heroRow.yaw, 0f);
         hero.transform.localScale = Vector3.one * heroRow.scale;
+        // 모델 표의 hide: 그 이름으로 시작하는 노드를 끈다(같은 모델을 장면마다 다르게 쓰려고. 흑월 1차는 눈이 안 쌓인 모습)
+        if (heroRow.hide != null && heroRow.hide.Length > 0)
+            foreach (var t in hero.GetComponentsInChildren<Transform>(true))
+                foreach (var h in heroRow.hide) if (t.name.StartsWith(h)) { t.gameObject.SetActive(false); break; }
+        // 모델 표의 light: 머리 뼈에 약한 점광원을 달아 '붉게 빛나는 눈' 둘레가 어둠 속에서 번지게 한다(발광 재질만으론 주변이 안 밝아서)
+        if (heroRow.light != null && heroRow.light.Length >= 4)
+            foreach (var t in hero.GetComponentsInChildren<Transform>(true))
+                if (t.name == "Head") { var lg = new GameObject("EyeGlow"); lg.transform.SetParent(t, false); lg.transform.localPosition = new Vector3(0f, 0.1f, 0.3f); var l = lg.AddComponent<Light>(); l.type = LightType.Point; l.color = new Color(heroRow.light[0], heroRow.light[1], heroRow.light[2]); l.intensity = heroRow.light[3]; l.range = 4f; l.shadows = LightShadows.None; break; }
         // 재질은 가져오지 않았으므로(색 팔레트는 코드에서) 색 지도(colormap) 한 장을 입힌 무광 재질을 만든다
         var tex = string.IsNullOrEmpty(heroRow.texture) ? null : Resources.Load<Texture2D>(heroRow.texture);
         var rl = new List<Material>(); var cl = new List<Color>();
@@ -272,6 +280,15 @@ public class ActorModel : MonoBehaviour
         return s;
     }
 
+    /// <summary>그림 이름("boss/boss_b05_daedol2_attack")에서 모델 표의 키를 뽑는다. 동작 꼬리표를 뗀 이름이 표에 있어야 한다</summary>
+    static string BossModelKey(string name)
+    {
+        int i = name.IndexOf("boss_b"); if (i < 0) return null;
+        string b = name.Substring(i);
+        foreach (var suf in new[] { "_attack", "_kneel", "_idle" }) if (b.EndsWith(suf)) { b = b.Substring(0, b.Length - suf.Length); break; }
+        return ModelCatalog.Actor(b) != null ? b : null;
+    }
+
     static Spec SpecBase(string name)
     {
         var s = new Spec { legs = true };
@@ -281,6 +298,8 @@ public class ActorModel : MonoBehaviour
         { s.key = "boss_b02"; s.height = 2.4f; s.body = new Color(0.72f, 0.25f, 0.38f); s.accent = new Color(0.95f, 0.8f, 0.4f); s.legs = false; s.glow = 0.4f; }
         else if (name.Contains("boss_b03"))  // 서 의원: 약장을 진 마른 의원
         { s.key = "boss_b03"; s.height = 2.2f; s.body = new Color(0.45f, 0.33f, 0.20f); s.accent = new Color(0.4f, 0.9f, 0.85f); s.legs = false; s.glow = 0.3f; }
+        else if (name.Contains("boss_b") && BossModelKey(name) != null)   // 2·3막 보스·흑월: 모델 표에 줄이 있는 이름이면 그 모델(없으면 아래 도형)
+        { s.key = BossModelKey(name); s.height = 2.2f; s.body = new Color(0.30f, 0.25f, 0.35f); s.accent = new Color(0.9f, 0.3f, 0.3f); s.legs = false; s.glow = 0.4f; }
         else if (name.Contains("boss"))  // 나루 영감: 크고 보랏빛, 뿔 없이 긴 도포
         { s.key = "boss"; s.height = 3.2f; s.body = new Color(0.40f, 0.30f, 0.60f); s.accent = new Color(0.8f, 0.7f, 1f); s.legs = false; s.glow = 0.5f; }
         else if (name.Contains("soul_wail") || name.Contains("soul_mote") || name.Contains("soul_buried"))   // 필드 혼 3유형: 키 = <유형>_<등급> (모델은 models.json, 없으면 이 도형 대역)

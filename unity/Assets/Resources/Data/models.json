@@ -2100,6 +2100,607 @@
     "KneelHold"
    ],
    "yaw": 180
+  },
+  {
+   "key": "boss_b05_daedol2",
+   "path": "Models/Boss/boss_b05_daedol2",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  },
+  {
+   "key": "boss_b06_jangsu",
+   "path": "Models/Boss/boss_b06_jangsu",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  },
+  {
+   "key": "boss_b07_chilseong",
+   "path": "Models/Boss/boss_b07_chilseong",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  },
+  {
+   "key": "boss_b08_yeom",
+   "path": "Models/Boss/boss_b08_yeom",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  },
+  {
+   "key": "boss_b09_mangbu_ahnak",
+   "path": "Models/Boss/boss_b09_mangbu_ahnak",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  },
+  {
+   "key": "boss_b10_captain",
+   "path": "Models/Boss/boss_b10_captain",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  },
+  {
+   "key": "boss_b11_wangcho",
+   "path": "Models/Boss/boss_b11_wangcho",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  },
+  {
+   "key": "boss_b12_heugwol",
+   "path": "Models/Boss/boss_b12_heugwol",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ],
+   "light": [
+    1.0,
+    0.15,
+    0.1,
+    0.9
+   ]
+  },
+  {
+   "key": "boss_b12_heugwol_b04",
+   "path": "Models/Boss/boss_b12_heugwol",
+   "scale": 1.0,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit1"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ],
+   "hide": [
+    "snow_sh",
+    "brim_snow"
+   ],
+   "light": [
+    1.0,
+    0.15,
+    0.1,
+    0.9
+   ]
   }
  ],
  "props": [

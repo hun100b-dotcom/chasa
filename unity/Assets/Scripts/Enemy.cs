@@ -420,7 +420,7 @@ public class Enemy : MonoBehaviour
         bool down = kneeling || sending;
         if (soul.Boss)
         {
-            string b = soul.BossId == 2 ? "boss_b02" : soul.BossId == 3 ? "boss_b03" : soul.BossId >= 5 ? Bosses.Get(soul.BossId).Model : "boss_naru";
+            string b = soul.BossId == 2 ? "boss_b02" : soul.BossId == 3 ? "boss_b03" : soul.BossId >= 4 ? Bosses.Get(soul.BossId).Model : "boss_naru";
             n = "boss/" + b + (atk.Winding ? "_attack" : down && soul.BossId > 1 ? "_kneel" : "_idle");
         }
         else if (soul.Fierce) n = "enemies/soul_fierce";

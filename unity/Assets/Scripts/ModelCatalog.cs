@@ -15,6 +15,8 @@ public static class ModelCatalog
     {
         public string key, path, texture; public float scale = 1f, yaw;   // yaw: 앞 방향 보정(도). glTFast 는 GLB 의 앞(+Z)을 유니티에서 뒤집어 읽어서 GLB 모델은 180
         public ClipRow[] clips; public string[] loop;
+        public string[] hide;    // 이 이름으로 시작하는 노드는 끈다(예: 흑월 1차는 눈 조각을 뺀다)
+        public float[] light;    // [r,g,b,세기] 머리 뼈에 다는 점광원(없으면 안 단다)
     }
     [Serializable] public class PropRow { public string sprite, path, texture; public float scale = 1f, yaw; }
     [Serializable] class File { public ActorRow[] actors; public PropRow[] props; }

@@ -30,7 +30,7 @@ namespace Chasa.Core
                 case 3: return new BossDef { Id = 3, Name = "서 의원", Cut = "B03", CluePrefix = "B03-", X = 46f, Z = 453f, Maedhim = Balance.B03_BOSS_MAEDHIM, Speed = 0.15f, Damage = 24, Model = "boss_b03" };
                 // 2막 보스(기획 act2_map boss_arenas 좌표 · 맺힘 임시값은 balance B05~B08). 전투 규칙은 Core/Act2Boss.cs
                 // 4호 흑월 차사 1차(1막 끝, ② 무덤골 임시 자리): 처결이 없다. 맺힘 50%에서 사슬을 거두고 물러난다(JudgeSystem.TickHeukwol)
-                case 4: return new BossDef { Id = 4, Name = "흑월", Cut = "B04", CluePrefix = "B04-", X = 110f, Z = 585f, Maedhim = Balance.B04_MAEDHIM, Speed = 0.5f, Damage = (int)Balance.B04_DAMAGE, Model = "boss_naru" };
+                case 4: return new BossDef { Id = 4, Name = "흑월", Cut = "B04", CluePrefix = "B04-", X = 110f, Z = 585f, Maedhim = Balance.B04_MAEDHIM, Speed = 0.5f, Damage = (int)Balance.B04_DAMAGE, Model = "boss_b12_heugwol_b04" };
                 case 5: return new BossDef { Id = 5, Name = "기수 대돌", Cut = "B05", CluePrefix = "B05-", X = 125f, Z = 1018f, Maedhim = Balance.B05_MAEDHIM, Speed = 0.5f, Damage = Balance.B05_DAMAGE, Model = "boss_b05_daedol2" };
                 case 6: return new BossDef { Id = 6, Name = "이름 없는 장수", Cut = "B06", CluePrefix = "B06-", X = 245f, Z = 1138f, Maedhim = Balance.B06_MAEDHIM, Speed = 0.4f, Damage = Balance.B06_DAMAGE, Model = "boss_b06_jangsu" };
                 case 7: return new BossDef { Id = 7, Name = "갱도 반장 칠성", Cut = "B07", CluePrefix = "B07-", X = 705f, Z = 1192f, Maedhim = Balance.B07_MAEDHIM, Speed = 0.5f, Damage = Balance.B07_DAMAGE, Model = "boss_b07_chilseong" };
