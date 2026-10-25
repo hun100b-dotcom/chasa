@@ -720,6 +720,8 @@ public class JudgeSystem : MonoBehaviour
     }
     /// <summary>장례 컷의 조건 글자(서사 condition). 지금은 1호 결과만 안다(3호 결과는 아직 따로 세지 않아 false)</summary>
     bool FuneralCond(string c) { return c == "B-01 천도함" ? bossOutcome == 1 : false; }
+    /// <summary>제사를 지켜보기 전에는 장례 대상 이름혼의 지도 표식을 숨긴다(기획: 지켜보면 그 혼의 오늘 밤 자리가 명부에 표시된다). 윤 소사·연이는 첫 세션 흐름이라 처음부터 보인다</summary>
+    public bool NamedMarkerHidden(string name) { return name != null && name != "윤 소사" && name != "연이" && funeralCut.ContainsKey(name) && (npcs == null || !npcs.JesaSeen.Contains(name)); }
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
     // ===== 저장·불러오기 (규칙은 Core/SaveGame.cs, 저장소는 SaveStore) ==================
     bool loadChecked; float autoSaveT = 30f;

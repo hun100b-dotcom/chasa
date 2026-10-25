@@ -52,6 +52,7 @@ public class NpcWorld
     public readonly HashSet<string> JesaSeen = new HashSet<string>();   // 제사를 끝까지 지켜본 혼(천도하면 기억 끝에 한 줄이 붙는다)
     readonly Dictionary<string, Vector3> soulHome = new Dictionary<string, Vector3>();   // 장례 대상 혼의 집 마당(제사 지켜보기 자리)
     readonly Dictionary<string, string> jesaPlaceSoul = new Dictionary<string, string>();   // 자리 이름 → 혼 이름
+    public System.Func<float> dayFrac;                   // 낮이 얼마나 지났나(0~1). 섭섭이가 낮 앞 7분은 부엌, 뒤 7분은 뒤뜰에 서는 데 쓴다
     public System.Func<bool> inCombat;                   // 10m 안에 깨어 있는 혼이 있으면 true: 듣는 진행이 멈춘다(기획 §2-3)
     public readonly HeardLog Log = new HeardLog();       // 들은 말 기록(명부 '들은 말' 탭용)
     public float DwellRatio;                             // 지금 듣는 중인 자리의 진행(0~1). 화면 고리용
@@ -107,10 +108,13 @@ public class NpcWorld
                 float x = j.x, z = j.z; MapLayout.PushOut(ref x, ref z, 0.6f);
                 var row = new Row { npc = j.id, name = name, zone = j.zone, place = j.place, verb = "지켜보기", line = j.line, half = j.line_half, clue = "", region = 1, unlock = 2, time = slot };
                 all.Add(new Spot { row = row, clue = "", line = j.line, half = j.line_half, verb = "지켜보기", label = name, pos = new Vector3(x, 0f, z), jesa = true, jesaSoul = soul,
-                    gate = () => !(soulDone != null && soulDone(soul) && !park) && (!park || (parkTendoed != null && parkTendoed())) && karma() < 60 });   // 처결하면 닫힘(박돌쇠는 천도했을 때만 열림), 업 60 이상이면 문이 닫힘
+                    gate = () => !(soulDone != null && soulDone(soul) && !park) && (!park || (parkTendoed != null && parkTendoed())) && karma() < 60 && (j.id != "J-021" || LateDay()) });   // 처결하면 닫힘(박돌쇠는 천도했을 때만 열림), 업 60 이상이면 문이 닫힘
             }
         }
+        foreach (var sp in all) if (sp.row.npc == "N-203" && sp.row.place == "장터 주막 부엌" && sp.row.time == 1) sp.gate = () => !LateDay();   // 섭섭이: 낮 앞 7분은 부엌(엿듣기), 뒤 7분은 뒤뜰(제사)
     }
+
+    bool LateDay() { return dayFrac != null && dayFrac() >= 0.5f; }   // 낮 뒤 7분
 
     /// <summary>처결 결과로 바뀐 풍경 한 곳을 더한다(예: 보스를 천도하면 나루에 배가 묶여 있다). 다가서면 글이 뜬다. timeSlot: 0 동틀녘 1 낮 2 해질녘 3 밤</summary>
     public void AddScenery(Vector3 pos, string text, int timeSlot)
