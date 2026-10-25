@@ -794,6 +794,11 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>지금 넋길을 탈 수 있나 (필드·밤·서낭당 곁·행동 가능). 서낭당 번호를 돌려준다(없으면 -1)</summary>
+    /// <summary>폰 '상호작용' 버튼을 보일 때인가(서낭당 곁 밤)</summary>
+    public bool CanSoulPathNow { get { return SoulPathStop() >= 0; } }
+    /// <summary>도술 칸 i 의 남은 재사용 대기(초). 이름이 없으면 0</summary>
+    public float SkillLeft(int slot) { string n = ActiveNameAt(slot); return n == null ? 0f : lo.active.Left(n); }
+
     int SoulPathStop()
     {
         if (clock == null || Casting || !player.CanActNow() || !SoulPath.Available(clock.Daylight)) return -1;
@@ -1395,9 +1400,9 @@ public class JudgeSystem : MonoBehaviour
             bool artP = DrawArt(rP, TouchHeld(rP) && nearKneel ? "ui_btn_pahon_pressed" : "ui_btn_pahon", nearKneel);
             if (GUI.Button(rP, "파혼", artP ? artBs : bs)) CommandPahon();
             GUI.enabled = wasEnabled;
-            if (SoulPathStop() >= 0 && GUI.Button(new Rect(292, Screen.height - 110, 110, 90), "넋길", bs)) CommandSoulPath();   // 서낭당 곁 밤에만 나타난다
+            if (!TouchControls.Active && SoulPathStop() >= 0 && GUI.Button(new Rect(292, Screen.height - 110, 110, 90), "넋길", bs)) CommandSoulPath();   // 서낭당 곁 밤에만 나타난다
             // 도술 세 칸과 무기 바꾸기 (위쪽 줄) — 시연판 기본 구성에서는 숨김
-            if (SkillsOn)
+            if (SkillsOn && !TouchControls.Active)   // 폰 도술은 새 부채꼴 버튼(TouchControls)이 맡는다
                 for (int i = 0; i < SkillTree.ActiveSlots; i++)
                 {
                     string an = ActiveNameAt(i); if (an == null) continue;

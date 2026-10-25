@@ -95,6 +95,7 @@ public class GameMain : MonoBehaviour
             atmo.cam = cam; atmo.judge = judge; atmo.player = player; atmo.enemies = enemies;
         }
         if (View3D.On) { var hr = gameObject.AddComponent<HeroRing>(); hr.player = player; }   // 주인공 발밑 청록 고리(어두운 땅에서 안 묻히게)
+        WireTouchControls();
         if (FieldRules.On) { var mm = gameObject.AddComponent<MiniMap>(); mm.judge = judge; mm.player = player; mm.cam = cam; }   // 필드 지도(오른쪽 위 작은 지도 + M 큰 지도)
         { var gfx = cam.gameObject.AddComponent<GradingFx>(); gfx.judge = judge; }   // 화면 분위기 후처리(색보정·블룸·비네트·천도 시야 축소). 카메라에 붙어야 OnRenderImage 가 불린다
         if (FieldRules.On) { var fm = gameObject.AddComponent<FieldManager>(); fm.player = player; }   // 걸어가면 둘레 청크를 켜고 끈다
@@ -432,16 +433,11 @@ public class GameMain : MonoBehaviour
     }
 
     // ---- 화면 글자 / 폰 버튼 (기본 글꼴에 한글이 없을 수 있어 영문) --------------------
-    Rect PullBtn => new Rect(Screen.width - 260, Screen.height - 110, 110, 90);
-    Rect DodgeBtn => new Rect(Screen.width - 136, Screen.height - 212, 110, 90);
-    Rect SwingBtn => new Rect(Screen.width - 136, Screen.height - 110, 110, 90);
-
     bool OverTouchButtons(Vector3 mouse)
     {
         if (!Ko.TouchUI) return false;
         if (InJoyZone(mouse) || joyActive) return true;   // 조이스틱 영역은 '눌러서 이동'이 아니다
-        var p = new Vector2(mouse.x, Screen.height - mouse.y);
-        return PullBtn.Contains(p) || SwingBtn.Contains(p) || DodgeBtn.Contains(p);
+        return TouchControls.Over(mouse) || MiniMap.OverMini(mouse);   // 공격·도술·피하기 같은 새 터치 버튼(TouchControls)
     }
 
     void OnGUI()
@@ -451,10 +447,26 @@ public class GameMain : MonoBehaviour
         // 상시 조작 안내 줄은 지웠다(기획 표준). 안내는 처음 해당 행동이 필요할 때 하나씩 띄운다(TutorialHints)
         if (!Ko.TouchUI) return;
         DrawJoystick();
-        var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
-        if (GUI.Button(PullBtn, "끌기", bs)) { var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); }
-        if (Balance.DODGE_ENABLED && GUI.Button(DodgeBtn, "피하기", bs)) player.CommandDodge(null);   // 폰: 걷던 방향으로
-        if (GUI.Button(SwingBtn, "휘두르기", bs)) { var e = Nearest(); player.CommandSwing(e != null ? e.Pos : player.Pos + U.Dir(player.facing)); }
+    }
+
+    /// <summary>폰 조작 버튼(TouchControls)에 동작을 연결한다. 키보드·마우스와 같은 함수를 부르므로 규칙이 갈라지지 않는다</summary>
+    void WireTouchControls()
+    {
+        var tc = gameObject.AddComponent<TouchControls>();
+        tc.hasPull = () => player.loadout.Def.HasPull;
+        tc.canInteract = () => judge.CanSoulPathNow;
+        tc.skillLabel = i => judge.ActiveNameAt(i);
+        tc.skillLeft = i => judge.SkillLeft(i);
+        tc.onSkill = i => judge.UseSkill(i);
+        tc.onDodge = () => { judge.guide.Complete("dodge"); player.CommandDodge(null); };   // 걷던 방향으로(가운데면 앞쪽)
+        tc.onPull = () => { judge.guide.Complete("pull"); var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); };
+        tc.onInteract = () => judge.CommandSoulPath();
+        tc.onAttackHold = () =>   // 누르고 있으면 6m 안 가장 가까운 적을 자동 조준해 연속 공격
+        {
+            Enemy best = null; float bd = 6f;
+            foreach (var e in enemies.list) { if (!e.alive || !e.Targetable) continue; float d = Vector3.Distance(e.Pos, player.Pos); if (d <= bd) { bd = d; best = e; } }
+            if (best != null) player.CommandAttack(best); else player.CommandSwing(player.Pos + U.Dir(player.facing));
+        };
     }
 
     Enemy Nearest()
