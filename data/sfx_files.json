@@ -2739,6 +2739,116 @@
    "bypass_cast_filter": false,
    "length_sec": 2.62,
    "peak_dbfs": -17
+  },
+  {
+   "id": "cut.knife.notch",
+   "file": "cut_knife_notch",
+   "category": "컷신",
+   "desc": "나무 말뚝에 칼금 하나: 칼날이 젖은 나무를 짧게 긁어 파는 '삭—' + 끝의 작은 '톡'(0.6초)",
+   "use": "B13-INTRO 3.2: 노인이 말뚝에 칼금을 하나 더 긋는다",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.24,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "cut.door.slide",
+   "file": "cut_door_slide",
+   "category": "컷신",
+   "desc": "오래된 나무 미닫이가 밀려 열림: 홈에 걸려 드르륵 끼이— 하다 툭 멈춤 + 빈 방 울림(1.8초)",
+   "use": "C-16 58.0: 아홉째 칸 빈 서가 뒤 문이 열려 있다",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.13,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "cut.paper.set",
+   "file": "cut_paper_set",
+   "category": "컷신",
+   "desc": "종이 한 장을 바위 위에 놓음: 한지가 스르륵 + 돌에 닿는 아주 작은 톡(0.6초)",
+   "use": "C-17 24.0: 먹지기가 종이 한 장을 바위 위에 놓는다",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.01,
+   "peak_dbfs": -19
+  },
+  {
+   "id": "cut.wire.untie",
+   "file": "cut_wire_untie",
+   "category": "컷신",
+   "desc": "눈꺼풀을 꿴 가는 쇠줄이 풀림: 가는 철사가 고리에서 미끄러지며 찌잉— + 작은 쇳소리 세 번 + 마지막에 힘 빠지듯 낮아짐(1.6초)",
+   "use": "B17-TENDO 1.8: 문지기가 눈꺼풀의 철사를 푼다",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.34,
+   "peak_dbfs": -17
+  },
+  {
+   "id": "cut.seal.thud",
+   "file": "cut_seal_thud",
+   "category": "컷신",
+   "desc": "돌도장이 이마에 닿는 둔한 소리: 무거운 돌이 살에 '둑' + 찍히지 않고 미끄러지는 젖은 소리(0.7초)",
+   "use": "B18-INTRO 1.8·3.2: 인을 제 이마에 찍는다(찍히지 않음)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.98,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "amb.dawn.still",
+   "file": "amb_dawn_still",
+   "category": "저승",
+   "desc": "바람 없는 새벽: 아무것도 움직이지 않는 고요 — 아주 낮은 공기, 멀리 우물물 한 방울, 새·벌레·닭 없음(반복용 16초)",
+   "use": "B19-INTRO 0.0(우물터 새벽) · 처음 마을의 '같은 새벽'",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 15.7,
+   "peak_dbfs": -28
+  },
+  {
+   "id": "amb.names.many",
+   "file": "amb_names_many",
+   "category": "저승",
+   "desc": "수천 사람이 한꺼번에 낮게 이름을 부름: 겹겹의 웅얼거림이 파도처럼 부풀었다 가라앉음 — 말뜻은 안 들림(반복용 14초)",
+   "use": "B20-INTRO 3.0~(물막이 바닥 덩어리). 크기는 물막이 눈금+시즌1 파혼 수로 키울 것",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 13.7,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "cut.names.release",
+   "file": "cut_names_release",
+   "category": "컷신",
+   "desc": "덩어리가 이름 하나하나로 풀려 강물에 실림: 웅얼거림이 낱낱의 맑은 소리로 갈라져 퍼지며 물 위로 사라짐(4초)",
+   "use": "C-20A 0.0: 풀어내기 첫 순간",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 5.77,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "cut.river.flow",
+   "file": "cut_river_flow",
+   "category": "컷신",
+   "desc": "막혔던 강이 흐르기 시작: 바닥에서 우르르 하고 둑이 풀리며, 고인 물이 점점 맑고 고르게 흐르는 소리로 바뀜(8초, 끝은 amb.river.mist로 이어짐)",
+   "use": "C-20A 10.0: 강이 흐른다. 물빛이 먹빛에서 맑아진다",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 10.62,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "cut.river.rush",
+   "file": "cut_river_rush",
+   "category": "컷신",
+   "desc": "거센 물살: 둑이 터진 뒤 강이 사납게 쏟아져 가루를 쓸고 감 — 낮게 웅웅 + 흰 물보라(반복용 8초)",
+   "use": "C-20B 2.0~16.0: 사나운 강(소리 대본에서 loop로 켜고 16초에 줄여 끔)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 7.7,
+   "peak_dbfs": -12
   }
  ],
  "footsteps": {

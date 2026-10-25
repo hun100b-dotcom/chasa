@@ -1256,3 +1256,7 @@
 ## 낚아챌 점 소품 교체 (코드·QA, 2026-10-25)
 - 아트 소품 3종(옷 b09·횃불 b12·군기 b05)을 Resources/Models/Boss 에 넣고 색 구슬을 대체. 횃불은 Light_grab_torch 자리에 주황 점광원(저사양은 생략). 파일이 없으면 구슬로 대체.
 - 낚는 자리(GrabPoint)는 아직 쓰지 않고 점의 위치(보스 손 앞·횃불·깃발 자리)를 그대로 쓴다. 던지는 곡선(옷)은 없음 — PC 화면 확인 후 다듬기.
+## 2026-10-25 밤 — [사운드] 시즌2 컷신 54컷 소리 대본 + 요청 소리 10개 + 컷신 곡 임시 4 (기획·사운드)
+- 대본(서사 cutscenes_s2.json)의 sfx_request 10개: `cut.knife.notch`·`cut.door.slide`·`cut.paper.set`·`cut.wire.untie`·`cut.seal.thud`·`amb.dawn.still`·`amb.names.many`·`cut.names.release`·`cut.river.flow`·`cut.river.rush`(반복형). 서사 sfx_map.promote가 옮기면 된다.
+- 소리 대본 `tools/cutscene_audio_s2.py` → `data/cutscene_audio_s2.json`: 47컷 143박자(대본 박자와 전부 맞음 검사). 저승 규칙대로 C-18 `amb.dawn.birds`→`amb.dawn.still`, 광산 임시 소리 → `amb.inkroom`·`amb.sealcave`. 보스전 도중 맺힘 컷은 resume 대신 duck 1.0(전투 층 유지).
+- 컷 곡 4자리(bgm_s2_open·bigdam·finale_a·finale_b): Gemini 지시문 42~45 + 임시 대역 합성(Temp). 효과음 총 259개, 기존 파일 변화 없음. 미리듣기 v18, 지시문 v6.
