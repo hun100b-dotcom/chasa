@@ -89,6 +89,13 @@ def glyph(kind, n=64):
         for k in range(3):
             lk = Image.new("RGBA", (30 * S, 30 * S), (0, 0, 0, 0)); ld = ImageDraw.Draw(lk); ld.rounded_rectangle([3 * S, 8 * S, 27 * S, 22 * S], radius=7 * S, fill=INK + (255,)); ld.rounded_rectangle([6 * S, 11 * S, 24 * S, 19 * S], radius=4 * S, fill=(0, 0, 0, 0)); ld.rounded_rectangle([6 * S, 11 * S, 24 * S, 19 * S], radius=4 * S, outline=CHAIN + (255,), width=int(2.6 * S))
             lk = lk.rotate(45 if k % 2 == 0 else -45 + 90, resample=Image.BICUBIC); im.alpha_composite(lk, (int(c - 15 * S - 14 * S + k * 14 * S), int(c - 15 * S + 12 * S - k * 12 * S)))
+    elif kind == "club":    # 육모방망이: 여섯 모 나무 방망이(비스듬, 위가 굵음) + 손잡이 끈 고리 + 맞은 곳 별 모양 충격선
+        poly([(-26, 20), (-20, 26), (8, -2), (4, -8)], (150, 112, 70, 255)); poly([(4, -8), (8, -2), (24, -18), (14, -28)], (178, 138, 88, 255))
+        d.line([P(5, -5), P(11, -1)], fill=INK + (255,), width=int(2 * S)); d.line([P(-1, 2), P(5, 6)], fill=INK + (255,), width=int(2 * S))       # 여섯 모를 나누는 마디 선
+        d.arc([c - 34 * S, c + 6 * S, c - 14 * S, c + 34 * S], 90, 270, fill=(205, 70, 55, 255), width=int(3 * S))                                      # 손잡이 끈
+        for (x, y, r) in ((22, -26, 7), (30, -12, 5), (14, -34, 5)):          # 충격 별(기절): 네 갈래 반짝
+            q = [P(x, y - r), P(x + r * 0.3, y - r * 0.3), P(x + r, y), P(x + r * 0.3, y + r * 0.3), P(x, y + r), P(x - r * 0.3, y + r * 0.3), P(x - r, y), P(x - r * 0.3, y - r * 0.3)]
+            d.polygon(q, fill=CREAM + (255,), outline=INK + (255,))
     elif kind == "lamp":    # 등잔: 받침 + 기름 접시 + 작은 불꽃 + 빛무리
         im = over(im, glow_layer(im.size, lambda dd: dd.ellipse([c - 16 * S, c - 24 * S, c + 16 * S, c + 8 * S], fill=255), LAMP, 8 * S, 0.8)); d = ImageDraw.Draw(im)
         poly([(-4, 10), (4, 10), (7, 24), (-7, 24)], BRASS + (255,)); poly([(-18, 6), (18, 6), (12, 14), (-12, 14)], BRASS + (255,)); flame(d, c, c - 8 * S, 24 * S, LAMP + (255,), INK + (255,), 1.6 * S); flame(d, c, c - 4 * S, 11 * S, (255, 250, 225, 255))
@@ -129,7 +136,7 @@ def run():
     put(ring(152, 62, 72, CHAIN, seg=(16, 0)), "btn_pahon_chain_ring", "파혼 연쇄 고리(업 30): ✕ 테두리를 두른 사슬 마디 16개. 파혼 직후 1초 동안 Filled Radial360이 시계 반대로 줄어든다. 연쇄 대상이 없으면 안 띄움")
     put(chain_mark(), "mark_chain_target", "연쇄 대상 표시(4 m 안 다음 꿇은 혼 머리 위): 맞물린 사슬 둘 + ▼. 화면 48 px")
     fr = q_frame(); put(fr, "btn_q_frame_104", "무기 기술 Q 버튼 틀 104(금 고리). 재사용 중엔 코드가 어둡게 + 남은 초")
-    for k, nm in (("pin", "삼지창: 꽂아 버티기"), ("call", "요령: 불러 세우기"), ("brush", "붓: 이름 쓰기"), ("chain", "철삭: 사슬(끌기)")):
+    for k, nm in (("pin", "삼지창: 꽂아 버티기"), ("call", "요령: 불러 세우기"), ("brush", "붓: 이름 쓰기"), ("chain", "철삭: 사슬(끌기)"), ("club", "육모방망이: 손에 익음(맞은 적 기절)")):
         put(glyph(k), f"q_glyph_{k}", f"Q 무기 기술 그림({nm}) 64. btn_q_frame_104 위 가운데에 얹는다"); put(comp(fr, glyph(k)), f"btn_q_{k}_104", f"Q 버튼 완성본({nm}) 104")
     put(dot(True), "q_dot_on", "붓 표식 먹점 켜짐 16(Q 버튼 위 ●●●)"); put(dot(False), "q_dot_off", "붓 표식 먹점 꺼짐 16")
     ff = f_frame(); put(ff, "btn_f_frame_104", "상호작용 F 버튼 틀 104(청록 고리)"); put(glyph("lamp"), "f_glyph_lamp", "등잔 그림 64"); put(comp(ff, glyph("lamp")), "btn_f_lamp_104", "F 자리 등잔 버튼(밤·오늘 안 켰고 둘레 대상 없을 때). 길게 0.5초 = 켜짐")
@@ -144,8 +151,8 @@ def check():
     """흑백 점검: ▲·✕ 버튼을 회색으로 바꿔 나란히 + 밝기 차 + 글리프 모양 차이(색을 지운 뒤 먹 테두리 바깥 면적)."""
     from PIL import ImageFont
     t = Image.open(os.path.join(U.UI, SUB, "btn_tendo_136@2x.png")).convert("RGBA"); p = Image.open(os.path.join(U.UI, SUB, "btn_pahon_136@2x.png")).convert("RGBA")
-    ds = [Image.open(os.path.join(U.UI, SUB, f"btn_{k}_104@2x.png")).convert("RGBA") for k in ("q_pin", "q_call", "q_brush", "q_chain", "f_lamp")]
-    W = Image.new("RGB", (272 * 2 + 40 + 208 * 5 + 60, 272 * 2 + 40), (110, 120, 100))
+    ds = [Image.open(os.path.join(U.UI, SUB, f"btn_{k}_104@2x.png")).convert("RGBA") for k in ("q_pin", "q_call", "q_brush", "q_chain", "q_club", "f_lamp")]
+    W = Image.new("RGB", (272 * 2 + 40 + 208 * 6 + 70, 272 * 2 + 40), (110, 120, 100))
     for row, gray in ((0, False), (1, True)):
         x = 10
         for im in [t, p] + ds:
