@@ -11,7 +11,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.join(HERE, "..
 OUT = os.path.join(ROOT, "assets3d", "terrain_act3_east")
 MAP = json.load(open("/mnt/project-files/planning/openworld/act3/act3_map.json", encoding="utf-8")) if os.path.exists("/mnt/project-files/planning/openworld/act3/act3_map.json") else json.load(open(os.path.join(ROOT, "data", "art", "act3_map.json"), encoding="utf-8"))
 X0, Y0, W, H = 768, 0, 512, 1024      # 월드 원점(남서 모서리)과 크기(m)
-HMIN, HMAX = -3.0, 10.0
+HMIN, HMAX = -7.0, 10.0
 xs = np.arange(W + 1, dtype=np.float64) + X0; ys = np.arange(H + 1, dtype=np.float64) + Y0
 X, Y = np.meshgrid(xs, ys)           # 모양 (641, 769), 행 0 = 남쪽
 
@@ -70,6 +70,10 @@ def build_height():
     h = mix(h, cape, 3.5 + 0.3 * n1); h = mix(h, disc(1215, 690, 20, 6), 3.0)    # 곶과 보스 B-09 마당
     h = mix(h, zr("WreckShoal", 20), 0.0 + 0.04 * n1); h = mix(h, disc(1135, 100, 20, 8), 0.0)       # 난파 여울: 썰물에 드러나는 바닥(B-10 마당)
     # 서쪽 아랫부분은 2막 갱도 출구 내리막과 이어져 높다(R3-9 시작 쪽)
+    # 해안 띠(planning 답): 남쪽 가장자리는 해안 길 바닥 -6.5m와 이어진다 → 남쪽 40m 안은 깊은 만으로 내려가고, 해안 길(R3-6)은 여울 바닥 0.0에서 -6.5로 비탈을 내려간다
+    h = mix(h, (1 - sstep(0, 55, Y)) * sea, -6.5)
+    ramp = [(1040, 110), (1014, 60), (988, 0)]; dr, sr, Lr = poly_dist(ramp)
+    h = mix(h, (1 - sstep(4.0, 9.0, dr)) * (Y < 112), -6.5 + 6.5 * (1 - sstep(0, 1, sr / Lr)) + 0.03 * n1)
     # 갯골(강어귀 물길): 물막이 골 강이 바다로 나간다. 바닥은 썰물에도 얕게 잠긴다
     def chan(h, pts, wf, ww, floor):
         d, s, L = poly_dist(pts); return mix(h, 1 - sstep(wf, wf + ww, d), floor + 0.05 * n1)
@@ -175,7 +179,7 @@ if __name__ == "__main__":
     for b in MAP["boss_arenas"]:
         if b["x"] >= X0: flat[b["boss"]] = round(float(sl[int(b["y"] - Y0), int(b["x"] - X0)]), 3)
     json.dump({"origin_m": [X0, Y0], "size_x_m": W, "size_z_m": H, "size": W, "height_res_x": W + 1, "height_res_z": H + 1, "splat_res_x": W, "splat_res_z": H, "height_min_m": HMIN, "height_max_m": HMAX, "layer_tile_m": [6, 6, 6, 6, 6],
-               "tide_low_m": LOW, "tide_high_m": HIGH, "sea_floor_m": SEA,
+               "tide_low_m": LOW, "tide_high_m": HIGH, "sea_floor_m": SEA, "south_bay_floor_m": -6.5, "coast_ramp_points": [[1040, 110], [1014, 60], [988, 0]],
                "layers": {"dirt": "마른 흙·갯벌 흙", "grass": "갯풀", "gravel": "자갈·바위", "paddy": "소금(splat_a A)", "leaf": "눈(⑥용, splat_b R, ⑤는 0)", "splat_b.G": "물거품", "splat_b.B": "젖은 갯벌"},
                "note": "아트 terrain_act3.py가 만든다. 행 0=남쪽(월드 y 0). 썰물 물높이 -0.5, 밀물 +0.6.", "slope_at_shrines_and_arenas": flat}, open(os.path.join(OUT, "terrain.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("기울기", flat)

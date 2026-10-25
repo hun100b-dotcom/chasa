@@ -7,7 +7,7 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 MAP = "/mnt/project-files/planning/openworld/act3/act3_map.json"
 TER = os.path.join(ROOT, "assets3d", "terrain_act3_east"); LAY = os.path.join(ROOT, "assets3d", "layouts")
-X0, Y0, W, H = 768, 0, 512, 1024; HMIN, HMAX = -3.0, 10.0; LOW = -0.5
+X0, Y0, W, H = 768, 0, 512, 1024; HMIN, HMAX = -7.0, 10.0; LOW = -0.5
 RNG = random.Random(3033)
 M = json.load(open(MAP))
 _hm = np.array(Image.open(os.path.join(TER, "heightmap.png")).convert("RGBA")).astype(np.int64)
