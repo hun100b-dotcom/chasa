@@ -1637,7 +1637,8 @@ public class JudgeSystem : MonoBehaviour
             System.Func<EquipPos, int> tierOf = pos => { var g = lo.gear.GetAt(pos); return g == null ? 0 : g.Named ? 4 : g.Rarity == Rarity.Rare ? 3 : g.Rarity == Rarity.Crafted ? 2 : 1; };
             int th = tierOf(EquipPos.Hat), tr = tierOf(EquipPos.Robe), tb = tierOf(EquipPos.Belt), ts = tierOf(EquipPos.Shoes);
             if (th == 4 && tr == 4 && tb == 4 && ts == 4) { th = tr = tb = 5; }
-            ActorModel.HeroHatTier = th; ActorModel.HeroRobeTier = tr; ActorModel.HeroBeltTier = tb;
+            int tc = System.Math.Max(tierOf(EquipPos.Charm1), tierOf(EquipPos.Charm2)); if (th == 5) tc = 5;   // 노리개는 둘 중 높은 등급(한 벌이면 한 벌)
+            ActorModel.HeroHatTier = th; ActorModel.HeroRobeTier = tr; ActorModel.HeroBeltTier = tb; ActorModel.HeroCharmTier = tc;
         }
         ActorModel.HeroShadowOn = clock.Phase != ClockPhase.Day;   // 낮엔 주인공 그림자 없음(산 사람에게 안 보이는 차사)
         if (interactables != null) DogTick();
