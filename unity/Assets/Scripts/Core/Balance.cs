@@ -402,6 +402,8 @@ public static class Balance
     public const int B02_CUPS = 12;  // (2호 보스 임시) 월화 열두 거리: 굿판 가장자리 잔 수. 열두째(번호 11) 잔은 엎어져 있어 늘 안전
     public const float B02_RING_RADIUS_M = 7.0f;  // (2호 보스 임시) 잔을 둘러놓은 원 반지름(m)
     public const float B02_CUP_RADIUS_M = 2.2f;  // (2호 보스 임시) 잔 앞 바닥이 열려 피해를 주는 반지름(m)
+    public const float B02_SECTOR_DEG = 30.0f;  // (2호 보스 임시) 잔이 열릴 때 보스(굿판 한가운데)에서 그 잔 방향으로 펼쳐지는 부채꼴의 각도. 아트 예고 그림(tele_sector30)과 같다
+    public const float B02_SECTOR_R_M = 8.0f;  // (2호 보스 임시) 위 부채꼴의 반지름(m). 잔 줄(7m)보다 조금 길다
     public const float B02_WARN_TIME = 1.0f;  // (2호 보스 임시) 열린 바닥 예고(초). 붉게 번졌다가 터진다
     public const float B02_WAVE_GAP = 4.5f;  // (2호 보스 임시) 방울 한 번(파동)과 다음 파동 사이(초)
     public const int B02_CUPS_PER_WAVE = 3;  // (2호 보스 임시) 1국면: 한 번에 열리는 잔 수

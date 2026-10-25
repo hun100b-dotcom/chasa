@@ -12,7 +12,8 @@ using UnityEngine;
 public class BossArena : MonoBehaviour
 {
     JudgeSystem judge; Enemy boss; BossDef def;
-    class Tele { public Vector3 c; float r; public float t, warn; public bool square, fired; public GameObject view; public float R { get { return r; } set { r = value; } } }
+    class Tele { public Vector3 c; float r; public float t, warn; public bool square, fired, sector; public float ang;   // sector: 월화 부채꼴(ang=굿판 중심에서 잔 방향, 라디안)
+        public GameObject view; public float R { get { return r; } set { r = value; } } }
     readonly List<Tele> teles = new List<Tele>();
     GameObject[] cups;                         // 월화: 잔 12개 / 서 의원: 5×5 칸 바닥(흐린 선)
     GameObject weakMark;                       // 서 의원: 약점이 열리면 머리 위에 켜지는 청록 표시
@@ -88,7 +89,8 @@ public class BossArena : MonoBehaviour
         {
             float ratio = boss.soul.MaedhimMax > 0f ? boss.soul.Maedhim / boss.soul.MaedhimMax : 1f;
             var pick = TwelveStreets.Pick(() => Random.value, TwelveStreets.CupsPerWave(ratio));
-            foreach (int i in pick) Add(CupPos(i), Balance.B02_CUP_RADIUS_M, Balance.B02_WARN_TIME, false);
+            // 월화 '열두 거리': 굿판 한가운데에서 그 잔 쪽으로 30° 부채꼴이 열린다(잔 방향 = 30i°, 아트 예고 그림과 같은 모양)
+            foreach (int i in pick) AddSector(i * Mathf.PI * 2f / Balance.B02_CUPS, Balance.B02_WARN_TIME);
             Sfx.Play("cut.yoryeong.ring");   // 요령(방울) 한 번
             waveT = Balance.B02_WAVE_GAP + Balance.B02_WARN_TIME;
         }
@@ -101,6 +103,25 @@ public class BossArena : MonoBehaviour
             waveT = Balance.B03_WARN_TIME + Balance.B03_WAVE_GAP;
         }
         lastOfWave = teles[teles.Count - 1];
+    }
+
+    void AddSector(float ang, float warn)
+    {
+        float R = Balance.B02_SECTOR_R_M;
+        var c = new Vector3(def.X, 0.03f + GroundTerrain.HeightAt(def.X, def.Z), def.Z);
+        var t = new Tele { c = c, t = 0f, warn = warn, sector = true, ang = ang }; t.R = R;
+        var tex = SpriteLib.Texture("boss/tele_sector30");
+        if (tex != null)
+        {
+            var g = new GameObject("Tele"); g.transform.position = c + Vector3.up * 0.03f;
+            // 그림은 꼭짓점이 한가운데, 오른쪽(+x)으로 펼쳐진다. 눕힌 뒤 위에서 볼 때 ang 만큼 돌린다(유니티 y축은 반대 방향이라 음수)
+            g.transform.rotation = Quaternion.Euler(0f, -ang * Mathf.Rad2Deg, 0f) * Quaternion.Euler(90f, 0f, 0f);
+            var sr = g.AddComponent<SpriteRenderer>();
+            sr.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), tex.width / (R * 2f));   // 그림 반폭 = 반지름
+            sr.color = new Color(0.35f, 0.05f, 0.05f, 0.3f); sr.sortingOrder = -4;
+            t.view = g;
+        }
+        teles.Add(t);
     }
 
     void Add(Vector3 c, float r, float warn, bool square)
@@ -128,6 +149,16 @@ public class BossArena : MonoBehaviour
         if (sr != null) sr.color = col; else g.GetComponent<Renderer>().sharedMaterial.color = col;
     }
 
+    // 부채꼴 판정: 굿판 중심에서 거리 < 반지름이고, 방향 차이가 부채꼴 반각(15°) 이내. 중심 바로 곁은 방향이 불안정해 늘 맞는 걸로 본다
+    static bool InSector(Vector3 d, Tele t)
+    {
+        float dist = new Vector2(d.x, d.z).magnitude;
+        if (dist > t.R + 0.4f) return false;
+        if (dist < 0.5f) return true;
+        float diff = Mathf.Abs(Mathf.DeltaAngle(Mathf.Atan2(d.z, d.x) * Mathf.Rad2Deg, t.ang * Mathf.Rad2Deg));
+        return diff <= Balance.B02_SECTOR_DEG * 0.5f + 2f;   // +2°: 경계에 걸친 몸 크기
+    }
+
     void TickTeles(float dt)
     {
         for (int i = teles.Count - 1; i >= 0; i--)
@@ -137,7 +168,7 @@ public class BossArena : MonoBehaviour
             {
                 t.fired = true;
                 var d = judge.player.Pos - t.c;
-                bool inside = t.square ? (Mathf.Abs(d.x) < t.R + 0.3f && Mathf.Abs(d.z) < t.R + 0.3f) : (new Vector2(d.x, d.z).magnitude < t.R + 0.4f);
+                bool inside = t.sector ? InSector(d, t) : t.square ? (Mathf.Abs(d.x) < t.R + 0.3f && Mathf.Abs(d.z) < t.R + 0.3f) : (new Vector2(d.x, d.z).magnitude < t.R + 0.4f);
                 if (inside) { if (judge.BossAreaHit(boss)) waveHit = true; }
                 if (t.view != null) Tint(t.view, new Color(1f, 0.55f, 0.25f, 1f));   // 터지는 순간 밝게
             }
