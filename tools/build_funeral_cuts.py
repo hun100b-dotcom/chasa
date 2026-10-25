@@ -30,6 +30,8 @@ def convert(cid, b, lock):
             if i in have and i not in ids: ids.append(i)
         if ids: row["sfx"] = ids
         if st.get("condition"): row["cond"] = st["condition"]
+        ln = st.get("line")   # 산 사람 말풍선 한 줄(예: 처결 못 함의 "날을 아직 못 받았네…")
+        if isinstance(ln, dict) and ln.get("text"): row["text"] = ln["text"]; row["style"] = ln.get("style", "bubble"); row["lineDur"] = ln.get("duration", 2.5)
         out.append(row)
     out.append({"t": max(0.0, b["duration"] - 0.5), "cam": "return", "camTime": 1.5})
     out.sort(key=lambda r: r["t"])   # 시간 순(같은 시각은 원래 순서 유지)
