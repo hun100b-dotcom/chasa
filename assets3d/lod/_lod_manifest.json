@@ -260,6 +260,16 @@
    "tris1": 35,
    "tris2": 12
   },
+  "prop_big_rock": {
+   "tris0": 314,
+   "size_m": [
+    6.98,
+    5.53,
+    3.91
+   ],
+   "tris1": 125,
+   "tris2": 12
+  },
   "prop_cairn": {
    "tris0": 216,
    "size_m": [
@@ -340,6 +350,16 @@
    "tris1": 129,
    "tris2": 12
   },
+  "prop_foul_pool": {
+   "tris0": 182,
+   "size_m": [
+    2.95,
+    2.91,
+    0.18
+   ],
+   "tris1": 72,
+   "tris2": 12
+  },
   "prop_geumjul": {
    "tris0": 220,
    "size_m": [
@@ -380,6 +400,16 @@
    "tris1": 29,
    "tris2": 12
   },
+  "prop_herb_pot": {
+   "tris0": 180,
+   "size_m": [
+    2.05,
+    0.95,
+    1.26
+   ],
+   "tris1": 72,
+   "tris2": 12
+  },
   "prop_jangdok": {
    "tris0": 516,
    "size_m": [
@@ -410,6 +440,16 @@
    "tris1": 35,
    "tris2": 12
   },
+  "prop_mangjang": {
+   "tris0": 132,
+   "size_m": [
+    2.88,
+    0.07,
+    3.6
+   ],
+   "tris1": 52,
+   "tris2": 12
+  },
   "prop_mill": {
    "tris0": 572,
    "size_m": [
@@ -428,6 +468,86 @@
     0.58
    ],
    "tris1": 35,
+   "tris2": 12
+  },
+  "prop_mist_bank": {
+   "tris0": 252,
+   "size_m": [
+    7.12,
+    4.23,
+    0.95
+   ],
+   "tris1": 100,
+   "tris2": 12
+  },
+  "prop_mist_pillar": {
+   "tris0": 180,
+   "size_m": [
+    2.39,
+    2.18,
+    2.65
+   ],
+   "tris1": 72,
+   "tris2": 12
+  },
+  "prop_old_tree": {
+   "tris0": 374,
+   "size_m": [
+    9.48,
+    5.06,
+    8.89
+   ],
+   "tris1": 149,
+   "tris2": 12
+  },
+  "prop_pass_cairn": {
+   "tris0": 526,
+   "size_m": [
+    3.15,
+    2.67,
+    3.84
+   ],
+   "tris1": 210,
+   "tris2": 12
+  },
+  "prop_plague_banner": {
+   "tris0": 60,
+   "size_m": [
+    0.92,
+    0.13,
+    2.6
+   ],
+   "tris1": 24,
+   "tris2": 12
+  },
+  "prop_plague_rope": {
+   "tris0": 164,
+   "size_m": [
+    4.13,
+    0.19,
+    2.2
+   ],
+   "tris1": 65,
+   "tris2": 12
+  },
+  "prop_quarantine_hut": {
+   "tris0": 116,
+   "size_m": [
+    3.2,
+    2.69,
+    1.98
+   ],
+   "tris1": 46,
+   "tris2": 12
+  },
+  "prop_ruined_shrine": {
+   "tris0": 486,
+   "size_m": [
+    8.9,
+    7.94,
+    4.15
+   ],
+   "tris1": 194,
    "tris2": 12
   },
   "prop_sacks": {
@@ -470,6 +590,26 @@
    "tris1": 280,
    "tris2": 12
   },
+  "prop_sick_lantern": {
+   "tris0": 70,
+   "size_m": [
+    0.67,
+    0.34,
+    2.2
+   ],
+   "tris1": 28,
+   "tris2": 12
+  },
+  "prop_sick_mats": {
+   "tris0": 162,
+   "size_m": [
+    3.6,
+    1.9,
+    0.29
+   ],
+   "tris1": 64,
+   "tris2": 12
+  },
   "prop_signpost": {
    "tris0": 80,
    "size_m": [
@@ -478,6 +618,16 @@
     1.96
    ],
    "tris1": 32,
+   "tris2": 12
+  },
+  "prop_small_shrine": {
+   "tris0": 204,
+   "size_m": [
+    4.2,
+    4.25,
+    3.35
+   ],
+   "tris1": 81,
    "tris2": 12
   },
   "prop_sotdae": {
@@ -490,6 +640,16 @@
    "tris1": 85,
    "tris2": 12
   },
+  "prop_soulfire_lantern": {
+   "tris0": 128,
+   "size_m": [
+    0.73,
+    0.84,
+    1.76
+   ],
+   "tris1": 51,
+   "tris2": 12
+  },
   "prop_stepstones": {
    "tris0": 144,
    "size_m": [
@@ -498,6 +658,16 @@
     0.1
    ],
    "tris1": 57,
+   "tris2": 12
+  },
+  "prop_tomb_old": {
+   "tris0": 156,
+   "size_m": [
+    2.14,
+    2.67,
+    1.35
+   ],
+   "tris1": 62,
    "tris2": 12
   },
   "prop_umul": {

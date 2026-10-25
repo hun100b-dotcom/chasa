@@ -1,5 +1,15 @@
 [
  {
+  "name": "prop_ruined_shrine",
+  "tris": 486,
+  "size_m": [
+   8.9,
+   7.94,
+   4.15
+  ],
+  "min_z": 0.0
+ },
+ {
   "name": "prop_tomb_old",
   "tris": 156,
   "size_m": [
@@ -8,5 +18,155 @@
    1.35
   ],
   "min_z": -0.036
+ },
+ {
+  "name": "prop_mangjang",
+  "tris": 132,
+  "size_m": [
+   2.88,
+   0.07,
+   3.6
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_soulfire_lantern",
+  "tris": 128,
+  "size_m": [
+   0.73,
+   0.84,
+   1.76
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_plague_rope",
+  "tris": 164,
+  "size_m": [
+   4.13,
+   0.19,
+   2.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_quarantine_hut",
+  "tris": 116,
+  "size_m": [
+   3.2,
+   2.69,
+   1.98
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_herb_pot",
+  "tris": 180,
+  "size_m": [
+   2.05,
+   0.95,
+   1.26
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_foul_pool",
+  "tris": 182,
+  "size_m": [
+   2.95,
+   2.91,
+   0.18
+  ],
+  "min_z": -0.04
+ },
+ {
+  "name": "prop_sick_mats",
+  "tris": 162,
+  "size_m": [
+   3.6,
+   1.9,
+   0.29
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_plague_banner",
+  "tris": 60,
+  "size_m": [
+   0.92,
+   0.13,
+   2.6
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_big_rock",
+  "tris": 314,
+  "size_m": [
+   6.98,
+   5.53,
+   3.91
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_old_tree",
+  "tris": 374,
+  "size_m": [
+   9.48,
+   5.06,
+   8.89
+  ],
+  "min_z": -0.05
+ },
+ {
+  "name": "prop_small_shrine",
+  "tris": 204,
+  "size_m": [
+   4.2,
+   4.25,
+   3.35
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_pass_cairn",
+  "tris": 526,
+  "size_m": [
+   3.15,
+   2.67,
+   3.84
+  ],
+  "min_z": -0.035
+ },
+ {
+  "name": "prop_mist_bank",
+  "tris": 252,
+  "size_m": [
+   7.12,
+   4.23,
+   0.95
+  ],
+  "min_z": -0.048
+ },
+ {
+  "name": "prop_mist_pillar",
+  "tris": 180,
+  "size_m": [
+   2.39,
+   2.18,
+   2.65
+  ],
+  "min_z": 0.015
+ },
+ {
+  "name": "prop_sick_lantern",
+  "tris": 70,
+  "size_m": [
+   0.67,
+   0.34,
+   2.2
+  ],
+  "min_z": 0.0
  }
 ]

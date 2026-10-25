@@ -239,6 +239,16 @@ for pr, x, y, rt in (("prop_plague_banner", 99.5, 446.0, 0), ("prop_plague_banne
 for k in range(10): life("prop_foul_pool", rnd.choice((rnd.uniform(60, 74), rnd.uniform(97, 112))), rnd.uniform(300, 620), rnd.uniform(0, 360), zone="독기 웅덩이")
 for k in range(9): life("prop_plague_banner", rnd.choice((rnd.uniform(64, 74), rnd.uniform(97, 108))), rnd.uniform(300, 620), rnd.choice((0, 15, -15)), zone="역병 깃발")
 for k in range(5): life("prop_sick_mats", rnd.uniform(20, 66), rnd.uniform(430, 520), rnd.choice((0, 90)), zone="검은여울 병자")
+# 역병 분위기 2차(안개): 기존 난수 흐름이 밀리지 않게 별도 난수로 배치한다
+_pr = random.Random(913)
+for x, y, rt in ((106.0, 452.0, 0), (96.0, 470.0, 30), (100.0, 430.0, 70), (70.0, 454.0, 10), (50.0, 470.0, 40), (36.0, 452.0, 0), (62.0, 484.0, 20), (110.0, 420.0, 0), (112.0, 484.0, 50)):
+    life("prop_mist_bank", x, y, rt, zone="독안개")                              # 다리목·의원 둘레에 짙게 고인 안개
+for k in range(26): life("prop_mist_bank", _pr.choice((_pr.uniform(58, 76), _pr.uniform(96, 114))), _pr.uniform(300, 620), _pr.uniform(0, 360), zone="독안개")   # 강 양쪽 둑을 따라 이어지는 안개
+for k in range(10): life("prop_mist_bank", _pr.uniform(18, 70), _pr.uniform(430, 520), _pr.uniform(0, 360), zone="독안개")                                       # 의원 마당
+for x, y in ((103.0, 437.0), (72.0, 440.0), (72.5, 466.0), (47.0, 478.0), (108.0, 446.0), (58.5, 460.0)):
+    life("prop_mist_pillar", x + 1.2, y + 1.0, 0, zone="독기 기둥")             # 웅덩이·약탕 곁에서 피어오르는 기운
+for x, y in ((98.0, 440.0), (98.0, 466.0), (112.0, 440.0), (112.0, 462.0), (84.0, 452.0), (66.0, 456.0), (52.0, 466.0), (34.0, 466.0), (42.0, 442.0), (116.0, 360.0), (116.0, 400.0), (104.0, 520.0), (104.0, 560.0), (90.0, 330.0)):
+    life("prop_sick_lantern", x, y, _pr.choice((0, 180)), zone="초록 등불")       # 길·다리목·의원 앞에 병든 초록 불빛
 # 길목 랜드마크: 큰 길과 샛길을 따라 72m마다 길에서 7m 떨어진 곳에 큰 바위·고목·사당·고갯마루 돌무더기를 돌려 가며
 LM_KINDS = ("prop_big_rock", "prop_old_tree", "prop_small_shrine", "prop_pass_cairn")
 _n = 0; _acc = 0.0

@@ -99,6 +99,25 @@ KIT = [("ruined_shrine", ruined_shrine, "무너진 당집"), ("tomb_old", tomb_o
        ("big_rock", big_rock, "큰 바위"), ("old_tree", old_tree, "고목"), ("small_shrine", small_shrine, "사당"), ("pass_cairn", pass_cairn, "고갯마루 돌무더기")]
 LIGHTS = {"small_shrine": ("Light_small_shrine", (1.7, -1.9, 1.6), "#FFB066", 0.9, 8.0), "ruined_shrine": ("Light_ruined_shrine", (0, 1.8, 1.3), "#B58CFF", 1.0, 10.0), "soulfire_lantern": ("Light_soulfire_lantern", (0, 0, 1.28), "#9FDCFF", 0.8, 7.0), "herb_pot": ("Light_herb_pot", (0, 0, 1.0), "#A8E6B8", 0.7, 6.0)}
 
+# ── 역병 분위기 2차: 안개 소품·안개 불빛 ────────────────────────────────────────────────
+def mist_bank():
+    """낮게 깔린 독안개 덩이: 납작한 타원 6개를 겹친 흐린 회청록 덩어리. 폭 약 5m, 높이 0.55m.
+    왜: 월드 안개는 장면을 검게 먹어서 못 쓴다 → 모양 있는 안개 소품을 바닥에 깔아 '안개가 고인 느낌'을 만든다(약한 자체발광으로 밤에도 읽힘)."""
+    m = mat("#74887E", 0.6)
+    return [sphere(f"mist{i}", 1.1 + 0.25 * (i % 3), (math.cos(i * 1.3) * 1.5, math.sin(i * 1.3) * 0.9, 0.40 + 0.05 * (i % 2)), m, 7, 4, (1.4, 1.0, 0.28)) for i in range(6)]
+
+def mist_pillar():
+    """솟는 독기 기둥: 위로 갈수록 가늘고 엷은 덩이 5개를 비스듬히 쌓음. 높이 약 3m. 웅덩이·약탕 곁에 세워 기운이 피어오르는 모양."""
+    return [sphere(f"wisp{i}", 0.75 - 0.08 * i, (math.sin(i * 1.1) * 0.45, math.cos(i * 1.1) * 0.35, 0.3 + i * 0.55), mat("#6E8A7E", 0.7), 6, 4, (1.6, 1.0, 0.38), rot=(0, 0, i * 0.7)) for i in range(5)]
+
+def sick_lantern():
+    """병든 초록 등불: 휘어진 장대 끝에 매단 연두색 등롱. 높이 2.2m. Light_sick_lantern(탁한 연두 불빛)이 번지며 안개를 비춘다."""
+    return [cyl("pole", 0.05, 0.04, 2.2, (0, 0, 0), "wood_dark", 5), box("arm", (0.5, 0.05, 0.05), (0.25, 0, 2.15), "wood_dark"),
+            cyl("string", 0.01, 0.01, 0.2, (0.48, 0, 1.95), "thatch", 4), cyl("lamp", 0.14, 0.11, 0.3, (0.48, 0, 1.65), mat("#9FE0B0", 1.8), 6), cyl("lampCap", 0.17, 0.0, 0.08, (0.48, 0, 1.95), "wood_dark", 6)]
+
+KIT += [("mist_bank", mist_bank, "독안개 덩이"), ("mist_pillar", mist_pillar, "독기 기둥"), ("sick_lantern", sick_lantern, "병든 초록 등불")]
+LIGHTS.update({"sick_lantern": ("Light_sick_lantern", (0.48, 0, 1.6), "#8FE0A8", 1.0, 9.0), "mist_pillar": ("Light_mist_pillar", (0, 0, 1.2), "#7FB89C", 0.5, 6.0)})
+
 def build(key, fn):
     reset(); o = join(f"prop_{key}", fn()); lo, hi = bounds(o)
     if key in LIGHTS: n, pos, col, it, rg = LIGHTS[key]; light_empty(o, n, pos, col, intensity=it, range_m=rg, flicker=True)

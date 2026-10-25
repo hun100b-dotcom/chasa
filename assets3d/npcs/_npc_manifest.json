@@ -1,0 +1,1285 @@
+{
+ "fps": 60,
+ "note": "화면에 주인공 이름은 쓰지 않는다. 같은 틀(뼈 16개·동작 4개)이라 유니티에서 한 컨트롤러를 공유할 수 있다.",
+ "npcs": [
+  {
+   "id": "N101",
+   "name": "당할미",
+   "file": "assets3d/npcs/npc_N101.glb",
+   "template": "노인 여자(무녀)",
+   "height_m": 1.61,
+   "tris": 614,
+   "props": [
+    "fan_broken",
+    "cross_cloth"
+   ],
+   "note": "서낭당 무녀. 오방색 천과 부러진 부채",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N101.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 131
+   }
+  },
+  {
+   "id": "N102",
+   "name": "순임",
+   "file": "assets3d/npcs/npc_N102.glb",
+   "template": "처녀(일하는 차림)",
+   "height_m": 1.56,
+   "tris": 766,
+   "props": [
+    "rope_coil"
+   ],
+   "note": "나루 영감 손녀. 줄배 줄 타래",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N102.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 142
+   }
+  },
+  {
+   "id": "N103",
+   "name": "윤 소사네 아들",
+   "file": "assets3d/npcs/npc_N103.glb",
+   "template": "청년(도포)",
+   "height_m": 1.88,
+   "tris": 632,
+   "props": [
+    "incense"
+   ],
+   "note": "제사 지내는 아들. 흰 도포·갓·향로",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N103.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 131
+   }
+  },
+  {
+   "id": "N104a",
+   "name": "복남",
+   "file": "assets3d/npcs/npc_N104a.glb",
+   "template": "사내아이",
+   "height_m": 1.34,
+   "tris": 616,
+   "props": [
+    "candy_stick"
+   ],
+   "note": "노래놀이 아이 1",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N104a.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 130
+   }
+  },
+  {
+   "id": "N104b",
+   "name": "언년이",
+   "file": "assets3d/npcs/npc_N104b.glb",
+   "template": "계집아이",
+   "height_m": 1.22,
+   "tris": 422,
+   "props": [],
+   "note": "노래놀이 아이 2",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N104b.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 107
+   }
+  },
+  {
+   "id": "N104c",
+   "name": "삼돌이",
+   "file": "assets3d/npcs/npc_N104c.glb",
+   "template": "어린 사내아이",
+   "height_m": 1.05,
+   "tris": 506,
+   "props": [],
+   "note": "노래놀이 아이 3(가장 어림)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N104c.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 115
+   }
+  },
+  {
+   "id": "N105",
+   "name": "갑술 영감",
+   "file": "assets3d/npcs/npc_N105.glb",
+   "template": "노인 남자(삼베)",
+   "height_m": 1.62,
+   "tris": 520,
+   "props": [
+    "bell"
+   ],
+   "note": "상여 선소리꾼. 삼베옷·흰 수염·요령",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N105.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 120
+   }
+  },
+  {
+   "id": "N106",
+   "name": "곱단네",
+   "file": "assets3d/npcs/npc_N106.glb",
+   "template": "아낙(중년)",
+   "height_m": 2.13,
+   "tris": 594,
+   "props": [
+    "jar_on_head"
+   ],
+   "note": "우물가 아낙. 물동이",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N106.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 128
+   }
+  },
+  {
+   "id": "N107",
+   "name": "간난이",
+   "file": "assets3d/npcs/npc_N107.glb",
+   "template": "아낙(젊음)",
+   "height_m": 1.61,
+   "tris": 514,
+   "props": [
+    "bucket"
+   ],
+   "note": "우물가 아낙. 두레박",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N107.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 119
+   }
+  },
+  {
+   "id": "N108",
+   "name": "덕만",
+   "file": "assets3d/npcs/npc_N108.glb",
+   "template": "청년(소장수 아들)",
+   "height_m": 1.8,
+   "tris": 728,
+   "props": [
+    "scar"
+   ],
+   "note": "왼 눈썹 흉터(+X쪽)와 고삐",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N108.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 140
+   }
+  },
+  {
+   "id": "N109",
+   "name": "용득",
+   "file": "assets3d/npcs/npc_N109.glb",
+   "template": "대장장이(건장)",
+   "height_m": 1.8,
+   "tris": 724,
+   "props": [
+    "smith"
+   ],
+   "note": "가죽 앞치마·망치·검댕",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N109.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 141
+   }
+  },
+  {
+   "id": "N110a",
+   "name": "등짐장수(득보)",
+   "file": "assets3d/npcs/npc_N110a.glb",
+   "template": "등짐장수",
+   "height_m": 1.81,
+   "tris": 748,
+   "props": [
+    "jige"
+   ],
+   "note": "지게와 보따리 둘, 패랭이",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N110a.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 143
+   }
+  },
+  {
+   "id": "N110b",
+   "name": "등짐장수(동무)",
+   "file": "assets3d/npcs/npc_N110b.glb",
+   "template": "등짐장수",
+   "height_m": 1.76,
+   "tris": 726,
+   "props": [
+    "bundle"
+   ],
+   "note": "봇짐과 지팡이, 패랭이",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N110b.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 140
+   }
+  },
+  {
+   "id": "N201",
+   "name": "득보",
+   "file": "assets3d/npcs/npc_N201.glb",
+   "template": "등짐장수",
+   "height_m": 1.81,
+   "tris": 748,
+   "props": [
+    "jige"
+   ],
+   "note": "N-110 등짐장수(득보)와 같은 사람·같은 모양",
+   "same_as": "N110a",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N201.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 143
+   }
+  },
+  {
+   "id": "N202",
+   "name": "은실",
+   "file": "assets3d/npcs/npc_N202.glb",
+   "template": "처녀(약방)",
+   "height_m": 1.61,
+   "tris": 506,
+   "props": [
+    "medicine"
+   ],
+   "note": "약봉지와 약주머니",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N202.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 120
+   }
+  },
+  {
+   "id": "N203",
+   "name": "섭섭이",
+   "file": "assets3d/npcs/npc_N203.glb",
+   "template": "처녀(주막)",
+   "height_m": 1.61,
+   "tris": 530,
+   "props": [
+    "tray"
+   ],
+   "note": "주막 쟁반(사발·주전자)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N203.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 119
+   }
+  },
+  {
+   "id": "N204a",
+   "name": "꼭지",
+   "file": "assets3d/npcs/npc_N204a.glb",
+   "template": "사내아이(장터)",
+   "height_m": 1.29,
+   "tris": 616,
+   "props": [
+    "candy_stick"
+   ],
+   "note": "엿 막대",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N204a.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 129
+   }
+  },
+  {
+   "id": "N204b",
+   "name": "차돌이",
+   "file": "assets3d/npcs/npc_N204b.glb",
+   "template": "사내아이(장터)",
+   "height_m": 1.22,
+   "tris": 630,
+   "props": [
+    "candy_tray"
+   ],
+   "note": "목에 건 엿판",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N204b.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 130
+   }
+  },
+  {
+   "id": "N205",
+   "name": "노경수 손주",
+   "file": "assets3d/npcs/npc_N205.glb",
+   "template": "도령(아이)",
+   "height_m": 1.27,
+   "tris": 586,
+   "props": [
+    "book"
+   ],
+   "note": "아전 집 도령. 복건과 책",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N205.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 124
+   }
+  },
+  {
+   "id": "N206",
+   "name": "옥지기",
+   "file": "assets3d/npcs/npc_N206.glb",
+   "template": "관아 하인(옥)",
+   "height_m": 1.8,
+   "tris": 812,
+   "props": [
+    "keys"
+   ],
+   "note": "허리 열쇠 뭉치, 어두운 옷",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N206.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 145
+   }
+  },
+  {
+   "id": "N207",
+   "name": "사령",
+   "file": "assets3d/npcs/npc_N207.glb",
+   "template": "관아 사령(군복)",
+   "height_m": 2.14,
+   "tris": 828,
+   "props": [
+    "gonjang"
+   ],
+   "note": "붉은 군복·전립·곤장",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "step": [
+       9,
+       27
+      ]
+     }
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N207.glb",
+    "skins": 1,
+    "joints": 16,
+    "animations": [
+     "Idle",
+     "Walk",
+     "Talk",
+     "Work"
+    ],
+    "size_kb": 151
+   }
+  }
+ ]
+}

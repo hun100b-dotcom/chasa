@@ -33,6 +33,10 @@ STYLE = {
  "물막이 골": {"mood": "개울과 벼랑 사이 좁고 빽빽한 숲 골짜기. 방앗간이 외딴 불빛.", "density": "숲 군집 매우 빽빽, 갈대·바위", "enemy": "개울가·벼랑 아래 오래된 혼과 보스 1호(나루 영감) 주변 호위.", "camps": 5},
  "폐당집": {"mood": "고지의 무너진 당집과 무덤 터. 마른 나무, 무덤 무리, 푸른 혼불.", "density": "마른 나무·무덤 많음, 길 좁음", "enemy": "무덤 곁 원념 덩어리와 오래된 혼.", "camps": 4},
  "검은여울": {"mood": "어두운 강, 돌다리, 나루터, 약초·역병 기운(2막). 물가 갈대와 버드나무.", "density": "물가 소품 집중, 숲 중간", "enemy": "강둑·나루터 역병 혼(멍울). 의원 집은 안전지대.", "camps": 4}}
+# 구역별 안개 값(유니티 RenderSettings.fog 용): 색(hex), 밀도(지수형 0~1 느낌값), 시작·끝 거리(m). 검은여울은 탁한 회청록으로 짙게 → 역병 느낌
+FOG = {"_기본": {"color": "#33405F", "density": 0.006, "start_m": 40, "end_m": 180},
+       "검은여울": {"color": "#46564F", "density": 0.016, "start_m": 14, "end_m": 90, "note": "회청록 독안개. 안개 소품(prop_mist_bank·mist_pillar)과 초록 등불(prop_sick_lantern)이 함께 깔림"},
+       "폐당집": {"color": "#3A3357", "density": 0.010, "start_m": 25, "end_m": 130, "note": "보랏빛 한기"}}
 zones_out = []
 for z in F["zones"]:
     x0, y0, x1, y1 = z["rect_m"]; st = STYLE[z["name"]]; camps = []; tries = 0
@@ -43,7 +47,7 @@ for z in F["zones"]:
         if math.hypot(x - SPAWN[0], y - SPAWN[1]) < (45 if z["name"] == "솔고개 마을" else 60) or near_struct(x, y, r + 4): continue
         if any(math.hypot(x - c["x"], y - c["y"]) < 40 for c in camps): continue
         camps.append({"x": x, "y": y, "radius_m": r, "size_hint": rnd.choice(("소(3~4)", "중(5~7)", "중(5~7)", "대(8~10)"))})
-    zones_out.append({"name": z["name"], "rect_m": z["rect_m"], "mood": st["mood"], "density": st["density"], "enemy_theme": st["enemy"], "enemy_camps": camps})
+    zones_out.append({"name": z["name"], "rect_m": z["rect_m"], "fog": FOG.get(z["name"], FOG["_기본"]), "mood": st["mood"], "density": st["density"], "enemy_theme": st["enemy"], "enemy_camps": camps})
 json.dump({"units": "m", "axes": "x=동, y=북", "spawn": SPAWN, "note": "enemy_camps는 걸을 수 있는 풀밭·밭 위에서 건물에서 4m 이상, 시작점에서 60m 이상, 군집끼리 40m 이상 떨어진 자리. 후보일 뿐이니 코드에서 가감하세요.", "zones": zones_out},
           open(os.path.join(A3, "field_5x5_zones.json"), "w"), ensure_ascii=False, indent=1)
 print("인스턴스", out["counts"], "군집", {z["name"]: len(z["enemy_camps"]) for z in zones_out})
