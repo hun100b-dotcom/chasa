@@ -191,8 +191,9 @@ def build_body(s):
         add(f"Hand.{side}", K_.sph("hand", 0.055, hp, sk, 5, 4))
     # 머리
     hc = (0, hy, 1.58 - (0.02 if child else 0))
-    add("Head", K_.sph("head", hr, hc, sk, 7, 5))
-    for sx in (1, -1): add("Head", K_.box("eye", (0.035, 0.02, 0.024), (sx * 0.05, hy - hr + 0.004, hc[2] + 0.025), DARK))
+    add("Head", K_.sph("head", hr, hc, sk, 10, 7, (1, 0.97, 1.08)))
+    from look_v2 import npc_face
+    npc_face(K_, add, s, hc, hr, hy)   # 눈 두 점 → 흰자·눈동자·눈썹·코·입·귀·볼·주름(look_v2.py)
     hs = s.get("hair", "topknot"); hc_col = s["haircol"]
     if hs != "none": add("Head", K_.sph("hairCap", hr * 1.05, (0, hy + 0.025, hc[2] + 0.04), hc_col, 7, 4, (1, 1, 0.8)))
     if hs == "topknot": add("Head", K_.sph("knot", 0.055, (0, hy + 0.02, hc[2] + 0.17), hc_col, 5, 4), K_.box("pin", (0.01, 0.01, 0.1), (0, hy + 0.02, hc[2] + 0.14), "gold"))

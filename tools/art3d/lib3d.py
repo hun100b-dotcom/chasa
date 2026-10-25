@@ -164,3 +164,63 @@ def light_empty(parent, name, pos, color, intensity=1.0, range_m=8.0, flicker=Fa
     e.location = pos; e.parent = parent
     e["light_type"] = kind; e["color"] = color; e["intensity"] = intensity; e["range_m"] = range_m; e["flicker"] = 1 if flicker else 0
     return e
+
+
+def mat_alpha(name, alpha=0.5, emit=0.0):
+    """반투명 재질(혼의 겉껍질 등). 베이스컬러+알파만 쓴다(텍스처 없음). glTF에는 alphaMode BLEND로 나간다.
+    발광(emit)이 있으면 같은 색으로 은은히 빛난다. 유니티에서는 투명 정렬이 필요하니 겉껍질 하나만 이 재질을 쓰고 속(핵)은 불투명 발광으로 둔다."""
+    key = (name, emit, "alpha", alpha)
+    if key in _mats: return _mats[key]
+    m = bpy.data.materials.new(f"M_{name}_shell")
+    m.use_nodes = True
+    b = m.node_tree.nodes["Principled BSDF"]
+    b.inputs["Base Color"].default_value = hex2rgb(name)
+    b.inputs["Roughness"].default_value = 0.6
+    b.inputs["Alpha"].default_value = alpha
+    if emit:
+        b.inputs["Emission Color"].default_value = hex2rgb(name)
+        b.inputs["Emission Strength"].default_value = emit
+    for attr, val in (("surface_render_method", "BLENDED"), ("blend_method", "BLEND")):
+        try: setattr(m, attr, val)
+        except Exception: pass
+    m["alpha"] = alpha; m["emit"] = emit; m["hex"] = PAL.get(name, name)
+    _mats[key] = m
+    return m
+
+
+def lathe(name, rings, segs, material, scale=(1, 1, 1), loc=(0, 0, 0), rot=(0, 0, 0), fn=None, skip=None, caps=(True, True)):
+    """선반으로 깎은 몸체. rings=[(높이 z, 반지름 r), ...] 아래→위. 각 고리를 segs각형으로 둘러 면을 잇는다.
+    fn(i, k, th, z, r) -> (r, z): 고리 i의 k번째 점의 반지름·높이를 비틀어 주름·물결을 만든다. skip(i, k): 그 칸의 면을 비워 트임을 낸다.
+    각도 th=0은 +X, 앞(-Y)은 th=-90°. 반지름 0인 고리는 한 점으로 모여 뾰족해진다."""
+    bm = bmesh.new(); grid = []
+    for i, (z, r) in enumerate(rings):
+        row = []
+        for k in range(segs):
+            th = 2 * math.pi * k / segs
+            rr, zz = fn(i, k, th, z, r) if fn else (r, z)
+            row.append(bm.verts.new((rr * math.cos(th), rr * math.sin(th), zz)))
+        grid.append(row)
+    for i in range(len(rings) - 1):
+        for k in range(segs):
+            k2 = (k + 1) % segs
+            if skip and skip(i, k): continue
+            try: bm.faces.new([grid[i][k], grid[i][k2], grid[i + 1][k2], grid[i + 1][k]])
+            except ValueError: pass
+    if caps[0] and rings[0][1] > 0:
+        try: bm.faces.new(list(reversed(grid[0])))
+        except ValueError: pass
+    if caps[1] and rings[-1][1] > 0:
+        try: bm.faces.new(grid[-1])
+        except ValueError: pass
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    return _obj(name, bm, material, loc, rot, scale)
+
+
+def chain_pts(name, pts, r1, r2, material, segs=5):
+    """점들을 이은 가는 곡선 줄(갓끈·꼬리·머리카락). 앞 점에서 뒤 점으로 갈수록 r1→r2로 가늘어진다."""
+    out = []; n = len(pts) - 1
+    for i in range(n):
+        a = r1 + (r2 - r1) * i / n; b = r1 + (r2 - r1) * (i + 1) / n
+        out.append(limb(f"{name}{i}", pts[i], pts[i + 1], a, b, material, segs))
+    return out

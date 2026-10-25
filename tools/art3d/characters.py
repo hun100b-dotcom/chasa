@@ -13,7 +13,7 @@ def to_group(objs, bone):
         vg.add(list(range(len(o.data.vertices))), 1.0, "REPLACE")
     return objs
 
-def hero(chain=False):
+def hero_v1(chain=False):
     """chain=True면 오른손에 사슬을 감은 옛 모양. 기본은 사슬 없는 주먹(사슬은 chain_wrap()로 따로 내보냄)."""
     parts = []
     A = 0.5   # 팔이 벌어진 각도(라디안): A자 자세
@@ -83,7 +83,7 @@ def rig(mesh, bones=None):
     m = mesh.modifiers.new("Armature", "ARMATURE"); m.object = ao
     return ao
 
-def chain_wrap():
+def chain_wrap_v1():
     """영웅 오른손에 감겨 있던 사슬(감은 고리 6 + 늘어진 고리 4)을 손 위치 기준(0,0,0)으로 따로 만든 것. 소켓: Hand.R 머리 위치."""
     hand = Vector((0, 0, 0)); p = []
     for i in range(6):
@@ -93,7 +93,7 @@ def chain_wrap():
         p.append(box(f"link{i}", (0.045, 0.02, 0.07), (-0.05, -0.04, -0.1 - i * 0.075), "chain", rot=(0, 0, 0.0 if i % 2 else 0.9)))
     return p
 
-def souls():
+def souls_v1():
     S = {}
     def eyes(z, y, c="face", dx=0.07, s=0.035, ox=0):
         return [box("eyeL", (s, 0.02, s * 1.5), (ox + dx, y, z), c), box("eyeR", (s, 0.02, s * 1.5), (ox - dx, y, z), c)]
@@ -120,6 +120,9 @@ def souls():
             p.append(cyl(f"spike{i}", 0.09, 0.0, 0.32, (o + math.cos(a) * 0.5, math.sin(a) * 0.4, 0.2), m, 5, rot=(0.0, 0.6 * math.cos(a), 0)))
         return p
     return {"fresh": fresh, "day": day, "old": old, "lump": lump}
+
+# 2차 다듬기(look_v2.py): 같은 뼈대 이름·위치를 쓰는 새 모양. 이전 모양은 hero_v1/souls_v1로 남겨 전후 비교에 쓴다.
+from look_v2 import hero2 as hero, souls2 as souls, chain_wrap2 as chain_wrap
 
 if __name__ == "__main__":
     rep = []

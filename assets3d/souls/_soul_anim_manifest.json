@@ -48,7 +48,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 28
+   "size_kb": 68
   },
   {
    "file": "soul_day.glb",
@@ -60,7 +60,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 31
+   "size_kb": 99
   },
   {
    "file": "soul_old.glb",
@@ -72,7 +72,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 32
+   "size_kb": 64
   },
   {
    "file": "soul_lump.glb",
@@ -84,7 +84,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 45
+   "size_kb": 125
   },
   {
    "file": "soul_fresh_yeoksa.glb",
@@ -96,7 +96,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 44
+   "size_kb": 84
   },
   {
    "file": "soul_day_yeoksa.glb",
@@ -108,7 +108,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 47
+   "size_kb": 115
   },
   {
    "file": "soul_old_yeoksa.glb",
@@ -120,7 +120,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 48
+   "size_kb": 80
   },
   {
    "file": "soul_lump_yeoksa.glb",
@@ -132,7 +132,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 61
+   "size_kb": 141
   },
   {
    "file": "soul_fresh_bungjae.glb",
@@ -144,7 +144,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 39
+   "size_kb": 79
   },
   {
    "file": "soul_day_bungjae.glb",
@@ -156,7 +156,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 42
+   "size_kb": 110
   },
   {
    "file": "soul_old_bungjae.glb",
@@ -168,7 +168,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 43
+   "size_kb": 75
   },
   {
    "file": "soul_lump_bungjae.glb",
@@ -180,7 +180,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 57
+   "size_kb": 137
   },
   {
    "file": "soul_fresh_soegol.glb",
@@ -192,7 +192,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 41
+   "size_kb": 80
   },
   {
    "file": "soul_day_soegol.glb",
@@ -204,7 +204,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 43
+   "size_kb": 111
   },
   {
    "file": "soul_old_soegol.glb",
@@ -216,7 +216,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 44
+   "size_kb": 76
   },
   {
    "file": "soul_lump_soegol.glb",
@@ -228,7 +228,7 @@
     "Attack",
     "Kneel"
    ],
-   "size_kb": 58
+   "size_kb": 138
   }
  ]
 }

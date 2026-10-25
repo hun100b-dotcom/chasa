@@ -4,13 +4,13 @@
   {
    "name": "weapon_chain",
    "label": "철삭",
-   "tris": 352,
-   "length_m": 1.3,
+   "tris": 1314,
+   "length_m": 1.81,
    "z_range_m": [
-    -0.17,
-    1.13
+    -0.46,
+    1.35
    ],
-   "width_m": 0.14,
+   "width_m": 0.22,
    "socket": {
     "bone": "Hand.R",
     "position_in_bone_m": [

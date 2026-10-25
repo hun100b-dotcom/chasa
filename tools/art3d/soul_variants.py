@@ -23,7 +23,10 @@ def tint(parts, base_key, color, t):
     for o in parts:
         for i, m in enumerate(o.data.materials):
             if m and m.name.startswith("M_" + base_key):
-                o.data.materials[i] = mat(mix(src, color, t), 0.7)
+                if m.get("alpha"):   # 반투명 겉껍질은 알파·발광을 그대로 두고 색만 섞는다
+                    o.data.materials[i] = mat_alpha(mix(src, color, t), m["alpha"], m["emit"])
+                else:
+                    o.data.materials[i] = mat(mix(src, color, t), max(0.7, m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value))
 
 def region_extra(region, kind):
     hz, hr, fy, cz = ANCHOR[kind]

@@ -9,7 +9,7 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets3d")
 
 def L(name, a, b, r1, r2, m, segs=6): return limb(name, a, b, r1, r2, m, segs)
 
-def chain():
+def chain_v1():
     """철삭: 가죽 손잡이 + 감긴 사슬 + 늘어진 사슬 + 끝추. 사슬 길이는 짧게 두고, 늘어나는 연출은 코드 이펙트가 맡는다."""
     p = [cyl("grip", 0.035, 0.035, 0.28, (0, 0, -0.14), "wood_dark", 6), cyl("capA", 0.05, 0.05, 0.03, (0, 0, 0.14), "iron", 6), cyl("capB", 0.05, 0.05, 0.03, (0, 0, -0.17), "iron", 6)]
     for i in range(5): p.append(cyl(f"coil{i}", 0.07, 0.07, 0.025, (0, 0, -0.1 + i * 0.045), mat("chain", 0.5), 8))
@@ -17,6 +17,8 @@ def chain():
         p.append(box(f"link{i}", (0.05, 0.02, 0.085), (0, 0, 0.2 + i * 0.075), mat("chain", 0.5), rot=(0, 0, 0 if i % 2 else math.pi / 2)))
     p += [sphere("weight", 0.07, (0, 0, 0.93), "iron", 6, 4), cyl("spike", 0.045, 0.0, 0.16, (0, 0, 0.97), "iron", 5)]
     return p
+
+from look_v2 import chain2 as chain   # 2차 다듬기(look_v2.py). 옛 모양은 chain_v1
 
 def bangmang():
     """육모방망이: 여섯 모 나무 몽둥이, 끝이 굵고 쇠테 두 줄, 손잡이 끈."""
