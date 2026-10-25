@@ -88,3 +88,8 @@
 - `pc-verify-6888ec5-demo.mp4` — ?demo=1&cam=a 30초(원본 14초 지점부터), 4.6MB. 새 땅·대기 고리·천도
 - `pc-verify-terrain-walk.png` — ?field 시작에서 위·오른쪽·아래·왼쪽으로 걷기(새 땅 위 이동 정상)
 - `pc-verify-terrain-tour.png` — ?field 걷기 8컷
+
+## 2026-10-25 13:10 KST — 48fe879 땅 잔무늬·개울물 확인
+- `48fe879-water-weir.png`·`48fe879-water-boss-stream.png` 물 셰이더 정상(분홍 없음, 잔무늬 밝기 튐 없음)
+- `48fe879-water-bridge-no-water.png`·`48fe879-water-ferry-dock-on-grass.png` 돌다리·나루터 밑에 물이 없음 — 높이맵이 남북으로 뒤집혀 읽힘(보고 참고)
+- `48fe879-water-village.png` 마을
