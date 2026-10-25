@@ -342,7 +342,7 @@ public class JudgeSystem : MonoBehaviour
             e.soul.WaitLeft = e.soul.WaitTotal;
         }
         if (!Demo.Gear) return;   // 시연판 기본 구성: 장비 드롭 없음
-        var it = Loot.Roll(() => Random.value, e.soul.Fierce);
+        var it = Loot.Roll(() => Random.value, e.soul.Fierce, FieldRules.On ? RingLoot.RingAt(e.Pos.x, e.Pos.z, FieldZones.NameAt(e.Pos.x, e.Pos.z) == "검은여울") : 0);   // 필드에선 위치로 고리를 정해 등급 표를 쓴다
         if (it == null) return;
         string txt = Loadout.Describe(it);
         if (lo.Equip(it))

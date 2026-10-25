@@ -658,4 +658,26 @@ public static class Balance
     public const float B12_FLOOD_WID = 3.0f;  // (3막 보스 임시·기획 부록 E) 물살 띠 폭(m)
     public const float B12_FLOOD_GAP = 6.0f;  // (3막 보스 임시·기획 부록 E) 물살 간격(초)
     public const float B12_TORCH_STUN = 3.0f;  // (3막 보스 임시·기획 부록 E) 큰물 단계에서 횃불을 건지면 흑월이 멈추는 시간(초)
+    public const int RING1_DROP_COMMON_PCT = 80;  // (기획 성장 곡선 10-25) 고리 1 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100
+    public const int RING1_DROP_CRAFTED_PCT = 18;  // (기획 성장 곡선 10-25) 고리 1 장비 드롭 중 손본 등급 확률(%). 고리별 합 100
+    public const int RING1_DROP_RARE_PCT = 2;  // (기획 성장 곡선 10-25) 고리 1 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100
+    public const int RING2_DROP_COMMON_PCT = 70;  // (기획 성장 곡선 10-25) 고리 2 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100
+    public const int RING2_DROP_CRAFTED_PCT = 26;  // (기획 성장 곡선 10-25) 고리 2 장비 드롭 중 손본 등급 확률(%). 고리별 합 100
+    public const int RING2_DROP_RARE_PCT = 4;  // (기획 성장 곡선 10-25) 고리 2 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100
+    public const int RING3_DROP_COMMON_PCT = 55;  // (기획 성장 곡선 10-25) 고리 3 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100
+    public const int RING3_DROP_CRAFTED_PCT = 37;  // (기획 성장 곡선 10-25) 고리 3 장비 드롭 중 손본 등급 확률(%). 고리별 합 100
+    public const int RING3_DROP_RARE_PCT = 8;  // (기획 성장 곡선 10-25) 고리 3 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100
+    public const int RING4_DROP_COMMON_PCT = 45;  // (기획 성장 곡선 10-25) 고리 4 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100
+    public const int RING4_DROP_CRAFTED_PCT = 43;  // (기획 성장 곡선 10-25) 고리 4 장비 드롭 중 손본 등급 확률(%). 고리별 합 100
+    public const int RING4_DROP_RARE_PCT = 12;  // (기획 성장 곡선 10-25) 고리 4 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100
+    public const int RING5_DROP_COMMON_PCT = 35;  // (기획 성장 곡선 10-25) 고리 5 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100
+    public const int RING5_DROP_CRAFTED_PCT = 47;  // (기획 성장 곡선 10-25) 고리 5 장비 드롭 중 손본 등급 확률(%). 고리별 합 100
+    public const int RING5_DROP_RARE_PCT = 18;  // (기획 성장 곡선 10-25) 고리 5 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100
+    public const int RING6_DROP_COMMON_PCT = 25;  // (기획 성장 곡선 10-25) 고리 6 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100
+    public const int RING6_DROP_CRAFTED_PCT = 50;  // (기획 성장 곡선 10-25) 고리 6 장비 드롭 중 손본 등급 확률(%). 고리별 합 100
+    public const int RING6_DROP_RARE_PCT = 25;  // (기획 성장 곡선 10-25) 고리 6 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100
+    public const int SEAL_SMALL_NEOK = 300;  // (기획 성장 곡선 10-25) 작은 인 만드는 넋(같은 두 빛깔이면 빛깔당 150, 한 빛깔이면 300)
+    public const int SEAL_LARGE_NEOK = 900;  // (기획 성장 곡선 10-25) 큰 인 만드는 넋(두 빛깔 450씩, 한 빛깔 900)
+    public const int SEAL_SLOTS_CRAFTED = 1;  // (기획 성장 곡선 10-25) 손본 등급 인 홈(무기·갓·도포만)
+    public const int SEAL_SLOTS_RARE = 2;  // (기획 성장 곡선 10-25) 귀한 등급 인 홈(무기·갓·도포만). 이름 있는 물건도 같다
 }

@@ -341,12 +341,16 @@ namespace Chasa.Core
             return list.Count == 1 ? list[0] : list[(int)(rand() * list.Count) % list.Count];
         }
 
-        public static ItemDef Roll(Func<float> rand, bool fierce)
+        public static ItemDef Roll(Func<float> rand, bool fierce) { return Roll(rand, fierce, 0); }
+
+        /// <summary>ring 1~6 이면 고리별 등급 표(RingLoot), 0 이면 시연판 고정 확률. 난수를 쓰는 순서는 같다(기존 결과 유지)</summary>
+        public static ItemDef Roll(Func<float> rand, bool fierce, int ring)
         {
             if (!fierce && rand() >= Balance.DROP_CHANCE) return null;
             Rarity r;
             float x = rand();
-            if (fierce || x < Balance.DROP_RARITY_RARE) r = Rarity.Rare;
+            if (ring > 0) r = fierce ? Rarity.Rare : RingLoot.RarityAt(ring, x);
+            else if (fierce || x < Balance.DROP_RARITY_RARE) r = Rarity.Rare;
             else if (x < Balance.DROP_RARITY_RARE + Balance.DROP_RARITY_CRAFTED) r = Rarity.Crafted;
             else r = Rarity.Common;
 

@@ -2262,5 +2262,96 @@ public class CoreTests
         Assert.AreEqual(9, Bosses.Get(9).Id); Assert.AreEqual(12, Bosses.Get(12).Id);
     }
 
+    // ---- 장비 7칸·고리 드롭·인 (Core/GearPlan.cs) ----
+    [Test]
+    public void EquipLayout_열리는_때와_인_홈()
+    {
+        Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Weapon2, false, false)); Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Robe, false, false)); Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Charm1, false, false));
+        Assert.IsFalse(EquipLayout.IsOpen(EquipPos.Hat, false, false)); Assert.IsFalse(EquipLayout.IsOpen(EquipPos.Belt, false, false));
+        Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Hat, true, false)); Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Belt, true, false));
+        Assert.IsFalse(EquipLayout.IsOpen(EquipPos.Shoes, true, false)); Assert.IsFalse(EquipLayout.IsOpen(EquipPos.Charm2, true, false));
+        Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Shoes, true, true)); Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Charm2, false, true));
+        Assert.AreEqual(0, EquipLayout.SealSlots(EquipPos.Robe, Rarity.Common, false));
+        Assert.AreEqual(1, EquipLayout.SealSlots(EquipPos.Hat, Rarity.Crafted, false));
+        Assert.AreEqual(2, EquipLayout.SealSlots(EquipPos.Weapon1, Rarity.Rare, false));
+        Assert.AreEqual(2, EquipLayout.SealSlots(EquipPos.Weapon2, Rarity.Common, true));      // 이름 있는 물건은 귀한과 같다
+        Assert.AreEqual(0, EquipLayout.SealSlots(EquipPos.Belt, Rarity.Rare, false));          // 띠·신·노리개는 홈 없음
+        Assert.AreEqual(0, EquipLayout.SealSlots(EquipPos.Charm1, Rarity.Rare, true));
+    }
+
+    [Test]
+    public void RingLoot_고리별_확률의_합은_1이고_고리가_오를수록_귀한_쪽이_넓다()
+    {
+        float prevRare = -1f;
+        for (int ring = 1; ring <= 6; ring++)
+        {
+            float sum = RingLoot.Chance(ring, Rarity.Common) + RingLoot.Chance(ring, Rarity.Crafted) + RingLoot.Chance(ring, Rarity.Rare);
+            Assert.AreEqual(1f, sum, 0.001f);
+            Assert.Greater(RingLoot.Chance(ring, Rarity.Rare), prevRare); prevRare = RingLoot.Chance(ring, Rarity.Rare);
+        }
+        Assert.AreEqual(RingLoot.Chance(1, Rarity.Rare), RingLoot.Chance(0, Rarity.Rare), 0.0001f);   // 범위 밖은 가장자리로
+        Assert.AreEqual(RingLoot.Chance(6, Rarity.Rare), RingLoot.Chance(9, Rarity.Rare), 0.0001f);
+        Assert.AreEqual(Rarity.Rare, RingLoot.RarityAt(6, 0.2f));      // 고리 6 은 귀한 25%
+        Assert.AreEqual(Rarity.Crafted, RingLoot.RarityAt(6, 0.3f));
+        Assert.AreEqual(Rarity.Common, RingLoot.RarityAt(6, 0.9f));
+        Assert.AreEqual(Rarity.Common, RingLoot.RarityAt(1, 0.5f));    // 고리 1 은 귀한 2%·손본 18%
+    }
+
+    [Test]
+    public void RingLoot_위치로_고리를_정한다()
+    {
+        Assert.AreEqual(1, RingLoot.RingAt(200f, 100f, false)); Assert.AreEqual(2, RingLoot.RingAt(300f, 500f, true));
+        Assert.AreEqual(3, RingLoot.RingAt(100f, 900f, false)); Assert.AreEqual(4, RingLoot.RingAt(600f, 1000f, false));
+        Assert.AreEqual(5, RingLoot.RingAt(1000f, 400f, false)); Assert.AreEqual(6, RingLoot.RingAt(-300f, 300f, false));
+    }
+
+    [Test]
+    public void Loot_고리를_주면_고리표를_쓰고_안_주면_시연판_확률을_쓴다()
+    {
+        int rare6 = 0, rare0 = 0, n = 4000; var rng = new System.Random(7);
+        for (int i = 0; i < n; i++) { var it = Loot.Roll(() => (float)rng.NextDouble(), false, 6); if (it != null && it.Rarity == Rarity.Rare) rare6++; }
+        rng = new System.Random(7);
+        for (int i = 0; i < n; i++) { var it = Loot.Roll(() => (float)rng.NextDouble(), false, 0); if (it != null && it.Rarity == Rarity.Rare) rare0++; }
+        Assert.Greater(rare6, rare0 * 2);                               // 고리 6(25%)이 시연판(8%)보다 훨씬 자주 귀한 것을 준다
+        Assert.IsTrue(Loot.Roll(() => 0f, true, 3).Rarity == Rarity.Rare);   // 사나운 적은 어느 고리든 귀한 확정
+        var seq = new[] { 0f, 0.5f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f };
+        int k = 0; var a1 = Loot.Roll(() => seq[k++ % seq.Length], false);
+        k = 0; var a2 = Loot.Roll(() => seq[k++ % seq.Length], false, 0);
+        Assert.AreEqual(a1.Rarity, a2.Rarity); Assert.AreEqual(a1.Options.Count, a2.Options.Count);   // 기존 호출은 결과가 그대로
+    }
+
+    [Test]
+    public void Seal_열다섯_종과_비용()
+    {
+        Assert.AreEqual(15, Seal.AllKinds(false).Count);
+        var mono = new Seal(SoulColor.Red, SoulColor.Red, false); var pair = new Seal(SoulColor.Yellow, SoulColor.Blue, false);
+        Assert.AreEqual(Balance.SEAL_SMALL_NEOK, mono.CostOf(SoulColor.Red)); Assert.AreEqual(0, mono.CostOf(SoulColor.Blue));
+        Assert.AreEqual(Balance.SEAL_SMALL_NEOK / 2, pair.CostOf(SoulColor.Blue)); Assert.AreEqual(Balance.SEAL_SMALL_NEOK / 2, pair.CostOf(SoulColor.Yellow));
+        Assert.AreEqual(new Seal(SoulColor.Blue, SoulColor.Yellow, false).Key, pair.Key);   // 순서가 달라도 같은 인
+        Assert.AreEqual(Balance.SEAL_LARGE_NEOK / 2, new Seal(SoulColor.Black, SoulColor.White, true).CostOf(SoulColor.White));
+    }
+
+    [Test]
+    public void SoulWallet_모자라면_만들지_못하고_아무것도_깎지_않는다()
+    {
+        var w = new SoulWallet(); w.Add(SoulColor.Blue, 150); w.Add(SoulColor.Yellow, 149);
+        Assert.IsNull(w.Craft(SoulColor.Blue, SoulColor.Yellow, false));
+        Assert.AreEqual(150, w.Get(SoulColor.Blue)); Assert.AreEqual(149, w.Get(SoulColor.Yellow));
+        w.Add(SoulColor.Yellow, 1);
+        var s = w.Craft(SoulColor.Yellow, SoulColor.Blue, false);
+        Assert.IsNotNull(s); Assert.AreEqual(0, w.Get(SoulColor.Blue)); Assert.AreEqual(0, w.Get(SoulColor.Yellow));
+        Assert.IsNull(w.Craft(SoulColor.Red, SoulColor.Red, true));   // 큰 인은 900
+    }
+
+    [Test]
+    public void SealSet_홈_수를_넘겨_박지_못한다()
+    {
+        var set = new SealSet(EquipLayout.SealSlots(EquipPos.Hat, Rarity.Crafted, false));   // 손본 갓 = 홈 1
+        var s = new Seal(SoulColor.Blue, SoulColor.Blue, false);
+        Assert.IsTrue(set.Insert(s)); Assert.IsFalse(set.Insert(s));
+        Assert.IsTrue(set.Remove(0)); Assert.IsTrue(set.Insert(s)); Assert.IsFalse(set.Insert(null));
+        Assert.IsFalse(new SealSet(0).Insert(s));   // 흔한 등급은 홈이 없다
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }
