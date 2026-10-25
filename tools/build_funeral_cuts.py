@@ -26,6 +26,13 @@ def convert(cid, b, lock):
     out.sort(key=lambda r: r["t"])   # 시간 순(같은 시각은 원래 순서 유지)
     return {"id": cid, "duration": b["duration"], "lock": lock, "pause": False, "skippable": b.get("skippable", True), "steps": out}
 
+# 2막 장례(docs/narrative/funerals_act2.json)가 있으면 같이 변환한다. 집 좌표(제사 지켜보기 자리)가 2막 지도와 함께 와야 실제로 열린다
+p2 = os.path.join(root, "docs", "narrative", "funerals_act2.json")
+if os.path.exists(p2):
+    f2 = json.load(open(p2, encoding="utf-8"))["funerals"]
+    ids = {f["id"] for f in src["funerals"]}
+    assert not any(f["id"] in ids for f in f2), "장례 id 겹침"
+    src["funerals"] = src["funerals"] + f2
 cuts = []
 for f in src["funerals"]:
     for b in f["branches"]:
