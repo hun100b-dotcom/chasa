@@ -131,16 +131,16 @@ def burst_frames(color, kind, n=6):
 # ── ③ 장비 등급 표시: 이름표 판 + 꼭대기 모양(색약 대응: 모양이 등급마다 다르다) ──────────────────────
 TIERS = [("common", "흔한", (243, 231, 211)), ("refined", "손본", (79, 168, 160)), ("rare", "귀한", (212, 169, 78)), ("antique", "옛 차사", (59, 74, 122)), ("named", "이름 있는", (232, 92, 65)), ("set", "한 벌", (95, 227, 192))]
 def tier_mark(i, size=32, col=None):
-    """등급 꼭대기 모양: 0 동그라미 · 1 마름모 · 2 네 갈래 별 · 3 도장 네모(속 빈) · 4 세 뿔 관 · 5 겹 고리(◎). 먹 테두리를 두르고 색으로 채운다(어두운 옛 차사 남색만 한지색 테두리)."""
+    """등급 꼭대기 모양: 0 동그라미 · 1 마름모 · 2 붓 한 획 · 3 도장 네모(속 빈) · 4 세 뿔 관 · 5 겹 고리(◎). 먹 테두리를 두르고 색으로 채운다(어두운 옛 차사 남색만 한지색 테두리)."""
     col = col or TIERS[i][2]; im = new(size, size); d = ImageDraw.Draw(im); c = size * S / 2; r = size * S * 0.36
     def shape(dd, fill, grow=0):
         rr = r + grow
         if i == 0: dd.ellipse([c - rr, c - rr, c + rr, c + rr], fill=fill)
         elif i == 1: dd.polygon([(c, c - rr * 1.15), (c + rr, c), (c, c + rr * 1.15), (c - rr, c)], fill=fill)
         elif i == 2:
-            pts = []
-            for k in range(8): a = k * math.pi / 4 - math.pi / 2; q = rr * 1.25 if k % 2 == 0 else rr * 0.42; pts.append((c + math.cos(a) * q, c + math.sin(a) * q))
-            dd.polygon(pts, fill=fill)
+            # 붓 한 획(IP 점검: 별 꾸밈 금지): 가로로 굵게 시작해 끝이 가늘어지는 획 + 위쪽 점 하나
+            dd.polygon([(c - rr * 1.25, c - rr * 0.1), (c - rr * 1.05, c + rr * 0.55), (c + rr * 0.4, c + rr * 0.45), (c + rr * 1.3, c + rr * 0.05), (c + rr * 0.4, c - rr * 0.3)], fill=fill)
+            dd.polygon([(c - rr * 0.1, c - rr * 1.0), (c + rr * 0.35, c - rr * 0.6), (c - rr * 0.1, c - rr * 0.2), (c - rr * 0.55, c - rr * 0.6)], fill=fill)
         elif i == 3: dd.rectangle([c - rr, c - rr, c + rr, c + rr], fill=fill)
         elif i == 5: dd.ellipse([c - rr * 1.15, c - rr * 1.15, c + rr * 1.15, c + rr * 1.15], fill=fill)
         else: dd.polygon([(c - rr * 1.1, c + rr * 0.9), (c - rr * 1.1, c - rr * 0.5), (c - rr * 0.55, c + rr * 0.15), (c, c - rr * 1.25), (c + rr * 0.55, c + rr * 0.15), (c + rr * 1.1, c - rr * 0.5), (c + rr * 1.1, c + rr * 0.9)], fill=fill)
@@ -360,7 +360,7 @@ def run():
     strip(burst_frames(ORANGE, "coin"), "absorb_coin_burst", 20, "발밑에 빨려 드는 순간(128², 0.3초) — 삐죽 파편이 바깥으로 튐")
     # ③ 등급 표시
     for i, (k, nm, col) in enumerate(TIERS):
-        save(tier_mark(i), f"tier_mark_{k}", SUB, note=f"{nm} 등급 꼭대기·이름표 모양 32² (모양 {['동그라미','마름모','네 갈래 별','도장 네모','세 뿔 관','겹 고리'][i]})")
+        save(tier_mark(i), f"tier_mark_{k}", SUB, note=f"{nm} 등급 꼭대기·이름표 모양 32² (모양 {['동그라미','마름모','붓 한 획','도장 네모','세 뿔 관','겹 고리'][i]})")
         save(tag_plate(i), f"drop_tag_{k}", SUB, nine=[16, 16, 16, 16], note=f"{nm} 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리")
     # ④ 도술 카드
     save(card_frame(False), "skill_card_frame", SUB, note="첫 도술 카드 틀 320×440. 갈래 배지(지름 84, 중심 160,44), 삽화 창(16,66, 288×130), 이름 띠(16,208, 288×44), 효과 글 y 262~362"); save(card_frame(True), "skill_card_frame_hover", SUB, note="골랐을 때 금빛 테두리 번짐판(같은 크기)")

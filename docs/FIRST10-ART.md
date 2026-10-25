@@ -9,7 +9,7 @@
 |---|---|---|---|
 | M6 ① | 품계 승급 인 1초 | 새로 | `rank_paper`(명부 종이 640×400) · `rank_stamp`(12프레임 12fps 띠, 프레임 4가 찍힘 → 종소리·화면 어두워짐 맞춤) · `rank_dot`(스킬바 붉은 점) · `craft_flash`(손보기 성공 금빛 0.5초) |
 | M3 ② | 혼불 흡수 · 엽전 튐 | 새로 | `absorb_hon_fly`·`absorb_coin_spin`(둘 다 48²) · `absorb_hon_burst`(청록 불티가 안으로)·`absorb_coin_burst`(주황 파편이 바깥으로), 둘 다 128²·6프레임·0.3초. 곡선·숫자는 코드 |
-| M4 ③ | 장비 등급 빛줄기·이름표 | 새로 | `fx_drop_{common,refined,rare,antique,named,set}.glb` 여섯 등급(기획 확정: 흔한 1.5 m, 손본 2.5 m, 귀한 이상 4 m). 꼭대기 모양 동그라미·마름모·네 갈래 별·속 빈 네모·세 뿔 관·겹 고리(◎), 한 벌은 빔을 감은 고리 셋이 더 있어 손본 청록과 구별 · `drop_tag_*`(이름표 판 220×40, 9칸 16) · `tier_mark_*`(32²) |
+| M4 ③ | 장비 등급 빛줄기·이름표 | 새로 | `fx_drop_{common,refined,rare,antique,named,set}.glb` 여섯 등급(기획 확정: 흔한 1.5 m, 손본 2.5 m, 귀한 이상 4 m). 꼭대기 모양 동그라미·마름모·붓 한 획·속 빈 네모·세 뿔 관·겹 고리(◎), 한 벌은 빔을 감은 고리 셋이 더 있어 손본 청록과 구별 · `drop_tag_*`(이름표 판 220×40, 9칸 16) · `tier_mark_*`(32²) |
 | M9 ④ | 첫 도술 카드 3장 틀 | 새로 | `skill_card_frame`(320×440, 배지·삽화 창·이름 띠 좌표는 manifest 설명) · `_hover`(고른 번짐판) · `skill_card_art_{bureum,jul,eolluk}`(288×130 삽화) · `branch_*`(40²)·`branch_*_big`(80², ▲ 부름 ● 줄 ✕ 얼룩) |
 | M10 ⑤ | 거센 혼 붉은 테·이름 띠·맺힘 막대 | 새로 | `elite_ring`(4프레임 가시 고리) · `elite_name_band`(720×64, 9칸 24) · `bind_bar_frame/fill/ticks`(맺힘 3칸 눈금) |
 | ⑤+ | 거센 혼 예고 장판 | 새로 | `tele_circle_{border,fill_red,fill_yellow}`(512², 반경 2.5 m=5 m 정사각) · `tele_band_{border,fill_red,fill_yellow}`(256×960, 1.6×6 m) — 접근성: 밝은 테두리 #FFF4E0 3px + 35% 채움, 채움은 바깥→안(코드 마스크) |
@@ -40,7 +40,7 @@
 | `drop_tag_common` | 220×40 | 흔한 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리 |
 | `tier_mark_refined` | 32×32 | 손본 등급 꼭대기·이름표 모양 32² (모양 마름모) |
 | `drop_tag_refined` | 220×40 | 손본 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리 |
-| `tier_mark_rare` | 32×32 | 귀한 등급 꼭대기·이름표 모양 32² (모양 네 갈래 별) |
+| `tier_mark_rare` | 32×32 | 귀한 등급 꼭대기·이름표 모양 32² (모양 붓 한 획) |
 | `drop_tag_rare` | 220×40 | 귀한 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리 |
 | `tier_mark_antique` | 32×32 | 옛 차사 등급 꼭대기·이름표 모양 32² (모양 도장 네모) |
 | `drop_tag_antique` | 220×40 | 옛 차사 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리 |
@@ -81,3 +81,9 @@
 | `title_fog_a` | 2048×512 | 이음매 없는 안개 띠. 좌우로 이어 천천히(가장 느린 층 8px/초, 빠른 층 14px/초) 흘림. 밤 서낭당 배경 위 |
 | `title_fog_b` | 2048×512 | 이음매 없는 안개 띠. 좌우로 이어 천천히(가장 느린 층 8px/초, 빠른 층 14px/초) 흘림. 밤 서낭당 배경 위 |
 | `loading_tip_plate` | 960×64 | 로딩 팁 판 960×64(9칸 24), 글 22자 |
+
+## 추가 (IP 점검 반영, M2·M14)
+- 장비 빛줄기: 귀한 등급 꼭대기를 별 → **붓 한 획**으로 교체(`tier_mark_rare`도 같이). 모든 빛줄기 밑에 **먹 번짐 밑둥**(넓은 옅은 원뿔 + 치우친 가는 줄기)을 더했다. 소용돌이·별 꾸밈 없음.
+- 넋길 표식 아이콘: 둥근 고리 → **서낭당 혼불 줄**(새끼줄에 혼불 셋). 3D 넋길 입구 모델은 아직 없고, 만들 때도 둥근 문·돌 고리 금지.
+- M2: `assets3d/ui/first10/wake_camera.json` (줌 20→16 m 2초, HUD 0.2초 간격, Wake 동작 0.8초 제안).
+- M14: `tools/art3d/loading_tips.py` → `assets3d/title/loading_{4..7}_*.jpg`, `loading_tips.json`(지역 7곳×팁 3~6줄, 22자 이내, 초안), 미리보기 `previews/loading_tips_sheet.jpg`. 시즌 2·3 그림은 임시 대역.
