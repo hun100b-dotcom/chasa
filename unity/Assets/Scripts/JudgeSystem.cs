@@ -1451,6 +1451,7 @@ public class JudgeSystem : MonoBehaviour
         if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { if (pahonOrTendo == 0) parkUnjudged = true; introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
         if (!cuts.PauseClock && !introFrozen) clock.Tick(dt);   // 오프닝 컷 동안·첫 5분엔 시계가 멈춘다
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
+        { var hat = lo.gear.GetAt(EquipPos.Hat); ActorModel.HeroHatTier = hat == null ? 0 : hat.Named ? 4 : hat.Rarity == Rarity.Rare ? 3 : hat.Rarity == Rarity.Crafted ? 2 : 1; }   // 갓 등급 → 외형 조각(1 흔한 2 손본 3 귀한 4 이름 있는)
         ActorModel.HeroShadowOn = clock.Phase != ClockPhase.Day;   // 낮엔 주인공 그림자 없음(산 사람에게 안 보이는 차사)
         if (interactables != null) DogTick();
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);

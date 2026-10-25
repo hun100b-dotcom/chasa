@@ -82,7 +82,7 @@ public class ActorModel : MonoBehaviour
             {
                 // 색 지도가 없는 모델(아트팀 GLB): 재질 칸마다 원래 색을 따서 번쩍 가능한 재질로 바꾼다
                 var src = r.sharedMaterials; var dst = new Material[src.Length];
-                for (int i = 0; i < src.Length; i++) { var c = Props3D.MatColor(src[i]); dst[i] = U.Flashable(c); rl.Add(dst[i]); cl.Add(c); }
+                for (int i = 0; i < src.Length; i++) { if (src[i] != null && src[i].name.StartsWith("M_hat")) hatRend = r; var c = Props3D.MatColor(src[i]); dst[i] = U.Flashable(c); rl.Add(dst[i]); cl.Add(c); }
                 r.sharedMaterials = dst;
             }
             r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On; r.receiveShadows = true;
@@ -121,6 +121,35 @@ public class ActorModel : MonoBehaviour
     }
 
     Dictionary<string, AnimationClip> clipsByName; Pose[] heroOrder;
+
+    // ---- 장비 외형(⑦): 갓 등급(1 흔한 ~ 5 한 벌)에 맞는 조각을 머리 뼈에 얹고 기본 갓을 숨긴다 ----
+    // 왜 뼈를 따라가게 하나? 아트의 장비 조각은 뼈대 없는 정지 모양이라, 처음 자세에서의 머리 뼈 위치를 기억해 두었다가 매 프레임 머리가 움직인 만큼 같이 옮긴다.
+    /// <summary>입은 갓의 등급(0=없음→기본 갓). JudgeSystem 이 장비가 바뀔 때 알려 준다</summary>
+    public static int HeroHatTier = 0;
+    Renderer hatRend; GameObject hatGear; int hatApplied;
+
+    void ApplyHat()
+    {
+        hatApplied = HeroHatTier;
+        if (hatGear != null) Destroy(hatGear);
+        if (hatRend == null) return;
+        if (hatApplied <= 0) { hatRend.enabled = true; return; }   // 기본 갓으로 돌아간다
+        var prefab = Resources.Load<GameObject>("Models/Gear/gear_gat_t" + Mathf.Clamp(hatApplied, 1, 5));
+        Transform head = null;
+        foreach (var t in hero.GetComponentsInChildren<Transform>(true)) if (t.name == "Head") { head = t; break; }
+        if (prefab == null || head == null) { hatRend.enabled = true; return; }   // 조각이나 뼈가 없으면 기본 갓 그대로
+        hatRend.enabled = false;
+        hatGear = Instantiate(prefab, hero.transform);
+        hatGear.transform.localPosition = Vector3.zero; hatGear.transform.localRotation = Quaternion.identity; hatGear.transform.localScale = Vector3.one;
+        foreach (var r in hatGear.GetComponentsInChildren<Renderer>())
+        {
+            var src = r.sharedMaterials; var dst = new Material[src.Length];
+            for (int i = 0; i < src.Length; i++) dst[i] = U.Flashable(Props3D.MatColor(src[i]));
+            r.sharedMaterials = dst;
+            r.shadowCastingMode = HeroShadowOn ? UnityEngine.Rendering.ShadowCastingMode.On : UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+        var f = hatGear.AddComponent<BoneFollow>(); f.Setup(head);
+    }
 
     static string WeaponClipPrefix(WeaponId w)
     {
@@ -461,6 +490,7 @@ public class ActorModel : MonoBehaviour
             foreach (var r in hero.GetComponentsInChildren<Renderer>()) r.shadowCastingMode = mode;
             if (weaponGo != null) foreach (var r in weaponGo.GetComponentsInChildren<Renderer>()) r.shadowCastingMode = mode;
         }
+        if (hero != null && key == "dongi" && hatApplied != HeroHatTier) ApplyHat();
         float dt = Time.deltaTime;
         poseT += dt;
         // 이동 속도 = 위치 변화 (걷기 판정). 슬로모·히트스톱 중엔 dt 가 달라 값이 흔들릴 수 있어 부드럽게
