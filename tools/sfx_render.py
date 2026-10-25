@@ -1281,6 +1281,128 @@ def _(r):
     return reverb(buf, 1.2, .3)
 
 
+# ===== 3막 지역 환경음 (⑤ 갯마을 포구 · ⑥ 도성 아랫마을, 서사 boss_clues_act3.json, 2026-10-25) =====
+def _wave(r, sec, size=1.0):
+    """파도 한 번: 밀려오며 커지는 쏴아(높이가 올라감) → 부서지는 찰싹 → 빠지며 자갈·거품 사르르"""
+    n = int(sec * SR); tt = np.arange(n) / SR
+    rise = sweep_filt(noise(n, r), "band", 300, 1200 * size, .8) * np.clip(tt / (sec * .45), 0, 1) ** 2 * (tt < sec * .5)
+    crash = filt(noise(n, r), "low", 4000) * env(n, sec * .45, sec * .25, 3)
+    fizz = grains(sec, r, int(120 * size), lambda r, k: bubble(.02, r.uniform(2500, 6000), 1.3, .003) * r.uniform(.05, .3),
+                  spread=lambda k, r: sec * .5 + r.uniform(0, sec * .45))
+    return (rise * .5 + crash * .8 + fizz * .4) * size
+
+
+@sfx("amb.harbor", -22, "세계", "갯마을 포구: 선창 기둥에 찰싹이는 잔파도 + 줄에 묶인 빈 배가 삐걱 + 먼 갈매기(반복용 16초)", loop=True, use="⑤ 포구(Harbor)")
+def _(r):
+    sec = 16.4; n = int(sec * SR); buf = np.zeros(n)
+    at = .2
+    while at < sec - 1:
+        d = r.uniform(2.2, 3.4); place(buf, _wave(r, d, r.uniform(.4, .7)), at); at += d * r.uniform(.6, .9)
+    slap = grains(sec, r, 14, lambda r, k: filt(noise(int(.06 * SR), r), "low", 1500) * env(int(.06 * SR), .002, .02, 4) * r.uniform(.2, .5))   # 기둥에 찰싹
+    creak = grains(sec, r, 6, lambda r, k: sweep_filt(noise(int(.7 * SR), r), "band", r.uniform(350, 500), r.uniform(500, 700), 14) * env(int(.7 * SR), .1, .2, 4, hold=.3) * .5)   # 배끼리·줄 삐걱
+    gull = np.zeros(n)
+    for at in (4.0, 4.35, 11.5):
+        d = .45; f0 = curve(d, [(0, 1500), (.1, 1900), (.4, 1300)])
+        place(gull, voice(f0, [(2200, 4, 1), (3600, 5, .4)], .3, r, nh=10) * env(int(d * SR), .02, .15, 3, hold=.15), at)
+    gull = reverb(filt(gull, "low", 3500), 1.8, .5)[:n]
+    return loopify(buf + slap + creak + gull * .25 + filt(noise(n, r), "low", 150) * .2, .5)
+
+
+@sfx("sfx.tide.flood", -12, "세계", "밀물 신호: 먼바다에서 낮게 웅— 밀려오는 큰 물소리가 점점 차오름 + 징 한 번(약 5초) — 20초 안에 붙잡아라", bypass_cast=True, use="⑤ 밀물 신호 순간(물 혼이 떠밀려 가기 시작)")
+def _(r):
+    sec = 5.2; n = int(sec * SR); buf = np.zeros(n)
+    surge = sweep_filt(noise(n, r), "low", 200, 1800) * curve(sec, [(0, 0), (3.5, 1), (5.2, .6)])
+    swell = tone(sec, 55, 65) * curve(sec, [(0, 0), (3, .6), (5.2, 0)])
+    jing = modal(4.5, [(150, 2.5, 1), (151.2, 2.5, .8), (322, 1.4, .5), (463, .9, .3)], r)   # 징: 맥놀이가 긴 놋쇠 울림
+    place(buf, jing * .7, 0)
+    buf += surge * .7 + swell * .4
+    return reverb(buf, 2.0, .3)
+
+
+@sfx("amb.tide.ebb", -24, "세계", "썰물 갯벌: 물 빠진 갯벌이 뽀글뽀글 숨 쉼 + 게 구멍 톡톡 + 멀어진 파도(반복용 15초)", loop=True, use="⑤ 썰물 때 포구·난파 여울 바닥")
+def _(r):
+    sec = 15.4; n = int(sec * SR)
+    far = filt(noise(n, r), "low", 500) * (.5 + .3 * np.sin(2 * np.pi * T(sec) / 7.7))      # 멀리 물러난 바다
+    mud = grains(sec, r, 500, lambda r, k: bubble(.03, r.uniform(800, 2500), 1.6, .006) * r.uniform(.05, .4))   # 갯벌 숨구멍
+    crab = grains(sec, r, 40, lambda r, k: modal(.03, [(r.uniform(3000, 5000), .006, 1)], r) * r.uniform(.05, .2))
+    drain = filt(noise(n, r), "band", 1800, 1.5) * .06                                     # 갯골로 흘러 나가는 가는 물
+    return loopify(far * .6 + mud * .5 + crab + drain, .5)
+
+
+@sfx("amb.saltfield", -23, "세계", "소금밭: 탁 트인 바닷바람 + 소금 결정이 바람에 서걱 + 아주 먼 파도(반복용 14초)", loop=True, use="⑤ 소금밭(SaltField)")
+def _(r):
+    sec = 14.4; n = int(sec * SR)
+    g = _gust_curve(sec, r, 2, .4)
+    wind = filt(noise(n, r), "band", 600, .6) * (.4 + .6 * g)
+    salt = grains(sec, r, 900, lambda r, k: filt(noise(int(.002 * SR), r), "high", 5000) * r.uniform(.02, .12)) * np.repeat(g, 1)[:n]
+    sea = filt(noise(n, r), "low", 300) * .3
+    return loopify(wind * .5 + salt + sea, .5)
+
+
+@sfx("amb.wreckshoal", -21, "세계", "난파 여울: 암초 사이를 빠르게 흐르는 물살 + 부서진 배 나무가 물에 부딪혀 쿵·삐걱(반복용 15초)", loop=True, use="⑤ 난파 여울(WreckShoal)·B-10 갑판")
+def _(r):
+    sec = 15.4; n = int(sec * SR); t = T(sec)
+    rush = filt(filt(noise(n, r), "high", 200), "low", 3500) * (.8 + .2 * np.sin(2 * np.pi * t / 3.1))
+    churn = grains(sec, r, 400, lambda r, k: bubble(.06, r.uniform(250, 900), 2, .015) * r.uniform(.1, .6))   # 물살 속 공기 방울
+    hull = grains(sec, r, 7, lambda r, k: (modal(.5, [(r.uniform(70, 110), .2, 1), (r.uniform(220, 300), .1, .4)], r) + filt(noise(int(.5 * SR), r), "low", 400) * env(int(.5 * SR), .002, .05, 4) * .5) * r.uniform(.3, .7))   # 배 조각이 바위에 쿵
+    creak = grains(sec, r, 5, lambda r, k: sweep_filt(noise(int(.8 * SR), r), "band", 280, 420, 16) * env(int(.8 * SR), .1, .2, 4, hold=.35) * .5)
+    return loopify(rush * .6 + churn * .4 + hull + creak, .5)
+
+
+@sfx("amb.capital.market", -24, "세계", "도성 저잣거리: 촘촘한 사람 소리(뜻 안 들림) + 장사꾼의 길게 끄는 외침 + 엽전·그릇·수레·소 방울 + 먼 장구(반복용 16초)", loop=True, use="⑥ 저잣거리(Market) — 1막 장터보다 크고 바쁘다")
+def _(r):
+    sec = 16.4; n = int(sec * SR); buf = np.zeros(n)
+    vowels = [[(750, 4, 1), (1200, 5, .5)], [(450, 4, 1), (1900, 6, .4)], [(320, 4, 1), (2300, 7, .35)], [(550, 4, 1), (900, 5, .6)]]
+    for p in range(24):                                       # 사람이 장터보다 많다
+        base = r.uniform(110, 280); at = r.uniform(0, 1.0)
+        while at < sec - .3:
+            d = r.uniform(.07, .22); m = int(d * SR)
+            f0 = np.linspace(base * r.uniform(.9, 1.2), base * r.uniform(.8, 1.05), m)
+            place(buf, voice(f0, vowels[r.integers(4)], .2, r, nh=16) * env(m, .012, d * .4, 3, hold=d * .4) * r.uniform(.2, .8), at)
+            at += d + (r.uniform(.02, .07) if r.random() > .12 else r.uniform(.3, 1.2))
+    buf = filt(buf, "low", 2000)
+    for at in (2.0, 9.0, 13.5):                               # 장사꾼 외침: 길게 끌어 올렸다 내림(말뜻 없음)
+        d = 1.3; f0 = curve(d, [(0, 200), (.2, 300), (.9, 290), (1.3, 220)])
+        place(buf, filt(voice(f0, [(700, 4, 1), (1150, 5, .5)], .25, r, nh=25), "low", 2500) * env(int(d * SR), .05, .3, 3, hold=.8) * .5, at)
+    coins = grains(sec, r, 40, lambda r, k: modal(.12, [(r.uniform(3500, 5500), .03, 1), (r.uniform(6500, 8000), .015, .4)], r) * r.uniform(.05, .2))
+    cart = grains(sec, r, 4, lambda r, k: filt(noise(int(.6 * SR), r), "band", r.uniform(450, 700), 6) * env(int(.6 * SR), .1, .2, 3, hold=.2) * .3)
+    cowbell = grains(sec, r, 6, lambda r, k: modal(.5, [(r.uniform(700, 800), .15, 1), (r.uniform(1700, 1900), .08, .4)], r) * .1)
+    drum = np.zeros(n)
+    for k in range(int(sec / .5)):                             # 아주 멀리 장구 굿거리 비슷한 박
+        if k % 6 in (0, 3, 4):
+            place(drum, tone(.2, 120, 90) * env(int(.2 * SR), .002, .06, 4) * (1 if k % 6 == 0 else .5), k * .5)
+    drum = filt(drum, "low", 600) * .15
+    return loopify(reverb(buf + coins + cart + cowbell + drum + filt(noise(n, r), "low", 350) * .1, 1.0, .25, tone_hz=3000)[:n], .5)
+
+
+@sfx("amb.bridge.under", -24, "세계", "큰 다리 밑: 다리 아래로 흐르는 강물 + 머리 위 돌다리를 지나는 둔탁한 발소리·수레 + 거적 움막 바스락(반복용 15초)", loop=True, use="⑥ 큰 다리 밑(BridgeUnder)·움막촌")
+def _(r):
+    sec = 15.4; n = int(sec * SR)
+    river = filt(filt(noise(n, r), "high", 150), "low", 1800) * .5 + grains(sec, r, 200, lambda r, k: bubble(.05, r.uniform(300, 800), 1.8, .012) * r.uniform(.1, .4))
+    steps = np.zeros(n); at = 1.0
+    while at < sec - 1:                                         # 위를 지나는 사람들(돌을 지나 먹먹하게)
+        for j in range(r.integers(4, 9)):
+            place(steps, filt(noise(int(.08 * SR), r), "low", 300) * env(int(.08 * SR), .002, .03, 4) * r.uniform(.3, .7), at + j * .5)
+        at += r.uniform(3, 6)
+    roll = np.zeros(n); place(roll, filt(noise(int(2.5 * SR), r), "low", 180) * np.sin(np.pi * np.linspace(0, 1, int(2.5 * SR))) * .8, 8.0)   # 수레가 다리를 건넘
+    straw = grains(sec, r, 25, lambda r, k: filt(noise(int(.05 * SR), r), "band", r.uniform(2000, 4000), 1.5) * env(int(.05 * SR), .005, .015, 4) * r.uniform(.05, .2))
+    return loopify(reverb(river * .6 + steps + roll + straw, 1.2, .35, tone_hz=2500)[:n], .5)
+
+
+@sfx("amb.citygate", -21, "세계", "닫힌 성문 밖의 밤: 성벽을 따라 부는 찬 바람 + 성문 쇠고리가 가끔 덜컥 + 아주 먼 개 짖음(반복용 16초)", loop=True, use="⑥ 성문 밖(CityGate)·팻말 없는 무덤")
+def _(r):
+    sec = 16.4; n = int(sec * SR)
+    g = _gust_curve(sec, r, 3, .3)
+    wind = sweep_filt(noise(n, r), "band", 250, 380, 2) * (.5 + .5 * g) + filt(noise(n, r), "low", 120) * .4
+    knock = grains(sec, r, 4, lambda r, k: modal(.6, [(r.uniform(400, 500), .15, 1), (r.uniform(1100, 1300), .08, .5), (r.uniform(2400, 2700), .04, .3)], r) * .35)   # 쇠고리 덜컥(큰 나무문 울림)
+    dog = np.zeros(n)
+    for at in (6.0, 6.4, 6.75, 13.0):
+        d = .22; f0 = curve(d, [(0, 420), (.05, 520), (d, 380)])
+        place(dog, voice(f0, [(900, 3, 1), (1800, 4, .5)], .4, r, nh=15) * env(int(d * SR), .005, .08, 4), at)
+    dog = reverb(filt(dog, "low", 1500), 2.5, .6, tone_hz=1500)[:n]
+    return loopify(wind * .7 + knock + dog * .35, .5)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)
