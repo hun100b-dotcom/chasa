@@ -25,6 +25,10 @@ namespace Chasa.Core
         public static float VillageX = 196f, VillageZ = 60f;       // 마을 원점
         public static float BossX = 404f, BossZ = 288f;            // 1호 보스 자리(개울 위 나룻배)
 
+        /// <summary>넋길로 이어진 서낭당 자리들(남→북 순서)과 이름. 마커에서 채운다</summary>
+        public static float[][] Shrines = new float[0][];
+        public static string[] ShrineNames = new string[0];
+
         /// <summary>단서 세 곳: 마을 안 큰길과 마당 근처 (마을 원점 기준 옮김)</summary>
         public static float[][] CluePoints()
         {

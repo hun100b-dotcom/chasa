@@ -60,6 +60,7 @@ public class GameMain : MonoBehaviour
         {
             judge.camps = new FieldCamps(enemies);
             judge.clock = new WorldClock();
+            judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)
             var cu = (Application.absoluteURL ?? "").ToLowerInvariant();
             int ci = cu.IndexOf("clock=");
             float sp; if (ci >= 0 && float.TryParse(new string(cu.Substring(ci + 6).TakeWhile(char.IsDigit).ToArray()), out sp) && sp > 0f) judge.clock.Speed = sp;   // 주소 ?clock=10 이면 10배속(한 바퀴 검사용)

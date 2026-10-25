@@ -46,6 +46,12 @@ public class FieldManager : MonoBehaviour
         if (ta == null) return;
         var f = JsonUtility.FromJson<FieldFile>(ta.text);
         if (f == null || f.markers == null) return;
+        // 넋길 정류장: 서낭당 마커 + 폐당집 입구를 남→북 순으로
+        var stops = new System.Collections.Generic.List<Marker>();
+        foreach (var m in f.markers) if (m.kind == "seonang" || m.kind == "ruin") stops.Add(m);
+        stops.Sort((a, b) => a.z.CompareTo(b.z));
+        FieldRules.Shrines = stops.ConvertAll(m => new[] { m.x, m.z }).ToArray();
+        FieldRules.ShrineNames = stops.ConvertAll(m => m.name).ToArray();
         foreach (var m in f.markers)
         {
             if (m.kind == "spawn") { FieldRules.StartX = m.x; FieldRules.StartZ = m.z; }

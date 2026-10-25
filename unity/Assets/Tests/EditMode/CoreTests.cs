@@ -1396,4 +1396,23 @@ public class CoreTests
         MoonEffects.Set(false, false);                                                     // 다른 시험에 영향 없게 되돌림
         Assert.AreEqual(1f, MoonEffects.MaedhimMult);
     }
+
+    // ---------- 넋길 (4단계) ----------
+    [Test]
+    public void SoulPath_NightOnly_AndNextWraps()
+    {
+        Assert.IsTrue(SoulPath.Available(0f));
+        Assert.IsFalse(SoulPath.Available(1f));                     // 낮엔 못 탄다
+        Assert.AreEqual(1, SoulPath.Next(0, 3));
+        Assert.AreEqual(0, SoulPath.Next(2, 3));                    // 끝이면 처음으로
+    }
+
+    [Test]
+    public void SoulPath_NearIndexPicksClosestWithinRadius()
+    {
+        var sh = new[] { new[] { 0f, 0f }, new[] { 100f, 0f } };
+        Assert.AreEqual(0, SoulPath.NearIndex(2f, 1f, sh));
+        Assert.AreEqual(1, SoulPath.NearIndex(98f, 0f, sh));
+        Assert.AreEqual(-1, SoulPath.NearIndex(50f, 0f, sh));       // 어느 서낭당 곁도 아님
+    }
 }

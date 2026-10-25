@@ -430,6 +430,27 @@ public class JudgeSystem : MonoBehaviour
         UpdateStainViews();
     }
 
+    /// <summary>지금 넋길을 탈 수 있나 (필드·밤·서낭당 곁·행동 가능). 서낭당 번호를 돌려준다(없으면 -1)</summary>
+    int SoulPathStop()
+    {
+        if (clock == null || Casting || !player.CanActNow() || !SoulPath.Available(clock.Daylight)) return -1;
+        return SoulPath.NearIndex(player.Pos.x, player.Pos.z, FieldRules.Shrines);
+    }
+
+    /// <summary>넋길: 다음 서낭당으로 즉시 이동</summary>
+    public void CommandSoulPath()
+    {
+        int at = SoulPathStop();
+        if (at < 0) return;
+        int to = SoulPath.Next(at, FieldRules.Shrines.Length);
+        var s = FieldRules.Shrines[to];
+        var dest = new Vector3(s[0], 0f, s[1] - 3f);   // 서낭당 바로 앞(남쪽)에 선다
+        player.CommandStop(); player.Pos = dest;
+        if (onTeleport != null) onTeleport(dest);
+        Sfx.Play("sfx.tendo.done");
+        Say("넋길 — " + FieldRules.ShrineNames[to]);
+    }
+
     /// <summary>세계 시계를 흘리고, 단계가 바뀌면 종을 울리고 알린다</summary>
     void TickClock(float dt)
     {
@@ -451,6 +472,7 @@ public class JudgeSystem : MonoBehaviour
     void HandleKeys()
     {
         if (Input.GetKeyDown(KeyCode.E)) CommandTendo();
+        if (Input.GetKeyDown(KeyCode.F)) CommandSoulPath();   // F: 넋길(밤에 서낭당 곁에서)
         if (Input.GetKeyDown(KeyCode.Alpha1)) UseSkill(0);
         if (Input.GetKeyDown(KeyCode.Alpha2)) UseSkill(1);
         if (Input.GetKeyDown(KeyCode.Alpha3)) UseSkill(2);
@@ -557,6 +579,7 @@ public class JudgeSystem : MonoBehaviour
 
     // ===== 화면 ====================================================================
     /// <summary>화면에 보일 값을 모아(HudState) 새 화면(UI Toolkit)에 넘긴다</summary>
+    public System.Action<Vector3> onTeleport;   // 넋길로 순간이동했을 때 카메라가 따라가게 GameMain 이 받는다
     public WorldClock clock;   // 필드 모드의 흐르는 하루 (없으면 옛 '하룻밤 한 판')
     public FieldCamps camps;   // 필드 모드에서만 있다
     SoulMarkers soulMarkers;
@@ -800,6 +823,7 @@ public class JudgeSystem : MonoBehaviour
             GUI.enabled = wasEnabled && nearKneel;
             if (GUI.Button(new Rect(148, Screen.height - 110, 130, 90), "파혼", bs)) CommandPahon();
             GUI.enabled = wasEnabled;
+            if (SoulPathStop() >= 0 && GUI.Button(new Rect(292, Screen.height - 110, 110, 90), "넋길", bs)) CommandSoulPath();   // 서낭당 곁 밤에만 나타난다
             // 도술 세 칸과 무기 바꾸기 (위쪽 줄) — 시연판 기본 구성에서는 숨김
             if (Demo.Skills)
                 for (int i = 0; i < 3; i++)
