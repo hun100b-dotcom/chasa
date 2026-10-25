@@ -36,7 +36,10 @@
     },
     "action": "횃불 하나가 둑 아래로 내려간다. 횃불을 든 사람은 보이지 않는다(불빛만)",
     "caption": "[빗소리]",
-    "sfx_request": [
+    "sfx": [
+     "amb.rain"
+    ],
+    "sfx_note": [
      "amb.rain(빗소리)"
     ]
    },
@@ -53,7 +56,10 @@
     },
     "action": "횃불이 물에 잠긴다. 불이 꺼지기 전 물속이 주황으로 한 번 밝아진다",
     "caption": "[물에 잠기는 소리]",
-    "sfx_request": [
+    "sfx": [
+     "cut.torch.sink"
+    ],
+    "sfx_note": [
      "cut.torch.sink(횃불이 물에 잠김: 치익 + 꼬르륵)"
     ]
    },
@@ -77,7 +83,10 @@
     },
     "action": "어둠 속에서 쇠사슬이 손목에 한 바퀴, 두 바퀴 감긴다",
     "caption": "[쇠사슬 소리]",
-    "sfx_request": [
+    "sfx": [
+     "cut.chain.wrap"
+    ],
+    "sfx_note": [
      "cut.chain.wrap(쇠사슬이 손목에 감김)"
     ]
    },
@@ -130,9 +139,10 @@
       "control": "none",
       "caption": "[바람] [먼 닭울음]",
       "sfx": [
-       "amb.field"
+       "amb.field",
+       "amb.rooster"
       ],
-      "sfx_request": [
+      "sfx_note": [
        "amb.rooster(먼 닭울음)"
       ]
      },
@@ -162,9 +172,11 @@
       "note": "만장이 차사의 몸을 스치고 지나간다",
       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
       "sfx": [
-       "cut.yoryeong.ring"
+       "cut.yoryeong.ring",
+       "vo.wail",
+       "mus.sangyeo.far"
       ],
-      "sfx_request": [
+      "sfx_note": [
        "vo.wail(곡소리, 말 없음)",
        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
       ]
@@ -179,7 +191,10 @@
       "control": "walk",
       "note": "아무도 고개를 돌리지 않는다. 업 10 미만이면 마을 개 한 마리가 한쪽 귀를 세워 차사가 선 쪽을 잠깐 보다 만다(정말 보았는지는 모호하게). 업 10 이상이면 개가 짖고 달아난다",
       "caption": "[곡소리가 커졌다가 잦아든다]",
-      "sfx_request": [
+      "sfx": [
+       "vo.wail"
+      ],
+      "sfx_note": [
        "vo.wail(곡소리, 커졌다 잦아듦)"
       ]
      },
@@ -193,7 +208,10 @@
       "control": "walk",
       "note": "고개에 투명한 경계(따라갈 수 없다)",
       "caption": "[상여소리가 멀어진다]",
-      "sfx_request": [
+      "sfx": [
+       "mus.sangyeo.far"
+      ],
+      "sfx_note": [
        "mus.sangyeo.far(멀어짐)"
       ]
      },
@@ -206,7 +224,10 @@
       "action": "먼저 돌아온 용득이 화로에 불을 붙인다. 서툴게 풀무를 밟는다. 불이 오른다. 화면 가장자리에 쇳물 주황이 한 번 번졌다 사라진다",
       "control": "none",
       "caption": "[풀무 소리] [불꽃 튀는 소리]",
-      "sfx_request": [
+      "sfx": [
+       "cut.bellows"
+      ],
+      "sfx_note": [
        "cut.bellows(풀무 + 불꽃 튐)"
       ]
      },
@@ -301,7 +322,10 @@
       "t": 12.0,
       "action": "아내가 부엌으로 들어간다. 마당이 비고, 빗장 지른 문만 남는다",
       "caption": "[개가 한 번 낑낑대는 소리]",
-      "sfx_request": [
+      "sfx": [
+       "sfx.dog.whine"
+      ],
+      "sfx_note": [
        "sfx.dog.whine(개 낑낑)"
       ]
      },
