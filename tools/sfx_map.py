@@ -76,7 +76,12 @@ def apply(cut):
 MADE = {'amb.market', 'amb.mine', 'amb.rain', 'amb.rooster', 'cut.bellows', 'cut.brass.tap', 'cut.brush.write',
         'cut.chain.wrap', 'cut.chisel.tap', 'cut.coal.sort', 'cut.hoe.dig', 'cut.ink.grind', 'cut.kids.clap',
         'cut.mule.hoof', 'cut.paper.tear', 'cut.pour.liquor', 'cut.sickle.cut', 'cut.steam.rise', 'cut.tag.unhook',
-        'cut.torch.sink', 'mus.sangyeo.far', 'sfx.dog.whine', 'vo.wail'}
+        'cut.torch.sink', 'mus.sangyeo.far', 'sfx.dog.whine', 'vo.wail',
+        # PR #29(시즌1 컷신 소리)·사운드 저장소 data/sfx_files.json 224개 가운데 대본이 요청했던 것(10-25 추가)
+        'amb.dawn.birds', 'amb.harbor', 'amb.sea.wind', 'amb.snow.wind', 'amb.wind.gust', 'cut.chain.drag',
+        'cut.cough', 'cut.hull.creak', 'cut.names.glow', 'cut.oar.row', 'cut.paper.ascend', 'cut.rope.untie',
+        'cut.snow.settle', 'cut.soldier.rise', 'cut.soul.rise', 'cut.splash.pull', 'cut.stone.carve',
+        'cut.straw.set', 'cut.tag.drop', 'cut.war.drum', 'cut.water.recede', 'cut.wave.row'}
 
 def promote(cut):
     """steps의 sfx_request 가운데 이제 있는 소리를 sfx로 옮긴다. 괄호 속 연출 메모는 sfx_note에 남긴다."""

@@ -64,10 +64,13 @@
       "framing": "물 위로 이어진 나룻배들을 위에서"
      },
      "action": "나루 영감이 저어 주던 나룻배가 다리처럼 이어져 있다. 차사가 그 위를 건넌다",
-     "sfx_request": [
-      "cut.hull.creak(나무배가 밟혀 삐걱)"
+     "condition": "B-01 천도(시즌 1)",
+     "sfx": [
+      "cut.hull.creak"
      ],
-     "condition": "B-01 천도(시즌 1)"
+     "sfx_note": [
+      "cut.hull.creak(나무배가 밟혀 삐걱)"
+     ]
     },
     {
      "t": 20.0,
@@ -121,10 +124,13 @@
       "framing": "줄 맨 앞, 강 위에 작은 배 하나"
      },
      "action": "줄 맨 앞, 강 위에 배가 한 척 떠 있다. 노 젓는 이 하나",
-     "sfx_request": [
-      "cut.oar.row(노 젓기, 멀리)"
+     "note": "사공 얼굴은 갓 그늘로",
+     "sfx": [
+      "cut.oar.row"
      ],
-     "note": "사공 얼굴은 갓 그늘로"
+     "sfx_note": [
+      "cut.oar.row(노 젓기, 멀리)"
+     ]
     },
     {
      "t": 58.0,
@@ -209,7 +215,10 @@
       "time": 2.0
      },
      "action": "사잣밥 상 위 짚신 한 켤레",
-     "sfx_request": [
+     "sfx": [
+      "cut.straw.set"
+     ],
+     "sfx_note": [
       "cut.straw.set(짚신을 상에 놓는 소리)"
      ]
     },
@@ -344,7 +353,10 @@
       "framing": "나루 말뚝 앞, 배와 줄을 한 화면에"
      },
      "action": "배가 닿아 있다. 줄 선 혼들이 그 혼에게 길을 내준다",
-     "sfx_request": [
+     "sfx": [
+      "cut.hull.creak"
+     ],
+     "sfx_note": [
       "cut.hull.creak(배가 말뚝에 닿아 삐걱)"
      ]
     },
@@ -485,7 +497,10 @@
       "zoom": 1.6
      },
      "action": "사슬 끝에서 조각 셋이 맞물린다. 번진 획이 서로를 찾는다",
-     "sfx_request": [
+     "sfx": [
+      "cut.names.glow"
+     ],
+     "sfx_note": [
       "cut.names.glow(획이 맞물리며 빛나는 소리)"
      ]
     },
@@ -599,7 +614,10 @@
      "ui": {
       "hint_icon": "천도 캐스팅으로 줄 선 혼의 등을 밀어 배에 태우기"
      },
-     "sfx_request": [
+     "sfx": [
+      "cut.hull.creak"
+     ],
+     "sfx_note": [
       "cut.hull.creak(배가 말뚝에 닿아 삐걱)"
      ]
     },
@@ -741,10 +759,13 @@
     {
      "t": 7.0,
      "action": "배가 떠난다. 그 뒤로 두 번째 배가 안개 속에서 나온다. 줄이 처음으로 한 칸 움직인다",
-     "sfx_request": [
-      "cut.oar.row(노 젓기 둘)"
+     "note": "두 번째 배 사공: 시즌 1 B-12 천도면 흑월(첫 사공과 서로 갓을 숙인다), 아니면 이름 없는 차사 혼",
+     "sfx": [
+      "cut.oar.row"
      ],
-     "note": "두 번째 배 사공: 시즌 1 B-12 천도면 흑월(첫 사공과 서로 갓을 숙인다), 아니면 이름 없는 차사 혼"
+     "sfx_note": [
+      "cut.oar.row(노 젓기 둘)"
+     ]
     },
     {
      "t": 9.5,
@@ -950,7 +971,10 @@
       "zoom": 0.8
      },
      "action": "둑에 붙어 있던 이름 쪽지가 눈처럼 흩어진다",
-     "sfx_request": [
+     "sfx": [
+      "cut.paper.ascend"
+     ],
+     "sfx_note": [
       "cut.paper.ascend(종이가 바람에 흩날려 오름)"
      ]
     },
@@ -2486,10 +2510,13 @@
       "framing": "빈 고을 위로 처음 드는 새벽빛"
      },
      "action": "⑨에 처음으로 새벽이 온다. 안개가 걷힌다",
-     "sfx_request": [
-      "amb.dawn.birds(새벽 새 한두 마리)"
+     "condition": "A",
+     "sfx": [
+      "amb.dawn.birds"
      ],
-     "condition": "A"
+     "sfx_note": [
+      "amb.dawn.birds(새벽 새 한두 마리)"
+     ]
     },
     {
      "t": 48.0,
@@ -3090,10 +3117,13 @@
       "time": 2.0
      },
      "action": "사공이 노를 젓는다. 입술이 움직인다. 소리는 없다",
-     "sfx_request": [
-      "cut.oar.row(노 젓기)"
+     "note": "어미의 이름 — 글로도 소리로도 내지 않는다",
+     "sfx": [
+      "cut.oar.row"
      ],
-     "note": "어미의 이름 — 글로도 소리로도 내지 않는다"
+     "sfx_note": [
+      "cut.oar.row(노 젓기)"
+     ]
     },
     {
      "t": 52.0,

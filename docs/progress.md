@@ -1205,3 +1205,7 @@
 - 소설 9장 확인에 맞춰 S-010 곽 뱃꾼 원본을 고침(열한째 손님 뒤 팔을 잡음 → 영감이 팔을 빼고 '한 사람만 더').
 - 남은 일: 시즌 2(⑦~⑩) 혼 원본. 검사 26개 파일 0건, IP 0건.
 - (이어서) 시즌 2(⑦~⑩) 원본 67개를 더해 모두 184개. 그 새벽(어미·첫 차사·사공)에 닿은 ⑩ 기억 8개·B-19, 큰물 밤 둑의 젊은이(S-046), 당할미 남편(S-048)은 "먹이 번져 읽을 수 없다"(smudged, 7막 몫). B-14·B-20은 기억이 없어 원본 칸 없음. 시즌 3(백, S-181~·B-21~)은 아직.
+
+## 2026-10-25 · 서사 — 사운드 PR #29 반영(컷신 소리 이름 맞춤)
+- `tools/sfx_map.py` MADE에 사운드 저장소(data/sfx_files.json 224개) 중 대본이 요청했던 22개 추가 → cutscenes_s1·s2 다시 생성. 박자(t)는 그대로.
+- 남은 요청: 시즌 1 0개, 시즌 2 10개(amb.dawn.still·amb.names.many·cut.door.slide·cut.knife.notch·cut.names.release·cut.paper.set·cut.river.flow·cut.river.rush·cut.seal.thud·cut.wire.untie).
