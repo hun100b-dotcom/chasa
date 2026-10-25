@@ -294,7 +294,7 @@ public static class Balance
     public const int SHOP_DAWN_PRICE = 40;  // (시연판 임시) 기획서 부록 B 낮: 새벽 부적 엽전(동트기 경고가 일찍 옴)
     public const float SHOP_DAWN_EARLY = 30.0f;  // (시연판 임시) 기획서 부록 B 낮: 새벽 부적: 경고가 일찍 오는 시간(초)
     public const int SHOP_CLEANSE_PRICE = 30;  // (시연판 임시) 기획서 부록 B 낮: 씻김 부적 엽전(얼룩 하나 지움, 업은 그대로)
-    public const int REROLL_BASE = 20;  // (시연판 임시) 기획서 부록 B 낮: 다시 굴리기 첫 비용(엽전)
+    public const int REROLL_BASE = 40;  // (시연판 임시) 기획서 부록 B 낮: 다시 굴리기 첫 비용(엽전) (기획 4-4절 10-25: 20→40, 기울기 다시 매기기)
     public const int REROLL_STEP = 20;  // (시연판 임시) 기획서 부록 B 낮: 다시 굴리기: 같은 물건에 할 때마다 늘어나는 비용
     public const int REROLL_MAX = 200;  // (시연판 임시) 기획서 부록 B 낮: 다시 굴리기 비용 상한
     public const int UPGRADE_COIN_1 = 60;  // (시연판 임시) 기획서 부록 B 낮: 흔한→손본 엽전
@@ -434,4 +434,12 @@ public static class Balance
     public const float JOY_RADIUS_PX = 90.0f;  // (폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)
     public const float JOY_DEADZONE_PX = 14.0f;  // (폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다
     public const float JOY_ZONE_WIDTH_FRAC = 0.45f;  // (폰 조작) 조이스틱이 생기는 화면 왼쪽 영역 너비 비율
+    public const int ENHANCE_MAX = 5;  // (기획 4-4절 10-25, 임시) 장비 손보기 최대 단계(칸마다 +1~+5)
+    public const float ENHANCE_PCT = 0.06f;  // (기획 4-4절 10-25, 임시) 장비 손보기 한 단계마다 그 칸 주옵션(첫 옵션) +비율
+    public const int ENHANCE_COST_1 = 30;  // (기획 4-4절 10-25, 임시) 장비 손보기 1단계 엽전
+    public const int ENHANCE_COST_2 = 60;  // (기획 4-4절 10-25, 임시) 장비 손보기 2단계 엽전
+    public const int ENHANCE_COST_3 = 100;  // (기획 4-4절 10-25, 임시) 장비 손보기 3단계 엽전
+    public const int ENHANCE_COST_4 = 150;  // (기획 4-4절 10-25, 임시) 장비 손보기 4단계 엽전
+    public const int ENHANCE_COST_5 = 220;  // (기획 4-4절 10-25, 임시) 장비 손보기 5단계 엽전
+    public const int PAHON_STAIN_POINT_EVERY = 15;  // (기획 4-4절 10-25, 임시) 파혼 이만큼마다 얼룩 갈래 전용 도술 점수 1
 }

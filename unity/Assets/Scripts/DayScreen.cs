@@ -182,6 +182,11 @@ public class DayScreen
             GUI.enabled = Shrine.CanReroll(cur);
             if (GUI.Button(new Rect(x, y, w / 2f - 4, 40), "다시 굴리기 (옵션 1번)  엽전 " + Shrine.RerollCost(cur.Rerolls), btn))
             { msg = Shrine.Reroll(cur, 0, ledger, () => Random.value) ? "옵션을 다시 굴렸다" : "굴릴 수 없다"; lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
+            // 장비 손보기: 칸마다 +1~+5, 단계마다 주옵션 +6% (엽전만 쓴다)
+            GUI.enabled = Shrine.CanEnhance(cur);
+            if (GUI.Button(new Rect(x, y, w, 40), "장비 손보기 +" + cur.Plus + (cur.Plus < Balance.ENHANCE_MAX ? " → +" + (cur.Plus + 1) + "  엽전 " + Shrine.EnhanceCost(cur.Plus) : " (최대)"), btn))
+            { msg = Shrine.Enhance(cur, ledger) ? "장비를 손봤다" : "엽전이 모자라다"; lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
+            y += 44;
             GUI.enabled = Shrine.CanUpgrade(cur);
             if (GUI.Button(new Rect(x + w / 2f, y, w / 2f, 40), "매듭 올리기  " + UpgradeCost(cur), btn))
             { msg = Shrine.Upgrade(cur, ledger, () => Random.value) ? "등급이 올랐다" : "엽전이나 광석이 모자라다"; lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }

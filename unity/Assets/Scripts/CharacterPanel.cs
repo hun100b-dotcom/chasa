@@ -177,7 +177,7 @@ public class CharacterPanel : MonoBehaviour
         int cur = GrowthState.NeokForRank(g.Rank);
         float frac = g.Rank >= GrowthState.MaxRank ? 1f : Mathf.Clamp01((g.TotalNeok - cur) / (float)Mathf.Max(1, next - cur));
         GUI.Label(new Rect(box.x + 16, y, 420, 28), "품계 " + g.Rank + "품   넋 " + g.TotalNeok + (g.Rank >= GrowthState.MaxRank ? "" : " / " + next), title);
-        GUI.Label(new Rect(box.x + 460, y + 2, box.width - 480, 24), "도술 점수 " + g.SkillPointsFree + "   능력치 점수 " + g.StatPointsFree, body);
+        GUI.Label(new Rect(box.x + 460, y + 2, box.width - 480, 24), "도술 점수 " + g.SkillPointsFree + (g.StainPointsFree > 0 ? " (+얼룩 전용 " + g.StainPointsFree + ")" : "") + "   능력치 점수 " + g.StatPointsFree, body);
         var bar = new Rect(box.x + 16, y + 30, box.width - 32, 8);
         GUI.color = new Color(0, 0, 0, 0.6f); GUI.DrawTexture(bar, white);
         GUI.color = ChasaPalette.CheondoGlow; GUI.DrawTexture(new Rect(bar.x, bar.y, bar.width * frac, bar.height), white);

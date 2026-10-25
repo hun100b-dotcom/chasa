@@ -161,6 +161,7 @@ public class JudgeSystem : MonoBehaviour
         e.Finish();
         int coinBefore = ledger.Coin;
         ledger.DoPahon(e.soul.Boss);
+        if (growth.AddPahon()) ui?.Hud.Toasts.Add("얼룩 도술 점수 +1");   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN;
         ledger.Coin += Mathf.RoundToInt(baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult - baseCoin);

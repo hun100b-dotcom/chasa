@@ -175,6 +175,7 @@ namespace Chasa.Core
         public bool Gradient;                                // 기울기 옵션 포함 (귀한 등급에만)
         public string TiltId;                                // 어떤 기울기인가 (TiltDef.Id)
         public int Rerolls;                                  // 다시 굴린 횟수 (비용이 오른다)
+        public int Plus;                                     // 장비 손보기 단계(0~ENHANCE_MAX). 첫 옵션(주옵션)이 단계마다 +6%
         public int Sockets;                                  // 뚫은 인 홈 수 (최대 SOCKET_MAX)
         public List<OptionRoll> Options = new List<OptionRoll>();
 
@@ -249,7 +250,14 @@ namespace Chasa.Core
 
         public void Add(ItemDef it)
         {
-            foreach (var o in it.Options)
+            for (int oi = 0; oi < it.Options.Count; oi++)
+            {
+                var o = it.Options[oi];
+                if (oi == 0 && it.Plus > 0)   // 손보기: 주옵션만 단계마다 올린다(귀한 칸 하나를 키우는 길 = 파혼 쪽 성장)
+                {
+                    float m = 1f + Balance.ENHANCE_PCT * it.Plus;
+                    o = new OptionRoll(o.Kind, o.Kind == Opt.HpFlat ? (float)Math.Round(o.Value * m) : o.Value * m);
+                }
                 switch (o.Kind)
                 {
                     case Opt.DamagePct: DamagePct += o.Value; break;
@@ -269,6 +277,7 @@ namespace Chasa.Core
                     case Opt.VisionShift: VisionShift += o.Value; break;
                     case Opt.CastDamageReducePct: CastDamageReducePct += o.Value; break;
                 }
+            }
         }
     }
 

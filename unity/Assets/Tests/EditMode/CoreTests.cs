@@ -914,10 +914,10 @@ public class CoreTests
     }
 
     [Test]
-    public void 손보기_다시굴리기_비용은_20씩_오르고_200이_상한_기울기와_이름물건은_불가()
+    public void 손보기_다시굴리기_비용은_40에서_20씩_오르고_200이_상한_기울기와_이름물건은_불가()
     {
-        Assert.AreEqual(20, Shrine.RerollCost(0));
-        Assert.AreEqual(40, Shrine.RerollCost(1));
+        Assert.AreEqual(40, Shrine.RerollCost(0));
+        Assert.AreEqual(60, Shrine.RerollCost(1));
         Assert.AreEqual(200, Shrine.RerollCost(9));
         Assert.AreEqual(200, Shrine.RerollCost(30));
         var rnd = new System.Random(3);
@@ -925,7 +925,7 @@ public class CoreTests
         it.Options.Add(new OptionRoll(Opt.DamagePct, 0.05f)); it.Options.Add(new OptionRoll(Opt.HpFlat, 8f));
         var l = new Ledger { Coin = 100 };
         Assert.IsTrue(Shrine.Reroll(it, 0, l, () => (float)rnd.NextDouble()));
-        Assert.AreEqual(80, l.Coin); Assert.AreEqual(1, it.Rerolls);
+        Assert.AreEqual(60, l.Coin); Assert.AreEqual(1, it.Rerolls);
         Assert.AreNotEqual(Opt.DamagePct, it.Options[0].Kind, "다른 종류로 굴러야 한다");
         Assert.AreEqual(Opt.HpFlat, it.Options[1].Kind, "다른 옵션은 그대로");
         Assert.AreEqual(2, new System.Collections.Generic.HashSet<Opt> { it.Options[0].Kind, it.Options[1].Kind }.Count, "옵션 종류 중복 없음");
@@ -1674,5 +1674,40 @@ public class CoreTests
         var cd = new ActiveCooldowns();
         Assert.IsTrue(cd.Start("혼불 날리기")); Assert.IsFalse(cd.Ready("혼불 날리기"));
         cd.Tick(Balance.ACD_SOULFIRE + 0.1f); Assert.IsTrue(cd.Ready("혼불 날리기"));
+    }
+
+    [Test]
+    public void Enhance_CostsAndRaisesMainOption()
+    {
+        var it = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Common, Name = "시험" };
+        it.Options.Add(new OptionRoll(Opt.DamagePct, 0.10f));
+        var l = new Ledger { Coin = 1000 };
+        float before = GearStatsOf(it).DamagePct;
+        int spent = 0;
+        for (int i = 0; i < 5; i++) { Assert.IsTrue(Shrine.Enhance(it, l)); }
+        spent = 1000 - l.Coin;
+        Assert.AreEqual(30 + 60 + 100 + 150 + 220, spent, "한 칸 5단계 = 560");
+        Assert.IsFalse(Shrine.Enhance(it, l), "최대 +5");
+        Assert.AreEqual(before * 1.3f, GearStatsOf(it).DamagePct, 0.0001f, "주옵션 +30%");
+        Assert.AreEqual(0, l.Neok, "넋은 건드리지 않는다");
+    }
+
+    static GearStats GearStatsOf(ItemDef it) { var st = new GearStats(); st.Add(it); return st; }
+
+    [Test]
+    public void Pahon15_GivesStainPoint_UsableOnlyOnStainSkill()
+    {
+        var g = new GrowthState();
+        g.Learned.Clear(); g.ActiveBar.Clear();
+        int got = 0;
+        for (int i = 0; i < 15; i++) if (g.AddPahon()) got++;
+        Assert.AreEqual(1, got);
+        Assert.AreEqual(1, g.StainPointsFree);
+        string stain = null, other = null;
+        foreach (var n in SkillTree.All) { if (n.Deep) continue; if (n.Branch == Branch.Stain && stain == null) stain = n.Name; if (n.Branch != Branch.Stain && other == null) other = n.Name; }
+        Assert.IsFalse(g.CanLearn(other), "다른 갈래에는 못 쓴다");
+        Assert.IsTrue(g.Learn(stain));
+        Assert.AreEqual(0, g.StainPointsFree);
+        Assert.AreEqual(0, g.SkillPointsSpent, "일반 점수는 쓰지 않았다");
     }
 }

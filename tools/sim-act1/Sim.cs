@@ -53,7 +53,8 @@ static class Sim
         Console.WriteLine("\n분당 가치 = (넋 + 기억×4 + 엽전×w) ÷ 걸린 분.  w = 엽전 1개의 가치(넋 환산). 위험 = 맞은 피해 ÷ 분");
         Console.WriteLine("| w | " + string.Join(" | ", names) + " | 1등 |");
         Console.WriteLine("|---|---|---|---|---|---|");
-        foreach (double w in new[] { 0.25, 0.5, 1.0, 2.0, 4.0 })
+        var passRows = new List<string>();
+        foreach (double w in new[] { 0.25, 0.5, 1.0, 1.25, 1.5, 2.0, 4.0 })
         {
             var vals = new List<double>(); int best = 0;
             foreach (Strat s in Enum.GetValues(typeof(Strat)))
@@ -63,7 +64,13 @@ static class Sim
                 vals.Add(v / Math.Max(1e-9, mins)); if (vals[vals.Count - 1] > vals[best]) best = vals.Count - 1;
             }
             Console.WriteLine("| " + w + " | " + string.Join(" | ", vals.ConvertAll(x => x.ToString("0.0"))) + " | " + names[best] + " |");
+            // 기획 합격 기준: ① 섞기(상황 판단)가 1등 ② 천도만·파혼만 차이 20% 안 (③ 보스·④ 위험은 아래 표에서 따로)
+            double hi = Math.Max(vals[0], vals[1]), lo = Math.Min(vals[0], vals[1]);
+            passRows.Add("| " + w + " | " + (best == 2 ? "O" : "X") + " | " + (hi > 0 && (hi - lo) / hi <= 0.20 ? "O" : "X") + " | " + ((vals[0] - vals[1]) / hi * 100).ToString("0") + "% |");
         }
+        Console.WriteLine("\n| w | ① 섞기 1등 | ② 천도·파혼 20% 안 | 천도-파혼 차이 |");
+        Console.WriteLine("|---|---|---|---|");
+        foreach (var row in passRows) Console.WriteLine(row);
         Console.WriteLine("| 밤에서 쓰러짐 | " + string.Join(" | ", ((Func<List<string>>)(() => { var o = new List<string>(); foreach (Strat s in Enum.GetValues(typeof(Strat))) o.Add((Avg(results[s], r => r.DiedInNight ? 1 : 0) * 100).ToString("0") + "%"); return o; }))()) + " | |");
         var qt = new List<string>();
         foreach (Strat s in Enum.GetValues(typeof(Strat))) { double sum = 0; int n = 0; foreach (var r in results[s]) foreach (var q in r.QuotaSeconds) if (!double.IsNaN(q)) { sum += q; n++; } qt.Add(n == 0 ? "-" : (sum / n).ToString("0") + "초"); }

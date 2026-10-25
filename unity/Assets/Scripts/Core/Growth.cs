@@ -75,6 +75,7 @@ namespace Chasa.Core
         public int TotalNeok;                              // 지금까지 쌓은 넋(잃지 않는다)
         public int SkillPointsEarned, SkillPointsSpent;
         public int StatPointsEarned;
+        public int PahonCount, StainPointsEarned, StainPointsSpent;   // 파혼 횟수 / 얼룩 갈래 전용 도술 점수(파혼 15회마다 1)
         public readonly int[] Stats = { StatBase, StatBase, StatBase, StatBase };
         public readonly Dictionary<string, int> Learned = new Dictionary<string, int>();
         public readonly List<string> ActiveBar = new List<string>();   // 배운 액티브 중 칸에 올린 것(최대 4)
@@ -122,6 +123,16 @@ namespace Chasa.Core
         /// <summary>보스를 천도하면 도술 점수 1</summary>
         public void AddBossPoint() { SkillPointsEarned++; }
 
+        /// <summary>파혼 한 번. PAHON_STAIN_POINT_EVERY 번째마다 얼룩 갈래 전용 점수 1을 주고 true (파혼만 해도 성장 길이 열리게)</summary>
+        public bool AddPahon()
+        {
+            PahonCount++;
+            if (PahonCount % Balance.PAHON_STAIN_POINT_EVERY != 0) return false;
+            StainPointsEarned++; return true;
+        }
+
+        public int StainPointsFree { get { return StainPointsEarned - StainPointsSpent; } }
+
         public int SkillPointsFree { get { return SkillPointsEarned - SkillPointsSpent; } }
         public int StatPointsFree { get { return StatPointsEarned - SpentStatPoints(); } }
         int SpentStatPoints() { int s = 0; foreach (var v in Stats) s += v - StatBase; return s; }
@@ -147,7 +158,8 @@ namespace Chasa.Core
         public bool CanLearn(string name)
         {
             var s = SkillTree.Find(name);
-            if (s == null || SkillPointsFree <= 0 || LevelOf(name) >= s.MaxLevel) return false;
+            if (s == null || LevelOf(name) >= s.MaxLevel) return false;
+            if (SkillPointsFree <= 0 && !(s.Branch == Branch.Stain && StainPointsFree > 0)) return false;   // 얼룩 도술은 전용 점수로도 배운다
             if (s.Deep && BranchPoints(s.Branch) < SkillTree.DeepNeeds) return false;
             return true;
         }
@@ -155,8 +167,9 @@ namespace Chasa.Core
         public bool Learn(string name)
         {
             if (!CanLearn(name)) return false;
-            Learned[name] = LevelOf(name) + 1; SkillPointsSpent++;
             var s = SkillTree.Find(name);
+            Learned[name] = LevelOf(name) + 1;
+            if (s.Branch == Branch.Stain && StainPointsFree > 0) StainPointsSpent++; else SkillPointsSpent++;   // 전용 점수를 먼저 쓴다
             if (s.Active && ActiveBar.Count < SkillTree.ActiveSlots) ActiveBar.Add(name);   // 칸이 비어 있으면 바로 올린다
             return true;
         }

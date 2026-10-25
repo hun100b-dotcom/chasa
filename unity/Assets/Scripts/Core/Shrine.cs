@@ -108,6 +108,26 @@ namespace Chasa.Core
             return true;   // 호출한 쪽이 장비 칸에서 지운다
         }
 
+        /// <summary>장비 손보기 비용: 지금 단계(0~4)에서 다음 단계로. 30/60/100/150/220 (일곱 칸 모두 5단계면 약 3,900)</summary>
+        public static int EnhanceCost(int plusNow)
+        {
+            int[] c = { Balance.ENHANCE_COST_1, Balance.ENHANCE_COST_2, Balance.ENHANCE_COST_3, Balance.ENHANCE_COST_4, Balance.ENHANCE_COST_5 };
+            return c[Math.Max(0, Math.Min(c.Length - 1, plusNow))];
+        }
+
+        /// <summary>이름 있는 물건도 손볼 수 있다(옵션을 바꾸는 게 아니라 키우는 것). 최대 단계 전이면 true</summary>
+        public static bool CanEnhance(ItemDef it) { return it != null && it.Options.Count > 0 && it.Plus < Balance.ENHANCE_MAX; }
+
+        /// <summary>손보기 한 단계: 엽전만 쓴다(넋·기억은 건드리지 않는다 — 천도=넋, 파혼=엽전 구분)</summary>
+        public static bool Enhance(ItemDef it, Ledger l)
+        {
+            if (!CanEnhance(it)) return false;
+            int cost = EnhanceCost(it.Plus);
+            if (l.Coin < cost) return false;
+            l.Coin -= cost; it.Plus++;
+            return true;
+        }
+
         /// <summary>홈 뚫기: 첫째 80, 둘째 240, 최대 2</summary>
         public static bool Socket(ItemDef it, Ledger l)
         {
