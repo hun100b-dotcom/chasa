@@ -332,6 +332,8 @@ public class UiRoot : MonoBehaviour
         root.Add(ringBox);
     }
 
+    static readonly string[] MoonTex = { "moon_crescent", "moon_first_quarter", "moon_full", "moon_last_quarter" };
+
     void RefreshTimeRing()
     {
         float deg;
@@ -349,7 +351,7 @@ public class UiRoot : MonoBehaviour
             ringMarker.style.width = ms; ringMarker.style.height = ms;
             ringMarker.style.left = c + Mathf.Sin(aa) * rr - ms / 2f; ringMarker.style.top = c - Mathf.Cos(aa) * rr - ms / 2f;
             bool sun = Hud.ClockLabel != null ? Hud.Daylight >= 0.5f : Hud.TimeOfDay < 0.0f;
-            var mt = UiTex(sun ? "ui_marker_sun" : "ui_marker_moon");
+            var mt = sun ? UiTex("ui_marker_sun") : (UiTex(MoonTex[Mathf.Clamp(Hud.MoonPhase, 0, 3)]) ?? UiTex("ui_marker_moon"));   // 밤엔 그날의 달 모양
             if (mt != null) ringMarker.style.backgroundImage = Background.FromTexture2D(mt);
             ringMarker.style.unityBackgroundImageTintColor = Hud.IsDawn ? new Color(1f, 0.55f, 0.5f) : Color.white;
             return;

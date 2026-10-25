@@ -160,10 +160,21 @@ public class FieldManager : MonoBehaviour
         {
             if (root == null) yield break;
             if (GroundTerrain.Active && it.t == 1) continue;   // 옛 땅 타일은 새 땅 메쉬가 대신한다
+            if (SkipDecor(it)) continue;                       // 폰: 작은 장식 일부를 건너뛴다
             Place(root.transform, it.n, it.x, HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z), it.z, it.r);   // 소품·집은 땅 높이 위에 붙인다(옛 평지는 +0)
             if (++n % ItemsPerFrame == 0) yield return null;
         }
         loading.Remove(key);
+    }
+
+    /// <summary>화질이 낮을 때 충돌 없는 작은 장식(덤불·작은 바위·죽은 나무)을 자리 값으로 일정하게 건너뛴다(같은 자리는 늘 같은 결과)</summary>
+    static bool SkipDecor(Item it)
+    {
+        float skip = QualityTier.DecorSkip; if (skip <= 0f) return false;
+        if (!(it.n.StartsWith("nature_bush") || it.n == "terrain_rock_small" || it.n.StartsWith("nature_dead"))) return false;
+        if (FieldRules.BlockerRadius(it.n) > 0f) return false;   // 충돌이 있는 건 그대로(안 보이는 벽이 생기면 안 된다)
+        int h = (Mathf.FloorToInt(it.x * 7.31f) * 73856093) ^ (Mathf.FloorToInt(it.z * 5.17f) * 19349663);
+        return ((h & 0x7fffffff) % 1000) / 1000f < skip;
     }
 
     const float TileThickness = 0.3f;   // 땅 타일 두께. 아트 표의 높이(z)는 '칸 아랫면' 기준이고 타일 윗면은 그보다 0.3 위다
@@ -247,7 +258,7 @@ public class FieldManager : MonoBehaviour
         near.Sort((a, b) => ((a.x - p.x) * (a.x - p.x) + (a.z - p.z) * (a.z - p.z)).CompareTo((b.x - p.x) * (b.x - p.x) + (b.z - p.z) * (b.z - p.z)));
         for (int i = 0; i < pool.Length; i++)
         {
-            if (i >= near.Count) { pool[i].enabled = false; poolLamp[i] = null; continue; }
+            if (i >= near.Count || i >= QualityTier.LampBudget) { pool[i].enabled = false; poolLamp[i] = null; continue; }   // 폰은 등불 점 광원을 적게
             var l = near[i];
             float d2 = (l.x - p.x) * (l.x - p.x) + (l.z - p.z) * (l.z - p.z);
             if (d2 > 45f * 45f) { pool[i].enabled = false; poolLamp[i] = null; continue; }   // 45m 밖은 안 켠다

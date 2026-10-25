@@ -46,6 +46,7 @@ public class NightLights : MonoBehaviour
         RenderSettings.fogDensity = 0.016f;
         QualitySettings.shadowDistance = 40f;
         QualitySettings.pixelLightCount = 8;   // 한 물체에 닿는 점 광원 최대 수(기본 4는 등불이 많으면 부족)
+        QualityTier.Apply(sun);   // 폰·태블릿이면 그림자·광원·프레임을 낮춘다
     }
 
     void Start()

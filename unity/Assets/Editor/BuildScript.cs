@@ -28,6 +28,7 @@ public static class BuildScript
         PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
         PlayerSettings.WebGL.dataCaching = true;
         PlayerSettings.runInBackground = true;
+        PlayerSettings.WebGL.template = "PROJECT:Chasa";   // 폰 대응 페이지 틀(전체 화면 캔버스·해상도 제한·가로 안내) — Assets/WebGLTemplates/Chasa
         // 엔진 코드 줄이기(stripping)를 끈다. 켜 두면 웹 빌드가 실제로 쓰는 엔진 기능(충돌체·GUI 등)까지 지워
         // 콘솔 오류가 수만 개 나고 화면 버튼 배경이 사라졌다(2026-10-24 PC 검증). 크기가 조금 늘어도 안전이 먼저다.
         PlayerSettings.stripEngineCode = false;

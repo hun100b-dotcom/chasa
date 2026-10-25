@@ -69,6 +69,17 @@ namespace Chasa.Core
 
         /// <summary>달의 날 0 ~ MOON_DAYS-1. 0 = 그믐, 가운데 = 보름</summary>
         public int MoonDay { get { return ((Day % (int)Balance.MOON_DAYS) + (int)Balance.MOON_DAYS) % (int)Balance.MOON_DAYS; } }
+        /// <summary>달 모양 4단계: 0 초승·그믐 / 1 상현 / 2 보름 / 3 하현 (MOON_DAYS 일 주기를 4등분, 보름은 가운데 날 하루)</summary>
+        public int MoonPhase
+        {
+            get
+            {
+                int n = (int)Balance.MOON_DAYS, d = MoonDay, half = n / 2;
+                if (d == half) return 2;
+                if (d == 0 || d == n - 1 && n > 4) return 0;
+                return d < half ? 1 : 3;
+            }
+        }
         public bool FullMoon { get { return MoonDay == (int)Balance.MOON_DAYS / 2; } }
         public bool NewMoon { get { return MoonDay == 0; } }
 

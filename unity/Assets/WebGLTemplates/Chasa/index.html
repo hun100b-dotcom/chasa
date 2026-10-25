@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!-- 폰: 화면 가득 쓰고 확대·당겨서 새로고침을 막는다 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0b0d14">
+  <title>{{{ PRODUCT_NAME }}}</title>
+  <style>
+    /* 화면 전체를 캔버스 하나로. 주소창이 줄었다 늘어도 맞도록 dvh 를 쓴다 */
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #0b0d14; overflow: hidden;
+                 overscroll-behavior: none; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    #unity-container { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; }
+    #unity-canvas { width: 100%; height: 100%; display: block; background: #0b0d14; touch-action: none; }
+    #loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+               color: #d8d2c4; font: 16px/1.5 sans-serif; background: #0b0d14; z-index: 5; }
+    #loading h1 { font-size: 28px; letter-spacing: 0.3em; margin: 0 0 18px 0; font-weight: 600; }
+    #bar { width: min(70vw, 360px); height: 6px; background: #2a2d3a; border-radius: 3px; overflow: hidden; }
+    #fill { width: 0%; height: 100%; background: #b5473f; transition: width .2s; }
+    #msg { margin-top: 14px; font-size: 13px; opacity: .75; text-align: center; padding: 0 24px; }
+    /* 세로로 들고 있을 때: 가로로 돌려 달라는 안내(게임은 가로 화면 기준) */
+    #rotate { display: none; position: absolute; inset: 0; z-index: 9; background: rgba(11,13,20,.94); color: #d8d2c4;
+              align-items: center; justify-content: center; text-align: center; font: 18px/1.7 sans-serif; padding: 24px; }
+    @media (orientation: portrait) and (max-width: 900px) { #rotate.on { display: flex; } }
+  </style>
+</head>
+<body>
+  <div id="unity-container">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="loading"><h1>차 사</h1><div id="bar"><div id="fill"></div></div><div id="msg">불러오는 중… 처음 한 번만 오래 걸리고, 다음부터는 저장된 것을 씁니다.</div></div>
+    <div id="rotate">폰을 가로로 돌려 주세요<br><small>가로 화면에서 가장 잘 보입니다</small></div>
+  </div>
+  <script src="Build/{{{ LOADER_FILENAME }}}"></script>
+  <script>
+    (function () {
+      var canvas = document.querySelector("#unity-canvas");
+      var params = new URLSearchParams(location.search);
+      var q = (params.get("q") || "").toLowerCase();
+      var mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+      // 화면 해상도: 폰은 장치 픽셀을 다 쓰면 GPU 가 못 버틴다 → 배율을 제한한다(낮음 1.0 / 보통 1.25 / 높음 최대 2, 자동은 폰 1.5·PC 2)
+      var dpr = window.devicePixelRatio || 1;
+      var cap = q === "low" ? 1.0 : q === "mid" ? 1.25 : q === "high" ? 2.0 : (mobile ? 1.5 : 2.0);
+      var config = {
+        arguments: [],
+        dataUrl: "Build/{{{ DATA_FILENAME }}}",
+        frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
+#if USE_WASM
+        codeUrl: "Build/{{{ CODE_FILENAME }}}",
+#endif
+#if SYMBOLS_FILENAME
+        symbolsUrl: "Build/{{{ SYMBOLS_FILENAME }}}",
+#endif
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+        productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+        productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+        devicePixelRatio: Math.min(dpr, cap),
+        matchWebGLToCanvasSize: true
+      };
+      var fill = document.getElementById("fill"), loading = document.getElementById("loading"), msg = document.getElementById("msg");
+      var rot = document.getElementById("rotate"); if (mobile) rot.classList.add("on");
+      createUnityInstance(canvas, config, function (p) { fill.style.width = (p * 100) + "%"; })
+        .then(function (inst) { loading.style.display = "none"; window.unityInstance = inst; })
+        .catch(function (e) { msg.textContent = "불러오지 못했습니다: " + e; });
+    })();
+  </script>
+</body>
+</html>

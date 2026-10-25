@@ -1841,4 +1841,14 @@ public class CoreTests
         Assert.IsNull(SaveGame.Deserialize(SaveGame.Serialize(new SaveSnapshot())).WeatherNow, "옛 저장·날씨 없음은 null");
         Assert.AreEqual(Weather.Fog, WeatherRules.Parse("FOG").Value); Assert.IsNull(WeatherRules.Parse("auto"));
     }
+
+    [Test]
+    public void MoonPhase_FollowsCycle()
+    {
+        var c = new WorldClock(0f);
+        var seen = new System.Collections.Generic.List<int>();
+        for (int d = 0; d < (int)Balance.MOON_DAYS; d++) { c.Set(d, 0f); seen.Add(c.MoonPhase); }
+        Assert.AreEqual(0, seen[0], "그믐=초승 모양"); Assert.AreEqual(2, seen[(int)Balance.MOON_DAYS / 2], "가운데 날 보름");
+        Assert.IsTrue(seen.Contains(1) && seen.Contains(3), "상현·하현이 모두 나온다");
+    }
 }
