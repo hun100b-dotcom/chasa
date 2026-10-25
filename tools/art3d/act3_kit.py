@@ -134,8 +134,35 @@ def shoal_plank():
     p = [box("plank", (3.0, 0.8, 0.1), (0, 0, 0.3), SEA_WOOD), box("batten1", (0.1, 0.8, 0.05), (-0.8, 0, 0.38), SEA_WOOD_D), box("batten2", (0.1, 0.8, 0.05), (0.8, 0, 0.38), SEA_WOOD_D)]
     return p
 
+def _deck_mat():
+    """다리 상판 전용 재질 M_bridge_deck: 상판·난간 전부가 이 한 재질만 쓴다. 코드가 플레이어가 다리 밑에 들면 이 재질의 알파만 낮추면 되도록(다른 곳과 재질이 섞이지 않게) 이름을 따로 둔다."""
+    import bpy
+    m = bpy.data.materials.get("M_bridge_deck")
+    if m is None:
+        m = bpy.data.materials.new("M_bridge_deck"); m.use_nodes = True; b = m.node_tree.nodes["Principled BSDF"]
+        b.inputs["Base Color"].default_value = hex2rgb("#8C877A"); b.inputs["Roughness"].default_value = 0.9
+    return m
+
+def bridge_deck():
+    """큰 다리 상판 한 칸 8×6m, 바닥에서 높이 3.6m: 돌 상판과 양옆 낮은 난간 벽(돌 기둥 여섯). 이름 규칙 bridge_deck*, 재질은 M_bridge_deck 하나뿐.
+    기둥(bridge_pier*)과 따로 내보내므로 두 모델의 원점을 같은 자리(다리 중앙 바닥)에 놓으면 맞는다."""
+    dm = _deck_mat(); p = [box("slab", (8.0, 6.0, 0.5), (0, 0, 3.35), dm)]
+    p += [box("rail_n", (8.0, 0.35, 0.8), (0, 2.8, 3.9), dm), box("rail_s", (8.0, 0.35, 0.8), (0, -2.8, 3.9), dm)]
+    p += [box(f"post{i}", (0.5, 0.5, 1.1), (-3.75 + i * 1.5, s * 2.8, 4.0), dm) for i in range(6) for s in (1, -1)]
+    return p
+
+def bridge_pier():
+    """큰 다리 기둥·바닥 8×6m: 돌 다릿발 둘과 보, 아래 둔치 바닥. 이름 규칙 bridge_pier*. 상판 아래로 들어서는 B-11 싸움판 가림 없이 위가 비어 보이게 상판과 분리."""
+    p = [box(f"pier{i}", (1.2, 4.0, 3.2), (-2.4 + i * 4.8, 0, 1.6), ROCK_D) for i in range(2)]
+    p += [box("beam", (8.0, 1.0, 0.3), (0, 0, 3.0), ROCK), box("floor", (8.0, 6.0, 0.1), (0, 0, 0.05), "#6A645A")]
+    return p
+
+def tide_water():
+    """썰물·밀물 물판 64×64m: 갯골·난파 여울용 물. 코드가 높이를 25분 주기로 오르내린다. 이름 규칙 tide_water*. 큰 강 물(river_water)과 같은 물 재질."""
+    return [water_plane("tide_water", -32, -32, 64, 64, 0.0, deep=False)]
+
 KIT = [(f.__name__, f) for f in (harbor_pier, harbor_gauge_post, harbor_boat, harbor_net_frame, harbor_net_pile, harbor_jar, harbor_gaekju_house, harbor_inn, harbor_lamp_hut,
-       salt_pan, salt_pile, salt_warehouse, salt_dike, cape_waiting_rock, cape_hutmyo, cape_new_grave, shoal_wreck, shoal_rock, shoal_plank)]
+       salt_pan, salt_pile, salt_warehouse, salt_dike, cape_waiting_rock, cape_hutmyo, cape_new_grave, shoal_wreck, shoal_rock, shoal_plank, bridge_deck, bridge_pier, tide_water)]
 LIGHTS = {"harbor_gaekju_house": ("Light_gaekju", (0, -3.5, 2.5), WARM, 1.0, 7.0, True), "harbor_inn": ("Light_inn", (2.0, -2.2, 2.2), WARM, 1.0, 6.0, True), "harbor_lamp_hut": ("Light_lamp_hut", (2.2, 0, 4.7), WARM, 1.4, 14.0, True)}
 
 def build(name, fn):
