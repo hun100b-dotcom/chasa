@@ -47,6 +47,29 @@ SEONANG = [
   'after_boss': {'boss': 'B-02', 'tendo': '그릇 조각이 한데 모여 있다', 'pahon': '그릇 조각이 더 잘게 깨져 있다'},
   'note': '⑤는 아직 배치 자리 없음(SEONANG-SET). 깨진 그릇이 닿는 것은 죽은 이의 물건이라서(세계 이치) — 풀어 말하지 않는다'},
 ]
+# ── 1-2) 2막 쉼터 셋(act2_map.json shrines, 기획 act2-entry-10min 10-26) ──
+# 1막과 같은 틀. 모델이 아직 없어 id(SH2-n)로 짝짓는다. 1막에서 넘어온 사람에게 같은 이치(산 사람이 놓은 것은
+# 손이 지나가고, 죽은 이의 것과 아무도 놓지 않은 것만 닿는다)를 새 땅의 물건으로 한 번 더 보여 준다.
+# 2막 보스 단서 낱말(서른일곱 · 일곱 · 위패 · 열셋 · 열넷 · 반장 · 앞장 · 뒷장 · 머릿수 · 술 붓)은 쓰지 않는다.
+SEONANG_ACT2 = [
+ {'id': 'SH2-1', 'zone': '③ 붉은재 서낭당(아랫마을 남쪽 어귀)',
+  'first_touch': ['서낭 돌탑에 손이 지나간다', '돌 틈 녹슨 화살촉만 손끝에 걸린다'],
+  'rest_day': ['고개 아래서 빨래 방망이 소리가 온다', '오방색 천 하나가 볕에 바랬다'],
+  'rest_night': ['산성 쪽 빈 깃대 끝이 바람에 운다', '화살골 쪽에서 돌 하나가 구른다'],
+  'after_boss': {'boss': 'B-05', 'tendo': '빈 깃대에 누가 흰 천을 매었다', 'pahon': '빈 깃대가 고개 쪽으로 기울었다'},
+  'note': '화살촉은 죽은 병사의 것이라 닿는다(세계 이치) — 풀어 말하지 않는다'},
+ {'id': 'SH2-2', 'zone': '④ 산신각(광부촌 남쪽 어귀)',
+  'first_touch': ['산신 탱화 앞 사발에 손이 지나간다', '바닥 석탄 가루만 손바닥에 묻는다'],
+  'rest_day': ['멀리 곡괭이 소리가 박자를 맞춘다', '탱화 앞 사발이 엎어져 있다'],
+  'rest_night': ['갱도 쪽에서 버팀목이 끄응 운다', '목패 걸이 판이 바람에 달각인다'],
+  'after_boss': {'boss': 'B-07', 'tendo': '엎어졌던 사발이 바로 놓였다', 'pahon': '목패 걸이 판에 빈 못이 늘었다'},
+  'note': '사발이 엎어진 것은 산신 모시던 광부(S-083)가 간 뒤로 아무도 막걸리를 올리지 않아서(엿듣기 R2-09) — 풀어 말하지 않는다'},
+ {'id': 'SH2-3', 'zone': '③ 산성 쉼터(산성 문 앞, B-06 천도 뒤 열림)',
+  'first_touch': ['성문 돌쩌귀에 손이 지나간다', '성돌 밑 썩은 목패만 손에 닿는다'],
+  'rest_day': ['성벽 위 빈 깃대가 곧게 섰다', '아랫마을 연기가 똑바로 오른다'],
+  'rest_night': ['성안이 조용하다', '아무도 수를 세지 않는다'],
+  'note': '천도해야만 열리는 쉼터라 after_boss 없음. 밤 줄은 엿듣기 R2-05(성안에서 수 세는 소리)의 맺음'},
+]
 SEONANG_RULE = {
     'first_touch': '그 서낭당에서 F(쉬기·넋길·만져 보기 무엇이든)를 처음 누를 때 한 번. 화면 하단 월드 안내 자리, 두 줄 3초. 저장(seonangTouched)',
     'rest': '쉬기를 마친 뒤 기존 줄 "서낭당에 이름을 걸어 두었다" 다음 0.6초 뒤에 한 줄 2.5초. 낮이면 rest_day, 밤이면 rest_night에서 하나(직전과 다른 줄)',
@@ -131,12 +154,14 @@ def chk(t, n, toast=False):
 
 
 seen = set()
-for s in SEONANG:
+ACT2_BAN = ('서른일곱', '일곱', '위패', '열셋', '열넷', '반장', '앞장', '뒷장', '머릿수', '술 붓')
+for s in SEONANG + SEONANG_ACT2:
     assert len(s['first_touch']) <= 2
     toasts = s['first_touch'] + s['rest_day'] + s['rest_night'] + ([s['rest_halmi']] if 'rest_halmi' in s else [])
     if 'after_boss' in s: toasts += [s['after_boss']['tendo'], s['after_boss']['pahon']]
     for t in toasts:
         chk(t, 22, True); assert t not in seen, t; seen.add(t)
+        if s in SEONANG_ACT2: assert not any(w in t for w in ACT2_BAN), t
 chk(DEATH_WAKE, 22, True)
 ids = set()
 for o in FIRST_NIGHT:
@@ -152,7 +177,7 @@ def pos(o):
 
 data = {
     '_설명': '서낭당 5곳 문구(처음 만져 볼 때 · 쉬기) + 첫 밤 솔고개 엿듣기 보강. tools/seonang_texts.py로 생성. 서사 2026-10-26',
-    'seonang': {'rule': SEONANG_RULE, 'death_wake': DEATH_WAKE, 'shrines': SEONANG},
+    'seonang': {'rule': SEONANG_RULE, 'death_wake': DEATH_WAKE, 'shrines': SEONANG, 'shrines_act2': SEONANG_ACT2},
     'first_night_overhear': {'rule': FIRST_NIGHT_RULE, 'spots': [
         dict({'id': o['id'], 'near': o['near'], 'pos': pos(o), 'through_wall': o['through'], 'cond': o['cond'],
               'lines': [{'speaker': sp, 'text': ln} for sp, ln in o['lines']], 'line_half': o['half'], 'clue': None},

@@ -1564,3 +1564,6 @@
 ## 2026-10-26 서사 — 시즌 1 미스터리 흐름 · 섞기형 놓침 점검
 - `docs/narrative/S1-MYSTERY-PACING.md`: 막별 "고장" 단서는 무엇이(1막) → 왜(2막) → 누가(3막)로 맞으나, F13 카드가 2 · 3막 답(저승의 숫자 명부 · 차사 더 뽑기)을 미리 말하고 있어 낮춤. 섞기형(파혼 반)이 반반으로 놓치던 출처 하나짜리 단서 셋 중 F8 · F15에 둘째 출처를 붙임(S-035 → F8, S-026 → F15 새 기억 줄, S-030 → F7, 시즌 2 S-042 · S-043 → F20). soul_memories v10, 기억 데이터 · unity memory_flat 재생성.
 - 기획 「금 간 그림자」 찬성, 세계관 문장 맞춤(item_texts eol_shadow).
+
+## 2026-10-26 서사 — 2막 처음 10분 문구 점검
+- `docs/narrative/ACT2-ENTRY-TEXT.md`(기획 act2-entry-10min v1 기준): 2막 엿듣기 열림을 "밤 뒤 낮" → "처음 들어선 때부터"로, R2-09 새벽 → 낮. 2막 쉼터 셋 문구 새로(`seonang_texts.json` shrines_act2). 숫자 혼 천도 기억 풀(`memories_act2.json` numbered)로 2막 첫 기억을 약 2분 안으로. 금줄 앞 "명부에 아직 이 관할이 없다" 확인.
