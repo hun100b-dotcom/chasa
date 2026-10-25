@@ -24,6 +24,9 @@ public class FieldCamps
     public int Count => camps.Count;
     public float GhostMult = 1f;   // 흐린 밤 +15%: 군집이 설 때 혼 수에 곱한다
 
+    // 서낭당 자리(아트 배치표의 prop_seonangdang 5곳, x·z 쌍)
+    static readonly float[] Shrines = { 108f, 452f, 188f, 36f, 160f, 180f, 356f, 324f, 186f, 39f };
+
     public FieldCamps(EnemyManager enemies)
     {
         this.enemies = enemies;
@@ -31,7 +34,16 @@ public class FieldCamps
         if (ta == null) return;
         var f = JsonUtility.FromJson<CampFile>(ta.text);
         if (f == null || f.camps == null) return;
-        foreach (var r in f.camps) camps.Add(new Camp { row = r });
+        // 서낭당 둘레 60m 는 비우고(쉬는 자리), 보스 마당 둘레 30m 는 치우거나 절반으로 줄인다(코디 결정). 아트 구역표 자체는 건드리지 않고 여기서 보정한다
+        var bosses = new List<float>();
+        for (int b = 1; b <= Bosses.Count; b++) { var bd = Bosses.Get(b); bosses.Add(bd.X); bosses.Add(bd.Z); }
+        foreach (var r in f.camps)
+        {
+            float x = r.x, z = r.z; int n = r.n;
+            if (!CampRules.Adjust(ref x, ref z, r.r, ref n, Shrines, bosses.ToArray())) continue;
+            r.x = x; r.z = z; r.n = n;
+            camps.Add(new Camp { row = r });
+        }
     }
 
     public void Tick(float dt, Vector3 playerPos)

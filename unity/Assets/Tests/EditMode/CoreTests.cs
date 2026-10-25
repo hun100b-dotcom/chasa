@@ -1851,4 +1851,20 @@ public class CoreTests
         Assert.AreEqual(0, seen[0], "그믐=초승 모양"); Assert.AreEqual(2, seen[(int)Balance.MOON_DAYS / 2], "가운데 날 보름");
         Assert.IsTrue(seen.Contains(1) && seen.Contains(3), "상현·하현이 모두 나온다");
     }
+
+    [Test]
+    public void CampRules_Adjust_PushesFromShrineAndThinsBossYard()
+    {
+        var sh = new float[] { 100f, 100f }; var boss = new float[] { 500f, 500f };
+        float x = 130f, z = 100f; int n = 6;   // 서낭당에서 30m → 밀려나 60m 밖
+        Assert.IsTrue(CampRules.Adjust(ref x, ref z, 8f, ref n, sh, boss));
+        Assert.GreaterOrEqual(new UnityEngineFreeVec(x - 100f, z - 100f).Len, CampRules.ShrineSafeM);
+        Assert.AreEqual(6, n);
+        x = 505f; z = 500f; n = 9;             // 보스 마당 한가운데 → 제거
+        Assert.IsFalse(CampRules.Adjust(ref x, ref z, 8f, ref n, sh, boss));
+        x = 525f; z = 500f; n = 9;             // 25m, 반지름 8 → 가장자리 띠: 절반
+        Assert.IsTrue(CampRules.Adjust(ref x, ref z, 8f, ref n, sh, boss));
+        Assert.AreEqual(4, n);
+    }
+    struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }
