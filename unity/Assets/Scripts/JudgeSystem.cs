@@ -141,6 +141,7 @@ public class JudgeSystem : MonoBehaviour
         castTarget = e;
         castT = 0f;
         castTotal = e.soul.Boss ? Mathf.Max(0.5f, Balance.BOSS_TENDO_CAST_TIME - (snatched.Contains(e.soul.BossId) ? 0.5f : 0f)) : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;
+        if (e.soul.Water) castTotal = Mathf.Max(Balance.WATER_SOUL_CAST_FLOOR_S, castTotal - Balance.WATER_SOUL_CAST_REDUCE_S);   // 물 혼: 천도 시전 −0.5초(하한 0.5초)
         if (HasKeepsake("도한수의 뱃삯")) castTotal += Balance.BAETSAK_TENDO_CAST_ADD;   // 뱃삯: 천도 시전 +0.1초(기울기)
         if (e.soul.Name != null && HasKeepsake("흑월의 붓")) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - 0.2f);   // 흑월의 붓: 이름혼 천도 시전 −0.2초   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
         if (!e.soul.Boss)
@@ -1187,6 +1188,8 @@ public class JudgeSystem : MonoBehaviour
         Sfx.NightNow = clock != null && clock.Phase == ClockPhase.Night;
         if (clock != null) Sfx.PhaseNow = (int)clock.Phase;
         if (clock != null) TideWater.WorldMinutes = Tide.TotalMinutes(clock.Day, clock.Minutes);   // 썰물·밀물 시계
+        Soul.MujeokLocked = !bossTendoIds.Contains(11);   // 무적 혼: B-11 천도 뒤에야 모두 천도할 수 있다
+        if (clock != null && camps != null && FieldRules.Act3) camps.SetTide(Tide.IsEbb(TideWater.WorldMinutes), Tide.EbbRemainMin(TideWater.WorldMinutes) * 60f);   // 3막 군집의 썰물 때만 맺힘·밀물 신호
         if (clock != null && FieldRules.Act3 && player.Pos.x > 764f)   // 3막 ⑤ 갯마을에 있을 때만 물때 소리
         {
             bool ebb = Tide.IsEbb(TideWater.WorldMinutes);

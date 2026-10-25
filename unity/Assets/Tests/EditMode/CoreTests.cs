@@ -2525,5 +2525,17 @@ public class CoreTests
         Assert.AreEqual(2, g.SkillPointsEarned); Assert.AreEqual(1, g.StainPointsFree);
     }
 
+    [Test]
+    public void Mujeok_LockedUntilB11_AndEbbRemain()
+    {
+        var s = new Soul(SoulKind.Fresh) { Mujeok = true };
+        Soul.MujeokLocked = true; Assert.IsFalse(s.CanTendo);    // B-11 천도 전: 무적 혼은 파혼만
+        Soul.MujeokLocked = false; Assert.IsTrue(s.CanTendo);    // 뒤: 모두 천도 가능
+        Assert.IsTrue(new Soul(SoulKind.Fresh).CanTendo);        // 표식 없는 혼은 상관없음
+        Assert.AreEqual(25f, Tide.EbbRemainMin(0f), 0.01f);      // 썰물이 막 시작
+        Assert.AreEqual(0.5f, Tide.EbbRemainMin(24.5f), 0.01f);  // 밀물 30초 전
+        Assert.AreEqual(0f, Tide.EbbRemainMin(30f), 0.01f);      // 밀물 중
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

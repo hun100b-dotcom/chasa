@@ -9,7 +9,7 @@ using Chasa.Core;
 
 public class FieldCamps
 {
-    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public int ring, numbered; public bool loner; public string who, memory, speaker, line, half; public float kx, kz; }
+    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public int ring, numbered, water, mujeok; public string tide; public bool loner; public string who, memory, speaker, line, half; public float kx, kz; }
     [System.Serializable] class CampFile { public CampRow[] camps; }
 
     class Camp
@@ -45,7 +45,7 @@ public class FieldCamps
         this.enemies = enemies;
         // 1막 군집표 + 2막 군집표(기획 act2_field_camps: 행마다 ring·numbered). 2막 군집은 문이 열린 땅에서만 걷다 만나므로 같이 읽어도 안전하다
         var rows = new List<CampRow>();
-        foreach (var nm in new[] { "Data/field_camps", "Data/act2_field_camps" })
+        foreach (var nm in new[] { "Data/field_camps", "Data/act2_field_camps", "Data/act3_field_camps" })
         {
             var ta0 = Resources.Load<TextAsset>(nm); if (ta0 == null) continue;
             var f0 = JsonUtility.FromJson<CampFile>(ta0.text); if (f0 != null && f0.camps != null) rows.AddRange(f0.camps);
@@ -64,12 +64,58 @@ public class FieldCamps
         }
     }
 
+    bool ebb = true, ebbKnown; float ebbRemainSec = 9999f;
+    readonly Dictionary<Enemy, float> sinkT = new Dictionary<Enemy, float>();   // 밀물 신호 뒤 물 혼이 가라앉기까지 남은 초
+
+    /// <summary>
+    /// 3막 물때를 군집에 알린다(JudgeSystem 이 매 프레임). tide="low" 군집은 썰물 시작에 맺히고, 밀물 30초 전부터는 새로 맺히지 않는다.
+    /// 밀물 신호(썰물→밀물): 물 혼은 TIDE_SIGNAL_WINDOW_S 안에 못 보내면 가라앉고(넋·기억 0, 벌점 없음), low 군집의 나머지 혼도 물에 잠겨 사라진다.
+    /// </summary>
+    public void SetTide(bool isEbb, float remainSec)
+    {
+        bool flood = ebbKnown && ebb && !isEbb;
+        ebb = isEbb; ebbRemainSec = remainSec; ebbKnown = true;
+        if (!flood) return;
+        foreach (var c in camps)
+        {
+            if (!c.spawned) continue;
+            foreach (var e in c.members)
+            {
+                if (e == null || e.soul == null || e.soul.State == SoulState.Sending) continue;
+                if (e.soul.Water && !sinkT.ContainsKey(e)) sinkT[e] = Balance.TIDE_SIGNAL_WINDOW_S;
+                else if (c.row.tide == "low" && !e.soul.Water && !sinkT.ContainsKey(e)) sinkT[e] = Balance.TIDE_SIGNAL_WINDOW_S;   // 같은 20초: 물에 잠기기 전 물러날 시간
+            }
+        }
+    }
+
+    /// <summary>군집 n 가운데 want 개 비율로 표식을 붙인다(군집이 줄어 선 만큼 비율을 맞춘다)</summary>
+    static void Mark(Camp c, int want0, System.Action<Soul> set)
+    {
+        if (want0 <= 0 || c.row.n <= 0) return;
+        var pool = new List<Enemy>(c.members); int want = Mathf.Min(pool.Count, Mathf.RoundToInt(want0 * (float)pool.Count / c.row.n));
+        for (int k = 0; k < want && pool.Count > 0; k++) { int pi = Random.Range(0, pool.Count); if (pool[pi] != null && pool[pi].soul != null) set(pool[pi].soul); pool.RemoveAt(pi); }
+    }
+
     public void Tick(float dt, Vector3 playerPos)
     {
+        if (sinkT.Count > 0)   // 가라앉는 혼: 시간이 다 되면(처결 중이 아니면) 보상 없이 사라진다
+        {
+            var gone = new List<Enemy>();
+            foreach (var k in new List<Enemy>(sinkT.Keys))
+            {
+                if (k == null || !enemies.list.Contains(k)) { gone.Add(k); continue; }
+                if (k.soul.State == SoulState.Sending) continue;   // 천도 시전 중이면 끝까지 보낸다
+                sinkT[k] -= dt;
+                if (sinkT[k] <= 0f) { enemies.Remove(k); gone.Add(k); }
+            }
+            foreach (var k in gone) sinkT.Remove(k);
+        }
         foreach (var c in camps)
         {
             c.cooldown = Mathf.Max(0f, c.cooldown - dt);
             float dist = new Vector2(c.row.x - playerPos.x, c.row.z - playerPos.z).magnitude;
+            bool tideBlocked = c.row.tide == "low" && ebbKnown && (!ebb || ebbRemainSec < 30f);   // 썰물 때만, 밀물 30초 전부터는 새로 맺히지 않는다
+            if (tideBlocked && !c.spawned) continue;
             if (CampRules.ShouldSpawn(c.spawned, dist, c.cooldown)) Spawn(c);
             else if (c.spawned)
             {
@@ -123,11 +169,9 @@ public class FieldCamps
             c.members.Add(e);
         }
         // 숫자 혼(인 없음): 군집 n 가운데 numbered 개 비율로 표식을 붙인다(종류와 따로. 기획 act2-field-camps 3절)
-        if (c.row.numbered > 0 && c.row.n > 0)
-        {
-            var pool = new List<Enemy>(c.members); int want = Mathf.Min(pool.Count, Mathf.RoundToInt(c.row.numbered * (float)pool.Count / c.row.n));
-            for (int k = 0; k < want && pool.Count > 0; k++) { int pi = Random.Range(0, pool.Count); if (pool[pi] != null && pool[pi].soul != null) pool[pi].soul.Numbered = true; pool.RemoveAt(pi); }
-        }
+        Mark(c, c.row.numbered, s => s.Numbered = true);
+        Mark(c, c.row.water, s => s.Water = true);     // 물 혼(3막 ⑤): 숫자 표식과 겹칠 수 있다(표식은 종류와 따로, 서로도 따로)
+        Mark(c, c.row.mujeok, s => s.Mujeok = true);   // 무적 혼(3막 ⑥)
         // 외톨이 야영지(기획 감사 보강): 무리에서 12~16m 떨어진 곳에 무릎 꿇은 혼 1~2. 싸우지 않고 혼자 처결 대기 중이라 무리의 공격권에 들지 않는다
         if (c.row.loner)
         {

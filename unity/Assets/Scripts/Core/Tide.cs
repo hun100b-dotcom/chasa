@@ -21,6 +21,9 @@ namespace Chasa.Core
         /// <summary>물 높이 0(가장 낮은 썰물)~1(가장 높은 밀물). 0분=만조에서 시작해 25분에 간조</summary>
         public static float Level(float totalMin) { return 0.5f + 0.5f * (float)Math.Cos(2.0 * Math.PI * InCycle(totalMin) / CycleMin); }
 
+        /// <summary>썰물이 끝나기까지 남은 분(밀물이면 0). 필드 군집이 '밀물 30초 전부터 새로 맺히지 않기'에 쓴다</summary>
+        public static float EbbRemainMin(float totalMin) { float m = InCycle(totalMin); return m < EbbMin ? EbbMin - m : 0f; }
+
         /// <summary>지금 썰물 구간인가(주기의 앞 25분)</summary>
         public static bool IsEbb(float totalMin) { return InCycle(totalMin) < EbbMin; }
 

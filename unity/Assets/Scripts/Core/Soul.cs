@@ -66,7 +66,10 @@ namespace Chasa.Core
         public bool Alive { get { return State == SoulState.Active; } }
         public bool Kneeling { get { return State == SoulState.Kneel; } }
         /// <summary>덩어리는 천도 불가 → 파혼만 (W-004)</summary>
-        public bool CanTendo { get { return Kind != SoulKind.Lump; } }
+        public bool Water;           // 물 혼(3막 ⑤): 천도 시전 −0.5초(하한 0.5초). 밀물 신호 뒤 20초 안에 못 보내면 그 밤 가라앉아 사라진다
+        public bool Mujeok;          // 무적 혼(3막 ⑥, 기획 act3-souls): B-11 천도 전엔 파혼만 된다(별명을 들어 풀리는 길은 아직 없다)
+        public static bool MujeokLocked = true;   // JudgeSystem 이 매 프레임 알려 준다: B-11 을 아직 천도하지 않았나
+        public bool CanTendo { get { return Kind != SoulKind.Lump && !(Mujeok && MujeokLocked); } }
         /// <summary>천도 가능 여부(단서 반영). 보스는 낮 단서가 BOSS_CLUES_REQUIRED 개 이상이어야 한다 (N-005, B-1 확정)</summary>
         public bool CanTendoWith(int clues) { return CanTendo && (!Boss || clues >= Balance.BOSS_CLUES_REQUIRED); }
 
