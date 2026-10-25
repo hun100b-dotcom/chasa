@@ -92,7 +92,7 @@ public static class ClockSky
         var fog = Color.Lerp(FieldZones.NightFog, Color.Lerp(FogDay, new Color(0.85f, 0.55f, 0.45f), red * 0.5f), dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);
         if (keyed) fog = Color.Lerp(FieldZones.NightFog, ks.fog, dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);   // 낮 안개는 아트 색, 밤엔 구역별 안개 그대로
         RenderSettings.fogColor = fog;
-        RenderSettings.fogDensity = Mathf.Lerp(FieldZones.NightDensity, 0.007f, dl) * SkyState.FogMult * Balance.FOG_DENSITY_MULT;   // 낮엔 구역과 상관없이 옅게. 날씨가 안개를 더 짙게
+        RenderSettings.fogDensity = Mathf.Lerp(FieldZones.NightDensity * Balance.FOG_NIGHT_MULT, 0.007f * Balance.FOG_DAY_MULT, dl) * SkyState.FogMult * Balance.FOG_DENSITY_MULT;   // 낮엔 구역과 상관없이 옅게. 날씨가 안개를 더 짙게
         if (cam != null) cam.backgroundColor = fog;
     }
 }

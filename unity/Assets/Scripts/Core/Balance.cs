@@ -533,4 +533,6 @@ public static class Balance
     public const int NAMED_NEAR_CAP = 3;  // 이름혼 둘레 군집 인원 상한
     public const int MOTE_GROUP_MIN_RING1 = 3;  // 고리1 잔넋 무리 크기 최소
     public const int MOTE_GROUP_MAX_RING1 = 4;  // 고리1 잔넋 무리 크기 최대(3~4). 그 밖은 3~5
+    public const float FOG_NIGHT_MULT = 0.75f;  // 밤 안개 짙기 추가 배율(FOG_DENSITY_MULT 위에). 밤 숲이 회색 판이 되던 것 완화(PC 10-25)
+    public const float FOG_DAY_MULT = 0.55f;  // 낮 안개 짙기 추가 배율. 보릿들 낮이 희뿌옇던 것 완화
 }
