@@ -424,9 +424,32 @@ public class Player : MonoBehaviour
         float cap = Mathf.Max(full * Balance.MOVE_START_FRAC, dist / Mathf.Max(0.01f, Balance.MOVE_BRAKE_TIME));   // 도착이 가까울수록 허용 속도가 낮아진다
         walkSpeed = Mathf.MoveTowards(walkSpeed, Mathf.Min(full, cap), Balance.MOVE_ACCEL * dt);
         float step = Mathf.Min(dist, walkSpeed * dt);
-        Pos += new Vector3(d.x / dist, 0, d.y / dist) * step;
+        var dir3 = new Vector3(d.x / dist, 0, d.y / dist);
+        // 경사: 앞으로 1m 지점과 지금 자리의 땅 높이 차로 기울기를 잰다. 오르막이 가파를수록 느려지고, 너무 가파르면 못 오른다(내리막은 그대로)
+        if (GroundTerrain.Active && step > 1e-5f)
+        {
+            float rise = GroundTerrain.HeightAt(Pos.x + dir3.x, Pos.z + dir3.z) - GroundTerrain.HeightAt(Pos.x, Pos.z);
+            if (rise > Balance.MOVE_SLOPE_SLOW)
+                step *= Mathf.Clamp01(1f - (rise - Balance.MOVE_SLOPE_SLOW) / Mathf.Max(0.01f, Balance.MOVE_SLOPE_BLOCK - Balance.MOVE_SLOPE_SLOW));
+        }
+        Pos += dir3 * step;
+        Footstep(step);
         ClampToArena();
     }
+
+    float strideLeft;   // 다음 발소리까지 남은 걸음 거리
+    /// <summary>걸은 거리를 모아 한 걸음(FOOTSTEP_STRIDE_M)마다 땅 재질에 맞는 발소리를 낸다</summary>
+    void Footstep(float moved)
+    {
+        if (moved <= 0f) return;
+        strideLeft -= moved;
+        if (strideLeft > 0f) return;
+        strideLeft = Balance.FOOTSTEP_STRIDE_M;
+        var w = footW ?? (footW = new float[5]);
+        GroundTerrain.LayerWeights(Pos.x, Pos.z, w);
+        Sfx.PlayStep(w, GroundTerrain.Active && GroundTerrain.HeightAt(Pos.x, Pos.z) < 0.18f);
+    }
+    float[] footW;
 
     void ClampToArena()
     {
