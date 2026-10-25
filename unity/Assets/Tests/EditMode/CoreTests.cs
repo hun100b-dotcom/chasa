@@ -2133,5 +2133,16 @@ public class CoreTests
         float dx, dz; Tide.SmokeDir(5, out dx, out dz); Assert.AreEqual(1f, dx); Assert.AreEqual(0f, dz);
     }
 
+    [Test]
+    public void Act2Gate_OpensDawnAfterBlackMoonNight()
+    {
+        Assert.AreEqual(int.MaxValue, Act2Gate.OpenDay(-1, false, -1));              // 아무 조건도 없으면 안 풀린다
+        Assert.AreEqual(4, Act2Gate.OpenDay(3, false, -1));                           // 3일째 낮에 셋 처결 → 그 밤 흑월 → 4일째 새벽
+        Assert.AreEqual(5, Act2Gate.OpenDay(3, true, -1));                            // 3일째 밤에 처결 → 다음 밤 → 5일째 새벽
+        Assert.AreEqual(7, Act2Gate.OpenDay(-1, false, 1));                           // 처결 못 해도 들어간 1일째 + 5 = 6일째 밤 → 7일째 새벽
+        Assert.AreEqual(4, Act2Gate.OpenDay(3, false, 1));                            // 둘 다면 더 빠른 쪽
+        Assert.IsFalse(Act2Gate.IsOpen(3, 3, false, -1)); Assert.IsTrue(Act2Gate.IsOpen(4, 3, false, -1));
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

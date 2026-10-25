@@ -1144,3 +1144,7 @@
 - 지켜보기 line 채움: 2막 B05-D1·B06-D1·B07-D1·B08-D1(요청분) + 같은 빈칸이던 1막 B03-D2, 3막 B09-D1~B12-D1. 사람이 없으면(파혼 등) 대화창 없이 단서만(rules.watch_line).
 - boss_clues_act2 rules.unlock 확정: 2막 금줄은 흑월 1차(② 무덤골)가 나타난 밤의 다음 새벽. 흑월 1차는 B-01~03 처결 다음 첫 밤, 늦어도 ② 첫 진입 뒤 5번째 새벽이 지난 밤.
 - boss_clues_act2 tendo_rule(B-05~B-08): 4개 중 3개, 단서별 주의, on_tendo/on_pahon. B-08 천도 문구의 "숫자 혼이 그제야 천도 가능" 모순을 고침(숫자 혼은 전에도 천도 가능, +0.5초 → 흐림 +0.25초).
+
+## 3막 혼 상수·서사 병합·금줄 규칙 (코드·QA, 10-25)
+- 기획 시뮬 패치(--act3) 적용, Balance 에 RING_COIN_SHARE_ACT3 0.7·WATER_SOUL_CAST_REDUCE_S/FLOOR_S 0.5·TIDE_SIGNAL_WINDOW_S 20 추가. 서사 PR 병합(2막 지켜보기 대사 들어와 npc_flat_act2 재생성).
+- Core/Act2Gate.cs: 금줄 해금 날 계산(흑월 1차 밤의 다음 새벽 / 검은여울 첫 진입 5일째 밤) + 테스트. 흑월 1차 이벤트 자체가 아직 없어 게임에는 연결 전(?act2=1 은 처음부터 열림).
