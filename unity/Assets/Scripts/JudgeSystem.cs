@@ -61,6 +61,7 @@ public class JudgeSystem : MonoBehaviour
         shrineView.transform.localScale = new Vector3(Balance.SHRINE_RADIUS * 2f, 0.01f, Balance.SHRINE_RADIUS * 2f);
         panel = gameObject.AddComponent<CharacterPanel>();   // C 키 캐릭터 창(장비·도술·능력치)
         panel.judge = this;
+        lo.growth = growth;   // 성장(능력치·패시브)이 전투 수치 합계에 얹히도록 연결
         enemies.onPlayerHit = OnPlayerHit;
         player.onDodgeCancelCast = () => { if (Casting) { castTarget.soul.CancelSending(); EndCast(); Say("천도를 거두고 피했다"); } };   // 천도 중 피하기: 캐스팅만 취소, 혼은 무릎 꿇은 채 대기
         enemies.onEnemyKneel = OnEnemyKneel;
@@ -215,6 +216,9 @@ public class JudgeSystem : MonoBehaviour
 
     // ===== M4.5: 장비 드롭·도술 ========================================================
     /// <summary>맺힘 0 → 장비 드롭 판정 1회(처결 방식과 무관). 사나운 적은 귀한 확정</summary>
+    /// <summary>명부에서 점수를 쓴 뒤: 전투 수치 합계를 다시 계산하고 최대 체력도 맞춘다</summary>
+    public void RefreshGrowth() { lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
+
     void OnEnemyKneel(Enemy e)
     {
         KneelEvents++;   // BGM 재생기가 '무릎 꿇는 순간'을 알아채는 번호표

@@ -1494,5 +1494,29 @@
  "DAY_CAMP_MIN_FRAC": {
   "value": 0.4,
   "note": "한낮에 적 군집 인원이 줄어드는 최소 비율(밤=1.0)"
+ },
+ "GROWTH_DAMAGE_PER_STR": {
+  "value": 0.01,
+  "note": "(성장 1차 임시) 힘 1점(시작 10 초과분)당 맺힘 피해 +1%"
+ },
+ "GROWTH_ATKSPD_PER_AGI": {
+  "value": 0.005,
+  "note": "(성장 1차 임시) 날램 1점당 공격 속도 +0.5%"
+ },
+ "GROWTH_MOVE_PER_AGI": {
+  "value": 0.003,
+  "note": "(성장 1차 임시) 날램 1점당 이동 속도 +0.3%"
+ },
+ "GROWTH_HP_PER_BODY": {
+  "value": 5,
+  "note": "(성장 1차 임시) 몸 1점당 최대 체력 +5"
+ },
+ "GROWTH_CAST_PER_MIND": {
+  "value": 0.005,
+  "note": "(성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%"
+ },
+ "GROWTH_NEOK_PER_MIND": {
+  "value": 0.005,
+  "note": "(성장 1차 임시) 마음 1점당 천도 넋 +0.5%"
  }
 }

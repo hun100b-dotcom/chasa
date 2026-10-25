@@ -189,7 +189,7 @@ public class CharacterPanel : MonoBehaviour
         {
             float x = box.x + 16 + i * 220;
             GUI.Label(new Rect(x, y, 150, 26), GrowthState.StatNames[i] + " " + g.Stats[i], body);
-            if (g.StatPointsFree > 0 && GUI.Button(new Rect(x + 120, y, 36, 28), "+")) g.AddStat(i);
+            if (g.StatPointsFree > 0 && GUI.Button(new Rect(x + 120, y, 36, 28), "+")) { g.AddStat(i); judge.RefreshGrowth(); }   // 점수를 쓰면 전투 수치를 다시 계산
         }
         y += 40;
 
@@ -211,7 +211,7 @@ public class CharacterPanel : MonoBehaviour
                 string label = (n.Active ? "[기] " : "[패] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
                 var r = new Rect(x, yy, colW, 26);
                 GUI.color = lv > 0 ? Color.white : (can ? new Color(1f, 1f, 1f, 0.9f) : new Color(1f, 1f, 1f, 0.45f));
-                if (GUI.Button(r, label)) g.Learn(n.Name);
+                if (GUI.Button(r, label)) { g.Learn(n.Name); judge.RefreshGrowth(); }   // 배우면 패시브 효과가 바로 붙는다
                 GUI.color = Color.white;
                 if (r.Contains(Event.current.mousePosition)) hoverDesc = n.Name + ": " + n.Desc;
                 yy += 28;

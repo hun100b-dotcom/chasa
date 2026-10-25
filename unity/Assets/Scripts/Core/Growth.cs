@@ -145,4 +145,32 @@ namespace Chasa.Core
             return true;
         }
     }
+
+    /// <summary>
+    /// 성장(능력치 점수 + 배운 패시브)을 장비 합계(GearStats)에 얹는다. 상한(CAP_*)은 GearStats 가 그대로 지킨다.
+    /// 이어진 것: 힘·날램·몸·마음, 패시브 7종. 아직 안 이은 것: 몫을 채움(명부 조건)·긴 사슬(사거리)·묶인 자·손에 익음·마른 얼룩, 액티브 전부.
+    /// </summary>
+    public static class GrowthEffects
+    {
+        public static void Apply(GrowthState g, GearStats s)
+        {
+            if (g == null) return;
+            int str = g.Stats[0] - GrowthState.StatBase, agi = g.Stats[1] - GrowthState.StatBase,
+                body = g.Stats[2] - GrowthState.StatBase, mind = g.Stats[3] - GrowthState.StatBase;
+            s.DamagePct += str * Balance.GROWTH_DAMAGE_PER_STR;
+            s.AttackSpeedPct += agi * Balance.GROWTH_ATKSPD_PER_AGI;
+            s.MoveSpeedPct += agi * Balance.GROWTH_MOVE_PER_AGI;
+            s.HpFlat += body * Balance.GROWTH_HP_PER_BODY;
+            s.CastReducePct += mind * Balance.GROWTH_CAST_PER_MIND;
+            s.TendoNeokPct += mind * Balance.GROWTH_NEOK_PER_MIND;
+            // 패시브(단계 1/2): 도술 설명문의 수치 그대로
+            s.ChainWindowAddS += 1f * g.LevelOf("오래 부르기");
+            s.TendoNeokPct += 0.10f * g.LevelOf("고마운 넋");
+            s.CastDamageReducePct += 0.10f * g.LevelOf("곁을 지킴");
+            s.AttackSpeedPct += 0.05f * g.LevelOf("단단한 손");
+            s.PahonRadiusM += 0.2f * g.LevelOf("큰 폭발");
+            s.PahonKnockbackPct += 0.2f * g.LevelOf("세찬 넉백");
+            s.PahonCoinPct += 0.2f * g.LevelOf("노잣돈");
+        }
+    }
 }

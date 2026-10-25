@@ -1617,4 +1617,20 @@ public class CoreTests
         cp.Tick(15f); Assert.IsTrue(cp.Walk);
         cp.Skip(); Assert.IsFalse(cp.Walk);   // 건너뛰면 잠금 상태로 정리된다(컷이 끝나며 조작은 어차피 돌아온다)
     }
+
+    // ---- 성장이 전투 수치에 얹힌다 ----
+    [Test] public void GrowthEffects_StatsAndPassivesAddToGear()
+    {
+        var g = new GrowthState { StatPointsEarned = 20, SkillPointsEarned = 10 };
+        for (int i = 0; i < 10; i++) g.AddStat(0);                                       // 힘 +10
+        for (int i = 0; i < 4; i++) g.AddStat(2);                                        // 몸 +4
+        g.Learn("고마운 넋"); g.Learn("고마운 넋"); g.Learn("노잣돈");
+        var s = new GearStats();
+        GrowthEffects.Apply(g, s);
+        Assert.AreEqual(0.10f, s.DamagePct, 0.0001f);                                    // 힘 10점 × 1%
+        Assert.AreEqual(20, s.HpFlat);                                                   // 몸 4점 × 5
+        Assert.AreEqual(0.20f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계
+        Assert.AreEqual(0.20f, s.PahonCoinPct, 0.0001f);
+        GrowthEffects.Apply(null, s);                                                    // 성장이 없어도 안전
+    }
 }

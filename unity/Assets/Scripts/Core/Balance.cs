@@ -376,4 +376,10 @@ public static class Balance
     public const float MOON_FULL_MEMORY = 1.5f;  // 보름 밤: 천도로 얻는 기억 배율(기억이 길게)
     public const float MOON_NEW_LUMP = 0.2f;  // 그믐 밤: 덩어리가 나올 확률 가산(파혼이 유리)
     public const float DAY_CAMP_MIN_FRAC = 0.4f;  // 한낮에 적 군집 인원이 줄어드는 최소 비율(밤=1.0)
+    public const float GROWTH_DAMAGE_PER_STR = 0.01f;  // (성장 1차 임시) 힘 1점(시작 10 초과분)당 맺힘 피해 +1%
+    public const float GROWTH_ATKSPD_PER_AGI = 0.005f;  // (성장 1차 임시) 날램 1점당 공격 속도 +0.5%
+    public const float GROWTH_MOVE_PER_AGI = 0.003f;  // (성장 1차 임시) 날램 1점당 이동 속도 +0.3%
+    public const int GROWTH_HP_PER_BODY = 5;  // (성장 1차 임시) 몸 1점당 최대 체력 +5
+    public const float GROWTH_CAST_PER_MIND = 0.005f;  // (성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%
+    public const float GROWTH_NEOK_PER_MIND = 0.005f;  // (성장 1차 임시) 마음 1점당 천도 넋 +0.5%
 }
