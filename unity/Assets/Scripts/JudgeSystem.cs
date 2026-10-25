@@ -193,7 +193,7 @@ public class JudgeSystem : MonoBehaviour
         // 이름 있는 노리개의 파혼 엽전 배수: 뱃삯 ×1.13 · 남은 장부 ×1.2(2막 숫자 혼만) · 아낙의 등잔 ×1.5(켠 둘레 안)
         float keepMult = 1f;
         if (HasKeepsake("도한수의 뱃삯")) keepMult *= Balance.BAETSAK_PAHON_COIN_MULT;
-        if (HasKeepsake("남은 장부") && !e.soul.Boss && e.soul.Name == null && at.z >= 640f && at.x < 768f) keepMult *= Balance.JANGBU_NUM_PAHON_COIN_MULT;
+        if (HasKeepsake("남은 장부") && !e.soul.Boss && e.soul.Name == null && at.z >= 640f && at.x >= 360f && at.x < 768f) keepMult *= 1.08f;   // 임시(기획 9절): Soul.Numbered 가 생기기 전까지 ④(x≥360)에서만 ×1.08. 정본은 JANGBU_NUM_PAHON_COIN_MULT 1.2 를 숫자 혼에만
         if (LampCovers(at) && !e.soul.Boss) keepMult *= Balance.DEUNGJAN_PAHON_COIN_MULT;
         float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult * snatchMult * keepMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
         int coinAdd = Mathf.FloorToInt(coinX); coinFrac = coinX - coinAdd; ledger.Coin += coinAdd;
@@ -1272,7 +1272,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>장례 컷의 조건 글자(서사 condition). 지금은 1호 결과만 안다(3호 결과는 아직 따로 세지 않아 false)</summary>
     bool FuneralCond(string c) { return c == "B-01 천도함" ? bossOutcome == 1 : false; }
     /// <summary>제사를 지켜보기 전에는 장례 대상 이름혼의 지도 표식을 숨긴다(기획: 지켜보면 그 혼의 오늘 밤 자리가 명부에 표시된다). 윤 소사·연이는 첫 세션 흐름이라 처음부터 보인다</summary>
-    public bool NamedMarkerHidden(string name, float x, float z) { if (x > 764f && !CapeSeen(x, z)) return true; return NamedMarkerHidden(name); }
+    public bool NamedMarkerHidden(string name, float x, float z) { if (x > 764f && z < 200f && Sfx.NightNow && !CapeSeen(x, z)) return true; /* 기획 9절: ⑤ 바닷가 띠(밤 해무)에서만 숨긴다. 목표 화살표는 이 겹침을 안 써서 늘 보인다 */ return NamedMarkerHidden(name); }
     public bool NamedMarkerHidden(string name) { return name != null && name != "윤 소사" && name != "연이" && funeralCut.ContainsKey(name) && (npcs == null || !npcs.JesaSeen.Contains(name)) && (npcs == null || npcs.HasHome(name)); }   // 제사 자리 데이터가 없는 이름혼(2막)은 숨기지 않는다
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
     // ===== 저장·불러오기 (규칙은 Core/SaveGame.cs, 저장소는 SaveStore) ==================
