@@ -556,6 +556,24 @@ public class JudgeSystem : MonoBehaviour
         }
     }
 
+    // ---- 처결 대기 긴장음: 남은 시간 비율에 맞춰 똑딱 간격이 1.0초 → 0.15초로 줄어든다(사운드팀 표) ----
+    float waitTickT; Enemy waitFor; bool waitFinalDone;
+    void TickWaitTick(float dt)
+    {
+        Enemy e = enemies.NearestKneeling(player.Pos, 14f);
+        if (e != waitFor) { waitFor = e; waitFinalDone = false; waitTickT = 0.3f; }   // 새 대기 혼이 생기면 처음부터
+        if (e == null || Casting || introFrozen) return;   // 천도 시전 중엔 멈춤, 첫 혼(튜토리얼)엔 틀지 않는다
+        var s = e.soul;
+        if (s.WaitTotal <= 0f) return;
+        if (!waitFinalDone && s.WaitLeft <= 1.5f) { waitFinalDone = true; Sfx.Play("sfx.wait.final"); }   // 마지막 1.5초 경고
+        waitTickT -= dt;
+        if (waitTickT > 0f) return;
+        float ratio = Mathf.Clamp01(s.WaitLeft / s.WaitTotal);
+        waitTickT = Mathf.Lerp(0.15f, 1.0f, ratio);
+        // 나이가 많은 혼일수록 낮고 무거운 똑딱
+        Sfx.Play(s.Kind == SoulKind.Fresh ? "sfx.wait.tick.fresh" : s.Kind == SoulKind.Year ? "sfx.wait.tick.year" : "sfx.wait.tick.old");
+    }
+
     void TickClues()
     {
         for (int i = cluePos.Count - 1; i >= 0; i--)
@@ -846,7 +864,7 @@ public class JudgeSystem : MonoBehaviour
         if (autoSaveT > 0f) return;
         autoSaveT = 45f;
         if (clock == null || !played || Casting || cuts.Active || ledger.Dead || AnyEnemyNear(20f)) return;
-        SaveGameNow();
+        if (SaveGameNow()) Sfx.Play("sfx.ui.save.auto");
     }
 
     void TickCutscenes(float dt)
@@ -1067,7 +1085,8 @@ public class JudgeSystem : MonoBehaviour
         if (named != null) { named.AppearMult = weather.Fx.NamedMult; named.Tick(player.Pos, clock.Daylight); }
         night.Clues = Mathf.Min(Balance.BOSS_CLUES_REQUIRED, clueBook.Count("B01-"));   // 1막 첫 보스(나루 영감)의 낮 단서 수 = 보스 천도 조건
         // 처결 대기가 끝까지 지나 일어선 혼 = '처결 못 함'(장례 대상이면 다음 낮 장례로). 읽고 바로 지워 한 번만 센다
-        foreach (var e in enemies.list) if (e.soul.TimedOut) { e.soul.TimedOut = false; MarkUnjudged(e); }
+        foreach (var e in enemies.list) if (e.soul.TimedOut) { e.soul.TimedOut = false; Sfx.Play("sfx.wait.expire"); MarkUnjudged(e); }
+        TickWaitTick(dt);
         var ph = clock.Consume();
         if (ph.HasValue)
         {

@@ -256,10 +256,11 @@ public class NpcWorld
             return;
         }
         string text = mode == EavesMode.Half && !string.IsNullOrEmpty(s.half) ? s.half : s.line;
+        if (!string.IsNullOrEmpty(text) && (string.IsNullOrEmpty(s.clue) || book.Has(s.clue))) Sfx.Play("sfx.ui.heard.open");   // 들은 말 자막이 뜨는 소리(새 단서가 붙을 땐 아래 heard.clue 가 대신)
         if (!string.IsNullOrEmpty(text)) { Say(text + (mode == EavesMode.Half ? " …" : ""), s.isObject ? null : s.label); Log.Add(s.label, s.row.place, text, s.clue, s.row.time); }
         if (!string.IsNullOrEmpty(s.clue) && book.Add(s.clue))
         {
-            Sfx.Play("sfx.clue");
+            Sfx.Play("sfx.clue"); Sfx.Play("sfx.ui.heard.clue");   // 단서 소리 + 들은 말에 단서가 붙는 소리
             if (onClue != null) onClue();
             if (s.view != null && s.actor == null) s.view.GetComponent<Renderer>().sharedMaterial = U.Matte(new Color(0.85f, 0.78f, 0.62f));   // 얻었으니 보랏빛이 꺼진다(도형 대역일 때만)
         }

@@ -19,6 +19,7 @@ public class BossArena : MonoBehaviour
     GameObject weakMark;                       // 서 의원: 약점이 열리면 머리 위에 켜지는 청록 표시
     readonly WeakWindow weak = new WeakWindow();
     float waveT = 2f;                          // 다음 파동까지(전투 시작 직후 잠깐 여유)
+    bool waveBurstSnd, frenzySnd; int seoStreak;   // 파동마다 터짐 소리 1번 / 월화 몰아침 소리 1번 / 서 의원 연속 피함
     bool waveHit; Tele lastOfWave;             // 이번 파동에서 맞았나 / 파동의 마지막 칸(끝났는지 보려고)
     bool built;
 
@@ -84,10 +85,11 @@ public class BossArena : MonoBehaviour
 
     void StartWave()
     {
-        waveHit = false;
+        waveHit = false; waveBurstSnd = false;
         if (def.Id == 2)
         {
             float ratio = boss.soul.MaedhimMax > 0f ? boss.soul.Maedhim / boss.soul.MaedhimMax : 1f;
+            if (!frenzySnd && ratio <= 0.5f) { frenzySnd = true; Sfx.Play("sfx.boss.wolhwa.frenzy"); }   // 맺힘이 처음 절반 아래로
             var pick = TwelveStreets.Pick(() => Random.value, TwelveStreets.CupsPerWave(ratio));
             // 월화 '열두 거리': 굿판 한가운데에서 그 잔 쪽으로 30° 부채꼴이 열린다(잔 방향 = 30i°, 아트 예고 그림과 같은 모양)
             foreach (int i in pick) AddSector(i * Mathf.PI * 2f / Balance.B02_CUPS, Balance.B02_WARN_TIME);
@@ -167,6 +169,7 @@ public class BossArena : MonoBehaviour
             if (!t.fired && t.t >= t.warn)
             {
                 t.fired = true;
+                if (!waveBurstSnd) { waveBurstSnd = true; Sfx.Play(def.Id == 2 ? "sfx.boss.wolhwa.burst" : "sfx.boss.seo.burst"); }   // 파동마다 한 번
                 var d = judge.player.Pos - t.c;
                 bool inside = t.sector ? InSector(d, t) : t.square ? (Mathf.Abs(d.x) < t.R + 0.3f && Mathf.Abs(d.z) < t.R + 0.3f) : (new Vector2(d.x, d.z).magnitude < t.R + 0.4f);
                 if (inside) { if (judge.BossAreaHit(boss)) waveHit = true; }
@@ -176,7 +179,7 @@ public class BossArena : MonoBehaviour
                 Tint(t.view, Color.Lerp(new Color(0.35f, 0.05f, 0.05f, 0.3f), new Color(0.85f, 0.12f, 0.1f, 1f), t.t / t.warn));   // 예고: 점점 붉어진다
             if (t.t >= t.warn + 0.25f)
             {
-                if (t == lastOfWave) { lastOfWave = null; if (def.Id == 3) weak.WaveResolved(waveHit); }   // 파동 하나 끝
+                if (t == lastOfWave) { lastOfWave = null; if (def.Id == 3) { weak.WaveResolved(waveHit); seoStreak = waveHit ? 0 : seoStreak + 1; if (seoStreak == 1 || seoStreak == 2) Sfx.Play("sfx.boss.seo.streak"); } }   // 3번째 피함은 약장 서랍 소리가 맡는다   // 파동 하나 끝
                 if (t.view != null) Destroy(t.view);
                 teles.RemoveAt(i);
             }

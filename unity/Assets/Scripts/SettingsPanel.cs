@@ -97,7 +97,7 @@ public class SettingsPanel : MonoBehaviour
             var r1 = new VisualElement { pickingMode = PickingMode.Position }; r1.style.flexDirection = FlexDirection.Row; r1.style.marginTop = 10; box.Add(r1);
             bool field = judge.FieldMode;
             Btn(r1, "조작 키 보기", () => showKeys = true);
-            Btn(r1, "지금 저장", () => note = judge.SaveGameNow() ? "저장했다" : "저장하지 못했다", field, 130);
+            Btn(r1, "지금 저장", () => { bool ok = judge.SaveGameNow(); Sfx.Play(ok ? "sfx.ui.save" : "sfx.ui.deny"); note = ok ? "저장했다" : "저장하지 못했다"; }, field, 130);
             Btn(r1, "불러오기", () => { if (judge.LoadGameNow()) { note = "불러왔다"; Close(); } else note = "저장이 없거나 읽지 못했다"; }, field && SaveStore.Exists, 130);
             var r2 = new VisualElement { pickingMode = PickingMode.Position }; r2.style.flexDirection = FlexDirection.Row; r2.style.alignItems = Align.Center; box.Add(r2);
             if (!confirmReset) Btn(r2, "처음부터 (저장 지움)", () => confirmReset = true, true, 200);

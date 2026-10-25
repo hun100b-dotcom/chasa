@@ -307,9 +307,9 @@ public class Enemy : MonoBehaviour
                 else Chase(dt, playerPos);
             }
             bool wasWind = atk.Winding;
-            if (atk.Tick(dt, dist, canAct)) onHitPlayer?.Invoke();
+            if (atk.Tick(dt, dist, canAct)) { if (soul.Boss && soul.BossId == 1) Sfx.Play("sfx.boss.naru.sweep"); onHitPlayer?.Invoke(); }   // 나루 영감: 휩쓸기 판정 순간
             if (gated) { if (atk.Winding) tokenHolders.Add(this); else tokenHolders.Remove(this); }
-            if (atk.Winding && !wasWind) Sfx.Play(type == SoulType.Mote ? "sfx.enemy.mote.telegraph" : "sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
+            if (atk.Winding && !wasWind) Sfx.Play(type == SoulType.Mote ? "sfx.enemy.mote.telegraph" : soul.Boss && soul.BossId == 1 ? "sfx.boss.naru.sweep.telegraph" : "sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
             mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)
                                     : baseColor;
