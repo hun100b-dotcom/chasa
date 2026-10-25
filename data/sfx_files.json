@@ -4697,6 +4697,149 @@
    "bypass_cast_filter": true,
    "length_sec": 0.55,
    "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.pahon.knock",
+   "file": "sfx_pahon_knock",
+   "category": "처결",
+   "desc": "파혼 넉백: 폭발에 날린 혼 하나가 몸으로 퍽 맞고 흙바닥을 쓰윽 미끄러짐(0.45초)",
+   "use": "파혼 폭발에 밀려난 적 하나마다(최대 4, 0.03초 간격, 음높이 +4%씩). 첫 폭발 0.05초 뒤",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.43,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.pahon.chain.2",
+   "file": "sfx_pahon_chain_2",
+   "category": "처결",
+   "desc": "연쇄 파혼 둘째: 폭발이 옆 혼에 번져 한 번 더 '쨍' — 저음 없이 깨지는 소리만(0.6초)",
+   "use": "파혼 폭발로 둘째 혼(잔넋 포함)이 함께 깨질 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.23,
+   "peak_dbfs": -8
+  },
+  {
+   "id": "sfx.pahon.chain.3",
+   "file": "sfx_pahon_chain_3",
+   "category": "처결",
+   "desc": "연쇄 파혼 셋째: 한 단 더 높게 '쨍'(0.6초)",
+   "use": "연쇄 셋째",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.26,
+   "peak_dbfs": -8
+  },
+  {
+   "id": "sfx.pahon.chain.4",
+   "file": "sfx_pahon_chain_4",
+   "category": "처결",
+   "desc": "연쇄 파혼 넷째 이상: 가장 높고 밝게 '쨍' — 넷째부터는 이것만 반복(0.6초)",
+   "use": "연쇄 넷째부터(같은 소리 동시 최대 2개)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.29,
+   "peak_dbfs": -8
+  },
+  {
+   "id": "sfx.pahon.cascade",
+   "file": "sfx_pahon_cascade",
+   "category": "처결",
+   "desc": "큰 연쇄 마무리: 셋 이상 함께 깨진 뒤 부서진 조각이 비처럼 차르르 떨어지고 엽전이 짤랑 모임(1.4초) — 시원함의 꼬리",
+   "use": "한 번의 파혼으로 셋 이상 깨졌을 때, 마지막 연쇄 0.15초 뒤 한 번",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.2,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "amb.karma.1",
+   "file": "amb_karma_1",
+   "category": "세계",
+   "desc": "업 10~29: 거의 안 들리는 낮은 웅 — 세상 밑바닥에서 무언가 조금 어긋남(반복용 20초, 귀를 기울여야 들림)",
+   "use": "업 10 이상. 구역 환경음 위에 음량 1.0으로 겹침(파일이 이미 아주 작다)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 19.6,
+   "peak_dbfs": -36
+  },
+  {
+   "id": "amb.karma.2",
+   "file": "amb_karma_2",
+   "category": "세계",
+   "desc": "업 30~59: 어긋난 두 음이 천천히 비벼지는 드론 + 가끔 먼 데서 들이쉬는 숨(뜻 없음) — 마음이 편치 않음(반복용 24초)",
+   "use": "업 30 이상. amb.karma.1 과 함께 겹침(1 을 끄지 않음)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 23.4,
+   "peak_dbfs": -32
+  },
+  {
+   "id": "amb.karma.3",
+   "file": "amb_karma_3",
+   "category": "세계",
+   "desc": "업 60 이상: 공기가 탁함 — 바닥에서 지글지글 끓는 잡음 + 느린 맥박 같은 울렁임 + 아주 먼 곳의 깨지는 소리 메아리(반복용 28초)",
+   "use": "업 60 이상. 1·2 위에 겹침. 같이 구역 환경음 전체에 저역 통과 6kHz(맑은 높은 소리가 사라짐)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 27.4,
+   "peak_dbfs": -18
+  },
+  {
+   "id": "sfx.stain.form",
+   "file": "sfx_stain_form",
+   "category": "처결",
+   "desc": "얼룩이 생김: 폭발 자리 땅에 검붉은 것이 '쯔으—' 스며 번지며 낮게 끓음(1초)",
+   "use": "파혼 직후 얼룩이 바닥에 생길 때(폭발 0.4초 뒤)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.79,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.stain.step",
+   "file": "sfx_stain_step",
+   "category": "처결",
+   "desc": "얼룩을 밟음: 끈적하게 '쩍' 들러붙었다 떨어지는 발 + 발밑에서 작게 '흐' 하는 원념(0.35초) — 느려진 걸음마다",
+   "use": "얼룩 위 발소리마다(재질 발소리 대신). 이동 −20% 동안",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.32,
+   "peak_dbfs": -17
+  },
+  {
+   "id": "amb.stain.near",
+   "file": "amb_stain_near",
+   "category": "처결",
+   "desc": "얼룩 곁: 낮게 끓는 거품 + 웅웅 떨리는 원념(반복용 6초) — 얼룩 자리에서 3D로",
+   "use": "얼룩마다 하나(3D, 최소 1m · 최대 8m), 사라질 때 1초 페이드. 최대 4개",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 5.8,
+   "peak_dbfs": -26
+  },
+  {
+   "id": "sfx.stain.overlap",
+   "file": "sfx_stain_overlap",
+   "category": "처결",
+   "desc": "얼룩 셋이 겹침(사나운 적이 온다): 세 끓는 소리가 한데 모여 꿀렁 꿀렁 꿀렁 + 땅속에서 낮게 부풀어 오름(1.6초)",
+   "use": "얼룩 3개가 겹쳐 사나운 적이 소환되기 직전",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 2.72,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.stain.fade",
+   "file": "sfx_stain_fade",
+   "category": "처결",
+   "desc": "얼룩이 마름: 끓던 것이 '스으' 잦아들며 땅에 말라붙음(0.8초)",
+   "use": "얼룩 지속 15초가 끝날 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.8,
+   "peak_dbfs": -22
   }
  ],
  "footsteps": {
