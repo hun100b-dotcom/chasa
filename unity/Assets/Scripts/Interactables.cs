@@ -12,8 +12,8 @@ using Chasa.Core;
 public class Interactables
 {
     [System.Serializable] class Gives { public string clue; }
-    [System.Serializable] class ClueRow { public string id, place, when, text; public float x, z; public Gives gives; }
-    [System.Serializable] class KeepRow { public string id, soul, soul_name, name, text; public float x, z; }
+    [System.Serializable] class ClueRow { public string id, place, when, text, model; public float x, z; public Gives gives; }
+    [System.Serializable] class KeepRow { public string id, soul, soul_name, name, text, model; public float x, z; }
     [System.Serializable] class CoinRow { public string id; public float x, z; public int coin; }
     [System.Serializable] class HerbRow { public string id; public float x, z; }
     [System.Serializable] class Rules { public string gone_text; }
@@ -59,6 +59,18 @@ public class Interactables
         return g;
     }
 
+    /// <summary>아트 모델(Resources/Models/Interact 또는 Field)이 있으면 그것을, 없으면 빛기둥 도형 대역을 세운다</summary>
+    GameObject Model(string name, Vector3 p, Color fallback, float h, float w)
+    {
+        GameObject prefab = null;
+        if (!string.IsNullOrEmpty(name)) prefab = Resources.Load<GameObject>("Models/Interact/" + name) ?? Resources.Load<GameObject>("Models/Field/" + name);
+        if (prefab == null) return Pillar(p, fallback, h, w);
+        var g = Object.Instantiate(prefab, p, Quaternion.identity, root);
+        foreach (var c in g.GetComponentsInChildren<Collider>()) Object.Destroy(c);   // 걸리지 않게
+        g.SetActive(false);
+        return g;
+    }
+
     Node Add(string kind, string id, Vector3 pos, InteractKind kind0, GameObject view, string extra = null)
     {
         var n = new Node { kind = kind, id = id, view = view, extra = extra };
@@ -70,7 +82,7 @@ public class Interactables
     void AddClue(ClueRow c)
     {
         var pos = Place(c.x, c.z);
-        var n = Add("clue", c.id, pos, InteractKind.Touch, Pillar(pos, ChasaPalette.MemoryRim, 1.1f, 0.35f), c.when);
+        var n = Add("clue", c.id, pos, InteractKind.Touch, Model(c.model, pos, ChasaPalette.MemoryRim, 1.1f, 0.35f), c.when);
         n.spot.OnUse = () =>
         {
             if (j.ledger.Karma >= Balance.CLUE_TOUCH_KARMA_LOCK) { j.Say("손이 미끄러진다"); return false; }   // 업이 높으면 물건이 식어 만질 수 없다(다음에 다시)
@@ -86,7 +98,7 @@ public class Interactables
     void AddKeep(KeepRow k)
     {
         var pos = Place(k.x, k.z);
-        var n = Add("keep", k.id, pos, InteractKind.Touch, Pillar(pos, new Color(0.95f, 0.85f, 0.55f), 0.9f, 0.18f), k.soul_name);
+        var n = Add("keep", k.id, pos, InteractKind.Touch, Model(k.model, pos, new Color(0.95f, 0.85f, 0.55f), 0.9f, 0.18f), k.soul_name);
         n.spot.OnUse = () =>
         {
             Picked.Add(k.id);
@@ -103,7 +115,7 @@ public class Interactables
     void AddCoin(CoinRow c)
     {
         var pos = Place(c.x, c.z);
-        var n = Add("coin", c.id, pos, InteractKind.Pickup, Pillar(pos, Color.white, 1.4f, 0.12f));
+        var n = Add("coin", c.id, pos, InteractKind.Pickup, Model("prop_coin_bundle", pos, Color.white, 1.4f, 0.12f));
         n.spot.OnUse = () => { Picked.Add(c.id); j.ledger.Coin += c.coin > 0 ? c.coin : Balance.COIN_BUNDLE; Sfx.Play("sfx.clue"); j.Say("엽전 " + (c.coin > 0 ? c.coin : Balance.COIN_BUNDLE) + "닢을 주웠다"); return true; };
         n.spot.Active = () => !Picked.Contains(c.id);
     }
@@ -111,7 +123,7 @@ public class Interactables
     void AddHerb(HerbRow h)
     {
         var pos = Place(h.x, h.z);
-        var n = Add("herb", h.id, pos, InteractKind.Pickup, Pillar(pos, new Color(0.55f, 0.85f, 0.4f), 1.0f, 0.12f));
+        var n = Add("herb", h.id, pos, InteractKind.Pickup, Model("prop_herb_mugwort", pos, new Color(0.55f, 0.85f, 0.4f), 1.0f, 0.12f));
         n.spot.OnUse = () => { HerbTaken[h.id] = j.clock.Day; Herbs++; j.Say("쑥을 뜯었다 (" + Herbs + ")"); return true; };
         n.spot.Active = () => j.clock != null && j.clock.Phase == ClockPhase.Day && !(HerbTaken.ContainsKey(h.id) && HerbTaken[h.id] >= j.clock.Day);   // 낮에만 · 따면 다음 날 낮에 다시
     }
@@ -124,6 +136,12 @@ public class Interactables
             if (n.view == null) continue;
             bool on = n.spot.Active != null && n.spot.Active() && new Vector2(n.spot.Pos.x - playerPos.x, n.spot.Pos.z - playerPos.z).magnitude < 40f;
             if (n.view.activeSelf != on) n.view.SetActive(on);
+            if (on && (n.kind == "clue" || n.kind == "keep"))
+            {
+                // 아트의 'Glow' 자식 메시: 유품은 밤 6m 안(Active 가 이미 보장), 단서는 12m 안에서만 켠다
+                var gl = n.view.transform.Find("Glow");
+                if (gl != null) gl.gameObject.SetActive(n.kind == "keep" || new Vector2(n.spot.Pos.x - playerPos.x, n.spot.Pos.z - playerPos.z).magnitude <= 12f);
+            }
         }
     }
 
