@@ -151,6 +151,7 @@ public class JudgeSystem : MonoBehaviour
         player.ConsumeAct();   // 후딜·피하기를 끊고 파혼
         DoPahon(e);
         player.actLock = Balance.PAHON_RECOVER;   // 파혼 끝동작 0.25초
+        player.PlayPahonAnim();
     }
 
     void DoPahon(Enemy e)
@@ -168,6 +169,7 @@ public class JudgeSystem : MonoBehaviour
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         if (e.soul.Boss)
         {
+            if (e.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
             if (e.soul.BossId <= 1) { night.BossDone = true; bossOutcome = 2; }
             Say(e.label + "을(를) 깨뜨렸다");
             cuts.Play(BossCut(e.soul, "PAHON")); feel.AddShake(1f);   // 6m 대폭발, 판자가 흩어진다
@@ -234,6 +236,7 @@ public class JudgeSystem : MonoBehaviour
         }
         if (castTarget.soul.Boss)
         {
+            if (castTarget.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
             int g = ledger.CompleteBossTendo();
             growth.AddBossPoint();                  // 보스 천도 = 도술 점수 1
             ui?.Hud.Toasts.Add("도술 점수 +1");
@@ -617,7 +620,7 @@ public class JudgeSystem : MonoBehaviour
         else TickClock(dt);
         TickClues();
         TickAutoSave(realDt);
-        if (camps != null) camps.Tick(dt, player.Pos);   // 필드: 가까운 군집만 세운다
+        if (camps != null) { camps.GhostMult = weather.Fx.GhostMult; camps.Tick(dt, player.Pos); }   // 필드: 가까운 군집만 세운다
         enemySpawnPause = Mathf.Max(0f, enemySpawnPause - dt);
         TickActives(dt);   // 도술이 남기는 짧은 상태(버프·느림·타이머)
         enemies.spawnPaused = enemySpawnPause > 0f || (Casting && castTarget.soul.Boss);   // 보스 천도 중·직후엔 잡몹이 새로 나오지 않는다
@@ -780,7 +783,7 @@ public class JudgeSystem : MonoBehaviour
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
         ActorModel.HeroShadowOn = clock.Phase != ClockPhase.Day;   // 낮엔 주인공 그림자 없음(산 사람에게 안 보이는 차사)
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
-        if (named != null) named.Tick(player.Pos, clock.Daylight);
+        if (named != null) { named.AppearMult = weather.Fx.NamedMult; named.Tick(player.Pos, clock.Daylight); }
         night.Clues = Mathf.Min(Balance.BOSS_CLUES_REQUIRED, clueBook.Count("B01-"));   // 1막 첫 보스(나루 영감)의 낮 단서 수 = 보스 천도 조건
         var ph = clock.Consume();
         if (ph.HasValue)
@@ -949,7 +952,7 @@ public class JudgeSystem : MonoBehaviour
             h.ClockLabel = WorldClock.PhaseName(clock.Phase) + (clock.FullMoon ? " · 보름달" : clock.NewMoon ? " · 그믐" : "") + (clock.Speed > 1.5f ? "  x" + (int)clock.Speed : "");
         }
         else { h.Peaceful = false; h.TimeOfDay = Mathf.Clamp01(1f - night.TimeLeft / Mathf.Max(1f, Balance.NIGHT_DURATION)); h.IsDawn = night.Warning; h.Daylight = 0f; h.ClockLabel = null; }
-        h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.ChainBonus = chainLeft > 0f;
+        h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.KarmaHidden = weather.Fx.HideKarma; h.ChainBonus = chainLeft > 0f;
         h.Hp = ledger.Hp; h.MaxHp = ledger.MaxHp; h.Heal = dayScreen.Pack.Heal;
         h.SecondsLeft = Mathf.CeilToInt(night.TimeLeft); h.Sent = night.Sent; h.Quota = Balance.NIGHT_QUOTA;
         h.Clues = night.Clues; h.CluesNeeded = Balance.BOSS_CLUES_REQUIRED;
@@ -966,7 +969,7 @@ public class JudgeSystem : MonoBehaviour
             if (ledger.Neok > pNeok) h.Toasts.Add("넋 +" + (ledger.Neok - pNeok));
             if (ledger.Memory > pMemory) h.Toasts.Add("기억 +" + (ledger.Memory - pMemory));
             if (ledger.Coin > pCoin) h.Toasts.Add("엽전 +" + (ledger.Coin - pCoin));
-            if (ledger.Karma > pKarma) h.Toasts.Add("업 +" + (ledger.Karma - pKarma));
+            if (ledger.Karma > pKarma && !weather.Fx.HideKarma) h.Toasts.Add("업 +" + (ledger.Karma - pKarma));   // 비 오는 밤엔 업이 오른 것도 가린다
             if (lo.lastDropT > 0f && lo.lastDrop != pDrop) h.Toasts.Add(lo.lastDrop);
         }
         pNeok = ledger.Neok; pMemory = ledger.Memory; pCoin = ledger.Coin; pKarma = ledger.Karma; pDrop = lo.lastDrop; toastReady = true;
@@ -1037,6 +1040,7 @@ public class JudgeSystem : MonoBehaviour
         if (white == null) return;
         if (CharacterPanel.Open || SettingsPanel.Open) return;   // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
+        weather.DrawOverlay();   // 비 줄기(HUD 보다 아래)
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
         if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)
@@ -1168,7 +1172,7 @@ public class JudgeSystem : MonoBehaviour
         {
             GUI.Label(new Rect(12, 30, 700, 24),
                 "넋 " + ledger.Neok + "   기억 " + ledger.Memory + "   엽전 " + ledger.Coin +
-                "   업 " + ledger.Karma + " (" + CoreRules.KarmaTier(ledger.Karma) + "단계)" +
+                "   업 " + (weather.Fx.HideKarma ? "?" : ledger.Karma + " (" + CoreRules.KarmaTier(ledger.Karma) + "단계)") +
                 (chainLeft > 0f ? "   연쇄!" : ""), small);
             GUI.Label(new Rect(12, 74, 700, 24), "체력 " + ledger.Hp + " / " + ledger.MaxHp + "   회복약 " + dayScreen.Pack.Heal + " (H)" +
                 (Demo.Weapons ? "   무기 " + lo.Def.Name + " (Tab)" + (lo.Def.HasQuake ? "  Q 땅울림" + (lo.quakeCd > 0f ? " " + Mathf.CeilToInt(lo.quakeCd) + "s" : "") : "") : "") +

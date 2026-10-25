@@ -22,6 +22,7 @@ public class FieldCamps
     readonly EnemyManager enemies;
 
     public int Count => camps.Count;
+    public float GhostMult = 1f;   // 흐린 밤 +15%: 군집이 설 때 혼 수에 곱한다
 
     public FieldCamps(EnemyManager enemies)
     {
@@ -53,6 +54,11 @@ public class FieldCamps
     {
         c.spawned = true;
         int count = CampRules.CountFor(c.row.n, SkyState.Daylight);   // 낮엔 적게
+        if (GhostMult > 1.001f)   // 날씨로 늘어나는 몫은 확률로 올려서(기댓값이 맞게) 작은 군집도 평균 +15% 가 된다
+        {
+            float exact = count * GhostMult; int whole = Mathf.FloorToInt(exact);
+            count = whole + (Random.value < exact - whole ? 1 : 0);
+        }
         for (int i = 0; i < count; i++)
         {
             // 군집 반지름 안 무작위 자리. 집·소품 안이면 밀려난다

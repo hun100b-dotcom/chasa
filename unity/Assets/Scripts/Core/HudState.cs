@@ -13,7 +13,7 @@ namespace Chasa.Core
     public sealed class HudState
     {
         // 장부
-        public int Neok, Memory, Coin, Karma;
+        public int Neok, Memory, Coin, Karma; public bool KarmaHidden;   // KarmaHidden: 비 오는 밤엔 업 표시가 ?로 가려진다(업은 그대로 쌓인다)
         public bool ChainBonus;                 // 연쇄 천도 창이 열려 있나
         // 몸
         public int Hp, MaxHp, Heal;
@@ -43,7 +43,7 @@ namespace Chasa.Core
         /// <summary>1줄: 장부 (넋·기억·엽전·업)</summary>
         public string LedgerLine()
         {
-            return "넋 " + Neok + "   기억 " + Memory + "   엽전 " + Coin + "   업 " + Karma + " (" + CoreRules.KarmaTier(Karma) + "단계)" + (ChainBonus ? "   연쇄!" : "");
+            return "넋 " + Neok + "   기억 " + Memory + "   엽전 " + Coin + "   업 " + (KarmaHidden ? "?" : Karma + " (" + CoreRules.KarmaTier(Karma) + "단계)") + (ChainBonus ? "   연쇄!" : "");
         }
 
         /// <summary>2줄: 체력과 회복약</summary>

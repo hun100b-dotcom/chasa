@@ -79,7 +79,39 @@ public class WeatherRuntime
     static float LightMult(Weather w) { switch (w) { case Weather.Cloudy: return 0.8f; case Weather.Rain: return 0.55f; case Weather.Fog: return 0.7f; case Weather.Plague: return 0.6f; default: return 1f; } }
     static float FogMult(Weather w) { switch (w) { case Weather.Cloudy: return 1.2f; case Weather.Rain: return 1.6f; case Weather.Fog: return 3.0f; case Weather.Plague: return 2.5f; default: return 1f; } }
 
-    float lightNow = 1f, fogNow = 1f;
+    // ---- 비 줄기 화면 덮개: 멀리·가까이 두 겹을 아래로 흘린다(sky_clock.json 의 rain_layers 값)
+    float rainA; Texture2D rainFar, rainNear; bool rainTried;
+
+    /// <summary>JudgeSystem.OnGUI 가 HUD 보다 먼저 부른다. 비가 아니면 서서히 걷힌다</summary>
+    public void DrawOverlay()
+    {
+        float target = Current == Weather.Rain ? 1f : 0f;
+        rainA = Mathf.MoveTowards(rainA, target, Time.unscaledDeltaTime * 0.7f);   // 약 1.4초에 걸쳐 시작·그침
+        if (rainA <= 0.01f || Event.current.type != EventType.Repaint) return;
+        if (!rainTried)
+        {
+            rainTried = true;
+            rainFar = SpriteLib.Texture("sky/rain_streaks_far"); rainNear = SpriteLib.Texture("sky/rain_streaks_near");
+            if (rainFar != null) rainFar.wrapMode = TextureWrapMode.Repeat;
+            if (rainNear != null) rainNear.wrapMode = TextureWrapMode.Repeat;
+        }
+        float t = Time.unscaledTime;
+        DrawRainLayer(rainFar, 0.05f, -1.3f, 640f, 0.45f * rainA, t);
+        DrawRainLayer(rainNear, 0.12f, -2.4f, 460f, 0.6f * rainA, t);
+    }
+
+    static void DrawRainLayer(Texture2D tex, float su, float sv, float tilePx, float alpha, float t)
+    {
+        if (tex == null) return;
+        float w = Screen.width / tilePx, h = Screen.height / tilePx;
+        GUI.color = new Color(1f, 1f, 1f, alpha);
+        // 텍스처 v 는 아래가 0 이라 +방향으로 흘리면 줄기가 아래로 떨어져 보인다(그림 좌표계 차이를 부호로 맞춤)
+        GUI.DrawTextureWithTexCoords(new Rect(0, 0, Screen.width, Screen.height), tex, new Rect(t * su, -t * sv, w, h));
+        GUI.color = Color.white;
+    }
+
+    static float CloudCover(Weather w) { switch (w) { case Weather.Cloudy: return 0.7f; case Weather.Rain: return 0.95f; case Weather.Fog: return 0.4f; case Weather.Plague: return 0.5f; default: return 0.25f; } }   // sky_clock.json cloud_cover
+    float lightNow = 1f, fogNow = 1f, cloudNow = 0.25f;
     void Apply()
     {
         // 갑자기 바뀌지 않게 서서히(약 1.5초) 따라간다
@@ -87,5 +119,7 @@ public class WeatherRuntime
         lightNow = Mathf.Lerp(lightNow, LightMult(Current), k); fogNow = Mathf.Lerp(fogNow, FogMult(Current), k);
         SkyState.LightMult = lightNow; SkyState.FogMult = fogNow;
         Sfx.SetWeatherAmbient(Current);
+        cloudNow = Mathf.Lerp(cloudNow, CloudCover(Current), k);
+        GroundTerrain.SetCloudCover(cloudNow);   // 구름 그림자(땅에 곱해 흘린다)
     }
 }

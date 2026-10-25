@@ -83,6 +83,20 @@ public static class GroundTerrain
         return t;
     }
 
+    /// <summary>날씨의 구름 양(0~1)을 땅 셰이더에 알린다. 구름 그림이 없으면 아무 일도 없다</summary>
+    public static void SetCloudCover(float amount)
+    {
+        if (mat == null || !mat.HasProperty("_CloudAmount")) return;
+        if (!cloudTried)
+        {
+            cloudTried = true;
+            var t = SpriteLib.Texture("sky/cloud_shadow");
+            if (t != null) { t.wrapMode = TextureWrapMode.Repeat; mat.SetTexture("_CloudTex", t); cloudOk = true; }
+        }
+        mat.SetFloat("_CloudAmount", cloudOk ? amount : 0f);
+    }
+    static bool cloudTried, cloudOk;
+
     static Material waterMat, waterDeepMat;
 
     /// <summary>큰 강 조각(br_*)의 물면용 재질. deep=깊은 곳(어두운 그림). 그림·셰이더가 없으면 null(조각 모델 자체 재질을 그대로 쓴다)</summary>

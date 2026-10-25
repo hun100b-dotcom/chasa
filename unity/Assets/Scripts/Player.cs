@@ -265,6 +265,7 @@ public class Player : MonoBehaviour
         if (!Demo.Weapons || Busy || state != State.Free) return;   // 시연판 기본 구성은 철삭 하나
         var next = loadout.other; loadout.other = loadout.weapon; loadout.weapon = next;   // 든 것과 멘 것을 맞바꾼다
         loadout.swapLeft = Balance.WEAPON_SWAP_TIME;
+        spr?.SetWeapon(loadout.weapon); spr?.PlayDraw();   // 새 무기 모델로 바꾸고 꺼내 드는 동작
         comboStep = 0; comboTimer = 0f; moveTarget = null; chaseTarget = null;
     }
 
@@ -273,6 +274,9 @@ public class Player : MonoBehaviour
     /// 기절은 서 있는 적에게만 걸리고, 무릎 꿇은 혼의 처결 대기 시간과는 무관하다 (기획 확정).
     /// 무릎 꿇은 혼은 맞지 않는다 — 처결을 기다리는 혼을 부수면 안 되니까.
     /// </summary>
+    /// <summary>파혼 몸 동작(JudgeSystem 이 파혼을 터뜨릴 때 부른다)</summary>
+    public void PlayPahonAnim() { spr?.PlayPahon(); }
+
     public bool CommandQuake()
     {
         if (Busy || state != State.Free || !loadout.Def.HasQuake || loadout.quakeCd > 0f) return false;

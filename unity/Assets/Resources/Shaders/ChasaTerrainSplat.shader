@@ -26,6 +26,9 @@ Shader "Chasa/TerrainSplat"
         _D3 ("잔무늬 논", 2D) = "gray" {}
         _D4 ("잔무늬 낙엽", 2D) = "gray" {}
         _DetailTileM ("잔무늬 타일 m", Float) = 1.5
+        _CloudTex ("구름 그림자 (흑백, 200m 반복)", 2D) = "white" {}
+        _CloudAmount ("구름 그림자 세기 (0=끔)", Float) = 0
+        _CloudScroll ("구름 흐름 속도 m/s xz", Vector) = (1.2, 0.4, 0, 0)
         _DetailAmount ("잔무늬 세기 (0=끔)", Float) = 0
         _DetailNear ("잔무늬 완전히 보이는 거리 m", Float) = 18
         _DetailFar ("잔무늬 사라지는 거리 m", Float) = 32
@@ -42,6 +45,7 @@ Shader "Chasa/TerrainSplat"
         float _TileM4, _WorldSize;
         sampler2D _D0, _D1, _D2, _D3, _D4;
         float _DetailTileM, _DetailAmount, _DetailNear, _DetailFar;
+        sampler2D _CloudTex; float _CloudAmount; float4 _CloudScroll;
 
         struct Input { float3 worldPos; };
 
@@ -71,6 +75,12 @@ Shader "Chasa/TerrainSplat"
                              + tex2D(_D3, duv).rgb * wa.w + tex2D(_D4, duv).rgb * wb;
                     c = lerp(c, d, k);   // 잔무늬 평균 명도가 층 그림과 비슷하다고 아트가 맞춰 줌 → 색을 섞어도 밝기가 안 튄다
                 }
+            }
+            // 구름 그림자: 흑백 그림(흰=햇빛, 검=그림자)을 바람 방향으로 천천히 흘려 땅 색에 곱한다
+            if (_CloudAmount > 0.001)
+            {
+                float cs = tex2D(_CloudTex, (wxz + _CloudScroll.xy * _Time.y) / 200.0).r;
+                c *= lerp(1.0, lerp(0.55, 1.0, cs), _CloudAmount);
             }
             o.Albedo = c;
         }

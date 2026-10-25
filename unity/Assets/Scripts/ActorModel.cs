@@ -16,7 +16,7 @@ using UnityEngine.Playables;
 
 public class ActorModel : MonoBehaviour
 {
-    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3 }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
+    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
 
     // 모양 설명서: 이름에서 골라 쓴다
     struct Spec
@@ -87,11 +87,11 @@ public class ActorModel : MonoBehaviour
         var all = Resources.LoadAll<AnimationClip>(heroRow.path);
         var byName = new Dictionary<string, AnimationClip>();
         foreach (var c in all) if (!c.name.StartsWith("__")) byName[c.name] = c;
-        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3 };
+        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw };
         graph = PlayableGraph.Create("Hero");
         graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);   // 우리가 직접 시간을 흘린다(히트스톱과 무관하게 부드럽게)
         var output = AnimationPlayableOutput.Create(graph, "out", anim);
-        var order = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3 };
+        var order = heroOrder;
         mixer = AnimationMixerPlayable.Create(graph, order.Length);
         heroPlayables = new AnimationClipPlayable[order.Length];
         for (int i = 0; i < order.Length; i++)
@@ -130,6 +130,8 @@ public class ActorModel : MonoBehaviour
             else if (po == Pose.Attack2) want = pre != null ? pre + "_Attack2" : (ClipName(heroRow, Pose.Attack2) ?? ClipName(heroRow, Pose.Attack));
             else if (po == Pose.Attack3) want = pre != null ? pre + "_Attack3" : (ClipName(heroRow, Pose.Attack3) ?? ClipName(heroRow, Pose.Attack));
             else if (po == Pose.Cast) want = pre != null ? pre + "_Tendo" : ClipName(heroRow, Pose.Cast);
+            else if (po == Pose.Pahon) want = pre != null ? pre + "_Pahon" : "Pahon";   // 파혼 전용 동작(철삭은 기본 Pahon)
+            else if (po == Pose.Draw) want = (pre ?? "Chain") + "_Draw";                 // 무기 바꿔 들기 동작
             else continue;
             AnimationClip clip;
             if (want == null || !clipsByName.TryGetValue(want, out clip)) continue;   // 전용 동작이 없으면 지금 것을 그대로
@@ -171,8 +173,19 @@ public class ActorModel : MonoBehaviour
     /// 모델 동작의 '때리는 순간'(대략 클립의 45%)이 판정 시각(선딜 + 휘두름의 가운데)에 오도록 재생 속도를 맞춘다.
     /// 왜? 판정과 몸 동작이 따로 놀면 "사슬만 혼자 도는" 느낌이 난다(PC 영상 의견).
     /// </summary>
+    Pose oneShot; float oneShotT;   // 파혼·무기 바꿈 같은 한 번짜리 동작이 도는 동안은 그림 이름이 자세를 덮어쓰지 않는다
+
+    /// <summary>한 번짜리 몸 동작(파혼·무기 바꿔 들기). 클립 길이만큼 자세를 붙든다. 주인공 3D 모델이 아니면 무시</summary>
+    public void PlayOneShot(Pose p)
+    {
+        int idx; if (hero == null || heroPlayables == null || !heroInput.TryGetValue(p, out idx) || !heroPlayables[idx].IsValid()) return;
+        oneShot = p; pose = p; poseT = 0f; heroT = 0f; heroSpeed = 1f;
+        oneShotT = heroPlayables[idx].GetAnimationClip().length;
+    }
+
     public void PlayAttack(float windup, float swing, int step = 1)
     {
+        oneShotT = 0f;
         pose = Pose.Attack; poseT = 0f; heroT = 0f;
         atkPose = step >= 3 ? Pose.Attack3 : step == 2 ? Pose.Attack2 : Pose.Attack;
         int idx; if (!heroInput.TryGetValue(atkPose, out idx) || heroPlayables == null || !heroPlayables[idx].IsValid()) { heroSpeed = 1f; return; }
@@ -275,7 +288,8 @@ public class ActorModel : MonoBehaviour
         var spec = SpecFor(name);
         if (key != spec.key) Build(spec);
         var p = PoseFor(name);
-        if (p != pose) { pose = p; poseT = 0f; }
+        if (oneShotT > 0f) { oneShotT -= Time.deltaTime; if (oneShotT <= 0f) { pose = Pose.Idle; poseT = 0f; } }   // 한 번짜리 동작 중엔 그림 이름을 따르지 않는다
+        else if (p != pose) { pose = p; poseT = 0f; }
         facing.y = 0f;
         if (facing.sqrMagnitude > 1e-4f) yaw = Mathf.Atan2(facing.x, facing.z) * Mathf.Rad2Deg;   // 유니티: +z 가 앞(0도)
         // 색조: 예비동작 붉음·맞은 번쩍(흰색)을 재질에 반영

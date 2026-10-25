@@ -28,6 +28,8 @@ public class ActorSprite : MonoBehaviour
     public void SetWeapon(Chasa.Core.WeaponId w) { if (model != null) model.SetWeapon(w); }
 
     /// <summary>공격 시작을 3D 인형에 알린다(동작을 처음부터, 판정 시각에 맞춰 재생). 2D 그림 쪽은 할 일 없음</summary>
+    public void PlayPahon() { if (model != null) model.PlayOneShot(ActorModel.Pose.Pahon); }
+    public void PlayDraw() { if (model != null) model.PlayOneShot(ActorModel.Pose.Draw); }
     public void PlayAttack(float windup, float swing, int step = 1) { if (model != null) model.PlayAttack(windup, swing, step); }
 
     /// <summary>스프라이트를 바꾼다. 없으면(null) 숨기고 false — 부르는 쪽이 색 도형으로 대신한다</summary>

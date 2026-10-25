@@ -33,6 +33,8 @@ public class NamedSoulSpawns
     }
 
     /// <summary>daylight: 하늘 밝기(0=밤). 밤에만 혼이 보인다</summary>
+    public float AppearMult = 1f;   // 안개 +50%: 나타나는 거리 배율
+
     public void Tick(Vector3 playerPos, float daylight)
     {
         bool night = daylight < 0.35f;
@@ -49,7 +51,7 @@ public class NamedSoulSpawns
             }
             if (!night) continue;
             float d = new Vector2(e.row.x - playerPos.x, e.row.z - playerPos.z).magnitude;
-            if (d > SpawnDist) continue;
+            if (d > SpawnDist * AppearMult) continue;   // 안개 낀 밤: 이름혼이 더 멀리서부터 나타난다(+50%)
             float x = e.row.x, z = e.row.z;
             MapLayout.PushOut(ref x, ref z, Config.ENEMY_RADIUS + 1f);
             var en = enemies.SpawnCamp(new Vector3(x, 0f, z), true);
