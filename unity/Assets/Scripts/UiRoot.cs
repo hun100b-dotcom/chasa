@@ -20,6 +20,8 @@ public class UiRoot : MonoBehaviour
     public readonly HudState Hud = new HudState();
 
     UIDocument doc;
+    /// <summary>화면 전체를 덮는 바닥 요소(설정 창 같은 큰 창이 여기에 붙는다). 아직 안 만들어졌으면 null</summary>
+    public VisualElement Overlay { get { return doc != null ? doc.rootVisualElement : null; } }
     Label ledger, vital, night, hint, hpText;
     VisualElement hpFill, root, toastBox, skillBar;
     readonly System.Collections.Generic.List<VisualElement> edgePool = new System.Collections.Generic.List<VisualElement>();   // 화면 가장자리 경고 표시 재사용 묶음
