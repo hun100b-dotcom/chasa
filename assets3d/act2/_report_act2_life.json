@@ -1,0 +1,266 @@
+[
+ {
+  "name": "a2v_house_sul",
+  "label": "술도가 집",
+  "tris": 456,
+  "size_m": [
+   6.7,
+   5.0,
+   3.55
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2v_house_small",
+  "label": "붉은 흙벽 초가",
+  "tris": 232,
+  "size_m": [
+   5.2,
+   4.15,
+   3.35
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2v_house_herb",
+  "label": "약초 집",
+  "tris": 272,
+  "size_m": [
+   4.8,
+   5.15,
+   3.35
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2v_stone_cutter",
+  "label": "석수 일터",
+  "tris": 384,
+  "size_m": [
+   4.04,
+   2.31,
+   1.05
+  ],
+  "min_z": -0.048
+ },
+ {
+  "name": "a2v_persimmon_line",
+  "label": "곶감 줄",
+  "tris": 852,
+  "size_m": [
+   3.1,
+   0.1,
+   2.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2v_red_wall_low",
+  "label": "붉은 낮은 담",
+  "tris": 252,
+  "size_m": [
+   4.41,
+   0.55,
+   1.04
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2m_soup_house",
+  "label": "국밥집",
+  "tris": 210,
+  "size_m": [
+   5.4,
+   4.8,
+   3.35
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2m_mule",
+  "label": "노새",
+  "tris": 140,
+  "size_m": [
+   1.04,
+   2.06,
+   1.42
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2m_stable",
+  "label": "마구간",
+  "tris": 184,
+  "size_m": [
+   4.6,
+   3.57,
+   2.34
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2m_owner_house",
+  "label": "광산 주인집",
+  "tris": 208,
+  "size_m": [
+   8.1,
+   7.2,
+   4.4
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2m_coal_stack",
+  "label": "석탄 더미",
+  "tris": 368,
+  "size_m": [
+   2.14,
+   2.2,
+   0.63
+  ],
+  "min_z": -0.016
+ },
+ {
+  "name": "a2m_dusty_clothes",
+  "label": "먼지 빨래줄",
+  "tris": 132,
+  "size_m": [
+   3.1,
+   0.11,
+   1.8
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2m_pick_rack",
+  "label": "곡괭이 걸이",
+  "tris": 180,
+  "size_m": [
+   2.11,
+   0.29,
+   1.8
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2m_water_barrel",
+  "label": "물통",
+  "tris": 284,
+  "size_m": [
+   1.66,
+   1.12,
+   0.9
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2m_lamp_string",
+  "label": "등 줄",
+  "tris": 148,
+  "size_m": [
+   4.1,
+   0.2,
+   2.4
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2f_dry_grass",
+  "label": "마른 풀",
+  "tris": 560,
+  "size_m": [
+   1.66,
+   1.88,
+   1.4
+  ],
+  "min_z": -0.005
+ },
+ {
+  "name": "a2f_red_rock",
+  "label": "붉은 바위",
+  "tris": 128,
+  "size_m": [
+   1.83,
+   1.43,
+   1.12
+  ],
+  "min_z": -0.18
+ },
+ {
+  "name": "a2f_thorn_bush",
+  "label": "가시덤불",
+  "tris": 208,
+  "size_m": [
+   1.6,
+   1.44,
+   0.91
+  ],
+  "min_z": 0.024
+ },
+ {
+  "name": "a2f_dead_tree",
+  "label": "고사목",
+  "tris": 92,
+  "size_m": [
+   2.76,
+   2.51,
+   4.72
+  ],
+  "min_z": -0.009
+ },
+ {
+  "name": "a2f_boundary_stone",
+  "label": "경계 돌",
+  "tris": 56,
+  "size_m": [
+   0.48,
+   0.4,
+   1.36
+  ],
+  "min_z": -0.057
+ },
+ {
+  "name": "a2f_persimmon_tree",
+  "label": "감나무",
+  "tris": 596,
+  "size_m": [
+   2.69,
+   2.89,
+   4.44
+  ],
+  "min_z": -0.009
+ },
+ {
+  "name": "a2f_dry_plot",
+  "label": "마른 밭",
+  "tris": 184,
+  "size_m": [
+   4.0,
+   3.0,
+   0.56
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a2f_cairn_red",
+  "label": "붉은 돌탑",
+  "tris": 252,
+  "size_m": [
+   0.73,
+   0.84,
+   1.59
+  ],
+  "min_z": -0.073
+ },
+ {
+  "name": "a2f_ore_vein_rock",
+  "label": "광맥 바위",
+  "tris": 110,
+  "size_m": [
+   1.91,
+   1.73,
+   1.4
+  ],
+  "min_z": -0.15
+ }
+]
