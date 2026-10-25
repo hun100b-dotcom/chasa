@@ -52,8 +52,16 @@ public class Loadout
 
     /// <summary>손보기로 장비가 바뀐 뒤 합계를 다시 계산한다</summary>
     /// <summary>인 만들기: 넋 주머니에서 깎고 가방에 담는다. 넋이 모자라면 false (아무것도 깎지 않는다)</summary>
+    /// <summary>인 만들기 문(기획 인 점검 2): 작은 인은 1막 첫 보스를 보낸 뒤, 큰 인은 2막에 들어선 뒤. 열려 있으면 null, 잠겼으면 알림 글</summary>
+    public string CraftLockReason(bool large)
+    {
+        bool open = large ? gear.Act2Entered : gear.FirstRingBossDone;
+        return open ? null : "아직 명부에 이 인이 없다";
+    }
+
     public bool CraftSeal(SoulColor a, SoulColor b, bool large)
     {
+        if (CraftLockReason(large) != null) return false;
         var s = wallet.Craft(a, b, large);
         if (s == null) return false;
         sealBag.Add(s); return true;

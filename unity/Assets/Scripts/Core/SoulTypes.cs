@@ -25,6 +25,19 @@ namespace Chasa.Core
             else if (zone.Contains("검은여울")) { mote = Balance.SOULTYPE_RAPIDS_MOTE_PCT; wail = Balance.SOULTYPE_RAPIDS_WAIL_PCT; buried = Balance.SOULTYPE_RAPIDS_BURIED_PCT; }
         }
 
+        /// <summary>구역 이름 → 숫자 혼 비율(%). 기획 act2-souls 2절 표. 1막 구역은 0</summary>
+        public static float NumberedPct(string zone)
+        {
+            if (zone == null) return 0f;
+            if (zone.Contains("산성 아랫마을")) return 10f; if (zone.Contains("무너진 산성")) return 30f; if (zone.Contains("화살골")) return 45f;
+            if (zone.Contains("군막")) return 60f; if (zone.Contains("큰 무덤")) return 50f; if (zone.Contains("광부촌")) return 20f;
+            if (zone.Contains("선탄장")) return 15f; if (zone.Contains("큰 갱도")) return 40f; if (zone.Contains("막장")) return 70f;
+            return 0f;
+        }
+
+        /// <summary>쇳골(④)의 구역인가: 남은 장부는 여기서만 숫자 혼 파혼 엽전을 늘린다</summary>
+        public static bool IsIronValley(string zone) { return zone != null && (zone.Contains("광부촌") || zone.Contains("선탄장") || zone.Contains("갱도") || zone.Contains("막장")); }
+
         /// <summary>구역과 난수(0~1)로 군집 유형을 정한다(군집 하나가 한 유형: 잔넋은 무리, 나머지는 섞이지 않게)</summary>
         public static SoulType Pick(string zone, float roll)
         {

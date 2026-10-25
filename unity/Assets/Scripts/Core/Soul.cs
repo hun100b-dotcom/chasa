@@ -28,6 +28,8 @@ namespace Chasa.Core
         public bool Boss;            // 보스 여부 (천도에 단서 3개 필요, 보상이 큼)
         public string LonerMemory;   // 외톨이 혼의 기억 한 줄(천도해야만 보인다. 감사 보강: 혼자 앉은 까닭)
         public string Name;          // 이름혼/보스의 이름 (무명 혼은 null)
+        public bool Numbered;        // 숫자 혼(인 없음): 대기 +0.5초, 천도 넋 ×1.3. B-08 천도 뒤엔 흐림(+0.25초). 맺힐 때 구역 비율로 정한다(기획 act2-souls)
+        public static bool NumberedBlurred;   // B-08 을 천도했나 — JudgeSystem 이 켠다
         public float WaitBonus;      // 인(seal)이 흐리면 처결 대기가 늘어난다(흐림 +0.25 · 없음 +0.5초). 서사 규칙
         public bool Frozen;          // 처결 대기 시간이 흐르지 않는다 (첫 갈림: 처음 배우는 사람이 천천히 고르게)
         public bool Trick;           // 속임수 혼: 무릎 꿇은 척하다 가까이 오면 덮친다 (한 번만)
@@ -69,7 +71,7 @@ namespace Chasa.Core
 
         public float WaitTimeForKind()
         {
-            return WaitBase() + WaitBonus;
+            return WaitBase() + WaitBonus + (Numbered ? (NumberedBlurred ? Balance.NUMBERED_BLUR_WAIT_ADD : Balance.NUMBERED_WAIT_ADD) : 0f);
         }
 
         float WaitBase()

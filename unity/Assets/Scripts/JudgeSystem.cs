@@ -193,12 +193,23 @@ public class JudgeSystem : MonoBehaviour
         // 이름 있는 노리개의 파혼 엽전 배수: 뱃삯 ×1.13 · 남은 장부 ×1.2(2막 숫자 혼만) · 아낙의 등잔 ×1.5(켠 둘레 안)
         float keepMult = 1f;
         if (HasKeepsake("도한수의 뱃삯")) keepMult *= Balance.BAETSAK_PAHON_COIN_MULT;
-        if (HasKeepsake("남은 장부") && !e.soul.Boss && e.soul.Name == null && at.z >= 640f && at.x >= 360f && at.x < 768f) keepMult *= 1.08f;   // 임시(기획 9절): Soul.Numbered 가 생기기 전까지 ④(x≥360)에서만 ×1.08. 정본은 JANGBU_NUM_PAHON_COIN_MULT 1.2 를 숫자 혼에만
+        if (HasKeepsake("남은 장부") && e.soul.Numbered && SoulTypeRules.IsIronValley(FieldZones.NameAt(at.x, at.z))) keepMult *= Balance.JANGBU_NUM_PAHON_COIN_MULT;   // 남은 장부: ④ 쇳골 숫자 혼 파혼만 ×1.2(기획 9절)
         if (LampCovers(at) && !e.soul.Boss) keepMult *= Balance.DEUNGJAN_PAHON_COIN_MULT;
         float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult * snatchMult * keepMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
         int coinAdd = Mathf.FloorToInt(coinX); coinFrac = coinX - coinAdd; ledger.Coin += coinAdd;
         if (e.soul.Name == "박돌쇠") { ledger.Coin += Balance.NAMED_FIRST_PAHON_COIN; }   // 첫 이름혼 파혼: 엽전이 커서 첫 손보기가 바로 열린다(처음 10분 M6)
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
+        // 빛깔 가루(서사 확정 이름, 기획 인 점검 3): 파혼한 혼도 그 혼의 기본 천도 넋 × 0.25 를 그 구역 빛깔 주머니에 남긴다. 소수는 모았다가 1이 되면 반영
+        if (Balance.SEAL_PAHON_COLOR)
+        {
+            dustFrac += (e.soul.Boss ? Bosses.NeokFor(e.soul.BossId) : Balance.TENDO_NEOK) * Balance.SEAL_COLOR_SHARE;
+            int dust = Mathf.FloorToInt(dustFrac); dustFrac -= dust;
+            if (dust > 0)
+            {
+                var dc = SoulColors.ForZone(FieldZones.NameAt(at.x, at.z)); lo.wallet.Add(dc, dust);
+                ui?.Hud.Toasts.Add("빛깔 가루 +" + dust + " · " + (dc == SoulColor.Yellow ? "흙" : dc == SoulColor.Red ? "불" : dc == SoulColor.Black ? "물" : dc == SoulColor.White ? "쇠" : "숲"));
+            }
+        }
         if (reward != null) reward.Pahon(at, 3 + (ledger.Coin - coinBefore) / 8);   // 엽전이 튀었다가 발밑으로 빨려 든다
         if (numbers != null) numbers.Spawn(at + Vector3.up * 1.7f, ledger.Coin - coinBefore, "coin");
         // 왕초의 바가지: 파혼 때 둘레 3 m 의 잔넋도 터진다(하나에 엽전 +1)
@@ -419,8 +430,9 @@ public class JudgeSystem : MonoBehaviour
     {
         if (amount <= 0) return;
         var c = SoulColors.ForZone(FieldZones.NameAt(at.x, at.z));
-        lo.wallet.Add(c, amount);
-        ui?.Hud.Toasts.Add(SoulColors.KoName(c) + " +" + amount);
+        int share = Mathf.Max(1, Mathf.RoundToInt(amount * Balance.SEAL_COLOR_SHARE));   // 천도 넋 중 빛깔 주머니로 가는 몫 1/4(기획 인 점검 2: 인이 너무 일찍·많이 생기지 않게). 품계 넋은 그대로
+        lo.wallet.Add(c, share);
+        ui?.Hud.Toasts.Add(SoulColors.KoName(c) + " +" + share);
     }
 
     void FinishTendo()
@@ -459,6 +471,7 @@ public class JudgeSystem : MonoBehaviour
             // 묻힌 혼은 넋 ×1.25, 넋두리는 기억 조각 +1 (기획 F-1b)
             if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
+            if (castTarget.soul.Numbered) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.NUMBERED_NEOK_MULT - 1f));   // 숫자 혼: 천도 넋 ×1.3(대기가 길어 파혼하고 싶게 만드는 값)
             if (castTarget.soul.Name != null && HasKeepsake("흑월의 붓")) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * 0.10f);   // 흑월의 붓: 이름혼 천도 넋 +10%
             if (castTarget.soul.Boss && castTarget.soul.BossId == 12) { var ks = ItemDef.BossKeepsake(12); if (ks != null && lo.Equip(ks)) { lo.lastDrop = "이름 있는 장비: 흑월의 붓"; lo.lastDropT = 6f; } }   // B-12 천도 보상(시즌 2로 가져감)
             if (castTarget.soul.Name == "박돌쇠") { int bonus = (ledger.Neok - before) * (Balance.NAMED_FIRST_NEOK_MULT - 1); ledger.Neok += bonus; }   // 첫 이름혼은 넋이 크다: 5분 안에 첫 품계(처음 10분 M6)
@@ -557,6 +570,7 @@ public class JudgeSystem : MonoBehaviour
     }
 
     // ---- 아낙의 등잔(B-09 파혼 노리개): 밤마다 한 번 F 로 켜면 60초, 둘레 6 m 에서 파혼 엽전 ×1.5·천도 시야가 안 줄어든다 ----
+    float dustFrac;   // 빛깔 가루의 소수 부분
     Vector3 lampAt; float lampT; int lampNight = -1;
     bool LampOn { get { return lampT > 0f && player != null && new Vector2(player.Pos.x - lampAt.x, player.Pos.z - lampAt.z).magnitude <= Balance.DEUNGJAN_RADIUS; } }
     bool LampCovers(Vector3 p) { return lampT > 0f && new Vector2(p.x - lampAt.x, p.z - lampAt.z).magnitude <= Balance.DEUNGJAN_RADIUS; }
@@ -675,6 +689,7 @@ public class JudgeSystem : MonoBehaviour
 
     void TickActives(float dt)
     {
+        Soul.NumberedBlurred = bossTendoIds.Contains(8);   // B-08 천도 뒤 숫자 혼은 흐림(대기 +0.25초)
         if (lampT > 0f) lampT -= dt;   // 등잔 불이 타 들어간다
         if (clock != null && clock.Phase == ClockPhase.Dawn && lastPhase != ClockPhase.Dawn) tendoToday = 0;   // 새 하루
         // 거센 혼 흔적(서사 cutscenes_b02 next_day): 폐당집 보스를 파혼한 뒤엔 밤이 올 때마다 얼룩 둥지의 흔적이 한 줄 뜬다

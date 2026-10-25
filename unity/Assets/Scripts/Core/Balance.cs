@@ -276,6 +276,9 @@ public static class Balance
     public const float CAP_FIERCE_PCT = 0.5f;  // 거센 혼·덩어리·보스 피해 상한 +50%
     public const float SEAL_COLOR_SHARE = 0.25f;  // (인 점검 2) 천도 넋 중 빛깔 주머니로 가는 몫
     public const bool SEAL_PAHON_COLOR = true;  // (인 점검 3, 서사 확정) 파혼한 혼도 빛깔 가루를 남김(그 혼 기본 천도 넋 × SEAL_COLOR_SHARE)
+    public const float NUMBERED_WAIT_ADD = 0.5f;  // (기획 act2-souls 2절) 숫자 혼: 처결 대기 +초(인 없음)
+    public const float NUMBERED_BLUR_WAIT_ADD = 0.25f;  // B-08 천도 뒤 숫자 혼이 흐림이 되어 대기 +초
+    public const float NUMBERED_NEOK_MULT = 1.3f;  // 숫자 혼 천도 넋 배수
     public const float CAP_COIN_PCT = 0.5f;  // (시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%
     public const float DROP_RARITY_RARE = 0.08f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 귀한 확률
     public const float DROP_RARITY_CRAFTED = 0.3f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 손본 확률(귀한 제외). 나머지는 흔한

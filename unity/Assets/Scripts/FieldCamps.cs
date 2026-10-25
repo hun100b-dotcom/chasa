@@ -115,6 +115,7 @@ public class FieldCamps
                 continue;
             }
             var e = enemies.SpawnCamp(new Vector3(x, 0f, z), i % 2 == 0, type);
+            if (e != null && e.soul != null && Random.value * 100f < SoulTypeRules.NumberedPct(c.row.zone)) e.soul.Numbered = true;   // 숫자 혼(2막 구역 비율)
             c.members.Add(e);
         }
         // 외톨이 야영지(기획 감사 보강): 무리에서 12~16m 떨어진 곳에 무릎 꿇은 혼 1~2. 싸우지 않고 혼자 처결 대기 중이라 무리의 공격권에 들지 않는다

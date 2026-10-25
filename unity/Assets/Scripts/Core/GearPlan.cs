@@ -142,16 +142,16 @@ namespace Chasa.Core
                 case "11": return "생명 +" + 30 * m;
                 case "44": return "방어 +" + 6 * m + "%";
                 case "22": return "도술 재사용 -" + 8 * m + "%";
-                case "03": return "연속 천도 창 +" + m + "초";
+                case "03": return "연속 천도 창 +" + m + "초 · 천도 넋 +" + 4 * m + "%";
                 case "01": return "이동 속도 +" + 5 * m + "%";
                 case "04": return "무기 기술 재사용 -" + 10 * m + "%";
-                case "02": return "천도 시전 -" + 6 * m + "%";
-                case "13": return "파혼 피해 +" + 15 * m + "%";
+                case "02": return "천도 시전 -" + 6 * m + "% · 천도 넋 +" + 4 * m + "%";
+                case "13": return "파혼 피해 +" + 15 * m + "% · 파혼 엽전 +" + 2 * m + "%";
                 case "34": return "사나운 적·덩어리 피해 +" + 12 * m + "%";
-                case "23": return "얼룩 지속 -" + 20 * m + "%";
-                case "14": return "천도 중 받는 피해 -" + 15 * m + "%";
+                case "23": return "얼룩 지속 -" + 20 * m + "% · 파혼 엽전 +" + 3 * m + "%";
+                case "14": return "천도 중 받는 피해 -" + 15 * m + "% · 천도 넋 +" + 4 * m + "%";
                 case "12": return "처결 대기 시간 +" + m + "초";
-                default: return "파혼 넉백 +" + 30 * m + "%";
+                default: return "파혼 넉백 +" + 30 * m + "% · 파혼 엽전 +" + 3.5f * m + "%";
             }
         }
         public static void Apply(Seal s, GearStats g)
@@ -164,16 +164,16 @@ namespace Chasa.Core
                 case "11": g.HpFlat += (int)(30 * m); break;
                 case "44": g.DefensePct += 0.06f * m; break;
                 case "22": g.SkillCdReduce += 0.08f * m; break;
-                case "03": g.ChainWindowAddS += 1f * m; break;
+                case "03": g.ChainWindowAddS += 1f * m; g.TendoNeokPct += 0.04f * m; break;   // 기울기 인은 덧줄(기획 인 점검 4): 천도 셋 합 11.2% · 파혼 셋 합 11.0%
                 case "01": g.MoveSpeedPct += 0.05f * m; break;
                 case "04": g.WeaponCdReduce += 0.10f * m; break;
-                case "02": g.CastReducePct += 0.06f * m; break;
-                case "13": g.PahonDamagePct += 0.15f * m; break;
+                case "02": g.CastReducePct += 0.06f * m; g.TendoNeokPct += 0.04f * m; break;
+                case "13": g.PahonDamagePct += 0.15f * m; g.PahonCoinPct += 0.02f * m; break;
                 case "34": g.FiercePct += 0.12f * m; break;
-                case "23": g.StainShorten += 0.20f * m; break;
-                case "14": g.CastDamageReducePct += 0.15f * m; break;
+                case "23": g.StainShorten += 0.20f * m; g.PahonCoinPct += 0.03f * m; break;
+                case "14": g.CastDamageReducePct += 0.15f * m; g.TendoNeokPct += 0.04f * m; break;
                 case "12": g.WaitAddS += 1f * m; break;
-                default: g.PahonKnockbackPct += 0.30f * m; break;
+                default: g.PahonKnockbackPct += 0.30f * m; g.PahonCoinPct += 0.035f * m; break;
             }
         }
         /// <summary>인을 장비 홈에 끼운다(홈이 비어 있고 그 자리가 인을 받을 수 있을 때)</summary>

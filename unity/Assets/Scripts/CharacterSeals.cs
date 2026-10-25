@@ -124,7 +124,7 @@ public partial class CharacterPanel
         holdKey = null; holdLabel = null;
         var lo = judge.player.loadout;
         if (lo.CraftSeal(holdA, holdB, holdLarge)) { Sfx.Play("sfx.ui.confirm"); selBagSeal = lo.sealBag.Count - 1; ToastSeal(lo.sealBag[lo.sealBag.Count - 1]); }
-        else Sfx.Play("sfx.ui.deny");
+        else { Sfx.Play("sfx.ui.deny"); var lockMsg = lo.CraftLockReason(holdLarge); if (lockMsg != null) judge.Say(lockMsg); }
         viewDirty = true;
     }
     void ToastSeal(CSeal s) { judge.Say("인을 만들었다 — " + SealLabel(s)); }
