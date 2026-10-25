@@ -58,6 +58,7 @@ public static class GroundTerrain
             if (FieldRules.Act2) Active2 = InitExtra("Terrain2", new[] { new Color(1.2f, 0.7f, 0.5f), new Color(1.3f, 1.1f, 0.55f), new Color(0.9f, 0.9f, 0.95f), new Color(0.35f, 0.35f, 0.5f), new Color(1.3f, 1.05f, 0.6f) });   // 붉은 흙·마른 풀·바위·쇠찌꺼기·황토
             if (FieldRules.Act3)
             {
+                InitExtra("Terrain3C", new[] { new Color(1.15f, 1.05f, 0.9f), new Color(0.85f, 0.85f, 0.85f), new Color(0.95f, 0.95f, 1.0f), new Color(1.0f, 1.0f, 1.0f), Color.white });   // 해안 띠: 모랫길·벼랑 바위(층 이름은 terrain.json)
                 InitExtra("Terrain3E", new[] { new Color(1.1f, 1.0f, 0.85f), new Color(0.8f, 1.0f, 0.75f), new Color(0.95f, 0.95f, 1.0f), new Color(1.9f, 1.9f, 1.8f), Color.white });   // ⑤ 갯마을: 마른 갯흙·갯풀·바위·소금 흰색
                 InitExtra("Terrain3W", new[] { new Color(1.0f, 0.95f, 0.85f), new Color(0.9f, 0.95f, 0.85f), new Color(0.95f, 0.95f, 1.0f), new Color(1.15f, 0.95f, 0.75f), new Color(2.0f, 2.0f, 2.2f) });   // ⑥ 도성: 흙길·풀·성벽 돌·장터 마당·눈
             }

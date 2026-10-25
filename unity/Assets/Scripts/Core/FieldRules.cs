@@ -76,10 +76,10 @@ namespace Chasa.Core
         /// <summary>붙이지 않은 청크 번호(배치표 항목을 담을 때: 안 열린 땅의 항목이 가장자리 청크에 섞이지 않게)</summary>
         public static int RawChunk(float v) { return (int)Math.Floor(v / ChunkSize); }
 
-        /// <summary>청크 (cx, cz)를 하나의 정수 키로. 서쪽 청크 번호는 음수라 20 을 더해 양수로 만든다</summary>
-        public static int Key(int cx, int cz) { return (cx + 20) * 100 + cz; }
+        /// <summary>청크 (cx, cz)를 하나의 정수 키로. 서쪽(cx)·남쪽 해안(cz=-1) 번호는 음수라 각각 20·10 을 더해 양수로 만든다</summary>
+        public static int Key(int cx, int cz) { return (cx + 20) * 100 + (cz + 10); }
         public static int KeyX(int key) { return key / 100 - 20; }
-        public static int KeyZ(int key) { return key % 100; }
+        public static int KeyZ(int key) { return key % 100 - 10; }
 
         /// <summary>이 청크(128m 칸)가 걸을 수 있는 땅과 조금이라도 겹치나(빈 칸은 만들지 않는다)</summary>
         public static bool ChunkHasLand(int cx, int cz)
@@ -123,6 +123,7 @@ namespace Chasa.Core
         {
             if (r[0] >= Size + 100f) return Act3Open;   // ⑤ 갯마을(동)
             if (r[2] <= 0f) return Act3Open;            // ⑥ 도성(서)
+            if (r[3] <= 0f) return Act3Open;            // 해안 띠(남쪽 z<0): 3막 땅 셋을 잇는 낭떠러지 아래 길
             if (r[1] >= Size) return Act2Open;          // 2막(북)
             return true;
         }

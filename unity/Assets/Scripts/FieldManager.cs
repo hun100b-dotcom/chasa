@@ -186,7 +186,7 @@ public class FieldManager : MonoBehaviour
             if (it.n.StartsWith("cover_")) continue;          // 바닥 채움 소품은 CoverInstancer 가 그린다
             if (GroundTerrain.Active && it.t == 1) continue;   // 옛 땅 타일은 새 땅 메쉬가 대신한다
             if (SkipDecor(it)) continue;                       // 폰: 작은 장식 일부를 건너뛴다
-            float py = it.z >= FieldRules.Size || it.x < 0f || it.x >= FieldRules.Size ? it.y : HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z);   // 붙은 땅(2막 z≥640 · ⑤ x≥640 · ⑥ x<0) 표의 높이(y)는 땅 높이까지 이미 더해 둔 절대값
+            float py = it.z >= FieldRules.Size || it.z < 0f || it.x < 0f || it.x >= FieldRules.Size ? it.y : HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z);   // 붙은 땅(2막 z≥640 · ⑤ x≥640 · ⑥ x<0) 표의 높이(y)는 땅 높이까지 이미 더해 둔 절대값
             Place(root.transform, it.n, it.x, py, it.z, it.r);   // 소품·집은 땅 높이 위에 붙인다(옛 평지는 +0)
             if (++n % ItemsPerFrame == 0) yield return null;
         }

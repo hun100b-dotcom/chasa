@@ -16,10 +16,11 @@ public class TideWater : MonoBehaviour
     public static float WorldMinutes;   // JudgeSystem 이 매 프레임 알려 준다(하루 수 × 40 + 하루 안의 분)
     public float rise = 1.1f;           // 간조(놓인 높이, 아트 기준 -0.5)에서 만조(+0.6)까지 올라가는 높이(m)
     float lowY; bool init;
+    const float CoastRise = 1.5f;       // 해안 띠 물판은 -7.5(썰물)↔-6.0(밀물) = 1.5m 오르내린다(아트 terrain.json)
 
     void LateUpdate()
     {
-        if (!init) { lowY = transform.position.y; init = true; }   // 아트 약속: 배치표의 높이가 썰물(간조) 높이
+        if (!init) { lowY = transform.position.y; init = true; if (lowY < -5f) rise = CoastRise; }   // 아트 약속: 배치표의 높이가 썰물(간조) 높이. 해안 띠(깊이 -5m 아래)는 오르내림 폭이 달라 따로
         var p = transform.position;
         p.y = lowY + Tide.Level(WorldMinutes) * rise;
         transform.position = p;

@@ -10,7 +10,7 @@
  "height_res_z": 641,
  "splat_res_x": 640,
  "splat_res_z": 640,
- "height_min_m": -1.5,
+ "height_min_m": -7.0,
  "height_max_m": 9.0,
  "layer_tile_m": [
   6,
@@ -20,6 +20,24 @@
   6
  ],
  "river_floor_m": -0.6,
+ "coast_ramp_points": [
+  [
+   -420,
+   0
+  ],
+  [
+   -446,
+   70
+  ],
+  [
+   -470,
+   140
+  ],
+  [
+   -500,
+   185
+  ]
+ ],
  "bridge_axis_y_m": 400,
  "bridge_deck_top_m": 3.9,
  "dry_bank_under_bridge_m": 0.3,

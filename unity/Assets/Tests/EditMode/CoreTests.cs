@@ -2171,6 +2171,9 @@ public class CoreTests
             Assert.IsTrue(FieldRules.Walkable(100f, 900f)); Assert.IsTrue(FieldRules.Walkable(-300f, 300f)); Assert.IsTrue(FieldRules.Walkable(1000f, 500f));
             Assert.IsFalse(FieldRules.Walkable(700f, 300f));   // 1막 동쪽 바깥 빈 구석(x 640~768, z<640)
             Assert.AreEqual(FieldRules.Key(-5, 3), FieldRules.Key(-5, 3)); Assert.AreEqual(-5, FieldRules.KeyX(FieldRules.Key(-5, 3))); Assert.AreEqual(3, FieldRules.KeyZ(FieldRules.Key(-5, 3)));
+            // 해안 띠 청크(cz=-1)도 키가 겹치지 않고 왕복된다
+            Assert.AreEqual(-1, FieldRules.KeyZ(FieldRules.Key(2, -1))); Assert.AreEqual(2, FieldRules.KeyX(FieldRules.Key(2, -1)));
+            Assert.AreNotEqual(FieldRules.Key(2, -1), FieldRules.Key(1, 4));
             Assert.IsTrue(FieldRules.ChunkHasLand(-5, 0)); Assert.IsFalse(FieldRules.ChunkHasLand(5, 2));   // (640~768, 256~384)는 빈 땅
             // 빈 구석으로 걸어 들어가면 가장 가까운 땅으로 당겨진다
             float x = 700f, z = 300f; FieldRules.ClampWalk(ref x, ref z, 0.5f); Assert.IsTrue(FieldRules.Walkable(x, z, 0.4f));
