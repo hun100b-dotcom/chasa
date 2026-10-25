@@ -82,6 +82,8 @@ public class GameMain : MonoBehaviour
             };
             judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)
             var cu = (Application.absoluteURL ?? "").ToLowerInvariant();
+            // 검수용 안개 배율: ?fog=off 는 안개 끔, ?fog=0.5 처럼 숫자면 그 배율
+            { int fi = cu.IndexOf("fog="); if (fi >= 0) { string fv = cu.Substring(fi + 4); int amp = fv.IndexOf('&'); if (amp >= 0) fv = fv.Substring(0, amp); float fs; ClockSky.FogScale = fv == "off" ? 0f : (float.TryParse(fv, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out fs) ? fs : 1f); } }
             // 검수용 시각 고정: ?time=day|dusk|night|dawn 이면 그 시간대 한가운데에서 시작하고 첫 5분 시계 정지를 푼다(아트·PC 캡처용)
             foreach (var tn in new[] { "dawn", "day", "dusk", "night" })
                 if (cu.Contains("time=" + tn))
