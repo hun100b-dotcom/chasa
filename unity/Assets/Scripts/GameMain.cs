@@ -39,12 +39,12 @@ public class GameMain : MonoBehaviour
         // 켜지면 옛 구역 시험판(?zones)은 쓰지 않는다
         var fieldUrl = (Application.absoluteURL ?? "").ToLowerInvariant();
         FieldRules.On = !(fieldUrl.Contains("field=0") || fieldUrl.Contains("field=off"));
+        FieldRules.Act2 = FieldRules.On && fieldUrl.Contains("act2=1");   // 2막 땅 열기(지금은 주소로만; 입장 조건이 구현되면 그 사건이 켠다). 마커·땅·바닥판이 만들어지기 전에 정해야 한다
         if (FieldRules.On) { FieldManager.ApplyMarkers(); MapLayout.Blockers.Clear(); }   // 마을 옛 충돌표는 비우고 필드 소품 충돌을 쓴다
         World.Enabled = !FieldRules.On && (Balance.WORLD_ZONES || Application.absoluteURL.Contains("zones"));
         var url = Application.absoluteURL;
         UiRoot.Enabled = Balance.UI_TOOLKIT || url.Contains("?ui") || url.Contains("&ui");   // 주소에 ?ui 가 있으면 UI Toolkit HUD ("build" 같은 글자에 걸리지 않게 ? 와 & 를 붙여 본다)
         GrowthData.Load();   // 기획팀 도술·옵션 JSON 덮어쓰기(있을 때만)
-        FieldRules.Act2 = FieldRules.On && url.Contains("act2=1");   // 2막 땅 열기(지금은 주소로만; 입장 조건이 구현되면 그 사건이 켠다). 땅·바닥판이 만들어지기 전에 정해야 한다
         if (FieldRules.On) GroundTerrain.Init();   // 아트의 새 땅(Resources/Terrain)이 있으면 읽는다. 없으면 옛 타일 땅
         BuildStage();
         var startPos = FieldRules.On ? new Vector3(FieldRules.StartX, 0f, FieldRules.StartZ) : Vector3.zero;

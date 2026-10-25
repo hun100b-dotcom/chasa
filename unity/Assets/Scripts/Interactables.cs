@@ -163,7 +163,7 @@ public class Interactables
         // 칠복네 빈 개집은 아트 배치표(field.json, 190.5·75.0)가 놓는다 — 예전 임시 자리(200.5·61)는 중복이라 뺐다
         foreach (var s in FieldRules.Shrines)
         {
-            var g = Object.Instantiate(prefab, new Vector3(s[0], 0f, s[1]), Quaternion.identity, root);
+            var g = Object.Instantiate(prefab, new Vector3(s[0], GroundTerrain.HeightAt(s[0], s[1]), s[1]), Quaternion.identity, root);
             foreach (var c in g.GetComponentsInChildren<Collider>()) Object.Destroy(c);
             var lt = g.transform.Find("Light_seonang_rest");
             if (lt != null && QualityTier.Current != QualityTier.Level.Low)

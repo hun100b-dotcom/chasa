@@ -40,6 +40,20 @@ public class FieldManager : MonoBehaviour
 
     public string Status { get { return "필드 청크 켜짐 " + roots.Count + (cover != null ? " · 바닥 소품 " + cover.DrawnCount : ""); } }
 
+    [System.Serializable] class ShrineRow { public string id, name; public float x, y; }
+    [System.Serializable] class Act2File { public ShrineRow[] shrines; }
+
+    /// <summary>2막 서낭당 SH2-1·SH2-2(처음부터 열림)를 넋길 정류장 목록 끝에 붙인다. SH2-3(산성 쉼터)은 'B-06 천도 뒤'라 해금 규칙이 생기면 추가</summary>
+    static void AddAct2Shrines()
+    {
+        var ta = Resources.Load<TextAsset>("Data/act2_map"); if (ta == null) return;
+        var f = JsonUtility.FromJson<Act2File>(ta.text); if (f == null || f.shrines == null) return;
+        var pos = new System.Collections.Generic.List<float[]>(FieldRules.Shrines);
+        var names = new System.Collections.Generic.List<string>(FieldRules.ShrineNames);
+        foreach (var s in f.shrines) { if (s.id == "SH2-3") continue; pos.Add(new[] { s.x, s.y }); names.Add(s.name); }
+        FieldRules.Shrines = pos.ToArray(); FieldRules.ShrineNames = names.ToArray();
+    }
+
     /// <summary>시작 위치·이야기 자리를 마커에서 읽어 FieldRules 에 넣는다. GameMain 이 맨 먼저 부른다</summary>
     public static void ApplyMarkers()
     {
@@ -53,6 +67,7 @@ public class FieldManager : MonoBehaviour
         stops.Sort((a, b) => a.z.CompareTo(b.z));
         FieldRules.Shrines = stops.ConvertAll(m => new[] { m.x, m.z }).ToArray();
         FieldRules.ShrineNames = stops.ConvertAll(m => m.name).ToArray();
+        if (FieldRules.Act2) AddAct2Shrines();   // 2막 서낭당(붉은재·산신각)을 넋길 정류장 뒤에 잇는다
         foreach (var m in f.markers)
         {
             if (m.kind == "spawn") { FieldRules.StartX = m.x; FieldRules.StartZ = Mathf.Max(m.z, 56f); }   // 카메라가 -x,-z 쪽을 비스듬히 내려다봐서, 남쪽 끝(z<30)에 서면 화면 위쪽 절반이 맵 밖 맨바닥이다 → 마을 안쪽으로 물린다
