@@ -17,7 +17,8 @@ public class NpcWorld
 {
     [System.Serializable] class Row { public string npc, name, zone, place, verb, line, half, clue; public int region, unlock, time; }
     [System.Serializable] class ClueRow { public string boss, id, verb, zone, place, npc, what; public int time; }
-    [System.Serializable] class FileData { public Row[] entries; public ClueRow[] clues; }
+    [System.Serializable] class PlaceRow { public string place; public float ox, oz; }
+    [System.Serializable] class FileData { public Row[] entries; public ClueRow[] clues; public PlaceRow[] places; }
 
     class Spot
     {
@@ -28,10 +29,11 @@ public class NpcWorld
     const float SpawnRadius = 80f;       // 이 거리 안의 사람만 세운다(멀리는 부품 낭비)
     static readonly Dictionary<string, Vector2> Anchors = new Dictionary<string, Vector2>
     {
-        { "Hub", new Vector2(188f, 40f) }, { "Village", new Vector2(196f, 62f) }, { "Field", new Vector2(160f, 180f) },
+        { "Hub", new Vector2(188f, 36f) }, { "Village", new Vector2(196f, 62f) }, { "Field", new Vector2(160f, 180f) },
         { "Ravine", new Vector2(356f, 324f) }, { "Shrine", new Vector2(580f, 552f) },
     };
 
+    static readonly Dictionary<string, Vector2> placeOffset = new Dictionary<string, Vector2>();   // 서사가 정한 장소별 위치(구역 중심 기준, 동 +x · 북 +z)
     readonly List<Spot> spots = new List<Spot>();        // 지금 시간대에 켜진 자리들
     readonly List<Spot> all = new List<Spot>();
     readonly ClueBook book;
@@ -49,6 +51,8 @@ public class NpcWorld
         var ta = Resources.Load<TextAsset>("Data/npc_flat");
         if (ta == null) return;
         var f = JsonUtility.FromJson<FileData>(ta.text);
+        placeOffset.Clear();
+        if (f.places != null) foreach (var pl in f.places) placeOffset[pl.place] = new Vector2(pl.ox, pl.oz);
         var npcClueIds = new HashSet<string>();
         foreach (var r in f.entries)
         {
@@ -66,6 +70,13 @@ public class NpcWorld
     /// <summary>구역 중심에서 장소 이름으로 정한 방향·거리(6~16m)의 자리. 막힌 곳이면 밀려난다</summary>
     static Vector3 PosFor(string zone, string place)
     {
+        Vector2 off;
+        if (placeOffset.TryGetValue(place, out off))   // 서사가 장소 위치를 정해 줬으면 그대로(아트 확정 전 임시 값)
+        {
+            var a0 = Anchors[zone]; float px = a0.x + off.x, pz = a0.y + off.y;
+            MapLayout.PushOut(ref px, ref pz, 0.6f);
+            return new Vector3(px, 0f, pz);
+        }
         int h = 17; foreach (char ch in place) h = h * 31 + ch;
         float a = (h & 1023) / 1024f * Mathf.PI * 2f, d = 6f + ((h >> 10) & 255) / 255f * 10f;
         var an = Anchors[zone];

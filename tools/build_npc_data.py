@@ -24,7 +24,8 @@ for boss, b in src["boss_clues"].items():
     for c in b.get("clues", []):
         clues.append({"boss": boss, "id": c["id"], "verb": c.get("verb", ""), "time": TIME.get(c.get("time", "낮"), 1),
                       "zone": c.get("zone", ""), "place": c.get("place", ""), "npc": c.get("npc") or "", "what": c.get("what", "")})
-out = {"entries": rows, "clues": clues}
+places = [{"place": k, "ox": v["offset_m"][0], "oz": v["offset_m"][1]} for k, v in src.get("places", {}).items()]
+out = {"entries": rows, "clues": clues, "places": places}
 path = os.path.join(root, "unity", "Assets", "Resources", "Data", "npc_flat.json")
 json.dump(out, open(path, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
 print("일정", len(rows), "단서", len(clues))
