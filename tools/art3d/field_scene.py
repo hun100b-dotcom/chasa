@@ -126,6 +126,8 @@ SHOTS = {
   "gate":   dict(win=(150, 0, 245, 80), center=(196, 42, 0), ortho=50, title="솔고개 어귀(밤)"),
   "village": dict(win=(150, 20, 245, 110), center=(196, 62, 0), ortho=60, title="마을 안(밤)"),
   "barley": dict(win=(250, 70, 470, 220), center=(352, 134, 0), ortho=150, title="보릿들(밤)"),
+  "hamlet": dict(win=(280, 100, 370, 200), center=(324, 148, 0), ortho=56, title="보릿들 한가운데 마을(밤)"),
+  "mill": dict(win=(370, 310, 430, 372), center=(402, 340, 0), ortho=30, title="개울가 방앗간(밤)"),
   "bridge": dict(win=(40, 410, 130, 500), center=(84, 452, 0), ortho=48, title="검은여울 돌다리(밤)"),
   "naru":   dict(win=(340, 230, 470, 340), center=(404, 290, 0.6), ortho=40, title="나루 영감 보스 자리(밤)"),
   "tendo":  dict(win=(170, 30, 230, 90), center=(196, 51, 0), ortho=18, title="천도 이펙트(밤)"),

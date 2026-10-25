@@ -196,6 +196,26 @@ life("prop_signpost", VX_ + 3.8, 30.0, 10, zone="이정표"); life("prop_signpos
 for gx_, gy_, n_ in ((66 * T, 62 * T, 9), (70 * T, 68 * T, 7), (22 * T, 10 * T, 6), (20 * T, 14 * T, 5), (12 * T, 62 * T, 5)):
     for g in range(n_): life("prop_grave", gx_ + (g % 3) * 5.5 + rnd.uniform(-1, 1), gy_ + (g // 3) * 7.0 + rnd.uniform(-1, 1), rnd.choice((0, 0, 20, -15)), zone="무덤")
 # 숲 속 쓰러진 통나무·그루터기, 숲길 야영 불
+# ── 5-3) 2차: 촌락(보릿들 가운데, 마을 변두리 초가 군)과 개울가 방앗간 ─────────────────────────────────────────────
+HAMLETS = []
+def hamlet(name, cx, cy, houses, extras):
+    """초가 여러 채+마당 소품. houses=[(dx,dy,rot,kind)], extras=[(prop,dx,dy,rot)]. 같은 자리의 숲·덤불은 치운다."""
+    for dx, dy, rot, kind in houses:
+        structures.append({"id": f"{name}_{len(structures)}", "kind": kind, "x": cx + dx, "y": cy + dy, "rot": rot, "note": f"{name}(한옥 키트 초가)", "pieces": place_building(kind, cx + dx, cy + dy, rot, gate=True)})
+    for pr, dx, dy, rot in extras: props.append({"zone": "촌락 생활", "prop": pr, "x": round(cx + dx, 1), "y": round(cy + dy, 1), "rot": rot, "z": 0.0})
+    HAMLETS.append({"name": name, "x": cx, "y": cy, "r": 20})
+hamlet("보릿들 한가운데 마을", 324.0, 148.0, [(-11, 9, 0, "choga4"), (11, 10, 0, "choga8"), (-12, -9, 180, "choga4"), (10, -10, 180, "choga4")],
+       [("prop_umul", 0, 0, 0), ("prop_jangdok", -6, 6, 0), ("prop_jangdok", 5, -5, 180), ("prop_campfire", 0, -4, 0), ("prop_haystack", -16, 0, 0), ("prop_haystack", 16, 2, 90), ("prop_cart", 5, 5, 20), ("prop_cow", -6, -2, 90), ("prop_cow", 8, 0, 270),
+        ("prop_fence", -4, -14, 0), ("prop_fence", 4, -14, 0), ("prop_firewood", -15, -5, 90), ("prop_sacks", 14, -6, 0), ("prop_scarecrow", -2, 17, 0), ("prop_stepstones", 0, 8, 0)])
+hamlet("마을 서쪽 변두리", 160.0, 66.0, [(0, -17, 90, "choga4"), (-1, 0, 90, "choga8"), (1, 16, 90, "choga4")],
+       [("prop_haystack", -6, -8, 0), ("prop_firewood", -5, 6, 0), ("prop_cow", -7, 9, 90), ("prop_fence", -9, -14, 90), ("prop_sacks", 5, -8, 0), ("prop_millstone", 5, 8, 0)])
+hamlet("마을 동쪽 변두리", 232.0, 66.0, [(0, -16, -90, "choga4"), (1, 1, -90, "choga4"), (-1, 17, -90, "choga8")],
+       [("prop_haystack", 6, -6, 0), ("prop_haystack", 7, 10, 90), ("prop_cart", 6, 3, 80), ("prop_cow", 8, -2, 270), ("prop_firewood", 5, 12, 90), ("prop_fence", 9, 6, 90)])
+def _clear(): 
+    props[:] = [p for p in props if p["zone"] in ("촌락 생활", "생활감", "마을 가축") or not any((p["x"] - h["x"]) ** 2 + (p["y"] - h["y"]) ** 2 < h["r"] ** 2 for h in HAMLETS)]
+_clear()
+structures.append({"piece": "prop_mill", "file": "assets3d/props/prop_mill.glb", "x": 399.3, "y": 340.0, "z": 0, "rot": 0, "note": "개울가 방앗간(물레방아가 +X=개울 쪽)"})
+for pr_, dx_, dy_, rt_ in (("prop_sacks", -3.8, -4.0, 0), ("prop_cart", -5.5, 2.5, 100), ("prop_haystack", -8.0, -1.0, 0), ("prop_stepstones", -4.0, -8.0, 0)): props.append({"zone": "방앗간", "prop": pr_, "x": round(399.3 + dx_, 1), "y": round(340.0 + dy_, 1), "rot": rt_, "z": 0.0})
 scatter("통나무", (16, 16, 63, 62), ["prop_log_pile"], 70); scatter("숲 야영", (28, 30, 56, 60), ["prop_campfire"], 4, lvl=0)
 life("prop_campfire", 99.5, 548.0, zone="나루터 모닥불"); life("prop_log_pile", 100.8, 551.0, 70, zone="나루터")
 scatter("폐당집 터", (66, 62, 78, 76), DEAD + ROCK, 40, lvl=1); scatter("폐당집 둘레", (60, 56, 79, 79), DEAD + PINE, 45, lvl=0)

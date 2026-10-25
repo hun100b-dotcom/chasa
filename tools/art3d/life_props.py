@@ -93,9 +93,24 @@ def campfire():
     p += [cyl("flame", 0.17, 0.0, 0.5, (0, 0, 0.2), mat("gold", 2.2), 6)]
     return p
 
+def mill():
+    """방앗간(물레방아 집): 흙벽 4.6×3.6m 초가 + 동쪽 벽에 물레방아(지름 3m). 물레방아 쪽(+X)을 개울에 맞대어 놓는다. 앞=-Y."""
+    p = [box("base", (4.8, 3.8, 0.3), (-0.4, 0, 0.15), "stone"), box("wall", (4.4, 3.4, 1.9), (-0.4, 0, 1.25), "mud"), box("door", (1.1, 0.08, 1.5), (-1.2, -1.72, 0.9), "wood_dark"),
+         cyl("roof", 3.6, 0.35, 1.4, (-0.4, 0, 2.2), "thatch", 4, rot=(0, 0, math.pi / 4)), box("beamF", (4.6, 0.08, 0.1), (-0.4, -1.75, 2.2), "wood_dark")]
+    for sy in (-0.9, 0.9): p.append(box(f"axle{sy}", (1.4, 0.12, 0.12), (2.3, sy, 1.55), "wood_dark"))
+    for sy in (-0.7, 0.7):
+        p.append(cyl(f"rim{sy}", 1.5, 1.5, 0.08, (2.9, sy, 0.05), "wood", 12, rot=(0, 0, 0)))
+    wheel = [cyl("hub", 0.25, 0.25, 1.9, (2.9, 0, 1.55), "wood_dark", 6, rot=(math.pi / 2, 0, 0))]
+    for i in range(12):
+        a = i * math.tau / 12; c, s = math.cos(a), math.sin(a)
+        for sy in (-0.7, 0.7): wheel.append(box(f"spoke{i}_{sy}", (1.5, 0.1, 0.1), (2.9 + c * 0.75, sy, 1.55 + s * 0.75), "wood", rot=(0, -a, 0)))
+        wheel.append(box(f"paddle{i}", (0.1, 1.5, 0.45), (2.9 + c * 1.5, 0, 1.55 + s * 1.5), "wood_dark", rot=(0, -a, 0)))
+    p = [q for q in p if not q.name.startswith("rim")]
+    return p + wheel + [box("chute", (0.3, 1.0, 0.1), (2.9, 0, 3.2), "wood"), box("sackA", (0.5, 0.4, 0.5), (-2.4, -1.3, 0.55), "hanji"), box("sackB", (0.5, 0.4, 0.4), (-2.4, -0.8, 0.5), "reed")]
+
 KIT = [("haystack", haystack, "볏가리"), ("fence", fence, "싸리 울타리 3m"), ("cart", cart, "수레"), ("firewood", firewood, "장작더미"), ("scarecrow", scarecrow, "허수아비"),
        ("wonduumak", wonduumak, "원두막"), ("signpost", signpost, "이정표"), ("grave", grave, "봉분 무덤"), ("cairn", cairn, "돌탑"), ("millstone", millstone, "맷돌"),
-       ("sacks", sacks, "곡식 자루"), ("cow", cow, "소"), ("stepstones", stepstones, "디딤돌"), ("log_pile", log_pile, "통나무와 그루터기"), ("campfire", campfire, "모닥불(불빛)")]
+       ("sacks", sacks, "곡식 자루"), ("cow", cow, "소"), ("stepstones", stepstones, "디딤돌"), ("log_pile", log_pile, "통나무와 그루터기"), ("campfire", campfire, "모닥불(불빛)"), ("mill", mill, "방앗간(물레방아)")]
 
 def build(key, fn):
     reset(); o = join(f"prop_{key}", fn()); lo, hi = bounds(o)
