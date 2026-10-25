@@ -603,7 +603,7 @@ public static class Balance
     public const int B08_PAPERS_FOR_CROUCH = 3;  // (2막 보스 임시·기획 act2-souls §4) 이름 종이 몇 장을 밟으면 웅크리나
     public const float B08_CROUCH_SEC = 3.0f;  // (2막 보스 임시·기획 act2-souls §4) 웅크림 시간(초)
     public const float ACT2_KNEEL_WAIT = 7.0f;  // (2막 보스 임시·기획 act2-souls §4) 2막 보스 넷 처결 대기(초)
-    public const float RING_COIN_SHARE_ACT3 = 0.7f;  // (3막 기획 act3_souls) 엽전 몫. 0.75면 파혼만이 5% 앞서고 0.65면 천도만이 앞선다
+    public const float RING_COIN_SHARE_ACT3 = 0.6f;  // (기획 성장 곡선 10-25) 고리 엽전 몫: 막 구분 없이 0.6 하나. 장비가 강해질수록 파혼이 앞서던 것을 막는다(2막 2%·3막 3%·시즌2 2% 차이)
     public const float WATER_SOUL_CAST_REDUCE_S = 0.5f;  // (3막 QA 채택) 물 혼 천도 캐스팅 단축(초). 하한 WATER_SOUL_CAST_FLOOR_S
     public const float WATER_SOUL_CAST_FLOOR_S = 0.5f;  // 물 혼 캐스팅 하한(초)
     public const float TIDE_SIGNAL_WINDOW_S = 20.0f;  // (3막) 밀물 신호 뒤 물 혼 2~4마리가 떠밀려 가기까지(초). 안에 처결 못 하면 그 밤 사라진다

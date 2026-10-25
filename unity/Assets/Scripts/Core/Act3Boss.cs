@@ -20,7 +20,6 @@ namespace Chasa.Core
         public bool ClothDone;                // B-09: 옷 던지기 장면이 이미 있었나(1회)
         public bool TorchDone;                // B-12: 큰물 횃불 약점을 이미 썼나(1회)
         float cdA, cdB, cdC;
-        bool stage2Said;
         int lineSeq;
 
         public Act3Brain(int bossId, Func<float> rand)

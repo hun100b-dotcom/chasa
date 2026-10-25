@@ -67,7 +67,7 @@ namespace Chasa.Core
     public class GrowthState
     {
         public const int MaxRank = 50;
-        public const int StatPerRank = 5;      // 품계 한 번 오를 때 능력치 점수
+        public const int StatPerRank = 7;      // 품계 한 번 오를 때 능력치 점수(기획 성장 곡선 10-25: 5→7. 품계가 느려져도 천도가 파혼에 안 밀리게)
         public const int StatBase = 10;        // 능력치 시작값
         public static readonly string[] StatNames = { "힘", "날램", "몸", "마음" };
 
@@ -96,11 +96,11 @@ namespace Chasa.Core
             ActiveBar.Add(name); return true;
         }
 
-        /// <summary>그 품계에 닿기까지 필요한 누적 넋(임시 곡선). 2품계 40, 10품계 약 1080, 40품계 약 9740, 50품계 약 13700</summary>
+        /// <summary>그 품계에 닿기까지 필요한 누적 넋(기획 성장 곡선 10-25). 2품계 75, 10품계 6075, 20품계 27075, 40품계 114075, 50품계 180075. 밤 22분 기준 시즌 1 끝이 약 20품계</summary>
         public static int NeokForRank(int rank)
         {
             if (rank <= 1) return 0;
-            return (int)Math.Round(40.0 * Math.Pow(rank - 1, 1.5));
+            return (int)Math.Round(75.0 * (rank - 1) * (rank - 1));
         }
 
         public static int RankFor(int totalNeok)
@@ -110,7 +110,7 @@ namespace Chasa.Core
             return r;
         }
 
-        /// <summary>넋을 얻었다. 품계가 오른 만큼(여러 단계도 가능)을 돌려준다. 오를 때마다 도술 점수 1·능력치 5점</summary>
+        /// <summary>넋을 얻었다. 품계가 오른 만큼(여러 단계도 가능)을 돌려준다. 오를 때마다 도술 점수 1·능력치 7점</summary>
         public int AddNeok(int amount)
         {
             if (amount <= 0) return 0;

@@ -260,7 +260,7 @@ public class JudgeSystem : MonoBehaviour
             {
                 t2.soul.BeginSending(); t2.Finish();
                 int nb = ledger.Neok; ledger.CompleteTendo(); gainedExtra = ledger.Neok - nb;
-                if (growth.AddNeok(gainedExtra) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }
+                if (growth.AddNeok(gainedExtra) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank); }
                 night.RecordTendo(gainedExtra);
                 Say("한 줄로 함께 천도했다");
             }
@@ -286,7 +286,7 @@ public class JudgeSystem : MonoBehaviour
             if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
             int gained = ledger.Neok - before;
-            if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }   // 품계 상승 알림
+            if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank); }   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (OnJudged != null) OnJudged(castTarget, true);
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
