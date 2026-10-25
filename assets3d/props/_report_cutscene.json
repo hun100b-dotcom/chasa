@@ -1,0 +1,312 @@
+[
+ {
+  "name": "prop_gut_floor",
+  "tris": 1976,
+  "size_m": [
+   12.75,
+   12.75,
+   0.47
+  ],
+  "min_z": 0.0,
+  "nodes": [
+   "Cup_01",
+   "Cup_02",
+   "Cup_03",
+   "Cup_04",
+   "Cup_05",
+   "Cup_06",
+   "Cup_07",
+   "Cup_08",
+   "Cup_09",
+   "Cup_10",
+   "Cup_11",
+   "Cup_12",
+   "Floor",
+   "Pedestal_01",
+   "Pedestal_02",
+   "Pedestal_03",
+   "Pedestal_04",
+   "Pedestal_05",
+   "Pedestal_06",
+   "Pedestal_07",
+   "Pedestal_08",
+   "Pedestal_09",
+   "Pedestal_10",
+   "Pedestal_11",
+   "Pedestal_12"
+  ]
+ },
+ {
+  "name": "prop_gut_slots",
+  "tris": 528,
+  "size_m": [
+   9.7,
+   9.7,
+   0.02
+  ],
+  "min_z": 0.17,
+  "nodes": [
+   "Slot_01",
+   "Slot_02",
+   "Slot_03",
+   "Slot_04",
+   "Slot_05",
+   "Slot_06",
+   "Slot_07",
+   "Slot_08",
+   "Slot_09",
+   "Slot_10",
+   "Slot_11",
+   "Slot_12"
+  ]
+ },
+ {
+  "name": "prop_gut_cup",
+  "tris": 100,
+  "size_m": [
+   0.32,
+   0.34,
+   0.2
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_gut_cup_flipped",
+  "tris": 100,
+  "size_m": [
+   0.32,
+   0.34,
+   0.22
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_gutsang",
+  "tris": 512,
+  "size_m": [
+   1.6,
+   0.92,
+   1.04
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_bangul",
+  "tris": 528,
+  "size_m": [
+   0.27,
+   0.28,
+   0.3
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_salpuchae_broken",
+  "tris": 116,
+  "size_m": [
+   0.68,
+   0.04,
+   0.52
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_obang_scraps",
+  "tris": 144,
+  "size_m": [
+   2.06,
+   2.32,
+   0.15
+  ],
+  "min_z": -0.043,
+  "nodes": [
+   "Scrap_01",
+   "Scrap_02",
+   "Scrap_03",
+   "Scrap_04",
+   "Scrap_05",
+   "Scrap_06",
+   "Scrap_07",
+   "Scrap_08",
+   "Scrap_09",
+   "Scrap_10",
+   "Scrap_11",
+   "Scrap_12"
+  ]
+ },
+ {
+  "name": "prop_eave_lamp",
+  "tris": 120,
+  "size_m": [
+   0.31,
+   0.78,
+   1.07
+  ],
+  "min_z": 0.0,
+  "nodes": [
+   "Lamp_frame",
+   "Lamp_glow"
+  ]
+ },
+ {
+  "name": "prop_post_lamp",
+  "tris": 136,
+  "size_m": [
+   0.5,
+   0.9,
+   2.8
+  ],
+  "min_z": 0.0,
+  "nodes": [
+   "Lamp_frame",
+   "Lamp_glow",
+   "Pillar"
+  ]
+ },
+ {
+  "name": "prop_yakjang",
+  "tris": 276,
+  "size_m": [
+   0.66,
+   0.77,
+   0.86
+  ],
+  "min_z": 0.05,
+  "nodes": [
+   "Body",
+   "Drawer_BL",
+   "Drawer_BL_glow"
+  ]
+ },
+ {
+  "name": "prop_tanggeon",
+  "tris": 136,
+  "size_m": [
+   0.24,
+   0.25,
+   0.22
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_brush_dry",
+  "tris": 50,
+  "size_m": [
+   0.02,
+   0.03,
+   0.3
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_gamcho_pile",
+  "tris": 216,
+  "size_m": [
+   0.37,
+   0.4,
+   0.17
+  ],
+  "min_z": -0.016,
+  "nodes": []
+ },
+ {
+  "name": "prop_potion_bottle",
+  "tris": 146,
+  "size_m": [
+   0.13,
+   0.13,
+   0.24
+  ],
+  "min_z": 0.003,
+  "nodes": []
+ },
+ {
+  "name": "prop_yakbongji",
+  "tris": 60,
+  "size_m": [
+   0.15,
+   0.13,
+   0.14
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_seal_red",
+  "tris": 60,
+  "size_m": [
+   0.9,
+   0.9,
+   0.04
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_seal_empty",
+  "tris": 48,
+  "size_m": [
+   0.9,
+   0.9,
+   0.01
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_ledger_open",
+  "tris": 192,
+  "size_m": [
+   1.14,
+   0.84,
+   0.08
+  ],
+  "min_z": 0.0,
+  "nodes": []
+ },
+ {
+  "name": "prop_number_grid",
+  "tris": 444,
+  "size_m": [
+   9.56,
+   9.56,
+   0.02
+  ],
+  "min_z": 0.0,
+  "nodes": [
+   "Cell_0_0",
+   "Cell_0_1",
+   "Cell_0_2",
+   "Cell_0_3",
+   "Cell_0_4",
+   "Cell_1_0",
+   "Cell_1_1",
+   "Cell_1_2",
+   "Cell_1_3",
+   "Cell_1_4",
+   "Cell_2_0",
+   "Cell_2_1",
+   "Cell_2_2",
+   "Cell_2_3",
+   "Cell_2_4",
+   "Cell_3_0",
+   "Cell_3_1",
+   "Cell_3_2",
+   "Cell_3_3",
+   "Cell_3_4",
+   "Cell_4_0",
+   "Cell_4_1",
+   "Cell_4_2",
+   "Cell_4_3",
+   "Cell_4_4",
+   "Lines"
+  ]
+ }
+]
