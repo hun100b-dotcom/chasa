@@ -27,6 +27,9 @@ static class Sim
     static double WR(WeaponId w) { switch (w) { case WeaponId.Mace: return 0.91; case WeaponId.Bell: return 0.70; case WeaponId.Trident: return 0.78; case WeaponId.Brush: return 0.65; default: return 1.0; } }
     static double WG(WeaponId w) { switch (w) { case WeaponId.Mace: return 0.15; case WeaponId.Bell: return 0.80; case WeaponId.Trident: return 0.40; case WeaponId.Brush: return 0.0; default: return 0.20; } }
     static double WTake(WeaponId w) { return w == WeaponId.Brush ? 0.75 : 1.0; }
+    // 날씨(기획서 8절). null = 날씨 무시(옛 시뮬). Fixed = 밤 세 개를 같은 날씨로, Mixed = 솔고개 가중치로 밤마다(+밤 중간 25% 다시) 굴림
+    static Weather? WxFixed = null; static bool WxMixed = false; static double PTendo = 0.5;
+    static WeatherEffect Fx = WeatherRules.Effect(Weather.Clear, true);
     static bool Growth = true;   // 성장(품계 힘 몰기·장비 손보기·얼룩 점수)을 전투에 직접 넣는다. --nogrowth 면 끈다(옛 시뮬)
     const double MainOptDmg = 0.055;   // 손보기 대상 주옵션을 피해 옵션 평균(기본 6% x 등급 0.5~1.1)으로 가정
     static readonly int[] EnhCost = { 30, 60, 100, 150, 220 };
@@ -37,6 +40,7 @@ static class Sim
         int runs = args.Length > 0 && !args[0].StartsWith("--") ? int.Parse(args[0]) : 4000;
         foreach (var a in args) if (a == "--nogrowth") Growth = false;
         if (Array.IndexOf(args, "--weapons") >= 0) return WeaponTable(runs);
+        if (Array.IndexOf(args, "--weather") >= 0) return WeatherTable(runs);
         Console.WriteLine("1막 시뮬: 첫 밤 " + Nights + "개 + 1호 보스, 각 전략 " + runs + "판. 밤 " + Balance.NIGHT_DURATION + "초, 몫 " + Balance.NIGHT_QUOTA + ", 체력 " + Balance.PLAYER_MAX_HP);
         var results = new Dictionary<Strat, List<RunResult>>();
         foreach (Strat s in Enum.GetValues(typeof(Strat)))
@@ -121,6 +125,67 @@ static class Sim
         return 0;
     }
 
+    /// <summary>밤 하나의 날씨 효과를 정한다(고정이면 그 날씨, 섞기면 솔고개 밤 가중치로 굴림, 아니면 맑음)</summary>
+    static WeatherEffect NightFx(Random rng)
+    {
+        if (WxFixed.HasValue) return WeatherRules.Effect(WxFixed.Value, true);
+        if (WxMixed) return WeatherRules.Effect(WeatherRules.Roll("솔고개", true, (float)rng.NextDouble()), true);
+        return WeatherRules.Effect(Weather.Clear, true);
+    }
+
+    static double ValuePerMin(List<RunResult> L, double w) { double v = 0, m = 0; foreach (var r in L) { v += r.Neok + 4.0 * r.Memory + w * r.Coin; m += r.Seconds / 60; } return v / Math.Max(1e-9, m); }
+    static double RiskPerMin(List<RunResult> L) { double d = 0, m = 0; foreach (var r in L) { d += r.Damage; m += r.Seconds / 60; } return d / Math.Max(1e-9, m); }
+    static List<RunResult> RunMany(Strat s, int runs) { var rng = new Random(12345); var L = new List<RunResult>(); for (int i = 0; i < runs; i++) L.Add(Play(s, rng)); return L; }
+
+    /// <summary>날씨별 판정표: 기획서 8절 합격 기준 ①~③ (w=1.3)</summary>
+    static int WeatherTable(int runs)
+    {
+        const double w = 1.3;
+        Console.WriteLine("날씨 시뮬 (철삭, w=" + w + ", 각 전략 " + runs + "판). 밤 세 개를 같은 날씨로 고정해 돌린다. 가치/분 = (넋+기억x4+엽전xw)/분");
+        Console.WriteLine("| 날씨 | 천도만 | 파혼만 | 섞기(상황) | 섞기(반반) | 1등 | 천도-파혼 차이 | 최적 천도 비율 | 생존(천/파/섞) | 위험(천/파/섞) |");
+        Console.WriteLine("|---|---|---|---|---|---|---|---|---|---|");
+        string[] wn = { "맑음", "흐림", "비", "안개", "역병 안개" }; var best = new double[5]; var gap = new double[5];
+        string[] nm = { "천도만", "파혼만", "섞기(상황)", "섞기(반반)" };
+        for (int wi = 0; wi < 5; wi++)
+        {
+            WxFixed = (Weather)wi; WxMixed = false; Fx = WeatherRules.Effect(WxFixed.Value, true);
+            var v = new double[4]; var risk = new double[3]; var surv = new double[3]; int k = 0;
+            foreach (Strat st in Enum.GetValues(typeof(Strat)))
+            {
+                PTendo = 0.5; var L = RunMany(st, runs); v[k] = ValuePerMin(L, w);
+                if (k < 3) { risk[k] = RiskPerMin(L); surv[k] = Avg(L, r => r.Died ? 0 : 1); }
+                k++;
+            }
+            int b = 0; for (int i = 1; i < 4; i++) if (v[i] > v[b]) b = i;
+            double hi = Math.Max(v[0], v[1]), lo = Math.Min(v[0], v[1]); gap[wi] = (hi - lo) / hi;
+            // 최적 천도 비율: 섞기 전략에서 천도를 고르는 확률 p 를 0~1 로 훑어 가치/분이 가장 큰 p
+            double bp = 0, bv = -1;
+            for (double p = 0; p <= 1.0001; p += 0.1) { PTendo = p; var L = RunMany(Strat.CoinFlip, runs); double vv = ValuePerMin(L, w); if (vv > bv) { bv = vv; bp = p; } }
+            best[wi] = bp; PTendo = 0.5;
+            Console.WriteLine("| " + wn[wi] + " | " + v[0].ToString("0.0") + " | " + v[1].ToString("0.0") + " | " + v[2].ToString("0.0") + " | " + v[3].ToString("0.0") + " | " + nm[b] + " | " + ((v[0] - v[1]) / hi * 100).ToString("0") + "% | " + (bp * 100).ToString("0") + "% | " + (surv[0] * 100).ToString("0") + "/" + (surv[1] * 100).ToString("0") + "/" + (surv[2] * 100).ToString("0") + "% | " + risk[0].ToString("0") + "/" + risk[1].ToString("0") + "/" + risk[2].ToString("0") + " |");
+        }
+        bool c1 = true; foreach (var g in gap) if (g > 0.25) c1 = false;
+        double diff = Math.Abs(best[2] - best[3]) * 100;
+        Console.WriteLine("\n① 날씨별로 순수 전략 간 차이 25% 이내: " + (c1 ? "O" : "X") + " (최대 " + (Max(gap) * 100).ToString("0") + "%)");
+        Console.WriteLine("② 최적 천도 비율 비 vs 안개 차이 10%p 이상: " + (diff >= 10 ? "O" : "X") + " (비 " + (best[2] * 100).ToString("0") + "% / 안개 " + (best[3] * 100).ToString("0") + "% → " + diff.ToString("0") + "%p)");
+        // ③ 날씨를 섞은 1막 전체에서 4-4절 기준 ①~④
+        WxFixed = null; WxMixed = true; var vm = new double[4]; var rm = new double[4]; double psurv = 0, pboss = 0; int q = 0;
+        foreach (Strat st in Enum.GetValues(typeof(Strat)))
+        {
+            PTendo = 0.5; var L = RunMany(st, runs); vm[q] = ValuePerMin(L, w); rm[q] = RiskPerMin(L);
+            if (st == Strat.PahonOnly) { psurv = Avg(L, r => r.Died ? 0 : 1); pboss = Avg(L, r => r.BossFought ? 1 : 0); }
+            q++;
+        }
+        int bm = 0; for (int i = 1; i < 4; i++) if (vm[i] > vm[bm]) bm = i;
+        double mh = Math.Max(vm[0], vm[1]), ml = Math.Min(vm[0], vm[1]);
+        Console.WriteLine("\n③ 날씨 섞은 1막(밤마다 솔고개 가중치, 밤 중간 25% 재굴림):");
+        Console.WriteLine("| 천도만 | 파혼만 | 섞기(상황) | 섞기(반반) | 1등 | ① 섞기 1등 | ② 천도·파혼 20% 안 | ③ 파혼만 생존·보스 | ④ 위험 천도만 최대 |");
+        Console.WriteLine("|---|---|---|---|---|---|---|---|---|");
+        Console.WriteLine("| " + vm[0].ToString("0.0") + " | " + vm[1].ToString("0.0") + " | " + vm[2].ToString("0.0") + " | " + vm[3].ToString("0.0") + " | " + nm[bm] + " | " + (bm == 2 ? "O" : "X") + " | " + ((mh - ml) / mh <= 0.20 ? "O" : "X") + " (" + ((vm[0] - vm[1]) / mh * 100).ToString("0") + "%) | " + (psurv >= 0.95 && pboss >= 0.95 ? "O" : "X") + "(생존" + (psurv * 100).ToString("0") + "%) | " + (rm[0] >= rm[1] && rm[0] >= rm[2] && rm[0] >= rm[3] ? "O" : "X") + " |");
+        return 0;
+    }
+    static double Max(double[] a) { double m = a[0]; foreach (var x in a) if (x > m) m = x; return m; }
+
     static double Avg(List<RunResult> L, Func<RunResult, double> f) { double s = 0; foreach (var r in L) s += f(r); return s / L.Count; }
 
     static bool WantTendo(Strat s, Random rng, int others, double hp)
@@ -130,7 +195,7 @@ static class Sim
             case Strat.TendoOnly: return true;
             case Strat.PahonOnly: return false;
             case Strat.Adaptive: return others <= 1 && hp > 30;   // 주변이 붐비거나 위험하면 파혼, 한가하면 천도
-            default: return rng.NextDouble() < 0.5;
+            default: return rng.NextDouble() < PTendo;
         }
     }
 
@@ -146,11 +211,17 @@ static class Sim
         for (int night = 0; night < Nights && hp > 0; night++)
         {
             double t = 0, lastTendoAt = -99, sinceHit = 99; int sentTonight = 0; res.QuotaSeconds[night] = double.NaN;
+            double fogClearUntil = -1; bool midRolled = false;
+            Fx = NightFx(rng);
             bool namedDone = false;
             while (t < Balance.NIGHT_DURATION && hp > 0)
             {
                 // 다음 혼을 찾아간다(이동). 맞지 않은 시간만큼 회복
-                double travel = TravelAvg * (0.5 + rng.NextDouble());
+                if (WxMixed && !midRolled && t >= Balance.NIGHT_DURATION / 2) { midRolled = true; if (rng.NextDouble() < Balance.WEATHER_NIGHT_MID_REROLL) Fx = NightFx(rng); }   // 밤 중간 25% 한 번 더
+                double travel = TravelAvg * (0.5 + rng.NextDouble()) / Fx.GhostMult;   // 혼이 더 많이 나오면 다음 혼이 가깝다
+                if (Fx.VisionM < Balance.WEATHER_CLEAR_VISION_M) travel *= Math.Sqrt(Balance.WEATHER_CLEAR_VISION_M / Fx.VisionM);   // 안개: 혼 찾기 느려짐(가정: 시야 비의 제곱근)
+                bool clearNow = t < fogClearUntil;
+                if (Fx.MoveSlow > 0 && !clearNow) travel /= 1 - Fx.MoveSlow;   // 역병 안개: 이동 -20%
                 t += travel; sinceHit += travel; hp = Math.Min(led.MaxHp, hp + Balance.REGEN_PER_SEC * Math.Max(0, sinceHit - Balance.REGEN_DELAY > 0 ? Math.Min(travel, sinceHit - Balance.REGEN_DELAY) : 0));
                 if (t >= Balance.NIGHT_DURATION) break;
                 // 혼 하나: 종류, 주변 적 수
@@ -178,10 +249,11 @@ static class Sim
                 {
                     bool chain = t - lastTendoAt <= Balance.TENDO_CHAIN_WINDOW + Wd.ChainWindowAddS;
                     double cast = CoreRules.CastTime(chain) * Wd.CastTimeMult;
-                    double dmg = others * (cast / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * HitCast;
+                    double dmg = others * (cast / Balance.ENEMY_ATTACK_INTERVAL) * Balance.ENEMY_ATTACK_DAMAGE * Fx.CastHit;
+                    if (Fx.StandDrain > 0 && !(t < fogClearUntil)) dmg += Fx.StandDrain * cast;   // 역병 안개: 서서 외는 동안 초당 1
                     Hit(ref hp, ref sinceHit, ref res, dmg); t += cast + Approach; if (dmg > 0) sinceHit = 0;
                     if (hp <= 0) break;
-                    { int nb = led.Neok; led.CompleteTendo(); led.Neok += (int)Math.Round((led.Neok - nb) * Wd.NeokPct); } res.Tendo++; sentTonight++; lastTendoAt = t;
+                    { int nb = led.Neok; led.CompleteTendo(); led.Neok += (int)Math.Round((led.Neok - nb) * Wd.NeokPct); } res.Tendo++; sentTonight++; lastTendoAt = t; fogClearUntil = t + Balance.WEATHER_PLAGUE_CLEAR_SEC;   // 천도 자리 안개 15초 걷힘
                     if (named) { namedDone = true; namedTendoed = true; }
                     if (sentTonight == Balance.NIGHT_QUOTA) res.QuotaSeconds[night] = t;
                 }

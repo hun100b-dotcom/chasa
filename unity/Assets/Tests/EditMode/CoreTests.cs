@@ -1786,4 +1786,24 @@ public class CoreTests
         s.Weights(5, 5, o); Assert.AreEqual(1f, o[(int)GroundLayer.Dirt], 1e-4f, "위쪽만 칠해졌어도 합을 1로 맞춘다");
         s.Weights(5, 10, o); Assert.AreEqual(1f, o[(int)GroundLayer.Grass], 1e-4f, "아무 층도 안 칠한 자리는 풀 100%");
     }
+
+    [Test]
+    public void Weather_WeightsAndRoll()
+    {
+        var day = WeatherRules.Weights("검은여울", false); Assert.AreEqual(0f, day[4], "낮엔 역병 안개가 없다"); Assert.AreEqual(30f, day[0], "낮엔 맑음 ×2");
+        Assert.AreEqual(35f, WeatherRules.Weights("검은여울", true)[4]); Assert.AreEqual(5f, WeatherRules.Weights("검은여울", true, true)[4], "3호 처결 뒤 35→5");
+        Assert.AreEqual(Weather.Clear, WeatherRules.Roll("솔고개", true, 0.0f)); Assert.AreEqual(Weather.Fog, WeatherRules.Roll("솔고개", true, 0.99f));
+        Assert.AreEqual(Weather.Rain, WeatherRules.Roll("물막이 골", true, 0.5f), "물막이 골: 25/20/40/15 중 0.5(=50/100)는 비 구간(45~85)");
+        Assert.AreEqual(Weather.Rain, WeatherRules.BossFixed(1).Value); Assert.AreEqual(Weather.Plague, WeatherRules.BossFixed(3).Value); Assert.IsNull(WeatherRules.BossFixed(0));
+    }
+
+    [Test]
+    public void Weather_EffectsOnlyAtNight_AndSlowCap()
+    {
+        Assert.AreEqual(1f, WeatherRules.Effect(Weather.Cloudy, false).GhostMult, "낮엔 효과 없음");
+        Assert.AreEqual(Balance.WEATHER_CLOUDY_GHOST_MULT, WeatherRules.Effect(Weather.Cloudy, true).GhostMult);
+        var fog = WeatherRules.Effect(Weather.Fog, true); Assert.AreEqual(Balance.WEATHER_FOG_VISION_M, fog.VisionM); Assert.Greater(fog.CastHit, Balance.WEATHER_CLEAR_CAST_HIT);
+        Assert.IsTrue(WeatherRules.Effect(Weather.Rain, true).HideKarma);
+        Assert.AreEqual(Balance.WEATHER_MOVE_SLOW_MAX, WeatherRules.CombineSlow(0.2f, 0.2f), 1e-5f, "겹쳐도 최대 -30%");
+    }
 }

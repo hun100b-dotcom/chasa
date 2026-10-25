@@ -369,6 +369,19 @@ public static class Balance
     public const float MOVE_SLOPE_SLOW = 0.5f;  // 오르막 기울기(오른 높이÷간 거리)가 이 값을 넘으면 걸음이 느려지기 시작(0.5 = 약 27도)
     public const float MOVE_SLOPE_BLOCK = 1.1f;  // 오르막 기울기가 이 값 이상이면 못 오른다(1.1 = 약 48도). 그 사이는 선형으로 느려짐
     public const float FOOTSTEP_STRIDE_M = 1.15f;  // 발소리 한 번이 나는 걸음 거리(m)
+    public const float WEATHER_NIGHT_MID_REROLL = 0.25f;  // 밤 중간(약 11분)에 날씨를 한 번 더 굴릴 확률 (기획서 8절, 임시)
+    public const float WEATHER_CLOUDY_GHOST_MULT = 1.15f;  // 흐림: 혼 나오는 수 배율
+    public const float WEATHER_RAIN_STAIN_MULT = 0.5f;  // 비: 원념 얼룩 지속 배율
+    public const float WEATHER_FOG_VISION_M = 11.0f;  // 안개: 보이는 거리(m). 맑을 때 18
+    public const float WEATHER_CLEAR_CAST_HIT = 0.75f;  // 맑을 때 천도 중 피격 확률(기획 가정). 실제 게임에서는 CastHit/이 값을 시전 중 받는 피해 배율로 쓴다
+    public const float WEATHER_CLEAR_VISION_M = 18.0f;  // 맑을 때 보이는 거리(m)
+    public const float WEATHER_FOG_CAST_HIT = 0.85f;  // 안개: 천도 중 피격 확률(맑을 때 0.75)
+    public const float WEATHER_FOG_NAMED_MULT = 1.5f;  // 안개: 이름혼 출현 배율
+    public const float WEATHER_PLAGUE_MOVE_SLOW = 0.2f;  // 역병 안개: 이동 둔화(얼룩과 겹쳐도 합쳐서 최대 WEATHER_MOVE_SLOW_MAX)
+    public const float WEATHER_MOVE_SLOW_MAX = 0.3f;  // 둔화 겹침 상한
+    public const float WEATHER_PLAGUE_STAND_DRAIN = 1.0f;  // 역병 안개: 서 있을 때 초당 체력 감소
+    public const float WEATHER_PLAGUE_CLEAR_R = 4.0f;  // 천도하면 그 자리 안개가 걷히는 반경(m)
+    public const float WEATHER_PLAGUE_CLEAR_SEC = 15.0f;  // 안개가 걷혀 있는 시간(초)
     public const float CLOCK_DAWN_MIN = 2.0f;  // (기획 3단계) 하루 40분 중 동틀녘 길이(분). 출발값, QA 시뮬레이션으로 확정
     public const float CLOCK_DAY_MIN = 14.0f;  // 낮 길이(분)
     public const float CLOCK_DUSK_MIN = 2.0f;  // 해질녘 길이(분)
