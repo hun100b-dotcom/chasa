@@ -1270,3 +1270,7 @@
 - 사운드 PR #36(7534a05) 장례 소리 20개를 MADE에 넣음 → funerals_s3 요청 0. FUN-S-276은 cut.seal.set.nine, FUN-B28은 반복음 cut.ink.grind.room + 20초 cut.ink.grind.stop(1초 무음).
 
 - (보탬) 검사기 금지어 목록 줄 5곳에 ip-scan:allow 표시. IP-SAFETY 2-1에 "차사 셋이 한 패" 금지 구도 추가(기획 IP 점검 요청).
+
+## 2026-10-26 서사 — 감사 보강 문구(넋길 추가 도착점 · 외톨이 야영지)
+- 새 생성기 `tools/field_extra_texts.py` → `docs/narrative/field_extra_texts.json`: 넋길 추가 도착점 19곳(B-01~03, B-05~20 처음 닿을 때 한 줄) + 외톨이 야영지 7곳(field_camps 2·5·7·10·12·15·18, 넋 기억 한 줄 + 엿듣기 온줄/반줄). 엿듣기는 보스 단서가 아님, 둘째 넋 기억은 generic_pool에서.
+- 검사: check_s1 36개 파일 어긋남 0, ip-scan 알려진 2건(코드팀 몫)만.
