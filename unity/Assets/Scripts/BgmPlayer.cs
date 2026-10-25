@@ -44,13 +44,36 @@ public class BgmPlayer : MonoBehaviour
         var b = go.AddComponent<BgmPlayer>(); b.judge = j; return b;
     }
 
-    static AudioClip Load(string id) { return Resources.Load<AudioClip>("Audio/BGM/" + id); }
+    // 진짜 곡(BGM/)을 먼저 찾고, 없으면 임시 대역(BGM/Temp/)을 쓴다 → 오너 곡을 같은 이름으로 넣기만 하면 자동으로 바뀐다
+    static AudioClip Load(string id) { return Resources.Load<AudioClip>("Audio/BGM/" + id) ?? Resources.Load<AudioClip>("Audio/BGM/Temp/" + id); }
+
+    // ---- 지역별 곡: 지역이 바뀌면 그 지역의 다섯 곡(낮·밤·전투·처결)을 다시 불러와 4초에 걸쳐 넘긴다 ----
+    string region; float regionCheck; bool regionFade;
+    /// <summary>
+    /// 월드 좌표 → 곡 이름 앞부분. ⑤ 갯마을(x≥768)·⑥ 도성(x&lt;0)·2막 ③ 붉은재(서쪽)·④ 쇳골(동쪽)·그 밖은 솔고개.
+    /// 왜 좌표 경계? 지역 사각형을 JSON 에서 다시 읽는 것보다 단순하고, 지역 경계는 땅 사각형(FieldRules)과 같은 선이라 어긋나지 않는다.
+    /// </summary>
+    public static string RegionKeyAt(float x, float z)
+    {
+        if (x >= FieldRules.Size + 128f) return "gaetmaeul";
+        if (x < 0f) return "doseong";
+        if (z >= FieldRules.Size) return x < 360f ? "bulgeunjae" : "soegol";
+        return "solgogae";
+    }
+    void LoadRegion(string r)
+    {
+        if (r == region) return;
+        bool first = region == null; region = r;
+        dayA = Load("bgm_" + r + "_day_a"); dayBclip = Load("bgm_" + r + "_day_b");   // day_b 는 없어도 된다(그러면 day_a 만 반복)
+        night = Load("bgm_" + r + "_night"); combat = Load("bgm_" + r + "_combat"); finish = Load("bgm_" + r + "_finish");
+        if (night == null) night = dayA;   // 밤 곡이 없으면 낮 곡으로
+        loadedAny = dayA != null || night != null;
+        if (!first) { curId = null; regionFade = true; }   // 다음 프레임에 새 지역 곡으로 교차(첫 불러오기는 그냥 시작)
+    }
 
     void Start()
     {
-        dayA = Load("bgm_solgogae_day_a"); dayBclip = Load("bgm_solgogae_day_b");
-        night = Load("bgm_solgogae_night"); combat = Load("bgm_solgogae_combat"); finish = Load("bgm_solgogae_finish");   // 처결 전용 곡(오너 Gemini 「Bells of the Crossing」 첫 종소리 8.45초)
-        loadedAny = dayA != null || night != null;
+        LoadRegion("solgogae");   // 시작은 솔고개(처결 전용 곡은 오너 Gemini 「Bells of the Crossing」 첫 종소리 8.45초)
         cur = NewSource(); prev = NewSource();
         if (loadedAny) Sfx.StopAmbient();   // 진짜 BGM 이 있으면 임시 배경음은 끈다
         if (judge != null) lastKneel = judge.KneelEvents;
@@ -67,6 +90,8 @@ public class BgmPlayer : MonoBehaviour
     {
         if (!loadedAny || judge == null || !judge.FieldMode || judge.InDay) { Silence(); return; }
         float dt = Time.unscaledDeltaTime;   // 슬로모션 중에도 음악은 같은 속도로
+        regionCheck -= dt;
+        if (regionCheck <= 0f && judge.player != null) { regionCheck = 0.5f; LoadRegion(RegionKeyAt(judge.player.Pos.x, judge.player.Pos.z)); }   // 0.5초마다 지역을 본다
         Sfx.TickDuck(judge.cuts.Active || judge.Casting || CharacterPanel.Open, dt);   // 컷신·천도 시전·명부 열림 때 배경을 줄인다
         int kneeling; float near = judge.NearestEnemyDist(out kneeling);
         bool started = judge.KneelEvents != lastKneel; lastKneel = judge.KneelEvents;
@@ -101,7 +126,8 @@ public class BgmPlayer : MonoBehaviour
             if (pc != null) { want = pc; wantId = "cut:" + playId; loop = false; }
             else if (playFallback == "silence") { want = null; wantId = "cut-none"; }
         }
-        if (wantId != curId) Switch(want, wantId, loop, nearEndFade: dir.Layer == BgmLayer.Explore && (curId == "day_a" || curId == "day_b") && (wantId == "day_a" || wantId == "day_b") ? 2f : dir.Fade);
+        if (wantId != curId && regionFade) { regionFade = false; Switch(want, wantId, loop, 4f); }   // 지역이 바뀔 때는 4초에 걸쳐 넘긴다
+        else if (wantId != curId) Switch(want, wantId, loop, nearEndFade: dir.Layer == BgmLayer.Explore && (curId == "day_a" || curId == "day_b") && (wantId == "day_a" || wantId == "day_b") ? 2f : dir.Fade);
 
         // 교차 진행
         fadeT = Mathf.Min(fadeLen, fadeT + dt);
