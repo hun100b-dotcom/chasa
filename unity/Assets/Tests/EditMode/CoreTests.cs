@@ -2088,5 +2088,35 @@ public class CoreTests
         Assert.Less(b.Maedhim, hp);
     }
 
+
+    [Test]
+    public void HeightField_RectOrigin_ReadsWorldCoords()
+    {
+        // 2막 땅: 768×640m, 남서 모서리 (0,640). 가로 3칸·세로 3칸짜리 작은 지도로 확인
+        var m = new float[] { 0, 1, 2, 10, 11, 12, 20, 21, 22 };   // 행(z) 0이 남쪽
+        var h = new HeightField(3, 3, 4f, 4f, 100f, 640f, m);
+        Assert.AreEqual(0f, h.At(100f, 640f), 1e-4f);
+        Assert.AreEqual(2f, h.At(104f, 640f), 1e-4f);
+        Assert.AreEqual(20f, h.At(100f, 644f), 1e-4f);
+        Assert.AreEqual(11f, h.At(102f, 642f), 1e-4f, "한가운데");
+        Assert.IsTrue(h.Covers(102f, 642f)); Assert.IsFalse(h.Covers(99f, 642f)); Assert.IsFalse(h.Covers(102f, 600f));
+    }
+
+    [Test]
+    public void FieldRules_Extend_ChunkGrid()
+    {
+        float x0 = FieldRules.WorldX, z0 = FieldRules.WorldZ;
+        try
+        {
+            Assert.AreEqual(5, FieldRules.ChunksX); Assert.AreEqual(5, FieldRules.ChunksZ);
+            FieldRules.Extend(768f, 1280f);
+            Assert.AreEqual(6, FieldRules.ChunksX); Assert.AreEqual(10, FieldRules.ChunksZ);
+            Assert.AreEqual(9, FieldRules.ChunkZ(1279f)); Assert.AreEqual(5, FieldRules.ChunkX(767f)); Assert.AreEqual(9, FieldRules.ChunkZ(5000f));
+            Assert.AreEqual(5, FieldRules.RawChunk(640f), "붙이지 않은 번호");
+            Assert.IsTrue(FieldRules.Inside(700f, 1200f));
+        }
+        finally { FieldRules.Extend(x0, z0); }
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

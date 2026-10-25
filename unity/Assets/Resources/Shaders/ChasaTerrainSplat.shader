@@ -20,6 +20,12 @@ Shader "Chasa/TerrainSplat"
         _TileM ("타일 크기 m (흙,풀,자갈,논)", Vector) = (6, 6, 6, 6)
         _TileM4 ("낙엽 타일 크기 m", Float) = 6
         _WorldSize ("지도가 덮는 한 변 m", Float) = 640
+        _SplatRect ("지도 원점 xz, 크기 xz (m) — 2막은 직사각·원점이 있다", Vector) = (0, 0, 640, 640)
+        _Tint0 ("흙 색 곱", Color) = (1,1,1,1)
+        _Tint1 ("풀 색 곱", Color) = (1,1,1,1)
+        _Tint2 ("자갈 색 곱", Color) = (1,1,1,1)
+        _Tint3 ("논 색 곱", Color) = (1,1,1,1)
+        _Tint4 ("낙엽 색 곱", Color) = (1,1,1,1)
         _D0 ("잔무늬 흙", 2D) = "gray" {}
         _D1 ("잔무늬 풀", 2D) = "gray" {}
         _D2 ("잔무늬 자갈", 2D) = "gray" {}
@@ -47,7 +53,7 @@ Shader "Chasa/TerrainSplat"
         UNITY_DECLARE_TEX2D_NOSAMPLER(_T1); UNITY_DECLARE_TEX2D_NOSAMPLER(_T2); UNITY_DECLARE_TEX2D_NOSAMPLER(_T3); UNITY_DECLARE_TEX2D_NOSAMPLER(_T4);
         #define S(tex, uv) UNITY_SAMPLE_TEX2D_SAMPLER(tex, _T0, uv)
         float4 _TileM;
-        float _TileM4, _WorldSize;
+        float _TileM4, _WorldSize; float4 _SplatRect; fixed4 _Tint0, _Tint1, _Tint2, _Tint3, _Tint4;   // 2막은 같은 타일 그림에 색을 곱해 붉은 흙·마른 풀·쇠찌꺼기로 바꾼다
         UNITY_DECLARE_TEX2D_NOSAMPLER(_D0); UNITY_DECLARE_TEX2D_NOSAMPLER(_D1); UNITY_DECLARE_TEX2D_NOSAMPLER(_D2); UNITY_DECLARE_TEX2D_NOSAMPLER(_D3); UNITY_DECLARE_TEX2D_NOSAMPLER(_D4);
         float _DetailTileM, _DetailAmount, _DetailNear, _DetailFar;
         UNITY_DECLARE_TEX2D_NOSAMPLER(_CloudTex); float _CloudAmount; float4 _CloudScroll;
@@ -57,18 +63,18 @@ Shader "Chasa/TerrainSplat"
         void surf (Input IN, inout SurfaceOutput o)
         {
             float2 wxz = IN.worldPos.xz;
-            float2 suv = wxz / _WorldSize;
+            float2 suv = (wxz - _SplatRect.xy) / _SplatRect.zw;
             fixed4 a = S(_SplatA, suv);
             fixed4 b = S(_SplatB, suv);
             float sum = a.r + a.g + a.b + a.a + b.r;
             float4 wa = a; float wb = b.r;
             if (sum < 0.0001) { wa = float4(0, 1, 0, 0); wb = 0; sum = 1; }   // 아무것도 안 칠한 자리 = 풀
             wa /= sum; wb /= sum;
-            fixed3 c = S(_T0, wxz / _TileM.x).rgb * wa.x
-                     + S(_T1, wxz / _TileM.y).rgb * wa.y
-                     + S(_T2, wxz / _TileM.z).rgb * wa.z
-                     + S(_T3, wxz / _TileM.w).rgb * wa.w
-                     + S(_T4, wxz / _TileM4).rgb * wb;
+            fixed3 c = S(_T0, wxz / _TileM.x).rgb * _Tint0.rgb * wa.x
+                     + S(_T1, wxz / _TileM.y).rgb * _Tint1.rgb * wa.y
+                     + S(_T2, wxz / _TileM.z).rgb * _Tint2.rgb * wa.z
+                     + S(_T3, wxz / _TileM.w).rgb * _Tint3.rgb * wa.w
+                     + S(_T4, wxz / _TileM4).rgb * _Tint4.rgb * wb;
             // 가까울 때(약 18~32m)만 잔무늬(이랑·자갈 알갱이)를 섞는다. 멀리선 큰 타일만 보여 반복 무늬가 덜 티 난다
             if (_DetailAmount > 0.001)
             {

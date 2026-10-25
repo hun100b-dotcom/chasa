@@ -50,6 +50,18 @@ namespace Chasa.Core
         }
 
         /// <summary>청크 (cx, cz)를 하나의 정수 키로</summary>
+        // ---- 2막으로 넓힌 땅(직사각): 기본은 1막 정사각(640×640). 2막 땅이 켜지면 Extend 로 동서 768·남북 1280 까지 ----
+        public static float WorldX = Size, WorldZ = Size;
+        public static bool Act2;   // 2막 땅이 열렸다(주소 ?act2=1 검사용 — 2막 입장 조건이 구현되면 그 사건이 켠다)
+        public static void Extend(float worldX, float worldZ) { WorldX = Math.Max(Size, worldX); WorldZ = Math.Max(Size, worldZ); }
+        public static int ChunksX { get { return (int)Math.Ceiling(WorldX / ChunkSize); } }
+        public static int ChunksZ { get { return (int)Math.Ceiling(WorldZ / ChunkSize); } }
+        /// <summary>청크 번호(범위 안으로 붙임): 동서(X)·남북(Z)이 개수가 다르다</summary>
+        public static int ChunkX(float v) { return Math.Max(0, Math.Min(ChunksX - 1, (int)Math.Floor(v / ChunkSize))); }
+        public static int ChunkZ(float v) { return Math.Max(0, Math.Min(ChunksZ - 1, (int)Math.Floor(v / ChunkSize))); }
+        /// <summary>붙이지 않은 청크 번호(배치표 항목을 담을 때: 2막 항목이 1막 가장자리 청크에 섞이지 않게)</summary>
+        public static int RawChunk(float v) { return (int)Math.Floor(v / ChunkSize); }
+
         public static int Key(int cx, int cz) { return cx * 100 + cz; }
 
         /// <summary>
@@ -88,6 +100,46 @@ namespace Chasa.Core
                 case "prop_sotdae": return 0.3f;
                 case "prop_choga": case "prop_giwa": return 2.5f;
                 case "night_torch_stand": return 0.3f;
+                // 2막 소품(아트 place_act2.py 의 충돌 반지름 표 그대로. 갱도 골 바닥 모듈은 걷는 곳이라 0)
+                case "sanseong_wall_straight": return 2.0f;
+                case "sanseong_wall_ruin": return 2.0f;
+                case "sanseong_wall_unfinished": return 2.0f;
+                case "sanseong_gate": return 3.0f;
+                case "sanseong_tower": return 2.0f;
+                case "sanseong_palisade": return 1.6f;
+                case "sanseong_banner_torn": return 0.5f;
+                case "sanseong_big_mound": return 3.5f;
+                case "sanseong_arrow_field": return 0.8f;
+                case "sanseong_arrow_rock": return 2.0f;
+                case "sanseong_spear_rack": return 1.0f;
+                case "sanseong_tent": return 2.2f;
+                case "sanseong_sul_vat": return 1.0f;
+                case "sanseong_stairs": return 1.5f;
+                case "sanseong_beacon": return 1.2f;
+                case "sanseong_shrine": return 2.2f;
+                case "sanseong_wipae": return 0.3f;
+                case "sanseong_jinbeop_map": return 0.9f;
+                case "sanseong_flag_shard": return 0.4f;
+                case "sanseong_geumjul_jangseung_pair": return 1.8f;
+                case "soegol_mine_entrance": return 4.0f;
+                case "soegol_timber_frame": return 1.2f;
+                case "soegol_rail": return 0.5f;
+                case "soegol_cart": return 0.8f;
+                case "soegol_ore_pile": return 1.0f;
+                case "soegol_slag_heap": return 2.0f;
+                case "soegol_windlass": return 1.2f;
+                case "soegol_miner_hut": return 1.8f;
+                case "soegol_lantern_post": return 0.4f;
+                case "soegol_ore_basket": return 0.5f;
+                case "soegol_wash_flume": return 2.0f;
+                case "soegol_smelter": return 2.0f;
+                case "soegol_ingot_stack": return 0.8f;
+                case "soegol_rope_fence": return 1.6f;
+                case "soegol_scree": return 1.5f;
+                case "soegol_mokpae_board": return 1.4f;
+                case "soegol_sorting_bench": return 1.4f;
+                case "soegol_chalk_rock": return 1.6f;
+                case "soegol_canyon_wall": return 3.0f;
                 case "prop_gaejip_empty": return 0.6f;       // 아트 walkcheck 에 맞춤(개집)
                 case "prop_market_drum_frame": return 0.5f;  // 북틀. 벼루(prop_dry_inkstone)는 0
             }
@@ -95,6 +147,6 @@ namespace Chasa.Core
         }
 
         /// <summary>월드 점이 필드 안인가</summary>
-        public static bool Inside(float x, float z) { return x >= 0f && x <= Size && z >= 0f && z <= Size; }
+        public static bool Inside(float x, float z) { return x >= 0f && x <= WorldX && z >= 0f && z <= WorldZ; }
     }
 }

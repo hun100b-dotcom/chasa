@@ -81,7 +81,7 @@ public class FieldManager : MonoBehaviour
 
     void Bucket(Item it)
     {
-        int key = FieldRules.Key(FieldRules.ChunkIndex(it.x), FieldRules.ChunkIndex(it.z));
+        int key = FieldRules.Key(FieldRules.RawChunk(it.x), FieldRules.RawChunk(it.z));   // 붙이지 않는다: 아직 안 열린 2막 항목이 1막 가장자리 청크로 섞이지 않게
         List<Item> l; if (!byChunk.TryGetValue(key, out l)) byChunk[key] = l = new List<Item>();
         l.Add(it);
     }
@@ -90,14 +90,14 @@ public class FieldManager : MonoBehaviour
     {
         if (player == null || data == null) return;
         if (cover != null && cover.player == null) cover.player = player;   // GameMain 이 player 를 Awake 뒤에 넣어 준다
-        int cx = FieldRules.ChunkIndex(player.Pos.x), cz = FieldRules.ChunkIndex(player.Pos.z);
+        int cx = FieldRules.ChunkX(player.Pos.x), cz = FieldRules.ChunkZ(player.Pos.z);
         int key = FieldRules.Key(cx, cz);
         if (key != curChunk)
         {
             curChunk = key;
             for (int x = cx - 1; x <= cx + 1; x++)
                 for (int z = cz - 1; z <= cz + 1; z++)
-                    if (x >= 0 && z >= 0 && x < FieldRules.Chunks && z < FieldRules.Chunks) Open(x, z);
+                    if (x >= 0 && z >= 0 && x < FieldRules.ChunksX && z < FieldRules.ChunksZ) Open(x, z);
             var drop = new List<int>();
             foreach (var kv in roots) { int ox = kv.Key / 100, oz = kv.Key % 100; if (Mathf.Abs(ox - cx) > 1 || Mathf.Abs(oz - cz) > 1) drop.Add(kv.Key); }
             foreach (var k in drop) Close(k);
@@ -167,7 +167,8 @@ public class FieldManager : MonoBehaviour
             if (it.n.StartsWith("cover_")) continue;          // 바닥 채움 소품은 CoverInstancer 가 그린다
             if (GroundTerrain.Active && it.t == 1) continue;   // 옛 땅 타일은 새 땅 메쉬가 대신한다
             if (SkipDecor(it)) continue;                       // 폰: 작은 장식 일부를 건너뛴다
-            Place(root.transform, it.n, it.x, HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z), it.z, it.r);   // 소품·집은 땅 높이 위에 붙인다(옛 평지는 +0)
+            float py = it.z >= FieldRules.Size ? it.y : HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z);   // 2막(z 640 이상) 표의 높이(y)는 땅 높이까지 이미 더해 둔 절대값
+            Place(root.transform, it.n, it.x, py, it.z, it.r);   // 소품·집은 땅 높이 위에 붙인다(옛 평지는 +0)
             if (++n % ItemsPerFrame == 0) yield return null;
         }
         loading.Remove(key);

@@ -13,14 +13,28 @@ namespace Chasa.Core
     public class HeightField
     {
         public readonly int W, H;
-        public readonly float Size;              // 지도가 덮는 한 변(m)
+        public readonly float Size;              // 지도가 덮는 한 변(m). 직사각이면 동서 길이(SizeX)
+        public readonly float SizeX, SizeZ, OriginX, OriginZ;   // 직사각 땅(2막: 768×640m, 남서 모서리 (0,640)). 정사각 1막은 SizeX=SizeZ=Size, 원점 0
         readonly float[] m;                      // 높이(m), 행 우선: m[z * W + x]
 
-        public HeightField(int w, int h, float sizeM, float[] meters)
+        public HeightField(int w, int h, float sizeM, float[] meters) : this(w, h, sizeM, sizeM, 0f, 0f, meters) { }
+
+        public HeightField(int w, int h, float sizeXM, float sizeZM, float originX, float originZ, float[] meters)
         {
             if (w < 2 || h < 2 || meters == null || meters.Length != w * h) throw new ArgumentException("높이 지도 크기가 맞지 않다");
-            W = w; H = h; Size = sizeM; m = meters;
+            W = w; H = h; Size = sizeXM; SizeX = sizeXM; SizeZ = sizeZM; OriginX = originX; OriginZ = originZ; m = meters;
         }
+
+        /// <summary>직사각·원점이 있는 땅용 FromRG(2막)</summary>
+        public static HeightField FromRGRect(int w, int h, float sizeXM, float sizeZM, float originX, float originZ, byte[] r, byte[] g, float minM, float maxM)
+        {
+            var f = new float[w * h];
+            for (int i = 0; i < f.Length; i++) f[i] = minM + (r[i] * 256 + g[i]) / 65535f * (maxM - minM);
+            return new HeightField(w, h, sizeXM, sizeZM, originX, originZ, f);
+        }
+
+        /// <summary>이 월드 점이 이 땅 지도 안인가</summary>
+        public bool Covers(float x, float z) { return x >= OriginX && x <= OriginX + SizeX && z >= OriginZ && z <= OriginZ + SizeZ; }
 
         /// <summary>16비트 높이를 (큰 바이트 R, 작은 바이트 G)로 담은 그림에서 만든다. 0 → minM, 65535 → maxM</summary>
         public static HeightField FromRG(int w, int h, float sizeM, byte[] r, byte[] g, float minM, float maxM)
@@ -60,14 +74,14 @@ namespace Chasa.Core
             return false;
         }
 
-        public float Texel { get { return Size / (W - 1); } }   // 한 칸의 실제 길이(m)
+        public float Texel { get { return SizeX / (W - 1); } }   // 한 칸의 실제 길이(m)
 
         float Px(int ix, int iz) { return m[Math.Max(0, Math.Min(H - 1, iz)) * W + Math.Max(0, Math.Min(W - 1, ix))]; }
 
         /// <summary>월드 (x,z) 의 땅 높이(m). 지도 밖은 가장자리 값</summary>
         public float At(float x, float z)
         {
-            float fx = x / Size * (W - 1), fz = z / Size * (H - 1);
+            float fx = (x - OriginX) / SizeX * (W - 1), fz = (z - OriginZ) / SizeZ * (H - 1);
             int ix = (int)Math.Floor(fx), iz = (int)Math.Floor(fz);
             float tx = fx - ix, tz = fz - iz;
             float a = Px(ix, iz), b = Px(ix + 1, iz), c = Px(ix, iz + 1), d = Px(ix + 1, iz + 1);
@@ -87,13 +101,16 @@ namespace Chasa.Core
     {
         public const int Layers = 5;
         public readonly int W, H; public readonly float Size;
+        public readonly float SizeX, SizeZ, OriginX, OriginZ;   // 높이 지도와 같은 약속(직사각·원점)
         readonly float[][] w;   // w[층][z*W+x] 0~1
 
-        public SplatField(int wpx, int hpx, float sizeM, float[][] weights)
+        public SplatField(int wpx, int hpx, float sizeM, float[][] weights) : this(wpx, hpx, sizeM, sizeM, 0f, 0f, weights) { }
+
+        public SplatField(int wpx, int hpx, float sizeXM, float sizeZM, float originX, float originZ, float[][] weights)
         {
             if (weights == null || weights.Length != Layers) throw new ArgumentException("재질 층은 5개");
             foreach (var l in weights) if (l == null || l.Length != wpx * hpx) throw new ArgumentException("재질 지도 크기가 맞지 않다");
-            W = wpx; H = hpx; Size = sizeM; w = weights;
+            W = wpx; H = hpx; Size = sizeXM; SizeX = sizeXM; SizeZ = sizeZM; OriginX = originX; OriginZ = originZ; w = weights;
         }
 
         float Px(int l, int ix, int iz) { return w[l][Math.Max(0, Math.Min(H - 1, iz)) * W + Math.Max(0, Math.Min(W - 1, ix))]; }
@@ -101,7 +118,7 @@ namespace Chasa.Core
         /// <summary>월드 (x,z) 의 층별 비율을 합이 1 이 되게 out[0..4] 에 담는다. 아무 층도 칠해지지 않은 자리는 풀 100%</summary>
         public void Weights(float x, float z, float[] o)
         {
-            float fx = x / Size * (W - 1), fz = z / Size * (H - 1);
+            float fx = (x - OriginX) / SizeX * (W - 1), fz = (z - OriginZ) / SizeZ * (H - 1);
             int ix = (int)Math.Floor(fx), iz = (int)Math.Floor(fz);
             float tx = fx - ix, tz = fz - iz, sum = 0f;
             for (int l = 0; l < Layers; l++)
