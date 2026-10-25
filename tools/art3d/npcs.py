@@ -33,6 +33,9 @@ def npc_bones(k, wide=1.0):
          ("UpperArm.R", "Chest", (-sx, 0, 1.4), (-ex, 0, ez)), ("Hand.R", "UpperArm.R", (-ex, 0, ez), (-ex - 0.01, 0, ez - 0.1)),
          ("UpperLeg.L", "Hips", (0.13, 0, 0.95), (0.13, 0, 0.5)), ("LowerLeg.L", "UpperLeg.L", (0.13, 0, 0.5), (0.13, 0, 0.09)), ("Foot.L", "LowerLeg.L", (0.13, 0, 0.09), (0.13, -0.2, 0.02)),
          ("UpperLeg.R", "Hips", (-0.13, 0, 0.95), (-0.13, 0, 0.5)), ("LowerLeg.R", "UpperLeg.R", (-0.13, 0, 0.5), (-0.13, 0, 0.09)), ("Foot.R", "LowerLeg.R", (-0.13, 0, 0.09), (-0.13, -0.2, 0.02))]
+    # 치마·도포 자락 뼈(주인공 Skirt_F/B/L/R과 같은 이름): 쪼그릴 때 밑단이 땅에 파묻히지 않게 들어 올리는 데 쓴다
+    B += [("Skirt_F", "Hips", (0, -0.20 * wide, 0.78), (0, -0.24 * wide, 0.25)), ("Skirt_B", "Hips", (0, 0.20 * wide, 0.78), (0, 0.24 * wide, 0.25)),
+          ("Skirt_L", "Hips", (0.22 * wide, 0, 0.78), (0.26 * wide, 0, 0.25)), ("Skirt_R", "Hips", (-0.22 * wide, 0, 0.78), (-0.26 * wide, 0, 0.25))]
     return [(n, p, tuple(a * k for a in h), tuple(a * k for a in t)) for n, p, h, t in B]
 
 def ring_xz(K_, name, c, r, n, size, m, y=0.0):
@@ -214,10 +217,26 @@ def build_body(s):
     for p in s.get("props", ()): PROPS[p](K_, H, add)
     return P, cover
 
+def skirt_weights(ob, k, wide):
+    """hero_sec._skirt와 같은 규칙: 높이가 내려갈수록, 앞·뒤·좌·우 가까운 자락 뼈에 더 많이 묶는다."""
+    sm_ = lambda t: (lambda u: u * u * (3 - 2 * u))(max(0.0, min(1.0, t)))
+    ob.vertex_groups.clear(); groups = {}; ang = {"Skirt_F": 0.0, "Skirt_L": math.pi / 2, "Skirt_B": math.pi, "Skirt_R": -math.pi / 2}
+    for v in ob.data.vertices:
+        p = ob.matrix_world @ v.co; z = p.z / k; t = sm_((0.80 - z) / 0.55) ** 1.1; phi = math.atan2(p.x, -p.y)
+        w = {b: max(0.0, math.cos(math.atan2(math.sin(phi - a), math.cos(phi - a)))) ** 2 * t for b, a in ang.items()}; w["Hips"] = 1.0 - t
+        tot = sum(w.values()) or 1.0
+        for b, x in w.items():
+            if x > 1e-4:
+                if b not in groups: groups[b] = ob.vertex_groups.new(name=b)
+                groups[b].add([v.index], x / tot, "REPLACE")
+
 def make(s):
     """한 명을 만들어 (메시, 뼈대, 삼각형 수)로 돌려준다."""
     P, cover = build_body(s); objs = []
     for b, ps in P.items(): objs += to_group(list(ps), b)
+    if cover:                           # 치마·도포 조각은 밑단으로 갈수록 자락 뼈 4개에 나눠 묶는다(위쪽은 골반 그대로)
+        for ob in objs:
+            if ob.name.startswith(("chima", "robe")): skirt_weights(ob, s["k"], s.get("wide", 1.0))
     o = join(f"npc_{s['id']}", objs); arm = rig(o, npc_bones(s["k"], s.get("wide", 1.0)))
     return o, arm, cover
 
@@ -248,7 +267,7 @@ def clips(s, cover):
     Walk는 사람마다 보폭·속도가 달라 '재생 속도 = 이동 속도'로 맞추면 발이 안 미끄러진다(메타의 speed_mps)."""
     f = 0.55 if cover else 1.0; k = s["k"]; child = bool(s.get("child"))
     idle = hero_anim.idle_keys()[0][1]
-    nm.SQ["dz"] = -0.34 if cover else -0.56       # 치마·도포는 자락이 땅에 파묻히지 않게 덜 낮춘다
+    nm.SQ["dz"] = -0.50 if cover else -0.56       # 치마·도포는 자락이 땅에 파묻히지 않게 덜 낮춘다
     wk, meta = nm.walk(**nm.walk_preset(s, cover))
     wk = nm.scale_keys(wk, k)
     v = meta["speed_n"] * k; N = meta["N"]
@@ -262,7 +281,18 @@ def clips(s, cover):
     sh = nm.startle_hold(child); C["StartleHold"] = (nm.scale_keys(sh[0], k),) + sh[1:]
     sr = nm.startle_recover(idle); C["StartleRecover"] = (nm.scale_keys(sr[0], k),) + sr[1:]
     for nme, c in nm.role_clips(s, idle).items(): C[nme] = (nm.scale_keys(c[0], k),) + tuple(c[1:])
+    if cover: C = {nme: (lift_skirt(c[0]),) + tuple(c[1:]) for nme, c in C.items()}
     return C
+
+def lift_skirt(keys):
+    """골반이 내려간 만큼 자락 뼈를 들어 올린다(쪼그려 앉을 때 치마 밑단이 땅에 묻히지 않게). 뒷자락은 몸이 숙여져 더 처지므로 조금 더, 앞자락은 무릎에 눌리니 앞으로 조금."""
+    out = []
+    for f, spec in keys:
+        dz = spec.get("Hips", {}).get("l", (0, 0, 0))[2]; up = max(0.0, -dz - 0.05) * 1.0; d = dict(spec)
+        if up > 0:
+            for b, (y, extra) in {"Skirt_F": (-0.06, 0.0), "Skirt_B": (-0.10, 0.06), "Skirt_L": (-0.04, 0.02), "Skirt_R": (-0.04, 0.02)}.items(): d[b] = {"l": (0, y * up / 0.3, up + extra * up / 0.3)}
+        out.append((f, d))
+    return out
 
 # ── 17명(21개) 명세 ───────────────────────────────────────────────────────────────
 HAIR = "#14141F"; WHITE = "#D8D0C0"; GREY = "#8E8A84"

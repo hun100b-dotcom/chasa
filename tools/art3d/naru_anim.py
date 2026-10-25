@@ -1,6 +1,6 @@
 """나루 영감 동작: Idle(반복 96f) / Windup(예비동작 66f≈1.1초, 보스 큰 기술 예고 기준) / Swing(삿대 휘두르기 42f: 휘두름 14f, 명중 f8, 후딜 28f).
 오른팔과 삿대 뼈가 함께 돌고, 상체가 뒤틀려 힘을 싣는다. 배는 흔들린다."""
-import sys, os, json
+import sys, os, json, math
 sys.path.insert(0, os.path.dirname(__file__))
 from lib3d import *
 from boss_naru import naru, BONES
@@ -15,9 +15,23 @@ def clips():
     # 예비동작: 삿대 끝이 뒤로 젖혀지고(팔 +110°) 상체가 오른쪽으로 감긴다
     def wind(k=1.0, sh=0):
         return {"UpperArm.R": {"r": (95 * k, 0, 0)}, "Pole": {"r": (15 * k, 0, -10 * k)}, "Chest": {"r": (6 * k, 0, -42 * k)}, "Hips": {"r": (0, 0, -14 * k)}, "Head": {"r": (0, 0, 20 * k)}, "UpperArm.L": {"r": (-20 * k, -25 * k, 0)}, "Boat": {"r": (-3 * k, 0, 0)}}
-    C["Windup"] = ([(0, {}), (20, wind(0.35)), (56, wind(1.0)), (60, {**wind(1.0), "Chest": {"r": (6, 0, -45)}}), (66, wind(1.0))], "BEZIER", False, {"flash": 54, "end_pose_held": True})
+    C["WindupLong"] = ([(0, {}), (20, wind(0.35)), (56, wind(1.0)), (60, {**wind(1.0), "Chest": {"r": (6, 0, -45)}}), (66, wind(1.0))], "BEZIER", False, {"flash": 54, "end_pose_held": True})
     sw = lambda k=1.0: {"UpperArm.R": {"r": (-75 * k, 0, 0)}, "Pole": {"r": (-10 * k, 0, 25 * k)}, "Chest": {"r": (8 * k, 0, 55 * k)}, "Hips": {"r": (0, 0, 20 * k)}, "Head": {"r": (0, 0, -25 * k)}, "UpperArm.L": {"r": (10 * k, 20 * k, 0)}, "Boat": {"r": (4 * k, 0, 0), "l": (0, -0.12 * k, 0)}}
     C["Swing"] = ([(0, wind(1.0)), (8, sw(0.45)), (14, sw(1.0)), (24, sw(0.9)), (42, {})], "LINEAR", False, {"hit": 8, "swing_end": 14})
+    # ── 코드 예비동작 시간에 맞춘 판(10-25 다듬음) ─────────────────────────────────────────
+    # 코드: ENEMY_ATTACK_WINDUP 0.55초(=33f), 첫 예고는 ×1.5(=50f). 예비동작이 끝나는 프레임에 바로 피해가 들어가므로, 휘두름을 예비동작 끝 6프레임에 넣어 '내리치는 프레임 = 명중 프레임'으로 맞췄다.
+    def windup(N):
+        rel = N - 6; ks = [(0, {})]
+        ks.append((max(3, round(N * 0.12)), {"Hips": {"l": (0, 0, -0.06)}, "Chest": {"r": (7, 0, 0)}, "Head": {"r": (5, 0, 0)}, "UpperArm.R": {"r": (-8, 0, 0)}, "Boat": {"r": (-1.5, 0, 0)}}))   # ① 몸을 낮추고 삿대를 앞으로 바로 쥠(신호)
+        ks.append((round(N * 0.50), wind(0.75)))                                                                                                                                                   # ② 삿대를 뒤로 크게 젖힘
+        load = round(N * 0.66)
+        for i, f in enumerate(range(load, rel + 1, 2)):                                                                                                                                             # ③ 가득 젖힌 채 부르르 떨며 멈춤
+            w = wind(1.0); tr = 3.0 * math.sin(i * 2.4) * (1 - (f - load) / max(1, rel - load) * 0.4); w["Pole"] = {"r": (15 + tr, 0, -10 + tr)}; ks.append((f, w))
+        ks.append((rel + 3, {**sw(0.45)})); ks.append((N, sw(1.0)))                                                                                                                                  # ④ 휘둘러 N프레임에 명중
+        return ks
+    C["Windup"] = (windup(33), "BEZIER", False, {"tell": 0, "loaded": 22, "flash": 22, "hit": 33, "windup_end": 33, "note": "코드 예비동작 0.55초(33f)에 맞춤. 33f의 자세에서 SwingRecover로 이어 붙인다"})
+    C["WindupFirst"] = (windup(50), "BEZIER", False, {"tell": 0, "loaded": 33, "flash": 33, "hit": 50, "windup_end": 50, "note": "첫 예고(×1.5=0.83초, 50f)용. 같은 모양을 천천히"})
+    C["SwingRecover"] = ([(0, sw(1.0)), (8, sw(0.9)), (20, sw(0.35)), (30, {})], "LINEAR", False, {"swing_end": 0})
     # ── 맞는 쪽 손맛(10-25) ── 보스는 위치가 안 밀리고(코드 넉백 0 권장) 몸이 젖혀지며 배가 출렁인다. 0번 프레임 = 히트스톱에 멈춰 보일 '맞은 직후' 자세.
     R_ = lambda **k: {n_: {"r": v} for n_, v in k.items()}
     C["Hit1"] = ([(0, R_(Chest=(-5, 0, 2), Head=(-5, 0, 0), Boat=(-1.5, 0, 0))), (2, R_(Chest=(-8, 0, 3), Head=(-8, 0, 0), Boat=(-2.5, 0, 0))), (10, {})], "BEZIER", False, {"peak": 2})
@@ -46,7 +60,7 @@ if __name__ == "__main__":
     if "--sheets" in sys.argv:
         setup_render(8.0, (0, 0, 1.2), size=(260, 300), ground_size=14)
         for c in man:
-            if c["name"] in ("Idle", "KneelHold") or c["name"] not in ("Windup", "Swing", "Hit1", "Hit2", "Stagger", "Kneel", "Tendo", "Pahon"): continue
-            if True: anim.sheet(arm, c["name"], {"Windup": [0, 20, 40, 56, 65], "Swing": [0, 4, 8, 11, 14, 24, 41], "Hit1": [0, 2, 5, 10], "Hit2": [0, 3, 8, 18], "Stagger": [0, 5, 12, 20, 36], "Kneel": [0, 14, 26, 60], "Tendo": [0, 60, 110, 170, 210], "Pahon": [0, 6, 30, 80, 120]}[c["name"]], os.path.join(OUT, "previews", f"anim_naru_{c['name']}"), cell=(260, 300))
+            if c["name"] in ("Idle", "KneelHold") or c["name"] not in ("Windup", "WindupFirst", "WindupLong", "SwingRecover", "Swing", "Hit1", "Hit2", "Stagger", "Kneel", "Tendo", "Pahon"): continue
+            if True: anim.sheet(arm, c["name"], {"Windup": [0, 4, 10, 17, 22, 28, 33], "WindupFirst": [0, 6, 16, 26, 33, 44, 50], "WindupLong": [0, 20, 40, 56, 65], "SwingRecover": [0, 8, 20, 30], "Swing": [0, 4, 8, 11, 14, 24, 41], "Hit1": [0, 2, 5, 10], "Hit2": [0, 3, 8, 18], "Stagger": [0, 5, 12, 20, 36], "Kneel": [0, 14, 26, 60], "Tendo": [0, 60, 110, 170, 210], "Pahon": [0, 6, 30, 80, 120]}[c["name"]], os.path.join(OUT, "previews", f"anim_naru_{c['name']}"), cell=(260, 300))
     p = os.path.join(OUT, "boss", "boss_naru.glb"); anim.export_rig(arm, p); v = anim.verify(p); print(v)
     json.dump({"fps": anim.FPS, "clips": man, "verify": v}, open(os.path.join(OUT, "boss", "_naru_anim_manifest.json"), "w"), ensure_ascii=False, indent=1)

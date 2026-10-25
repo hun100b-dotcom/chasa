@@ -88,6 +88,28 @@ def seo():
 
 # ── 동작 ─────────────────────────────────────────────────────────────────────────
 def mir(a, b): return {"L": a, "R": b}
+def _sm(t):
+    t = max(0.0, min(1.0, t)); return t * t * (3 - 2 * t)
+
+def wol_open(pose, a, spin=False):
+    """열두 거리 예비동작 60f(= 코드 B02_WARN_TIME 1.0초). 바닥이 붉어지기 시작하는 순간 0프레임, 터지는 순간 60프레임에 방울을 내리친다.
+    읽는 순서(플레이어가 눈으로 보는 순서): ① 0~8f 숨을 들이쉬며 방울을 가슴 앞에 모음(신호) ② 8~44f 방울을 점점 빠르고 크게 흔들며 팔이 올라감(경고가 커진다)
+    ③ 44~56f 방울을 머리 위에 높이 든 채 부르르 떨며 멈춤(곧 내리친다) ④ 56~60f 내리침(60f = 바닥이 열리는 프레임). spin=True면 2국면(잔 5개): ②에서 한 바퀴 돌아 '더 크다'는 걸 보인다."""
+    ks = []
+    for f in range(0, 61, 2):
+        s_in = _sm(f / 8); u = _sm((f - 8) / 36); amp = _sm((f - 8) / 12) * (1 - _sm((f - 44) / 6) * 0.7)
+        ph = 2 * math.pi * ((f - 8) * 0.10 + 0.0045 * (f - 8) ** 2) if f >= 8 else 0.0     # 갈수록 빨라지는 흔들림
+        sh = math.sin(ph) * amp
+        arm_up = 22 + 33 * u; hold = _sm((f - 44) / 6)
+        trem = (1.6 * math.sin(f * 2.2) if f >= 46 else 0.0)
+        d = _sm((f - 56) / 4)                                                    # 56~60f 내리침
+        k = dict(lean=-8 * s_in + 2 * sh - 6 * hold + 24 * d, nod=-6 * s_in - 4 * hold + 20 * d, lup=12 * s_in + (arm_up - 12) * u + 8 * hold - 70 * d, rup=12 * s_in + (arm_up - 12) * u + 8 * hold - 70 * d,
+                 lfw=20 * s_in + 10 * u + 30 * d, rfw=20 * s_in + 10 * u + 30 * d, lh=-30 * u * 0.4 + 28 * sh - 12 * hold + trem * 0.5, ring=45 * sh + 25 * hold + 35 * d, hturn=0.0)
+        if spin: k["hturn"] = -360.0 * _sm((f - 8) / 44) * (1 if f < 56 else 1)       # 5개 열릴 때: 한 바퀴 돌며 올라간다
+        ks.append((f, pose(**k)))
+    ks += [(66, pose(lup=-10, rup=-10, lfw=40, rfw=40, lean=12, nod=10, lh=-10, ring=60)), (84, pose(lup=-10, rup=-10, lfw=40, rfw=40, lean=12, nod=10, lh=-10, ring=60)), (104, a)]
+    return ks
+
 def wol_clips():
     """월화. 팔은 옆으로 벌어진 자세가 기준이다(앞=왼팔 rz 음수·오른팔 rz 양수, 위=왼팔 ry 음수·오른팔 ry 양수)."""
     C = {}
@@ -104,7 +126,8 @@ def wol_clips():
                    (132, pose(hturn=180, hz=-50, nod=6)), (216, pose(hturn=180, hz=-50, nod=6))], "BEZIER", False, {"bell_ring": 36, "head_turn": 132})
     # 잔이 열린다(예비 1.0초=60f): 두 팔을 들어 올리고 방울을 높이 든다 → 내리치기
     up = pose(lup=55, rup=55, lfw=10, rfw=10, lean=-6, nod=-6, lh=-35, ring=25); down = pose(lup=-10, rup=-10, lfw=40, rfw=40, lean=12, nod=10, lh=-10, ring=60)
-    C["Open"] = ([(0, a), (24, pose(lup=25, rup=25, lean=-3)), (54, up), (60, up), (66, down), (84, down), (104, a)], "BEZIER", False, {"windup_end": 60, "hit": 66, "flash": 54})
+    C["Open"] = (wol_open(pose, a), "BEZIER", False, {"windup_end": 60, "hit": 60, "tell": 0, "shake": [8, 44], "loaded": 48, "flash": 48, "ring_bell": [14, 22, 29, 35, 40, 44]})
+    C["Open_P2"] = (wol_open(pose, a, True), "BEZIER", False, {"windup_end": 60, "hit": 60, "tell": 0, "spin": [8, 52], "loaded": 52, "flash": 52})   # 2국면(잔 5개): 같은 길이에 한 바퀴 돌며
     # 붉은 천 휘감기(예비 0.7초=42f): 오른팔을 뒤로 젖혔다가 앞으로 길게 휘두름
     wnd = pose(rfw=-60, rup=20, twist=-30, hturn=-10, lean=2); whip = pose(rfw=80, rup=0, twist=40, hturn=12, lean=8, rh=-20)
     C["Whip"] = ([(0, a), (28, pose(rfw=-35, rup=10, twist=-15)), (42, wnd), (46, whip), (66, whip), (90, a)], "LINEAR", False, {"windup_end": 42, "hit": 46})
@@ -128,6 +151,29 @@ def wol_clips():
     C["Stagger"] = ([(0, pose(lean=-11, nod=-9)), (5, pose(lean=-22, nod=-18, lup=30, rup=30, drop=-0.1, hturn=-8)), (12, pose(lean=8, nod=8, drop=-0.05, hturn=6, lup=10, rup=10)), (20, pose(lean=-8, nod=-6, hturn=-4)), (28, pose(lean=3, nod=2)), (36, a)], "BEZIER", False, {"peak": 5, "sway_peaks": [12, 20, 28]})
     return C
 
+def seo_call(pose, a, chain=False):
+    """번호 부르기 예비동작 48f(= 코드 B03_WARN_TIME 0.8초). 바닥 칸이 붉어지기 시작하는 순간 0프레임, 터지는 순간 48프레임에 손을 내리찍는다.
+    읽는 순서: ① 0~8f 숨을 들이쉬며 몸을 뒤로 젖힘(신호, 약장 서랍이 달그락) ② 세 번 번호를 부르며(칸을 짚듯 손이 좌→가운데→우로 옮겨 가며) 손을 올렸다 끊어 친다 ③ 38~46f 손을 가장 높이 들고 부르르 떨며 멈춤(곧 터진다) ④ 48f 내리찍음.
+    chain=True(CallNext, 2·3번째 파동): 앞 파동의 찍은 자세에서 시작해 6f 만에 손을 다시 들고 박자를 더 빠르게 → '이어서 또 온다'는 걸 보인다."""
+    first = pose(lean=12, nod=10, rup=20, rout=0, rh=-15, lup=10); ks = []
+    cads = (10, 20, 30) if chain else (12, 24, 36); starts = 6 if chain else 8
+    for f in range(0, 49, 2):
+        s_in = _sm(f / starts); hold = _sm((f - 38) / 6); d = _sm((f - 46) / 2)
+        beat = 0.0
+        for c in cads:
+            beat += max(0.0, 1 - abs(f - c) / 3.0)                     # 부르는 순간마다 짧은 끊어침
+        idx = sum(1 for c in cads if f >= c - 1)                         # 몇 번째 번호인가 → 손이 가리키는 쪽이 바뀐다
+        out = (-30, 8, 50, 20)[min(idx, 3)] if idx else 0
+        k = dict(lean=-14 * s_in + 6 * beat - 6 * hold + 30 * d, nod=-14 * s_in + 12 * beat - 6 * hold + 22 * d, hturn=(-10, 0, 10, 0)[min(idx, 3)] * s_in * (1 - d), rup=(115 if not chain else 100) * s_in - 18 * beat + 14 * hold - 100 * d, rout=out * s_in + 4 * hold, rh=20 * s_in - 10 * d - 30 * d,
+                 lup=10, case=-5 * (1 - s_in) - 4 * math.sin(f * 1.7) * (1 if f < starts + 2 else 0), slide=0.0, hz=4 * math.sin(f * 0.3) * (1 - d),
+                 twist=(5 * (1 if idx < 2 else -1)) * s_in * (1 - d))
+        if hold > 0.1 and d < 0.1: k["rh"] += 1.5 * math.sin(f * 2.3); k["rup"] += 1.5 * math.sin(f * 2.1)
+        k = {kk: vv for kk, vv in k.items()}
+        ks.append((f, pose(**k)))
+    start = first if chain else a
+    ks[0] = (0, start); ks += [(52, first), (72, first), (96, a)]
+    return ks
+
 def seo_clips():
     """서 의원. 팔은 앞으로 모은 자세가 기준(들기 rx 음수, 벌리기 rz). 약장(Case)은 등에서 가슴 움직임을 따르고 Drawer는 +Y(뒤)로 민다."""
     C = {}
@@ -142,7 +188,8 @@ def seo_clips():
     C["Intro"] = ([(0, a), (30, a), (36, cough(0.0, 4)), (42, cough(0.12, 10)), (48, cough(0.12, 3)), (54, cough(0.12, 11)), (66, cough(0.0, 2)), (84, a), (210, a)], "LINEAR", False, {"cough": 42, "drawer_out": 42, "drawer_in": 66})
     # 번호 부르기(예비 0.8초=48f): 오른손을 높이 들어 번호를 부르고 앞으로 찍듯 내림
     up = pose(rup=70, rout=20, lean=-6, nod=-8, rh=20, lup=10); call = pose(rup=20, rout=0, lean=12, nod=10, rh=-15, lup=10)
-    C["Call"] = ([(0, a), (30, pose(rup=35, rout=10)), (48, up), (52, call), (72, call), (96, a)], "BEZIER", False, {"windup_end": 48, "hit": 52})
+    C["Call"] = (seo_call(pose, a), "BEZIER", False, {"windup_end": 48, "hit": 48, "tell": 0, "call": [12, 24, 36], "loaded": 40, "flash": 40})
+    C["CallNext"] = (seo_call(pose, a, True), "BEZIER", False, {"windup_end": 48, "hit": 48, "tell": 0, "call": [10, 20, 30], "loaded": 40, "flash": 40, "starts_from": "Call 끝 자세"})   # 2·3번째 파동
     # 붉은 도장 찍기(예비 0.7초=42f): 두 팔을 머리 위로, 앞으로 내리찍음
     st_up = pose(rup=100, lup=100, rout=10, lout=10, lean=-12, nod=-10); st_dn = pose(rup=25, lup=25, lean=22, nod=14, rh=-25, lh=-25)
     C["Stamp"] = ([(0, a), (28, pose(rup=55, lup=55, lean=-5)), (42, st_up), (46, st_dn), (66, st_dn), (90, a)], "LINEAR", False, {"windup_end": 42, "hit": 46})
@@ -183,6 +230,8 @@ def build(name, fn, bn, cl, h, export=True, sheets=False):
         for c in man:
             n = c["frames"]; fr = sorted({0, round(n * 0.2), round(n * 0.4), round(n * 0.6), round(n * 0.8), n - 1})
             if c["name"] in ("Idle", "KneelHold", "Hurt"): continue
+            if c["name"] in ("Open", "Open_P2"): fr = [0, 8, 20, 32, 44, 52, 58, 60, 66]
+            if c["name"] in ("Call", "CallNext"): fr = [0, 6, 12, 24, 36, 42, 46, 48, 52]
             anim.sheet(arm, c["name"], fr, os.path.join(OUT, "previews", f"anim_{name}_{c['name']}"), cell=(250, 300), ortho=3.9, center=(0, 0, 1.0))
     path = os.path.join(OUT, "boss", f"{name}.glb")
     if export: anim.export_rig(arm, path)

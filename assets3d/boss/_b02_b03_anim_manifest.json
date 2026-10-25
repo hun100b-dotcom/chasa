@@ -42,8 +42,39 @@
      "loop": false,
      "events": {
       "windup_end": 60,
-      "hit": 66,
-      "flash": 54
+      "hit": 60,
+      "tell": 0,
+      "shake": [
+       8,
+       44
+      ],
+      "loaded": 48,
+      "flash": 48,
+      "ring_bell": [
+       14,
+       22,
+       29,
+       35,
+       40,
+       44
+      ]
+     }
+    },
+    {
+     "name": "Open_P2",
+     "frames": 105,
+     "length_sec": 1.733,
+     "loop": false,
+     "events": {
+      "windup_end": 60,
+      "hit": 60,
+      "tell": 0,
+      "spin": [
+       8,
+       52
+      ],
+      "loaded": 52,
+      "flash": 52
      }
     },
     {
@@ -152,6 +183,7 @@
      "Idle",
      "Intro",
      "Open",
+     "Open_P2",
      "Whip",
      "Phase2",
      "Kneel",
@@ -163,7 +195,7 @@
      "Hit2",
      "Stagger"
     ],
-    "size_kb": 315
+    "size_kb": 329
    }
   },
   {
@@ -209,7 +241,34 @@
      "loop": false,
      "events": {
       "windup_end": 48,
-      "hit": 52
+      "hit": 48,
+      "tell": 0,
+      "call": [
+       12,
+       24,
+       36
+      ],
+      "loaded": 40,
+      "flash": 40
+     }
+    },
+    {
+     "name": "CallNext",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": false,
+     "events": {
+      "windup_end": 48,
+      "hit": 48,
+      "tell": 0,
+      "call": [
+       10,
+       20,
+       30
+      ],
+      "loaded": 40,
+      "flash": 40,
+      "starts_from": "Call 끝 자세"
      }
     },
     {
@@ -330,6 +389,7 @@
      "Idle",
      "Intro",
      "Call",
+     "CallNext",
      "Stamp",
      "Phase2",
      "Cough",
@@ -342,7 +402,7 @@
      "Hit2",
      "Stagger"
     ],
-    "size_kb": 326
+    "size_kb": 345
    }
   }
  ]

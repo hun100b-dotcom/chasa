@@ -9,7 +9,7 @@
    "events": {}
   },
   {
-   "name": "Windup",
+   "name": "WindupLong",
    "frames": 67,
    "length_sec": 1.1,
    "loop": false,
@@ -26,6 +26,43 @@
    "events": {
     "hit": 8,
     "swing_end": 14
+   }
+  },
+  {
+   "name": "Windup",
+   "frames": 34,
+   "length_sec": 0.55,
+   "loop": false,
+   "events": {
+    "tell": 0,
+    "loaded": 22,
+    "flash": 22,
+    "hit": 33,
+    "windup_end": 33,
+    "note": "코드 예비동작 0.55초(33f)에 맞춤. 33f의 자세에서 SwingRecover로 이어 붙인다"
+   }
+  },
+  {
+   "name": "WindupFirst",
+   "frames": 51,
+   "length_sec": 0.833,
+   "loop": false,
+   "events": {
+    "tell": 0,
+    "loaded": 33,
+    "flash": 33,
+    "hit": 50,
+    "windup_end": 50,
+    "note": "첫 예고(×1.5=0.83초, 50f)용. 같은 모양을 천천히"
+   }
+  },
+  {
+   "name": "SwingRecover",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "swing_end": 0
    }
   },
   {
@@ -106,8 +143,11 @@
   "joints": 8,
   "animations": [
    "Idle",
-   "Windup",
+   "WindupLong",
    "Swing",
+   "Windup",
+   "WindupFirst",
+   "SwingRecover",
    "Hit1",
    "Hit2",
    "Stagger",
@@ -116,6 +156,6 @@
    "Tendo",
    "Pahon"
   ],
-  "size_kb": 186
+  "size_kb": 215
  }
 }
