@@ -730,7 +730,7 @@ public class JudgeSystem : MonoBehaviour
             }
         }
         if (FieldRules.On)
-            foreach (var b in enemies.list)
+            foreach (var b in new List<Enemy>(enemies.list))   // 복사본을 돈다: 안에서 혼을 새로 세우면(SpawnCamp) 원본 목록이 바뀌어 'Collection was modified' 오류가 났다
             {
                 if (!b.soul.Boss || b.soul.BossId < 1 || bossIntroDone.Contains(b.soul.BossId)) continue;
                 if (new Vector2(b.Pos.x - player.Pos.x, b.Pos.z - player.Pos.z).magnitude >= 40f) continue;

@@ -32,12 +32,12 @@ public static class GroundTerrain
             var sa = Resources.Load<TextAsset>("Terrain/splat_a");
             if (mj == null || hb == null || sa == null) return;   // 아직 아트 산출물이 없다
             meta = JsonUtility.FromJson<Meta>(mj.text);
-            var ht = Decode(hb); if (ht == null) return;
+            var ht = Decode(hb, true); if (ht == null) return;
             var px = ht.GetPixels32(); var r = new byte[px.Length]; var g = new byte[px.Length];
             for (int i = 0; i < px.Length; i++) { r[i] = px[i].r; g[i] = px[i].g; }
             height = HeightField.FromRG(ht.width, ht.height, meta.size, r, g, meta.height_min_m, meta.height_max_m);
             // 재질 섞기: 5개 층을 float 로 풀어 규칙 클래스에 넘긴다(걸어 다닐 때 재질 소리·미끄러움에 쓸 수 있게)
-            var ta = Decode(sa); var tb = Decode(Resources.Load<TextAsset>("Terrain/splat_b"));
+            var ta = Decode(sa, true); var tb = Decode(Resources.Load<TextAsset>("Terrain/splat_b"), true);
             if (ta != null)
             {
                 var pa = ta.GetPixels32(); var pb = tb != null && tb.width == ta.width && tb.height == ta.height ? tb.GetPixels32() : null;
@@ -52,11 +52,19 @@ public static class GroundTerrain
         catch (System.Exception e) { Debug.LogWarning("새 땅을 읽지 못해 옛 땅을 쓴다: " + e.Message); Active = false; }
     }
 
-    static Texture2D Decode(TextAsset ta)
+    /// <summary>PNG 를 읽는다. flipRows: 지도(높이·재질)는 약속이 '그림 첫 줄(위) = 남쪽(z 0)'인데 유니티는 그림 맨 아랫줄을 0번으로 읽어 남북이 뒤집힌다 → 줄 순서를 뒤집어 바로잡는다</summary>
+    static Texture2D Decode(TextAsset ta, bool flipRows = false)
     {
         if (ta == null) return null;
         var t = new Texture2D(2, 2, TextureFormat.RGBA32, false, true);   // 선형(색 보정 없이): 높이·비율 값이라서
-        return t.LoadImage(ta.bytes) ? t : null;
+        if (!t.LoadImage(ta.bytes)) return null;
+        if (flipRows)
+        {
+            int w = t.width, h = t.height; var px = t.GetPixels32(); var fl = new Color32[px.Length];
+            for (int y = 0; y < h; y++) System.Array.Copy(px, y * w, fl, (h - 1 - y) * w, w);
+            t.SetPixels32(fl); t.Apply();
+        }
+        return t;
     }
 
     /// <summary>그 자리의 재질 비율(흙·풀·자갈·논·낙엽). 걸음 소리·미끄러움에 쓴다. 새 땅이 없으면 풀</summary>
