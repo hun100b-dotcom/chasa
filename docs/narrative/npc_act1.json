@@ -487,7 +487,7 @@
    "name": "순임",
    "region": 1,
    "role": "나루 영감(도씨 뱃사공)의 손녀. 줄배를 맨다",
-   "unlock_night": 4,
+   "unlock_night": 1,
    "schedule": [
     {
      "time": "새벽",
@@ -542,7 +542,7 @@
    "name": "윤 소사네 아들",
    "region": 1,
    "role": "윤 소사(S-002)와 윤 영감(B-21)의 아들. 제사를 지낸다",
-   "unlock_night": 4,
+   "unlock_night": 1,
    "schedule": [
     {
      "time": "낮",
