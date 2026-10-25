@@ -646,7 +646,7 @@ public class JudgeSystem : MonoBehaviour
             it = Loot.Roll(() => sq.Count > 0 ? sq.Dequeue() : Random.value, false, 0, lo.gear.DropKinds());
         }
         else if (e.eliteMote) it = null;   // 부른 잔넋은 장비를 주지 않는다
-        else it = Loot.Roll(() => Random.value, e.soul.Fierce, FieldRules.On ? RingLoot.RingAt(e.Pos.x, e.Pos.z, FieldZones.NameAt(e.Pos.x, e.Pos.z) == "검은여울") : 0, lo.gear.DropKinds());   // 필드에선 위치로 고리를 정해 등급 표를 쓴다
+        else it = Loot.Roll(() => Random.value, e.soul.Fierce, FieldRules.On ? (e.soul.Ring > 1 ? e.soul.Ring : RingLoot.RingAt(e.Pos.x, e.Pos.z, FieldZones.NameAt(e.Pos.x, e.Pos.z) == "검은여울")) : 0, lo.gear.DropKinds());   // 필드에선 위치로 고리를 정해 등급 표를 쓴다
         if (it == null) return;
         firstGearGiven = true;
         string nm = Ko.ItemName(it, Ko.FamilyOf(it.Slot, it.Slot == Slot.Weapon ? (WeaponId?)lo.weapon : null));

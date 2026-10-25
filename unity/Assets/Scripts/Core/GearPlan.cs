@@ -85,7 +85,7 @@ namespace Chasa.Core
         {
             if (x >= FieldRules.Size + 128f) return 5;
             if (x < 0f) return 6;
-            if (z >= FieldRules.Size) return x < 360f ? 3 : 4;
+            if (z >= FieldRules.Size) return 3;   // 2막 고리는 구역 단위라 군집·혼이 가진 값(Soul.Ring)을 쓴다. 이 값은 정보 없는 자리의 기본
             return blackRiver ? 2 : 1;
         }
     }

@@ -2355,7 +2355,7 @@ public class CoreTests
     public void RingLoot_위치로_고리를_정한다()
     {
         Assert.AreEqual(1, RingLoot.RingAt(200f, 100f, false)); Assert.AreEqual(2, RingLoot.RingAt(300f, 500f, true));
-        Assert.AreEqual(3, RingLoot.RingAt(100f, 900f, false)); Assert.AreEqual(4, RingLoot.RingAt(600f, 1000f, false));
+        Assert.AreEqual(3, RingLoot.RingAt(100f, 900f, false)); Assert.AreEqual(3, RingLoot.RingAt(600f, 1000f, false));   // 2막은 구역 단위라 군집·혼의 ring 을 쓴다(기획 act2-field-camps). 기본은 3
         Assert.AreEqual(5, RingLoot.RingAt(1000f, 400f, false)); Assert.AreEqual(6, RingLoot.RingAt(-300f, 300f, false));
     }
 

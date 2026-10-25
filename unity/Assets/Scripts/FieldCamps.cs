@@ -9,7 +9,7 @@ using Chasa.Core;
 
 public class FieldCamps
 {
-    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public bool loner; public string who, memory, speaker, line, half; public float kx, kz; }
+    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public int ring, numbered; public bool loner; public string who, memory, speaker, line, half; public float kx, kz; }
     [System.Serializable] class CampFile { public CampRow[] camps; }
 
     class Camp
@@ -43,10 +43,15 @@ public class FieldCamps
     public FieldCamps(EnemyManager enemies)
     {
         this.enemies = enemies;
-        var ta = Resources.Load<TextAsset>("Data/field_camps");
-        if (ta == null) return;
-        var f = JsonUtility.FromJson<CampFile>(ta.text);
-        if (f == null || f.camps == null) return;
+        // 1막 군집표 + 2막 군집표(기획 act2_field_camps: 행마다 ring·numbered). 2막 군집은 문이 열린 땅에서만 걷다 만나므로 같이 읽어도 안전하다
+        var rows = new List<CampRow>();
+        foreach (var nm in new[] { "Data/field_camps", "Data/act2_field_camps" })
+        {
+            var ta0 = Resources.Load<TextAsset>(nm); if (ta0 == null) continue;
+            var f0 = JsonUtility.FromJson<CampFile>(ta0.text); if (f0 != null && f0.camps != null) rows.AddRange(f0.camps);
+        }
+        if (rows.Count == 0) return;
+        var f = new CampFile { camps = rows.ToArray() };
         // 서낭당 둘레 60m 는 비우고(쉬는 자리), 보스 마당 둘레 30m 는 치우거나 절반으로 줄인다(코디 결정). 아트 구역표 자체는 건드리지 않고 여기서 보정한다
         var bosses = new List<float>();
         for (int b = 1; b <= Bosses.Count; b++) { var bd = Bosses.Get(b); bosses.Add(bd.X); bosses.Add(bd.Z); }
@@ -81,8 +86,8 @@ public class FieldCamps
         if (alive >= EarlyMaxAlive) { c.cooldown = 3f; return; }   // 지금은 더 못 세운다(조금 뒤 다시 시도)
         c.spawned = true;
         int count = CampRules.CountFor(c.row.n, SkyState.Daylight);   // 낮엔 적게
-        int ring = RingLoot.RingAt(c.row.x, c.row.z, c.row.zone == "검은여울");   // 고리는 RingAt 하나로(기획 act1-enemy-check 2)
-        float dens = Balance.CAMP_DENSITY_MULT * (ring == 1 ? Balance.CAMP_DENSITY_RING1 : ring == 2 ? Balance.CAMP_DENSITY_RING2 : Balance.CAMP_DENSITY_RING3);   // 구역 고리별 밀도(난이도 조정)
+        int ring = c.row.ring > 0 ? c.row.ring : RingLoot.RingAt(c.row.x, c.row.z, c.row.zone == "검은여울");   // 2막 행은 행의 ring(구역 단위), 1막은 RingAt(기획 act1-enemy-check 2)
+        float dens = c.row.ring > 0 ? 1f : Balance.CAMP_DENSITY_MULT * (ring == 1 ? Balance.CAMP_DENSITY_RING1 : ring == 2 ? Balance.CAMP_DENSITY_RING2 : Balance.CAMP_DENSITY_RING3);   // 구역 고리별 밀도(난이도 조정)
         if (dens < 0.999f) count = Mathf.Max(1, Mathf.RoundToInt(count * dens));
         if (NearNamed(c.row.x, c.row.z)) count = Mathf.Max(1, Mathf.Min(Balance.NAMED_NEAR_CAP, Mathf.RoundToInt(count * 0.5f)));   // 이름혼 자리 둘레는 한산하게(이름혼 처결 때 둘러싸이지 않게)
         if (GhostMult > 1.001f)   // 날씨로 늘어나는 몫은 확률로 올려서(기댓값이 맞게) 작은 군집도 평균 +15% 가 된다
@@ -115,8 +120,13 @@ public class FieldCamps
                 continue;
             }
             var e = enemies.SpawnCamp(new Vector3(x, 0f, z), i % 2 == 0, type, ring);
-            if (e != null && e.soul != null && Random.value * 100f < SoulTypeRules.NumberedPct(c.row.zone)) e.soul.Numbered = true;   // 숫자 혼(2막 구역 비율)
             c.members.Add(e);
+        }
+        // 숫자 혼(인 없음): 군집 n 가운데 numbered 개 비율로 표식을 붙인다(종류와 따로. 기획 act2-field-camps 3절)
+        if (c.row.numbered > 0 && c.row.n > 0)
+        {
+            var pool = new List<Enemy>(c.members); int want = Mathf.Min(pool.Count, Mathf.RoundToInt(c.row.numbered * (float)pool.Count / c.row.n));
+            for (int k = 0; k < want && pool.Count > 0; k++) { int pi = Random.Range(0, pool.Count); if (pool[pi] != null && pool[pi].soul != null) pool[pi].soul.Numbered = true; pool.RemoveAt(pi); }
         }
         // 외톨이 야영지(기획 감사 보강): 무리에서 12~16m 떨어진 곳에 무릎 꿇은 혼 1~2. 싸우지 않고 혼자 처결 대기 중이라 무리의 공격권에 들지 않는다
         if (c.row.loner)
