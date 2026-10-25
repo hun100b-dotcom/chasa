@@ -1,0 +1,27 @@
+{
+  "_설명": "1막 장례 대상 이름혼 9명의 '제사 지켜보기' 자리. 기획 v1 2026-10-25. 좌표는 x=동, z=북(미터, field_5x5와 같음). 규칙은 jesa-watch-act1.md",
+  "_상태": "자리·시간·규칙은 기획 확정. line/mourner 이름은 서사 확인 전(line_ok:false). 새 좌표는 아트 걷기 확인 전(walk_ok:false)",
+  "verb": "지켜보기",
+  "radius_m": 6,
+  "time_s": 15,
+  "spots": [
+    {"id":"J-001","soul":"S-001","soul_name":"박돌쇠","zone":"Village","place":"박돌쇠네 대장간 마당 제사상","x":217.0,"z":65.5,"time":["낮","저녁"],"open":"after_tendo_only","mourner":"용득(N-109)","line":"풀무는 내일부터 다시 돌린다. 아버지 몫까지.","line_half":"풀무는 내일부터…","line_ok":false,"walk_ok":false,"note":"예외: 첫 5분에 반드시 처결되므로 지켜보기→천도 순서가 불가능. 천도한 경우에만 열리고, 끝까지 보면 명부 박돌쇠 기억 다시 보기에 jesa_extra 줄이 붙는다. 파혼했으면 대문 조등만(장면 없음)"},
+    {"id":"J-002","soul":"S-002","soul_name":"윤 소사","zone":"Village","place":"윤 소사네 마당 제사상","x":192.0,"z":58.0,"time":["낮","밤 6~14분"],"open":"region_entered","mourner":"윤 소사네 아들(N-103)","existing":true,"note":"이미 npc_act1.json에 있음. 그대로 쓴다"},
+    {"id":"J-003","soul":"S-003","soul_name":"연이","zone":"Village","place":"연이네 마당(동쪽 초가 house_03 앞)","x":200.5,"z":47.5,"time":["낮"],"open":"region_entered","mourner":"연이 시어미(새 인물, 서사 이름 대기)","line":"시루는 그대로 둬라. 그 애가 찌다 만 거다.","line_half":"시루는 그대로…","line_ok":false,"walk_ok":false},
+    {"id":"J-004","soul":"S-004","soul_name":"칠복","zone":"Village","place":"칠복네 마당(동쪽 초가 house_04 앞)","x":200.0,"z":61.5,"time":["낮"],"open":"region_entered","mourner":"칠복 아우(새 인물, 서사 이름 대기) + 누렁이(개 소품, 문 앞에 엎드림)","line":"누렁이가 사흘째 문 앞에서 안 움직여.","line_half":"누렁이가…","line_ok":false,"walk_ok":false},
+    {"id":"J-005","soul":"S-005","soul_name":"허 훈장","zone":"Village","place":"글방 마당(동쪽 긴 초가 house_05 앞)","x":200.0,"z":70.0,"time":["낮"],"open":"region_entered","mourner":"글방 아이 둘(새 인물, 이름 없이 '글방 아이')","line":"훈장님 회초리, 누가 치울 거야?\n그냥 둬. 아직 계신 것 같아.","line_half":"훈장님 회초리…","line_ok":false,"walk_ok":false},
+    {"id":"J-019","soul":"S-019","soul_name":"엿장수 판쇠","zone":"Market","place":"장터 엿판 곁 냉수 그릇","x":37.5,"z":382.0,"time":["낮"],"open":"region_entered","mourner":"꼭지·차돌이(N-204)","line":"엿판에 냉수 한 그릇 떠 놨어. 아재 목마를까 봐.","line_half":"엿판에 냉수…","line_ok":false,"walk_ok":false,"note":"아이들이라 제사상 대신 냉수 한 그릇. 꼭지 엿듣기 자리(39,383)와 2.3m라 두 원이 겹친다. 둘 다 저절로 진행되니 문제없음"},
+    {"id":"J-020","soul":"S-020","soul_name":"포목전 최씨","zone":"Market","place":"포목 좌판(덮개 덮인 좌판) 앞","x":31.5,"z":377.5,"time":["낮"],"open":"region_entered","mourner":"옆 좌판 장꾼(새 인물, 이름 없이 '옆 좌판 장꾼')","line":"최씨 장부가 아궁이에서 나왔다는데, 이름이 하나도 없더래.","line_half":"최씨 장부가…","line_ok":false,"walk_ok":false},
+    {"id":"J-021","soul":"S-021","soul_name":"주모 끝순","zone":"Market","place":"장터 주막 뒤뜰(장독대 곁)","x":51.5,"z":390.5,"time":["낮"],"open":"region_entered","mourner":"섭섭이(N-203)","line":"상은 부엌에 차렸어. 어머니는 마루보다 부엌이 편하셨으니까.","line_half":"상은 부엌에…","line_ok":false,"walk_ok":false,"note":"섭섭이 엿듣기 자리(주막 부엌 42.5,392)와 9m 떨어뜨려 원이 안 겹치게 함. 섭섭이는 낮 시간 앞 절반은 부엌, 뒤 절반은 뒤뜰에 선다(낮 0~7분 부엌, 7~14분 뒤뜰)"},
+    {"id":"J-029","soul":"S-029","soul_name":"북잡이 덕수","zone":"Market","place":"장마당 북 걸어 둔 자리","x":36.0,"z":398.0,"time":["낮"],"open":"region_entered","mourner":"장꾼 둘(새 인물, 이름 없이 '장꾼')","line":"오늘은 북 없이 장을 연다. 사람들이 때를 모르겠네.","line_half":"오늘은 북 없이…","line_ok":false,"walk_ok":false,"note":"득보 엿듣기 자리(장마당 36,388)와 10m"}
+  ],
+  "soul_spawn_proposal": {
+    "_설명": "named_souls.json에 아직 없는 장례 대상 혼의 밤 자리 제안. 지켜보기 효과(명부에 오늘 밤 위치 표시)에 필요. 아트 걷기 확인 전",
+    "S-004": {"x":202.0,"z":63.5,"memo":"칠복네 문 앞(개가 엎드린 자리 곁)"},
+    "S-005": {"x":202.0,"z":72.5,"memo":"글방 문 앞"},
+    "S-019": {"x":38.0,"z":380.0,"memo":"엿판 북쪽"},
+    "S-020": {"x":29.5,"z":376.0,"memo":"포목 좌판 뒤"},
+    "S-021": {"x":50.0,"z":388.0,"memo":"주막 뒤뜰 모퉁이"},
+    "S-029": {"x":33.5,"z":399.5,"memo":"장마당 남쪽 끝"}
+  }
+}

@@ -20,6 +20,7 @@ namespace Chasa.Core
         public int Maedhim;          // 맺힘 (체력 대신 깎이는 수치)
         public int MaedhimMax;
         public float WaitLeft;       // 처결 대기 남은 시간
+        public bool TimedOut;        // 처결 대기가 다 지나 일어섰다(JudgeSystem 이 읽고 지운다 — 장례 '처결 못 함' 판정용)
         public float WaitTotal;
         public float Stun;           // 남은 경직 시간
         public bool Fierce;          // 얼룩 3개로 소환된 사나운 적
@@ -133,7 +134,7 @@ namespace Chasa.Core
             WaitLeft -= dt;
             if (WaitLeft <= 0f)
             {
-                State = SoulState.Active;
+                TimedOut = true; State = SoulState.Active;
                 Maedhim = System.Math.Max(1, (int)(MaedhimMax * Balance.WAIT_TIMEOUT_RECOVER));
                 Stun = 0.4f;
             }

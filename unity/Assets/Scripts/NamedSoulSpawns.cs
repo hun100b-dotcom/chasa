@@ -36,6 +36,9 @@ public class NamedSoulSpawns
 
     /// <summary>daylight: 하늘 밝기(0=밤). 밤에만 혼이 보인다</summary>
     /// <summary>자동 플레이 테스트용: 아직 처결 안 된 이름혼의 자리</summary>
+    /// <summary>이 이름의 혼이 이미 처결(천도·파혼)되었나</summary>
+    public bool IsDone(string name) { foreach (var e in entries) if (e.row.name == name) return e.done || (e.live != null && e.live.gone); return false; }
+
     public void PendingPositions(List<KeyValuePair<Vector3, string>> into)
     {
         into.Clear();

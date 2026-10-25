@@ -56,6 +56,7 @@ public static class SkyKeys
 
 public static class ClockSky
 {
+    public static float ArenaFog = 1f;   // 보스 마당 안에서는 0.5(보스가 안개에 묻히지 않게, 아트 검수 10-25). JudgeSystem 이 정한다
     public static float FogScale = 1f;   // 검수용 ?fog=off(0)|0.5|2 … 안개 농도 배율(희뿌연 낮 원인 가르기: 0 이면 안개 끔)
     static readonly Color SunNight = new Color(0.55f, 0.65f, 1f), SunDay = new Color(1f, 0.96f, 0.86f), SunRed = new Color(1f, 0.55f, 0.35f);
     static readonly Color AmbNight = new Color(0.20f, 0.23f, 0.34f), AmbDay = new Color(0.55f, 0.56f, 0.58f);
@@ -93,7 +94,7 @@ public static class ClockSky
         var fog = Color.Lerp(FieldZones.NightFog, Color.Lerp(FogDay, new Color(0.85f, 0.55f, 0.45f), red * 0.5f), dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);
         if (keyed) fog = Color.Lerp(FieldZones.NightFog, ks.fog, dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);   // 낮 안개는 아트 색, 밤엔 구역별 안개 그대로
         RenderSettings.fogColor = fog;
-        RenderSettings.fogDensity = Mathf.Lerp(FieldZones.NightDensity * Balance.FOG_NIGHT_MULT, 0.007f * Balance.FOG_DAY_MULT, dl) * SkyState.FogMult * Balance.FOG_DENSITY_MULT * FogScale;   // 낮엔 구역과 상관없이 옅게. 날씨가 안개를 더 짙게
+        RenderSettings.fogDensity = Mathf.Lerp(FieldZones.NightDensity * Balance.FOG_NIGHT_MULT, 0.007f * Balance.FOG_DAY_MULT, dl) * SkyState.FogMult * Balance.FOG_DENSITY_MULT * FogScale * ArenaFog;   // 낮엔 구역과 상관없이 옅게. 날씨가 안개를 더 짙게
         if (cam != null) cam.backgroundColor = fog;
     }
 }

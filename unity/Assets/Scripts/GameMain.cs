@@ -39,6 +39,7 @@ public class GameMain : MonoBehaviour
         // 켜지면 옛 구역 시험판(?zones)은 쓰지 않는다
         var fieldUrl = (Application.absoluteURL ?? "").ToLowerInvariant();
         FieldRules.On = !(fieldUrl.Contains("field=0") || fieldUrl.Contains("field=off"));
+        FieldRules.Act2 = FieldRules.On && fieldUrl.Contains("act2=1");   // 2막 땅 열기(지금은 주소로만; 입장 조건이 구현되면 그 사건이 켠다). 마커·땅·바닥판이 만들어지기 전에 정해야 한다
         if (FieldRules.On) { FieldManager.ApplyMarkers(); MapLayout.Blockers.Clear(); }   // 마을 옛 충돌표는 비우고 필드 소품 충돌을 쓴다
         World.Enabled = !FieldRules.On && (Balance.WORLD_ZONES || Application.absoluteURL.Contains("zones"));
         var url = Application.absoluteURL;
@@ -69,15 +70,21 @@ public class GameMain : MonoBehaviour
             judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
+            // 제사 지켜보기(기획 jesa_watch_act1): 처결하면 닫히고, 박돌쇠는 천도했을 때만 열린다. 끝까지 본 혼은 천도할 때 기억 끝에 한 줄이 붙는다
+            judge.npcs.dayFrac = () => Mathf.Clamp01((judge.clock.Minutes - Balance.CLOCK_DAWN_MIN) / Balance.CLOCK_DAY_MIN);
+            judge.npcs.soulDone = n => judge.named != null && judge.named.IsDone(n);
+            judge.npcs.parkTendoed = () => judge.PahonOrTendo == 1;
+            judge.memories.jesaSeen = n => judge.npcs.JesaSeen.Contains(n);
+            judge.interactables = new Interactables(judge);   // 1막 줍기·만져 보기 물건
             // 10m 안에 싸우는 혼이 있으면 엿듣기·지켜보기 진행이 멈춘다(기획 npc-interaction-spec §2-3)
             judge.npcs.enemyWithin = r =>
             {
-                foreach (var x in judge.enemies.list) if (x.alive && (x.Pos - judge.player.Pos).sqrMagnitude < r * r) return true;
+                foreach (var x in judge.enemies.list) if (x.alive && !x.kneeling && x.Targetable && (x.Pos - judge.player.Pos).sqrMagnitude < r * r) return true;   // 무릎 꿇어 처결을 기다리는 혼·땅에 묻힌 혼은 싸움이 아니다(봇이 20초 서 있어도 단서가 안 열리던 원인 후보)
                 return false;
             };
             judge.npcs.inCombat = () =>
             {
-                foreach (var x in judge.enemies.list) if (x.alive && (x.Pos - judge.player.Pos).sqrMagnitude < 100f) return true;
+                foreach (var x in judge.enemies.list) if (x.alive && !x.kneeling && x.Targetable && (x.Pos - judge.player.Pos).sqrMagnitude < 100f) return true;
                 return false;
             };
             judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)
@@ -117,6 +124,7 @@ public class GameMain : MonoBehaviour
         if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)
         var settingsPanel = gameObject.AddComponent<SettingsPanel>(); settingsPanel.judge = judge; settingsPanel.white = Texture2D.whiteTexture;   // 설정 화면(O)
         Sfx.Create(judge);   // 효과음 재생기
+        ZoneAmbient.Create(() => player.Pos);   // 2막 구역별 환경음(붉은재·쇳골)
         BgmPlayer.Create(judge);   // BGM 재생기(층 교차). 필드에서만 소리를 낸다
         if (BotScript.Wanted()) { var bs = gameObject.AddComponent<BotScript>(); bs.player = player; bs.enemies = enemies; bs.judge = judge; }   // ?bot=1 첫 세션 자동 플레이 테스트
         else if (DemoScript.Wanted()) { var ds = gameObject.AddComponent<DemoScript>(); ds.player = player; ds.enemies = enemies; ds.judge = judge; }   // ?demo=1 자동 연출
@@ -282,7 +290,13 @@ public class GameMain : MonoBehaviour
         {
             case "boss": case "boss_boat": return bp;
             case "player_and_boss": return (bp + pp) * 0.5f;
-            case "funeral": return new Vector3(JudgeSystem.FuneralX, 0f, JudgeSystem.FuneralZ);   // 박돌쇠 집(대장간) 문 앞 마당(아트 확정 좌표)
+            case "funeral": return judge.FuneralPos;   // 지금 장례가 열린 집 마당(박돌쇠는 대장간 문 앞, 아트 확정 좌표)
+            // 기획 funeral_targets: 혼마다 다른 좌표(멈춘 것·다시 움직이는 것·대문·노제·사라지는 자리)
+            case "funeral_stop": return judge.FuneralPoint("stop");
+            case "funeral_restart": return judge.FuneralPoint("restart");
+            case "funeral_gate": return judge.FuneralPoint("gate");
+            case "funeral_noje": return judge.FuneralPoint("noje");
+            case "funeral_exit": return judge.FuneralPoint("exit");
             case "forge": return new Vector3(218f, 0f, 62f);              // 대장간 안(건물 모델이 없어 터 좌표만)
             case "far_sky_over_hub": return new Vector3(188f, 0f, 60f);   // 서낭당 쪽 먼 하늘
             default: return pp;
@@ -500,13 +514,12 @@ public class GameMain : MonoBehaviour
         var tc = gameObject.AddComponent<TouchControls>();
         tc.hasPull = () => player.loadout.Def.HasPull;
         tc.canInteract = () => judge.CanInteractNow;
-        tc.interactLabel = () => Chasa.Core.Interact.Label(judge.Target);
+        tc.interactLabel = () => judge.TargetLabel;
         tc.skillLabel = i => judge.ActiveNameAt(i);
         tc.skillLeft = i => judge.SkillLeft(i);
         tc.onSkill = i => judge.UseSkill(i);
         tc.onDodge = () => { judge.guide.Complete("dodge"); player.CommandDodge(null); };   // 걷던 방향으로(가운데면 앞쪽)
         tc.onPull = () => { judge.guide.Complete("pull"); var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); };
-        tc.onInteract = () => judge.CommandInteract();
         tc.onAttackHold = () =>   // 누르고 있으면 6m 안 가장 가까운 적을 자동 조준해 연속 공격
         {
             Enemy best = null; float bd = 6f;

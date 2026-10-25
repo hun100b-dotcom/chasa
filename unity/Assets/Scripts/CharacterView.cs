@@ -1,0 +1,165 @@
+// =============================================================================
+// CharacterView.cs — 명부(C) 화면의 UI Toolkit 판. 설정 화면과 같은 방식(UiRoot 의 Overlay 에 판을 얹고, 바뀔 때만 다시 만든다).
+// 왜 옮기나: IMGUI(OnGUI)는 폰 해상도·글자 배율을 따로 계산해야 하고 한 프레임마다 전부 다시 그려 느리다. UI Toolkit 은
+//   UiRoot 와 같은 1280×720(폰 960×540) 기준 크기를 같이 쓴다. 규칙·수치는 그대로 Core/Growth.cs 가 쥐고 있고, 여기서는 보여 주고 누르게만 한다.
+// 옛 세 탭(장비·도술·능력치, DEMO_PANEL 이 켜졌을 때만)은 아직 IMGUI 가 그린다. 명부·들은 말 두 탭만 이 판이 맡는다.
+// ?ui2=0 이면 이 판을 끄고 옛 IMGUI 로 돌아간다.
+// =============================================================================
+using System.Collections.Generic;
+using Chasa.Core;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public partial class CharacterPanel
+{
+    VisualElement view; bool viewDirty = true; int builtTab = -1, builtLog = -1;
+    static readonly bool Ui2 = !(Application.absoluteURL ?? "").Contains("ui2=0");
+    static readonly Color VInk = new Color32(0x1E, 0x1A, 0x17, 255), VSeal = new Color32(0xB5, 0x47, 0x3F, 255), VPaper = new Color(0.953f, 0.906f, 0.827f);
+
+    /// <summary>이 판이 지금 그리는 중인가(그렇다면 IMGUI 는 건너뛴다)</summary>
+    bool UseView { get { return Ui2 && view != null && tab >= 3; } }
+
+    static Label VTxt(VisualElement p, string text, int size, Color c, bool bold = false)
+    {
+        var l = new Label(text) { pickingMode = PickingMode.Ignore };
+        l.style.color = c; l.style.fontSize = size; l.style.whiteSpace = WhiteSpace.Normal;
+        if (bold) l.style.unityFontStyleAndWeight = FontStyle.Bold;
+        var f = Ko.GetFont(); if (f != null) l.style.unityFontDefinition = FontDefinition.FromFont(f);
+        p.Add(l); return l;
+    }
+
+    Label VBtn(VisualElement p, string text, System.Action click, Color c, int size = 13, bool bgOn = false)
+    {
+        var b = VTxt(p, text, size, c); b.pickingMode = PickingMode.Position;
+        b.style.paddingLeft = 4; b.style.paddingRight = 4; b.style.paddingTop = 3; b.style.paddingBottom = 3; b.style.marginBottom = 2;
+        if (bgOn) b.style.backgroundColor = new Color(VInk.r, VInk.g, VInk.b, 0.14f);
+        b.RegisterCallback<ClickEvent>(e => { click(); viewDirty = true; });
+        b.RegisterCallback<PointerEnterEvent>(e => b.style.color = VSeal);
+        b.RegisterCallback<PointerLeaveEvent>(e => b.style.color = c);
+        return b;
+    }
+
+    void UpdateView()
+    {
+        if (!Ui2) return;
+        if (view == null)
+        {
+            var ov = judge != null && judge.ui != null ? judge.ui.Overlay : null; if (ov == null) return;
+            view = new VisualElement { name = "character-view" }; view.style.position = Position.Absolute; view.style.left = 0; view.style.right = 0; view.style.top = 0; view.style.bottom = 0;
+            view.style.alignItems = Align.Center; view.style.justifyContent = Justify.Center; view.style.display = DisplayStyle.None;
+            view.style.backgroundColor = new Color(0f, 0f, 0f, 0.5f);   // 뒤 화면을 어둡게(눌림이 뒤로 새지 않게 이 판이 받는다)
+            ov.Add(view);
+        }
+        bool show = Open && tab >= 3 && judge != null && judge.player != null;
+        view.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+        if (!show) { viewDirty = true; return; }
+        int logN = judge.npcs != null && judge.npcs.Log != null ? judge.npcs.Log.Items.Count : 0;
+        if (viewDirty || builtTab != tab || builtLog != logN) { viewDirty = false; builtTab = tab; builtLog = logN; BuildView(); }
+    }
+
+    void BuildView()
+    {
+        view.Clear();
+        var book = SpriteLib.Texture("ui/ui_book_spread");
+        bool bm = tab == 3 && book != null;
+        var box = new VisualElement(); box.style.width = Length.Percent(96); box.style.maxWidth = 940; box.style.height = Length.Percent(92); box.style.maxHeight = 600;
+        if (bm) { box.style.backgroundImage = new StyleBackground(book); box.style.paddingLeft = 52; box.style.paddingRight = 52; box.style.paddingTop = 44; box.style.paddingBottom = 40; }
+        else { box.style.backgroundColor = new Color(0.05f, 0.06f, 0.1f, 0.94f); box.style.paddingLeft = 16; box.style.paddingRight = 16; box.style.paddingTop = 12; box.style.paddingBottom = 12; }
+        Color txt = bm ? VInk : VPaper, hi = bm ? VSeal : VPaper;
+        // 탭 줄
+        var tabs = new VisualElement { pickingMode = PickingMode.Position }; tabs.style.flexDirection = FlexDirection.Row; tabs.style.justifyContent = Justify.SpaceBetween;
+        var left = new VisualElement { pickingMode = PickingMode.Position }; left.style.flexDirection = FlexDirection.Row;
+        for (int i = 3; i < 5; i++) { int ti = i; var t = VBtn(left, TabNames[i] + (tab == i ? " *" : ""), () => { if (tab != ti) Sfx.Play("sfx.ui.tab"); tab = ti; }, tab == i ? hi : txt, 16); t.style.marginRight = 14; }
+        tabs.Add(left); VBtn(tabs, "닫기", () => Open = false, txt, 16);
+        box.Add(tabs);
+        var body = new ScrollView(ScrollViewMode.Vertical); body.style.flexGrow = 1; body.style.marginTop = 8;
+        if (tab == 3) BuildBook(body, txt, hi, bm); else BuildHeard(body, txt, bm);
+        box.Add(body);
+        view.Add(box);
+    }
+
+    void BuildHeard(VisualElement p, Color txt, bool bm)
+    {
+        var log = judge.npcs != null ? judge.npcs.Log : null;
+        if (log == null || log.Items.Count == 0) { VTxt(p, "아직 들은 말이 없다. 산 사람 곁에 가만히 서 있으면 들린다.", 16, txt); return; }
+        for (int i = log.Items.Count - 1; i >= 0; i--)   // 최근 것이 위
+        {
+            var e = log.Items[i]; bool clue = !string.IsNullOrEmpty(e.Clue);
+            var row = new VisualElement { pickingMode = PickingMode.Ignore }; row.style.marginBottom = 8;
+            var head = new VisualElement { pickingMode = PickingMode.Ignore }; head.style.flexDirection = FlexDirection.Row;
+            if (clue) VTxt(head, "● ", 16, new Color(0.85f, 0.62f, 0.1f));   // 단서가 있는 말은 금색 점
+            VTxt(head, e.Who + "  (" + SlotNames[Mathf.Clamp(e.Slot, 0, 3)] + " · " + e.Place + ")", 16, txt, true);
+            row.Add(head); VTxt(row, e.Text, 15, txt); p.Add(row);
+        }
+    }
+
+    void BuildBook(VisualElement p, Color txt, Color hi, bool bm)
+    {
+        var g = judge.growth;
+        // 1) 품계 줄과 진행 막대
+        int next = g.Rank >= GrowthState.MaxRank ? g.TotalNeok : GrowthState.NeokForRank(g.Rank + 1), cur = GrowthState.NeokForRank(g.Rank);
+        float frac = g.Rank >= GrowthState.MaxRank ? 1f : Mathf.Clamp01((g.TotalNeok - cur) / (float)Mathf.Max(1, next - cur));
+        var r1 = new VisualElement { pickingMode = PickingMode.Ignore }; r1.style.flexDirection = FlexDirection.Row; r1.style.justifyContent = Justify.SpaceBetween;
+        VTxt(r1, "품계 " + g.Rank + "품   넋 " + g.TotalNeok + (g.Rank >= GrowthState.MaxRank ? "" : " / " + next), 18, hi, true);
+        VTxt(r1, "도술 점수 " + g.SkillPointsFree + (g.StainPointsFree > 0 ? " (+얼룩 전용 " + g.StainPointsFree + ")" : "") + "   능력치 점수 " + g.StatPointsFree, 14, txt);
+        p.Add(r1);
+        var bar = new VisualElement { pickingMode = PickingMode.Ignore }; bar.style.height = 8; bar.style.marginTop = 4; bar.style.marginBottom = 10; bar.style.backgroundColor = new Color(VInk.r, VInk.g, VInk.b, 0.18f);
+        var fill = new VisualElement { pickingMode = PickingMode.Ignore }; fill.style.height = Length.Percent(100); fill.style.width = Length.Percent(frac * 100f); fill.style.backgroundColor = bm ? VSeal : new Color(0.45f, 0.78f, 0.82f);
+        bar.Add(fill); p.Add(bar);
+        // 2) 능력치 4종(점수가 있으면 + 버튼)
+        var r2 = new VisualElement { pickingMode = PickingMode.Position }; r2.style.flexDirection = FlexDirection.Row; r2.style.marginBottom = 10;
+        for (int i = 0; i < GrowthState.StatNames.Length; i++)
+        {
+            int si = i; var cell = new VisualElement { pickingMode = PickingMode.Position }; cell.style.flexDirection = FlexDirection.Row; cell.style.width = Length.Percent(25);
+            VTxt(cell, GrowthState.StatNames[i] + " " + g.Stats[i], 16, txt);
+            if (g.StatPointsFree > 0) { var b = VBtn(cell, " + ", () => { g.AddStat(si); judge.RefreshGrowth(); }, hi, 18, true); b.style.marginLeft = 8; }
+            r2.Add(cell);
+        }
+        p.Add(r2);
+        // 3) 도술 세 갈래(세 열). 설명은 아래 한 줄에 마우스를 올린 것을 보여 준다
+        var desc = new Label(); desc.pickingMode = PickingMode.Ignore;
+        string idle = "도술을 누르면 점수 1을 써서 배운다(배운 액티브는 누르면 칸에 올리고 내림). [기]=액티브 [패]=패시브(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)";
+        var cols = new VisualElement { pickingMode = PickingMode.Position }; cols.style.flexDirection = FlexDirection.Row;
+        for (int b = 0; b < 3; b++)
+        {
+            var br = (Branch)b; var col = new VisualElement { pickingMode = PickingMode.Position }; col.style.flexGrow = 1; col.style.flexBasis = 0; col.style.marginRight = b < 2 ? 12 : 0;
+            VTxt(col, SkillTree.BranchName(br) + " 갈래  (" + g.BranchPoints(br) + "점)", 16, hi, true);
+            foreach (var n in SkillTree.All)
+            {
+                if (n.Branch != br) continue;
+                var node = n; int lv = g.LevelOf(n.Name); bool can = g.CanLearn(n.Name); bool locked = n.Deep && g.BranchPoints(br) < SkillTree.DeepNeeds;
+                int barAt = n.Active ? g.ActiveBar.IndexOf(n.Name) : -1;
+                string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[기] ") : "[패] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
+                var c = lv > 0 ? txt : new Color(txt.r, txt.g, txt.b, can ? 0.9f : 0.45f);
+                var bt = VBtn(col, label, () =>
+                {
+                    if (node.Active && g.LevelOf(node.Name) > 0) g.ToggleBar(node.Name);   // 배운 액티브는 칸에 올렸다 내렸다
+                    else { g.Learn(node.Name); judge.RefreshGrowth(); }                     // 배우면 패시브 효과가 바로 붙는다
+                }, c, 13, barAt >= 0);
+                bt.RegisterCallback<PointerEnterEvent>(e => desc.text = node.Name + ": " + node.Desc);
+                bt.RegisterCallback<PointerLeaveEvent>(e => desc.text = idle);
+            }
+            cols.Add(col);
+        }
+        p.Add(cols);
+        // 4) 설명 한 줄 + 액티브 칸 + 무기 두 자루
+        desc.text = idle; desc.style.color = txt; desc.style.fontSize = 13; desc.style.whiteSpace = WhiteSpace.Normal; desc.style.marginTop = 8;
+        var kf = Ko.GetFont(); if (kf != null) desc.style.unityFontDefinition = FontDefinition.FromFont(kf);
+        p.Add(desc);
+        string bar4 = ""; for (int i = 0; i < SkillTree.ActiveSlots; i++) bar4 += "[" + (i + 1) + ": " + (i < g.ActiveBar.Count ? g.ActiveBar[i] : "빈 칸") + "]  ";
+        VTxt(p, "액티브 칸  " + bar4, 13, txt).style.marginTop = 4;
+        var lo = judge.player.loadout;
+        for (int row = 0; row < 2; row++)
+        {
+            bool hand = row == 0; var line = new VisualElement { pickingMode = PickingMode.Position }; line.style.flexDirection = FlexDirection.Row; line.style.flexWrap = Wrap.Wrap; line.style.alignItems = Align.Center;
+            var tag = VTxt(line, hand ? "손에 든" : "등에 멘", 13, txt); tag.style.width = 60;
+            for (int i = 0; i < Loadout.AllWeapons.Length; i++)
+            {
+                var wid = Loadout.AllWeapons[i]; bool held = (hand ? lo.weapon : lo.other) == wid;
+                var wb = VBtn(line, (held ? "● " : "") + WeaponDef.Get(wid).Name, () => { if (hand) lo.SetHand(wid); else lo.SetBack(wid); }, txt, 13, held); wb.style.marginRight = 10;
+            }
+            p.Add(line);
+        }
+        VTxt(p, "지금 든 " + lo.Def.Name + " — " + lo.Def.Taste, 13, txt);
+    }
+}

@@ -31,9 +31,9 @@ namespace Chasa.Core
 
         /// <summary>맵 경계 (월드). 구역 기능이 꺼져 있으면 마을 한 곳(기존 동작), 켜져 있으면 이어 붙인 구역 전체</summary>
         public static float MinX { get { return FieldRules.On ? 0f : World.Enabled ? World.MinX : VillageMinX; } }
-        public static float MaxX { get { return FieldRules.On ? FieldRules.Size : World.Enabled ? World.MaxX : VillageMaxX; } }
+        public static float MaxX { get { return FieldRules.On ? FieldRules.WorldX : World.Enabled ? World.MaxX : VillageMaxX; } }
         public static float MinZ { get { return FieldRules.On ? 0f : World.Enabled ? World.MinZ : VillageMinZ; } }
-        public static float MaxZ { get { return FieldRules.On ? FieldRules.Size : World.Enabled ? World.MaxZ : VillageMaxZ; } }
+        public static float MaxZ { get { return FieldRules.On ? FieldRules.WorldZ : World.Enabled ? World.MaxZ : VillageMaxZ; } }
 
         public static float CenterX { get { return (MinX + MaxX) * 0.5f; } }
         public static float CenterZ { get { return (MinZ + MaxZ) * 0.5f; } }
@@ -102,6 +102,22 @@ namespace Chasa.Core
                 }
             x = System.Math.Max(MinX + radius, System.Math.Min(MaxX - radius, x));
             z = System.Math.Max(MinZ + radius, System.Math.Min(MaxZ - radius, z));
+            ClampL(ref x, ref z, radius);
+        }
+
+        /// <summary>
+        /// 2막 땅은 1막(640×640) 북쪽에 붙은 768×640 이라 전체 모양이 'ㄴ'자다.
+        /// 사각 경계만 쓰면 1막 동쪽 바깥(x>640, z<640)의 빈 공간으로 걸어 나갈 수 있어서, 그 구석을 막는다.
+        /// 왜 '작은 쪽으로 밀기'? 경계선을 따라 미끄러지듯 자연스럽게 돌아가게 하려고.
+        /// </summary>
+        static void ClampL(ref float x, ref float z, float radius)
+        {
+            if (!FieldRules.Act2 || FieldRules.WorldX <= FieldRules.Size) return;
+            float lx = FieldRules.Size - radius, lz = FieldRules.Size - radius;   // 1막 정사각의 동쪽·북쪽 선(몸 반지름만큼 안쪽)
+            if (x > lx && z < lz)
+            {
+                if (x - lx < lz - z) x = lx; else z = lz;
+            }
         }
 
         /// <summary>점 하나를 맵 안으로만 가둔다 (이동 목표점 등, 막힌 곳은 따지지 않음)</summary>
@@ -109,6 +125,7 @@ namespace Chasa.Core
         {
             x = System.Math.Max(MinX, System.Math.Min(MaxX, x));
             z = System.Math.Max(MinZ, System.Math.Min(MaxZ, z));
+            ClampL(ref x, ref z, 0f);
         }
 
         /// <summary>점 (x,z) 가 막힌 곳 안인가 (혼이 집 안에서 태어나지 않게 검사용)</summary>

@@ -208,8 +208,20 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>S1 보스 나루 영감: 크고 느리고 한 방이 아프다</summary>
+    // 보스 목줄: 플레이어가 40m 보다 멀면 쫓지 않고 처음 자리로 돌아간다.
+    // 왜? 넓은 필드에서 몇 분 지나면 보스가 마을까지 걸어와 체력바가 마을에 뜨는 일이 있었다(PC 봇 측정).
+    const float BossLeashM = 40f;
+    Vector3 bossHome; bool bossHomeSet;
+    void ReturnHome(float dt)
+    {
+        if (!bossHomeSet) return;
+        var d = bossHome - Pos; d.y = 0f;
+        if (d.magnitude < 0.5f) return;
+        Pos += d.normalized * speed * slowMult * dt;
+    }
     public void MakeBoss(int id = 1)
     {
+        bossHome = Pos; bossHomeSet = true;
         var def = Bosses.Get(id);
         extra = true; label = def.Name;
         soul = Soul.MakeBoss(id);
@@ -240,6 +252,7 @@ public class Enemy : MonoBehaviour
     public void Freeze(float seconds) { freezeT = Mathf.Max(freezeT, seconds); }
 
     // ---- 공격 차례(토큰): 동시에 때리는 보통 혼 수를 제한해, 둘러싸여도 한꺼번에 맞아 쓰러지지 않게 한다(기획 10-25) ----
+    public static bool IntroCalm;                                       // 첫 25초(첫 5분 안): 가만히 서 있어도 쓰러지지 않게 원거리 혼(넋두리·묻힌 혼)은 쏘지 않고 근접도 한 마리씩만(PC 유휴 1분 검증)
     public static int TokenMax = int.MaxValue;                          // JudgeSystem 이 매 프레임 정한다(첫 5분엔 2, 이후 3)
     static readonly HashSet<Enemy> tokenHolders = new HashSet<Enemy>();   // 지금 예고·공격 중인 혼들
     public static void ResetTokens() { tokenHolders.Clear(); }
@@ -275,8 +288,8 @@ public class Enemy : MonoBehaviour
             stun -= dt;
             bool canAct = stun <= 0f;
             float dist = new Vector2(playerPos.x - Pos.x, playerPos.z - Pos.z).magnitude;
-            if (type == SoulType.Wail) TickWail(dt, playerPos, canAct, dist);
-            else if (type == SoulType.Buried) TickBuried(dt, canAct, dist);
+            if (type == SoulType.Wail) TickWail(dt, playerPos, canAct && !IntroCalm, dist);
+            else if (type == SoulType.Buried) { if (!IntroCalm) TickBuried(dt, canAct, dist); }
             else
             {
             // 예비동작 중에는 멈춰 서서 '곧 때린다'는 신호를 준다 (피할 시간)
@@ -290,12 +303,13 @@ public class Enemy : MonoBehaviour
                     var tg = new Vector3(-(playerPos.z - Pos.z), 0f, playerPos.x - Pos.x) / Mathf.Max(0.01f, dist);
                     Pos += tg * speed * slowMult * 0.35f * dt;
                 }
+                else if (soul.Boss && FieldRules.On && dist > BossLeashM) ReturnHome(dt);   // 보스는 마당 근처에서만 쫓는다
                 else Chase(dt, playerPos);
             }
             bool wasWind = atk.Winding;
-            if (atk.Tick(dt, dist, canAct)) onHitPlayer?.Invoke();
+            if (atk.Tick(dt, dist, canAct)) { if (soul.Boss && soul.BossId == 1) Sfx.Play("sfx.boss.naru.sweep"); onHitPlayer?.Invoke(); }   // 나루 영감: 휩쓸기 판정 순간
             if (gated) { if (atk.Winding) tokenHolders.Add(this); else tokenHolders.Remove(this); }
-            if (atk.Winding && !wasWind) Sfx.Play("sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
+            if (atk.Winding && !wasWind) Sfx.Play(type == SoulType.Mote ? "sfx.enemy.mote.telegraph" : soul.Boss && soul.BossId == 1 ? "sfx.boss.naru.sweep.telegraph" : "sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
             mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)
                                     : baseColor;
@@ -317,7 +331,8 @@ public class Enemy : MonoBehaviour
         }
         bool wasWind = wail.Winding;
         bool fire = wail.Tick(dt, dist, canAct);
-        if (wail.Winding && !wasWind) Sfx.Play("sfx.enemy.telegraph");
+        if (wail.Winding && !wasWind) Sfx.Play("sfx.enemy.wail.telegraph");   // 사운드 PR #25: 신종 혼 예고음
+        if (fire) Sfx.Play("sfx.enemy.wail.throw");
         if (fire) WonnyeomOrb.Spawn(Pos + Vector3.up * 1.0f, dir, this);
         UpdateTeleLine(dir, Mathf.Min(dist, Balance.SOULTYPE_WAIL_ORB_RANGE_M));
         mat.color = wail.Winding ? Color.Lerp(baseColor, new Color(0.7f, 0.3f, 0.9f), wail.WindupRatio) : baseColor;
@@ -347,8 +362,8 @@ public class Enemy : MonoBehaviour
     {
         var ph = buried.Phase;
         if (!canAct && ph != BuriedPhase.Hidden) { /* 기절 중엔 단계가 멈춘다 */ }
-        else if (buried.Tick(dt, dist) && SoulTypeRules.Reachable(type, buried.Phase) && BuriedAi.InStrike(dist)) onHitPlayer?.Invoke();
-        if (buried.Phase == BuriedPhase.Windup && ph == BuriedPhase.Hidden) Sfx.Play("sfx.enemy.telegraph");
+        else if (buried.Tick(dt, dist) && SoulTypeRules.Reachable(type, buried.Phase) && BuriedAi.InStrike(dist)) { Sfx.Play("sfx.enemy.buried.burst"); onHitPlayer?.Invoke(); }
+        if (buried.Phase == BuriedPhase.Windup && ph == BuriedPhase.Hidden) Sfx.Play("sfx.enemy.buried.telegraph");
         mat.color = buried.Phase == BuriedPhase.Windup ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), buried.T / Balance.SOULTYPE_BURIED_WINDUP) : baseColor;
     }
 
@@ -405,7 +420,7 @@ public class Enemy : MonoBehaviour
         bool down = kneeling || sending;
         if (soul.Boss)
         {
-            string b = soul.BossId == 2 ? "boss_b02" : soul.BossId == 3 ? "boss_b03" : "boss_naru";
+            string b = soul.BossId == 2 ? "boss_b02" : soul.BossId == 3 ? "boss_b03" : soul.BossId >= 5 ? Bosses.Get(soul.BossId).Model : "boss_naru";
             n = "boss/" + b + (atk.Winding ? "_attack" : down && soul.BossId > 1 ? "_kneel" : "_idle");
         }
         else if (soul.Fierce) n = "enemies/soul_fierce";

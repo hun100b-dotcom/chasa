@@ -49,7 +49,13 @@ public static class BuildScript
         Directory.CreateDirectory(MatDir);
         Directory.CreateDirectory("Assets/Scenes");
 
-        Save("Matte", Shader.Find("Standard"), m => { m.SetFloat("_Glossiness", 0f); m.SetFloat("_Metallic", 0f); });
+        Save("Matte", Shader.Find("Standard"), m =>
+        {
+            m.SetFloat("_Glossiness", 0f); m.SetFloat("_Metallic", 0f);
+            // 바닥 소품(CoverInstancer)이 GPU 인스턴싱으로 그린다. 원본 재질에 켜 두지 않으면 웹 빌드가 '인스턴싱 변형'을 지워
+            // 소품 수는 세는데 화면엔 안 그려진다(2026-10-25 PC 검증: 소품 587개·분홍 덩어리 0)
+            m.enableInstancing = true;
+        });
         Save("Flash", Shader.Find("Standard"), m =>
         {
             // 적이 맞을 때 하얗게 번쩍이는 데 쓰는 '발광' 기능을 켜 둔다 (빌드에서 이 기능이 빠지지 않게)

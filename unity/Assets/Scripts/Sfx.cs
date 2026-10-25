@@ -76,18 +76,44 @@ public class Sfx : MonoBehaviour
         clips[id] = c; return c;
     }
 
+    /// <summary>구역 환경음용 반복 음원 하나를 만든다(소리 0으로 시작, 호출한 쪽이 서서히 키운다). 소리 파일이 없으면 null 대신 빈 음원</summary>
+    public static AudioSource MakeLoop(string id)
+    {
+        var host = I != null ? I.gameObject : new GameObject("SfxLoop");
+        var s = host.AddComponent<AudioSource>(); s.loop = true; s.playOnAwake = false; s.volume = 0f;
+        var c = I != null ? I.Clip(id) : null;
+        if (c != null) { s.clip = c; s.Play(); }
+        return s;
+    }
+
     /// <summary>효과음 한 번 재생. 아직 준비 전이거나 꺼져 있으면 조용히 무시</summary>
+    /// <summary>무기 이름표(chain/mace/bell/trident/brush) — 소리 id 뒤에 붙인다</summary>
+    public static string WeaponTag(WeaponId w) { return w.ToString().ToLowerInvariant(); }
+    /// <summary>무기별 타격음 id. 철삭은 기존 소리를 그대로 쓴다(사운드팀 표)</summary>
+    public static string HitKey(WeaponId w, bool heavy)
+    {
+        if (w == WeaponId.Chain) return heavy ? "sfx.hit.heavy" : "sfx.hit.chain";
+        return "sfx.hit." + WeaponTag(w) + (heavy ? ".heavy" : "");
+    }
     public static void Play(string id) { if (I != null) I.PlayInternal(id); }
 
     AudioSource wxLoop; Weather wxNow = Weather.Clear; string wxId;
     /// <summary>날씨 소리: 비=amb.weather.rain, 흐림=바람, 안개·역병 안개=fog_night. 맑음은 끈다. 바뀌면 서서히(0.5초) 갈아 끼운다</summary>
+    /// <summary>더킹(ducking, 중요한 소리 때 배경을 잠깐 줄이기): 1=그대로, 0.5=절반. 컷신·천도 시전·명부 열림 때 BGM·환경음에 곱한다. 예고음·타격음은 줄이지 않는다</summary>
+    public static float Duck = 1f;
+    public static void TickDuck(bool on, float dt) { Duck = Mathf.MoveTowards(Duck, on ? 0.5f : 1f, dt / (on ? 0.4f : 1.2f) * 0.5f); }   // 줄일 땐 0.4초, 돌아올 땐 1.2초(갑자기 커지지 않게)
+    public static bool NightNow;   // 지금이 밤인가(JudgeSystem 이 시계를 보고 매 프레임 알려 준다 — 날씨 소리 고르기용)
     public static void SetWeatherAmbient(Weather w) { if (I != null) I.SetWeatherInternal(w); }
 
     void SetWeatherInternal(Weather w)
     {
         if (wxLoop == null) { wxLoop = gameObject.AddComponent<AudioSource>(); wxLoop.loop = true; wxLoop.playOnAwake = false; wxLoop.volume = 0f; }
-        string id = w == Weather.Rain ? "amb.weather.rain" : w == Weather.Cloudy ? "amb.weather.wind" : (w == Weather.Fog || w == Weather.Plague) ? "amb.weather.fog_night" : null;
-        float target = id == null || muted ? 0f : 0.5f * SaveStore.Settings.Sfx;
+        // 날씨 소리는 낮·밤과 안개·역병을 구분한다(사운드팀 표). 큰비(1호 보스 날)는 보스 날 신호가 생기면 추가
+        string id = w == Weather.Rain ? "amb.weather.rain"
+            : w == Weather.Cloudy ? (NightNow ? "amb.weather.cloudy.night" : "amb.weather.wind")
+            : w == Weather.Fog ? (NightNow ? "amb.weather.fog_night" : "amb.weather.fog")
+            : w == Weather.Plague ? "amb.weather.plague" : null;
+        float target = id == null || muted ? 0f : 0.6f * SaveStore.Settings.Sfx * Duck;   // 믹스 기준표: 날씨 0.6
         if (id != null && id != wxId) { var c = Clip(id); if (c != null) { wxLoop.clip = c; wxId = id; if (!wxLoop.isPlaying) wxLoop.Play(); } }
         wxLoop.volume = Mathf.MoveTowards(wxLoop.volume, target, Time.unscaledDeltaTime * 2f);
         if (id == null && wxLoop.volume <= 0f && wxLoop.isPlaying) { wxLoop.Stop(); wxId = null; }

@@ -29,6 +29,8 @@ namespace Chasa.Core
         public bool OpeningSeen, FuneralShown;    // 오프닝·장례 컷을 이미 봤나(불러오면 다시 틀지 않는다)
         public WeaponId Weapon = WeaponId.Chain, Other = WeaponId.Mace;   // 손에 든 / 등에 멘 무기
         public int[] WeatherNow;                  // 구역별 지금 날씨(Weather 순서, WeatherRules.Zones 순). null 이면 불러올 때 새로 굴린다
+        public List<string> Picked = new List<string>(), HerbTaken = new List<string>();   // 주운 엽전·만진 유품 / 딴 쑥(id:날)
+        public int Herbs;                         // 가진 쑥
         public bool PlagueEased;                  // 3호 처결 뒤 역병 가중치 감소
     }
 
@@ -76,6 +78,7 @@ namespace Chasa.Core
             var c = new List<string>(); foreach (var n in s.Clues) c.Add(Clean(n)); w("clues", string.Join(",", c));
             w("boss", s.BossOutcome); w("named", s.NamedOutcome); w("opening", s.OpeningSeen ? 1 : 0); w("funeral", s.FuneralShown ? 1 : 0); w("weapon", (int)s.Weapon); w("other", (int)s.Other);
             if (s.WeatherNow != null) w("wx", string.Join(",", s.WeatherNow)); w("plagueEased", s.PlagueEased ? 1 : 0);
+            w("picked", string.Join(",", s.Picked)); w("herbTaken", string.Join(",", s.HerbTaken)); w("herbs", s.Herbs);
             return b.ToString();
         }
 
@@ -101,6 +104,9 @@ namespace Chasa.Core
                 for (int i = 0; i < s.Gear.Length; i++) s.Gear[i] = d.ContainsKey("gear" + i) ? ItemFrom(d["gear" + i], (Slot)i) : null;
                 if (d.ContainsKey("clues") && d["clues"].Length > 0) s.Clues.AddRange(d["clues"].Split(','));
                 s.PlagueEased = I("plagueEased") == 1;
+                if (d.ContainsKey("picked") && d["picked"].Length > 0) s.Picked.AddRange(d["picked"].Split(','));
+                if (d.ContainsKey("herbTaken") && d["herbTaken"].Length > 0) s.HerbTaken.AddRange(d["herbTaken"].Split(','));
+                s.Herbs = d.ContainsKey("herbs") ? I("herbs") : 0;
                 if (d.ContainsKey("wx") && d["wx"].Length > 0) { var wp = d["wx"].Split(','); s.WeatherNow = new int[wp.Length]; for (int i = 0; i < wp.Length; i++) s.WeatherNow[i] = Math.Max(0, Math.Min(4, int.Parse(wp[i]))); }
                 return s;
             }

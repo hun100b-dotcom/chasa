@@ -53,6 +53,7 @@ public class JudgeSystem : MonoBehaviour
 
     void Start()
     {
+        LoadFuneralIndex(); CutPlayback.Cond = FuneralCond;   // 1막 장례 색인과 장례 컷의 조건 판정
         // 서낭당: 출발점이자 귀환점. 납작한 노란 원으로 '돌아갈 곳'을 보여 준다
         shrineView = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         Destroy(shrineView.GetComponent<Collider>());
@@ -135,6 +136,7 @@ public class JudgeSystem : MonoBehaviour
         castTotal = e.soul.Boss ? Balance.BOSS_TENDO_CAST_TIME : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
         if (!e.soul.Boss)
         {
+            if (interactables != null && e.label != null && interactables.KeepsakeSouls.Contains(e.label)) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.KEEPSAKE_CAST_CUT);   // 유품을 만져 둔 혼
             if (nameLightArmed) { castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.AC_NAMELIGHT_SEC); nameLightArmed = false; }   // 이름 비추기
             if (sevenArmed) { castTotal = Balance.CAST_MIN_TIME; sevenArmed = false; }                                                          // 일곱 이름: 하한까지
         }
@@ -162,6 +164,8 @@ public class JudgeSystem : MonoBehaviour
         var at = e.Pos;
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
+        if (interactables != null) interactables.OnPahon(e.soul.Name);   // 이름혼의 유품은 재가 된다
+        if (e.soul.Name != null && funeralCut.ContainsKey(e.soul.Name)) { funeralPending[e.soul.Name] = 2; funeralBorn[e.soul.Name] = clock != null && clock.Phase == ClockPhase.Day ? clock.Day : -1; }   // 파혼: 조등만(장면 없음)
         if (!e.soul.Boss && e.soul.Name == null) introPlainDone++;
         e.PlayFinishAnim(false);   // 파혼 동작(터짐)
         e.Finish();
@@ -218,7 +222,7 @@ public class JudgeSystem : MonoBehaviour
         // 파편 모델: 3종 중 하나를 무작위 방향으로 터뜨린다 (반경에 맞춰 크기)
         FxMesh.Burst("fx_pahon_shards_" + "abc"[Random.Range(0, 3)], new Vector3(at.x, at.y + 0.05f, at.z), radius / 1.25f, 0.55f, 0.5f, 1.15f, 0.4f, null, Random.Range(0f, 360f));
         feel.HitStop(Balance.PAHON_HITSTOP_FRAMES);
-        Sfx.Play("sfx.pahon.burst");
+        Sfx.Play("sfx.pahon.burst." + Sfx.WeaponTag(lo.weapon));
         feel.AddShake(Balance.PAHON_SHAKE);
         feel.AddZoom(1f);                       // 파혼: 확 다가가는 쿵
         flashColor = new Color(0.55f, 0.05f, 0.08f); flashA = 0.55f;   // 붉은 번쩍임(깨뜨림)
@@ -238,6 +242,7 @@ public class JudgeSystem : MonoBehaviour
         FxMesh.Burst("fx_tendo_pillar", tp, 0.8f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f, 0.7f));   // 크기 −20%·알파 −30%(아트 검수: 화면 1/3을 흰 덩어리로 덮음)
         FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 0.85f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f, 0.7f));
         TendoSuccessAt = Time.time;
+        if (castTarget.soul.Name != null && funeralCut.ContainsKey(castTarget.soul.Name)) { funeralPending[castTarget.soul.Name] = 1; funeralBorn[castTarget.soul.Name] = clock != null && clock.Phase == ClockPhase.Day ? clock.Day : -1; }   // 천도: 다음 낮 그 집 장례
         weather.ClearPlague(tp);   // 역병 안개: 천도한 자리 반경 4m 가 15초 걷힌다
         castTarget.PlayFinishAnim(true);   // 천도 동작(일어남→빛 알갱이→숨김)
         castTarget.Finish();
@@ -250,7 +255,7 @@ public class JudgeSystem : MonoBehaviour
             {
                 t2.soul.BeginSending(); t2.Finish();
                 int nb = ledger.Neok; ledger.CompleteTendo(); gainedExtra = ledger.Neok - nb;
-                if (growth.AddNeok(gainedExtra) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");
+                if (growth.AddNeok(gainedExtra) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }
                 night.RecordTendo(gainedExtra);
                 Say("한 줄로 함께 천도했다");
             }
@@ -275,7 +280,7 @@ public class JudgeSystem : MonoBehaviour
             if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
             int gained = ledger.Neok - before;
-            if (growth.AddNeok(gained) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");   // 품계 상승 알림
+            if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
             if (castTarget.soul.Name == null) introPlainDone++;
@@ -288,7 +293,7 @@ public class JudgeSystem : MonoBehaviour
         if (ml != null) { memLine = ml; memLineT = 5f; if (fact != null) ui?.Hud.Toasts.Add("추리판 " + fact + " 켜짐"); }
         chainLeft = lo.stats.ChainWindow + lo.Def.ChainWindowAddS;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
-        Sfx.Play("sfx.tendo.done");
+        Sfx.Play("sfx.tendo.done." + Sfx.WeaponTag(lo.weapon));
         feel.SlowMo(Balance.TENDO_COMPLETE_SLOWMO, Balance.TENDO_COMPLETE_SLOWMO_SCALE);   // 멈춤이 아니라 느림 = 보냄
         feel.AddZoom(-0.7f);                    // 천도 완료: 숨을 내쉬듯 화면이 살짝 멀어졌다 돌아온다
         flashColor = new Color(0.85f, 0.8f, 1f); flashA = 0.5f;        // 흰 보랏빛 번쩍임(보냄)
@@ -528,6 +533,13 @@ public class JudgeSystem : MonoBehaviour
                 var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
                 var arena = new GameObject("BossArena" + bid).AddComponent<BossArena>(); arena.Init(this, be, bd);
             }
+        if (FieldRules.On && Act2BossArena.Enabled)   // 2막 보스 넷(?act2=1 검사용): 2막 땅이 깔리면 기본으로 켠다
+            for (int bid = 5; bid <= 8; bid++)
+            {
+                var bd = Bosses.Get(bid);
+                var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
+                var arena = new GameObject("Act2BossArena" + bid).AddComponent<Act2BossArena>(); arena.Init(this, be, bd);
+            }
         cluePos.Clear();
         foreach (var v in clueViews) Destroy(v);
         clueViews.Clear();
@@ -542,6 +554,24 @@ public class JudgeSystem : MonoBehaviour
             g.GetComponent<Renderer>().sharedMaterial = U.Unlit(ChasaPalette.MemoryRim);   // 보랏빛 구슬 = 기억의 단서
             clueViews.Add(g);
         }
+    }
+
+    // ---- 처결 대기 긴장음: 남은 시간 비율에 맞춰 똑딱 간격이 1.0초 → 0.15초로 줄어든다(사운드팀 표) ----
+    float waitTickT; Enemy waitFor; bool waitFinalDone;
+    void TickWaitTick(float dt)
+    {
+        Enemy e = enemies.NearestKneeling(player.Pos, 14f);
+        if (e != waitFor) { waitFor = e; waitFinalDone = false; waitTickT = 0.3f; }   // 새 대기 혼이 생기면 처음부터
+        if (e == null || Casting || introFrozen) return;   // 천도 시전 중엔 멈춤, 첫 혼(튜토리얼)엔 틀지 않는다
+        var s = e.soul;
+        if (s.WaitTotal <= 0f) return;
+        if (!waitFinalDone && s.WaitLeft <= 1.5f) { waitFinalDone = true; Sfx.Play("sfx.wait.final"); }   // 마지막 1.5초 경고
+        waitTickT -= dt;
+        if (waitTickT > 0f) return;
+        float ratio = Mathf.Clamp01(s.WaitLeft / s.WaitTotal);
+        waitTickT = Mathf.Lerp(0.15f, 1.0f, ratio);
+        // 나이가 많은 혼일수록 낮고 무거운 똑딱
+        Sfx.Play(s.Kind == SoulKind.Fresh ? "sfx.wait.tick.fresh" : s.Kind == SoulKind.Year ? "sfx.wait.tick.year" : "sfx.wait.tick.old");
     }
 
     void TickClues()
@@ -623,7 +653,7 @@ public class JudgeSystem : MonoBehaviour
         SetupNight();
     }
 
-    void Say(string s) { toast = s; toastT = 1.5f; }
+    public void Say(string s) { toast = s; toastT = 1.5f; }
 
     // ===== 매 프레임 ===============================================================
     public void Tick(float dt, float realDt)
@@ -639,6 +669,7 @@ public class JudgeSystem : MonoBehaviour
         if (!played && (Input.anyKeyDown || Input.GetMouseButtonDown(0) || Input.touchCount > 0)) { played = true; enemies.graceT = Balance.NIGHT_GRACE; }
         enemies.holdFire = !played;
         UpdateInteract(dt);
+        player.judgeStance = !Casting && enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE) != null;   // 무릎 꿇은 혼 앞: 주인공 Judge 자세
         if (!night.Over) HandleKeys();   // 결과 화면에서는 무기 교체·공격 키가 먹지 않는다(QA B4)
         if (!night.Over) overT = 0f;
         if (night.Over)
@@ -666,6 +697,7 @@ public class JudgeSystem : MonoBehaviour
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
         if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
+        Sfx.NightNow = clock != null && clock.Phase == ClockPhase.Night;
         weather.state.Override = WeatherRules.Parse(cuts.SceneWeather);   // 서사 컷이 정한 날씨가 무작위보다 우선
         float wxSlow; int wxDrain;
         weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
@@ -697,6 +729,74 @@ public class JudgeSystem : MonoBehaviour
     bool openingStarted;
     int pahonOrTendo;            // 박돌쇠 처결 결과: 0 안 함 · 1 천도 · 2 파혼
     bool funeralShown;
+    public int PahonOrTendo { get { return pahonOrTendo; } }   // 박돌쇠 결과: 1 천도 · 2 파혼 · 0 아직
+    // 1막 장례(서사 funerals_act1): 처결한 혼의 집 앞에 다음 낮 처음 다가갈 때 하루 한 번. 혼 이름 → 컷 이름 색인
+    [System.Serializable] class FunIdx { public string soul, id; }
+    [System.Serializable] class FunFile { public FunIdx[] funerals; }
+    readonly Dictionary<string, string> funeralCut = new Dictionary<string, string>();
+    readonly Dictionary<string, int> funeralPending = new Dictionary<string, int>();   // 혼 → 결과(1 천도 · 2 파혼)
+    readonly HashSet<string> funeralDone = new HashSet<string>();
+    readonly Dictionary<string, int> funeralBorn = new Dictionary<string, int>();   // 혼 → 처결한 날(낮에 처결했으면 그 낮이 끝나도 다음 낮까지 남기려고)
+    int funeralDay = -1;                                  // 장례를 본 날(하루 한 번)
+    public Vector3 FuneralPos = new Vector3(214f, 0f, 62f);   // 지금 장례가 열린 마당(카메라 'funeral' 대상)
+    // 기획 funeral_targets_act1.json: 혼마다 대문(gate)·멈춘 것·다시 움직이는 것·노제·사라지는 자리 좌표
+    [System.Serializable] class FPt { public float[] xy; }
+    [System.Serializable] class FTarget { public string name; public float[] gate; public FPt stop_object, restart_object, noje, exit; }
+    [System.Serializable] class FTargetFile { public FTarget[] funerals; }
+    readonly Dictionary<string, FTarget> funeralTargets = new Dictionary<string, FTarget>();
+    bool dogHome;                                         // 칠복 장례 다음 새벽부터 누렁이가 개집(191,75)으로 돌아와 머문다
+    /// <summary>누렁이 동선(기획 kennel_S004): 처결 전 둑 어귀(250,100)·밤엔 칠복 혼 자리 근처 / 장례 날 (205,86)에서 나타나 행렬을 따라 (236,98)로 사라짐 / 다음 새벽부터 개집 / 파혼·처결 못 함이면 둑 어귀 그대로</summary>
+    void DogTick()
+    {
+        bool done = funeralDone.Contains("칠복");
+        Vector3 p = Vector3.zero; bool show = true;
+        if (dogHome) p = new Vector3(191f, 0f, 75f);
+        else if (cuts.Active && cuts.CurId == "FUN-S004_TENDO") { float k = Mathf.Clamp01((cuts.CurTime - 25f) / 20f); show = cuts.CurTime >= 25f; p = Vector3.Lerp(new Vector3(205f, 0f, 86f), new Vector3(236f, 0f, 98f), k); }
+        else if (done) show = false;   // 장례가 끝난 날: 사라진 채로 다음 새벽을 기다린다
+        else if (clock != null && clock.Phase == ClockPhase.Night && !funeralPending.ContainsKey("칠복") && !funeralNoneShown.Contains("칠복")) p = new Vector3(204f, 0f, 87.5f);
+        else p = new Vector3(250f, 0f, 100f);
+        interactables.SetDog(show, show ? p : Vector3.zero);
+    }
+    bool parkUnjudged;                                    // 박돌쇠 '처결 못 함' 확정(대기 초과·동틀녘·첫 5분 10분 안전장치)
+    string funeralNow;                                    // 지금 열린 장례의 혼 이름(카메라 좌표 종류를 고르는 데 쓴다)
+    readonly HashSet<string> funeralNoneShown = new HashSet<string>();   // '처결 못 함' 장면을 이미 본 혼(한 혼에 한 번)
+    ClockPhase lastFunPhase = ClockPhase.Night;
+    static Vector3 V(float[] xy) { return xy != null && xy.Length >= 2 ? new Vector3(xy[0], 0f, xy[1]) : Vector3.zero; }
+    /// <summary>장례 카메라 좌표: kind = stop · restart · gate · noje · exit. 혼 데이터가 없으면 지금 마당</summary>
+    public Vector3 FuneralPoint(string kind)
+    {
+        FTarget t;
+        if (funeralNow == null || !funeralTargets.TryGetValue(funeralNow, out t)) return FuneralPos;
+        switch (kind)
+        {
+            case "stop": return t.stop_object != null ? V(t.stop_object.xy) : FuneralPos;
+            case "restart": return t.restart_object != null ? V(t.restart_object.xy) : FuneralPos;
+            case "noje": return t.noje != null ? V(t.noje.xy) : FuneralPos;
+            case "exit": return t.exit != null ? V(t.exit.xy) : FuneralPos;
+            default: return V(t.gate);
+        }
+    }
+    /// <summary>처결 대기까지 갔다가 E·R 을 못 받고 흩어졌다(대기 초과·동틀녘): 장례 대상이면 다음 낮 '처결 못 함'(한 혼에 한 번)</summary>
+    void MarkUnjudged(Enemy e)
+    {
+        string n = e.soul.Name;
+        if (n == "박돌쇠" && pahonOrTendo == 0) parkUnjudged = true;   // 박돌쇠는 첫 세션 장면(FUNERAL_NONE)이 따로 있어 표시만 한다
+        if (n == null || !funeralCut.ContainsKey(n) || funeralDone.Contains(n) || funeralNoneShown.Contains(n) || funeralPending.ContainsKey(n)) return;
+        funeralPending[n] = 3; funeralBorn[n] = clock != null && clock.Phase == ClockPhase.Day ? clock.Day : -1;
+    }
+    public bool FuneralDoneHas(string soul) { return funeralDone.Contains(soul); }
+    void LoadFuneralIndex()
+    {
+        var ta = Resources.Load<TextAsset>("Data/funerals_index"); if (ta == null) return;
+        var f = JsonUtility.FromJson<FunFile>(ta.text); if (f == null || f.funerals == null) return;
+        foreach (var x in f.funerals) funeralCut[x.soul] = x.id;
+        var tt = Resources.Load<TextAsset>("Data/funeral_targets_act1");
+        if (tt != null) { var tf = JsonUtility.FromJson<FTargetFile>(tt.text); if (tf != null && tf.funerals != null) foreach (var x in tf.funerals) funeralTargets[x.name] = x; }
+    }
+    /// <summary>장례 컷의 조건 글자(서사 condition). 지금은 1호 결과만 안다(3호 결과는 아직 따로 세지 않아 false)</summary>
+    bool FuneralCond(string c) { return c == "B-01 천도함" ? bossOutcome == 1 : false; }
+    /// <summary>제사를 지켜보기 전에는 장례 대상 이름혼의 지도 표식을 숨긴다(기획: 지켜보면 그 혼의 오늘 밤 자리가 명부에 표시된다). 윤 소사·연이는 첫 세션 흐름이라 처음부터 보인다</summary>
+    public bool NamedMarkerHidden(string name) { return name != null && name != "윤 소사" && name != "연이" && funeralCut.ContainsKey(name) && (npcs == null || !npcs.JesaSeen.Contains(name)); }
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
     // ===== 저장·불러오기 (규칙은 Core/SaveGame.cs, 저장소는 SaveStore) ==================
     bool loadChecked; float autoSaveT = 30f;
@@ -710,6 +810,9 @@ public class JudgeSystem : MonoBehaviour
         s.X = player.Pos.x; s.Z = player.Pos.z; s.ClockDay = clock.Day; s.ClockMinutes = clock.Minutes;
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
+        if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
+        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
+        if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
         return SaveStore.Write(SaveGame.Serialize(s));
     }
 
@@ -725,6 +828,19 @@ public class JudgeSystem : MonoBehaviour
         RefreshGrowth();
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
+        funeralPending.Clear(); funeralDone.Clear(); funeralNoneShown.Clear(); funeralBorn.Clear(); parkUnjudged = false; dogHome = false; funeralDay = -1;
+        foreach (var pk in s.Picked)
+        {
+            if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
+            else if (pk == "pu:1") parkUnjudged = true;
+            else if (pk == "dh:1") dogHome = true;
+            else if (pk.StartsWith("fn:")) funeralNoneShown.Add(pk.Substring(3));
+            else if (pk.StartsWith("fb:")) { int c = pk.LastIndexOf(':'); int o; if (c > 3 && int.TryParse(pk.Substring(c + 1), out o)) funeralBorn[pk.Substring(3, c - 3)] = o; }
+            else if (pk.StartsWith("fday:")) int.TryParse(pk.Substring(5), out funeralDay);
+            else if (pk.StartsWith("fp:")) { int c = pk.LastIndexOf(':'); int o; if (c > 3 && int.TryParse(pk.Substring(c + 1), out o)) funeralPending[pk.Substring(3, c - 3)] = o; }
+        }
+        if (npcs != null) { npcs.JesaSeen.Clear(); foreach (var pk in s.Picked) if (pk.StartsWith("jesa:")) npcs.JesaSeen.Add(pk.Substring(5)); }
+        if (interactables != null) { interactables.Restore(s.Picked, s.HerbTaken, s.Herbs); foreach (var sp in interactSpots) sp.Done = false; }   // 주운 것은 Active 가 id 로 걸러 준다
         weather.Restore(s.WeatherNow, s.PlagueEased, clock);   // 날씨도 그대로(불러오자마자 다시 굴리지 않는다)
         bossOutcome = s.BossOutcome; pahonOrTendo = s.NamedOutcome; openingStarted = true; funeralShown = s.FuneralShown; sceneryAdded = false;
         player.CommandStop(); player.Pos = new Vector3(s.X, 0f, s.Z);
@@ -748,7 +864,7 @@ public class JudgeSystem : MonoBehaviour
         if (autoSaveT > 0f) return;
         autoSaveT = 45f;
         if (clock == null || !played || Casting || cuts.Active || ledger.Dead || AnyEnemyNear(20f)) return;
-        SaveGameNow();
+        if (SaveGameNow()) Sfx.Play("sfx.ui.save.auto");
     }
 
     void TickCutscenes(float dt)
@@ -771,11 +887,43 @@ public class JudgeSystem : MonoBehaviour
         // 박돌쇠 장례: 처결한 다음 낮, 그 집(대장간) 앞에 처음 다가갈 때 한 번(서사 확정). 천도 70초 / 처결 못 함 20초 / 파혼은 조등만(아무 일 없음, 컷 없음)
         if (clock != null && clock.Phase == ClockPhase.Day && !funeralShown && openingStarted && !cuts.Active)
         {
-            if (pahonOrTendo == 2) funeralShown = true;   // 파혼: 일어나는 일이 없다
+            if (pahonOrTendo == 2 || (pahonOrTendo == 0 && !parkUnjudged)) funeralShown = pahonOrTendo == 2;   // 파혼: 일어나는 일이 없다. 처결 못 함(대기 초과·동틀녘·10분 안전장치)이 아니면 "아직"이라 장면 없음
             else if (new Vector2(player.Pos.x - FuneralX, player.Pos.z - FuneralZ).magnitude < 14f)
             {
-                funeralShown = true;
+                funeralShown = true; funeralDay = clock.Day; FuneralPos = new Vector3(FuneralX, 0f, FuneralZ);
                 cuts.Play(pahonOrTendo == 1 ? "FUNERAL_TENDO" : "FUNERAL_NONE");
+            }
+        }
+        // 1막 장례(기획 funeral-rules-act1): 다음 낮 14분 안에 그 집 대문 20m 안으로 처음 들어갈 때 시작, 못 보고 낮이 지나면 사라짐. 하루 한 번.
+        // 천도(1)=장례 장면 · 파혼(2)=조등만 · 처결 못 함(3)=20초 장면(한 혼에 한 번)
+        if (clock != null && clock.Phase != lastFunPhase)
+        {
+            if (lastFunPhase == ClockPhase.Day && funeralPending.Count > 0)   // 낮이 끝났다: 그 낮에 열린 것은 못 본 장례로 사라진다(낮에 처결한 것은 다음 낮까지 남는다)
+            {
+                int missed = 0; foreach (var k in new List<string>(funeralPending.Keys)) { int born; if (!funeralBorn.TryGetValue(k, out born) || born != clock.Day) { funeralPending.Remove(k); funeralBorn.Remove(k); if (funeralPending.ContainsKey(k) == false) missed++; } }
+                if (missed > 0) Say("보지 못한 장례");
+            }
+            lastFunPhase = clock.Phase;
+        }
+        if (clock != null && clock.Phase == ClockPhase.Day && openingStarted && !cuts.Active && funeralPending.Count > 0 && funeralDay != clock.Day)
+        {
+            string fire = null; int fireKind = 0;
+            foreach (var kv in funeralPending)
+            {
+                FTarget ft;
+                if (kv.Value == 2 || funeralDone.Contains(kv.Key)) { if (fire == null) { fire = kv.Key; fireKind = 2; } continue; }   // 조등만: 장면 없이 정리
+                if (kv.Value == 3 && funeralNoneShown.Contains(kv.Key)) { if (fire == null) { fire = kv.Key; fireKind = 2; } continue; }   // 두 번째부터는 빗장만
+                if (funeralTargets.TryGetValue(kv.Key, out ft) && new Vector2(player.Pos.x - ft.gate[0], player.Pos.z - ft.gate[1]).magnitude < 20f) { fire = kv.Key; fireKind = kv.Value; break; }
+            }
+            if (fire != null)
+            {
+                funeralPending.Remove(fire); funeralBorn.Remove(fire);
+                if (fireKind != 2)
+                {
+                    funeralDay = clock.Day; funeralNow = fire; FuneralPos = FuneralPoint("gate");
+                    if (fireKind == 1) funeralDone.Add(fire); else funeralNoneShown.Add(fire);
+                    cuts.Play(funeralCut[fire] + (fireKind == 1 ? "_TENDO" : "_NONE"));
+                }
             }
         }
         if (FieldRules.On)
@@ -810,58 +958,99 @@ public class JudgeSystem : MonoBehaviour
     }
 
     // ---- F 상호작용(기획 npc-interaction-spec §2): 줍기 2m · 만져 보기 1.5m(2초 누르기) · 넋길 3m · 쉬기 3m ----
-    /// <summary>줍기·만져 보기 자리. 배치 데이터가 생기면 여기에 더한다(OnUse 가 실제 동작)</summary>
-    public class InteractSpot { public InteractKind Kind; public Vector3 Pos; public System.Action OnUse; public bool Done; }
+    /// <summary>줍기·만져 보기 자리(Interactables 가 채운다). OnUse 가 true 를 돌려주면 다 쓴 것(Done)</summary>
+    public class InteractSpot { public InteractKind Kind; public Vector3 Pos; public System.Func<bool> OnUse; public System.Func<bool> Active; public bool Done; }
     public readonly List<InteractSpot> interactSpots = new List<InteractSpot>();
+    public Interactables interactables;                    // 1막 물건 배치(필드에서만)
     public InteractKind Target = InteractKind.None;       // 지금 F 가 향하는 대상(안내·폰 버튼 글자가 이것을 따른다)
-    public float TouchHold;                                // 만져 보기 누른 시간(초)
+    public string TargetLabel = "";                        // 안내·폰 버튼 글자(넋길 곁이면 '꾹 눌러 쉬기'도 붙는다)
+    public float HoldRatio;                                // 누르고 있는 진행(0~1): 만져 보기·쉬기
+    public bool RestBlocked;                               // 쉬려는데 10m 안에 깨어 있는 혼이 있다
     InteractSpot targetSpot;
+    float holdT, lastHold; bool prevF, heldConsumed;
     readonly List<InteractCand> candBuf = new List<InteractCand>();
 
-    float NearestShrineDist()
-    {
-        float best = float.MaxValue;
-        foreach (var sh in FieldRules.Shrines) { float d = Mathf.Sqrt((sh[0] - player.Pos.x) * (sh[0] - player.Pos.x) + (sh[1] - player.Pos.z) * (sh[1] - player.Pos.z)); if (d < best) best = d; }
-        return best;
-    }
+    void ShrineNear(out float dist) { dist = float.MaxValue; foreach (var sh in FieldRules.Shrines) { float d = Mathf.Sqrt((sh[0] - player.Pos.x) * (sh[0] - player.Pos.x) + (sh[1] - player.Pos.z) * (sh[1] - player.Pos.z)); if (d < dist) dist = d; } }
 
-    /// <summary>매 프레임: 후보를 모아 대상 하나를 고르고, 만져 보기는 F 를 누르고 있는 동안 진행시킨다</summary>
+    /// <summary>매 프레임: 후보를 모아 대상 하나를 고르고, F 누름·누르고 있기(만져 보기·쉬기)를 처리한다</summary>
     void UpdateInteract(float dt)
     {
         candBuf.Clear(); targetSpot = null;
+        float sd = float.MaxValue; bool canSoulPath = false;
         if (clock != null && !Casting && player.CanActNow())
         {
             for (int i = 0; i < interactSpots.Count; i++)
             {
-                var sp = interactSpots[i]; if (sp.Done) continue;
+                var sp = interactSpots[i]; if (sp.Done || (sp.Active != null && !sp.Active())) continue;
                 candBuf.Add(new InteractCand { Kind = sp.Kind, Id = i, Dist = Mathf.Sqrt((sp.Pos.x - player.Pos.x) * (sp.Pos.x - player.Pos.x) + (sp.Pos.z - player.Pos.z) * (sp.Pos.z - player.Pos.z)) });
             }
-            float sd = NearestShrineDist();
-            if (SoulPathStop() >= 0) candBuf.Add(new InteractCand { Kind = InteractKind.SoulPath, Id = -1, Dist = sd });
+            ShrineNear(out sd);
+            canSoulPath = SoulPathStop() >= 0;
+            if (canSoulPath) candBuf.Add(new InteractCand { Kind = InteractKind.SoulPath, Id = -1, Dist = sd });
             candBuf.Add(new InteractCand { Kind = InteractKind.Rest, Id = -1, Dist = sd });
         }
         int pick = Interact.Pick(candBuf);
         Target = pick < 0 ? InteractKind.None : candBuf[pick].Kind;
         if (pick >= 0 && candBuf[pick].Id >= 0) targetSpot = interactSpots[candBuf[pick].Id];
-        if (Target == InteractKind.Touch && (Input.GetKey(KeyCode.F) || TouchControls.UseHeld))
-        {
-            TouchHold += dt;
-            if (TouchHold >= Balance.TOUCH_TIME) { TouchHold = 0f; targetSpot.Done = true; if (targetSpot.OnUse != null) targetSpot.OnUse(); }
-        }
-        else TouchHold = 0f;
-    }
 
-    /// <summary>F(또는 폰 버튼) 한 번 누름. 만져 보기는 누르고 있어야 해서 여기서는 하지 않는다</summary>
-    public void CommandInteract()
-    {
+        // 쉬기 막힘: 10m 안에 깨어 있는 혼
+        RestBlocked = false;
+        if (Target == InteractKind.Rest || Target == InteractKind.SoulPath)
+            foreach (var x in enemies.list) if (x.alive && (x.Pos - player.Pos).sqrMagnitude < Balance.SHRINE_REST_BLOCK_M * Balance.SHRINE_REST_BLOCK_M) { RestBlocked = true; break; }
+        bool nightBoth = Target == InteractKind.SoulPath;   // 밤 서낭당: 톡 = 넋길, 꾹 = 쉬기
+        TargetLabel = Target == InteractKind.None ? "" : nightBoth ? (RestBlocked ? "넋길 (혼이 가까이 있다)" : "넋길 · 꾹 눌러 쉬기")
+            : Target == InteractKind.Rest && RestBlocked ? "혼이 가까이 있다" : Interact.Label(Target);
+
+        // F 상태: 키보드 또는 폰 버튼. 한 번 쓴 뒤에는 뗄 때까지 새 대상으로 이어지지 않는다
+        bool fHeld = Input.GetKey(KeyCode.F) || TouchControls.UseHeld;
+        if (!fHeld) heldConsumed = false;
+        bool down = fHeld && !prevF, up = !fHeld && prevF; prevF = fHeld;
+        if (fHeld && !heldConsumed) holdT += dt; else { if (up) lastHold = holdT; holdT = 0f; }
+        if (sinceHit < 0.1f) holdT = 0f;   // 맞으면 앉기·만지기가 끊긴다
+        HoldRatio = 0f;
         switch (Target)
         {
-            case InteractKind.Pickup: targetSpot.Done = true; if (targetSpot.OnUse != null) targetSpot.OnUse(); break;
-            case InteractKind.SoulPath: CommandSoulPath(); break;
-            case InteractKind.Rest: ledger.Hp = ledger.MaxHp; Say("서낭당에서 숨을 골랐다"); break;   // 임시 효과(기획이 쉬기 규칙을 주면 교체)
-            case InteractKind.None: if (npcs != null) npcs.DismissSubtitle(); break;
+            case InteractKind.Pickup:
+                if (down && targetSpot != null) UseSpot(targetSpot);
+                break;
+            case InteractKind.Touch:
+                HoldRatio = Mathf.Clamp01(holdT / Balance.TOUCH_TIME);
+                if (holdT >= Balance.TOUCH_TIME && targetSpot != null) { holdT = 0f; heldConsumed = true; UseSpot(targetSpot); }
+                break;
+            case InteractKind.SoulPath:
+            case InteractKind.Rest:
+                if (nightBoth && up && lastHold < 0.35f) CommandSoulPath();
+                if (!RestBlocked && holdT > 0.35f)
+                {
+                    HoldRatio = Mathf.Clamp01(holdT / Balance.SHRINE_REST_TIME);
+                    if (holdT >= Balance.SHRINE_REST_TIME) { holdT = 0f; heldConsumed = true; ShrineRest(); }
+                }
+                break;
+            case InteractKind.None:
+                if (down && npcs != null) npcs.DismissSubtitle();
+                break;
         }
     }
+
+    void UseSpot(InteractSpot sp) { if (sp.OnUse == null || sp.OnUse()) sp.Done = true; }
+
+    /// <summary>서낭당에서 앉아 쉰다(기획 interactables-act1 §3). 시간은 넘기지 않는다</summary>
+    void ShrineRest()
+    {
+        ledger.Hp = ledger.MaxHp; player.RefillDodge();
+        int made = 0;
+        if (interactables != null)
+        {
+            made = Mathf.Min(interactables.Herbs / Balance.HERB_PER_POTION, Mathf.Max(0, Shop_Max - dayScreen.Pack.Heal));   // 쑥 3개 → 회복약 1개(한도까지)
+            dayScreen.Pack.Heal += made; interactables.Herbs -= made * Balance.HERB_PER_POTION;
+        }
+        CharacterPanel.Open = true;   // 성장 창(도술·능력치 점수 찍기)
+        SaveGameNow();
+        Say(made > 0 ? "서낭당에 이름을 걸어 두었다 — 쑥을 달여 회복약 " + made + "개" : "서낭당에 이름을 걸어 두었다");
+        if (weather != null) { forecastNote = weather.PeekNext(clock); forecastT = 12f; }   // 다음 시간대 날씨 예보
+    }
+    const int Shop_Max = Balance.SHOP_HEAL_MAX;
+    string forecastNote; float forecastT;   // 쉬고 난 뒤 시간 고리 곁에 잠시 띄우는 예보
 
     /// <summary>넋길: 다음 서낭당으로 즉시 이동</summary>
     public void CommandSoulPath()
@@ -881,24 +1070,32 @@ public class JudgeSystem : MonoBehaviour
     void TickClock(float dt)
     {
         // 처음 5분: 박돌쇠를 처결할 때까지(최대 10분) 시계를 멈춘다 — 시간 압박 없이 배우게(기획 first-5-minutes)
-        Enemy.TokenMax = FieldRules.On ? (introFrozen ? Balance.ATTACK_TOKENS_INTRO : Balance.ATTACK_TOKENS) : int.MaxValue;   // 동시에 때리는 혼 수 제한
+        { var nb = NearestBoss(); float want = nb != null && Vector3.Distance(nb.Pos, player.Pos) < 24f ? 0.5f : 1f; ClockSky.ArenaFog = Mathf.MoveTowards(ClockSky.ArenaFog, want, dt * 0.5f); }   // 마당에 들어서면 2초에 걸쳐 안개가 반으로
+        Enemy.IntroCalm = FieldRules.On && introFrozen && introT < 25f;
+        Enemy.TokenMax = FieldRules.On ? (Enemy.IntroCalm ? 1 : introFrozen ? Balance.ATTACK_TOKENS_INTRO : Balance.ATTACK_TOKENS) : int.MaxValue;   // 동시에 때리는 혼 수 제한
         FieldCamps.EarlyMaxAlive = introFrozen ? 5 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
         if (introFrozen && !cuts.Active && !inDay) introT += dt;
-        if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
+        if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { if (pahonOrTendo == 0) parkUnjudged = true; introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
         if (!cuts.PauseClock && !introFrozen) clock.Tick(dt);   // 오프닝 컷 동안·첫 5분엔 시계가 멈춘다
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
         ActorModel.HeroShadowOn = clock.Phase != ClockPhase.Day;   // 낮엔 주인공 그림자 없음(산 사람에게 안 보이는 차사)
+        if (interactables != null) DogTick();
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
+        if (interactables != null) interactables.Tick(player.Pos);
         if (named != null) { named.AppearMult = weather.Fx.NamedMult; named.Tick(player.Pos, clock.Daylight); }
         night.Clues = Mathf.Min(Balance.BOSS_CLUES_REQUIRED, clueBook.Count("B01-"));   // 1막 첫 보스(나루 영감)의 낮 단서 수 = 보스 천도 조건
+        // 처결 대기가 끝까지 지나 일어선 혼 = '처결 못 함'(장례 대상이면 다음 낮 장례로). 읽고 바로 지워 한 번만 센다
+        foreach (var e in enemies.list) if (e.soul.TimedOut) { e.soul.TimedOut = false; Sfx.Play("sfx.wait.expire"); MarkUnjudged(e); }
+        TickWaitTick(dt);
         var ph = clock.Consume();
         if (ph.HasValue)
         {
             Sfx.Play("sfx.bell");
             if (ph.Value == ClockPhase.Night) Hint(HintEvent.FirstNightfall);
             string n = WorldClock.PhaseName(ph.Value);
+            if (ph.Value == ClockPhase.Dawn && funeralDone.Contains("칠복") && funeralDay >= 0) dogHome = true;
             if (ph.Value == ClockPhase.Dawn)
-                foreach (var e in enemies.list) if (e.kneeling) { e.soul.Finish(); Say("동이 터 처결 못 한 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
+                foreach (var e in enemies.list) if (e.kneeling) { MarkUnjudged(e); e.soul.Finish(); Say("동이 터 처결 못 한 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
             Say(ph.Value == ClockPhase.Dusk ? "인정 — 해가 진다" : ph.Value == ClockPhase.Dawn ? "파루 — 동이 튼다" : n + "이 되었다");
         }
         // 검사용: ] 로 배속 순환(1→10→60→1)
@@ -911,7 +1108,7 @@ public class JudgeSystem : MonoBehaviour
     void HandleKeys()
     {
         if (Input.GetKeyDown(KeyCode.E)) CommandTendo();
-        if (Input.GetKeyDown(KeyCode.F)) CommandInteract();   // F: 가장 알맞은 대상 하나(줍기·만져 보기·넋길·쉬기), 없으면 들은 말 창 닫기
+        // F(줍기·만져 보기·넋길·쉬기)는 UpdateInteract 가 누름·누르고 있기를 함께 처리한다
         if (Input.GetKeyDown(KeyCode.Alpha1)) UseSkill(0);
         if (Input.GetKeyDown(KeyCode.Alpha2)) UseSkill(1);
         if (Input.GetKeyDown(KeyCode.Alpha3)) UseSkill(2);
@@ -1074,8 +1271,8 @@ public class JudgeSystem : MonoBehaviour
         h.SubNpc = npcs != null && npcs.SubtitleT > 0f ? npcs.Subtitle : null; h.SubNpcName = npcs != null ? npcs.SubtitleName : null;
         // 무릎 꿇은 혼이 3m 안이면 F 안내를 숨긴다(그 순간엔 E·R 이 주인공, 기획 §2-2). F 를 눌러도 동작은 한다
         bool kneelNear = enemies.NearestKneeling(player.Pos, 3f) != null;
-        h.InteractLabel = Target != InteractKind.None && !kneelNear ? Interact.Label(Target) : null;
-        h.InteractRatio = Target == InteractKind.Touch ? Mathf.Clamp01(TouchHold / Balance.TOUCH_TIME) : 0f; h.SubNpcAlpha = npcs != null ? Mathf.Clamp01(npcs.SubtitleT / 0.6f) : 0f;
+        h.InteractLabel = Target != InteractKind.None && !kneelNear ? TargetLabel : null;
+        h.InteractRatio = HoldRatio; h.SubNpcAlpha = npcs != null ? Mathf.Clamp01(npcs.SubtitleT / 0.6f) : 0f;
         // 경험치(품계) 막대: 처음 넋을 얻은 뒤에만(하나씩 열기)
         h.ShowExp = revNeok && FieldRules.On; h.Rank = growth.Rank;
         { int lo0 = GrowthState.NeokForRank(growth.Rank), hi0 = GrowthState.NeokForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.TotalNeok - lo0) / (hi0 - lo0); }
@@ -1174,6 +1371,7 @@ public class JudgeSystem : MonoBehaviour
             h.Peaceful = clock.Daylight > 0.6f && !Casting && !AnyEnemyNear(25f);
             h.TimeOfDay = clock.DayFraction; h.IsDawn = clock.Reddish; h.Daylight = clock.Daylight; h.FullMoon = clock.FullMoon; h.NewMoon = clock.NewMoon; h.MoonPhase = clock.MoonPhase;
             h.ClockLabel = WorldClock.PhaseName(clock.Phase) + (clock.FullMoon ? " · 보름달" : clock.NewMoon ? " · 그믐" : "") + (clock.Speed > 1.5f ? "  x" + (int)clock.Speed : "") + (introFrozen ? "  · 시간 멈춤" : "");
+            if (forecastT > 0f) { forecastT -= Time.unscaledDeltaTime; h.ClockLabel += "\n" + forecastNote; }   // 서낭당 예보
         }
         else { h.Peaceful = false; h.TimeOfDay = Mathf.Clamp01(1f - night.TimeLeft / Mathf.Max(1f, Balance.NIGHT_DURATION)); h.IsDawn = night.Warning; h.Daylight = 0f; h.ClockLabel = null; }
         h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.KarmaHidden = weather.Fx.HideKarma; h.ChainBonus = chainLeft > 0f;
@@ -1271,7 +1469,8 @@ public class JudgeSystem : MonoBehaviour
         // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
         weather.DrawOverlay(player.Pos);   // 비 줄기(HUD 보다 아래)
-        if (npcs != null) npcs.DrawWorld(Camera.main, player.Pos, white);   // 귀·눈 아이콘, 진행, 지나가는 혼잣말
+        if (npcs != null) npcs.DrawWorld(Camera.main, player.Pos, white);
+        if (interactables != null) interactables.DrawWorld(Camera.main, player.Pos, white);   // 귀·눈 아이콘, 진행, 지나가는 혼잣말
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
         if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)

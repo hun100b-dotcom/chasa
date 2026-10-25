@@ -11,16 +11,18 @@ using UnityEngine;
 
 public static class GroundTerrain
 {
-    [System.Serializable] class Meta { public float size = 640f, height_min_m = 0f, height_max_m = 8f; public int height_res = 641, splat_res = 640; public float[] layer_tile_m; }
+    [System.Serializable] class Meta { public float size = 640f, height_min_m = 0f, height_max_m = 8f; public int height_res = 641, splat_res = 640; public float[] layer_tile_m; public float[] origin_m; public float size_x_m, size_z_m; }   // origin_m·size_x/z_m 는 2막 직사각 땅
 
-    public static bool Active;
+    public static bool Active, Active2;   // Active2: 2막 땅(768×640m, 원점 (0,640))이 켜졌다
+    static HeightField height2; static SplatField splat2; static Material mat2; static Meta meta2;
+    const float Act2Z = 640f;             // 이 z 이상은 2막 땅이 맡는다
     static HeightField height; static SplatField splat;
     static Material mat; static Meta meta;
     const float Step = 2f;   // 땅 메쉬 꼭짓점 간격(m). 128m 청크 = 64칸 = 4225 꼭짓점
 
     /// <summary>월드 (x,z) 의 땅 높이(m). 새 땅이 없으면 0 (옛 평지)</summary>
-    public static float HeightAt(float x, float z) { return Active ? height.At(x, z) : 0f; }
-    public static float SlopeAt(float x, float z) { return Active ? height.Slope(x, z) : 0f; }
+    public static float HeightAt(float x, float z) { if (Active2 && z >= Act2Z) return height2.At(x, z); return Active ? height.At(x, z) : 0f; }
+    public static float SlopeAt(float x, float z) { if (Active2 && z >= Act2Z) return height2.Slope(x, z); return Active ? height.Slope(x, z) : 0f; }
 
     public static void Init()
     {
@@ -49,8 +51,40 @@ public static class GroundTerrain
                 BuildMaterial(ta, tb);
             }
             Active = true;
+            if (FieldRules.Act2) InitAct2();   // 2막 땅은 열렸을 때만 읽는다(1막은 아무것도 안 바뀐다)
         }
         catch (System.Exception e) { Debug.LogWarning("새 땅을 읽지 못해 옛 땅을 쓴다: " + e.Message); Active = false; }
+    }
+
+    /// <summary>
+    /// 2막 땅(Resources/Terrain2): 직사각 768×640m, 원점 (0,640). 층 그림·잔무늬는 1막 것을 그대로 쓰고, 색만 2막 뜻으로 곱한다(붉은 흙·마른 풀·바위·쇠찌꺼기·황토).
+    /// 실패하면 2막 땅만 꺼지고 1막은 그대로다.
+    /// </summary>
+    static void InitAct2()
+    {
+        try
+        {
+            var mj = Resources.Load<TextAsset>("Terrain2/terrain"); var hb = Resources.Load<TextAsset>("Terrain2/heightmap"); var sa = Resources.Load<TextAsset>("Terrain2/splat_a");
+            if (mj == null || hb == null || sa == null) return;
+            meta2 = JsonUtility.FromJson<Meta>(mj.text);
+            float ox = meta2.origin_m != null && meta2.origin_m.Length >= 2 ? meta2.origin_m[0] : 0f, oz = meta2.origin_m != null && meta2.origin_m.Length >= 2 ? meta2.origin_m[1] : Act2Z;
+            float sx = meta2.size_x_m > 0f ? meta2.size_x_m : meta2.size, sz = meta2.size_z_m > 0f ? meta2.size_z_m : meta2.size;
+            var ht = Decode(hb, true); if (ht == null) return;
+            var px = ht.GetPixels32(); var r = new byte[px.Length]; var g = new byte[px.Length];
+            for (int i = 0; i < px.Length; i++) { r[i] = px[i].r; g[i] = px[i].g; }
+            height2 = HeightField.FromRGRect(ht.width, ht.height, sx, sz, ox, oz, r, g, meta2.height_min_m, meta2.height_max_m);
+            var ta = Decode(sa, true); var tb = Decode(Resources.Load<TextAsset>("Terrain2/splat_b"), true);
+            if (ta == null) return;
+            var pa = ta.GetPixels32(); var pb = tb != null && tb.width == ta.width && tb.height == ta.height ? tb.GetPixels32() : null;
+            var layers = new float[SplatField.Layers][];
+            for (int l = 0; l < layers.Length; l++) layers[l] = new float[pa.Length];
+            for (int i = 0; i < pa.Length; i++) { layers[0][i] = pa[i].r / 255f; layers[1][i] = pa[i].g / 255f; layers[2][i] = pa[i].b / 255f; layers[3][i] = pa[i].a / 255f; layers[4][i] = pb == null ? 0f : pb[i].r / 255f; }
+            splat2 = new SplatField(ta.width, ta.height, sx, sz, ox, oz, layers);
+            mat2 = MakeMaterial(ta, tb, meta2, new Vector4(ox, oz, sx, sz), true);
+            FieldRules.Extend(ox + sx, oz + sz);   // 걸을 수 있는 땅이 768×1280 으로 넓어진다
+            Active2 = true;
+        }
+        catch (System.Exception e) { Debug.LogWarning("2막 땅을 읽지 못했다: " + e.Message); Active2 = false; }
     }
 
     /// <summary>PNG 를 읽는다. flipRows: 지도(높이·재질)는 약속이 '그림 첫 줄(위) = 남쪽(z 0)'인데 유니티는 그림 맨 아랫줄을 0번으로 읽어 남북이 뒤집힌다 → 줄 순서를 뒤집어 바로잡는다</summary>
@@ -71,6 +105,7 @@ public static class GroundTerrain
     /// <summary>그 자리의 재질 비율(흙·풀·자갈·논·낙엽). 걸음 소리·미끄러움에 쓴다. 새 땅이 없으면 풀</summary>
     public static void LayerWeights(float x, float z, float[] o)
     {
+        if (Active2 && splat2 != null && z >= Act2Z) { splat2.Weights(x, z, o); return; }
         if (Active && splat != null) { splat.Weights(x, z, o); return; }
         for (int i = 0; i < o.Length; i++) o[i] = i == (int)GroundLayer.Grass ? 1f : 0f;
     }
@@ -158,11 +193,19 @@ public static class GroundTerrain
         mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; mr.receiveShadows = false;
     }
 
-    static void BuildMaterial(Texture2D a, Texture2D b)
+    static void BuildMaterial(Texture2D a, Texture2D b) { mat = MakeMaterial(a, b, meta, new Vector4(0f, 0f, meta.size, meta.size), false); }
+
+    static Material MakeMaterial(Texture2D a, Texture2D b, Meta meta, Vector4 rect, bool act2)
     {
         var sh = Resources.Load<Shader>("Shaders/ChasaTerrainSplat");
-        if (sh == null || !sh.isSupported) { mat = U.Matte(new Color(0.34f, 0.46f, 0.26f)); return; }   // 셰이더가 안 되는 기기: 한 가지 풀색 땅(그래도 높낮이는 있다)
-        mat = new Material(sh);
+        if (sh == null || !sh.isSupported) return U.Matte(act2 ? new Color(0.45f, 0.30f, 0.22f) : new Color(0.34f, 0.46f, 0.26f));   // 셰이더가 안 되는 기기: 한 가지 색 땅(그래도 높낮이는 있다)
+        var mat = new Material(sh);
+        mat.SetVector("_SplatRect", rect);
+        if (act2)   // 2막 색 곱(아트 TERRAIN-ACT2.md 표): 흙→붉은 흙, 풀→마른 풀, 자갈→바위, 논→쇠찌꺼기·석탄, 낙엽→황토. 같은 타일 그림에 곱하는 근사값이라 PC 캡처로 아트 검수 필요
+        {
+            mat.SetColor("_Tint0", new Color(1.2f, 0.7f, 0.5f)); mat.SetColor("_Tint1", new Color(1.3f, 1.1f, 0.55f)); mat.SetColor("_Tint2", new Color(0.9f, 0.9f, 0.95f));
+            mat.SetColor("_Tint3", new Color(0.35f, 0.35f, 0.5f)); mat.SetColor("_Tint4", new Color(1.3f, 1.05f, 0.6f));
+        }
         a.wrapMode = TextureWrapMode.Clamp; a.filterMode = FilterMode.Bilinear; mat.SetTexture("_SplatA", a);
         if (b != null) { b.wrapMode = TextureWrapMode.Clamp; b.filterMode = FilterMode.Bilinear; mat.SetTexture("_SplatB", b); }
         mat.SetTexture("_T0", LayerTex("dirt", "tile_dirt_road_a")); mat.SetTexture("_T1", LayerTex("grass", "tile_grass_a"));
@@ -181,12 +224,16 @@ public static class GroundTerrain
             t.wrapMode = TextureWrapMode.Repeat; mat.SetTexture("_D" + i, t); found++;
         }
         mat.SetFloat("_DetailAmount", found == 5 ? 0.5f : 0f);   // 0.5 = 가까울 때 큰 타일과 반반
+        return mat;
     }
 
     /// <summary>청크(cx,cz) 한 칸(128m)의 땅 메쉬를 만들어 parent 아래에 붙인다. 높이는 하이트맵에서</summary>
     public static System.Collections.IEnumerator BuildChunk(Transform parent, int cx, int cz)
     {
         if (!Active) yield break;
+        bool a2 = cz * FieldRules.ChunkSize >= Act2Z;   // 이 청크는 2막 땅 위
+        if (a2 && !Active2) yield break;
+        if (!a2 && cx >= FieldRules.Chunks) yield break;   // 1막 땅 동쪽 바깥(x 640~768, z<640)은 땅이 없다
         float cs = FieldRules.ChunkSize; int n = Mathf.RoundToInt(cs / Step), vn = n + 1;
         float x0 = cx * cs, z0 = cz * cs;
         var verts = new Vector3[vn * vn]; var uvs = new Vector2[vn * vn]; var tris = new int[n * n * 6];
@@ -195,8 +242,8 @@ public static class GroundTerrain
             for (int i = 0; i < vn; i++)
             {
                 float x = x0 + i * Step, z = z0 + j * Step;
-                verts[j * vn + i] = new Vector3(x, height.At(x, z), z);
-                uvs[j * vn + i] = new Vector2(x / meta.size, z / meta.size);
+                verts[j * vn + i] = new Vector3(x, a2 ? height2.At(x, z) : height.At(x, z), z);
+                uvs[j * vn + i] = new Vector2(x / meta.size, z / meta.size);   // (셰이더는 월드 좌표를 쓴다. uv 는 쓰이지 않음)
             }
             if (j % 24 == 23) yield return null;   // 한 프레임에 몰아 만들면 걸음이 뚝 끊긴다 → 여러 프레임에 나눠 만든다
         }
@@ -216,9 +263,9 @@ public static class GroundTerrain
         var go = new GameObject("Ground");
         go.transform.SetParent(parent, false);
         go.AddComponent<MeshFilter>().sharedMesh = mesh;
-        var mr = go.AddComponent<MeshRenderer>(); mr.sharedMaterial = mat;
+        var mr = go.AddComponent<MeshRenderer>(); mr.sharedMaterial = a2 ? mat2 : mat;
         mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;   // 땅이 자기 그림자를 만들 필요는 없다(가볍게)
-        BuildWater(parent, verts, n, vn);   // 강·개울 자리에 흐르는 물
+        if (!a2) BuildWater(parent, verts, n, vn);   // 강·개울 자리에 흐르는 물(2막은 아직 물 없음)
     }
 }
 

@@ -161,7 +161,7 @@ public class DayScreen
         {
             var it = (ShopItem)i;
             if (GUI.Button(new Rect(x, y, w, 40), names3[i] + "  엽전 " + Shrine.Price(it) + "   (지님 " + have[i] + ")" + ShopHelp(it), btn))
-                msg = Shrine.Buy(it, ledger, Pack) ? names3[i] + "을 샀다" : "엽전이 모자라거나 더 지닐 수 없다";
+                { bool bought = Shrine.Buy(it, ledger, Pack); Sfx.Play(bought ? "sfx.ui.confirm" : "sfx.ui.deny"); msg = bought ? names3[i] + "을 샀다" : "엽전이 모자라거나 더 지닐 수 없다"; }
             y += 44;
         }
         y += 8;

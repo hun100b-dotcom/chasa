@@ -294,15 +294,133 @@ def _(r):
     return thump * .8 + grit * .5
 
 
-@sfx("sfx.ui.click", -18, "UI", "버튼 누름: 나무 딱", use="버튼·탭")
-def _(r):
-    return modal(.08, [(1850, .012, 1), (3100, .008, .5), (720, .02, .4)], r)
+# ===== UI 소리: 한지·먹 분위기(2026-10-25 정비) =====
+# 왜 이렇게: UI 소리는 한 판에 수백 번 듣는다. 그래서 (1) 짧고(대부분 0.1~0.5초) (2) 귀를 찌르는 높은 쇳소리 없이
+# 종이·붓·나무·도장처럼 '손에 닿는 재질'로 만들고 (3) 자주 나는 것일수록 작게 둔다(버튼 -21, 들은 말 -21(부드러운 결이라 실제로는 더 작게 들림), 자동 저장 -31).
+# 큰일(품계 오름)만 크고 길다 → 귀가 '이건 중요하다'를 바로 안다.
+def _paper(r, sec, lo=1500, hi=6500, a=.004, hold=0.0):
+    """한지 스침: 높은 쪽만 남긴 잡음(종이의 사각거림). lo~hi 사이만 통과"""
+    m = int(sec * SR)
+    return filt(filt(noise(m, r), "high", lo), "low", hi) * env(m, a, sec * .35, 4, hold=hold)
 
 
-@sfx("sfx.ui.confirm", -16, "UI", "확인: 나무 딱 + 작은 방울", use="선택 확정·창 닫기")
+def _crinkle(r, sec, count, f=(2000, 6000), amp=(.2, 1)):
+    """종이 구김: 아주 짧은 '틱' 알갱이를 흩뿌림(cut.paper.tear 와 같은 원리, 더 적게)"""
+    tick = lambda r, k: filt(noise(int(.004 * SR), r), "band", r.uniform(*f), 2.5) * env(int(.004 * SR), .0002, .0012) * r.uniform(*amp)
+    return grains(sec, r, count, tick)
+
+
+def _thump(r, sec=.12, f=180, body=600):
+    """한지 덮인 나무를 손끝으로 누름: 낮은 둥 + 짧은 몸통 울림(딱딱한 '딱' 대신 먹먹한 '톡')"""
+    m = int(sec * SR)
+    return tone(sec, f * 1.4, f) * env(m, .002, sec * .3, 3) + filt(noise(m, r), "band", body, 1.2) * env(m, .001, .015) * .6
+
+
+@sfx("sfx.ui.click", -21, "UI", "버튼 누름: 한지 바른 나무를 손끝으로 톡(먹먹하게, 0.1초)", use="버튼·탭·목록 고르기(가장 자주 남 → 가장 작게)")
 def _(r):
-    x = modal(.6, [(1850, .012, 1), (720, .02, .4)], r)
-    return reverb(x + np.roll(modal(.6, [(2640, .18, .5), (3960, .1, .25)], r), int(.05 * SR)) * .6, .8, .2)
+    buf = np.zeros(int(.14 * SR))
+    place(buf, _thump(r, .1, 210, 900), 0)
+    place(buf, _crinkle(r, .03, 4, (2500, 5000), (.1, .3)), .002)   # 종이 결이 살짝 바스락
+    return reverb(buf, .25, .06)
+
+
+@sfx("sfx.ui.confirm", -17, "UI", "확인: 붓끝 톡 + 도장 꾹(낮고 짧게 맺힘, 0.35초)", use="선택 확정·사기·배우기")
+def _(r):
+    buf = np.zeros(int(.5 * SR))
+    place(buf, filt(noise(int(.012 * SR), r), "band", 1600, 1) * env(int(.012 * SR), .0005, .004) * .5, 0)   # 붓끝 닿음
+    place(buf, _thump(r, .2, 150, 520) * 1.1, .07)                                                         # 인주 묻은 도장이 꾹
+    place(buf, modal(.35, [(880, .09, .35), (1320, .05, .15)], r), .07)                                      # 도장 손잡이(나무) 짧은 울림
+    return reverb(buf, .4, .1)
+
+
+@sfx("sfx.ui.back", -21, "UI", "뒤로·취소: 종이를 옆으로 스윽 밀어 둠(위로 올라가지 않고 내려앉는 결, 0.22초)", use="취소·창 하나 뒤로·설정 닫기")
+def _(r):
+    m = int(.22 * SR)
+    x = sweep_filt(noise(m, r), "band", 3200, 1400, 1.2) * env(m, .02, .08, 4, hold=.06)   # 높→낮으로 쓸림 = '물러남'
+    return reverb(x * .8 + np.pad(_thump(r, .08, 170, 700), (int(.15 * SR), 0))[:m] * .35, .25, .06)
+
+
+@sfx("sfx.ui.tab", -17, "UI", "탭 넘김: 얇은 한지 한 장 끝을 손톱으로 넘김(팔락, 0.15초)", use="명부 안 탭(명부/들은 말/장비…) 바꿀 때")
+def _(r):
+    buf = np.zeros(int(.2 * SR))
+    place(buf, _paper(r, .1, 1800, 7000, .006) * .7, 0)
+    place(buf, filt(noise(int(.05 * SR), r), "low", 900) * env(int(.05 * SR), .003, .015) * .5, .07)   # 종이가 내려앉는 바람
+    return reverb(buf, .2, .05)
+
+
+@sfx("sfx.ui.deny", -21, "UI", "안 됨: 먹먹한 나무 두 번 툭툭(낮게, 꾸짖지 않게, 0.3초)", use="엽전 모자람·못 누르는 버튼·칸이 꽉 참")
+def _(r):
+    buf = np.zeros(int(.34 * SR))
+    place(buf, _thump(r, .1, 140, 380), 0); place(buf, _thump(r, .1, 125, 340), .12, .8)
+    return reverb(buf, .2, .05)
+
+
+@sfx("sfx.ui.ledger.open", -16, "UI", "명부 펼침: 두꺼운 표지 들림 + 한지 장이 촤라락 + 마지막 장이 툭 내려앉음(0.8초)", use="C로 명부(캐릭터 창) 열 때")
+def _(r):
+    sec = .85; buf = np.zeros(int(sec * SR))
+    place(buf, _thump(r, .14, 120, 350) * .7, 0)                                   # 표지가 들리며 책등이 눌림
+    dens = lambda k, r: .06 + .38 * (k / 26) ** 1.4 + r.uniform(0, .008)            # 처음엔 촘촘하다가 점점 느려짐(장이 덜 넘어감)
+    flip = lambda r, k: _paper(r, .045, 1500, 6500, .003) * r.uniform(.3, .7) * (1 - k / 40)
+    place(buf, grains(.6, r, 26, flip, spread=dens), 0)
+    place(buf, filt(noise(int(.09 * SR), r), "low", 700) * env(int(.09 * SR), .004, .03) * .6, .58)   # 펼친 장이 바람을 밀며 툭
+    return reverb(buf, .5, .12)
+
+
+@sfx("sfx.ui.ledger.close", -17, "UI", "명부 덮음: 장이 한데 모이는 사락 + 표지 탁(낮고 포근하게, 0.5초)", use="C·Esc·닫기로 명부 닫을 때")
+def _(r):
+    sec = .55; buf = np.zeros(int(sec * SR))
+    m = int(.22 * SR); place(buf, sweep_filt(noise(m, r), "band", 2500, 1200, 1) * env(m, .05, .06, 3, hold=.08) * .55, 0)   # 장들이 미끄러져 모임
+    place(buf, _thump(r, .18, 110, 300), .2)                                          # 표지가 닫힘
+    place(buf, filt(noise(int(.1 * SR), r), "low", 500) * env(int(.1 * SR), .002, .03) * .5, .2)   # 닫히며 밀려난 공기
+    return reverb(buf, .4, .1)
+
+
+@sfx("sfx.ui.heard.open", -21, "UI", "들은 말 창 뜸: 접힌 쪽지를 펴는 사락 + 아주 옅은 숨결(0.45초, 싸움 소리에 묻혀도 됨)", use="들은 말 창이 새로 뜰 때(엿듣기·지켜보기 완료)")
+def _(r):
+    sec = .5; buf = np.zeros(int(sec * SR))
+    place(buf, _paper(r, .2, 1300, 5500, .03) * .6, 0)
+    place(buf, _crinkle(r, .2, 6, (2000, 4500), (.1, .35)), .02)
+    place(buf, filt(noise(int(.4 * SR), r), "band", 700, .7) * env(int(.4 * SR), .12, .15, 3) * .25, .05)   # 혼이 엿듣는 숨결(낮은 바람)
+    return reverb(buf, .7, .2)
+
+
+@sfx("sfx.ui.heard.clue", -19, "UI", "단서를 들음: 붓 한 획 스윽 + 맑은 방울 두 번 띵—딩(낮은 쪽→높은 쪽, 0.9초)", use="들은 말에 단서(금빛)가 붙어 명부에 새로 적힐 때")
+def _(r):
+    sec = 1.0; buf = np.zeros(int(sec * SR))
+    m = int(.28 * SR)
+    place(buf, filt(filt(noise(m, r), "high", 1800), "low", 6500) * env(m, .02, .08, 4, hold=.12) * .35, 0)   # 붓이 이름 옆에 한 줄 긋다
+    place(buf, modal(.8, [(1174.7, .35, 1), (2349, .18, .35), (3524, .08, .12)], r) * .45, .2)   # D6
+    place(buf, modal(.7, [(1568, .32, 1), (3136, .15, .3)], r) * .4, .36)                        # G6 (4도 위 = 맺힘)
+    return reverb(buf, 1.0, .25)
+
+
+@sfx("sfx.ui.rank.up", -12, "UI", "품계 오름: 먹물 한 방울 똑 → 물에 번지는 쏴아(부풂) → 편경 세 음 차례로 + 작은 북 둥(2.4초)", use="넋이 차서 품계가 오를 때(한 번에 여러 품이 올라도 한 번만)")
+def _(r):
+    sec = 2.6; n = int(sec * SR); buf = np.zeros(n)
+    place(buf, bubble(.08, 900, 1.9, .018) * .6, 0)                                  # 먹물이 물에 똑
+    m = int(.9 * SR)
+    bloom = sweep_filt(noise(m, r), "band", 400, 2600, .9) * env(m, .55, .3, 2.5)        # 먹이 번지며 부푼다(낮→높)
+    place(buf, bloom * .35, .05)
+    stone = lambda f: modal(1.6, [(f, .9, 1), (f * 2.76, .35, .35), (f * 5.4, .12, .12)], r, strike=.003)   # 편경(돌 악기): 정수배 아닌 배음 = 돌의 맑음
+    for k, f in enumerate([587.3, 784.0, 1174.7]):                                  # D5–G5–D6: 평조 계열, 위로 오르는 세 음
+        place(buf, stone(f) * (.5 + .1 * k), .55 + k * .2)
+    drum = tone(1.0, 110, 72) * env(int(1.0 * SR), .003, .28, 3)
+    place(buf, drum * .55, .55)                                                       # 첫 음과 함께 작은 북
+    return reverb(buf, 1.6, .3, tone_hz=4500)
+
+
+@sfx("sfx.ui.save", -17, "UI", "저장(직접 누름): 도장을 꾹 눌렀다가 종이에서 떼는 '똑'(0.5초)", use="설정의 저장하기 버튼")
+def _(r):
+    sec = .55; buf = np.zeros(int(sec * SR))
+    place(buf, _thump(r, .22, 120, 420) * 1.1, 0)                                     # 꾹 누름
+    m = int(.12 * SR); place(buf, filt(noise(m, r), "band", 900, 2) * env(m, .03, .03, 3) * .3, .06)   # 인주가 눌리는 미세한 질척임
+    place(buf, bubble(.05, 1400, 1.4, .01) * .35, .32)                                # 종이에서 떼는 똑
+    return reverb(buf, .4, .1)
+
+
+@sfx("sfx.ui.save.auto", -31, "UI", "자동 저장: 붓끝이 종이를 스치는 아주 작은 사각(0.15초, 거의 안 들림)", use="45초마다 자동 저장될 때(들리면 귀찮으니 아주 작게, 원하면 꺼도 됨)")
+def _(r):
+    return reverb(_paper(r, .12, 2000, 6000, .01) * .6, .2, .05)
 
 
 @sfx("sfx.danger.enter", -11, "세계", "위험 지역 진입: 먼 징 한 번(낮게 우는 맥놀이)", use="원념 짙은 구역 들어설 때")
@@ -776,6 +894,1107 @@ def _(r):
     insect = np.sin(2 * np.pi * 4100 * t) * (np.sin(2 * np.pi * 24 * t) > .3) * (np.sin(2 * np.pi * .21 * t) > .4) * .02
     drips = grains(sec, r, 7, lambda r, k: bubble(.15, r.uniform(800, 1300), 2, .02) * r.uniform(.2, .5))
     return loopify(reverb(air * .9 + hum * .4 + frogs * .35 + insect + drips * .3, 2.5, .35, tone_hz=2500)[:n], .5)
+
+
+# ===== 1막 장례 대본(funerals_act1.json, 4a40857) 추가 요청 6종 =====
+@sfx("amb.market", -24, "세계", "장터 웅성거림: 여러 사람 말소리가 겹쳐 뜻은 안 들림 + 그릇·엽전 달그락 + 수레 삐걱(반복용 14초)", loop=True, use="장날 장터 배경·장터 장례 시작")
+def _(r):
+    sec = 14.4; n = int(sec * SR); buf = np.zeros(n)
+    # 사람 말소리: 짧은 음절(0.08~0.25초)을 사람마다 다른 음높이·모음으로 이어 붙인다 → 많이 겹치면 '웅성웅성'이 된다
+    vowels = [[(750, 4, 1), (1200, 5, .5)], [(450, 4, 1), (1900, 6, .4)], [(320, 4, 1), (2300, 7, .35)], [(550, 4, 1), (900, 5, .6)]]
+    for p in range(14):                                       # 14명이 동시에 떠든다
+        base = r.uniform(110, 260); at = r.uniform(0, 1.0)
+        while at < sec - .3:
+            d = r.uniform(.08, .25); m = int(d * SR)
+            f0 = np.linspace(base * r.uniform(.9, 1.2), base * r.uniform(.8, 1.05), m)
+            y = voice(f0, vowels[r.integers(4)], .2, r, nh=18) * env(m, .015, d * .4, 3, hold=d * .4)
+            place(buf, y * r.uniform(.3, 1) * (.4 + .6 * (p % 4 == 0)), at)
+            at += d + (r.uniform(.02, .08) if r.random() > .15 else r.uniform(.4, 1.5))   # 말하다 가끔 쉰다
+    buf = filt(buf, "low", 2200)                               # 뜻이 들리지 않게 높은 소리(자음)를 깎는다
+    clink = grains(sec, r, 26, lambda r, k: modal(.15, [(r.uniform(1800, 3500), .04, 1), (r.uniform(4000, 6000), .02, .4)], r) * r.uniform(.1, .35))
+    cart = grains(sec, r, 3, lambda r, k: filt(noise(int(.5 * SR), r), "band", r.uniform(500, 800), 6) * env(int(.5 * SR), .1, .2, 3, hold=.15) * .3)
+    floor = filt(noise(n, r), "low", 400) * .08                # 사람 많은 곳의 바닥 웅웅
+    return loopify(reverb(buf + clink * .5 + cart + floor, 1.2, .3, tone_hz=3000)[:n], .5)
+
+
+@sfx("cut.kids.clap", -14, "컷신", "아이 둘의 손뼉 장단: 덩-덩-덕 박자를 흉내 내다 자꾸 어긋남(약 7초)", use="상여 뒤 장터 아이들이 손뼉으로 장단 흉내")
+def _(r):
+    sec = 7.5; buf = np.zeros(int(sec * SR))
+    def clap(r, small):
+        m = int(.06 * SR)
+        x = noise(m, r) * env(m, .0005, .012, 5)
+        f = r.uniform(1300, 1900) if small else r.uniform(1000, 1400)      # 아이 손은 작아서 소리가 높다
+        return filt(x, "band", f, 1.2) + filt(x, "band", f * 2.1, 2) * .4
+    pattern = [0, .5, .75, 1.25]                              # 한 마디(1.5초): 짝—짝짝—짝 (자진모리 비슷한 3·2 느낌)
+    for kid in range(2):
+        drift = 0.0; g = 1.0 if kid == 0 else .7
+        for bar in range(5):
+            for b in pattern:
+                drift += r.normal(0, .025) + (.012 if kid == 1 else 0)    # 둘째 아이는 조금씩 늦어진다 = 박자 어긋남
+                if r.random() < .08: continue                             # 가끔 한 번 빼먹는다
+                place(buf, clap(r, kid == 1) * g * r.uniform(.7, 1), .1 + bar * 1.5 + b + drift)
+    return reverb(buf, .9, .25, tone_hz=4500)
+
+
+@sfx("cut.paper.tear", -15, "컷신", "기둥에 붙은 종이를 떼는 소리: 풀 떨어지며 바스락 찌익— 마지막에 툭 떨어짐(약 1.6초)", use="주막 기둥 종이 떼는 장면")
+def _(r):
+    sec = 1.6; n = int(sec * SR); buf = np.zeros(n)
+    # 한지가 풀에서 떨어질 때 = 아주 짧은 '틱' 알갱이가 점점 촘촘해졌다가 사라짐
+    dens = lambda k, r: .05 + 1.0 * (k / 220) ** .7 + r.uniform(0, .01)
+    tick = lambda r, k: filt(noise(int(.004 * SR), r), "band", r.uniform(1800, 6000), 2.5) * env(int(.004 * SR), .0002, .0012) * r.uniform(.2, 1)
+    buf += grains(sec, r, 220, tick, spread=dens)
+    rip = sweep_filt(noise(int(.9 * SR), r), "band", 1500, 3200, 1.5) * env(int(.9 * SR), .2, .2, 4, hold=.35)
+    place(buf, rip * .35, .1)
+    flap = filt(noise(int(.15 * SR), r), "low", 900) * env(int(.15 * SR), .005, .05, 4)   # 종이가 손에서 펄럭
+    place(buf, flap * .6, 1.15)
+    return reverb(buf, .5, .12)
+
+
+@sfx("cut.steam.rise", -20, "컷신", "시루에 김 오르는 소리: 솥 물 보글보글 + 시루 틈으로 쉬— 새는 김 + 뚜껑 달그락(약 6초)", use="부엌에서 떡을 다시 찌는 장면")
+def _(r):
+    sec = 6.0; n = int(sec * SR); t = T(sec)
+    boil = grains(sec, r, 260, lambda r, k: bubble(.05, r.uniform(250, 700), 1.8, .012) * r.uniform(.2, 1))
+    boil = filt(boil, "low", 1500)                            # 솥 안이라 먹먹하게
+    hiss = filt(filt(noise(n, r), "high", 2500), "low", 9000)
+    hiss = hiss * curve(sec, [(0, .05), (1.5, .5), (3, .8), (6, .7)]) * (1 + .25 * np.sin(2 * np.pi * .7 * t))   # 김이 점점 세지며 일렁임
+    lid = grains(sec, r, 7, lambda r, k: modal(.1, [(r.uniform(900, 1300), .03, 1), (r.uniform(2400, 3000), .02, .5)], r) * .25,
+                 spread=lambda k, r: 3.0 + k * .38 + r.uniform(0, .05))   # 김에 밀려 뚜껑이 달그락
+    return reverb(boil * .7 + hiss * .25 + lid, .7, .2)
+
+
+@sfx("cut.brass.tap", -14, "컷신", "놋그릇을 숟가락으로 두드림: 댕— 긴 놋쇠 울림 네 번, 걸음 박자(약 4.5초)", use="문짝 들것 행렬 앞사람이 놋그릇을 침")
+def _(r):
+    sec = 4.6; buf = np.zeros(int(sec * SR))
+    def bowl(r, g):
+        f = 640 * r.uniform(.995, 1.005)                       # 놋쇠 주발: 기본음 + 정수배가 아닌 높은 울림들, 가까운 두 음이 맥놀이
+        y = modal(1.8, [(f, .9, 1), (f * 1.004, .9, .7), (f * 2.71, .5, .6), (f * 2.716, .5, .4), (f * 5.1, .25, .3), (f * 8.2, .1, .15)], r)
+        place(y, filt(noise(int(.006 * SR), r), "high", 3000) * .8, 0)   # 숟가락 끝이 닿는 짧은 '딱'
+        return y * g
+    for k in range(4):                                         # 걸음에 맞춰 약 0.95초마다
+        place(buf, bowl(r, (1.0, .8, .9, .75)[k]), .02 + k * .95 + r.uniform(-.03, .03))
+    return reverb(buf, 1.4, .25, tone_hz=6000)
+
+
+@sfx("cut.ink.grind", -20, "컷신", "벼루에 먹 가는 소리: 물기 있는 사각사각이 원을 그리며 느리게 반복(약 5초)", use="서당 아이들이 먹을 가는 장면")
+def _(r):
+    sec = 5.2; n = int(sec * SR); t = T(sec)
+    circ = np.sin(2 * np.pi * 1.1 * t)                        # 먹을 원으로 돌림(1초에 1.1바퀴)
+    speed = .35 + .65 * np.abs(circ)                           # 원의 옆구리에서 빨라지고 끝에서 느려짐
+    rub = filt(noise(n, r), "band", 1400, .9) * speed
+    grit = grains(sec, r, 700, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(2500, 5500), 3) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .6))
+    grit = grit * speed
+    wet = filt(noise(n, r), "low", 500) * (.4 + .6 * np.abs(np.sin(2 * np.pi * .55 * t)))    # 물기 머금은 낮은 쓸림
+    stone = filt(rub, "band", 320, 4) * .5                     # 벼루 돌의 짧은 울림
+    y = (rub * .5 + grit * .35 + wet * .25 + stone) * env(n, .25, .4, 3, hold=sec - .9)
+    return reverb(y, .5, .12)
+
+
+# ===== 2막 장례 대본(funerals_act2.json, 822391c) 추가 요청 9종 =====
+def _stone_hit(r, metal=1.0):
+    """돌에 쇠가 박히는 '딱': 높은 쇠 울림(짧게) + 돌 몸통 울림 + 부스러기 잡음"""
+    m = modal(.25, [(r.uniform(2200, 3200), .03 * metal, metal), (r.uniform(4500, 6000), .015, .5 * metal),
+                    (r.uniform(700, 1100), .02, .7), (r.uniform(180, 260), .03, .5)], r)
+    k = int(.01 * SR); place(m, filt(noise(k, r), "high", 2000) * env(k, .0002, .003) * .8, 0)
+    return m
+
+
+@sfx("amb.mine", -20, "세계", "광부촌: 갱 안에서 울려 나오는 먼 곡괭이 소리 + 가끔 구르는 수레 + 낮은 바람·물방울(반복용 15초)", loop=True, use="광부촌·갱 입구 배경")
+def _(r):
+    sec = 15.4; n = int(sec * SR); buf = np.zeros(n)
+    at = .3
+    while at < sec - .5:                                       # 곡괭이질: 두세 번 치고 쉰다
+        for _k in range(r.integers(2, 4)):
+            place(buf, _stone_hit(r) * r.uniform(.4, 1), at); at += r.uniform(.7, .95)
+        at += r.uniform(1.0, 2.5)
+    picks = reverb(filt(buf, "low", 3500), 2.2, .55, tone_hz=2500)[:n]   # 갱(굴)은 울림이 길다
+    cart = np.zeros(n)
+    for c0 in (4.0, 11.0):                                      # 수레 두 번: 구르는 웅웅 + 레일 이음매 덜컹
+        m = int(3.0 * SR)
+        roll = filt(noise(m, r), "low", 220) * np.sin(np.pi * np.linspace(0, 1, m)) ** 1.5
+        place(cart, roll * .8, c0)
+        for j in range(7):
+            place(cart, modal(.12, [(r.uniform(300, 420), .04, 1), (r.uniform(900, 1200), .02, .4)], r) * .35 * np.sin(np.pi * (j + .5) / 7), c0 + .2 + j * .38)
+    cart = reverb(filt(cart, "low", 1500), 1.8, .5, tone_hz=1500)[:n]
+    wind = filt(noise(n, r), "low", 180) * .35
+    drips = grains(sec, r, 8, lambda r, k: bubble(.15, r.uniform(700, 1200), 2, .02) * .3)
+    return loopify(picks * .8 + cart * .7 + wind + drips, .5)
+
+
+@sfx("cut.pour.liquor", -18, "컷신", "잔에 술 따르기: 쪼르륵 차오르며 소리가 높아짐 × 세 잔, 잠시 쉬고 한 잔 더(약 8초)", use="무덤 앞에 술을 붓는 장면")
+def _(r):
+    sec = 8.2; buf = np.zeros(int(sec * SR))
+    def pour(r, d):
+        m = int(d * SR); tt = np.arange(m) / SR
+        stream = filt(noise(m, r), "band", 2200, 1.2) * (.6 + .4 * np.sin(2 * np.pi * 9 * tt + r.uniform(0, 6)))   # 물줄기 쉬—
+        fill = sweep_filt(noise(m, r), "band", 600, 1500, 8)    # 잔이 차면 공기 기둥이 짧아져 울림이 높아진다
+        glug = grains(d, r, int(d * 14), lambda r, k: bubble(.04, r.uniform(500, 1100), 1.6, .01) * r.uniform(.2, .6))
+        return (stream * .25 + fill * .9 + glug * .3) * env(m, .05, .08, 4, hold=d - .15)
+    clink = lambda r: modal(.4, [(2650, .12, 1), (4100, .07, .4), (6900, .03, .2)], r)   # 병 주둥이가 사기잔에 닿는 딩
+    at = .1
+    for k, d in enumerate((1.2, 1.1, 1.2)):
+        place(buf, clink(r) * .35, at); place(buf, pour(r, d), at + .05); at += d + .5
+    at += .9                                                    # 다 부은 뒤 잠깐 멈췄다가 — 한 잔 더(할아버지 몫)
+    place(buf, clink(r) * .25, at); place(buf, pour(r, 1.4) * .9, at + .08)
+    return reverb(buf, .8, .2)
+
+
+@sfx("cut.hoe.dig", -15, "컷신", "호미로 흙 파기: 툭 박히고 슥 긁어 당김 × 네 번, 흙 알갱이 흩어짐(약 4.5초)", use="바위틈 약초 캐는 장면")
+def _(r):
+    sec = 4.6; buf = np.zeros(int(sec * SR))
+    for k in range(4):
+        at = .1 + k * 1.05 + r.uniform(-.05, .05)
+        m = int(.12 * SR)
+        thud = filt(noise(m, r), "low", 700) * env(m, .001, .03, 4) + tone(.12, 150, 90) * env(m, .001, .04, 4) * .6
+        place(buf, thud, at)
+        if k == 2: place(buf, _stone_hit(r, .4) * .35, at + .005)          # 한 번은 돌에 닿아 쨍
+        m2 = int(.35 * SR)
+        scrape = filt(noise(m2, r), "band", 1600, 1.0) * env(m2, .05, .1, 4, hold=.15)
+        place(buf, scrape * .45, at + .15)
+        soil = grains(.4, r, 30, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(1500, 5000), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .5))
+        place(buf, soil * .6, at + .3)
+    return reverb(buf, .6, .12)
+
+
+@sfx("cut.chisel.tap", -14, "컷신", "정으로 돌에 글자 새기기: 망치가 정을 때리는 쨍 + 돌 부스러기, 일정한 박자 열 번(약 5초)", use="성돌에 스승 이름을 새기는 장면")
+def _(r):
+    sec = 5.2; buf = np.zeros(int(sec * SR))
+    for k in range(10):
+        at = .1 + k * .48 + r.uniform(-.02, .02)
+        if k == 5: at += .25                                     # 한 획 끝나고 정을 옮겨 대는 짧은 쉼
+        hit = modal(.5, [(3150 * r.uniform(.99, 1.01), .12, 1), (5240, .06, .5), (1420, .05, .5), (7600, .02, .2)], r)   # 쇠정 울림
+        place(buf, hit * r.uniform(.8, 1), at)
+        place(buf, _stone_hit(r, .2) * .5, at)
+        chips = grains(.15, r, 8, lambda r, k: filt(noise(int(.003 * SR), r), "high", 3500) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .4))
+        place(buf, chips, at + .01)
+    return reverb(buf, .9, .2)
+
+
+@sfx("cut.sickle.cut", -13, "컷신", "낫으로 풀 베기: 숫돌에 한 번 쓱 갈고, 쉭— 서걱 네 번(약 5.5초)", use="무덤 벌초 장면")
+def _(r):
+    sec = 5.6; buf = np.zeros(int(sec * SR))
+    m = int(.8 * SR)                                              # 숫돌질: 쇠가 돌에 미끄러지는 쓱—
+    hone = sweep_filt(noise(m, r), "band", 3500, 5500, 4) * env(m, .1, .2, 4, hold=.4) + tone(.8, 4200) * env(m, .1, .2, 4, hold=.4) * .05
+    place(buf, hone * .5, .05)
+    for k in range(4):
+        at = 1.25 + k * 1.0 + r.uniform(-.05, .05)
+        m = int(.3 * SR)
+        swish = sweep_filt(noise(m, r), "band", 900, 2600, 2) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2   # 낫이 바람을 가름
+        place(buf, swish * .35, at)
+        cut = grains(.12, r, 35, lambda r, k: filt(noise(int(.004 * SR), r), "band", r.uniform(2000, 6000), 2) * env(int(.004 * SR), .0002, .0015) * r.uniform(.2, 1))   # 풀줄기 끊어짐 서걱
+        place(buf, cut, at + .2)
+        place(buf, filt(noise(int(.2 * SR), r), "low", 800) * env(int(.2 * SR), .01, .06, 4) * .3, at + .3)   # 베인 풀이 쓰러짐
+    return reverb(buf, .5, .1)
+
+
+@sfx("cut.tag.unhook", -16, "컷신", "고리에서 나무 목패 떼기: 쇠고리 끽 + 패가 옆 패에 딱 부딪힘 + 손에 쥠(약 1.4초)", use="동료가 순돌의 목패를 떼는 장면")
+def _(r):
+    buf = np.zeros(int(1.5 * SR))
+    m = int(.25 * SR)
+    creak = sweep_filt(noise(m, r), "band", 1800, 2600, 10) * env(m, .03, .08, 4, hold=.1)   # 녹슨 쇠고리 비빔
+    place(buf, creak * .5, .05)
+    wood = lambda r, f: modal(.15, [(f, .03, 1), (f * 2.4, .015, .5), (f * 4.1, .008, .2)], r)   # 마른 나무패 딱
+    place(buf, wood(r, 900) * .9, .3); place(buf, wood(r, 1150) * .5, .38); place(buf, wood(r, 1000) * .3, .44)   # 옆 패들이 흔들려 따라 부딪힘
+    place(buf, modal(.3, [(3300, .08, 1), (5200, .04, .4)], r) * .15, .3)   # 고리 짤랑
+    grab = filt(noise(int(.12 * SR), r), "low", 1200) * env(int(.12 * SR), .005, .04, 4) * .4   # 손에 쥐는 소리
+    place(buf, grab, .85)
+    return reverb(buf, .6, .15)
+
+
+@sfx("cut.coal.sort", -18, "컷신", "평상에서 석탄 고르기: 덩이끼리 달그락 + 나무판에 쓸어 밀기 + 바구니에 툭(약 5초)", use="딸이 어머니 자리에서 석탄을 고르는 장면")
+def _(r):
+    sec = 5.2; n = int(sec * SR); buf = np.zeros(n)
+    lump = lambda r, k: modal(.06, [(r.uniform(1800, 3800), .012, 1), (r.uniform(4500, 7000), .006, .5)], r) * r.uniform(.15, .8)   # 석탄은 가볍고 잘 깨지는 유리 같은 소리
+    for g0 in (.2, 1.6, 3.1):                                    # 한 줌씩 세 번
+        place(buf, grains(.8, r, 14, lump), g0)
+        m = int(.5 * SR)
+        place(buf, filt(noise(m, r), "band", 1100, .8) * env(m, .05, .15, 4, hold=.2) * .2, g0 + .4)   # 판 위에 쓸어 밀기
+        place(buf, filt(noise(int(.1 * SR), r), "low", 600) * env(int(.1 * SR), .002, .03, 4) * .5 + modal(.1, [(420, .03, .4)], r), g0 + 1.1)   # 바구니에 툭
+    return reverb(buf, .5, .12)
+
+
+@sfx("cut.brush.write", -22, "컷신", "붓으로 종이에 쓰기: 붓끝이 닿는 톡 + 사악— 획 긋는 소리 여섯 획, 중간에 한 번 멈춤(약 5초)", use="외상 장부에 이름을 적어 넣는 장면")
+def _(r):
+    sec = 5.0; buf = np.zeros(int(sec * SR))
+    at = .15
+    for k in range(6):
+        d = r.uniform(.25, .55); m = int(d * SR)
+        stroke = filt(filt(noise(m, r), "high", 1800), "low", 6500) * env(m, .02, .08, 4, hold=d - .12) * (1 + .3 * np.sin(np.linspace(0, 3, m)))
+        place(buf, filt(noise(int(.01 * SR), r), "band", 1500, 1) * env(int(.01 * SR), .0005, .004) * .5, at)   # 붓끝 닿음
+        place(buf, stroke * .4, at + .01)
+        at += d + r.uniform(.12, .3)
+        if k == 3: at += 1.0                                    # 모르는 번호 앞에서 붓이 멈춘다
+    return reverb(buf, .4, .08)
+
+
+@sfx("cut.mule.hoof", -15, "컷신", "노새 발굽: 흙길 위 네 발 걸음 따각따각, 갱 입구 앞에서 멈춤(약 6초)", use="풀려난 노새가 상여를 따라가는 장면")
+def _(r):
+    sec = 6.2; buf = np.zeros(int(sec * SR))
+    def clop(r):
+        m = modal(.12, [(r.uniform(380, 520), .025, 1), (r.uniform(1100, 1500), .012, .6), (r.uniform(2400, 3000), .006, .3)], r)   # 단단한 발굽
+        k = int(.05 * SR); place(m, filt(noise(k, r), "low", 1500) * env(k, .001, .015, 4) * .7, 0)   # 흙이 눌리는 퍽
+        return m
+    stride = .62                                                # 걸음: 한 주기에 네 발(좌뒤-좌앞-우뒤-우앞)
+    for s in range(8):
+        for j, off in enumerate((0, .16, .31, .47)):
+            slow = 1 + max(0, s - 5) * .25                       # 마지막 두 걸음은 느려지며 멈춘다
+            place(buf, clop(r) * r.uniform(.6, 1) * (1 - .1 * (j % 2)), .1 + s * stride * slow + off * slow + r.uniform(-.012, .012))
+    place(buf, filt(noise(int(.4 * SR), r), "low", 300) * env(int(.4 * SR), .05, .15, 4) * .3, 5.4)   # 멈춰 서서 코로 푸르르
+    return reverb(buf, .7, .15)
+
+
+# ===== 2막 지역 환경음 (③ 붉은재 싸움터 · ④ 쇳골 광산, 2026-10-25) =====
+def _flutter(sec, r, gust, rate=(7, 16), bright=2200):
+    """천(깃발·천막) 펄럭임: 잡음을 빠르게 '툭툭' 끊어 주는 맥박(초당 rate번)으로 곱한다.
+    gust(0~1 곡선)가 셀수록 더 빠르고 크게 펄럭이고, 센 순간마다 '탁' 하고 천이 튕긴다"""
+    n = int(sec * SR)
+    hz = rate[0] + (rate[1] - rate[0]) * gust
+    ph = np.cumsum(hz) / SR
+    pulse = (0.5 + 0.5 * np.sin(2 * np.pi * ph)) ** 6                  # 뾰족한 맥박 = 천이 펄럭 접혔다 펴짐
+    cloth = filt(filt(noise(n, r), "low", bright), "high", 150) * pulse * gust
+    snaps = np.zeros(n)
+    for i in np.where(np.diff((gust > .75).astype(int)) == 1)[0]:     # 바람이 확 셀 때 '탁'
+        k = int(.03 * SR); place(snaps, filt(noise(k, r), "low", 3000) * env(k, .001, .008, 4), i / SR)
+    return cloth + snaps * .8
+
+
+def _gust_curve(sec, r, n_gust=3, base=.25):
+    """느린 돌풍 곡선(0~1): 기본 바람 위에 n번 확 불었다 잦아듦"""
+    t = T(sec); g = np.full(len(t), base)
+    for k in range(n_gust):
+        c = (k + .5) * sec / n_gust + r.uniform(-1, 1); w = r.uniform(1.2, 2.5)
+        g += (1 - base) * np.exp(-((t - c) / w) ** 2) * r.uniform(.7, 1)
+    g += .08 * filt(r.standard_normal(len(t)), "low", 2) / .02
+    return np.clip(g, 0, 1)
+
+
+@sfx("amb.fortress.flag", -22, "세계", "무너진 산성 위: 높은 곳의 센 바람 + 찢어진 깃발이 펄럭이다 탁 튕김(반복용 16초)", loop=True, use="③ 무너진 산성·산성 아랫마을 높은 곳")
+def _(r):
+    sec = 16.4; n = int(sec * SR)
+    g = _gust_curve(sec, r, 3, .3)
+    wind = sweep_filt(noise(n, r), "band", 350, 500, 1.2) * (.4 + .6 * g) + filt(noise(n, r), "low", 200) * .5
+    flag = _flutter(sec, r, g)
+    rope = grains(sec, r, 6, lambda r, k: sweep_filt(noise(int(.35 * SR), r), "band", 900, 1300, 12) * env(int(.35 * SR), .05, .1, 4, hold=.15) * .3)   # 깃대 밧줄 삐걱
+    return loopify(wind * .7 + flag * .55 + rope, .5)
+
+
+@sfx("amb.arrowvalley", -24, "세계", "화살골: 바위틈을 지나는 가는 휘파람 바람 + 녹슨 화살촉이 바람에 떨리는 아주 작은 쇳소리(반복용 15초)", loop=True, use="③ 화살골 골짜기")
+def _(r):
+    sec = 15.4; n = int(sec * SR); t = T(sec)
+    g = _gust_curve(sec, r, 2, .35)
+    base = filt(noise(n, r), "low", 300) * .6
+    whistle = np.zeros(n)
+    for f, a in ((620, 1), (930, .5), (1480, .3)):                    # 바위틈 = 좁은 구멍 → 높이가 정해진 휘파람
+        whistle += sweep_filt(noise(n, r), "band", f * .97, f * 1.03, 40) * a
+    whistle *= np.clip(g - .3, 0, 1) ** 1.5 * 2.5
+    tinks = grains(sec, r, 9, lambda r, k: modal(.4, [(r.uniform(2800, 3600), .15, 1), (r.uniform(5000, 6000), .08, .4)], r) * r.uniform(.05, .15))
+    return loopify(reverb(base + whistle * .5 + tinks, 1.6, .35, tone_hz=4000)[:n], .5)
+
+
+@sfx("amb.camp", -18, "세계", "빈 군막 터: 기둥만 남은 평지, 너덜한 천 조각 펄럭임 + 밧줄 삐걱 + 먼 까마귀(반복용 14초)", loop=True, use="③ 군막 터")
+def _(r):
+    sec = 14.4; n = int(sec * SR)
+    g = _gust_curve(sec, r, 2, .2)
+    wind = filt(noise(n, r), "low", 400) * (.5 + .5 * g)
+    rag = _flutter(sec, r, g * .8, rate=(10, 22), bright=3500) * .5           # 작은 천 조각은 더 빠르고 가볍게 떤다
+    creak = grains(sec, r, 5, lambda r, k: sweep_filt(noise(int(.5 * SR), r), "band", 600, 900, 15) * env(int(.5 * SR), .05, .15, 4, hold=.2) * .35)
+    crow = np.zeros(n)
+    for at in (3.0, 3.45, 10.2):                                      # 까악— (목소리 합성, 멀리)
+        d = .35; f0 = curve(d, [(0, 520), (.08, 600), (d, 480)])
+        place(crow, voice(f0, [(1200, 3, 1), (2400, 4, .5)], .5, r, nh=15) * env(int(d * SR), .02, .12, 3, hold=.1), at)
+    crow = reverb(filt(crow, "low", 2200), 2.0, .6, tone_hz=2000)[:n]
+    return loopify(wind * .8 + rag + creak + crow * .5, .5)
+
+
+@sfx("amb.mine.wind", -22, "세계", "갱 입구 바람: 굴속으로 빨려 드는 낮은 웅— 공명(관 울림) + 입구 판자 덜컹(반복용 16초)", loop=True, use="④ 광부촌 갱 입구·큰 갱도 입구")
+def _(r):
+    sec = 16.4; n = int(sec * SR); t = T(sec)
+    g = _gust_curve(sec, r, 3, .4)
+    tube = np.zeros(n)
+    for k, a in ((1, 1), (2, .55), (3, .3), (5, .12)):              # 긴 굴 = 큰 관. 관 길이로 정해진 낮은 음과 그 배음이 운다
+        f = 72 * k * (1 + .01 * np.sin(2 * np.pi * t / 9))
+        tube += sweep_filt(noise(n, r), "band", f[0], f[-1], 25) * a
+    tube *= .4 + .6 * g
+    hiss = filt(filt(noise(n, r), "high", 600), "low", 3000) * g * .25
+    boards = grains(sec, r, 5, lambda r, k: modal(.2, [(r.uniform(180, 260), .05, 1), (r.uniform(500, 700), .03, .5)], r) * .5)   # 입구 판자문이 바람에 덜컹
+    return loopify(reverb(tube * .9 + hiss + boards, 1.5, .3, tone_hz=1500)[:n], .5)
+
+
+@sfx("amb.mine.shaft", -24, "세계", "큰 갱도 안: 끝없는 어둠의 울림, 물방울 똑똑 + 버팀목 삐걱 + 멀리 돌 구르는 소리 + 석탄 가루 사락(반복용 15초)", loop=True, use="④ 큰 갱도·무너진 막장")
+def _(r):
+    sec = 15.4; n = int(sec * SR)
+    room = filt(noise(n, r), "low", 120) * .4
+    drips = grains(sec, r, 18, lambda r, k: bubble(.2, r.uniform(900, 1600), 2.2, .02) * r.uniform(.3, 1))
+    timber = grains(sec, r, 4, lambda r, k: sweep_filt(noise(int(.8 * SR), r), "band", 300, 420, 18) * env(int(.8 * SR), .1, .25, 4, hold=.3) * .6)   # 무거운 버팀목이 짓눌려 끄응
+    rocks = np.zeros(n)
+    for at in (6.0, 12.5):
+        place(rocks, grains(1.2, r, 12, lambda r, k: modal(.15, [(r.uniform(400, 900), .04, 1), (r.uniform(1500, 2500), .02, .3)], r) * (1 - k / 14) * .5), at)
+    dust = grains(sec, r, 300, lambda r, k: filt(noise(int(.002 * SR), r), "high", 4000) * r.uniform(.02, .1))
+    y = room + drips * .4 + timber + filt(rocks, "low", 2000) * .7 + dust
+    return loopify(reverb(y, 3.0, .55, tone_hz=2200)[:n], .6)
+
+
+# ===== 신종 혼 3종 공격 예고 (넋두리 wail · 잔넋 mote · 묻힌 혼 buried, 아트 SOUL-TYPES.md) =====
+# 예고음은 '피할 시간'을 귀로 알려 주는 소리라 천도 먹먹함을 무시하고(bypass_cast) 선딜 길이에 맞춘다.
+@sfx("sfx.enemy.wail.telegraph", -12, "전투", "넋두리 예고(0.7초): 흐느끼는 숨이 올라가며 원념 구슬이 웅— 차오름, 끝에 짧게 번쩍", bypass_cast=True, use="넋두리가 원념을 던지기 전 선딜 0.7초")
+def _(r):
+    sec = .75; n = int(sec * SR)
+    f0 = curve(sec, [(0, 210), (.5, 300), (.7, 340)])
+    moan = voice(f0, [(700, 4, 1), (1100, 5, .5), (2600, 7, .2)], .35, r, nh=20) * curve(sec, [(0, 0), (.15, .5), (.62, 1), (.7, .2), (.75, 0)])
+    hum = tone(sec, 110, 220) * curve(sec, [(0, 0), (.65, 1), (.72, 0)]) + tone(sec, 331, 662) * curve(sec, [(0, 0), (.65, .4), (.72, 0)])   # 구슬이 차오르며 음이 오름
+    flash = filt(noise(int(.05 * SR), r), "high", 3000) * env(int(.05 * SR), .001, .015, 4)
+    buf = moan * .6 + hum * .4; place(buf, flash * .7, .66)
+    return reverb(buf, .5, .15)
+
+
+@sfx("sfx.enemy.wail.throw", -12, "전투", "넋두리 투척: 원념 구슬이 휙 날아가며 웅웅 떨리는 소리(약 0.6초)", bypass_cast=True, use="넋두리 투척 순간(탄 발사)")
+def _(r):
+    sec = .6; n = int(sec * SR); tt = T(sec)
+    whoosh = sweep_filt(noise(n, r), "band", 1800, 600, 2) * env(n, .01, .2, 4, hold=.1)
+    wobble = tone(sec, 240, 180) * (.6 + .4 * np.sin(2 * np.pi * 18 * tt)) * env(n, .005, .3, 3)
+    return whoosh * .7 + wobble * .4
+
+
+@sfx("sfx.enemy.mote.telegraph", -16, "전투", "잔넋 예고(0.3초): 작은 혼이 찍— 하고 몸을 움츠림. 여럿이 겹쳐도 시끄럽지 않게 짧고 높게", bypass_cast=True, use="잔넋 무리 선딜 0.3~0.4초(동시에 여러 마리면 최대 3개만 재생 권장)")
+def _(r):
+    sec = .32; n = int(sec * SR)
+    f0 = curve(sec, [(0, 900), (.12, 1400), (.25, 1250)])
+    chirp = voice(f0, [(2200, 5, 1), (3600, 6, .4)], .3, r, nh=8) * env(n, .01, .08, 4, hold=.12)
+    shiver = filt(noise(n, r), "band", 5000, 3) * (np.sin(2 * np.pi * 40 * T(sec)) > 0) * env(n, .02, .1, 4, hold=.1) * .3   # 몸을 떠는 바스락
+    return reverb(chirp * .6 + shiver, .3, .1)
+
+
+@sfx("sfx.enemy.buried.telegraph", -15, "전투", "묻힌 혼 예고(0.73초): 땅속에서 우르릉 올라오며 흙이 갈라지는 소리 — 커지는 쪽으로 피하라", bypass_cast=True, use="묻힌 혼이 솟기 전 선딜 0.73초(땅 갈라짐 예고와 같이)")
+def _(r):
+    sec = .8; n = int(sec * SR)
+    rumble = sweep_filt(noise(n, r), "low", 80, 260) * curve(sec, [(0, 0), (.6, 1), (.73, 1), (.8, 0)])
+    thump = tone(sec, 45, 70) * curve(sec, [(0, 0), (.7, .8), (.8, 0)])
+    crack = grains(sec, r, 40, lambda r, k: filt(noise(int(.004 * SR), r), "band", r.uniform(800, 3000), 2) * env(int(.004 * SR), .0002, .0015) * r.uniform(.2, 1),
+                   spread=lambda k, r: .2 + .5 * (k / 40) ** .5 + r.uniform(0, .02))   # 끝으로 갈수록 촘촘히 갈라짐
+    return rumble * .9 + thump * .5 + crack * .5
+
+
+@sfx("sfx.enemy.buried.burst", -9, "전투", "묻힌 혼이 솟구침: 흙이 퍽 터지며 손이 움켜쥠 + 흙 부스러기 떨어짐(약 1초)", bypass_cast=True, use="묻힌 혼 Attack 적중 프레임(솟구침)")
+def _(r):
+    sec = 1.0; n = int(sec * SR); buf = np.zeros(n)
+    m = int(.25 * SR)
+    place(buf, filt(noise(m, r), "low", 900) * env(m, .002, .06, 4) + tone(.25, 90, 50) * env(m, .002, .08, 4) * .8, 0)
+    place(buf, modal(.15, [(r.uniform(300, 400), .04, 1), (r.uniform(800, 1000), .02, .4)], r) * .4, .05)   # 뼈 같은 손이 움켜쥠
+    buf += grains(sec, r, 60, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(1000, 4000), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .5),
+                  spread=lambda k, r: .1 + r.exponential(.2))
+    return reverb(buf, .5, .12)
+
+
+# ===== 2막 보스 전용 소리 (서사 SCENARIO-ACT2: B-05 기수 대돌 · B-06 이름 없는 장수 · B-07 갱도 반장 칠성 · B-08 장부꾼 염씨) =====
+# 대사는 서사 원칙상 글(말풍선)로 나오므로, 소리는 '말뜻 없는 목소리 + 신호 소리'로만 만든다.
+def _shout(r, sec, f_hi, f_lo, vowel="a", rough=.35):
+    """말뜻 없는 외침(목소리 합성): f_hi에서 시작해 f_lo로 떨어지는 사내 목소리"""
+    f0 = curve(sec, [(0, f_lo * 1.1), (sec * .15, f_hi), (sec * .7, f_hi * .95), (sec, f_lo)])
+    f0 = f0 * (1 + .015 * np.sin(2 * np.pi * 6 * T(sec)))
+    form = {"a": [(750, 4, 1), (1200, 5, .55), (2600, 7, .25)], "o": [(500, 4, 1), (850, 5, .6), (2500, 8, .15)]}[vowel]
+    return voice(f0, form, rough, r, nh=30) * env(int(sec * SR), .03, sec * .3, 3, hold=sec * .55)
+
+
+@sfx("sfx.boss.daedol.call", -11, "보스", "기수 대돌이 동료를 부름: 깃발 휘두르며 길게 외치는 소리(말뜻 없음) + 땅에서 병사 혼이 일어나는 갑옷 철컥(약 2초)", use="B-05: 이름을 불러 병사 혼을 일으킬 때")
+def _(r):
+    sec = 2.2; buf = np.zeros(int(sec * SR))
+    place(buf, _shout(r, 1.0, 190, 140, "o") * .8, 0)
+    m = int(.6 * SR); place(buf, sweep_filt(noise(m, r), "band", 500, 1500, 1.5) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2 * .4, .1)   # 깃발이 크게 휙
+    rise = sweep_filt(noise(int(1.0 * SR), r), "low", 100, 400) * env(int(1.0 * SR), .4, .3, 4) * .6
+    place(buf, rise, 1.0)
+    for k in range(5):                                                   # 일어서는 병사들의 낡은 갑옷 철컥
+        place(buf, modal(.2, [(r.uniform(1800, 2600), .04, 1), (r.uniform(3500, 4500), .02, .5), (r.uniform(500, 700), .03, .4)], r) * .35, 1.3 + k * .12 + r.uniform(0, .05))
+    return reverb(buf, 1.6, .35)
+
+
+@sfx("sfx.boss.daedol.number", -10, "보스", "번호로 부름: 이름 대신 짧게 끊어 외치는 거친 소리 + 징이 둔탁하게 '퉁' — 더 사나운 병사가 일어난다는 경고(약 1.4초)", use="B-05: 이름을 잊어 번호로 부를 때(맺힘 +30% 병사)")
+def _(r):
+    sec = 1.5; buf = np.zeros(int(sec * SR))
+    place(buf, _shout(r, .35, 240, 200, "a", .6) * .8, 0); place(buf, _shout(r, .3, 230, 180, "a", .6) * .7, .4)
+    gong = modal(1.2, [(98, .8, 1), (196.5, .5, .6), (277, .35, .5), (412, .2, .3)], r)   # 둔탁하게 막힌 징
+    place(buf, filt(gong, "low", 1200) * .9, .4)
+    return reverb(buf, 1.4, .3)
+
+
+@sfx("sfx.boss.general.command", -10, "보스", "이름 없는 장수의 호령: 큰 북 두 번 '둥둥' + 짧은 외침 — 대형이 바뀐다는 신호(약 1.3초)", use="B-06: 진법 호령(번호)으로 병사 대형을 바꾸기 직전. 이 소리를 듣고 대형을 읽는다")
+def _(r):
+    sec = 1.4; buf = np.zeros(int(sec * SR))
+    drum = lambda r: tone(.5, 80, 55) * env(int(.5 * SR), .002, .15, 4) + filt(noise(int(.5 * SR), r), "low", 400) * env(int(.5 * SR), .001, .04, 4) * .6
+    place(buf, drum(r), 0); place(buf, drum(r) * .9, .28)
+    place(buf, _shout(r, .5, 170, 130, "o", .5) * .7, .6)
+    return reverb(buf, 1.6, .3)
+
+
+@sfx("sfx.boss.general.formation", -12, "보스", "대형이 바뀜: 병사 혼 여럿이 한꺼번에 발을 구르고 창끝이 철컥 맞춰짐(약 1.2초)", use="B-06: 대형 이동이 끝나는 순간(빈틈이 생긴 쪽으로 파고들 때)")
+def _(r):
+    sec = 1.3; buf = np.zeros(int(sec * SR))
+    for beat in (0, .45):
+        for v in range(8):                                               # 여덟 명이 거의 같이 = 쿵
+            m = int(.15 * SR)
+            place(buf, filt(noise(m, r), "low", 500) * env(m, .002, .04, 4) * .4 + tone(.15, 70) * env(m, .002, .05, 4) * .2, beat + r.uniform(0, .03))
+    for v in range(6):
+        place(buf, modal(.25, [(r.uniform(2000, 3000), .05, 1), (r.uniform(4000, 5500), .03, .4)], r) * .25, .9 + r.uniform(0, .04))
+    return reverb(buf, 1.2, .25)
+
+
+@sfx("sfx.boss.chilsung.count", -12, "보스", "갱도 반장 칠성이 셈: 곡괭이 자루로 레일을 '깡' 한 번 + 낮게 웅얼거리는 셈(말뜻 없음). 광부 혼 하나가 출구로 걸어 나갈 때마다(약 0.9초)", use="B-07: 광부 혼을 한 명씩 내보낼 때마다 한 번")
+def _(r):
+    sec = 1.0; buf = np.zeros(int(sec * SR))
+    rail = modal(.8, [(1180, .3, 1), (1730, .2, .6), (2950, .12, .4), (4400, .05, .2)], r)   # 쇠 레일
+    place(buf, rail * .7, 0)
+    f0 = curve(.5, [(0, 120), (.2, 135), (.5, 110)])
+    place(buf, voice(f0, [(500, 4, 1), (900, 5, .5)], .3, r, nh=25) * env(int(.5 * SR), .03, .15, 3, hold=.25) * .5, .25)
+    return reverb(filt(buf, "low", 5000), 2.0, .45, tone_hz=2500)          # 막장(굴) 울림
+
+
+@sfx("sfx.boss.chilsung.rage", -9, "보스", "셈이 틀려 광폭해짐: 막장이 우르릉 흔들리며 돌가루가 쏟아지고, 반장이 짐승처럼 울부짖음(약 2.2초)", use="B-07: 광부 혼을 파혼해 숫자가 틀렸을 때(맺힘 회복)")
+def _(r):
+    sec = 2.3; n = int(sec * SR); buf = np.zeros(n)
+    quake = filt(noise(n, r), "low", 150) * curve(sec, [(0, 0), (.3, 1), (1.6, .8), (2.3, 0)]) + tone(sec, 38, 30) * curve(sec, [(0, 0), (.3, .6), (2.3, 0)])
+    roar = _shout(r, 1.2, 160, 90, "a", .9)
+    rocks = grains(sec, r, 40, lambda r, k: modal(.12, [(r.uniform(300, 900), .03, 1)], r) * r.uniform(.2, .7), t0=.4)
+    dust = filt(noise(n, r), "high", 3000) * curve(sec, [(0, 0), (.5, .3), (2.3, 0)])
+    buf += quake * .8 + rocks * .4 + dust * .15; place(buf, roar * .7, .25)
+    return reverb(buf, 2.0, .4, tone_hz=2500)
+
+
+@sfx("sfx.boss.yeom.throw", -12, "보스", "장부꾼 염씨가 숫자를 날림: 장부 낱장이 촤르륵 넘어가며 종이가 휙휙 날아감(약 1초)", use="B-08: 숫자 지뢰를 날리는 순간")
+def _(r):
+    sec = 1.1; buf = np.zeros(int(sec * SR))
+    flip = grains(.4, r, 14, lambda r, k: filt(noise(int(.02 * SR), r), "band", r.uniform(2000, 4500), 2) * env(int(.02 * SR), .001, .006, 4) * r.uniform(.4, 1),
+                  spread=lambda k, r: k * .025)                          # 장부가 촤르륵
+    place(buf, flip, 0)
+    for k in range(4):
+        m = int(.3 * SR)
+        place(buf, sweep_filt(noise(m, r), "band", 2500, 900, 2.5) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2 * .45, .35 + k * .12)
+    return reverb(buf, .6, .15)
+
+
+@sfx("sfx.boss.yeom.land", -11, "보스", "숫자가 바닥에 박힘: 도장을 찍듯 '탁' + 낮게 웅 울리는 경고(이 칸 밟지 마라)(약 0.7초)", bypass_cast=True, use="B-08: 숫자 지뢰가 바닥에 꽂힐 때(위치 예고)")
+def _(r):
+    sec = .75; buf = np.zeros(int(sec * SR))
+    stamp = modal(.2, [(320, .05, 1), (710, .03, .4)], r) * .6
+    place(stamp, filt(noise(int(.08 * SR), r), "low", 1500) * env(int(.08 * SR), .001, .02, 4), 0)   # 도장 찍는 탁
+    place(buf, stamp, 0)
+    warn = tone(.6, 147) * (0.5 + 0.5 * np.sin(2 * np.pi * 6 * T(.6))) * env(int(.6 * SR), .05, .2, 4, hold=.2)   # 낮은 박동 경고
+    place(buf, warn * .4, .08)
+    return reverb(buf, .6, .15)
+
+
+@sfx("sfx.boss.yeom.burst", -9, "보스", "숫자를 밟음: 먹물이 퍽 터지며 붓 자국이 흩어짐(약 0.9초)", use="B-08: 플레이어가 숫자 칸을 밟아 피해를 입을 때")
+def _(r):
+    sec = .9; n = int(sec * SR); buf = np.zeros(n)
+    m = int(.3 * SR)
+    place(buf, filt(noise(m, r), "low", 1200) * env(m, .002, .07, 4) + tone(.3, 110, 60) * env(m, .002, .08, 4) * .7, 0)
+    splat = grains(.6, r, 30, lambda r, k: bubble(.04, r.uniform(300, 900), 1.5, .01) * r.uniform(.2, .6), spread=lambda k, r: .03 + r.exponential(.12))   # 먹물 튐(끈적한 물방울)
+    buf += np.concatenate([splat, np.zeros(n - len(splat))]) * .5
+    m2 = int(.4 * SR); place(buf, sweep_filt(noise(m2, r), "band", 3000, 1200, 2) * env(m2, .01, .12, 4) * .3, .05)   # 붓 획이 흩어짐
+    return reverb(buf, .6, .15)
+
+
+@sfx("sfx.boss.yeom.backpage", -16, "보스", "장부 뒷장(이름이 적힌 종이)을 밟음: 종이가 부드럽게 사락 + 맑은 방울 한 번 — 해롭지 않고 맺힘이 깎인다(약 1.2초)", use="B-08: 뒷장 종이를 밟았을 때(이로운 쪽)")
+def _(r):
+    sec = 1.3; buf = np.zeros(int(sec * SR))
+    m = int(.4 * SR); place(buf, filt(filt(noise(m, r), "high", 1500), "low", 6000) * env(m, .03, .12, 4, hold=.1) * .4, 0)
+    place(buf, modal(1.1, [(1568, .5, 1), (2352, .35, .5), (3920, .15, .2)], r) * .5, .12)   # G6 맑은 방울
+    return reverb(buf, 1.2, .3)
+
+
+# ===== 3막 지역 환경음 (⑤ 갯마을 포구 · ⑥ 도성 아랫마을, 서사 boss_clues_act3.json, 2026-10-25) =====
+def _wave(r, sec, size=1.0):
+    """파도 한 번: 밀려오며 커지는 쏴아(높이가 올라감) → 부서지는 찰싹 → 빠지며 자갈·거품 사르르"""
+    n = int(sec * SR); tt = np.arange(n) / SR
+    rise = sweep_filt(noise(n, r), "band", 300, 1200 * size, .8) * np.clip(tt / (sec * .45), 0, 1) ** 2 * (tt < sec * .5)
+    crash = filt(noise(n, r), "low", 4000) * env(n, sec * .45, sec * .25, 3)
+    fizz = grains(sec, r, int(120 * size), lambda r, k: bubble(.02, r.uniform(2500, 6000), 1.3, .003) * r.uniform(.05, .3),
+                  spread=lambda k, r: sec * .5 + r.uniform(0, sec * .45))
+    return (rise * .5 + crash * .8 + fizz * .4) * size
+
+
+@sfx("amb.harbor", -22, "세계", "갯마을 포구: 선창 기둥에 찰싹이는 잔파도 + 줄에 묶인 빈 배가 삐걱 + 먼 갈매기(반복용 16초)", loop=True, use="⑤ 포구(Harbor)")
+def _(r):
+    sec = 16.4; n = int(sec * SR); buf = np.zeros(n)
+    at = .2
+    while at < sec - 1:
+        d = r.uniform(2.2, 3.4); place(buf, _wave(r, d, r.uniform(.4, .7)), at); at += d * r.uniform(.6, .9)
+    slap = grains(sec, r, 14, lambda r, k: filt(noise(int(.06 * SR), r), "low", 1500) * env(int(.06 * SR), .002, .02, 4) * r.uniform(.2, .5))   # 기둥에 찰싹
+    creak = grains(sec, r, 6, lambda r, k: sweep_filt(noise(int(.7 * SR), r), "band", r.uniform(350, 500), r.uniform(500, 700), 14) * env(int(.7 * SR), .1, .2, 4, hold=.3) * .5)   # 배끼리·줄 삐걱
+    gull = np.zeros(n)
+    for at in (4.0, 4.35, 11.5):
+        d = .45; f0 = curve(d, [(0, 1500), (.1, 1900), (.4, 1300)])
+        place(gull, voice(f0, [(2200, 4, 1), (3600, 5, .4)], .3, r, nh=10) * env(int(d * SR), .02, .15, 3, hold=.15), at)
+    gull = reverb(filt(gull, "low", 3500), 1.8, .5)[:n]
+    return loopify(buf + slap + creak + gull * .25 + filt(noise(n, r), "low", 150) * .2, .5)
+
+
+@sfx("sfx.tide.flood", -12, "세계", "밀물 신호: 먼바다에서 낮게 웅— 밀려오는 큰 물소리가 점점 차오름 + 징 한 번(약 5초) — 20초 안에 붙잡아라", bypass_cast=True, use="⑤ 밀물 신호 순간(물 혼이 떠밀려 가기 시작)")
+def _(r):
+    sec = 5.2; n = int(sec * SR); buf = np.zeros(n)
+    surge = sweep_filt(noise(n, r), "low", 200, 1800) * curve(sec, [(0, 0), (3.5, 1), (5.2, .6)])
+    swell = tone(sec, 55, 65) * curve(sec, [(0, 0), (3, .6), (5.2, 0)])
+    jing = modal(4.5, [(150, 2.5, 1), (151.2, 2.5, .8), (322, 1.4, .5), (463, .9, .3)], r)   # 징: 맥놀이가 긴 놋쇠 울림
+    place(buf, jing * .7, 0)
+    buf += surge * .7 + swell * .4
+    return reverb(buf, 2.0, .3)
+
+
+@sfx("amb.tide.ebb", -24, "세계", "썰물 갯벌: 물 빠진 갯벌이 뽀글뽀글 숨 쉼 + 게 구멍 톡톡 + 멀어진 파도(반복용 15초)", loop=True, use="⑤ 썰물 때 포구·난파 여울 바닥")
+def _(r):
+    sec = 15.4; n = int(sec * SR)
+    far = filt(noise(n, r), "low", 500) * (.5 + .3 * np.sin(2 * np.pi * T(sec) / 7.7))      # 멀리 물러난 바다
+    mud = grains(sec, r, 500, lambda r, k: bubble(.03, r.uniform(800, 2500), 1.6, .006) * r.uniform(.05, .4))   # 갯벌 숨구멍
+    crab = grains(sec, r, 40, lambda r, k: modal(.03, [(r.uniform(3000, 5000), .006, 1)], r) * r.uniform(.05, .2))
+    drain = filt(noise(n, r), "band", 1800, 1.5) * .06                                     # 갯골로 흘러 나가는 가는 물
+    return loopify(far * .6 + mud * .5 + crab + drain, .5)
+
+
+@sfx("amb.saltfield", -23, "세계", "소금밭: 탁 트인 바닷바람 + 소금 결정이 바람에 서걱 + 아주 먼 파도(반복용 14초)", loop=True, use="⑤ 소금밭(SaltField)")
+def _(r):
+    sec = 14.4; n = int(sec * SR)
+    g = _gust_curve(sec, r, 2, .4)
+    wind = filt(noise(n, r), "band", 600, .6) * (.4 + .6 * g)
+    salt = grains(sec, r, 900, lambda r, k: filt(noise(int(.002 * SR), r), "high", 5000) * r.uniform(.02, .12)) * np.repeat(g, 1)[:n]
+    sea = filt(noise(n, r), "low", 300) * .3
+    return loopify(wind * .5 + salt + sea, .5)
+
+
+@sfx("amb.wreckshoal", -21, "세계", "난파 여울: 암초 사이를 빠르게 흐르는 물살 + 부서진 배 나무가 물에 부딪혀 쿵·삐걱(반복용 15초)", loop=True, use="⑤ 난파 여울(WreckShoal)·B-10 갑판")
+def _(r):
+    sec = 15.4; n = int(sec * SR); t = T(sec)
+    rush = filt(filt(noise(n, r), "high", 200), "low", 3500) * (.8 + .2 * np.sin(2 * np.pi * t / 3.1))
+    churn = grains(sec, r, 400, lambda r, k: bubble(.06, r.uniform(250, 900), 2, .015) * r.uniform(.1, .6))   # 물살 속 공기 방울
+    hull = grains(sec, r, 7, lambda r, k: (modal(.5, [(r.uniform(70, 110), .2, 1), (r.uniform(220, 300), .1, .4)], r) + filt(noise(int(.5 * SR), r), "low", 400) * env(int(.5 * SR), .002, .05, 4) * .5) * r.uniform(.3, .7))   # 배 조각이 바위에 쿵
+    creak = grains(sec, r, 5, lambda r, k: sweep_filt(noise(int(.8 * SR), r), "band", 280, 420, 16) * env(int(.8 * SR), .1, .2, 4, hold=.35) * .5)
+    return loopify(rush * .6 + churn * .4 + hull + creak, .5)
+
+
+@sfx("amb.capital.market", -24, "세계", "도성 저잣거리: 촘촘한 사람 소리(뜻 안 들림) + 장사꾼의 길게 끄는 외침 + 엽전·그릇·수레·소 방울 + 먼 장구(반복용 16초)", loop=True, use="⑥ 저잣거리(Market) — 1막 장터보다 크고 바쁘다")
+def _(r):
+    sec = 16.4; n = int(sec * SR); buf = np.zeros(n)
+    vowels = [[(750, 4, 1), (1200, 5, .5)], [(450, 4, 1), (1900, 6, .4)], [(320, 4, 1), (2300, 7, .35)], [(550, 4, 1), (900, 5, .6)]]
+    for p in range(24):                                       # 사람이 장터보다 많다
+        base = r.uniform(110, 280); at = r.uniform(0, 1.0)
+        while at < sec - .3:
+            d = r.uniform(.07, .22); m = int(d * SR)
+            f0 = np.linspace(base * r.uniform(.9, 1.2), base * r.uniform(.8, 1.05), m)
+            place(buf, voice(f0, vowels[r.integers(4)], .2, r, nh=16) * env(m, .012, d * .4, 3, hold=d * .4) * r.uniform(.2, .8), at)
+            at += d + (r.uniform(.02, .07) if r.random() > .12 else r.uniform(.3, 1.2))
+    buf = filt(buf, "low", 2000)
+    for at in (2.0, 9.0, 13.5):                               # 장사꾼 외침: 길게 끌어 올렸다 내림(말뜻 없음)
+        d = 1.3; f0 = curve(d, [(0, 200), (.2, 300), (.9, 290), (1.3, 220)])
+        place(buf, filt(voice(f0, [(700, 4, 1), (1150, 5, .5)], .25, r, nh=25), "low", 2500) * env(int(d * SR), .05, .3, 3, hold=.8) * .5, at)
+    coins = grains(sec, r, 40, lambda r, k: modal(.12, [(r.uniform(3500, 5500), .03, 1), (r.uniform(6500, 8000), .015, .4)], r) * r.uniform(.05, .2))
+    cart = grains(sec, r, 4, lambda r, k: filt(noise(int(.6 * SR), r), "band", r.uniform(450, 700), 6) * env(int(.6 * SR), .1, .2, 3, hold=.2) * .3)
+    cowbell = grains(sec, r, 6, lambda r, k: modal(.5, [(r.uniform(700, 800), .15, 1), (r.uniform(1700, 1900), .08, .4)], r) * .1)
+    drum = np.zeros(n)
+    for k in range(int(sec / .5)):                             # 아주 멀리 장구 굿거리 비슷한 박
+        if k % 6 in (0, 3, 4):
+            place(drum, tone(.2, 120, 90) * env(int(.2 * SR), .002, .06, 4) * (1 if k % 6 == 0 else .5), k * .5)
+    drum = filt(drum, "low", 600) * .15
+    return loopify(reverb(buf + coins + cart + cowbell + drum + filt(noise(n, r), "low", 350) * .1, 1.0, .25, tone_hz=3000)[:n], .5)
+
+
+@sfx("amb.bridge.under", -24, "세계", "큰 다리 밑: 다리 아래로 흐르는 강물 + 머리 위 돌다리를 지나는 둔탁한 발소리·수레 + 거적 움막 바스락(반복용 15초)", loop=True, use="⑥ 큰 다리 밑(BridgeUnder)·움막촌")
+def _(r):
+    sec = 15.4; n = int(sec * SR)
+    river = filt(filt(noise(n, r), "high", 150), "low", 1800) * .5 + grains(sec, r, 200, lambda r, k: bubble(.05, r.uniform(300, 800), 1.8, .012) * r.uniform(.1, .4))
+    steps = np.zeros(n); at = 1.0
+    while at < sec - 1:                                         # 위를 지나는 사람들(돌을 지나 먹먹하게)
+        for j in range(r.integers(4, 9)):
+            place(steps, filt(noise(int(.08 * SR), r), "low", 300) * env(int(.08 * SR), .002, .03, 4) * r.uniform(.3, .7), at + j * .5)
+        at += r.uniform(3, 6)
+    roll = np.zeros(n); place(roll, filt(noise(int(2.5 * SR), r), "low", 180) * np.sin(np.pi * np.linspace(0, 1, int(2.5 * SR))) * .8, 8.0)   # 수레가 다리를 건넘
+    straw = grains(sec, r, 25, lambda r, k: filt(noise(int(.05 * SR), r), "band", r.uniform(2000, 4000), 1.5) * env(int(.05 * SR), .005, .015, 4) * r.uniform(.05, .2))
+    return loopify(reverb(river * .6 + steps + roll + straw, 1.2, .35, tone_hz=2500)[:n], .5)
+
+
+@sfx("amb.citygate", -21, "세계", "닫힌 성문 밖의 밤: 성벽을 따라 부는 찬 바람 + 성문 쇠고리가 가끔 덜컥 + 아주 먼 개 짖음(반복용 16초)", loop=True, use="⑥ 성문 밖(CityGate)·팻말 없는 무덤")
+def _(r):
+    sec = 16.4; n = int(sec * SR)
+    g = _gust_curve(sec, r, 3, .3)
+    wind = sweep_filt(noise(n, r), "band", 250, 380, 2) * (.5 + .5 * g) + filt(noise(n, r), "low", 120) * .4
+    knock = grains(sec, r, 4, lambda r, k: modal(.6, [(r.uniform(400, 500), .15, 1), (r.uniform(1100, 1300), .08, .5), (r.uniform(2400, 2700), .04, .3)], r) * .35)   # 쇠고리 덜컥(큰 나무문 울림)
+    dog = np.zeros(n)
+    for at in (6.0, 6.4, 6.75, 13.0):
+        d = .22; f0 = curve(d, [(0, 420), (.05, 520), (d, 380)])
+        place(dog, voice(f0, [(900, 3, 1), (1800, 4, .5)], .4, r, nh=15) * env(int(d * SR), .005, .08, 4), at)
+    dog = reverb(filt(dog, "low", 1500), 2.5, .6, tone_hz=1500)[:n]
+    return loopify(wind * .7 + knock + dog * .35, .5)
+
+
+# ===== 무기 5종 타격음·휘두름 (2026-10-25 점검: 지금은 다섯 무기가 모두 sfx.hit.chain / sfx.hit.heavy 하나를 같이 씀) =====
+# 무기마다 '재료'가 다르게 들리게 한다. 귀가 무기를 구분하는 단서는 셋: 높이(밝기), 길이(꼬리), 첫 순간의 모양.
+#   철삭(Chain)     쇠사슬 철컥 — 중고음, 고리가 차례로 부딪힘 (기존 sfx.hit.chain/heavy 그대로)
+#   육모방망이(Mace) 단단한 나무 몸통 퍽 — 가장 낮고 두꺼움, 꼬리 짧음
+#   요령방울(Bell)   놋쇠 방울 짤랑 — 가장 밝고 꼬리 김(맞을 때마다 '울린다')
+#   삼지창(Trident)  쇠끝이 박힘 — 아주 짧고 날카로운 시작 + 찔려 들어가는 소리
+#   명부 붓(Brush)   먹이 튀며 획이 박힘 — 가볍고 촉촉함, 3타는 도장 '탁'
+def _flesh(r, sec=.25, f=800, a=.5):
+    """맞은 몸(혼)의 살 느낌: 짧은 대역 잡음 퍽"""
+    n = int(sec * SR); return filt(noise(n, r), "band", f, 1.2) * env(n, .001, .035) * a
+
+
+@sfx("sfx.hit.mace", -8, "전투", "육모방망이 타격: 단단한 나무 몸통이 퍽 — 낮고 두껍고 짧다", use="육모방망이 1·2타 적중")
+def _(r):
+    n = int(.35 * SR)
+    wood = modal(.35, [(r.uniform(230, 250), .05, 1), (r.uniform(520, 560), .035, .7), (r.uniform(980, 1050), .02, .4), (1800, .01, .2)], r)   # 단단한 나무(배음이 정수배가 아님)
+    thump = tone(.35, 120, 55) * env(n, .001, .08, 3)
+    crack = filt(noise(n, r), "band", 1600, 1.5) * env(n, .0005, .012)          # 모서리(육모)가 박히는 딱
+    return reverb(wood * .6 + thump * 1.0 + crack * .5 + _flesh(r, .35, 600, .6), .45, .1)
+
+
+@sfx("sfx.hit.mace.heavy", -5, "전투", "육모방망이 3타 내려찍기: 땅까지 울리는 쿵 + 흙 튐 + 나무 울림(반경 3m 기절)", use="육모방망이 3타(내려찍기) 적중·땅 찍기")
+def _(r):
+    n = int(.9 * SR); buf = np.zeros(n)
+    boom = tone(.9, 80, 32) * env(n, .002, .25, 3)
+    ground = filt(noise(n, r), "low", 350) * env(n, .001, .15, 3)
+    wood = modal(.4, [(210, .07, 1), (470, .05, .6), (900, .03, .3)], r)
+    dirt = grains(.7, r, 50, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(1000, 4000), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .5), spread=lambda k, r: .03 + r.exponential(.12))
+    buf += boom * 1.0 + ground * .8; place(buf, dirt * .5, 0); place(buf, wood * .6, 0)
+    return reverb(buf, .9, .15)
+
+
+@sfx("sfx.hit.bell", -10, "전투", "요령방울 타격: 놋쇠 방울이 짤랑 울리며 맞음 — 밝고 꼬리가 길다(맞을 때마다 '울린다')", use="요령방울 1·2타 적중(360° 원 범위라 여럿이 동시에 맞으면 1번만 재생)")
+def _(r):
+    n = int(.8 * SR); buf = np.zeros(n)
+    f = r.uniform(2050, 2200)
+    bell = modal(.8, [(f, .3, 1), (f * 1.006, .3, .7), (f * 2.32, .18, .5), (f * 3.9, .08, .3)], r)   # 방울: 맥놀이 + 높은 배음
+    jingle = grains(.15, r, 5, lambda r, k: modal(.15, [(r.uniform(3500, 5500), .04, 1)], r) * .4, spread=lambda k, r: k * .02 + r.uniform(0, .01))   # 방울 속 구슬이 짤랑
+    place(buf, bell * .7, 0); place(buf, jingle * .5, .005)
+    buf += np.concatenate([_flesh(r, .2, 1100, .35), np.zeros(n - int(.2 * SR))])
+    return reverb(buf, 1.0, .2)
+
+
+@sfx("sfx.hit.bell.heavy", -7, "전투", "요령방울 3타 '울림': 큰 방울 댕— 퍼지는 소리 + 공기가 둥글게 밀려나는 웅(원 범위 넉백)", use="요령방울 3타(toll) 적중")
+def _(r):
+    n = int(1.6 * SR); buf = np.zeros(n)
+    f = 1046
+    bell = modal(1.6, [(f, .7, 1), (f * 1.004, .7, .8), (f * 2.0, .45, .5), (f * 2.76, .3, .4), (f * 5.4, .12, .2)], r)
+    wave = sweep_filt(noise(n, r), "low", 900, 150) * env(n, .005, .25, 3)          # 둥글게 밀려나는 공기
+    sub = tone(1.6, 70, 50) * env(n, .003, .2, 3)
+    buf += bell * .7 + wave * .5 + sub * .6
+    return reverb(buf, 1.6, .3)
+
+
+@sfx("sfx.hit.trident", -9, "전투", "삼지창 찌르기 적중: 쇠끝이 '칙' 박히고 쑥 들어가는 소리 — 가장 짧고 날카로운 시작", use="삼지창 1·2타 적중(관통: 둘째·셋째 대상은 0.03초씩 늦춰 작게)")
+def _(r):
+    n = int(.3 * SR); buf = np.zeros(n)
+    tip = filt(noise(int(.012 * SR), r), "high", 3500) * env(int(.012 * SR), .0002, .003)     # 쇠끝이 닿는 칙
+    place(buf, tip * 1.0, 0)
+    prong = modal(.25, [(r.uniform(2900, 3100), .025, 1), (r.uniform(4400, 4700), .015, .5), (r.uniform(6900, 7300), .008, .3)], r)   # 세 갈래 날의 짧은 쇳소리
+    place(buf, prong * .4, .002)
+    sink = sweep_filt(noise(int(.15 * SR), r), "band", 1500, 500, 2) * env(int(.15 * SR), .005, .05, 4)   # 쑥 들어감(높이가 내려감)
+    place(buf, sink * .6, .01)
+    place(buf, tone(.12, 200, 120) * env(int(.12 * SR), .001, .03, 4) * .5, .01)
+    return reverb(buf, .35, .08)
+
+
+@sfx("sfx.hit.trident.heavy", -6, "전투", "삼지창 3타 꿰뚫기: 세 번 연달아 칙-칙-칙 박히고 마지막에 깊게 쾅 + 쇠 떨림", use="삼지창 3타(skewer) 적중")
+def _(r):
+    n = int(.8 * SR); buf = np.zeros(n)
+    for k in range(3):
+        tip = filt(noise(int(.01 * SR), r), "high", 3500) * env(int(.01 * SR), .0002, .003)
+        place(buf, tip * (.3 + .1 * k), k * .035)
+        place(buf, modal(.15, [(3000 + 150 * k, .02, 1), (4600, .012, .4)], r) * .3, k * .035)
+    deep = tone(.5, 140, 50) * env(int(.5 * SR), .001, .12, 3) + filt(noise(int(.5 * SR), r), "low", 600) * env(int(.5 * SR), .001, .06, 4) * .8
+    place(buf, deep * 1.8, .1)
+    shiver = modal(.6, [(1850, .25, 1), (1862, .25, .8)], r) * .25                      # 박힌 창대가 부르르 떪(맥놀이)
+    place(buf, shiver, .1)
+    return reverb(buf, .6, .12)
+
+
+@sfx("sfx.hit.brush", -11, "전투", "명부 붓 획 적중: 먹물이 '촥' 튀며 획이 박힘 — 가볍고 촉촉하다", use="명부 붓 1·2타 적중(먼 거리)")
+def _(r):
+    n = int(.35 * SR); buf = np.zeros(n)
+    swish = sweep_filt(noise(int(.08 * SR), r), "band", 4000, 1800, 1.5) * env(int(.08 * SR), .002, .025, 4)   # 붓끝이 긋는 촥
+    place(buf, swish * .8, 0)
+    splat = grains(.35, r, 18, lambda r, k: bubble(.03, r.uniform(500, 1400), 1.5, .007) * r.uniform(.2, .7), spread=lambda k, r: .01 + r.exponential(.05))   # 먹물 방울
+    buf += splat * .5
+    buf += np.concatenate([_flesh(r, .15, 1300, .3), np.zeros(n - int(.15 * SR))])
+    return reverb(buf, .4, .1)
+
+
+@sfx("sfx.hit.brush.heavy", -8, "전투", "명부 붓 3타 '인(도장)': 도장이 탁 찍히며 먹이 퍽 번짐 + 종이 위 붉은 인 같은 짧은 울림", use="명부 붓 3타(seal) 적중")
+def _(r):
+    n = int(.8 * SR); buf = np.zeros(n)
+    stamp = modal(.3, [(330, .05, 1), (740, .03, .5), (1500, .015, .3)], r) + tone(.3, 110, 60) * env(int(.3 * SR), .001, .06, 4)
+    place(buf, stamp, 0)
+    place(buf, filt(noise(int(.04 * SR), r), "low", 2500) * env(int(.04 * SR), .0005, .01, 4) * .8, 0)   # 도장 면이 닿는 탁
+    bloom = sweep_filt(noise(int(.5 * SR), r), "low", 2500, 400) * env(int(.5 * SR), .01, .12, 4) * .4   # 먹이 퍽 번짐
+    place(buf, bloom, .02)
+    place(buf, modal(.6, [(1568, .25, 1), (2349, .15, .4)], r) * .2, .03)              # 인이 찍힌 짧은 울림
+    return reverb(buf, .7, .15)
+
+
+# 휘두르는 소리(헛스윙 포함): 맞기 전, 휘두름 시작(windup 끝)에 재생. 무기 무게가 들려야 손맛이 산다
+@sfx("sfx.swing.chain", -16, "전투", "철삭 휘두름: 사슬이 차르륵 풀리며 휙", use="철삭 휘두름 시작(windup 끝)")
+def _(r):
+    n = int(.3 * SR)
+    whoosh = sweep_filt(noise(n, r), "band", 900, 2500, 1.5) * np.sin(np.pi * np.linspace(0, 1, n)) ** 2
+    rattle = grains(.25, r, 9, lambda r, k: modal(.04, [(r.uniform(3000, 5500), .008, 1)], r) * r.uniform(.3, .8), spread=lambda k, r: k * .025 + r.uniform(0, .008))
+    return whoosh * .7 + np.concatenate([rattle, np.zeros(n - len(rattle))]) * .4
+
+
+@sfx("sfx.swing.mace", -14, "전투", "육모방망이 휘두름: 무거운 몸통이 낮게 부웅", use="육모방망이 휘두름 시작")
+def _(r):
+    n = int(.4 * SR)
+    return sweep_filt(noise(n, r), "band", 200, 700, 1.2) * np.sin(np.pi * np.linspace(0, 1, n)) ** 2 + tone(.4, 70, 90) * np.sin(np.pi * np.linspace(0, 1, n)) ** 2 * .3
+
+
+@sfx("sfx.swing.bell", -16, "전투", "요령방울 휘두름: 방울이 흔들려 짤랑짤랑 + 가벼운 휙", use="요령방울 휘두름 시작")
+def _(r):
+    n = int(.35 * SR)
+    whoosh = sweep_filt(noise(n, r), "band", 1200, 2500, 1.5) * np.sin(np.pi * np.linspace(0, 1, n)) ** 2 * .4
+    jing = grains(.3, r, 6, lambda r, k: modal(.2, [(r.uniform(4000, 5500), .05, 1), (r.uniform(2100, 2300), .08, .4)], r) * r.uniform(.3, .7), spread=lambda k, r: k * .045 + r.uniform(0, .01))
+    return whoosh + np.concatenate([jing, np.zeros(max(0, n - len(jing)))])[:n] * .5
+
+
+@sfx("sfx.swing.trident", -16, "전투", "삼지창 찌름: 짧고 곧게 쉭 — 높이가 위로 쏘아 올라감", use="삼지창 찌르기 시작")
+def _(r):
+    n = int(.18 * SR)
+    return sweep_filt(noise(n, r), "band", 1500, 5000, 2) * env(n, .03, .05, 4, hold=.04)
+
+
+@sfx("sfx.swing.brush", -18, "전투", "명부 붓 휘두름: 붓털이 공기를 쓸며 사악 + 먹 한 방울 튐", use="명부 붓 휘두름 시작(획이 날아감)")
+def _(r):
+    n = int(.25 * SR); buf = np.zeros(n)
+    buf += filt(filt(noise(n, r), "high", 2500), "low", 8000) * np.sin(np.pi * np.linspace(0, 1, n)) ** 2 * .5
+    place(buf, bubble(.04, 900, 1.5, .008) * .3, .15)
+    return buf
+
+
+# ===== 무기별 천도·파혼 변형 (무기 특성표 Core/Gear.cs: 요령방울=천도 빠름·파혼 약함, 육모방망이=파혼 강함, 삼지창=파혼 날카로움, 붓=천도 넋 많음·파혼 약함, 철삭=연속 천도) =====
+# 바탕은 기존 sfx.tendo.done / sfx.pahon.burst 그대로(같은 고정 난수) + 무기 재료의 짧은 '꾸밈' 한 겹.
+# 강조하는 쪽은 꾸밈을 크게·길게(그리고 파일 크기를 1~2dB 높게), 약한 쪽은 바탕을 덜어 낸다.
+def _base(id):
+    """기존 소리를 같은 난수로 다시 만든다(바탕). 기존 파일과 똑같은 소리"""
+    return np.asarray(REG[id]["fn"](np.random.default_rng(zlib.crc32(id.encode()) & 0xffffffff)), dtype=np.float64)
+
+
+def _mix(base, accent, at=0.0, a=1.0):
+    n = max(len(base), int(at * SR) + len(accent))
+    out = np.zeros(n); out[:len(base)] += base / (np.abs(base).max() + 1e-9)
+    place(out, accent / (np.abs(accent).max() + 1e-9) * a, at)
+    return out
+
+
+@sfx("sfx.tendo.done.chain", -7, "처결", "천도 완료(철삭): 기본 천도음 + 풀린 사슬이 차르르 내려앉음", use="철삭으로 천도 성공")
+def _(r):
+    links = grains(.6, r, 10, lambda r, k: modal(.08, [(r.uniform(2800, 4500), .02, 1)], r) * (1 - k / 12), spread=lambda k, r: k * .05 + r.uniform(0, .01))
+    return _mix(_base("sfx.tendo.done"), links, .35, .25)
+
+
+@sfx("sfx.tendo.done.mace", -9, "처결", "천도 완료(육모방망이): 기본 천도음을 조금 낮고 작게 + 나무 '톡' 한 번(천도는 이 무기의 강점이 아니다)", use="육모방망이로 천도 성공")
+def _(r):
+    b = filt(_base("sfx.tendo.done"), "low", 4000)
+    return _mix(b, modal(.3, [(240, .05, 1), (540, .03, .5)], r), .05, .3)
+
+
+@sfx("sfx.tendo.done.bell", -5, "처결", "천도 완료(요령방울) — 강조: 기본 천도음 위로 요령이 길게 짤랑짤랑 울려 퍼지며 한 음 더 높이 올라감", use="요령방울로 천도 성공(이 무기의 강점)")
+def _(r):
+    sec = 3.0; acc = np.zeros(int(sec * SR))
+    for k in range(9):                                            # 요령을 흔드는 짤랑 — 점점 잦아듦
+        f = r.uniform(2050, 2250)
+        place(acc, modal(1.0, [(f, .35, 1), (f * 1.006, .35, .7), (f * 2.32, .2, .4)], r) * (1 - k / 11), .05 + k * .16 + r.uniform(0, .02))
+    place(acc, modal(2.2, [(1568 * 2, 1.0, 1), (1568 * 2 * 1.004, 1.0, .7)], r) * .6, 1.5)   # 마지막에 한 음 더 높이(G7)
+    return reverb(_mix(_base("sfx.tendo.done"), acc, 0, .7), 1.2, .15)
+
+
+@sfx("sfx.tendo.done.trident", -7, "처결", "천도 완료(삼지창): 기본 천도음 + 세 갈래 날이 맑게 '팅' 세 번", use="삼지창으로 천도 성공")
+def _(r):
+    acc = np.zeros(int(.8 * SR))
+    for k, f in enumerate((2960, 3520, 4186)):
+        place(acc, modal(.5, [(f, .2, 1), (f * 1.003, .2, .6)], r) * .6, k * .09)
+    return _mix(_base("sfx.tendo.done"), acc, .3, .3)
+
+
+@sfx("sfx.tendo.done.brush", -6, "처결", "천도 완료(명부 붓) — 넋이 많다: 기본 천도음 + 붓이 이름을 한 획 긋고 먹빛 반짝임이 여러 번 피어오름", use="명부 붓으로 천도 성공(넋 보너스)")
+def _(r):
+    acc = np.zeros(int(2.0 * SR))
+    m = int(.5 * SR); place(acc, filt(filt(noise(m, r), "high", 1800), "low", 6500) * env(m, .03, .12, 4, hold=.25) * .5, 0)   # 이름 한 획
+    for k in range(7):                                            # 넋이 송골송골 피어오름(위로 올라가는 작은 방울들)
+        place(acc, bubble(.25, 900 + 220 * k, 1.6, .05) * .35, .5 + k * .14); place(acc, modal(.6, [(1760 + 200 * k, .25, 1)], r) * .25, .5 + k * .14)
+    return _mix(_base("sfx.tendo.done"), acc, .2, .5)
+
+
+@sfx("sfx.pahon.burst.chain", -4, "처결", "파혼(철삭): 기본 파혼음 + 사슬이 팽팽히 당겨졌다 '쩡' 끊기듯 튕김", use="철삭으로 파혼")
+def _(r):
+    snap = modal(.6, [(1240, .12, 1), (1873, .09, .8), (2631, .06, .6)], r)
+    place(snap, filt(noise(int(.02 * SR), r), "high", 2500) * env(int(.02 * SR), .0003, .005), 0)
+    return _mix(_base("sfx.pahon.burst"), snap, .0, .35)
+
+
+@sfx("sfx.pahon.burst.mace", -2, "처결", "파혼(육모방망이) — 강조: 기본 파혼음 + 나무 몸통이 땅을 내리치는 거대한 쿵 + 땅 울림 + 흙 튐(가장 크고 무겁다)", use="육모방망이로 파혼(이 무기의 강점: 넉백·피해 큼)")
+def _(r):
+    sec = 1.6; n = int(sec * SR); acc = np.zeros(n)
+    acc += tone(sec, 70, 28) * env(n, .002, .4, 3) * 1.2 + filt(noise(n, r), "low", 300) * env(n, .001, .25, 3)
+    place(acc, modal(.5, [(200, .08, 1), (450, .05, .6), (880, .03, .3)], r) * .8, 0)
+    place(acc, grains(1.2, r, 80, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(800, 3500), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .5), spread=lambda k, r: .03 + r.exponential(.2)), 0)
+    return reverb(_mix(_base("sfx.pahon.burst"), acc, 0, 1.3), 1.0, .12)
+
+
+@sfx("sfx.pahon.burst.bell", -7, "처결", "파혼(요령방울) — 약함: 기본 파혼음을 덜어 내고, 방울이 금 간 소리로 '찌릉' 어긋나게 울림", use="요령방울로 파혼(이 무기의 약점: 파혼 피해 작음)")
+def _(r):
+    b = filt(_base("sfx.pahon.burst"), "high", 180) * .7
+    cracked = modal(1.0, [(2100, .3, 1), (2230, .3, .9), (3300, .15, .5)], r)   # 반음 가까이 어긋난 두 음 = 금 간 방울
+    place(cracked, filt(noise(int(.3 * SR), r), "band", 3000, 2) * env(int(.3 * SR), .002, .05, 4) * .4, 0)
+    return _mix(b, cracked, .05, .5)
+
+
+@sfx("sfx.pahon.burst.trident", -4, "처결", "파혼(삼지창) — 날카로움: 기본 파혼음 + 쇠가 찢기듯 높게 '끼익' 긁히며 꿰뚫음", use="삼지창으로 파혼(파혼 넉백·피해 보정)")
+def _(r):
+    m = int(.6 * SR)
+    scream = sweep_filt(noise(m, r), "band", 6000, 2500, 8) * env(m, .005, .15, 4, hold=.1)   # 쇠 긁힘
+    pierce = modal(.5, [(3100, .1, 1), (4650, .06, .6), (7200, .03, .3)], r)
+    return _mix(_base("sfx.pahon.burst"), scream * .7 + np.concatenate([pierce, np.zeros(m - len(pierce))])[:m], .0, .5)
+
+
+@sfx("sfx.pahon.burst.brush", -7, "처결", "파혼(명부 붓) — 약함: 기본 파혼음을 덜어 내고, 종이 이름이 '찌익' 찢기며 먹이 흩어짐", use="명부 붓으로 파혼(이 무기의 약점)")
+def _(r):
+    b = _base("sfx.pahon.burst") * .7
+    m = int(.7 * SR)
+    tear = sweep_filt(noise(m, r), "band", 1500, 4000, 1.5) * env(m, .02, .1, 4, hold=.3)
+    tear += grains(.7, r, 60, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(2000, 6000), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.2, 1))
+    return _mix(b, tear, .05, .5)
+
+
+# ===== 처결 대기 긴장음 (무릎 꿇은 혼의 남은 시간: 갓 죽은 10초 · 해 넘긴 7초 · 오래된 4초, balance WAIT_*) =====
+# 방식: 혼 나이별 '똑딱' 한 개를 코드가 남은 시간에 맞춰 점점 빨리 친다(간격 1.0초 → 0.15초).
+# 왜 긴 파일 하나가 아니라 똑딱인가? 대기 시간은 장비·도술(TILT_WAIT_ADD, SKILL_HOLD_WAIT_BONUS 등)로 늘거나 줄기 때문.
+@sfx("sfx.wait.tick.fresh", -16, "처결", "대기 똑딱(갓 죽은 혼): 아직 사람 같은 낮은 심장 소리 '두근'", bypass_cast=True, use="갓 죽은 혼이 무릎 꿇고 기다리는 동안 반복(남은 시간에 따라 간격을 줄임)")
+def _(r):
+    buf = np.zeros(int(.4 * SR))
+    for at, a in ((0, 1), (.14, .7)):                              # 두-근
+        place(buf, tone(.15, 62, 48) * env(int(.15 * SR), .004, .05, 4) * a + filt(noise(int(.15 * SR), r), "band", 450, 1.2) * env(int(.15 * SR), .002, .03, 4) * .6 * a, at)   # 폰 스피커에도 들리게 400Hz대 '툭'을 섞음
+    return buf
+
+
+@sfx("sfx.wait.tick.year", -16, "처결", "대기 똑딱(해 넘긴 혼): 마른 나무를 치는 '똑'(목탁 비슷하게 속이 빈 소리)", bypass_cast=True, use="해 넘긴 혼이 기다리는 동안 반복")
+def _(r):
+    return modal(.25, [(r.uniform(560, 600), .05, 1), (r.uniform(1450, 1550), .025, .4), (2900, .01, .15)], r)
+
+
+@sfx("sfx.wait.tick.old", -15, "처결", "대기 똑딱(오래된 혼): 녹슨 쇠를 긁듯 '칙' + 낮은 금 간 쇳소리 — 가장 거칠고 불안하다", bypass_cast=True, use="오래된 혼·덩어리가 기다리는 동안 반복")
+def _(r):
+    n = int(.3 * SR)
+    rust = modal(.3, [(410, .06, 1), (437, .06, .9), (1210, .03, .5)], r)   # 가까운 두 음이 부딪혀 거칠게 떪
+    grit = filt(noise(n, r), "band", 2500, 2) * env(n, .001, .02, 4)
+    return rust + grit * .6
+
+
+@sfx("sfx.wait.final", -14, "처결", "대기 마지막 1.5초: 숨을 들이켜듯 올라가는 소리 + 고리가 조여드는 떨림 — 지금 고르지 않으면 일어선다", bypass_cast=True, use="남은 시간 1.5초에 한 번(혼 나이 상관없이 같음)")
+def _(r):
+    sec = 1.5; n = int(sec * SR); t = T(sec)
+    breath = sweep_filt(noise(n, r), "band", 500, 2200, 2) * curve(sec, [(0, .1), (1.4, 1), (1.5, 0)])
+    trem = tone(sec, 220, 440) * (.5 + .5 * np.sin(2 * np.pi * curve(sec, [(0, 6), (1.5, 18)]).cumsum() / SR)) * curve(sec, [(0, 0), (1.4, .5), (1.5, 0)])
+    return breath * .6 + trem * .35
+
+
+@sfx("sfx.wait.expire", -14, "처결", "놓침: 혼이 다시 일어섬 — 무릎 꿇은 기운이 툭 끊기고 낮게 '우웅' 되살아나는 소리", bypass_cast=True, use="대기 시간이 다 돼 혼이 맺힘 50%로 일어설 때")
+def _(r):
+    sec = 1.2; n = int(sec * SR); buf = np.zeros(n)
+    place(buf, filt(noise(int(.05 * SR), r), "low", 1500) * env(int(.05 * SR), .001, .015, 4) * .8, 0)   # 툭 끊김
+    rise = tone(sec, 70, 140) * curve(sec, [(0, 0), (.15, .8), (.9, .6), (1.2, 0)])
+    moan = voice(curve(sec, [(0, 90), (.8, 150), (1.2, 140)]), [(500, 4, 1), (900, 5, .5)], .4, r, nh=20) * curve(sec, [(0, 0), (.2, .5), (1.0, .4), (1.2, 0)])
+    buf += rise * .6 + moan * .4
+    return reverb(buf, .8, .2)
+
+
+# ===== 1막 보스 전투 소리 보강 (B-01 나루 영감 · B-02 월화 · B-03 서 의원, 2026-10-25 밤) =====
+# 왜: 컷신 소리는 대본에 다 맞춰져 있지만, '싸우는 동안' 1막 보스는 거의 말이 없다.
+#   나루 영감은 일반 혼과 같은 예고음, 월화는 컷신용 방울 하나, 서 의원은 경고음만 있고 '터지는' 소리가 없다.
+#   보스는 크게 읽혀야 하므로(BOSS-01 기획 ① 예비동작 0.6초) 예고 → 실제 공격을 소리로도 나눈다.
+def _splash(r, sec=.6, size=1.0):
+    """물보라: 물이 깨지는 쏴 + 굵은 방울이 흩어져 떨어짐"""
+    n = int(sec * SR); buf = np.zeros(n)
+    place(buf, filt(noise(n, r), "low", 3500) * env(n, .004, sec * .3, 3) * size, 0)
+    place(buf, grains(sec, r, int(30 * size), lambda r, k: bubble(.06, r.uniform(500, 1800), 1.8, .012) * r.uniform(.2, .7), t0=.05), 0, .5)
+    return buf
+
+
+@sfx("sfx.boss.naru.sweep.telegraph", -12, "보스", "나루 영감 삿대 휩쓸기 예고: 삿대를 물에서 끌어올리는 물 뚝뚝 + 배가 삐걱 기울어짐(0.6초, 이 소리 끝에 휩쓸림)", bypass_cast=True, use="B-01: 삿대 휩쓸기 예비동작 시작(일반 혼 예고음 대신)")
+def _(r):
+    sec = .75; buf = np.zeros(int(sec * SR))
+    m = int(.5 * SR); place(buf, sweep_filt(noise(m, r), "band", 400, 1300, 1.2) * env(m, .15, .1, 3, hold=.15) * .6, 0)   # 삿대가 물을 가르며 올라옴
+    place(buf, grains(.6, r, 9, lambda r, k: bubble(.08, r.uniform(900, 1900), 1.6, .012) * r.uniform(.3, .7), t0=.15), 0)   # 물 뚝뚝
+    creak = tone(.45, 210, 160) * (1 + .6 * np.sign(np.sin(2 * np.pi * 34 * T(.45)))) * env(int(.45 * SR), .05, .2, 3, hold=.1)   # 배 나무 삐걱(울퉁불퉁한 낮은 음)
+    place(buf, filt(creak, "band", 700, 1.5) * .45, .1)
+    return reverb(buf, .9, .2, tone_hz=3500)
+
+
+@sfx("sfx.boss.naru.sweep", -9, "보스", "삿대 휩쓸기: 굵은 나무 장대가 크게 휘익 + 물보라 촤악(0.9초)", use="B-01: 휩쓸기 판정이 나가는 순간(맞든 안 맞든)")
+def _(r):
+    sec = 1.0; buf = np.zeros(int(sec * SR))
+    m = int(.4 * SR); place(buf, sweep_filt(noise(m, r), "band", 300, 1100, 2) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2, 0)   # 긴 장대라 낮고 굵은 휘익
+    place(buf, _splash(r, .7, 1.2), .25, .8)
+    place(buf, tone(.4, 80, 50) * env(int(.4 * SR), .005, .12) * .5, .25)
+    return reverb(buf, 1.0, .22, tone_hz=4000)
+
+
+@sfx("sfx.boss.naru.rise", -14, "보스", "물에 빠진 혼 둘이 올라옴(전투용 짧은 판): 물이 꿀렁 솟고 뚝뚝(0.9초)", use="B-01 ①: 강물에서 혼 2마리가 올라올 때마다(컷신 cut.water.hands 보다 짧고 작게)")
+def _(r):
+    sec = .95; n = int(sec * SR); buf = np.zeros(n)
+    m = int(.6 * SR); place(buf, sweep_filt(noise(m, r), "band", 250, 1200, 1.2) * env(m, .2, .2, 3) * .7, 0)
+    place(buf, grains(.8, r, 14, lambda r, k: bubble(.1, r.uniform(250, 800), 2, .02) * r.uniform(.3, .9)), 0, .4)
+    place(buf, tone(.5, 65, 50) * env(int(.5 * SR), .1, .2) * .4, .05)
+    return reverb(buf, 1.0, .25, tone_hz=3000)
+
+
+@sfx("sfx.boss.naru.flood", -10, "보스", "큰물: 강이 불어 바닥을 삼킴 — 낮은 우르릉 + 물이 밀려드는 쏴아아(3초, 한 번)", bypass_cast=True, use="B-01 ② 맺힘 50%: 싸울 바닥이 18m→11m로 좁아지기 시작할 때")
+def _(r):
+    sec = 3.2; n = int(sec * SR); t = T(sec)
+    rush = sweep_filt(noise(n, r), "band", 250, 900, .7) * env(n, 1.2, 1.0, 2.5, hold=.8)
+    rumble = filt(noise(n, r), "low", 120) * env(n, .6, 1.2, 2, hold=1.0) * 1.4
+    lap = grains(sec, r, 40, lambda r, k: bubble(.09, r.uniform(300, 900), 1.7, .02) * r.uniform(.2, .6), t0=.8)
+    return reverb(rush * .7 + rumble + lap * .35, 1.8, .3, tone_hz=2500)
+
+
+@sfx("sfx.boss.naru.bigwater", -9, "보스", "큰물귀신이 생김: 흘러간 파혼 얼룩 셋이 모여 물기둥이 솟음 — 꿀렁 셋 + 쿠와아 솟구침(1.6초)", use="B-01 ②: 얼룩 3개가 모여 큰물귀신이 될 때")
+def _(r):
+    sec = 1.8; n = int(sec * SR); buf = np.zeros(n)
+    for k in range(3): place(buf, bubble(.25, 180 + 40 * k, 1.8, .06) * .7, k * .18)   # 얼룩 셋이 하나씩 꿀렁
+    m = int(1.1 * SR)
+    place(buf, sweep_filt(noise(m, r), "band", 200, 1400, 1) * env(m, .25, .5, 3) * .9, .55)   # 물기둥이 위로 솟는다
+    place(buf, tone(1.0, 55, 40) * env(int(1.0 * SR), .2, .4) * .7, .55)
+    place(buf, _splash(r, .7, 1.0), 1.0, .5)
+    return reverb(buf, 1.5, .3, tone_hz=3000)
+
+
+@sfx("sfx.boss.wolhwa.warn", -12, "보스", "월화 열두 거리 예고: 요령 짤랑 + 굿판 잔들이 바르르 떨림(1초, 열릴 부채꼴 쪽 잔이 운다)", bypass_cast=True, use="B-02: 파동 예고 시작(지금 컷신용 cut.yoryeong.ring 자리)")
+def _(r):
+    sec = 1.1; buf = np.zeros(int(sec * SR))
+    jingle = lambda r, k: modal(.4, [(f := r.uniform(2400, 3400), .12, 1), (f * 1.52, .08, .4)], r) * r.uniform(.3, .7)
+    place(buf, grains(.25, r, 7, jingle), 0, .7)                                     # 방울 한 번 흔듦(짤랑)
+    rattle = lambda r, k: modal(.05, [(r.uniform(1800, 2600), .015, 1), (r.uniform(3800, 4600), .01, .4)], r) * r.uniform(.15, .4)
+    place(buf, grains(.75, r, 28, rattle, spread=lambda k, r: .25 + k * .026 + r.uniform(0, .01)), 0)   # 사기 잔이 받침과 부딪혀 바르르
+    return reverb(buf, 1.0, .25)
+
+
+@sfx("sfx.boss.wolhwa.burst", -10, "보스", "부채꼴이 열림: 오방 천 펄럭이는 바람 휙 + 무가 장구 '덩' 한 번(0.7초)", use="B-02: 예고가 끝나 부채꼴 판정이 나갈 때(파동마다 1번만)")
+def _(r):
+    sec = .8; buf = np.zeros(int(sec * SR))
+    m = int(.35 * SR); place(buf, sweep_filt(noise(m, r), "band", 600, 2400, 1.3) * np.sin(np.pi * np.linspace(0, 1, m)) ** 1.5 * .7, 0)   # 천이 휙 펼쳐짐
+    place(buf, _flutter(.35, r, np.ones(int(.35 * SR)), (12, 20), 2600) * .3, .05)
+    drum = tone(.5, 150, 95) * env(int(.5 * SR), .002, .14, 3) + filt(noise(int(.5 * SR), r), "band", 900, 1) * env(int(.5 * SR), .001, .02) * .4   # 장구 북편 '덩'
+    place(buf, drum, .08)
+    return reverb(buf, .9, .22)
+
+
+@sfx("sfx.boss.wolhwa.frenzy", -9, "보스", "월화가 몰아침: 장구가 빨라지는 덩덕덩덕덩덕 + 방울을 마구 흔듦(2초) — 이제부터 잔이 더 많이 열린다", bypass_cast=True, use="B-02 맺힘 50% 이하로 처음 내려갈 때 한 번")
+def _(r):
+    sec = 2.2; buf = np.zeros(int(sec * SR))
+    at = 0.0; gap = .28
+    for k in range(10):
+        low = k % 2 == 0
+        n = int(.3 * SR)
+        hit = (tone(.3, 150, 95) * env(n, .002, .12, 3) if low else filt(noise(n, r), "band", 2200, 2) * env(n, .001, .03))   # 덩(북편) / 덕(채편)
+        place(buf, hit * (.6 + .04 * k), at)
+        at += gap; gap = max(.12, gap * .88)                                         # 점점 빨라짐 = 몰아침
+    jingle = lambda r, k: modal(.3, [(f := r.uniform(2400, 3600), .1, 1), (f * 1.5, .06, .3)], r) * r.uniform(.2, .5)
+    place(buf, grains(1.8, r, 30, jingle), .2, .6)
+    return reverb(buf, 1.1, .25)
+
+
+@sfx("sfx.boss.seo.burst", -10, "보스", "서 의원 번호 칸이 터짐: 약재 가루가 퍽 + 탕약 끓어 넘치는 지글(0.6초, 파동마다 1번)", use="B-03: 예고(cut.floor.flash) 뒤 칸들이 실제로 터질 때")
+def _(r):
+    sec = .7; n = int(sec * SR); buf = np.zeros(n)
+    place(buf, filt(noise(n, r), "low", 2200) * env(n, .002, .09, 4), 0)              # 가루가 퍽
+    place(buf, tone(.3, 110, 60) * env(int(.3 * SR), .002, .08) * .7, 0)
+    sizzle = grains(.5, r, 70, lambda r, k: bubble(.02, r.uniform(1500, 4000), 1.4, .004) * r.uniform(.05, .3))   # 뜨거운 약물이 지글
+    place(buf, sizzle, .05, .6)
+    return reverb(buf, .7, .18)
+
+
+@sfx("sfx.boss.seo.streak", -15, "보스", "파동을 피했다(약점까지 한 걸음): 약장 서랍 고리가 달칵 — 첫 번째는 낮게, 두 번째는 높게(0.3초)", use="B-03: 파동을 맞지 않고 넘겼을 때. 1번째는 pitch 1.0, 2번째는 1.25로 재생(3번째는 cut.drawer)")
+def _(r):
+    buf = np.zeros(int(.35 * SR))
+    place(buf, modal(.25, [(1250, .05, 1), (2900, .03, .5), (620, .06, .4)], r), 0)   # 놋쇠 서랍 고리
+    place(buf, _thump(r, .1, 160, 500) * .5, .03)                                     # 서랍이 살짝 들썩
+    return reverb(buf, .5, .15)
+
+
+@sfx("sfx.boss.seo.weak.close", -14, "보스", "약점 끝: 열렸던 약장 서랍이 탁 닫힘(0.35초) — 다시 단단해졌다", use="B-03: 약점 3초가 끝나 서랍이 닫힐 때")
+def _(r):
+    buf = np.zeros(int(.4 * SR))
+    m = int(.12 * SR); place(buf, filt(noise(m, r), "band", 900, 1.2) * env(m, .02, .03, 3) * .5, 0)   # 드르륵 짧게
+    place(buf, modal(.25, [(420, .05, 1), (980, .03, .5)], r), .1); place(buf, _thump(r, .12, 130, 400), .1)        # 탁
+    return reverb(buf, .5, .12)
+
+
+# ===== 날씨 환경음 보강 (비·안개·역병 안개·흐린 밤, 2026-10-25 밤) =====
+# 왜: 지금은 안개와 역병 안개가 같은 'fog_night' 하나를 쓰고, 흐림은 낮이든 밤이든 'wind' 하나다.
+#   역병 안개는 이동이 느려지고 서 있으면 깎이는 '해로운' 날씨라(Weather.cs) 귀로도 달라야 한다.
+#   모두 반복용(loop), 크기는 기존 날씨와 같은 -23 ~ -27 근처(실제 평균 음량 -38 ~ -42dB).
+@sfx("amb.weather.fog", -26, "날씨", "낮 안개: 소리가 먹힌 듯 먹먹한 공기 + 젖은 풀잎에서 물방울 + 아주 먼 까마귀 소리가 흐릿하게(반복용 14초)", loop=True, use="낮에 안개 낀 날(밤 안개는 기존 fog_night)")
+def _(r):
+    sec = 14.3; n = int(sec * SR); t = T(sec)
+    air = filt(noise(n, r), "low", 220) * (.75 + .25 * np.sin(2 * np.pi * t / 14.3 * 2))
+    hush = filt(filt(noise(n, r), "band", 900, .5), "low", 1600) * .12                 # 높은 소리가 깎인 '먹먹함'
+    drips = grains(sec, r, 18, lambda r, k: bubble(.14, r.uniform(700, 1500), 1.9, .018) * r.uniform(.2, .6))
+    crow = np.zeros(n)
+    for at in (3.1, 3.55, 9.8):                                                     # 먼 까마귀 '까악'(안개 너머라 낮고 흐리게)
+        f0 = curve(.32, [(0, 620), (.08, 700), (.3, 560)])
+        place(crow, voice(f0, [(1100, 3, 1), (1800, 4, .5)], .4, r, nh=16) * env(int(.32 * SR), .02, .12, 3) * .35, at)
+    crow = filt(crow, "low", 1400)
+    return loopify(reverb(air + hush + drips * .3 + crow, 2.2, .4, tone_hz=1800)[:n], .5)
+
+
+@sfx("amb.weather.plague", -25, "날씨", "역병 안개: 무겁게 낮게 맥놀이하는 공기 + 멀리서 앓는 기침 + 파리 웅— (반복용 16초, 서 있으면 깎이는 해로운 날씨)", loop=True, use="역병 안개(검은여울 등). 3호를 처결하면 덜 온다")
+def _(r):
+    sec = 16.2; n = int(sec * SR); t = T(sec)
+    drone = (tone(sec, 61.0) + tone(sec, 63.2) * .8 + tone(sec, 91.8) * .35) * .25    # 가까운 두 음 = 느린 맥놀이(속이 메스꺼운 떨림)
+    air = filt(noise(n, r), "low", 300) * (.7 + .3 * np.sin(2 * np.pi * t / 8.1))
+    sick = filt(filt(noise(n, r), "band", 520, 2.5), "low", 900) * (.5 + .5 * np.sin(2 * np.pi * t / 5.4)) * .25   # 미지근하게 고인 공기
+    fly = np.zeros(n)
+    for at, dur in ((1.5, 2.2), (8.6, 1.6), (12.4, 2.4)):                           # 파리가 가까이 왔다 멀어짐
+        m = int(dur * SR); tt = T(dur)
+        f = 190 + 25 * np.sin(2 * np.pi * .9 * tt) + 8 * np.sin(2 * np.pi * 7 * tt)
+        buzz = np.sign(np.sin(2 * np.pi * np.cumsum(f) / SR)) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2
+        place(fly, filt(buzz, "band", 600, 1.2) * .25, at)
+    cough = np.zeros(n)
+    for at in (5.2, 13.6):                                                          # 먼 기침 두 번(초가 안에서)
+        for k, d in enumerate((.18, .14)):
+            m = int(d * SR); src = noise(m, r) * env(m, .004, d * .5, 4)
+            place(cough, (filt(src, "band", 600, 1.5) + filt(src, "band", 1600, 2.5) * .5) * (1 - .3 * k), at + k * .28)
+    cough = filt(cough, "low", 1800) * .3
+    return loopify(reverb(drone + air * .7 + sick + fly + cough, 2.0, .35, tone_hz=2000)[:n], .5)
+
+
+@sfx("amb.weather.cloudy.night", -24, "날씨", "흐린 밤: 별 없는 하늘의 낮은 바람 웅— + 구름 너머 아주 먼 우르릉 한 번 + 먼 개 짖음 + 문풍지 떨림(반복용 18초)", loop=True, use="흐린 날 밤(낮 흐림은 기존 wind)")
+def _(r):
+    sec = 18.2; n = int(sec * SR); t = T(sec)
+    base = filt(noise(n, r), "low", 200) * (.6 + .3 * np.sin(2 * np.pi * t / 9.1))
+    gust = np.zeros(n); m = int(5.0 * SR)
+    place(gust, sweep_filt(noise(m, r), "band", 250, 600, 4) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2, 4.0)
+    paper = np.zeros(n); m2 = int(1.6 * SR)                                          # 돌풍에 문풍지가 바르르
+    place(paper, filt(noise(m2, r), "band", 1800, 3) * (.5 + .5 * np.sign(np.sin(2 * np.pi * 23 * T(1.6)))) * np.sin(np.pi * np.linspace(0, 1, m2)) * .12, 6.0)
+    thunder = np.zeros(n); m3 = int(4.0 * SR)                                        # 비 없이 구름 속에서만 우는 먼 천둥
+    place(thunder, filt(noise(m3, r), "low", 110) * env(m3, .8, 1.4, 2, hold=.6) * 1.2, 11.5)
+    dog = np.zeros(n)
+    for k in range(3):
+        f0 = curve(.2, [(0, 480), (.05, 560), (.2, 420)])
+        place(dog, voice(f0, [(800, 3, 1), (1500, 4, .4)], .35, r, nh=18) * env(int(.2 * SR), .01, .08, 3) * .25, 15.0 + k * .45)
+    dog = filt(dog, "low", 1200)
+    return loopify(reverb(base + gust * .7 + paper + thunder + dog, 2.0, .35, tone_hz=2200)[:n], .5)
+
+
+@sfx("amb.weather.rain.heavy", -21, "날씨", "큰비: 굵은 빗줄기가 쏴— 땅을 두드림 + 처마 낙숫물 줄줄 + 물웅덩이 첨벙(반복용 12초)", loop=True, use="나루 영감 보스 날(비), 비가 가장 셀 때")
+def _(r):
+    sec = 12.2; n = int(sec * SR); t = T(sec)
+    roar = filt(filt(noise(n, r), "high", 400), "low", 7000) * (.9 + .1 * np.sin(2 * np.pi * t / 6.1))
+    patter = grains(sec, r, 2600, lambda r, k: bubble(.03, r.uniform(1800, 5500), 1.3, .003) * r.uniform(.05, .45))
+    eave = grains(sec, r, 160, lambda r, k: bubble(.07, r.uniform(500, 1100), 1.8, .012) * r.uniform(.2, .6))   # 처마에서 떨어지는 굵은 물
+    low = filt(noise(n, r), "low", 160) * .5
+    return loopify(roar * .5 + patter * .3 + eave * .25 + low, .4)
+
+
+@sfx("sfx.weather.thunder.far", -12, "날씨", "먼 천둥: 쩌억 갈라지는 소리 없이 산 너머로 굴러가는 우르르릉(4초, 한 번)", use="비·큰비 중 20~60초에 한 번 무작위(화면 번쩍 없이 소리만도 가능)")
+def _(r):
+    sec = 4.5; n = int(sec * SR); buf = np.zeros(n)
+    for k in range(5):                                                              # 산에 부딪혀 여러 번 굴러 옴
+        m = int(r.uniform(.8, 1.6) * SR)
+        place(buf, filt(noise(m, r), "low", r.uniform(90, 160)) * env(m, .08, .5, 2) * r.uniform(.5, 1), .1 + k * r.uniform(.4, .7))
+    place(buf, filt(noise(int(.4 * SR), r), "band", 400, 1) * env(int(.4 * SR), .02, .15) * .4, .1)   # 첫 번째 울림의 결
+    return reverb(buf, 2.5, .4, tone_hz=1200)
 
 
 # ---------------------------------------------------------------------------

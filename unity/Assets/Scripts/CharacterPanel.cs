@@ -6,7 +6,7 @@
 using Chasa.Core;
 using UnityEngine;
 
-public class CharacterPanel : MonoBehaviour
+public partial class CharacterPanel : MonoBehaviour
 {
     public static bool Open;                 // 열려 있으면 GameMain 이 세계 갱신을 멈춘다
     public JudgeSystem judge;
@@ -19,10 +19,11 @@ public class CharacterPanel : MonoBehaviour
     bool bookMode; GUIStyle bookBtn;                   // 명부에서 마우스를 올린 도술의 설명
 
     // 명부 탭은 시연판 설정과 무관하게 항상 열린다. 옛 세 탭(장비·도술·능력치)은 DEMO_PANEL 이 켜졌을 때만 보인다
-    public void Toggle() { Open = !Open; if (Open && !Demo.Panel) tab = 3; }
+    public void Toggle() { Open = !Open; Sfx.Play(Open ? "sfx.ui.ledger.open" : "sfx.ui.ledger.close"); if (Open && !Demo.Panel) tab = 3; }
 
     void Update()
     {
+        UpdateView();
         if (Input.GetKeyDown(KeyCode.C)) Toggle();   // Demo.Panel 이 꺼져 있으면 Toggle 이 무시한다
         if (Open && Input.GetKeyDown(KeyCode.Escape)) Open = false;
     }
@@ -30,7 +31,7 @@ public class CharacterPanel : MonoBehaviour
     void OnGUI()
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
-        if (!Open || judge == null || judge.player == null) return;
+        if (!Open || judge == null || judge.player == null || UseView) return;   // 명부·들은 말 탭은 UI Toolkit 판(CharacterView)이 그린다
         GUI.depth = -100;   // 가장 위에 그린다(낮을수록 위) — 밤 화면 글자와 겹치지 않게(QA B2)
         var lo = judge.player.loadout;
         // 명부는 도술 27칸을 세 줄로 늘어놓아야 해서 더 크게 쓴다

@@ -43,10 +43,11 @@ public class WeatherRuntime
         if (!started) { started = true; state.RollAll(night, rng); lastPhase = clock.Phase; }
         if (clock.Phase != lastPhase)
         {
-            if (clock.Phase == ClockPhase.Dawn) state.RollAll(false, rng);
+            if (clock.Phase == ClockPhase.Dawn) { if (pending != null && pendingFor == ClockPhase.Dawn) state.Restore(pending); else state.RollAll(false, rng); pending = null; }
             else if (clock.Phase == ClockPhase.Dusk)
             {
-                state.RollAll(true, rng); midDone = false;   // 저녁이 시작될 때 굴린 밤 날씨 = 예보(틀리지 않는다)
+                if (pending != null && pendingFor == ClockPhase.Dusk) state.Restore(pending); else state.RollAll(true, rng);
+                pending = null; midDone = false;   // 저녁이 시작될 때 굴린 밤 날씨 = 예보(틀리지 않는다)
                 if (toast != null) toast("오늘 밤 날씨 — " + Forecast());
             }
             lastPhase = clock.Phase;
@@ -75,6 +76,28 @@ public class WeatherRuntime
         }
         else drainAcc = Mathf.Max(0f, drainAcc - dt);
         Apply();
+    }
+
+    Weather[] pending; ClockPhase pendingFor;   // 서낭당에서 미리 본 다음 시간대 날씨(그 시간대가 오면 그대로 쓴다 — 예보는 틀리지 않는다)
+
+    /// <summary>서낭당 쉬기의 예보: 다음 시간대의 구역별 날씨 한 줄. 날씨는 새벽·저녁에만 새로 굴려지므로 그때가 다음이면 미리 굴려 두고, 아니면 지금 날씨가 이어진다</summary>
+    public string PeekNext(WorldClock clock)
+    {
+        if (clock == null) return "";
+        ClockPhase next = (ClockPhase)(((int)clock.Phase + 1) % 4);
+        if (next == ClockPhase.Dawn || next == ClockPhase.Dusk)
+        {
+            if (pending == null || pendingFor != next)
+            {
+                var keep = state.Snapshot();
+                state.RollAll(next == ClockPhase.Dusk, rng);   // 저녁에 굴리는 것은 '밤 날씨'
+                pending = state.Snapshot(); pendingFor = next;
+                state.Restore(keep);                           // 지금 날씨는 그대로
+            }
+            var keep2 = state.Snapshot(); state.Restore(pending);
+            string t = Forecast(); state.Restore(keep2); return WorldClock.PhaseName(next) + " 날씨 — " + t;
+        }
+        return WorldClock.PhaseName(next) + " 날씨 — " + Forecast();
     }
 
     /// <summary>저녁 예보 한 줄: 구역별 밤 날씨(맑음은 줄인다)</summary>
@@ -110,8 +133,8 @@ public class WeatherRuntime
             if (rainNear != null) rainNear.wrapMode = TextureWrapMode.Repeat;
         }
         float t = Time.unscaledTime;
-        DrawRainLayer(rainFar, 0.05f, -1.3f, 640f, 0.45f * rainA, t);
-        DrawRainLayer(rainNear, 0.12f, -2.4f, 460f, 0.6f * rainA, t);
+        DrawRainLayer(rainFar, 0.05f, -1.3f, 640f, 0.22f * rainA, t);   // 아트 검수 10-25: 비 줄기가 굵고 밝아 줄무늬였다 → 알파 절반
+        DrawRainLayer(rainNear, 0.12f, -2.4f, 460f, 0.3f * rainA, t);
         DrawSplashes(playerPos, t);
     }
 

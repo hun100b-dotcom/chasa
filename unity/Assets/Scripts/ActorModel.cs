@@ -16,7 +16,7 @@ using UnityEngine.Playables;
 
 public class ActorModel : MonoBehaviour
 {
-    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw, Hit2, Stagger, Tendo, RunStart, RunStop }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
+    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw, Hit2, Stagger, Tendo, RunStart, RunStop, Judge, KneelHold }   // Judge: 무릎 꿇은 혼 앞에서 천도·파혼을 고르는 자세(갓 숙임·왼손 혼불)   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
 
     // 모양 설명서: 이름에서 골라 쓴다
     struct Spec
@@ -87,7 +87,7 @@ public class ActorModel : MonoBehaviour
         var all = Resources.LoadAll<AnimationClip>(heroRow.path);
         var byName = new Dictionary<string, AnimationClip>();
         foreach (var c in all) if (!c.name.StartsWith("__")) byName[c.name] = c;
-        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw, Pose.Hit2, Pose.Stagger, Pose.Tendo, Pose.RunStart, Pose.RunStop };
+        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw, Pose.Hit2, Pose.Stagger, Pose.Tendo, Pose.RunStart, Pose.RunStop, Pose.Judge, Pose.KneelHold };
         graph = PlayableGraph.Create("Hero");
         graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);   // 우리가 직접 시간을 흘린다(히트스톱과 무관하게 부드럽게)
         var output = AnimationPlayableOutput.Create(graph, "out", anim);
@@ -97,6 +97,7 @@ public class ActorModel : MonoBehaviour
         for (int i = 0; i < order.Length; i++)
         {
             AnimationClip clip; var cn = ClipName(heroRow, order[i]);
+            if (order[i] == Pose.KneelHold && (cn == null || !byName.ContainsKey(cn))) continue;   // 무릎 꿇고 기다리는 반복 동작은 있는 모델만(없으면 Kneel 마지막 장면 유지)
             if (cn == null && (order[i] == Pose.Attack2 || order[i] == Pose.Attack3)) cn = ClipName(heroRow, Pose.Attack);   // 2·3타 동작이 표에 없으면 1타 동작을 쓴다
             if ((cn == null || !byName.TryGetValue(cn, out clip)) && !byName.TryGetValue(ClipName(heroRow, Pose.Idle) ?? "idle", out clip)) continue;
             heroPlayables[i] = AnimationClipPlayable.Create(graph, clip);
@@ -143,7 +144,7 @@ public class ActorModel : MonoBehaviour
         }
     }
 
-    bool wasMoving; float startT, stopT, runTime;
+    bool wasMoving, kneelHold; float startT, stopT, runTime;
     void HeroUpdate(float dt, bool moving)
     {
         var want = pose == Pose.Idle && moving ? Pose.Walk : pose;
@@ -158,6 +159,10 @@ public class ActorModel : MonoBehaviour
         wasMoving = moving;
         if (startT > 0f) { startT -= dt; if (!moving) startT = 0f; else want = Pose.RunStart; }
         else if (stopT > 0f) { stopT -= dt; if (moving) stopT = 0f; else want = Pose.RunStop; }
+        // 무릎 꿇음(Kneel)이 끝나면 이어서 KneelHold 를 반복한다(아트: 자세가 이어지게 만들어 크로스페이드 불필요). 처결 입력이 오면 자세가 바뀌어 풀린다
+        if (want != Pose.Kneel) kneelHold = false;
+        else if (!kneelHold && heroInput.ContainsKey(Pose.KneelHold) && heroInput.ContainsKey(Pose.Kneel) && heroT >= heroPlayables[heroInput[Pose.Kneel]].GetAnimationClip().length) kneelHold = true;
+        if (kneelHold) want = Pose.KneelHold;
         if (want == Pose.Attack) want = atkPose;   // 콤보 2·3타는 전용 동작
         if (want == Pose.Walk && !moving && pose == Pose.Walk) want = Pose.Idle;
         int idx; if (!heroInput.TryGetValue(want, out idx)) idx = 0;
@@ -301,6 +306,7 @@ public class ActorModel : MonoBehaviour
 
     static Pose PoseFor(string name)
     {
+        if (name.Contains("judge")) return Pose.Judge;
         if (name.Contains("kneel")) return Pose.Kneel;
         if (name.Contains("dodge")) return Pose.Dodge;
         if (name.Contains("cast")) return Pose.Cast;

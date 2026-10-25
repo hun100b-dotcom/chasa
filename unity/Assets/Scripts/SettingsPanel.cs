@@ -27,7 +27,8 @@ public class SettingsPanel : MonoBehaviour
         "무기 바꾸기 Tab                           회복약  H     얼룩 지우기  X",
         "넋길        F (서낭당 곁, 밤)",
         "명부(캐릭터) C                            설정   O",
-        "소리 켜고 끄기 M                          줌   마우스 휠",
+        "소리 켜고 끄기 N                          줌   마우스 휠",
+        "지도 M (크게 보기)",
     };
 
     // ---- UI Toolkit 판(UiRoot 가 있을 때). 옛 IMGUI 판은 아래 OnGUI 에 그대로 남아 UiRoot 가 없을 때만 쓴다 ----
@@ -96,7 +97,7 @@ public class SettingsPanel : MonoBehaviour
             var r1 = new VisualElement { pickingMode = PickingMode.Position }; r1.style.flexDirection = FlexDirection.Row; r1.style.marginTop = 10; box.Add(r1);
             bool field = judge.FieldMode;
             Btn(r1, "조작 키 보기", () => showKeys = true);
-            Btn(r1, "지금 저장", () => note = judge.SaveGameNow() ? "저장했다" : "저장하지 못했다", field, 130);
+            Btn(r1, "지금 저장", () => { bool ok = judge.SaveGameNow(); Sfx.Play(ok ? "sfx.ui.save" : "sfx.ui.deny"); note = ok ? "저장했다" : "저장하지 못했다"; }, field, 130);
             Btn(r1, "불러오기", () => { if (judge.LoadGameNow()) { note = "불러왔다"; Close(); } else note = "저장이 없거나 읽지 못했다"; }, field && SaveStore.Exists, 130);
             var r2 = new VisualElement { pickingMode = PickingMode.Position }; r2.style.flexDirection = FlexDirection.Row; r2.style.alignItems = Align.Center; box.Add(r2);
             if (!confirmReset) Btn(r2, "처음부터 (저장 지움)", () => confirmReset = true, true, 200);
@@ -116,9 +117,9 @@ public class SettingsPanel : MonoBehaviour
         view.Add(box);
     }
 
-    // 실험 스위치: 주소에 ?ui2=1 이 있을 때만 UI Toolkit 설정 화면을 쓴다. 이유: 이 프로젝트는 옛 입력 방식(Input Manager)이라 UI Toolkit 버튼 클릭이
-    // 브라우저에서 정말 오는지 아직 실제로 못 봤다. PC 가 확인하면 기본으로 바꾼다(그 전엔 옛 화면이 안전하다)
-    static readonly bool Ui2 = (Application.absoluteURL ?? "").Contains("ui2=1");
+    // UI Toolkit 설정 화면이 기본이다(PC 가 10-25 ?ui2=1 로 슬라이더·키 목록 버튼 클릭이 되는 것을 확인했다).
+    // 문제가 생기면 주소에 ?ui2=0 을 붙여 옛 화면으로 돌릴 수 있게 남겨 둔다
+    static readonly bool Ui2 = !(Application.absoluteURL ?? "").Contains("ui2=0");
 
     void UpdateView()
     {

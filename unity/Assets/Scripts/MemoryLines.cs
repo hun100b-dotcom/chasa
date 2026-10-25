@@ -11,12 +11,13 @@ using Chasa.Core;
 
 public class MemoryLines
 {
-    [System.Serializable] class SoulRow { public string name, memory, tint, fact; public bool mystery, decisive, boss; }
+    [System.Serializable] class SoulRow { public string name, memory, tint, fact, jesa; public bool mystery, decisive, boss; }
     [System.Serializable] class FileData { public string[] fresh, year, old; public SoulRow[] souls; }
 
     readonly Dictionary<string, SoulRow> byName = new Dictionary<string, SoulRow>();
     readonly HashSet<string> counted = new HashSet<string>();   // 이미 기억을 본 이름혼(한 번만)
     FileData data;
+    public System.Func<string, bool> jesaSeen;                  // 그 혼 집의 제사를 낮에 지켜봤나(JudgeSystem 이 판정)
     public int Fragments;                                       // 모은 기억 조각 수
 
     public MemoryLines()
@@ -38,6 +39,8 @@ public class MemoryLines
             if (!counted.Add(soul.Name)) return null;
             Fragments++;
             if (row.mystery && !string.IsNullOrEmpty(row.fact)) fact = row.fact;   // 추리판에 켜질 사실 번호
+            // 제사를 지켜본 뒤 천도하면 기억 끝에 한 줄 덧붙는다(기억 조각 수에는 세지 않는다)
+            if (!string.IsNullOrEmpty(row.jesa) && jesaSeen != null && jesaSeen(soul.Name)) return row.memory + "\n" + row.jesa;
             return row.memory;
         }
         string[] pool = soul.Kind == SoulKind.Year ? data.year : soul.Kind == SoulKind.Old ? data.old : data.fresh;

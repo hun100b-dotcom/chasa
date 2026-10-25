@@ -18,11 +18,13 @@ public class NpcWorld
     [System.Serializable] class Row { public string npc, name, zone, place, verb, line, half, clue; public string[] barks; public int region, unlock, time; }
     [System.Serializable] class ClueRow { public string boss, id, verb, zone, place, npc, what; public int time; }
     [System.Serializable] class PlaceRow { public string place; public float ox, oz, ax, az; public int abs; }
+    [System.Serializable] class JesaRow { public string id, soul_name, zone, place, mourner, line, line_half, open; public float x, z; public string[] time; public bool existing; }
+    [System.Serializable] class JesaFile { public JesaRow[] spots; }
     [System.Serializable] class FileData { public Row[] entries; public ClueRow[] clues; public PlaceRow[] places; }
 
     class Spot
     {
-        public Row row; public string clue, line, half, verb, label; public Vector3 pos; public GameObject view; public NpcActor actor; public bool isObject; public float barkT, barkCool; public string bark; public DwellTimer dwell = new DwellTimer();
+        public Row row; public string clue, line, half, verb, label; public Vector3 pos; public GameObject view; public NpcActor actor; public bool isObject; public bool jesa; public string jesaSoul; public System.Func<bool> gate; public float barkT, barkCool; public string bark; public DwellTimer dwell = new DwellTimer();
     }
 
     const float NoticeRadius = 3.5f;     // 이 거리 안이면 듣는다
@@ -45,6 +47,12 @@ public class NpcWorld
     int builtPhase = -1, builtNight = -1;
     HashSet<string> heard = new HashSet<string>();       // 오늘(이 시간대) 이미 들은 자리
     public System.Action onClue;                         // 단서를 처음 얻었을 때(안내용)
+    public System.Func<string, bool> soulDone;          // 이 이름의 혼을 처결했나(제사 지켜보기는 처결하면 닫힌다)
+    public System.Func<bool> parkTendoed;               // 박돌쇠를 천도했나(그 집 제사 지켜보기는 천도했을 때만 열린다)
+    public readonly HashSet<string> JesaSeen = new HashSet<string>();   // 제사를 끝까지 지켜본 혼(천도하면 기억 끝에 한 줄이 붙는다)
+    readonly Dictionary<string, Vector3> soulHome = new Dictionary<string, Vector3>();   // 장례 대상 혼의 집 마당(제사 지켜보기 자리)
+    readonly Dictionary<string, string> jesaPlaceSoul = new Dictionary<string, string>();   // 자리 이름 → 혼 이름
+    public System.Func<float> dayFrac;                   // 낮이 얼마나 지났나(0~1). 섭섭이가 낮 앞 7분은 부엌, 뒤 7분은 뒤뜰에 서는 데 쓴다
     public System.Func<bool> inCombat;                   // 10m 안에 깨어 있는 혼이 있으면 true: 듣는 진행이 멈춘다(기획 §2-3)
     public readonly HeardLog Log = new HeardLog();       // 들은 말 기록(명부 '들은 말' 탭용)
     public float DwellRatio;                             // 지금 듣는 중인 자리의 진행(0~1). 화면 고리용
@@ -56,24 +64,72 @@ public class NpcWorld
     {
         this.book = book; this.karma = karma; this.nightNo = nightNo;
         root = new GameObject("NpcWorld").transform;
-        var ta = Resources.Load<TextAsset>("Data/npc_flat");
+        placeOffset.Clear(); placeAbs.Clear();
+        LoadFlat("Data/npc_flat", false);
+        if (FieldRules.Act2) LoadFlat("Data/npc_flat_act2", true);   // 2막 땅이 열렸을 때만 2막 산 사람·단서를 세운다(tools/build_npc_act2.py)
+        LoadJesa();
+    }
+
+    /// <summary>납작한 일정표 한 파일을 읽어 자리(Spot)로 만든다. abs2=true 면 2막 표: 구역 이름표(Anchors) 없이 절대 좌표만으로 선다</summary>
+    void LoadFlat(string res, bool abs2)
+    {
+        var ta = Resources.Load<TextAsset>(res);
         if (ta == null) return;
         var f = JsonUtility.FromJson<FileData>(ta.text);
-        placeOffset.Clear(); placeAbs.Clear();
         if (f.places != null) foreach (var pl in f.places) { placeOffset[pl.place] = new Vector2(pl.ox, pl.oz); if (pl.abs == 1) placeAbs[pl.place] = new Vector2(pl.ax, pl.az); }
         var npcClueIds = new HashSet<string>();
         foreach (var r in f.entries)
         {
-            if (!Anchors.ContainsKey(r.zone)) continue;                       // 아직 땅이 없는 구역(장터거리 등)은 건너뜀
+            if (!abs2 && !Anchors.ContainsKey(r.zone)) continue;               // 아직 땅이 없는 구역(장터거리 등)은 건너뜀
             if (string.IsNullOrEmpty(r.line) && string.IsNullOrEmpty(r.clue)) continue;   // 말도 단서도 없는 줄(집 안 등)
-            all.Add(new Spot { row = r, clue = r.clue, line = r.line, half = r.half, verb = r.verb, label = r.name, pos = PosFor(r.zone, r.place) });
+            all.Add(new Spot { row = r, clue = r.clue, line = r.line, half = r.half, verb = r.verb, label = r.name, pos = abs2 ? AbsPos(r.place) : PosFor(r.zone, r.place) });
             if (!string.IsNullOrEmpty(r.clue)) npcClueIds.Add(r.clue);
         }
         // 사람 없이 사물에만 달린 단서(부러진 삿대 등): 낮에 만져 본다
         foreach (var c in f.clues)
-            if (string.IsNullOrEmpty(c.npc) && c.verb != "밤 대체" && Anchors.ContainsKey(c.zone) && !npcClueIds.Contains(c.id))
-                all.Add(new Spot { row = new Row { npc = "obj", name = c.place, zone = c.zone, place = c.place, time = c.time, unlock = 1, region = 1 }, clue = c.id, line = c.what, half = c.what, verb = c.verb, label = c.place, pos = PosFor(c.zone, c.place), isObject = true });
+            if (string.IsNullOrEmpty(c.npc) && c.verb != "밤 대체" && (abs2 || Anchors.ContainsKey(c.zone)) && !npcClueIds.Contains(c.id))
+                all.Add(new Spot { row = new Row { npc = "obj", name = c.place, zone = c.zone, place = c.place, time = c.time, unlock = 1, region = 1 }, clue = c.id, line = c.what, half = c.what, verb = c.verb, label = c.place, pos = abs2 ? AbsPos(c.place) : PosFor(c.zone, c.place), isObject = true });
     }
+
+    /// <summary>절대 좌표 자리(2막)의 월드 위치. 막힌 곳이면 살짝 밀어낸다</summary>
+    static Vector3 AbsPos(string place)
+    {
+        Vector2 a; if (!placeAbs.TryGetValue(place, out a)) return Vector3.zero;
+        float ax = a.x, az = a.y; MapLayout.PushOut(ref ax, ref az, 0.6f);
+        return new Vector3(ax, 0f, az);
+    }
+
+    /// <summary>장례 대상 혼의 집 마당 좌표(없으면 false)</summary>
+    public bool HomeOf(string soul, out Vector3 pos) { return soulHome.TryGetValue(soul, out pos); }
+
+    /// <summary>기획 jesa_watch_act1.json: 장례 대상 9명의 제사 지켜보기 자리. 이미 있는 자리(윤 소사)는 혼과의 연결만 잇고, 나머지는 애도하는 사람을 새로 세운다</summary>
+    void LoadJesa()
+    {
+        var ta = Resources.Load<TextAsset>("Data/jesa_watch_act1");
+        if (ta == null) return;
+        var f = JsonUtility.FromJson<JesaFile>(ta.text);
+        if (f == null || f.spots == null) return;
+        foreach (var j in f.spots)
+        {
+            jesaPlaceSoul[j.place] = j.soul_name;
+            { float hx = j.x, hz = j.z; MapLayout.PushOut(ref hx, ref hz, 0.6f); soulHome[j.soul_name] = new Vector3(hx, 0f, hz); }
+            if (j.existing) continue;
+            string name = j.mourner ?? "애도하는 사람"; int cut = name.IndexOf('('); if (cut > 0) name = name.Substring(0, cut).Trim();
+            string soul = j.soul_name; bool park = j.open == "after_tendo_only";
+            for (int ti = 0; ti < j.time.Length; ti++)
+            {
+                int slot = j.time[ti] == "낮" ? 1 : j.time[ti] == "저녁" ? 2 : -1;   // '밤 6~14분' 같은 줄은 윤 소사 기존 자리가 맡는다
+                if (slot < 0) continue;
+                float x = j.x, z = j.z; MapLayout.PushOut(ref x, ref z, 0.6f);
+                var row = new Row { npc = j.id, name = name, zone = j.zone, place = j.place, verb = "지켜보기", line = j.line, half = j.line_half, clue = "", region = 1, unlock = 2, time = slot };
+                all.Add(new Spot { row = row, clue = "", line = j.line, half = j.line_half, verb = "지켜보기", label = name, pos = new Vector3(x, 0f, z), jesa = true, jesaSoul = soul,
+                    gate = () => !(soulDone != null && soulDone(soul) && !park) && (!park || (parkTendoed != null && parkTendoed())) && karma() < 60 && (j.id != "J-021" || LateDay()) });   // 처결하면 닫힘(박돌쇠는 천도했을 때만 열림), 업 60 이상이면 문이 닫힘
+            }
+        }
+        foreach (var sp in all) if (sp.row.npc == "N-203" && sp.row.place == "장터 주막 부엌" && sp.row.time == 1) sp.gate = () => !LateDay();   // 섭섭이: 낮 앞 7분은 부엌(엿듣기), 뒤 7분은 뒤뜰(제사)
+    }
+
+    bool LateDay() { return dayFrac != null && dayFrac() >= 0.5f; }   // 낮 뒤 7분
 
     /// <summary>처결 결과로 바뀐 풍경 한 곳을 더한다(예: 보스를 천도하면 나루에 배가 묶여 있다). 다가서면 글이 뜬다. timeSlot: 0 동틀녘 1 낮 2 해질녘 3 밤</summary>
     public void AddScenery(Vector3 pos, string text, int timeSlot)
@@ -116,7 +172,9 @@ public class NpcWorld
         foreach (var s in spots)
         {
             float d = new Vector2(s.pos.x - playerPos.x, s.pos.z - playerPos.z).magnitude;
-            if (s.view != null) s.view.SetActive(d < SpawnRadius);
+            bool open = s.gate == null || s.gate();
+            if (s.view != null) s.view.SetActive(d < SpawnRadius && open);
+            if (!open) continue;
             if (s.actor != null) { s.actor.hasLook = d < 12f; s.actor.lookAt = playerPos; s.actor.talking = d <= NoticeRadius + 1f; }   // 가까우면 돌아보고 말하는 동작
             // 엿듣기·지켜보기는 원 안에 머무르면 저절로(엿듣기 3m 6초, 업 10 이상 2m · 지켜보기 6m 15초). 그 밖(만져 보기·사물)은 예전처럼 가까이 오면
             // 지나가는 혼잣말(barks): 8m 안을 지날 때 30% 확률, 같은 사람은 60초에 한 번. 기록하지 않는다(기획 §3-1)
@@ -194,6 +252,17 @@ public class NpcWorld
     void Notice(Spot s)
     {
         if (!heard.Add(HeardKey(s))) return;                                         // 이 시간대엔 한 번만
+        // 제사 지켜보기(기획 jesa-watch-act1): 업 10 반쪽 · 30 말없음 · 60 닫힘. 끝까지 보면 JesaSeen — 그 혼을 천도할 때 기억 끝에 한 줄이 붙는다
+        string jsoul = s.jesaSoul;
+        if (jsoul == null && s.verb == "지켜보기") jesaPlaceSoul.TryGetValue(s.row.place, out jsoul);
+        if (jsoul != null)
+        {
+            int k = karma(); if (k >= 60) return;
+            string jt = k >= 30 ? "(말이 없다)" : k >= 10 && !string.IsNullOrEmpty(s.half) ? s.half : s.line;
+            if (!string.IsNullOrEmpty(jt)) { Say(jt, s.label); Log.Add(s.label, s.row.place, jt, null, s.row.time); }
+            JesaSeen.Add(jsoul);
+            return;
+        }
         bool bossClue = !string.IsNullOrEmpty(s.clue) && s.clue.StartsWith("B");
         var mode = Eavesdrop.Mode(karma(), Eavesdrop.IsEavesVerb(s.verb), bossClue);
         if (mode == EavesMode.Closed)
@@ -202,10 +271,11 @@ public class NpcWorld
             return;
         }
         string text = mode == EavesMode.Half && !string.IsNullOrEmpty(s.half) ? s.half : s.line;
+        if (!string.IsNullOrEmpty(text) && (string.IsNullOrEmpty(s.clue) || book.Has(s.clue))) Sfx.Play("sfx.ui.heard.open");   // 들은 말 자막이 뜨는 소리(새 단서가 붙을 땐 아래 heard.clue 가 대신)
         if (!string.IsNullOrEmpty(text)) { Say(text + (mode == EavesMode.Half ? " …" : ""), s.isObject ? null : s.label); Log.Add(s.label, s.row.place, text, s.clue, s.row.time); }
         if (!string.IsNullOrEmpty(s.clue) && book.Add(s.clue))
         {
-            Sfx.Play("sfx.clue");
+            Sfx.Play("sfx.clue"); Sfx.Play("sfx.ui.heard.clue");   // 단서 소리 + 들은 말에 단서가 붙는 소리
             if (onClue != null) onClue();
             if (s.view != null && s.actor == null) s.view.GetComponent<Renderer>().sharedMaterial = U.Matte(new Color(0.85f, 0.78f, 0.62f));   // 얻었으니 보랏빛이 꺼진다(도형 대역일 때만)
         }

@@ -38,6 +38,20 @@ public class MiniMap : MonoBehaviour
     [Serializable] class Item { public string n; public float x, z; public int t; }
     [Serializable] class Mark { public string kind, name; public float x, z; }
     [Serializable] class FieldFile { public Item[] items; public Mark[] markers; }
+    // 2·3막 지도 겹침(tools/build_map_overlay.py 가 act2_map·act3_map 에서 만든다). 아트 지도는 1막(0~640m)뿐이라 그 밖은 도형으로 그린다
+    [Serializable] class OvRect { public int act; public float[] rect; }
+    [Serializable] class OvZone { public int act; public string name, code; public float[] rect; }
+    [Serializable] class OvRoad { public int act; public string name; public float[] pts; }
+    [Serializable] class OvPt { public int act; public string name; public float x, z; }
+    [Serializable] class OvFile { public float[] extent; public OvRect[] fills; public OvZone[] zones; public OvRoad[] roads; public OvPt[] shrines, bosses; }
+    OvFile ov; float ex0 = 0f, ez0 = 0f, ew = WorldM, eh = WorldM;   // 큰 지도가 보여 줄 전체 범위(월드 m). 겹침 데이터가 없으면 1막 정사각
+    static float bigX0, bigZ0;                                       // 큰 지도를 그리는 동안 월드 → 화면 변환에 쓰는 왼쪽 아래 월드 좌표
+    void LoadOverlay()
+    {
+        var ta = Resources.Load<TextAsset>("Data/map_overlay"); if (ta == null) return;
+        try { ov = JsonUtility.FromJson<OvFile>(ta.text); } catch { ov = null; }
+        if (ov != null && ov.extent != null && ov.extent.Length >= 4) { ex0 = ov.extent[0]; ez0 = ov.extent[1]; ew = ov.extent[2] - ov.extent[0]; eh = ov.extent[3] - ov.extent[1]; }
+    }
     readonly List<Mark> marks = new List<Mark>();
     readonly List<KeyValuePair<string, Rect>> zones = new List<KeyValuePair<string, Rect>>();
     GUIStyle label, small, title; float styleH;
@@ -46,6 +60,7 @@ public class MiniMap : MonoBehaviour
     void Start()
     {
         white = Texture2D.whiteTexture;
+        LoadOverlay();
         dot = new Texture2D(32, 32, TextureFormat.RGBA32, false) { filterMode = FilterMode.Bilinear };   // 속이 찬 동그라미
         for (int y = 0; y < 32; y++) for (int x = 0; x < 32; x++) dot.SetPixel(x, y, new Color(1, 1, 1, Mathf.Clamp01(16f - Vector2.Distance(new Vector2(x, y), new Vector2(15.5f, 15.5f)))));
         dot.Apply();
@@ -172,6 +187,35 @@ public class MiniMap : MonoBehaviour
     // 월드 오프셋 → 작은 지도 화면 오프셋(카메라 방향이 위): 반시계로 heading 만큼 돌린다
     static Vector2 Rot(float dx, float dz, float heading) { float c = Mathf.Cos(heading), s = Mathf.Sin(heading); return new Vector2(dx * c - dz * s, dx * s + dz * c); }
 
+    // 2·3막 겹침: 땅 바탕·구역 틀·길·서낭당·보스 자리. toScr = 월드 → 화면. big 이면 한지 위에 맞는 짙은 색, 구역 이름도 쓴다
+    void DrawOverlay(Func<float, float, Vector2> toScr, bool big)
+    {
+        if (ov == null) return;
+        Color ground = big ? new Color(0.78f, 0.72f, 0.57f, 1f) : new Color(0.20f, 0.24f, 0.19f, 1f);
+        if (ov.fills != null) foreach (var f in ov.fills)
+        { var a = toScr(f.rect[0], f.rect[1]); var b = toScr(f.rect[2], f.rect[3]); Box(new Rect(Mathf.Min(a.x, b.x), Mathf.Min(a.y, b.y), Mathf.Abs(b.x - a.x), Mathf.Abs(b.y - a.y)), ground); }
+        if (ov.zones != null) foreach (var z in ov.zones)
+        {
+            var a = toScr(z.rect[0], z.rect[1]); var b = toScr(z.rect[2], z.rect[3]);
+            var rc = new Rect(Mathf.Min(a.x, b.x), Mathf.Min(a.y, b.y), Mathf.Abs(b.x - a.x), Mathf.Abs(b.y - a.y));
+            Frame(rc, 1f, big ? new Color(0.2f, 0.1f, 0.05f, 0.35f) : new Color(1f, 1f, 1f, 0.12f));
+            if (big) { GUI.color = new Color(0.15f, 0.07f, 0.03f, 0.9f); GUI.Label(new Rect(rc.center.x - 70, rc.center.y - 12, 140, 24), z.name, label); GUI.color = Color.white; }
+        }
+        Color road = big ? new Color(0.45f, 0.33f, 0.2f, 0.9f) : new Color(0.84f, 0.75f, 0.55f, 0.9f);
+        if (ov.roads != null) foreach (var rd in ov.roads)
+            for (int i = 0; i + 3 < rd.pts.Length; i += 2)
+            {
+                var a = toScr(rd.pts[i], rd.pts[i + 1]); var b = toScr(rd.pts[i + 2], rd.pts[i + 3]);
+                var d = b - a; float len = d.magnitude; if (len < 0.5f) continue;
+                var old = GUI.matrix; GUIUtility.RotateAroundPivot(Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg, a);
+                Box(new Rect(a.x, a.y - 1.2f, len, 2.4f), road); GUI.matrix = old;
+            }
+        if (ov.shrines != null) foreach (var m in ov.shrines)
+        { var v = toScr(m.x, m.z); if (!Icon("seonang", v, 17f)) { Box(new Rect(v.x - 5, v.y - 5, 10, 10), new Color(0.05f, 0.06f, 0.08f, 0.9f)); Box(new Rect(v.x - 3.5f, v.y - 3.5f, 7, 7), new Color(0.45f, 0.95f, 0.85f)); } }
+        if (ov.bosses != null) foreach (var m in ov.bosses)
+        { var v = toScr(m.x, m.z); if (!Icon("boss", v, big ? 16f : 14f)) { var o = GUI.color; GUI.color = new Color(0.95f, 0.15f, 0.12f); GUI.DrawTexture(new Rect(v.x - 6, v.y - 6, 12, 12), dot); GUI.color = o; } }
+    }
+
     void DrawMini()
     {
         // 기획 표준: 1080p 에서 260px(화면 높이의 24%), 우상 여백 24px. 폰은 200px 급(높이의 30%, 읽히는 하한 110px)
@@ -192,6 +236,8 @@ public class MiniMap : MonoBehaviour
             float full = WorldM * scale;
             // 텍스처 좌표(0=남서) → 지도 위 위치: 내 자리가 중앙. IMGUI 의 위쪽은 북(+z)
             float ox = cen.x - player.Pos.x * scale, oy = cen.y - (WorldM - player.Pos.z) * scale;
+            float pxw = player.Pos.x, pzw = player.Pos.z;
+            DrawOverlay((wx, wz) => new Vector2(cen.x + (wx - pxw) * scale, cen.y - (wz - pzw) * scale), false);   // 2·3막 땅·길(1막은 아래 아트 지도가 덮는다)
             GUI.DrawTexture(new Rect(ox, oy, full, full), baseTex);
             GUI.matrix = old;
             // 표식(회전을 직접 계산해 그려서 글자·점이 돌아가지 않게)
@@ -218,16 +264,17 @@ public class MiniMap : MonoBehaviour
         float k = Mathf.Min(Screen.width * 0.8f / 1536f, Screen.height * 0.8f / 864f);
         var fr = new Rect((Screen.width - 1536f * k) * 0.5f, (Screen.height - 864f * k) * 0.5f, 1536f * k, 864f * k);
         var win = new Rect(fr.x + 64f * k, fr.y + 96f * k, 1104f * k, 700f * k);
-        float size = 700f * k;
-        var r = new Rect(win.x + (win.width - size) * 0.5f, win.y, size, size);   // 지도는 정사각이라 창 가운데에 맞춘다
-        Box(win, new Color(0.953f, 0.906f, 0.827f, 1f));   // 정사각 지도 좌우 빈자리는 한지 색(검은 막대 금지: 아트 검수)
-        float scale = size / WorldM;
-        if (ready) GUI.DrawTexture(r, baseTex);
+        float scale = Mathf.Min(win.width / ew, win.height / eh);   // 1·2·3막 전체 범위가 창에 들어오는 배율
+        var r = new Rect(win.x + (win.width - ew * scale) * 0.5f, win.y + (win.height - eh * scale) * 0.5f, ew * scale, eh * scale);
+        bigX0 = ex0; bigZ0 = ez0;
+        Box(win, new Color(0.953f, 0.906f, 0.827f, 1f));   // 지도 밖 빈자리는 한지 색(검은 막대 금지: 아트 검수)
+        DrawOverlay((wx, wz) => new Vector2(r.x + (wx - bigX0) * scale, r.yMax - (wz - bigZ0) * scale), true);
+        if (ready) GUI.DrawTexture(new Rect(r.x + (0f - ex0) * scale, r.yMax - (WorldM - ez0) * scale, WorldM * scale, WorldM * scale), baseTex);   // 아트 1막 지도는 0~640m 자리에
         foreach (var z in zones)
         {
             var c = new Vector2((z.Value.xMin + z.Value.xMax) * 0.5f, (z.Value.yMin + z.Value.yMax) * 0.5f);
-            var sp = new Vector2(r.x + c.x * scale, r.yMax - c.y * scale);
-            Frame(new Rect(r.x + z.Value.xMin * scale, r.yMax - z.Value.yMax * scale, z.Value.width * scale, z.Value.height * scale), 1f, new Color(0.2f, 0.1f, 0.05f, 0.35f));
+            var sp = new Vector2(r.x + (c.x - ex0) * scale, r.yMax - (c.y - ez0) * scale);
+            Frame(new Rect(r.x + (z.Value.xMin - ex0) * scale, r.yMax - (z.Value.yMax - ez0) * scale, z.Value.width * scale, z.Value.height * scale), 1f, new Color(0.2f, 0.1f, 0.05f, 0.35f));
             GUI.color = new Color(0.15f, 0.07f, 0.03f, 0.9f); GUI.Label(new Rect(sp.x - 70, sp.y - 12, 140, 24), z.Key, label); GUI.color = Color.white;
         }
         DrawMarkers(r, Vector2.zero, scale, 0f, 0f, true);
@@ -240,16 +287,18 @@ public class MiniMap : MonoBehaviour
 
     void DrawBigPlain()
     {
-        float size = Mathf.Min(Screen.width - 80f, Screen.height - 120f);
-        var r = new Rect((Screen.width - size) * 0.5f, 60f, size, size);
+        float aw = Screen.width - 80f, ah = Screen.height - 120f;
+        float scale = Mathf.Min(aw / ew, ah / eh);
+        var r = new Rect((Screen.width - ew * scale) * 0.5f, 60f, ew * scale, eh * scale);
+        bigX0 = ex0; bigZ0 = ez0;
         Box(new Rect(r.x - 6, r.y - 6, r.width + 12, r.height + 12), new Color(0.10f, 0.09f, 0.08f, 1f));
-        float scale = size / WorldM;
-        if (ready) GUI.DrawTexture(r, baseTex);
+        DrawOverlay((wx, wz) => new Vector2(r.x + (wx - bigX0) * scale, r.yMax - (wz - bigZ0) * scale), false);
+        if (ready) GUI.DrawTexture(new Rect(r.x + (0f - ex0) * scale, r.yMax - (WorldM - ez0) * scale, WorldM * scale, WorldM * scale), baseTex);
         foreach (var z in zones)
         {
             var c = new Vector2((z.Value.xMin + z.Value.xMax) * 0.5f, (z.Value.yMin + z.Value.yMax) * 0.5f);
-            var sp = new Vector2(r.x + c.x * scale, r.yMax - c.y * scale);
-            Frame(new Rect(r.x + z.Value.xMin * scale, r.yMax - z.Value.yMax * scale, z.Value.width * scale, z.Value.height * scale), 1f, new Color(1, 1, 1, 0.18f));
+            var sp = new Vector2(r.x + (c.x - ex0) * scale, r.yMax - (c.y - ez0) * scale);
+            Frame(new Rect(r.x + (z.Value.xMin - ex0) * scale, r.yMax - (z.Value.yMax - ez0) * scale, z.Value.width * scale, z.Value.height * scale), 1f, new Color(1, 1, 1, 0.18f));
             GUI.color = new Color(1f, 0.95f, 0.8f, 0.85f); GUI.Label(new Rect(sp.x - 70, sp.y - 12, 140, 24), z.Key, label); GUI.color = Color.white;
         }
         DrawMarkers(r, Vector2.zero, scale, 0f, 0f, true);
@@ -263,7 +312,7 @@ public class MiniMap : MonoBehaviour
     {
         Func<float, float, Vector2?> toScreen = (wx, wz) =>
         {
-            if (big) return new Vector2(r.x + wx * scale, r.yMax - wz * scale);
+            if (big) return new Vector2(r.x + (wx - bigX0) * scale, r.yMax - (wz - bigZ0) * scale);
             var o = Rot(wx - player.Pos.x, wz - player.Pos.z, H) * scale;
             return new Vector2(cen.x + o.x, cen.y - o.y);
         };
@@ -290,7 +339,7 @@ public class MiniMap : MonoBehaviour
         // 켜진 단서 자리
         if (judge.npcs != null) { tmp.Clear(); judge.npcs.PendingClues(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(1f, 0.85f, 0.2f), s + 2f, "quest"); }
         // 이름혼
-        if (judge.named != null) { tmp.Clear(); judge.named.PendingPositions(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(0.4f, 1f, 0.85f), s + 1f, "soul_named"); }
+        if (judge.named != null) { tmp.Clear(); judge.named.PendingPositions(tmp); foreach (var c in tmp) { if (judge.NamedMarkerHidden(c.Value)) continue; D(c.Key.x, c.Key.z, new Color(0.4f, 1f, 0.85f), s + 1f, "soul_named"); } }
         // 혼
         foreach (var e in judge.enemies.list)
         {

@@ -40,6 +40,20 @@ public class FieldManager : MonoBehaviour
 
     public string Status { get { return "필드 청크 켜짐 " + roots.Count + (cover != null ? " · 바닥 소품 " + cover.DrawnCount : ""); } }
 
+    [System.Serializable] class ShrineRow { public string id, name; public float x, y; }
+    [System.Serializable] class Act2File { public ShrineRow[] shrines; }
+
+    /// <summary>2막 서낭당 SH2-1·SH2-2(처음부터 열림)를 넋길 정류장 목록 끝에 붙인다. SH2-3(산성 쉼터)은 'B-06 천도 뒤'라 해금 규칙이 생기면 추가</summary>
+    static void AddAct2Shrines()
+    {
+        var ta = Resources.Load<TextAsset>("Data/act2_map"); if (ta == null) return;
+        var f = JsonUtility.FromJson<Act2File>(ta.text); if (f == null || f.shrines == null) return;
+        var pos = new System.Collections.Generic.List<float[]>(FieldRules.Shrines);
+        var names = new System.Collections.Generic.List<string>(FieldRules.ShrineNames);
+        foreach (var s in f.shrines) { if (s.id == "SH2-3") continue; pos.Add(new[] { s.x, s.y }); names.Add(s.name); }
+        FieldRules.Shrines = pos.ToArray(); FieldRules.ShrineNames = names.ToArray();
+    }
+
     /// <summary>시작 위치·이야기 자리를 마커에서 읽어 FieldRules 에 넣는다. GameMain 이 맨 먼저 부른다</summary>
     public static void ApplyMarkers()
     {
@@ -53,6 +67,7 @@ public class FieldManager : MonoBehaviour
         stops.Sort((a, b) => a.z.CompareTo(b.z));
         FieldRules.Shrines = stops.ConvertAll(m => new[] { m.x, m.z }).ToArray();
         FieldRules.ShrineNames = stops.ConvertAll(m => m.name).ToArray();
+        if (FieldRules.Act2) AddAct2Shrines();   // 2막 서낭당(붉은재·산신각)을 넋길 정류장 뒤에 잇는다
         foreach (var m in f.markers)
         {
             if (m.kind == "spawn") { FieldRules.StartX = m.x; FieldRules.StartZ = Mathf.Max(m.z, 56f); }   // 카메라가 -x,-z 쪽을 비스듬히 내려다봐서, 남쪽 끝(z<30)에 서면 화면 위쪽 절반이 맵 밖 맨바닥이다 → 마을 안쪽으로 물린다
@@ -81,7 +96,7 @@ public class FieldManager : MonoBehaviour
 
     void Bucket(Item it)
     {
-        int key = FieldRules.Key(FieldRules.ChunkIndex(it.x), FieldRules.ChunkIndex(it.z));
+        int key = FieldRules.Key(FieldRules.RawChunk(it.x), FieldRules.RawChunk(it.z));   // 붙이지 않는다: 아직 안 열린 2막 항목이 1막 가장자리 청크로 섞이지 않게
         List<Item> l; if (!byChunk.TryGetValue(key, out l)) byChunk[key] = l = new List<Item>();
         l.Add(it);
     }
@@ -90,14 +105,14 @@ public class FieldManager : MonoBehaviour
     {
         if (player == null || data == null) return;
         if (cover != null && cover.player == null) cover.player = player;   // GameMain 이 player 를 Awake 뒤에 넣어 준다
-        int cx = FieldRules.ChunkIndex(player.Pos.x), cz = FieldRules.ChunkIndex(player.Pos.z);
+        int cx = FieldRules.ChunkX(player.Pos.x), cz = FieldRules.ChunkZ(player.Pos.z);
         int key = FieldRules.Key(cx, cz);
         if (key != curChunk)
         {
             curChunk = key;
             for (int x = cx - 1; x <= cx + 1; x++)
                 for (int z = cz - 1; z <= cz + 1; z++)
-                    if (x >= 0 && z >= 0 && x < FieldRules.Chunks && z < FieldRules.Chunks) Open(x, z);
+                    if (x >= 0 && z >= 0 && x < FieldRules.ChunksX && z < FieldRules.ChunksZ) Open(x, z);
             var drop = new List<int>();
             foreach (var kv in roots) { int ox = kv.Key / 100, oz = kv.Key % 100; if (Mathf.Abs(ox - cx) > 1 || Mathf.Abs(oz - cz) > 1) drop.Add(kv.Key); }
             foreach (var k in drop) Close(k);
@@ -167,7 +182,8 @@ public class FieldManager : MonoBehaviour
             if (it.n.StartsWith("cover_")) continue;          // 바닥 채움 소품은 CoverInstancer 가 그린다
             if (GroundTerrain.Active && it.t == 1) continue;   // 옛 땅 타일은 새 땅 메쉬가 대신한다
             if (SkipDecor(it)) continue;                       // 폰: 작은 장식 일부를 건너뛴다
-            Place(root.transform, it.n, it.x, HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z), it.z, it.r);   // 소품·집은 땅 높이 위에 붙인다(옛 평지는 +0)
+            float py = it.z >= FieldRules.Size ? it.y : HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z);   // 2막(z 640 이상) 표의 높이(y)는 땅 높이까지 이미 더해 둔 절대값
+            Place(root.transform, it.n, it.x, py, it.z, it.r);   // 소품·집은 땅 높이 위에 붙인다(옛 평지는 +0)
             if (++n % ItemsPerFrame == 0) yield return null;
         }
         loading.Remove(key);

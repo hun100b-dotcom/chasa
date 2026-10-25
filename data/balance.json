@@ -2084,8 +2084,8 @@
   "note": "묻힌 혼을 천도하면 넋 배율"
  },
  "ATTACK_TOKENS": {
-  "value": 3,
-  "note": "동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음)"
+  "value": 2,
+  "note": "동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음) [10-25 PC 봇 쓰러짐 3회>2 → 3에서 2로]"
  },
  "ATTACK_TOKENS_INTRO": {
   "value": 2,
@@ -2130,5 +2130,277 @@
  "FOG_DAY_MULT": {
   "value": 0.55,
   "note": "낮 안개 짙기 추가 배율. 보릿들 낮이 희뿌옇던 것 완화"
+ },
+ "KEEPSAKE_CAST_CUT": {
+  "value": 0.5,
+  "note": "유품을 만진 혼의 천도 시전 단축(초)"
+ },
+ "KEEPSAKE_SHOW_M": {
+  "value": 6.0,
+  "note": "유품이 보이는 거리(밤만, m)"
+ },
+ "PICKUP_RADIUS": {
+  "value": 2.0,
+  "note": "줍기 거리(m)"
+ },
+ "COIN_BUNDLE": {
+  "value": 20,
+  "note": "엽전 꾸러미 하나"
+ },
+ "HERB_PER_POTION": {
+  "value": 3,
+  "note": "쑥 몇 개에 회복약 하나"
+ },
+ "SHRINE_REST_TIME": {
+  "value": 2.0,
+  "note": "서낭당 쉬기 앉는 시간(초)"
+ },
+ "SHRINE_REST_BLOCK_M": {
+  "value": 10.0,
+  "note": "이 거리 안에 깨어 있는 혼이 있으면 못 쉼(m)"
+ },
+ "CLUE_TOUCH_KARMA_LOCK": {
+  "value": 30,
+  "note": "이 업 이상이면 단서 물건을 못 만짐"
+ },
+ "B05_MAEDHIM": {
+  "value": 960,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-05 맺힘"
+ },
+ "B05_DAMAGE": {
+  "value": 22,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-05 공격"
+ },
+ "B05_CALL_INTERVAL": {
+  "value": 8.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 이름 부르기 간격(초)"
+ },
+ "B05_CALL_COUNT": {
+  "value": 2,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 한 번에 부르는 병사 수"
+ },
+ "B05_NUM_START_PCT": {
+  "value": 30,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 처음 번호 병사 비율(%) — 시작값은 임시"
+ },
+ "B05_NUM_STEP_SEC": {
+  "value": 30.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 번호 비율이 오르는 간격(초)"
+ },
+ "B05_NUM_STEP_PCT": {
+  "value": 10,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 한 번에 오르는 %p"
+ },
+ "B05_NUM_CAP_PCT": {
+  "value": 70,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 번호 비율 상한(%)"
+ },
+ "B05_CALLED_STUN": {
+  "value": 2.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 이름으로 불린 병사를 천도하면 보스가 멈추는 시간(초)"
+ },
+ "B05_FLAG_RADIUS": {
+  "value": 6.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 50% 깃발 꽂기: 병사 공격 +20% 반경(m)"
+ },
+ "B05_FLAG_ATK_PCT": {
+  "value": 20,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃발 반경 안 병사 공격 증가(%)"
+ },
+ "B05_SWING_RADIUS": {
+  "value": 3.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃발 휘두르기 반경(m)"
+ },
+ "B05_SWING_WARN": {
+  "value": 0.8,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃발 휘두르기 예고(초)"
+ },
+ "B05_SWING_GAP": {
+  "value": 5.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃발 휘두르기 간격(초, 임시)"
+ },
+ "B05_CHARGE_DIST": {
+  "value": 8.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃대 돌진 거리(m)"
+ },
+ "B05_CHARGE_WARN": {
+  "value": 0.9,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃대 돌진 예고(초)"
+ },
+ "B05_CHARGE_GAP": {
+  "value": 9.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃대 돌진 간격(초, 임시)"
+ },
+ "B05_SOLDIER_CAP": {
+  "value": 4,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 소환 병사 상한(보스 자리 잡몹 상한)"
+ },
+ "B06_MAEDHIM": {
+  "value": 1120,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-06 맺힘"
+ },
+ "B06_DAMAGE": {
+  "value": 24,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-06 공격"
+ },
+ "B06_LINE_WIDTH": {
+  "value": 12.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 일자진 폭(m)"
+ },
+ "B06_LINE_GAP": {
+  "value": 3.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 일자진 빈칸 폭(m)"
+ },
+ "B06_CRANE_RADIUS": {
+  "value": 7.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 학익진 반경(m)"
+ },
+ "B06_CIRCLE_START": {
+  "value": 6.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 원진 시작 반경(m)"
+ },
+ "B06_CIRCLE_END": {
+  "value": 2.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 원진 끝 반경(m)"
+ },
+ "B06_WARN": {
+  "value": 1.2,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 진법 예고(초)"
+ },
+ "B06_FAST_WARN": {
+  "value": 0.9,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 50% 빠른 호령 예고(초)"
+ },
+ "B06_FORM_GAP": {
+  "value": 6.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 진법 간격(초, 임시)"
+ },
+ "B06_GAP_DMG_MULT": {
+  "value": 1.5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 빈 자리에서 때리면 피해 배율"
+ },
+ "B07_MAEDHIM": {
+  "value": 1120,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-07 맺힘"
+ },
+ "B07_DAMAGE": {
+  "value": 24,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-07 공격"
+ },
+ "B07_ARENA_START": {
+  "value": 14.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 막장 시작 반경(m)"
+ },
+ "B07_ARENA_END": {
+  "value": 10.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 막장 끝 반경(m)"
+ },
+ "B07_MINERS": {
+  "value": 5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 광부 혼 수"
+ },
+ "B07_MINER_STUN": {
+  "value": 2.5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 광부 다섯이 나갈 때마다 보스가 멈추는 시간(초)"
+ },
+ "B07_PAHON_LUMP_PCT": {
+  "value": 10,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 광부를 파혼하면 보스 맺힘 증가(%)"
+ },
+ "B07_FRENZY_SEC": {
+  "value": 10.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 광부를 파혼하면 광폭 시간(초)"
+ },
+ "B07_PICK_RADIUS": {
+  "value": 2.5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 곡괭이 반경(m)"
+ },
+ "B07_PICK_WARN": {
+  "value": 0.7,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 곡괭이 예고(초)"
+ },
+ "B07_PICK_GAP": {
+  "value": 4.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 곡괭이 간격(초, 임시)"
+ },
+ "B07_ROCK_RADIUS": {
+  "value": 2.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 반경(m)"
+ },
+ "B07_ROCK_COUNT": {
+  "value": 3,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 수"
+ },
+ "B07_ROCK_COUNT_P2": {
+  "value": 5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 50% 이후 낙석 수"
+ },
+ "B07_ROCK_WARN": {
+  "value": 1.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 예고(초)"
+ },
+ "B07_ROCK_GAP": {
+  "value": 7.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 간격(초, 임시)"
+ },
+ "B08_MAEDHIM": {
+  "value": 960,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-08 맺힘"
+ },
+ "B08_DAMAGE": {
+  "value": 22,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-08 공격"
+ },
+ "B08_MINES": {
+  "value": 4,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 숫자 지뢰 수(넷 중 하나는 이름 종이)"
+ },
+ "B08_MINE_MULT": {
+  "value": 4,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 지뢰 숫자 × 피해 배율"
+ },
+ "B08_MINE_GAP": {
+  "value": 8.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 숫자 지뢰 간격(초, 임시)"
+ },
+ "B08_NAME_SHARE_PCT": {
+  "value": -2,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 이름 종이를 밟으면 보스 맺힘 변화(%)"
+ },
+ "B08_SWEEP_RADIUS": {
+  "value": 5.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 주판 쓸기 반경(m)"
+ },
+ "B08_SWEEP_ANGLE": {
+  "value": 90.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 주판 쓸기 각도(도)"
+ },
+ "B08_SWEEP_WARN": {
+  "value": 0.9,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 주판 쓸기 예고(초, 임시)"
+ },
+ "B08_SWEEP_GAP": {
+  "value": 5.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 주판 쓸기 간격(초, 임시)"
+ },
+ "B08_LEDGER_GAP": {
+  "value": 12.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 장부 넘기기 간격(초, 50% 이후, 임시)"
+ },
+ "B08_LEDGER_WARN": {
+  "value": 1.5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 장부 넘기기 예고(초, 임시)"
+ },
+ "B08_PAPERS_FOR_CROUCH": {
+  "value": 3,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 이름 종이 몇 장을 밟으면 웅크리나"
+ },
+ "B08_CROUCH_SEC": {
+  "value": 3.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 웅크림 시간(초)"
+ },
+ "ACT2_KNEEL_WAIT": {
+  "value": 7.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 2막 보스 넷 처결 대기(초)"
  }
 }
