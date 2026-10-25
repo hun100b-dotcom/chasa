@@ -1309,6 +1309,149 @@
    "bypass_cast_filter": false,
    "length_sec": 15.9,
    "peak_dbfs": -21
+  },
+  {
+   "id": "sfx.hit.mace",
+   "file": "sfx_hit_mace",
+   "category": "전투",
+   "desc": "육모방망이 타격: 단단한 나무 몸통이 퍽 — 낮고 두껍고 짧다",
+   "use": "육모방망이 1·2타 적중",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.5,
+   "peak_dbfs": -8
+  },
+  {
+   "id": "sfx.hit.mace.heavy",
+   "file": "sfx_hit_mace_heavy",
+   "category": "전투",
+   "desc": "육모방망이 3타 내려찍기: 땅까지 울리는 쿵 + 흙 튐 + 나무 울림(반경 3m 기절)",
+   "use": "육모방망이 3타(내려찍기) 적중·땅 찍기",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.99,
+   "peak_dbfs": -5
+  },
+  {
+   "id": "sfx.hit.bell",
+   "file": "sfx_hit_bell",
+   "category": "전투",
+   "desc": "요령방울 타격: 놋쇠 방울이 짤랑 울리며 맞음 — 밝고 꼬리가 길다(맞을 때마다 '울린다')",
+   "use": "요령방울 1·2타 적중(360° 원 범위라 여럿이 동시에 맞으면 1번만 재생)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.58,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.hit.bell.heavy",
+   "file": "sfx_hit_bell_heavy",
+   "category": "전투",
+   "desc": "요령방울 3타 '울림': 큰 방울 댕— 퍼지는 소리 + 공기가 둥글게 밀려나는 웅(원 범위 넉백)",
+   "use": "요령방울 3타(toll) 적중",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.97,
+   "peak_dbfs": -7
+  },
+  {
+   "id": "sfx.hit.trident",
+   "file": "sfx_hit_trident",
+   "category": "전투",
+   "desc": "삼지창 찌르기 적중: 쇠끝이 '칙' 박히고 쑥 들어가는 소리 — 가장 짧고 날카로운 시작",
+   "use": "삼지창 1·2타 적중(관통: 둘째·셋째 대상은 0.03초씩 늦춰 작게)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.38,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "sfx.hit.trident.heavy",
+   "file": "sfx_hit_trident_heavy",
+   "category": "전투",
+   "desc": "삼지창 3타 꿰뚫기: 세 번 연달아 칙-칙-칙 박히고 마지막에 깊게 쾅 + 쇠 떨림",
+   "use": "삼지창 3타(skewer) 적중",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.08,
+   "peak_dbfs": -6
+  },
+  {
+   "id": "sfx.hit.brush",
+   "file": "sfx_hit_brush",
+   "category": "전투",
+   "desc": "명부 붓 획 적중: 먹물이 '촥' 튀며 획이 박힘 — 가볍고 촉촉하다",
+   "use": "명부 붓 1·2타 적중(먼 거리)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.52,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.hit.brush.heavy",
+   "file": "sfx_hit_brush_heavy",
+   "category": "전투",
+   "desc": "명부 붓 3타 '인(도장)': 도장이 탁 찍히며 먹이 퍽 번짐 + 종이 위 붉은 인 같은 짧은 울림",
+   "use": "명부 붓 3타(seal) 적중",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.02,
+   "peak_dbfs": -8
+  },
+  {
+   "id": "sfx.swing.chain",
+   "file": "sfx_swing_chain",
+   "category": "전투",
+   "desc": "철삭 휘두름: 사슬이 차르륵 풀리며 휙",
+   "use": "철삭 휘두름 시작(windup 끝)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.3,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.swing.mace",
+   "file": "sfx_swing_mace",
+   "category": "전투",
+   "desc": "육모방망이 휘두름: 무거운 몸통이 낮게 부웅",
+   "use": "육모방망이 휘두름 시작",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.4,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.swing.bell",
+   "file": "sfx_swing_bell",
+   "category": "전투",
+   "desc": "요령방울 휘두름: 방울이 흔들려 짤랑짤랑 + 가벼운 휙",
+   "use": "요령방울 휘두름 시작",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.35,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.swing.trident",
+   "file": "sfx_swing_trident",
+   "category": "전투",
+   "desc": "삼지창 찌름: 짧고 곧게 쉭 — 높이가 위로 쏘아 올라감",
+   "use": "삼지창 찌르기 시작",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.18,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.swing.brush",
+   "file": "sfx_swing_brush",
+   "category": "전투",
+   "desc": "명부 붓 휘두름: 붓털이 공기를 쓸며 사악 + 먹 한 방울 튐",
+   "use": "명부 붓 휘두름 시작(획이 날아감)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.25,
+   "peak_dbfs": -18
   }
  ],
  "footsteps": {
