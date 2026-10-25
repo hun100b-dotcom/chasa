@@ -187,3 +187,4 @@
 - `tools/funerals_act2.py` → `funerals_act2.json`(③ 산성 아랫마을 4, ④ 광부촌 4). 1막 생성기의 틀을 그대로 씀(조건 박자: 만석 장례 B-05 천도 시).
 - 기획 `jesa_watch_act1.json` 확인: 대사 8곳 확정(3곳 고침), 새 인물 모두 역할 이름, 칠복 자리는 기와집(소설 6장), 장터 넷의 드러낸 장례는 "고뿔"로 치른 집 장례라 세계관과 맞음, 박돌쇠 예외 방식 승인.
 - npc_act1: 순임(N-102)·윤 소사네 아들(N-103) unlock_night 4 → 1(첫 세션 첫날에 나오므로. 밤 단위 폐지 뒤 남은 값).
+- (21:05) `tools/memories_act2.py` → `memories_act2.json`: 2막 혼·보스 40(미스터리 30), 축 main/mirror, 장례 대상 8명 jesa_extra. 밤 단위 칸(nights)은 넣지 않음.
