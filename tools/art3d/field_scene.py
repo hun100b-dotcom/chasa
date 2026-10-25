@@ -9,7 +9,7 @@ import bpy
 from mathutils import Vector, Euler
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 A3 = os.path.join(REPO, "assets3d")
-DIRS = [("terrain_", "terrain"), ("chunk_", "terrain"), ("nature_", "nature"), ("br_", "blackrapids"), ("prop_", "props"), ("hanok_", "hanok"), ("night_", "night"), ("fx_", "fx"), ("weapon_", "weapons"), ("boss_", "boss"), ("soul_", "souls"), ("hero_", "characters")]
+DIRS = [("terrain_", "terrain"), ("chunk_", "terrain"), ("nature_", "nature"), ("cover_", "nature"), ("br_", "blackrapids"), ("prop_", "props"), ("hanok_", "hanok"), ("night_", "night"), ("fx_", "fx"), ("weapon_", "weapons"), ("boss_", "boss"), ("soul_", "souls"), ("hero_", "characters")]
 FIELD = json.load(open(os.path.join(A3, "layouts", "field_5x5.json"), encoding="utf-8"))
 VIL = json.load(open(os.path.join(A3, "layouts", "solgogae_village.json"), encoding="utf-8"))
 VX, VY = FIELD["village_offset_m"]
@@ -60,6 +60,9 @@ def put(name, x, y, z=0.0, rot=0.0, lights=True, scale=1.0):
 
 def inwin(x, y, win, m=0.0): return win[0] - m <= x <= win[2] + m and win[1] - m <= y <= win[3] + m
 
+COVER_ON = os.environ.get("FS_COVER", "1") == "1"   # 바닥 채움 소품(field_cover.json). 전후 비교용으로 FS_COVER=0 이면 끈다
+COVER = json.load(open(os.path.join(A3, "layouts", "field_cover.json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", "field_cover.json")) else []
+
 def build(win):
     """win=(x0,y0,x1,y1) m. 창 안 타일·장식·구조물·마을·밤 소품을 조립한다."""
     x0, y0, x1, y1 = win
@@ -73,6 +76,9 @@ def build(win):
         if inwin(cx, cy, win, 6): put(t["tile"], cx, cy, t["z"], t["rot"])
     for p in FIELD["props"]:
         if inwin(p["x"], p["y"], win, 4): put(p["prop"], p["x"], p["y"], p.get("gz", p.get("z", 0) + 0.3), p["rot"])
+    if COVER_ON:
+        for p in COVER:
+            if inwin(p["x"], p["y"], win, 1): put(p["prop"], p["x"], p["y"], 0.3, p["rot"], lights=False)
     for s in FIELD.get("structures", []):
         if "pieces" in s:
             for q in s["pieces"]:
@@ -173,6 +179,10 @@ def pose(name, x, y, z, rot, action, frame, scale=1.0):
     return top
 
 SHOTS = {
+  "cover_field": dict(win=(300, 110, 360, 160), cam=((330, 96, 14), (330, 126, 0.3), 36), size=(1920, 1080), title="보릿들 바닥 채움(쿼터뷰에 가까운 시점)"),
+  "cover_q": dict(win=(280, 100, 350, 150), center=(315, 124, 0.3), ortho=34, title="보릿들 바닥 채움(쿼터뷰 50°)"),
+  "cover_river": dict(win=(70, 520, 130, 580), center=(98, 548, 0.2), ortho=34, title="검은여울 강변 채움(쿼터뷰 50°)"),
+  "cover_road": dict(win=(200, 120, 260, 175), center=(228, 146, 0.3), ortho=34, title="길가·밭머리 채움(쿼터뷰 50°)"),
   "market":  dict(win=(0, 360, 80, 420), center=(36, 390, 0), ortho=46, title="읍터 장터(밤)"),
   "donghun": dict(win=(0, 300, 80, 370), center=(34, 336, 0), ortho=52, title="동헌 터·옥·객사(밤)"),
   "smithy":  dict(win=(200, 38, 250, 84), center=(221, 59, 0), ortho=26, title="대장간(밤)"),

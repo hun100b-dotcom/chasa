@@ -1,0 +1,262 @@
+[
+ {
+  "name": "cover_grass_a",
+  "tris": 80,
+  "size_m": [
+   0.65,
+   0.73,
+   0.63
+  ],
+  "min_z": -0.002
+ },
+ {
+  "name": "cover_grass_b",
+  "tris": 96,
+  "size_m": [
+   1.11,
+   1.18,
+   0.98
+  ],
+  "min_z": -0.002
+ },
+ {
+  "name": "cover_grass_c",
+  "tris": 48,
+  "size_m": [
+   0.53,
+   0.51,
+   0.34
+  ],
+  "min_z": 0.008
+ },
+ {
+  "name": "cover_barley_a",
+  "tris": 256,
+  "size_m": [
+   0.51,
+   0.66,
+   1.12
+  ],
+  "min_z": 0.015
+ },
+ {
+  "name": "cover_barley_row",
+  "tris": 516,
+  "size_m": [
+   0.57,
+   3.66,
+   1.1
+  ],
+  "min_z": -0.012
+ },
+ {
+  "name": "cover_barley_row_ripe",
+  "tris": 708,
+  "size_m": [
+   0.55,
+   3.59,
+   1.26
+  ],
+  "min_z": -0.008
+ },
+ {
+  "name": "cover_flower_mix",
+  "tris": 368,
+  "size_m": [
+   0.71,
+   0.6,
+   0.46
+  ],
+  "min_z": 0.012
+ },
+ {
+  "name": "cover_flower_white",
+  "tris": 312,
+  "size_m": [
+   0.58,
+   0.5,
+   0.56
+  ],
+  "min_z": 0.013
+ },
+ {
+  "name": "cover_lily_red",
+  "tris": 280,
+  "size_m": [
+   0.79,
+   0.53,
+   0.78
+  ],
+  "min_z": 0.02
+ },
+ {
+  "name": "cover_thistle",
+  "tris": 180,
+  "size_m": [
+   0.51,
+   0.42,
+   0.87
+  ],
+  "min_z": 0.006
+ },
+ {
+  "name": "cover_stones_a",
+  "tris": 140,
+  "size_m": [
+   0.66,
+   0.88,
+   0.13
+  ],
+  "min_z": -0.024
+ },
+ {
+  "name": "cover_stones_b",
+  "tris": 176,
+  "size_m": [
+   1.32,
+   0.83,
+   0.5
+  ],
+  "min_z": -0.092
+ },
+ {
+  "name": "cover_stones_shore",
+  "tris": 356,
+  "size_m": [
+   1.41,
+   1.48,
+   0.24
+  ],
+  "min_z": -0.05
+ },
+ {
+  "name": "cover_wet_boulder",
+  "tris": 116,
+  "size_m": [
+   1.7,
+   1.12,
+   0.68
+  ],
+  "min_z": -0.181
+ },
+ {
+  "name": "cover_mud_patch",
+  "tris": 120,
+  "size_m": [
+   1.8,
+   1.36,
+   0.13
+  ],
+  "min_z": -0.063
+ },
+ {
+  "name": "cover_leaf_litter",
+  "tris": 152,
+  "size_m": [
+   1.39,
+   1.33,
+   0.1
+  ],
+  "min_z": -0.048
+ },
+ {
+  "name": "cover_moss_patch",
+  "tris": 100,
+  "size_m": [
+   1.49,
+   1.1,
+   0.21
+  ],
+  "min_z": -0.075
+ },
+ {
+  "name": "cover_driftwood",
+  "tris": 144,
+  "size_m": [
+   1.97,
+   1.68,
+   0.43
+  ],
+  "min_z": -0.021
+ },
+ {
+  "name": "cover_cattail",
+  "tris": 224,
+  "size_m": [
+   0.93,
+   0.93,
+   1.39
+  ],
+  "min_z": 0.009
+ },
+ {
+  "name": "cover_reed_short",
+  "tris": 120,
+  "size_m": [
+   1.31,
+   1.28,
+   1.35
+  ],
+  "min_z": 0.011
+ },
+ {
+  "name": "cover_straw_stand",
+  "tris": 84,
+  "size_m": [
+   0.79,
+   0.91,
+   1.01
+  ],
+  "min_z": -0.042
+ },
+ {
+  "name": "cover_hoe_basket",
+  "tris": 128,
+  "size_m": [
+   1.3,
+   0.64,
+   0.28
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "cover_stone_wall",
+  "tris": 456,
+  "size_m": [
+   2.07,
+   0.55,
+   0.66
+  ],
+  "min_z": -0.06
+ },
+ {
+  "name": "cover_boundary_stake",
+  "tris": 100,
+  "size_m": [
+   0.53,
+   0.32,
+   0.87
+  ],
+  "min_z": -0.016
+ },
+ {
+  "name": "cover_wayside_cairn",
+  "tris": 244,
+  "size_m": [
+   0.6,
+   0.92,
+   0.63
+  ],
+  "min_z": -0.082
+ },
+ {
+  "name": "cover_hay_scatter",
+  "tris": 96,
+  "size_m": [
+   1.38,
+   1.03,
+   0.04
+  ],
+  "min_z": 0.018
+ }
+]
