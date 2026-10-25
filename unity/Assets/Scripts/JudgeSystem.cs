@@ -171,6 +171,20 @@ public class JudgeSystem : MonoBehaviour
         float baseCoin = e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN;
         ledger.Coin += Mathf.RoundToInt(baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult - baseCoin);
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
+        // 잔넋 대장 파혼 연쇄(기획 F-1b): 4m 안 같은 무리 잔넋이 함께 깨진다. 엽전은 마리당 ×0.6, 업은 마리당 +0.5 (파혼이 늘 1등이 되지 않게)
+        if (e.type == SoulType.Mote && e.leader && e.group != null)
+        {
+            int chained = 0;
+            foreach (var m in new List<Enemy>(e.group))
+            {
+                if (m == null || m == e || !m.alive || m.soul.Boss) continue;
+                if (new Vector2(m.Pos.x - at.x, m.Pos.z - at.z).magnitude > Balance.MOTE_CHAIN_PAHON_M) continue;
+                m.PlayFinishAnim(false); m.Finish(); chained++;
+                int c = Mathf.RoundToInt(Balance.PAHON_COIN * Balance.MOTE_CHAIN_COIN_MULT * lo.stats.CoinMult * lo.stats.PahonCoinMult);
+                ledger.Coin += c; night.RecordCoin(c); ledger.AddKarma(Balance.MOTE_CHAIN_KARMA);
+            }
+            if (chained > 0) Say("잔넋 " + chained + "마리가 함께 깨졌다");
+        }
         if (e.soul.Boss)
         {
             if (e.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
@@ -256,6 +270,9 @@ public class JudgeSystem : MonoBehaviour
             int before = ledger.Neok;
             ledger.CompleteTendo();
             ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f + lo.Def.NeokPct));   // 향 내음: 천도 넋 보너스
+            // 묻힌 혼은 넋 ×1.25, 넋두리는 기억 조각 +1 (기획 F-1b)
+            if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
+            if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
             int gained = ledger.Neok - before;
             if (growth.AddNeok(gained) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다

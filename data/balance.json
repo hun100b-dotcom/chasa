@@ -2086,5 +2086,25 @@
  "AMBIENT_DAY_MULT": {
   "value": 0.85,
   "note": "낮 그늘빛(주변광) 배율"
+ },
+ "MOTE_CHAIN_PAHON_M": {
+  "value": 4.0,
+  "note": "잔넋 대장을 파혼하면 이 반경(m) 안 같은 무리 잔넋이 함께 깨진다(기획 부록 F-1b, 10-25)"
+ },
+ "MOTE_CHAIN_COIN_MULT": {
+  "value": 0.6,
+  "note": "함께 깨진 잔넋 한 마리당 엽전 배율(파혼 1순위가 되지 않게)"
+ },
+ "MOTE_CHAIN_KARMA": {
+  "value": 0.5,
+  "note": "함께 깨진 잔넋 한 마리당 업(소수는 모았다가 1이 되면 반영)"
+ },
+ "WAIL_TENDO_MEMORY": {
+  "value": 1,
+  "note": "넋두리를 천도하면 기억 조각 추가"
+ },
+ "BURIED_TENDO_NEOK_MULT": {
+  "value": 1.25,
+  "note": "묻힌 혼을 천도하면 넋 배율"
  }
 }
