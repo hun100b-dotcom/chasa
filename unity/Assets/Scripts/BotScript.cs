@@ -196,7 +196,7 @@ public class BotScript : MonoBehaviour
         var l = new List<KeyValuePair<Vector3, string>>(); judge.named.PendingPositions(l);
         KeyValuePair<Vector3, string>? best = null; float bd = 1e9f;
         foreach (var p in l) { float d = Vector2.Distance(new Vector2(p.Key.x, p.Key.z), new Vector2(player.Pos.x, player.Pos.z)); if (d < bd) { bd = d; best = p; } }
-        if (best == null || bd < 4f) return false;
+        if (best == null || bd < 4f || bd > 120f) return false;   // 120m 밖(장터 쪽 새 이름혼 등)은 찾아가지 않는다
         GoTo(best.Value.Key, "이름혼 " + best.Value.Value); return true;
     }
 

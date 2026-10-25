@@ -14,6 +14,9 @@ by = {s["name"]: s for s in mem["souls"]}
 PLACES = [  # 이름, 필드 x, z (임시), 명부 몫 여부
     ("박돌쇠", 182, 68, True), ("윤 소사", 205, 58, False), ("연이", 207, 54, False),
     ("장 둑지기", 184, 174, False), ("곽 뱃꾼", 372, 312, True), ("방물장수 막례", 384, 306, False),
+    # 기획 jesa_watch_act1.json soul_spawn_proposal(아트 걷기 확인 전): 제사 지켜보기 효과(명부에 오늘 밤 자리 표시)에 필요한 장례 대상 혼
+    ("칠복", 202.0, 63.5, False), ("허 훈장", 202.0, 72.5, False), ("엿장수 판쇠", 38.0, 380.0, False),
+    ("포목전 최씨", 29.5, 376.0, False), ("주모 끝순", 50.0, 388.0, False), ("북잡이 덕수", 33.5, 399.5, False),
 ]
 # 아트가 확정한 자리(data/art/npc_places_act1.json 의 named_souls_first_session)가 있으면 위 임시 좌표를 덮어쓴다
 art_path = os.path.join(root, "data", "art", "npc_places_act1.json")

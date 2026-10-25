@@ -700,6 +700,7 @@ public class JudgeSystem : MonoBehaviour
     bool openingStarted;
     int pahonOrTendo;            // 박돌쇠 처결 결과: 0 안 함 · 1 천도 · 2 파혼
     bool funeralShown;
+    public int PahonOrTendo { get { return pahonOrTendo; } }   // 박돌쇠 결과: 1 천도 · 2 파혼 · 0 아직
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
     // ===== 저장·불러오기 (규칙은 Core/SaveGame.cs, 저장소는 SaveStore) ==================
     bool loadChecked; float autoSaveT = 30f;
@@ -713,6 +714,7 @@ public class JudgeSystem : MonoBehaviour
         s.X = player.Pos.x; s.Z = player.Pos.z; s.ClockDay = clock.Day; s.ClockMinutes = clock.Minutes;
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
+        if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
         if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
         return SaveStore.Write(SaveGame.Serialize(s));
     }
@@ -729,6 +731,7 @@ public class JudgeSystem : MonoBehaviour
         RefreshGrowth();
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
+        if (npcs != null) { npcs.JesaSeen.Clear(); foreach (var pk in s.Picked) if (pk.StartsWith("jesa:")) npcs.JesaSeen.Add(pk.Substring(5)); }
         if (interactables != null) { interactables.Restore(s.Picked, s.HerbTaken, s.Herbs); foreach (var sp in interactSpots) sp.Done = false; }   // 주운 것은 Active 가 id 로 걸러 준다
         weather.Restore(s.WeatherNow, s.PlagueEased, clock);   // 날씨도 그대로(불러오자마자 다시 굴리지 않는다)
         bossOutcome = s.BossOutcome; pahonOrTendo = s.NamedOutcome; openingStarted = true; funeralShown = s.FuneralShown; sceneryAdded = false;
