@@ -81,7 +81,16 @@ MADE = {'amb.market', 'amb.mine', 'amb.rain', 'amb.rooster', 'cut.bellows', 'cut
         'amb.dawn.birds', 'amb.harbor', 'amb.sea.wind', 'amb.snow.wind', 'amb.wind.gust', 'cut.chain.drag',
         'cut.cough', 'cut.hull.creak', 'cut.names.glow', 'cut.oar.row', 'cut.paper.ascend', 'cut.rope.untie',
         'cut.snow.settle', 'cut.soldier.rise', 'cut.soul.rise', 'cut.splash.pull', 'cut.stone.carve',
-        'cut.straw.set', 'cut.tag.drop', 'cut.war.drum', 'cut.water.recede', 'cut.wave.row'}
+        'cut.straw.set', 'cut.tag.drop', 'cut.war.drum', 'cut.water.recede', 'cut.wave.row',
+        # PR #34(시즌2 컷신 요청 10개, 10-25 병합)
+        'cut.knife.notch', 'cut.door.slide', 'cut.paper.set', 'cut.wire.untie', 'cut.seal.thud', 'amb.dawn.still',
+        'amb.names.many', 'cut.names.release', 'cut.river.flow', 'cut.river.rush',
+        # PR #36(시즌3 컷신 요청 26개 + 백 판 장치음, 10-26). 백 무릎·깨뜨리기·저편 나룻불은 백 전용 소리로 바꿔 씀
+        'amb.underwater.low', 'cut.water.rise', 'cut.water.rise.far', 'sfx.laydown', 'cut.thread.snap',
+        'cut.bones.crumble', 'cut.chain.taut', 'cut.chain.fall', 'cut.rewind.soft', 'cut.thread.reel', 'cut.soil.shift',
+        'cut.hull.beach', 'cut.hull.scrape', 'cut.earth.drum', 'cut.straw.tie', 'cut.rope.taut', 'cut.rope.fall',
+        'cut.pole.lay', 'cut.lime.step', 'cut.lime.crack', 'cut.gate.close', 'cut.cloth.wave', 'cut.book.set',
+        'amb.wind.dry', 'amb.ondol.fire', 'vo.far.reply', 'sfx.baek.kneel', 'sfx.baek.break', 'sfx.farlight.on'}
 
 def promote(cut):
     """steps의 sfx_request 가운데 이제 있는 소리를 sfx로 옮긴다. 괄호 속 연출 메모는 sfx_note에 남긴다."""

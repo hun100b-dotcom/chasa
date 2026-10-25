@@ -64,7 +64,7 @@ def intro(bid, trigger, steps, dur):
 
 def kneel(bid, act, timer=7.0, ready='clue>=3 ? steady : flicker', extra=None):
     """처결 대기. 시즌 3은 이름 실 대신 '실 끊김' 표시: 원념의 실(검은 물줄기)이 끊기고 백이 무릎 꿇는다."""
-    steps = [st(0.0, cam={'mode': 'push', 'to': 'boss', 'time': 0.4, 'zoom': 1.25}, act=act, sfx=['sfx.kneel'],
+    steps = [st(0.0, cam={'mode': 'push', 'to': 'boss', 'time': 0.4, 'zoom': 1.25}, act=act, sfx=['sfx.baek.kneel'],
                 req=['cut.thread.snap(물줄기 같은 검은 실이 끊기는 낮은 소리)'])]
     if extra: steps.append(extra)
     steps += [st(0.4, ui={'kneel_timer': timer, 'lay_ready': ready}),
@@ -89,7 +89,7 @@ def lay(bid, beats, dur=9.0, light='저편 기슭에 나룻불이 하나 켜진�
                req=['sfx.laydown(몸이 젖은 흙에 천천히 눕는 낮은 소리)']),
             st(1.0, line=memline(bid), sfx=['sfx.clue'], note=f"기억 M-{bid.replace('-', '')}(★{b['decisive']} 전모)")]
     lt = light_t if light_t is not None else dur - 2.0
-    tail = [st(lt, beat='저편 나룻불', cam={'mode': 'cut', 'to': 'far_shore', 'framing': '강 하류 끝, 안개 너머 저편 기슭'}, act=light, sfx=['cut.lantern.light'],
+    tail = [st(lt, beat='저편 나룻불', cam={'mode': 'cut', 'to': 'far_shore', 'framing': '강 하류 끝, 안개 너머 저편 기슭'}, act=light, sfx=['sfx.farlight.on'],
                note='시즌 3 진행 막대(far_lights). 1막에 꺼져 있던 그 불(F3)'),
             st(dur, cam={'mode': 'return', 'to': 'player', 'time': 0.5},
                ui=dict({'fact_on': b['decisive'], 'reward': {'memory': 'M-' + bid.replace('-', '')}, 'world_change': b['lay'], 'sent_count': '+1(보낸 사람 수)'}, **(extra_ui or {})))]
@@ -101,7 +101,7 @@ def lay(bid, beats, dur=9.0, light='저편 기슭에 나룻불이 하나 켜진�
 
 def brk(bid, beats, reward_item):
     """깨뜨리기 컷. 즉시 · 큰 폭발. 그 사람의 혼이 ⑦ 줄에서 돌아서는 장면을 짧게 끼운다(대가를 보여 줌, 벌이 아니라 결과)."""
-    steps = [st(0.0, cam={'mode': 'shake', 'strength': 'big', 'time': 0.5}, act=beats[0], sfx=['sfx.pahon.burst'],
+    steps = [st(0.0, cam={'mode': 'shake', 'strength': 'big', 'time': 0.5}, act=beats[0], sfx=['sfx.baek.break'],
                 req=['cut.bones.crumble(젖은 흙과 뼈가 함께 부서지는 둔한 소리)']),
              st(0.3, ui={'ledger_fx': 'strokes_scatter'}, act='명부의 그 줄이 흩어진다', sfx=['cut.stroke.scatter'])]
     steps += [st(0.8 + 0.7 * i, act=a) for i, a in enumerate(beats[1:])]
@@ -202,7 +202,7 @@ COMMON = [
             st(3.0, ui={'sent_count': '+1', 'far_light_pending': '+1(그 혼이 배에 오르면)'})]},
  {'id': 'BAEK-BREAK', 'branch': '백 깨뜨리기(보스 아닌 백)', 'trigger': '이름 백 처결 대기 중 깨뜨리기 입력', 'duration': 1.2,
   'input_lock': False, 'world': 'run', 'skippable': False, 'lines': 0,
-  'steps': [st(0.0, cam={'mode': 'shake', 'strength': 'mid', 'time': 0.3}, act='백이 깨진다', sfx=['sfx.pahon.burst']),
+  'steps': [st(0.0, cam={'mode': 'shake', 'strength': 'mid', 'time': 0.3}, act='백이 깨진다', sfx=['sfx.baek.break']),
             st(1.2, ui={'karma': '+1(덩어리는 몸당 +0.1, 덩어리 하나당 상한 +3)'})]},
  {'id': 'STEP-ASIDE', 'branch': '비켜서는 백(7 · 8막)', 'trigger': '시즌 1 · 2에서 그 사람의 혼을 천도했고, 그 백에 3m 안으로 다가갔을 때', 'duration': 4.0,
   'input_lock': False, 'world': 'run', 'skippable': False, 'lines': 0,
@@ -222,7 +222,7 @@ COMMON = [
  {'id': 'FAR-LIGHT-FIRST', 'branch': '저편 나룻불 처음', 'trigger': '시즌 3에서 처음으로 배가 저편에 닿은 다음 낮, 서낭당에 처음 들렀을 때', 'duration': 12.0,
   'input_lock': True, 'world': 'pause_enemies', 'skippable': True, 'lines': 0,
   'note': '진행 막대 소개. 이후는 서낭당에서 보이는 불빛 개수로만(컷 없음). 1막에 꺼져 있던 그 불(F3)',
-  'steps': [st(0.0, cam={'mode': 'hold', 'framing': '서낭당 나무 너머 먼 하류 하늘'}, act='서낭당 너머 아주 먼 하류, 낮인데도 불빛 하나가 보인다', sfx=['cut.lantern.light']),
+  'steps': [st(0.0, cam={'mode': 'hold', 'framing': '서낭당 나무 너머 먼 하류 하늘'}, act='서낭당 너머 아주 먼 하류, 낮인데도 불빛 하나가 보인다', sfx=['sfx.farlight.on']),
             st(6.0, cond='당할미가 서낭당에 있을 때', act='당할미가 손을 멈추고 그 쪽을 본다. 아무 말도 하지 않는다'),
             st(12.0, cam={'mode': 'return', 'to': 'player', 'time': 0.5}, ui={'far_lights': 'show'})]},
 ]
@@ -288,7 +288,7 @@ CUTS += [
   st(3.0, cam={'mode': 'return', 'to': 'player', 'time': 0.3}, note='버티면 매듭 중심이 드러난다')]),
  {'id': 'B23-KNEEL', 'branch': '처결 대기(풀기 / 끊기)', 'trigger': '보스 맺힘 0', 'duration': 1.5, 'input_lock': False, 'world': 'run', 'skippable': False,
   'note': '단서 대신 조건: 이번 막에서 눕힌 백 20 이상 또는 시즌 1 · 2 누적 천도 300 이상(qa). 모자라면 끊기만. 진행은 막지 않는다',
-  'steps': [st(0.0, cam={'mode': 'push', 'to': 'boss', 'time': 0.4, 'zoom': 1.1}, act='매듭이 조인 채 멈춘다. 중심에 가장 오래된 실 한 가닥이 보인다', sfx=['sfx.kneel']),
+  'steps': [st(0.0, cam={'mode': 'push', 'to': 'boss', 'time': 0.4, 'zoom': 1.1}, act='매듭이 조인 채 멈춘다. 중심에 가장 오래된 실 한 가닥이 보인다', sfx=['sfx.baek.kneel']),
             st(0.4, ui={'kneel_timer': 7.0, 'untie_ready': 'laid_this_act>=20 || sent_total>=300 ? steady : flicker'}),
             st(1.5, cam={'mode': 'return', 'to': 'player_and_boss', 'time': 0.3})]},
  {'id': 'B23-NOCOND', 'branch': '처결 대기(풀기 불가)', 'trigger': '조건 미달에서 풀기 입력', 'duration': 1.0, 'input_lock': False, 'world': 'run', 'skippable': False,
@@ -318,7 +318,7 @@ C23B = {'id': 'C-23B', 'branch': '6막 끝 — 첫 배가 닿는다(끊기판)',
  'world': 'pause_enemies', 'skippable': True, 'lines': 0,
  'note': '대사 0. 배는 닿지만 끊긴 실의 혼들은 기슭을 떠돈다. F56은 이 판에서도 얻는다(진행 막힘 없음)',
  'steps': [
-  st(0.0, beat='끊김', cam={'mode': 'shake', 'strength': 'big', 'time': 1.0}, act='매듭이 끊어진다. 실 토막들이 사방으로 흩어진다', sfx=['sfx.pahon.burst'], req=['cut.thread.snap(물줄기 같은 검은 실이 끊기는 낮은 소리)']),
+  st(0.0, beat='끊김', cam={'mode': 'shake', 'strength': 'big', 'time': 1.0}, act='매듭이 끊어진다. 실 토막들이 사방으로 흩어진다', sfx=['sfx.baek.break'], req=['cut.thread.snap(물줄기 같은 검은 실이 끊기는 낮은 소리)']),
   st(6.0, beat='흩어진 혼', cam={'mode': 'crane', 'dir': 'up', 'time': 8.0, 'framing': '수면 위 기슭'}, act='줄에서 혼 몇이 떨어져 나와 기슭을 떠돈다. 발목의 실 끝이 잘려 있다'),
   st(18.0, beat='배', cam={'mode': 'follow', 'to': 'ferry', 'time': 14.0}, act='사공의 배가 강 한가운데를 지난다', sfx=['cut.oar.row']),
   st(36.0, beat='닿다', cam={'mode': 'hold', 'framing': '저편 기슭'}, act='배가 저편에 닿는다. 불빛이 켜진다 — 군데군데 비어 있다', req=['cut.hull.beach(나무배가 모래에 올라앉는 소리)']),
@@ -590,7 +590,7 @@ CUTS += [
   st(5.0, cam={'mode': 'return', 'to': 'player', 'time': 0.3})]),
  {'id': 'B31-KNEEL', 'branch': '처결 대기(눕히기 / 깨뜨리기)', 'trigger': '보스 맺힘 0', 'duration': 3.0, 'input_lock': False, 'world': 'run', 'skippable': False,
   'note': '처결 대기 15초. 눕히기 가능 = 기억 조각 150 이상 + 업 60 미만. 미달이면 깨뜨리기만 → 결말 C. 백은 무릎 꿇지 않는다',
-  'steps': [st(0.0, cam={'mode': 'push', 'to': 'boss', 'time': 0.8, 'zoom': 1.2}, act='백이 무릎 꿇지 않고 선다. 횃불을 내 쪽으로 내민다', sfx=['sfx.kneel']),
+  'steps': [st(0.0, cam={'mode': 'push', 'to': 'boss', 'time': 0.8, 'zoom': 1.2}, act='백이 무릎 꿇지 않고 선다. 횃불을 내 쪽으로 내민다', sfx=['sfx.baek.kneel']),
             st(0.8, line=memline('B-31', 3.6), note='기억 M-B31(★F72는 결말에서). 처결 대기 중 한 번'),
             st(1.0, ui={'kneel_timer': 15.0, 'lay_ready': 'memory>=150 && karma<60 ? steady : flicker'}),
             st(3.0, cam={'mode': 'return', 'to': 'player_and_boss', 'time': 0.3})]},
@@ -653,7 +653,7 @@ C31C = {'id': 'C-31C', 'branch': '결말 C — 다음 검은 갓', 'trigger': 'B
  'world': 'pause_enemies', 'skippable': False, 'lines': 0, 'canon': 'endings_s1.json final_endings.endings.C',
  'note': '대사 0. 벌이 아니라 거울 — 다음 회차 1막 멀리 혼 셋을 깨뜨리는 검은 갓이 나였다',
  'steps': [
-  st(0.0, beat='깨짐', cam={'mode': 'shake', 'strength': 'big', 'time': 1.0}, act='나의 백이 깨진다. 횃불이 물속에서 흩어진다', sfx=['sfx.pahon.burst', 'cut.torch.sink']),
+  st(0.0, beat='깨짐', cam={'mode': 'shake', 'strength': 'big', 'time': 1.0}, act='나의 백이 깨진다. 횃불이 물속에서 흩어진다', sfx=['sfx.baek.break', 'cut.torch.sink']),
   st(10.0, beat='물', cam={'mode': 'hold', 'framing': '소 수면'}, act='소에 물이 찬다. 다시는 빠지지 않는다'),
   st(24.0, beat='빈자리', cam={'mode': 'crane', 'dir': 'down', 'time': 6.0, 'framing': '둑, 열한 무덤 옆 빈자리'}, act='둑의 열두째 자리는 영영 비어 있다'),
   st(40.0, beat='쪽지', ui={'note_card': S3['keeper']['beats'][-1].split('"')[5], 'note_card_time': 6.0}, act='명부 여백 먹지기 쪽지'),

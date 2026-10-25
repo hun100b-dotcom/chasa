@@ -619,10 +619,11 @@ for c in rows + GROUPS + BOSSES:
 ids = [c['id'] for c in rows + GROUPS + BOSSES + BOSS_POINTERS]
 assert len(ids) == len(set(ids)), 'id 중복'
 
-json.dump(data, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-cnt = {}
-for r in rows:
-    cnt[r['kind']] = cnt.get(r['kind'], 0) + 1
-print(len(rows), 'baek rows', cnt, '| groups', len(GROUPS), '| boss', len(BOSSES), '+ pointers', len(BOSS_POINTERS))
-req = sorted({x.split('(')[0] for c in rows + GROUPS + BOSSES for br in c.get('branches', []) for s in br['steps'] for x in s.get('sfx_request', [])})
-print('sound requests:', len(req), req)
+if __name__ == '__main__':  # reverse_clues_s3.py가 이 파일의 재료(CARVE 등)를 가져다 쓴다. 가져갈 때는 파일을 쓰지 않는다
+    json.dump(data, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    cnt = {}
+    for r in rows:
+        cnt[r['kind']] = cnt.get(r['kind'], 0) + 1
+    print(len(rows), 'baek rows', cnt, '| groups', len(GROUPS), '| boss', len(BOSSES), '+ pointers', len(BOSS_POINTERS))
+    req = sorted({x.split('(')[0] for c in rows + GROUPS + BOSSES for br in c.get('branches', []) for s in br['steps'] for x in s.get('sfx_request', [])})
+    print('sound requests:', len(req), req)

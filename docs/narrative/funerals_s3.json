@@ -8698,13 +8698,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -8843,13 +8844,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -8988,13 +8990,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -9133,13 +9136,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -9278,13 +9282,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -9423,13 +9428,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -9568,13 +9574,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -9713,13 +9720,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -9858,13 +9866,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -10003,13 +10012,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -10148,13 +10158,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -10293,13 +10304,14 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
-       ],
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -10445,11 +10457,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -10588,11 +10603,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -10731,11 +10749,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -10874,11 +10895,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -11017,11 +11041,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -11160,11 +11187,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -11303,11 +11333,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -11454,11 +11487,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -11605,11 +11641,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -11748,11 +11787,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -11891,11 +11933,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -12034,11 +12079,14 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
-       ],
        "control": "none",
-       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)"
+       "note": "⑦~⑩엔 산 사람이 없다. 장례 대신 새벽 틈에 그 자리의 일이 끝난다(F65 · F68)",
+       "sfx": [
+        "amb.dawn.still"
+       ],
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,
@@ -12202,11 +12250,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 17.0,
@@ -12235,11 +12286,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -12320,12 +12374,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 10.0,
@@ -12365,12 +12422,15 @@
         "mode": "side_track",
         "to": "soul"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
        "note": "깊은 박자 ②. 그 혼은 ⑦ 줄로 간다. 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
-       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)"
+       "condition": "그 혼이 아직 그 자리에 있음(시즌 2에서 처결 안 함)",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 0.0,
@@ -12462,11 +12522,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 17.0,
@@ -12495,11 +12558,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -12580,11 +12646,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 17.0,
@@ -12613,11 +12682,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -12698,11 +12770,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(삭은 검정)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(삭은 검정)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 17.0,
@@ -12731,11 +12806,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(삭은 검정)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(삭은 검정)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -12816,11 +12894,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(은빛 가루)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(은빛 가루)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 17.0,
@@ -12849,11 +12930,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(은빛 가루)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(은빛 가루)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -12934,11 +13018,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 17.0,
@@ -12967,11 +13054,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -13052,11 +13142,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 17.0,
@@ -13085,11 +13178,14 @@
         "mode": "low_move",
         "to": "chain"
        },
-       "sfx_request": [
-        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다"
+       "note": "깊은 박자 ②. 무덤 하나가 끝난다(F68). 기억 색(녹슨 사슬빛)이 한 번 번졌다 사라진다",
+       "sfx": [
+        "cut.chain.fall"
+       ],
+       "sfx_note": [
+        "cut.chain.fall(사슬이 흙 위로 쓰러지는 소리)"
+       ]
       },
       {
        "t": 8.0,
@@ -14371,12 +14467,13 @@
        },
        "caption": "[먹 가는 소리] [새벽 바람]",
        "sfx": [
-        "cut.ink.grind"
+        "cut.ink.grind",
+        "amb.dawn.still"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.dawn.still(바람 없는 새벽)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 4.0,
@@ -14463,10 +14560,13 @@
         "time": 4.0
        },
        "caption": "[새벽 바람] [먼 종 한 번]",
-       "sfx_request": [
-        "amb.dawn.still(바람 없는 새벽)"
+       "control": "none",
+       "sfx": [
+        "amb.dawn.still"
        ],
-       "control": "none"
+       "sfx_note": [
+        "amb.dawn.still(바람 없는 새벽)"
+       ]
       },
       {
        "t": 4.0,

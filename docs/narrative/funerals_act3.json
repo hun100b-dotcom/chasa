@@ -38,12 +38,13 @@
        },
        "caption": "[파도] [갈매기] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.harbor"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.harbor(파도·갈매기·배 삐걱임)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -203,12 +204,13 @@
        },
        "caption": "[파도] [갈매기] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.harbor"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.harbor(파도·갈매기·배 삐걱임)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -368,12 +370,13 @@
        },
        "caption": "[파도] [갈매기] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.harbor"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.harbor(파도·갈매기·배 삐걱임)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -533,12 +536,13 @@
        },
        "caption": "[파도] [갈매기] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.harbor"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.harbor(파도·갈매기·배 삐걱임)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -580,11 +584,14 @@
         "to": "harbor_mouth"
        },
        "caption": "[노 젓는 소리] [파도]",
-       "sfx_request": [
-        "cut.oar.row(노 젓는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(저고리 다홍). 배 이름·깃발을 보이지 않는다(만선호와 헷갈리지 않게)"
+       "note": "깊은 박자 ②. 기억 색(저고리 다홍). 배 이름·깃발을 보이지 않는다(만선호와 헷갈리지 않게)",
+       "sfx": [
+        "cut.oar.row"
+       ],
+       "sfx_note": [
+        "cut.oar.row(노 젓는 소리)"
+       ]
       },
       {
        "t": 38.0,
@@ -698,12 +705,13 @@
        },
        "caption": "[파도] [갈매기] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.harbor"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.harbor(파도·갈매기·배 삐걱임)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
