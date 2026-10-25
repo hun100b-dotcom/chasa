@@ -55,11 +55,24 @@ public class Act2BossArena : MonoBehaviour
 
     // ---- 약점 점(사슬로 낚아챌 자리): 옷(B-09)·횃불(B-12)·깃발(B-05) ----
     PullPoint clothPt, torchPt, flagPt; GameObject clothView, torchView, flagView;
-    PullPoint MakePoint(Vector3 at, Color col, float size, System.Action onPull, out GameObject view)
+    PullPoint MakePoint(Vector3 at, Color col, float size, System.Action onPull, out GameObject view, string model = null)
     {
-        var g = GameObject.CreatePrimitive(PrimitiveType.Sphere); Destroy(g.GetComponent<Collider>());
-        g.transform.position = Flat(at.x, at.z) + Vector3.up * 1.2f; g.transform.localScale = Vector3.one * size;
-        g.GetComponent<Renderer>().sharedMaterial = U.Unlit(col); view = g;   // 눈에 띄는 색 구슬(임시: 아트가 옷·횃불 모델을 주면 교체)
+        GameObject g = null;
+        var prefab = model != null ? Resources.Load<GameObject>("Models/Boss/" + model) : null;   // 아트 소품(옷·횃불·군기). 없으면 색 구슬 대역
+        if (prefab != null)
+        {
+            g = Instantiate(prefab, Flat(at.x, at.z), Quaternion.Euler(0f, 180f, 0f));   // glTFast 가 읽은 GLB 는 앞이 반대라 180(모델 표 yaw 와 같은 이유)
+            foreach (var c in g.GetComponentsInChildren<Collider>()) Destroy(c);
+            var lt = g.transform.Find("Light_grab_torch");   // 횃불: 빈 오브젝트 자리에 주황 점광원(아트 지정: 세기 1.6·범위 7m)
+            if (lt != null && QualityTier.Current != QualityTier.Level.Low) { var l = lt.gameObject.AddComponent<Light>(); l.type = LightType.Point; l.color = new Color(1f, 0.6f, 0.25f); l.intensity = 1.6f; l.range = 7f; l.shadows = LightShadows.None; }
+        }
+        else
+        {
+            g = GameObject.CreatePrimitive(PrimitiveType.Sphere); Destroy(g.GetComponent<Collider>());
+            g.transform.position = Flat(at.x, at.z) + Vector3.up * 1.2f; g.transform.localScale = Vector3.one * size;
+            g.GetComponent<Renderer>().sharedMaterial = U.Unlit(col);
+        }
+        view = g;
         return PullPoints.Add(at, 2.5f, onPull);
     }
     void DropPoint(ref PullPoint p, ref GameObject v) { PullPoints.Remove(p); p = null; if (v != null) Destroy(v); v = null; }
@@ -87,7 +100,7 @@ public class Act2BossArena : MonoBehaviour
             {
                 if (brain3.OnTorchPulled()) judge.Say("물속 횃불을 건졌다 — 흑월이 멈춘다");
                 DropPoint(ref torchPt, ref torchView);
-            }, out torchView);
+            }, out torchView, "boss_grab_torch_b12");
             judge.Say("물속에 횃불이 하나 떠 있다");
         }
         if (brain3.Stage12 != 3 && torchPt != null) DropPoint(ref torchPt, ref torchView);
@@ -107,7 +120,7 @@ public class Act2BossArena : MonoBehaviour
             case BossAct.FlagPlant:
                 Add(new Tele { shape = Shape.Circle, c = bp + dir * 5f, r = m.Radius, warn = 20f, mine = false }, false);
                 DropPoint(ref flagPt, ref flagView);
-                flagPt = MakePoint(bp + dir * 5f, new Color(0.9f, 0.2f, 0.2f, 1f), 0.6f, () => { brain.OnFlagPulled(); judge.Say("깃발을 뽑았다"); DropPoint(ref flagPt, ref flagView); }, out flagView);   // 견인으로 뽑으면 깃발 효과가 사라진다
+                flagPt = MakePoint(bp + dir * 5f, new Color(0.9f, 0.2f, 0.2f, 1f), 0.6f, () => { brain.OnFlagPulled(); judge.Say("깃발을 뽑았다"); DropPoint(ref flagPt, ref flagView); }, out flagView, "boss_grab_flag_b05");   // 견인으로 뽑으면 깃발 효과가 사라진다
                 break;   // 깃발 반경(병사 공격 +20%는 다음 일). 피해 없이 표식만
             case BossAct.FlagSwing: Add(new Tele { shape = Shape.Circle, c = bp, r = m.Radius, warn = m.Warn }); break;
             case BossAct.PoleCharge: Add(new Tele { shape = Shape.Bar, c = bp + dir * (m.Param * 0.5f), dir = dir, len = m.Param, wid = 2f, warn = m.Warn }); break;
@@ -146,7 +159,7 @@ public class Act2BossArena : MonoBehaviour
                     float cut = brain3.OnClothCaught(); boss.soul.Maedhim = Mathf.Max(1, (int)brain3.Maedhim);
                     if (cut > 0f) { judge.Say("옷을 낚아챘다 — 아낙이 흔들린다"); Sfx.Play("sfx.boss.mangbu.cloth.catch"); }
                     DropPoint(ref clothPt, ref clothView);
-                }, out clothView);
+                }, out clothView, "boss_grab_clothes_b09");
                 break;
             case BossAct.RopeCut: case BossAct.RopeCross:
                 for (int i = 0; i < m.Count; i++)
