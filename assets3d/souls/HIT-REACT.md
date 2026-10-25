@@ -31,3 +31,10 @@ Tendo/Pahon은 Kneel 끝 자세에서 이어지도록 만들었다(Kneel→Tendo
 
 ## 다시 만들기
 python3 tools/art3d/soul_anim.py / soul_types.py / naru_anim.py / boss_b02_b03.py / fx_hon_shards.py. 동작 정의는 hit_react.py 한 곳.
+
+
+## KneelHold (처결 대기, 새로 추가)
+무릎 꿇은 혼이 천도·파혼을 기다리는 동안 반복 재생(120f, 루프). 첫·끝 자세 = Kneel 끝 자세라 Kneel→KneelHold→Tendo/Pahon 모두 크로스페이드 없이 이어진다. 숨 쉬듯 부풀었다 가라앉고 몸을 천천히 끄덕인다. 혼 16종·형태 변형 모두에 들어 있다(wail은 팔·구슬, buried는 팔 뼈 포함).
+
+## 떠돈 시간별 색 (한눈에 구분)
+갓 죽은 = 하늘빛 흰색(#BFE8FF, 작고 불꽃 방울) → 해 넘긴 = 노란 호박색(#FFCC55, 도포 입은 키 큰 혼) → 오래된 = 갈회색(#6E5446, 뿔·갈라진 틈·붉은 속불) → 덩어리 = 보라(#9A5CFF, 겹친 구름·얼굴 셋). 그림: assets3d/previews/souls_time_colors.png
