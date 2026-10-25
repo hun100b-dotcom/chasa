@@ -86,7 +86,7 @@ def pr_jige(K_, H, add):
     """등짐장수 지게: 두 다리와 가로대, 짐 보따리 둘, 어깨끈."""
     add("Chest", K_.cyl("jigeL", 0.03, 0.03, 1.0, (0.13, 0.34, 0.5), "wood", 5, rot=(0.12, 0, 0)), K_.cyl("jigeR", 0.03, 0.03, 1.0, (-0.13, 0.34, 0.5), "wood", 5, rot=(0.12, 0, 0)),
         K_.box("jigeBar", (0.36, 0.04, 0.04), (0, 0.4, 1.0), "wood"), K_.box("bundleA", (0.5, 0.3, 0.42), (0, 0.5, 1.28), "#8A7448"), K_.box("bundleB", (0.36, 0.26, 0.3), (0, 0.5, 1.64), "#6B5E50"),
-        K_.box("bundleBand", (0.52, 0.32, 0.04), (0, 0.5, 1.28), "red"), K_.box("strapL", (0.05, 0.4, 0.05), (0.14, 0.17, 1.38), "thatch"), K_.box("strapR", (0.05, 0.4, 0.05), (-0.14, 0.17, 1.38), "thatch"))
+        K_.box("bundleBand", (0.52, 0.32, 0.04), (0, 0.5, 1.28), "#B5473F"), K_.box("strapL", (0.05, 0.4, 0.05), (0.14, 0.17, 1.38), "thatch"), K_.box("strapR", (0.05, 0.4, 0.05), (-0.14, 0.17, 1.38), "thatch"))
 
 def pr_bundle(K_, H, add):
     """봇짐: 등에 진 보자기 짐과 가슴 앞 매듭, 지팡이."""
@@ -96,8 +96,8 @@ def pr_bundle(K_, H, add):
 def pr_medicine(K_, H, add):
     """약방 딸: 왼손에 약봉지 세 개, 허리에 약주머니."""
     x, y, z = H["L"]
-    add("Hand.L", *[K_.box(f"packet{i}", (0.13, 0.1, 0.045), (x, y - 0.07, z + 0.02 + i * 0.05), "hanji", rot=(0, 0.2 * i, 0)) for i in range(3)], K_.box("string", (0.03, 0.11, 0.16), (x, y - 0.07, z + 0.07), "red"))
-    add("Hips", K_.box("pouch", (0.12, 0.07, 0.17), (0.23, -0.1, 0.92), "yellow_cloth"), K_.box("pouchCord", (0.02, 0.02, 0.1), (0.23, -0.1, 1.03), "red"), K_.box("sprig", (0.05, 0.02, 0.14), (0.27, -0.1, 1.05), "leaf", rot=(0, 0.3, 0)))
+    add("Hand.L", *[K_.box(f"packet{i}", (0.13, 0.1, 0.045), (x, y - 0.07, z + 0.02 + i * 0.05), "hanji", rot=(0, 0.2 * i, 0)) for i in range(3)], K_.box("string", (0.03, 0.11, 0.16), (x, y - 0.07, z + 0.07), "#B5473F"))
+    add("Hips", K_.box("pouch", (0.12, 0.07, 0.17), (0.23, -0.1, 0.92), "yellow_cloth"), K_.box("pouchCord", (0.02, 0.02, 0.1), (0.23, -0.1, 1.03), "#B5473F"), K_.box("sprig", (0.05, 0.02, 0.14), (0.27, -0.1, 1.05), "leaf", rot=(0, 0.3, 0)))
 
 def pr_tray(K_, H, add):
     """주막 쟁반(소반): 오른손으로 받친 상에 사발 둘과 주전자."""
@@ -113,7 +113,7 @@ def pr_candy_tray(K_, H, add):
         K_.box("strapL", (0.03, 0.03, 0.62), (0.11, -0.16, 1.2), "thatch", rot=(-0.28, 0, 0)), K_.box("strapR", (0.03, 0.03, 0.62), (-0.11, -0.16, 1.2), "thatch", rot=(-0.28, 0, 0)))
 
 def pr_book(K_, H, add):
-    x, y, z = H["L"]; add("Hand.L", K_.box("book", (0.18, 0.045, 0.25), (x, y - 0.08, z + 0.02), "#2F4A7A"), K_.box("pages", (0.16, 0.047, 0.23), (x + 0.01, y - 0.08, z + 0.02), "hanji"), K_.box("spine", (0.02, 0.05, 0.25), (x - 0.09, y - 0.08, z + 0.02), "red"))
+    x, y, z = H["L"]; add("Hand.L", K_.box("book", (0.18, 0.045, 0.25), (x, y - 0.08, z + 0.02), "#2F4A7A"), K_.box("pages", (0.16, 0.047, 0.23), (x + 0.01, y - 0.08, z + 0.02), "hanji"), K_.box("spine", (0.02, 0.05, 0.25), (x - 0.09, y - 0.08, z + 0.02), "#B5473F"))
 
 def pr_keys(K_, H, add):
     """옥지기 열쇠: 허리 고리에 걸린 큰 열쇠 뭉치."""
@@ -123,7 +123,7 @@ def pr_keys(K_, H, add):
 def pr_gonjang(K_, H, add):
     """사령: 곤장(납작한 날이 달린 긴 몽둥이)과 허리의 붉은 오라줄."""
     x, y, z = H["R"]
-    add("Hand.R", K_.cyl("shaft", 0.028, 0.025, 1.25, (x, y - 0.03, 0.3), "wood", 5), K_.box("blade", (0.13, 0.035, 0.5), (x, y - 0.03, 0.22), "wood"), K_.box("band", (0.07, 0.07, 0.05), (x, y - 0.03, 1.1), "red"))
+    add("Hand.R", K_.cyl("shaft", 0.028, 0.025, 1.25, (x, y - 0.03, 0.3), "wood", 5), K_.box("blade", (0.13, 0.035, 0.5), (x, y - 0.03, 0.22), "wood"), K_.box("band", (0.07, 0.07, 0.05), (x, y - 0.03, 1.1), "#B5473F"))
     add("Hips", *ring_xz(K_, "rope", (-0.2, -0.14, 0.88), 0.09, 8, (0.06, 0.03, 0.03), "#B5473F"))
 
 def pr_scar(K_, H, add):
@@ -171,7 +171,7 @@ def build_body(s):
         add("Hips", K_.cyl("belt", 0.215 * w, 0.215 * w, 0.07, (0, 0, 0.99), sash, 8), K_.box("beltTail", (0.07, 0.03, 0.3), (0.08, -0.22, 0.86), sash, rot=(0, 0.1, 0)))
     # 윗옷
     if sex == "f":
-        add("Chest", K_.cyl("jeogori", 0.2, 0.17, 0.34, (0, 0, 1.12), top, 8), K_.box("goreum", (0.045, 0.02, 0.5), (0.04, -0.19, 1.2), s.get("ribbon", "red")), K_.box("goreum2", (0.045, 0.02, 0.42), (0.1, -0.19, 1.2), s.get("ribbon", "red"), rot=(0, -0.1, 0)))
+        add("Chest", K_.cyl("jeogori", 0.2, 0.17, 0.34, (0, 0, 1.12), top, 8), K_.box("goreum", (0.045, 0.02, 0.5), (0.04, -0.19, 1.2), s.get("ribbon", "#B5473F")), K_.box("goreum2", (0.045, 0.02, 0.42), (0.1, -0.19, 1.2), s.get("ribbon", "#B5473F"), rot=(0, -0.1, 0)))
     else:
         add("Chest", K_.cyl("jeogori", 0.215 * w, 0.185 * w, 0.46, (0, 0, 1.0), top, 8))
     # 깃(동정): 가슴 가운데 틈이 검게 비면 보기 싫어서, 안쪽에 속저고리(흰 판)를 한 겹 깔고 깃은 짧게
@@ -197,13 +197,13 @@ def build_body(s):
     if hs != "none": add("Head", K_.sph("hairCap", hr * 1.05, (0, hy + 0.025, hc[2] + 0.04), hc_col, 7, 4, (1, 1, 0.8)))
     if hs == "topknot": add("Head", K_.sph("knot", 0.055, (0, hy + 0.02, hc[2] + 0.17), hc_col, 5, 4), K_.box("pin", (0.01, 0.01, 0.1), (0, hy + 0.02, hc[2] + 0.14), "gold"))
     if hs == "bun": add("Head", K_.sph("bun", 0.065, (0, hy + 0.15, hc[2] - 0.03), hc_col, 6, 4), K_.box("binyeo", (0.22, 0.015, 0.015), (0, hy + 0.17, hc[2] - 0.03), "gold"))
-    if hs == "braid": add("Head", K_.box("braid", (0.065, 0.06, 0.4), (0, hy + 0.2, hc[2] - 0.3), hc_col), K_.box("daenggi", (0.075, 0.065, 0.1), (0, hy + 0.2, hc[2] - 0.52), s.get("daenggi", "red")))
+    if hs == "braid": add("Head", K_.box("braid", (0.065, 0.06, 0.4), (0, hy + 0.2, hc[2] - 0.3), hc_col), K_.box("daenggi", (0.075, 0.065, 0.1), (0, hy + 0.2, hc[2] - 0.52), s.get("daenggi", "#B5473F")))
     if hs == "tuft": add("Head", K_.sph("tuft", 0.04, (0, hy + 0.0, hc[2] + 0.15), hc_col, 5, 3))
     if s.get("beard"): add("Head", K_.sph("beard", 0.1, (0, hy - 0.06, hc[2] - 0.13), s["beard"], 6, 4, (0.85, 0.7, 1.1)), K_.box("brow", (0.18, 0.02, 0.025), (0, hy - hr + 0.0, hc[2] + 0.045), s["beard"]))
     # 모자·수건
     ht = s.get("hat")
     if ht: typ, col = ht
-    if ht and typ == "gat": add("Head", K_.cyl("brim", 0.32, 0.32, 0.02, (0, 0, 1.69), col, 12), K_.cyl("crown", 0.13, 0.1, 0.22, (0, 0, 1.7), col, 10), K_.box("strapL", (0.015, 0.015, 0.2), (0.1, -0.1, 1.55), "red"), K_.box("strapR", (0.015, 0.015, 0.2), (-0.1, -0.1, 1.55), "red"))
+    if ht and typ == "gat": add("Head", K_.cyl("brim", 0.32, 0.32, 0.02, (0, 0, 1.69), col, 12), K_.cyl("crown", 0.13, 0.1, 0.22, (0, 0, 1.7), col, 10), K_.box("strapL", (0.015, 0.015, 0.2), (0.1, -0.1, 1.55), "#B5473F"), K_.box("strapR", (0.015, 0.015, 0.2), (-0.1, -0.1, 1.55), "#B5473F"))
     if ht and typ == "paeraengi": add("Head", K_.cyl("brim", 0.3, 0.3, 0.025, (0, 0, 1.69), col, 10), K_.cyl("crown", 0.115, 0.095, 0.11, (0, 0, 1.7), col, 8), K_.box("string", (0.15, 0.015, 0.015), (0, -0.12, 1.6), "thatch"))
     if ht and typ == "jeollip": add("Head", K_.cyl("brim", 0.21, 0.175, 0.03, (0, 0, 1.69), "hat", 10), K_.cyl("crown", 0.125, 0.1, 0.14, (0, 0, 1.7), "hat", 8), K_.cyl("band", 0.13, 0.13, 0.03, (0, 0, 1.71), col, 8), K_.cyl("knob", 0.03, 0.03, 0.07, (0, 0, 1.84), col, 6), K_.box("plume", (0.025, 0.025, 0.26), (0.07, 0, 1.97), col, rot=(0, 0.35, 0)))
     if ht and typ == "headcloth": add("Head", K_.cyl("cloth", hr * 1.07, hr * 1.07, 0.06, (0, hy, hc[2] + 0.05), col, 8), K_.box("knot", (0.07, 0.05, 0.08), (0, hy + 0.15, hc[2] + 0.07), col), K_.box("tail", (0.04, 0.02, 0.18), (0.04, hy + 0.17, hc[2] - 0.04), col, rot=(0, 0.2, 0)))
@@ -250,9 +250,9 @@ HAIR = "#14141F"; WHITE = "#D8D0C0"; GREY = "#8E8A84"
 def N(id, name, tmpl, **kw): return dict(id=id, name=name, tmpl=tmpl, **kw)
 SPECS = [
  N("N101", "당할미", "노인 여자(무녀)", sex="f", k=0.93, skin="old_skin", top="hanji", bottom="#3E5A8A", haircol=WHITE, hair="bun", hunch=True, props=["fan_broken", "cross_cloth"], note="서낭당 무녀. 오방색 천과 부러진 부채"),
- N("N102", "순임", "처녀(일하는 차림)", sex="f", k=0.9, skin="#C49A78", top="#C8B68A", bottom="#7C6A55", hem=0.52, pants="#6E7B5B", haircol=HAIR, hair="braid", daenggi="red", props=["rope_coil"], note="나루 영감 손녀. 줄배 줄 타래"),
+ N("N102", "순임", "처녀(일하는 차림)", sex="f", k=0.9, skin="#C49A78", top="#C8B68A", bottom="#7C6A55", hem=0.52, pants="#6E7B5B", haircol=HAIR, hair="braid", daenggi="#B5473F", props=["rope_coil"], note="나루 영감 손녀. 줄배 줄 타래"),
  N("N103", "윤 소사네 아들", "청년(도포)", sex="m", k=0.98, skin="skin", top="hanji", bottom="hanji", robe="#E8E1D0", sash="#586080", haircol=HAIR, hair="topknot", hat=("gat", "hat"), props=["incense"], note="제사 지내는 아들. 흰 도포·갓·향로"),
- N("N104a", "복남", "사내아이", sex="m", k=0.75, child=True, skin="skin", top="#5C7FB0", bottom="#7C6A55", sash="red", haircol=HAIR, hair="topknot", props=["candy_stick"], note="노래놀이 아이 1"),
+ N("N104a", "복남", "사내아이", sex="m", k=0.75, child=True, skin="skin", top="#5C7FB0", bottom="#7C6A55", sash="#B5473F", haircol=HAIR, hair="topknot", props=["candy_stick"], note="노래놀이 아이 1"),
  N("N104b", "언년이", "계집아이", sex="f", k=0.7, child=True, skin="skin", top="#E8C15A", bottom="#B5473F", ribbon="hanji", haircol=HAIR, hair="braid", daenggi="#3E64B0", note="노래놀이 아이 2"),
  N("N104c", "삼돌이", "어린 사내아이", sex="m", k=0.6, child=True, skin="skin", top="#8C9A78", bottom="#6B5E50", haircol=HAIR, hair="tuft", note="노래놀이 아이 3(가장 어림)"),
  N("N105", "갑술 영감", "노인 남자(삼베)", sex="m", k=0.95, skin="old_skin", top="#D9D2BE", bottom="#D9D2BE", robe="#D9D2BE", haircol=WHITE, hair="none", beard=WHITE, hunch=True, hat=("headcloth", "#F3E7D3"), props=["bell"], note="상여 선소리꾼. 삼베옷·흰 수염·요령"),
@@ -260,11 +260,11 @@ SPECS = [
  N("N107", "간난이", "아낙(젊음)", sex="f", k=0.93, skin="skin", top="#E6B8B0", bottom="#4F6FA8", ribbon="hanji", haircol=HAIR, hair="bun", props=["bucket"], note="우물가 아낙. 두레박"),
  N("N108", "덕만", "청년(소장수 아들)", sex="m", k=1.0, skin="#C49A78", top="#9A9A8C", bottom="#4A4A52", sash="#7A5C45", haircol=HAIR, hair="topknot", hat=("headcloth", "#3E64B0"), props=["scar"], note="왼 눈썹 흉터(+X쪽)와 고삐"),
  N("N109", "용득", "대장장이(건장)", sex="m", k=1.0, wide=1.15, skin="#C49A78", top="#7C6A55", bottom="#3A3A44", sash="#2A2A38", rolled=True, haircol=HAIR, hair="topknot", hat=("headcloth", "#3E64B0"), props=["smith"], note="가죽 앞치마·망치·검댕"),
- N("N110a", "등짐장수(득보)", "등짐장수", sex="m", k=1.0, skin="#C49A78", top="#8A6B4A", bottom="#5A4630", sash="red", haircol=HAIR, hair="topknot", hat=("paeraengi", "#B4A66A"), props=["jige"], note="지게와 보따리 둘, 패랭이"),
+ N("N110a", "등짐장수(득보)", "등짐장수", sex="m", k=1.0, skin="#C49A78", top="#8A6B4A", bottom="#5A4630", sash="#B5473F", haircol=HAIR, hair="topknot", hat=("paeraengi", "#B4A66A"), props=["jige"], note="지게와 보따리 둘, 패랭이"),
  N("N110b", "등짐장수(동무)", "등짐장수", sex="m", k=0.97, skin="#C49A78", top="#6E7B5B", bottom="#4A4A52", sash="#E8C15A", haircol=HAIR, hair="topknot", hat=("paeraengi", "#8A7448"), props=["bundle"], note="봇짐과 지팡이, 패랭이"),
- N("N201", "득보", "등짐장수", same_as="N110a", sex="m", k=1.0, skin="#C49A78", top="#8A6B4A", bottom="#5A4630", sash="red", haircol=HAIR, hair="topknot", hat=("paeraengi", "#B4A66A"), props=["jige"], note="N-110 등짐장수(득보)와 같은 사람·같은 모양"),
+ N("N201", "득보", "등짐장수", same_as="N110a", sex="m", k=1.0, skin="#C49A78", top="#8A6B4A", bottom="#5A4630", sash="#B5473F", haircol=HAIR, hair="topknot", hat=("paeraengi", "#B4A66A"), props=["jige"], note="N-110 등짐장수(득보)와 같은 사람·같은 모양"),
  N("N202", "은실", "처녀(약방)", sex="f", k=0.93, skin="skin", top="#9CC9A0", bottom="#E8E1D0", ribbon="#E85C41" if False else "#B5473F", haircol=HAIR, hair="braid", daenggi="#E8C15A", props=["medicine"], note="약봉지와 약주머니"),
- N("N203", "섭섭이", "처녀(주막)", sex="f", k=0.93, skin="skin", top="#D9788A", bottom="#3E64B0", ribbon="hanji", haircol=HAIR, hair="braid", daenggi="red", props=["tray"], note="주막 쟁반(사발·주전자)"),
+ N("N203", "섭섭이", "처녀(주막)", sex="f", k=0.93, skin="skin", top="#D9788A", bottom="#3E64B0", ribbon="hanji", haircol=HAIR, hair="braid", daenggi="#B5473F", props=["tray"], note="주막 쟁반(사발·주전자)"),
  N("N204a", "꼭지", "사내아이(장터)", sex="m", k=0.72, child=True, skin="#C49A78", top="#C8A24A", bottom="#6B5E50", sash="#586080", haircol=HAIR, hair="topknot", props=["candy_stick"], note="엿 막대"),
  N("N204b", "차돌이", "사내아이(장터)", sex="m", k=0.7, child=True, skin="#C49A78", top="#7E8DAE", bottom="#5A4630", haircol=HAIR, hair="short", props=["candy_tray"], note="목에 건 엿판"),
  N("N205", "노경수 손주", "도령(아이)", sex="m", k=0.7, child=True, skin="skin", top="#6F5BA8", bottom="#3A3F52", sash="#E8C15A", haircol=HAIR, hair="none", hat=("bokgeon", "hat"), props=["book"], note="아전 집 도령. 복건과 책"),

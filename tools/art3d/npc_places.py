@@ -30,6 +30,22 @@ OV = {
  "역병막 어귀": (42.0, 452.0, (34, 469), "격리 움막 줄 동쪽 길목(약탕 화로 곁). 제안(0,-8)은 움막과 겹쳐 옮김"),
  "폐당집 굿상": (580, 531.5, (580, 535), "당집(580,535) 앞마루 남쪽. 폐당집 입구가 남쪽"),
 }
+# 첫 세션 이름혼 6명(first_session.json): 명부 몫 또는 명부 밖으로 나오는 이름 있는 혼의 자리
+SOULS = {
+ "S-001 박돌쇠": (215.6, 62.2, (219, 62), "fresh", "갈림 셋: 빗장 지른 대장간 문 앞. 대장간(219,62)이 서쪽 문이라 문 앞은 x 약 216"),
+ "S-002 윤 소사": (190.4, 60.8, (187.5, 57), "fresh", "마을 안(명부 밖). 윤 소사네 마당 제사상(191.2,58) 곁. 방금 천도했다면 제사상 앞에 잠깐 서 있다 흩어짐"),
+ "S-003 연이": (202.0, 56.6, (200.2, 54.5), "fresh", "마을 안(명부 밖). 우물(200.2,54.5) 동쪽 길, 동쪽 초가 문 앞"),
+ "S-006 장 둑지기": (302.0, 112.6, (290, 116), "year", "보릿들 둑 갈림 둘 자리(290,113)에서 동쪽 12m, 길 북쪽 풀둑. 해 넘긴 혼"),
+ "S-010 곽 뱃꾼": (381.5, 293.5, (404, 288), "year", "물막이 골: 큰 길에서 나루로 가는 중간(나루까지 약 23m). 해 넘긴 혼, 명부 몫"),
+ "S-011 방물장수 막례": (397.8, 304.0, (404, 296), "year", "보스 진입 직전 나루 북서쪽 풀밭(명부 밖, 인 없음)"),
+}
+def souls(pts):
+    out = {}
+    for name, (x, y, face, age, memo) in SOULS.items():
+        near = min((math.hypot(x - px, y - py), k) for px, py, k in pts)
+        out[name] = {"x": x, "y": y, "face_deg": round(math.degrees(math.atan2(face[1] - y, face[0] - x)) % 360), "age": age, "memo": memo, "nearest_prop": {"name": near[1], "dist_m": round(near[0], 1)}}
+    return out
+
 def build():
     out = {}; props = L["props"]; st = L["structures"]
     pts = [(p["x"], p["y"], p["prop"]) for p in props] + [(s["x"], s["y"], s.get("piece") or s.get("id")) for s in st]
@@ -46,5 +62,6 @@ if __name__ == "__main__":
     o = build()
     json.dump({"units": "m", "axes": "x=동, y=북(필드 절대). 유니티는 (x, 높이, y)", "face_deg": "0=동쪽, 90=북쪽(반시계). 그 자리 NPC가 바라볼 방향", "anchors": {k: list(v) for k, v in ANCHOR.items()},
                "note": "서사 제안(구역 중심 기준)을 필드 지도에 맞춰 확정한 값. needs_new는 아직 모델이 없는 건물·소품. 시장·동헌·역병막은 2막 구역이라 건물이 없고 터 좌표만 잡았다(필드 서쪽 둑, x 0~72).",
-               "needs_new": ["정자(마을 어귀)", "대장간 건물(초가+모루+풀무)", "주막 건물(터만 있음)", "장터 약방·주막·엿판 자리 건물/좌판", "동헌 터(탄 서안·숯 기둥)·옥 돌담·옥문·객사"], "places": o}, open(os.path.join(A3, "layouts", "npc_places_act1.json"), "w"), ensure_ascii=False, indent=1)
+               "needs_new": ["정자(마을 어귀)", "대장간 건물(초가+모루+풀무)", "주막 건물(터만 있음)", "장터 약방·주막·엿판 자리 건물/좌판", "동헌 터(탄 서안·숯 기둥)·옥 돌담·옥문·객사"], "named_souls_first_session": souls([(p["x"], p["y"], p["prop"]) for p in L["props"]] + [(q["x"], q["y"], q.get("piece") or q.get("id")) for q in L["structures"]]), "places": o}, open(os.path.join(A3, "layouts", "npc_places_act1.json"), "w"), ensure_ascii=False, indent=1)
+    for k, v in json.load(open(os.path.join(A3, "layouts", "npc_places_act1.json")))["named_souls_first_session"].items(): print("혼", k, v["x"], v["y"], v["nearest_prop"])
     for k, v in o.items(): print(f"{k:16s} {v['zone']:8s} ({v['x']:6},{v['y']:6}) 가까운 {v['nearest_prop']['name']} {v['nearest_prop']['dist_m']}m {'*' if v['moved_from_proposal'] else ''}")

@@ -111,7 +111,7 @@ def yakjang():
     dx = W / 4 - 0.005; dz = 0.09 + dh * 0.5
     drawer = [box("front", (W / 2 - 0.04, 0.03, dh - 0.03), (0, 0, 0), "wood"), box("knob", (0.04, 0.03, 0.04), (0, -0.025, 0), "gold"), box("box", (W / 2 - 0.08, D - 0.06, dh - 0.08), (0, 0.17, 0), "wood_dark")]
     for o in drawer: o.location += Vector((dx, -D / 2 + 0.015, dz))
-    glow = [box("glow", (W / 2 - 0.02, 0.01, dh - 0.01), (dx, -D / 2 - 0.012, dz), mat("#F0D78A", 1.5))]
+    glow = [box("glow", (W / 2 - 0.02, 0.01, dh - 0.01), (dx, -D / 2 - 0.012, dz), mat("#6FD6C0", 1.5))]
     return {"parts": [("Body", body), ("Drawer_BL", drawer), ("Drawer_BL_glow", glow)]}
 
 def tanggeon():
