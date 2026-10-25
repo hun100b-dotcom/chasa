@@ -99,7 +99,7 @@ public class UiRoot : MonoBehaviour
         // 장부·밤 글자: 배경 위에서도 읽히게 짙은 반투명 판 위에 둔다
         var texts = new VisualElement { pickingMode = PickingMode.Ignore }; texts.style.marginTop = 6; Panel(texts); note.Add(texts);
         ledger = Line(texts, 15); night = Line(texts, 15);
-        BuildGuide(); BuildBossArea(); BuildCards(); BuildToasts(); BuildStamp(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
+        BuildGuide(); BuildBossArea(); BuildCards(); BuildToasts(); BuildStamp(); BuildDosulCards(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
     }
 
     // ---- 아트팀 UI 그림(Resources/Sprites/ui). 없으면 null 이라 부르는 쪽이 옛 색 도형으로 대신 그린다(그림 없이도 돈다)
@@ -160,6 +160,62 @@ public class UiRoot : MonoBehaviour
         float a = Hud.StampAge, k = Mathf.Clamp01(a / 0.15f);               // 처음 0.15초에 크게→제 크기로 쾅
         stampBox.style.scale = new Scale(Vector2.one * Mathf.Lerp(1.7f, 1f, k));
         stampBox.style.opacity = Mathf.Clamp01((Balance.RANKUP_STAMP_SEC - a) / 0.25f);   // 마지막 0.25초에 사라짐
+    }
+
+    // ---- 첫 도술 카드: 한지 빛깔 카드 세 장 중 하나를 고른다(처음 10분 M9). 추천·별점 없음, 같은 크기 ----
+    VisualElement cardsBox, cardsRow, rerollBtn; Label cardsTitle, rerollLabel; string lastCards;
+    VisualElement[] cardEl = new VisualElement[3]; Label[] cardMark = new Label[3], cardName = new Label[3], cardDesc = new Label[3], cardKey = new Label[3];
+    void BuildDosulCards()
+    {
+        cardsBox = new VisualElement { name = "dosul-cards", pickingMode = PickingMode.Position };   // 화면 전체를 덮어 뒤 클릭을 막는다
+        cardsBox.style.position = Position.Absolute; cardsBox.style.left = 0; cardsBox.style.right = 0; cardsBox.style.top = 0; cardsBox.style.bottom = 0;
+        cardsBox.style.backgroundColor = new Color(0f, 0f, 0f, 0.62f); cardsBox.style.alignItems = Align.Center; cardsBox.style.justifyContent = Justify.Center;
+        cardsBox.style.display = DisplayStyle.None;
+        cardsTitle = Line(cardsBox, 26); cardsTitle.style.marginBottom = 18;
+        cardsRow = new VisualElement { pickingMode = PickingMode.Ignore }; cardsRow.style.flexDirection = FlexDirection.Row; cardsBox.Add(cardsRow);
+        for (int i = 0; i < 3; i++)
+        {
+            int idx = i;
+            var c = new VisualElement { pickingMode = PickingMode.Position };
+            float w = Ko.TouchUI ? 190f : 240f, h = Ko.TouchUI ? 260f : 330f;   // 명세 320x440 의 3/4(패널 단위)
+            c.style.width = w; c.style.height = h; c.style.marginLeft = 10; c.style.marginRight = 10; c.style.alignItems = Align.Center;
+            c.style.backgroundColor = new Color(0.90f, 0.86f, 0.74f, 0.97f);   // 한지
+            var edge = new Color(0.10f, 0.08f, 0.07f, 1f);
+            c.style.borderTopWidth = 4; c.style.borderBottomWidth = 4; c.style.borderLeftWidth = 4; c.style.borderRightWidth = 4;
+            c.style.borderTopColor = edge; c.style.borderBottomColor = edge; c.style.borderLeftColor = edge; c.style.borderRightColor = edge;   // 먹 테두리(등급 테두리 없음)
+            c.style.borderTopLeftRadius = 6; c.style.borderBottomLeftRadius = 6; c.style.borderTopRightRadius = 6; c.style.borderBottomRightRadius = 6;
+            c.style.paddingTop = 14; c.style.paddingLeft = 12; c.style.paddingRight = 12;
+            cardMark[i] = Line(c, 54); cardMark[i].style.color = new Color(0.12f, 0.09f, 0.08f);
+            cardName[i] = Line(c, 22); cardName[i].style.color = new Color(0.12f, 0.09f, 0.08f); cardName[i].style.marginTop = 6; cardName[i].style.unityFontStyleAndWeight = FontStyle.Bold;
+            cardDesc[i] = Line(c, 15); cardDesc[i].style.color = new Color(0.2f, 0.17f, 0.14f); cardDesc[i].style.whiteSpace = WhiteSpace.Normal; cardDesc[i].style.marginTop = 10; cardDesc[i].style.unityTextAlign = TextAnchor.UpperCenter;
+            cardKey[i] = Line(c, 16); cardKey[i].style.color = new Color(0.4f, 0.1f, 0.08f); cardKey[i].style.position = Position.Absolute; cardKey[i].style.bottom = 8; cardKey[i].text = (i + 1).ToString();
+            c.RegisterCallback<ClickEvent>(ev => { if (Hud.CardPick != null) Hud.CardPick(idx); });
+            cardEl[i] = c; cardsRow.Add(c);
+        }
+        rerollBtn = new VisualElement { pickingMode = PickingMode.Position }; Panel(rerollBtn); rerollBtn.style.marginTop = 18;
+        rerollLabel = Line(rerollBtn, 18); rerollBtn.RegisterCallback<ClickEvent>(ev => { if (Hud.CardRerollNow != null) Hud.CardRerollNow(); });
+        cardsBox.Add(rerollBtn);
+        root.Add(cardsBox);
+    }
+    void RefreshDosulCards()
+    {
+        if (cardsBox == null) return;
+        bool on = Hud.CardNames != null;
+        cardsBox.style.display = on ? DisplayStyle.Flex : DisplayStyle.None;
+        if (!on) { lastCards = null; return; }
+        string key = string.Join("|", Hud.CardNames) + Hud.CardReroll;
+        if (key == lastCards) return;
+        lastCards = key;
+        cardsTitle.text = Hud.CardRound == 0 ? "첫 도술 — 하나를 고른다" : "도술 — 하나를 고른다";
+        for (int i = 0; i < 3; i++)
+        {
+            bool has = i < Hud.CardNames.Length;
+            cardEl[i].style.display = has ? DisplayStyle.Flex : DisplayStyle.None;
+            if (!has) continue;
+            cardMark[i].text = Hud.CardMarks[i]; cardName[i].text = Hud.CardNames[i]; cardDesc[i].text = Hud.CardDescs[i];
+        }
+        rerollBtn.style.display = string.IsNullOrEmpty(Hud.CardReroll) ? DisplayStyle.None : DisplayStyle.Flex;
+        rerollLabel.text = Hud.CardReroll ?? "";
     }
 
     /// <summary>아래쪽 기술 줄: 가운데 아래에 무기 / E 천도 / R 파혼 / Q 끌기 / 피하기 충전 칸</summary>
@@ -446,7 +502,7 @@ public class UiRoot : MonoBehaviour
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshGuide(); RefreshBossArea();
         if (cardRow != null) cardRow.style.display = Hud.JudgeCard && !Ko.TouchUI ? DisplayStyle.Flex : DisplayStyle.None;   // 폰은 처결 버튼 자체가 카드 역할
-        RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshStamp(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
+        RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshStamp(); RefreshDosulCards(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         if (hpFill != null)
         {
             hpFill.style.width = Length.Percent(Hud.HpRatio * 100f);

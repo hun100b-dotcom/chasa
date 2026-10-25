@@ -2439,5 +2439,37 @@ public class CoreTests
         Assert.IsFalse(GameSettings.Parse("1,0.8,1,1").ReduceFlash, "옛 저장(4칸)은 꺼짐");
     }
 
+    [Test]
+    public void 도술카드_첫판은_고정_세장_갈래하나씩()
+    {
+        var g = new GrowthState(); g.Learned.Clear(); g.ActiveBar.Clear();
+        var o = DosulCards.Offer(0, g, () => 0.3f);
+        CollectionAssert.AreEquivalent(new[] { "붙잡아 부르기", "휘감기", "터뜨리기" }, o);
+    }
+
+    [Test]
+    public void 도술카드_둘째판부터_갈래마다_하나_배울수있는것만()
+    {
+        var g = new GrowthState(); g.Learned.Clear(); g.ActiveBar.Clear(); g.SkillPointsEarned = 5;
+        var rnd = new System.Random(7);
+        for (int round = 1; round < DosulCards.Rounds; round++)
+        {
+            var o = DosulCards.Offer(round, g, () => (float)rnd.NextDouble());
+            Assert.AreEqual(3, o.Count, "판 " + round);
+            var br = new System.Collections.Generic.HashSet<Branch>();
+            foreach (var n in o) { Assert.IsTrue(g.CanLearn(n), n); var nd = SkillTree.Find(n); Assert.IsFalse(nd.Deep); br.Add(nd.Branch); }
+            Assert.AreEqual(3, br.Count, "갈래 하나씩");
+            Assert.IsTrue(g.Learn(o[0]));
+        }
+    }
+
+    [Test]
+    public void 도술카드_얼룩점수3마다_도술점수1()
+    {
+        var g = new GrowthState(); g.StainPointsEarned = 7;
+        Assert.AreEqual(2, DosulCards.ConvertStain(g));
+        Assert.AreEqual(2, g.SkillPointsEarned); Assert.AreEqual(1, g.StainPointsFree);
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

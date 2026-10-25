@@ -68,6 +68,7 @@ public class JudgeSystem : MonoBehaviour
         shrineView.transform.localScale = new Vector3(Balance.SHRINE_RADIUS * 2f, 0.01f, Balance.SHRINE_RADIUS * 2f);
         panel = gameObject.AddComponent<CharacterPanel>();   // C 키 캐릭터 창(장비·도술·능력치)
         panel.judge = this;
+        if (FieldRules.On) { cardsMode = true; growth.Learned.Clear(); growth.ActiveBar.Clear(); }   // 본 게임: 도술은 카드로 하나씩 얻는다(처음 10분 M9). 저장을 불러오면 그 기록이 덮어쓴다
         lo.growth = growth;   // 성장(능력치·패시브)이 전투 수치 합계에 얹히도록 연결
         RefreshGrowth();
         enemies.onPlayerHit = OnPlayerHit;
@@ -270,6 +271,62 @@ public class JudgeSystem : MonoBehaviour
         ui.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank);
         ui.Hud.StampTitle = "품계 " + growth.Rank; ui.Hud.StampSub = Ko.RankTitle(growth.Rank); ui.Hud.StampAge = 0f;
         flashColor = new Color(0.05f, 0.02f, 0.02f); flashA = 0.35f;   // 화면이 살짝 어두워진다
+        cardDelay = Mathf.Max(cardDelay, 1.6f);   // 인이 찍히는 걸 본 뒤에 도술 카드가 뜬다
+    }
+
+    // ---- 첫 도술 카드(처음 10분 M9): 점수가 생기고 싸움이 잠잠하면 카드 세 장이 뜬다. 1·2·3 또는 클릭, 다시 뽑기 R ----
+    bool cardsMode, cardPicksLoaded, cardRerolled; int cardPicks; float cardDelay; List<string> cardList;
+    readonly HashSet<string> cardSeen = new HashSet<string>();
+    void TickCards(float dt)
+    {
+        if (ui == null || DosulCards.Open) return;
+        if (ui.Hud.CardPick == null) { ui.Hud.CardPick = PickCard; ui.Hud.CardRerollNow = RerollCards; }
+        if (!cardsMode || cardPicks >= DosulCards.Rounds) return;
+        DosulCards.ConvertStain(growth);   // 얼룩 점수 3마다 도술 점수 1(처음 다섯 판만)
+        if (growth.SkillPointsFree <= 0) return;
+        if (Casting || cuts.Active || inDay || night.Over || ledger.Dead || CharacterPanel.Open || SettingsPanel.Open || FightLeft(null) > 0) return;
+        if (cardDelay > 0f) { cardDelay -= dt; return; }
+        cardRerolled = false; OfferCards();
+    }
+    void OfferCards()
+    {
+        cardList = DosulCards.Offer(cardPicks, growth, () => Random.value, cardSeen);
+        if (cardList.Count == 0) { cardPicks = DosulCards.Rounds; return; }   // 고를 게 없으면 카드는 끝(도술 창으로)
+        var h = ui.Hud; int n = cardList.Count;
+        h.CardNames = new string[n]; h.CardMarks = new string[n]; h.CardDescs = new string[n]; h.CardRound = cardPicks;
+        for (int i = 0; i < n; i++)
+        {
+            var nd = SkillTree.Find(cardList[i]);
+            h.CardNames[i] = nd.Name + (growth.LevelOf(nd.Name) > 0 ? " +1" : "");
+            h.CardMarks[i] = DosulCards.Mark(nd.Branch);
+            h.CardDescs[i] = SkillTree.BranchName(nd.Branch) + " · " + (nd.Active ? "액티브" : "패시브") + "\n" + nd.Desc;
+        }
+        h.CardReroll = cardPicks == 0 || cardRerolled ? null : "엽전 " + DosulCards.RerollCoin + " · 다시 뽑기 (R)" + (ledger.Coin < DosulCards.RerollCoin ? " — 엽전이 모자라다" : "");
+        DosulCards.Open = true; Sfx.Play("sfx.ui.tab");
+    }
+    /// <summary>카드를 골랐다(1~3번 칸). 고른 도술을 배우고 카드는 닫힌다</summary>
+    public void PickCard(int i)
+    {
+        if (!DosulCards.Open || cardList == null || i < 0 || i >= cardList.Count) return;
+        string name = cardList[i];
+        foreach (var n in cardList) cardSeen.Add(n);
+        growth.Learn(name); cardPicks++;
+        RefreshGrowth();
+        ui.Hud.CardNames = null; DosulCards.Open = false; cardDelay = 0.8f;
+        Sfx.Play("sfx.ui.confirm"); ui.Hud.Toasts.Add("도술 — " + name);
+    }
+    public void RerollCards()
+    {
+        if (!DosulCards.Open || cardPicks == 0 || cardRerolled) return;
+        if (ledger.Coin < DosulCards.RerollCoin) { Sfx.Play("sfx.ui.deny"); return; }
+        ledger.Coin -= DosulCards.RerollCoin; cardRerolled = true;
+        ui.Hud.CardNames = null; OfferCards();
+    }
+    /// <summary>카드가 떠 있는 동안 세계는 멈춘다. 키 입력만 GameMain 이 여기로 넘긴다</summary>
+    public void CardInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) PickCard(0); else if (Input.GetKeyDown(KeyCode.Alpha2)) PickCard(1); else if (Input.GetKeyDown(KeyCode.Alpha3)) PickCard(2);
+        else if (Input.GetKeyDown(KeyCode.R)) RerollCards();
     }
 
     // ---- 거센 혼(첫 강적, 처음 10분 M10): 박돌쇠 처결 뒤 이름혼 자리에서 60m 멀어지거나 7분이 되면 보릿들 둑길 들머리에 한 번 ----
@@ -1043,6 +1100,7 @@ public class JudgeSystem : MonoBehaviour
         s.X = player.Pos.x; s.Z = player.Pos.z; s.ClockDay = clock.Day; s.ClockMinutes = clock.Minutes;
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
+        s.Picked.Add("cp:" + cardPicks);   // 도술 카드 몇 번 골랐나
         if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
         foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); foreach (var bi in bossDoneIds) s.Picked.Add("bd:" + bi); if (act2DoneDay >= 0) s.Picked.Add("a2d:" + act2DoneDay); if (allDoneDay >= 0) s.Picked.Add("ad:" + allDoneDay + ":" + (allDoneAtNight ? 1 : 0)); if (enterDay >= 0) s.Picked.Add("ed:" + enterDay); if (heukwolSpawned) s.Picked.Add("hks:1"); if (gateAnnounced) s.Picked.Add("ga:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
         if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
@@ -1066,9 +1124,11 @@ public class JudgeSystem : MonoBehaviour
         clock.Set(s.ClockDay, s.ClockMinutes);
         funeralPending.Clear(); funeralDone.Clear(); funeralNoneShown.Clear(); funeralBorn.Clear(); parkUnjudged = false; dogHome = false; funeralDay = -1;
         bossDoneIds.Clear(); allDoneDay = -1; allDoneAtNight = false; enterDay = -1; act2DoneDay = -1; gate3Announced = false; heukwolSpawned = false; heukwolRetreated = false; gateAnnounced = false; heukwolWarned = false; heukwol = null;
+        cardPicks = 0; cardPicksLoaded = false;
         foreach (var pk in s.Picked)
         {
-            if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
+            if (pk.StartsWith("cp:")) { int.TryParse(pk.Substring(3), out cardPicks); cardPicksLoaded = true; }
+            else if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
             else if (pk == "pu:1") parkUnjudged = true;
             else if (pk == "dh:1") dogHome = true;
             else if (pk.StartsWith("bd:")) { int bi; if (int.TryParse(pk.Substring(3), out bi)) bossDoneIds.Add(bi); }
@@ -1082,6 +1142,8 @@ public class JudgeSystem : MonoBehaviour
             else if (pk.StartsWith("fday:")) int.TryParse(pk.Substring(5), out funeralDay);
             else if (pk.StartsWith("fp:")) { int c = pk.LastIndexOf(':'); int o; if (c > 3 && int.TryParse(pk.Substring(c + 1), out o)) funeralPending[pk.Substring(3, c - 3)] = o; }
         }
+        if (!cardPicksLoaded && growth.Learned.Count > 0) cardPicks = DosulCards.Rounds;   // 카드 이전의 옛 저장: 이미 도술이 있으니 카드는 건너뛴다
+        DosulCards.Open = false; if (ui != null) ui.Hud.CardNames = null;
         if (npcs != null) { npcs.JesaSeen.Clear(); foreach (var pk in s.Picked) if (pk.StartsWith("jesa:")) npcs.JesaSeen.Add(pk.Substring(5)); }
         if (interactables != null) { interactables.Restore(s.Picked, s.HerbTaken, s.Herbs); foreach (var sp in interactSpots) sp.Done = false; }   // 주운 것은 Active 가 id 로 걸러 준다
         weather.Restore(s.WeatherNow, s.PlagueEased, clock);   // 날씨도 그대로(불러오자마자 다시 굴리지 않는다)
@@ -1339,6 +1401,7 @@ public class JudgeSystem : MonoBehaviour
         TickWaitTick(dt);
         TickFight();
         TickEliteSpawn(dt);
+        TickCards(dt);
         TickHeukwol();
         var ph = clock.Consume();
         if (ph.HasValue)

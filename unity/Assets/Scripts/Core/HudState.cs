@@ -46,6 +46,9 @@ namespace Chasa.Core
         public bool ShowExp; public float ExpRatio; public int Rank;                // 경험치(품계) 막대: 처음 넋을 얻은 뒤에 열린다
         public string AreaText; public float AreaAlpha;                          // 지역 진입 알림(화면 위 가운데 큰 글씨, 알파 0~1)
         public float StampAge = -1f; public string StampTitle, StampSub;           // 품계 승급 인 연출: 나이(초, -1 이면 없음) · 큰 글 · 계급명
+        // 첫 도술 카드(세 장 중 하나): CardNames 가 null 이면 안 보인다. 눌렀을 때 부를 함수는 게임 쪽이 꽂는다
+        public string[] CardNames, CardMarks, CardDescs; public int CardBranch0, CardRound; public string CardReroll;   // CardReroll: 다시 뽑기 버튼 글(없으면 버튼 없음)
+        public System.Action<int> CardPick; public System.Action CardRerollNow;
         public bool JudgeCard;                                   // 첫 처결 카드(천도·파혼 두 장)를 하단에 띄운다
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 

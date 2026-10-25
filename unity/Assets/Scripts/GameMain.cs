@@ -143,6 +143,7 @@ public class GameMain : MonoBehaviour
     void Update()
     {
         if (Input.touchCount > 0) Ko.TouchUI = true;   // 실제로 터치가 들어오면 화면 버튼을 띄운다
+        if (DosulCards.Open) { judge.CardInput(); UpdateCamera(Time.unscaledDeltaTime); return; }   // 도술 카드가 떠 있으면 세계 정지
         if (CharacterPanel.Open || SettingsPanel.Open || MiniMap.BigOpen) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
         if (judge.InDay) { judge.Tick(0f, Mathf.Min(0.05f, Time.unscaledDeltaTime)); return; }   // 낮 화면: 세계는 멈추고 낮 화면만 흐른다
         if (!judge.NightOver) HandleInput();   // 결과 화면에서는 조작이 먹지 않는다(QA B4)
