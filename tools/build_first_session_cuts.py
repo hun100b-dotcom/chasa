@@ -47,7 +47,7 @@ for b in src["funeral"]["branches"]:
     if b["branch"] == "천도": cuts.append(convert("FUNERAL_TENDO", b, True))
     elif b["branch"] == "처결 못 함":
         c = convert("FUNERAL_NONE", b, False)
-        # 아내의 한 줄(차사가 마당 안에 있을 때만 — 지금은 마당에서 시작하는 컷이라 항상 보인다)
+        # 아내의 한 줄(서사 10-25: 차사 위치와 상관없이 늘 나온다)
         for st in b["steps"]:
             if st.get("line"):
                 c["steps"].append({"t": st["t"], "text": st["line"]["text"], "style": "bubble", "lineDur": st["line"]["duration"]})

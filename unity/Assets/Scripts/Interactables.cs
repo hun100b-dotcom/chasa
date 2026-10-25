@@ -19,7 +19,7 @@ public class Interactables
     [System.Serializable] class Rules { public string gone_text; }
     [System.Serializable] class FileData { public Rules keepsake_text_rules; public ClueRow[] clue_objects; public KeepRow[] keepsakes; public CoinRow[] coin_bundles; public HerbRow[] herbs; }
 
-    class Node { public JudgeSystem.InteractSpot spot; public GameObject view; public string kind, id, extra; }
+    class Node { public JudgeSystem.InteractSpot spot; public GameObject view, ashView; public string kind, id, extra; }
     readonly List<Node> nodes = new List<Node>();
     readonly JudgeSystem j;
     Transform root; string goneText = "이미 떠난 사람의 물건이다.";
@@ -99,6 +99,7 @@ public class Interactables
     {
         var pos = Place(k.x, k.z);
         var n = Add("keep", k.id, pos, InteractKind.Touch, Model(k.model, pos, new Color(0.95f, 0.85f, 0.55f), 0.9f, 0.18f), k.soul_name);
+        n.ashView = Model("prop_keep_ash", pos, new Color(0.35f, 0.33f, 0.32f), 0.1f, 0.9f);   // 파혼하면 이 자리에 재가 남는다(F 안내 없음)
         n.spot.OnUse = () =>
         {
             Picked.Add(k.id);
@@ -108,7 +109,7 @@ public class Interactables
             return true;
         };
         // 밤에만, 6m 안에서만 보인다. 이미 처결된 혼의 물건은 사라진다(천도) — 파혼의 재는 아직 따로 그리지 않는다
-        n.spot.Active = () => !Picked.Contains(k.id) && j.clock != null && j.clock.Phase == ClockPhase.Night && !(j.named != null && j.named.IsDone(k.soul_name))
+        n.spot.Active = () => !Picked.Contains(k.id) && !Picked.Contains("ash:" + k.id) && j.clock != null && j.clock.Phase == ClockPhase.Night && !(j.named != null && j.named.IsDone(k.soul_name))
             && new Vector2(pos.x - j.player.Pos.x, pos.z - j.player.Pos.z).magnitude <= Balance.KEEPSAKE_SHOW_M;
     }
 
@@ -128,9 +129,53 @@ public class Interactables
         n.spot.Active = () => j.clock != null && j.clock.Phase == ClockPhase.Day && !(HerbTaken.ContainsKey(h.id) && HerbTaken[h.id] >= j.clock.Day);   // 낮에만 · 따면 다음 날 낮에 다시
     }
 
+    /// <summary>이름혼을 파혼했다: 그 혼의 유품 자리에 재가 남는다(천도하면 유품은 그냥 사라진다)</summary>
+    public void OnPahon(string soulName)
+    {
+        if (soulName == null) return;
+        foreach (var n in nodes) if (n.kind == "keep" && n.extra == soulName) Picked.Add("ash:" + n.id);
+    }
+
+    bool restBuilt;
+    /// <summary>서낭당마다 쉬기 자리(돌 의자·약탕 화로·따뜻한 불빛)를 세운다. 서낭당 좌표가 정해진 뒤 한 번</summary>
+    void BuildRestSpots()
+    {
+        restBuilt = true;
+        if (FieldRules.Shrines == null || FieldRules.Shrines.Length == 0 || root == null) return;
+        var prefab = Resources.Load<GameObject>("Models/Interact/prop_seonang_rest");
+        if (prefab == null) return;
+        foreach (var s in FieldRules.Shrines)
+        {
+            var g = Object.Instantiate(prefab, new Vector3(s[0], 0f, s[1]), Quaternion.identity, root);
+            foreach (var c in g.GetComponentsInChildren<Collider>()) Object.Destroy(c);
+            var lt = g.transform.Find("Light_seonang_rest");
+            if (lt != null && QualityTier.Current != QualityTier.Level.Low)
+            {
+                var l = lt.gameObject.AddComponent<Light>();
+                l.type = LightType.Point; l.color = new Color(1f, 0.69f, 0.4f); l.range = 6.5f; l.intensity = 1.1f;
+                lt.gameObject.AddComponent<RestFlicker>();
+            }
+        }
+    }
+
+    /// <summary>모닥불처럼 살짝 깜박이는 불빛</summary>
+    class RestFlicker : MonoBehaviour
+    {
+        Light l; float seed;
+        void Awake() { l = GetComponent<Light>(); seed = Random.value * 10f; }
+        void Update() { if (l != null) l.intensity = 1.0f + 0.15f * Mathf.PerlinNoise(seed, Time.time * 3f); }
+    }
+
     /// <summary>매 프레임: 켜진 자리만 빛기둥을 보이게(40m 안)</summary>
     public void Tick(Vector3 playerPos)
     {
+        if (!restBuilt) BuildRestSpots();
+        foreach (var n in nodes)
+            if (n.ashView != null)
+            {
+                bool ash = Picked.Contains("ash:" + n.id) && new Vector2(n.spot.Pos.x - playerPos.x, n.spot.Pos.z - playerPos.z).magnitude < 40f;
+                if (n.ashView.activeSelf != ash) n.ashView.SetActive(ash);
+            }
         foreach (var n in nodes)
         {
             if (n.view == null) continue;

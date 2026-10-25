@@ -163,6 +163,7 @@ public class JudgeSystem : MonoBehaviour
         var at = e.Pos;
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
+        if (interactables != null) interactables.OnPahon(e.soul.Name);   // 이름혼의 유품은 재가 된다
         if (!e.soul.Boss && e.soul.Name == null) introPlainDone++;
         e.PlayFinishAnim(false);   // 파혼 동작(터짐)
         e.Finish();
@@ -902,8 +903,10 @@ public class JudgeSystem : MonoBehaviour
         CharacterPanel.Open = true;   // 성장 창(도술·능력치 점수 찍기)
         SaveGameNow();
         Say(made > 0 ? "서낭당에 이름을 걸어 두었다 — 쑥을 달여 회복약 " + made + "개" : "서낭당에 이름을 걸어 두었다");
+        if (weather != null) { forecastNote = weather.PeekNext(clock); forecastT = 12f; }   // 다음 시간대 날씨 예보
     }
     const int Shop_Max = Balance.SHOP_HEAL_MAX;
+    string forecastNote; float forecastT;   // 쉬고 난 뒤 시간 고리 곁에 잠시 띄우는 예보
 
     /// <summary>넋길: 다음 서낭당으로 즉시 이동</summary>
     public void CommandSoulPath()
@@ -1217,6 +1220,7 @@ public class JudgeSystem : MonoBehaviour
             h.Peaceful = clock.Daylight > 0.6f && !Casting && !AnyEnemyNear(25f);
             h.TimeOfDay = clock.DayFraction; h.IsDawn = clock.Reddish; h.Daylight = clock.Daylight; h.FullMoon = clock.FullMoon; h.NewMoon = clock.NewMoon; h.MoonPhase = clock.MoonPhase;
             h.ClockLabel = WorldClock.PhaseName(clock.Phase) + (clock.FullMoon ? " · 보름달" : clock.NewMoon ? " · 그믐" : "") + (clock.Speed > 1.5f ? "  x" + (int)clock.Speed : "") + (introFrozen ? "  · 시간 멈춤" : "");
+            if (forecastT > 0f) { forecastT -= Time.unscaledDeltaTime; h.ClockLabel += "\n" + forecastNote; }   // 서낭당 예보
         }
         else { h.Peaceful = false; h.TimeOfDay = Mathf.Clamp01(1f - night.TimeLeft / Mathf.Max(1f, Balance.NIGHT_DURATION)); h.IsDawn = night.Warning; h.Daylight = 0f; h.ClockLabel = null; }
         h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.KarmaHidden = weather.Fx.HideKarma; h.ChainBonus = chainLeft > 0f;
