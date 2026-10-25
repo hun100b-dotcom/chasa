@@ -6614,6 +6614,85 @@ def _(r):
     place(b, sweep_filt(noise(m, r), "band", 600, 2200, 1.5) * env(m, .3, .5, 3) * .15, .4)   # 몸을 감싸는 짧은 바람
     return reverb(b, 1.5, .28, tone_hz=7000)
 
+# ===== 3막 들어섬(고개 넘음 · 바다가 처음 보임) + 별명을 들어 무적 혼 천도가 열림 (코디 요청 10-26, 연결법 docs/act3-entry-sound.md) =====
+# 흐름: planning/controls/act3-entry-10min.md. 금줄 끊김은 2막과 같은 sfx.geumjul.snap · amb.geumjul.cut 을 쓴다(같은 금줄, 같은 소리 = 귀가 "또 한 관할이 열렸다"를 안다).
+# 들어섬은 2막과 같은 틀(_pass_open 바람 + 땅 빛깔 + 피리 4도 위로)이고, 피리 음이 막마다 한 단씩 올라간다(2막 G·D → 3막 A·E): 길이 이어진다.
+@sfx("sfx.region.enter.gaetmaeul", -11, "세계", "갯마을 포구 들어섬: 강바람이 짠 바닷바람으로 확 트이고 → 파도 하나가 쏴아 밀려와 부서짐 → 먼 갈매기 끼룩 → 피리 한 마디 A4에서 D5로(2.8초)", use="구역 이름 띠 '갯마을 포구'가 펼쳐질 때(3막 처음 한 번, A 강둑길). 1초 뒤 3막 필드 곡. C 내리막으로 왔으면 이 소리 대신 sfx.sea.reveal 이 먼저 났으니 이름 띠 때는 피리만(.pipe 쪽)")
+def _(r):
+    b = _buf(3.6)
+    place(b, _pass_open(r, 2.4), 0)
+    place(b, filt(_wave(r, 2.2, .8), "low", 3500) * .55, .2)
+    place(b, reverb(filt(_gull(r, 1550), "low", 4000) * .35, 1.5, .4), .9)
+    place(b, _pipe(r, 1.8, 440, 587.3) * .35, .75)                         # A4 → D5
+    return reverb(b, 1.8, .3, tone_hz=5000)
+
+
+@sfx("sfx.region.enter.gaetmaeul.pipe", -14, "세계", "갯마을 포구 이름 띠(내리막으로 온 경우): 피리 한 마디 A4→D5만(1.8초) — 바다는 이미 들었으니", use="C 갱도 출구 내리막으로 와서 sfx.sea.reveal 을 이미 들은 뒤, 구역 이름 띠 '갯마을 포구'가 펼쳐질 때")
+def _(r):
+    b = _buf(2.4); place(b, _pipe(r, 1.8, 440, 587.3) * .4, 0); return reverb(b, 1.6, .3, tone_hz=5000)
+
+
+@sfx("sfx.region.enter.doseong", -11, "세계", "도성 아랫마을 들어섬: 큰길 바람이 트이고 → 멀리 도성 쪽 사람 소리가 한 번 크게 일렁였다 가라앉음 → 성 안 종루 큰 종 한 번 멀리 웅 → 피리 E4에서 A4로(2.8초)", use="구역 이름 띠 '도성 아랫마을'이 펼쳐질 때(3막 처음 한 번, B 큰길). 1초 뒤 3막 필드 곡")
+def _(r):
+    b = _buf(3.8)
+    place(b, _pass_open(r, 2.4), 0)
+    m = int(2.2 * SR)
+    place(b, filt(_murmur(r, 2.2, 14, lp=1100), "band", 600, .7) * env(m, .7, .8, 3, hold=.2) * .5, .15)   # 먼 웅성임이 일렁
+    bell = modal(3.0, [(110, 1.6, 1), (110.6, 1.6, .7), (264, .9, .45), (402, .6, .25), (561, .4, .12)], r)   # 종루 큰 종(A2), 멀어서 높은 쪽이 적음
+    place(b, reverb(filt(bell, "low", 1800) * .5, 2.5, .55, tone_hz=1500), .45)
+    place(b, _pipe(r, 1.8, 329.6, 440) * .33, .8)                          # E4 → A4
+    return reverb(b, 1.8, .3, tone_hz=4500)
+
+
+@sfx("sfx.sea.reveal", -10, "세계", "바다가 처음 보임(갱도 출구 내리막): 갱 안의 낮은 울림이 뚝 걷히고 → 귀가 확 트이며 넓은 바닷바람이 사방에서 쏴아 → 아래쪽 먼 파도 둘이 길게 → 낮게 깔리는 D-A-E 열린 화음이 숨처럼 부풀다 사라짐 → 먼 갈매기(4.8초)", use="C 길(B-07 천도한 경우만) 금줄 (790,1080)을 넘어 갱도 바깥 끝이 열리는 순간 한 번. 이어서 내리막 300 m 동안 갱 바탕 → 바다 바탕을 거리로 넘김(docs/act3-entry-sound.md)")
+def _(r):
+    b = _buf(6.0)
+    m = int(.6 * SR)                                                       # 갱 안 울림이 걷힘(낮은 웅이 0.4초에 빠짐)
+    place(b, filt(noise(m, r), "low", 160) * env(m, .02, .25, 4) * .6 + tone(.6, 62, 58) * env(m, .02, .25, 4) * .3, 0)
+    n = int(4.4 * SR); t = T(4.4)
+    air = sweep_filt(noise(n, r), "band", 300, 1500, .6) * np.clip((t - .1) / .6, 0, 1) * np.exp(-np.clip(t - 1.6, 0, None) / 1.6)
+    place(b, air * .6, .25)                                                # 귀가 트이는 넓은 바람
+    place(b, filt(_wave(r, 3.0, .9), "low", 2800) * .45, .7)
+    place(b, filt(_wave(r, 3.2, .7), "low", 2200) * .35, 2.2)
+    cs = 4.2; k = int(cs * SR); tc = T(cs)
+    swell = np.clip(tc / 1.4, 0, 1) ** 1.5 * np.exp(-np.clip(tc - 1.8, 0, None) / 1.0)
+    chord = sum(a * np.sin(2 * np.pi * f * tc + i) for i, (f, a) in enumerate(((146.8, 1), (220, .8), (329.6, .55), (440, .3))))   # D3-A3-E4-A4: 열린 화음(3음 없음 → 슬프지도 들뜨지도 않게, 넓기만)
+    place(b, filt(chord * swell, "low", 1600) * .28, .9)
+    place(b, reverb(filt(_gull(r, 1450), "low", 3800) * .3, 1.6, .45), 3.2)
+    return reverb(b, 2.2, .35, tone_hz=5000)
+
+
+# ── 별명 엿듣기 → 무적 혼 천도가 열림 ──
+# 규칙: ⑥ 무적 혼은 별명을 들어야 천도(▲)가 열린다. 소리는 세 단계로 이어진다 — 잠김(카드) → 들음(엿듣기) → 열림(카드).
+# 잠김은 '거절'이 아니라 '아직 모름'(부드러운 나무 막힘), 들음과 열림은 같은 방울 두 음을 써서 "아까 그 이름"을 귀가 잇는다.
+@sfx("sfx.nickname.locked", -19, "처결", "별명 모르는 무적 혼의 천도 칸: 나무 빗장이 닫힌 채 '톡' 한 번 + 아주 짧은 낮은 숨(0.35초) — 거절이 아니라 '아직 이름을 모른다'", use="⑥ 무적 혼 처결 카드가 뜰 때 ▲ 칸이 잠겨 있으면 카드 소리 0.15초 뒤 한 번. ▲를 눌러도 같은 소리(sfx.ui.deny 대신)")
+def _(r):
+    b = _buf(.5)
+    place(b, _wood_tap(r, 430, .03, .9), 0)
+    m = int(.3 * SR); place(b, filt(noise(m, r), "band", 500, 1.5) * env(m, .03, .12, 3) * .2, .02)
+    return reverb(b, .5, .15)
+
+
+@sfx("sfx.nickname.learn", -14, "처결", "별명을 엿들음: 붓 한 획 스윽 → 접힌 쪽지가 펴지듯 사락 → 나무 빗장이 '딸깍' 풀림 → 방울 두 음 E5·A5가 위로(1.2초) — 이 이름의 혼은 이제 보낼 수 있다", use="⑥ 상인·움막촌 엿듣기에서 별명(곰·키다리·끗발 등)을 들어 명부에 적힐 때. 그 줄의 sfx.ui.heard.clue 대신 이것 하나(둘을 겹치지 않는다)")
+def _(r):
+    b = _buf(1.9); m = int(.35 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 1200, 3500, 2) * env(m, .05, .2, 3, hold=.05) * .35, 0)   # 붓 한 획
+    place(b, _paper(r, .2, 1800, 6500, .01) * .3, .3)
+    place(b, _wood_tap(r, 760, .03, .8), .5)                               # 빗장 딸깍 — 잠김(430 Hz 톡)보다 높고 밝게
+    place(b, _wood_tap(r, 980, .02, .45), .56)
+    place(b, _chime(r, 659.3, .6, .5), .62)                                # E5
+    place(b, _chime(r, 880, .7, .45), .78)                                 # A5 — 4도 위로(들어섬 피리와 같은 오름)
+    return reverb(b, 1.3, .25, tone_hz=7000)
+
+
+@sfx("sfx.nickname.unlock", -16, "처결", "별명을 들은 무적 혼의 천도 칸이 열려 있음: 빗장 딸깍 + 같은 방울 E5·A5가 짧게(0.6초) — '아까 들은 그 이름'", use="⑥ 별명을 들은 무적 혼의 처결 카드가 뜰 때, 그 별명으로 처음 한 번(카드 소리 0.15초 뒤). 두 번째부터는 내지 않음")
+def _(r):
+    b = _buf(1.4)
+    place(b, _wood_tap(r, 760, .03, .7), 0)
+    place(b, _chime(r, 659.3, .4, .45), .06)
+    place(b, _chime(r, 880, .5, .4), .16)
+    return reverb(b, 1.0, .22, tone_hz=7000)
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)

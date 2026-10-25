@@ -6809,6 +6809,83 @@
    "bypass_cast_filter": false,
    "length_sec": 3.83,
    "peak_dbfs": -8
+  },
+  {
+   "id": "sfx.region.enter.gaetmaeul",
+   "file": "sfx_region_enter_gaetmaeul",
+   "category": "세계",
+   "desc": "갯마을 포구 들어섬: 강바람이 짠 바닷바람으로 확 트이고 → 파도 하나가 쏴아 밀려와 부서짐 → 먼 갈매기 끼룩 → 피리 한 마디 A4에서 D5로(2.8초)",
+   "use": "구역 이름 띠 '갯마을 포구'가 펼쳐질 때(3막 처음 한 번, A 강둑길). 1초 뒤 3막 필드 곡. C 내리막으로 왔으면 이 소리 대신 sfx.sea.reveal 이 먼저 났으니 이름 띠 때는 피리만(.pipe 쪽)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.66,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.region.enter.gaetmaeul.pipe",
+   "file": "sfx_region_enter_gaetmaeul_pipe",
+   "category": "세계",
+   "desc": "갯마을 포구 이름 띠(내리막으로 온 경우): 피리 한 마디 A4→D5만(1.8초) — 바다는 이미 들었으니",
+   "use": "C 갱도 출구 내리막으로 와서 sfx.sea.reveal 을 이미 들은 뒤, 구역 이름 띠 '갯마을 포구'가 펼쳐질 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.62,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.region.enter.doseong",
+   "file": "sfx_region_enter_doseong",
+   "category": "세계",
+   "desc": "도성 아랫마을 들어섬: 큰길 바람이 트이고 → 멀리 도성 쪽 사람 소리가 한 번 크게 일렁였다 가라앉음 → 성 안 종루 큰 종 한 번 멀리 웅 → 피리 E4에서 A4로(2.8초)",
+   "use": "구역 이름 띠 '도성 아랫마을'이 펼쳐질 때(3막 처음 한 번, B 큰길). 1초 뒤 3막 필드 곡",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.98,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.sea.reveal",
+   "file": "sfx_sea_reveal",
+   "category": "세계",
+   "desc": "바다가 처음 보임(갱도 출구 내리막): 갱 안의 낮은 울림이 뚝 걷히고 → 귀가 확 트이며 넓은 바닷바람이 사방에서 쏴아 → 아래쪽 먼 파도 둘이 길게 → 낮게 깔리는 D-A-E 열린 화음이 숨처럼 부풀다 사라짐 → 먼 갈매기(4.8초)",
+   "use": "C 길(B-07 천도한 경우만) 금줄 (790,1080)을 넘어 갱도 바깥 끝이 열리는 순간 한 번. 이어서 내리막 300 m 동안 갱 바탕 → 바다 바탕을 거리로 넘김(docs/act3-entry-sound.md)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 6.88,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.nickname.locked",
+   "file": "sfx_nickname_locked",
+   "category": "처결",
+   "desc": "별명 모르는 무적 혼의 천도 칸: 나무 빗장이 닫힌 채 '톡' 한 번 + 아주 짧은 낮은 숨(0.35초) — 거절이 아니라 '아직 이름을 모른다'",
+   "use": "⑥ 무적 혼 처결 카드가 뜰 때 ▲ 칸이 잠겨 있으면 카드 소리 0.15초 뒤 한 번. ▲를 눌러도 같은 소리(sfx.ui.deny 대신)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.58,
+   "peak_dbfs": -19
+  },
+  {
+   "id": "sfx.nickname.learn",
+   "file": "sfx_nickname_learn",
+   "category": "처결",
+   "desc": "별명을 엿들음: 붓 한 획 스윽 → 접힌 쪽지가 펴지듯 사락 → 나무 빗장이 '딸깍' 풀림 → 방울 두 음 E5·A5가 위로(1.2초) — 이 이름의 혼은 이제 보낼 수 있다",
+   "use": "⑥ 상인·움막촌 엿듣기에서 별명(곰·키다리·끗발 등)을 들어 명부에 적힐 때. 그 줄의 sfx.ui.heard.clue 대신 이것 하나(둘을 겹치지 않는다)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.06,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.nickname.unlock",
+   "file": "sfx_nickname_unlock",
+   "category": "처결",
+   "desc": "별명을 들은 무적 혼의 천도 칸이 열려 있음: 빗장 딸깍 + 같은 방울 E5·A5가 짧게(0.6초) — '아까 들은 그 이름'",
+   "use": "⑥ 별명을 들은 무적 혼의 처결 카드가 뜰 때, 그 별명으로 처음 한 번(카드 소리 0.15초 뒤). 두 번째부터는 내지 않음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.06,
+   "peak_dbfs": -16
   }
  ],
  "footsteps": {

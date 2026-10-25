@@ -1670,3 +1670,8 @@
 - sfx.geumjul.snap(새끼줄 툭 → 한지 흩날림), amb.geumjul.cut(끊긴 금줄 반복), sfx.region.enter.bulgeunjae(진고·피리)·soegol(곡괭이 메아리·피리), sfx.equip.slot.open(칸 둘 툭·툭 → 옥 5도, 품계 인과 같은 크기). 총 619개.
 - 소리 넘김 시간표: 끊김 때 음악 0.6배 2.5초, 금줄 앞뒤 100 m에서 1막·2막 바탕을 거리로 섞기, 들어섬 1초 뒤 2막 곡(docs/act2-entry-sound.md).
 - 코드는 장비 새 칸을 2막 첫 발에 열고, 기획은 서낭당 쉬기에 연다 → 확인 부탁. 1막 갓·띠 칸에도 같은 소리 제안.
+
+## 2026-10-26 KST — [기획·사운드] 3막 들어섬 + 바다가 처음 보임 + 별명 엿듣기
+- 금줄은 2막 소리 그대로(같은 금줄 = 같은 소리). sfx.region.enter.gaetmaeul(파도·갈매기·피리 A→D)·.pipe(내리막으로 온 경우)·doseong(먼 웅성임·종루 종·피리 E→A). 피리 음이 막마다 한 단씩 오름.
+- sfx.sea.reveal: 갱 울림이 걷히고 바닷바람·먼 파도·D-A-E 열린 화음(4.8초). 내리막 300 m 갱 → 바람 → 포구 바탕 거리로 넘김 제안.
+- 별명 규칙 소리 셋: sfx.nickname.locked(나무 빗장 톡, 거절음 아님) → learn(빗장 풀림 + 방울 E5·A5) → unlock(같은 방울, 별명마다 처음 한 번). 총 626개. docs/act3-entry-sound.md.
