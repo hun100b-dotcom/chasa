@@ -189,7 +189,8 @@ public class JudgeSystem : MonoBehaviour
         if (growth.AddPahon()) ui?.Hud.Toasts.Add("얼룩 도술 점수 +1");   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Bosses.CoinFor(e.soul.BossId) : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3
-        float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;   // 낚아챈 보스는 파혼 엽전 x1.2
+        float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;
+        if (!e.soul.Boss && e.soul.Ring > 1) snatchMult *= RingLoot.CoinMult(e.soul.Ring);   // 고리 보상 배율(엽전은 증가분의 60%)   // 낚아챈 보스는 파혼 엽전 x1.2
         // 이름 있는 노리개의 파혼 엽전 배수: 뱃삯 ×1.13 · 남은 장부 ×1.2(2막 숫자 혼만) · 아낙의 등잔 ×1.5(켠 둘레 안)
         float keepMult = 1f;
         if (HasKeepsake("도한수의 뱃삯")) keepMult *= Balance.BAETSAK_PAHON_COIN_MULT;
@@ -471,6 +472,7 @@ public class JudgeSystem : MonoBehaviour
             // 묻힌 혼은 넋 ×1.25, 넋두리는 기억 조각 +1 (기획 F-1b)
             if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
+            if (castTarget.soul.Ring > 1 && !castTarget.soul.Boss) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (RingLoot.RewardMult(castTarget.soul.Ring) - 1f));   // 고리 보상 배율(넋)
             if (castTarget.soul.Numbered) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.NUMBERED_NEOK_MULT - 1f));   // 숫자 혼: 천도 넋 ×1.3(대기가 길어 파혼하고 싶게 만드는 값)
             if (castTarget.soul.Name != null && HasKeepsake("흑월의 붓")) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * 0.10f);   // 흑월의 붓: 이름혼 천도 넋 +10%
             if (castTarget.soul.Boss && castTarget.soul.BossId == 12) { var ks = ItemDef.BossKeepsake(12); if (ks != null && lo.Equip(ks)) { lo.lastDrop = "이름 있는 장비: 흑월의 붓"; lo.lastDropT = 6f; } }   // B-12 천도 보상(시즌 2로 가져감)

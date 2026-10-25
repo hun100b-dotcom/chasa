@@ -81,7 +81,7 @@ public class FieldCamps
         if (alive >= EarlyMaxAlive) { c.cooldown = 3f; return; }   // 지금은 더 못 세운다(조금 뒤 다시 시도)
         c.spawned = true;
         int count = CampRules.CountFor(c.row.n, SkyState.Daylight);   // 낮엔 적게
-        int ring = RingOf(c.row.zone);
+        int ring = RingLoot.RingAt(c.row.x, c.row.z, c.row.zone == "검은여울");   // 고리는 RingAt 하나로(기획 act1-enemy-check 2)
         float dens = Balance.CAMP_DENSITY_MULT * (ring == 1 ? Balance.CAMP_DENSITY_RING1 : ring == 2 ? Balance.CAMP_DENSITY_RING2 : Balance.CAMP_DENSITY_RING3);   // 구역 고리별 밀도(난이도 조정)
         if (dens < 0.999f) count = Mathf.Max(1, Mathf.RoundToInt(count * dens));
         if (NearNamed(c.row.x, c.row.z)) count = Mathf.Max(1, Mathf.Min(Balance.NAMED_NEAR_CAP, Mathf.RoundToInt(count * 0.5f)));   // 이름혼 자리 둘레는 한산하게(이름혼 처결 때 둘러싸이지 않게)
@@ -109,12 +109,12 @@ public class FieldCamps
                     float ma = Random.value * Mathf.PI * 2f, mr = Random.value * 2.5f;
                     float mx = x + Mathf.Cos(ma) * mr, mz = z + Mathf.Sin(ma) * mr;
                     MapLayout.PushOut(ref mx, ref mz, Config.ENEMY_RADIUS + 0.5f);
-                    var m = enemies.SpawnCamp(new Vector3(mx, 0f, mz), true, SoulType.Mote);
+                    var m = enemies.SpawnCamp(new Vector3(mx, 0f, mz), true, SoulType.Mote, ring);
                     m.group = grp; m.leader = k == 0; grp.Add(m); c.members.Add(m);
                 }
                 continue;
             }
-            var e = enemies.SpawnCamp(new Vector3(x, 0f, z), i % 2 == 0, type);
+            var e = enemies.SpawnCamp(new Vector3(x, 0f, z), i % 2 == 0, type, ring);
             if (e != null && e.soul != null && Random.value * 100f < SoulTypeRules.NumberedPct(c.row.zone)) e.soul.Numbered = true;   // 숫자 혼(2막 구역 비율)
             c.members.Add(e);
         }

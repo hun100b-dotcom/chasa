@@ -1687,6 +1687,13 @@ public class CoreTests
         }
     }
 
+    [Test] public void RingMultipliers_MatchSimTable()
+    {
+        Assert.AreEqual(1.2f, RingLoot.MaedhimMult(2), 0.0001f); Assert.AreEqual(1.15f, RingLoot.DamageMult(2), 0.0001f); Assert.AreEqual(1.25f, RingLoot.RewardMult(2), 0.0001f);
+        Assert.AreEqual(1.15f, RingLoot.CoinMult(2), 0.0001f);   // 엽전은 증가분 0.25 의 60% = +0.15
+        Assert.AreEqual(1f, RingLoot.MaedhimMult(1), 0.0001f); Assert.AreEqual(2.3f, RingLoot.RewardMult(6), 0.0001f);
+    }
+
     // ---- 보스 목록·바닥 무늬 ----
     [Test] public void Bosses_TableAndTwelveStreetsNeverOpensSafeCup()
     {

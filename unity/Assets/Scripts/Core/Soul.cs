@@ -28,6 +28,7 @@ namespace Chasa.Core
         public bool Boss;            // 보스 여부 (천도에 단서 3개 필요, 보상이 큼)
         public string LonerMemory;   // 외톨이 혼의 기억 한 줄(천도해야만 보인다. 감사 보강: 혼자 앉은 까닭)
         public string Name;          // 이름혼/보스의 이름 (무명 혼은 null)
+        public int Ring = 1;         // 고리(1~6): 필드 군집 혼만 2 이상이 될 수 있다. 보상 배율에 쓴다
         public bool Numbered;        // 숫자 혼(인 없음): 대기 +0.5초, 천도 넋 ×1.3. B-08 천도 뒤엔 흐림(+0.25초). 맺힐 때 구역 비율로 정한다(기획 act2-souls)
         public static bool NumberedBlurred;   // B-08 을 천도했나 — JudgeSystem 이 켠다
         public float WaitBonus;      // 인(seal)이 흐리면 처결 대기가 늘어난다(흐림 +0.25 · 없음 +0.5초). 서사 규칙

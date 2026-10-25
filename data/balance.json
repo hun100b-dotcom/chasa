@@ -864,7 +864,7 @@
   "note": "서낭당 귀환 반경(m, 서낭나무 중심). 장승 한 쌍을 가장자리에 세운다. 서사 확정"
  },
  "BOSS_S1_MAEDHIM": {
-  "value": 1200,
+  "value": 800,
   "note": "(시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)"
  },
  "BOSS_S1_WAIT": {
@@ -1020,6 +1020,7 @@
  "NUMBERED_WAIT_ADD": {"value": 0.5, "note": "(기획 act2-souls 2절) 숫자 혼: 처결 대기 +초(인 없음)"},
  "NUMBERED_BLUR_WAIT_ADD": {"value": 0.25, "note": "B-08 천도 뒤 숫자 혼이 흐림이 되어 대기 +초"},
  "NUMBERED_NEOK_MULT": {"value": 1.3, "note": "숫자 혼 천도 넋 배수"},
+ "RING_COIN_SHARE": {"value": 0.6, "note": "(기획 act1-enemy-check) 필드 혼 엽전은 고리 보상 배율 증가분의 60%만 받는다"},
  "CAP_COIN_PCT": {
   "value": 0.5,
   "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%"
@@ -1601,7 +1602,7 @@
   "note": "마음의 천도 넋 보너스는 기획에 없는 값이라 0 (장비 점검 B-7)"
  },
  "BOSS_S2_MAEDHIM": {
-  "value": 1000,
+  "value": 800,
   "note": "(2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전"
  },
  "B02_CUPS": {
@@ -2129,8 +2130,8 @@
   "note": "고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)"
  },
  "CAMP_DENSITY_RING2": {
-  "value": 0.7,
-  "note": "고리2(물막이 골·폐당집)"
+  "value": 0.8,
+  "note": "고리2(검은여울 — 기획 act1-enemy-check: 고리는 RingAt 하나로)"
  },
  "CAMP_DENSITY_RING3": {
   "value": 0.8,

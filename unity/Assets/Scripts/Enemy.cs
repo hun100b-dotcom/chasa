@@ -212,6 +212,15 @@ public class Enemy : MonoBehaviour
         baseColor = KindColor(kind); mat.color = baseColor;
     }
 
+    /// <summary>고리 배율을 입힌다: 맺힘·공격이 고리를 따라 오른다(힘을 상한 밖으로 뺀 화력과 짝, 기획 act1-enemy-check)</summary>
+    public void ApplyRing(int ring)
+    {
+        if (soul == null || ring <= 1) return;
+        soul.Ring = ring;
+        soul.MaedhimMax = Mathf.Max(1, Mathf.RoundToInt(soul.MaedhimMax * RingLoot.MaedhimMult(ring))); soul.Maedhim = soul.MaedhimMax;
+        damage = Mathf.Max(1, Mathf.RoundToInt(damage * RingLoot.DamageMult(ring)));
+    }
+
     /// <summary>S1 보스 나루 영감: 크고 느리고 한 방이 아프다</summary>
     // 보스 목줄: 플레이어가 40m 보다 멀면 쫓지 않고 처음 자리로 돌아간다.
     // 왜? 넓은 필드에서 몇 분 지나면 보스가 마을까지 걸어와 체력바가 마을에 뜨는 일이 있었다(PC 봇 측정).
@@ -595,10 +604,11 @@ public class EnemyManager
     }
 
     /// <summary>필드 군집의 혼 하나를 세운다 (처결되면 그냥 사라진다: Respawn 하지 않음)</summary>
-    public Enemy SpawnCamp(Vector3 at, bool a, SoulType type = SoulType.Plain)
+    public Enemy SpawnCamp(Vector3 at, bool a, SoulType type = SoulType.Plain, int ring = 1)
     {
         var e = Enemy.Create(a, at);
         if (type != SoulType.Plain) e.SetType(type);
+        e.ApplyRing(ring);   // 고리 배율(맺힘·공격)
         e.camp = true;
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
         e.onKneel = () => onEnemyKneel?.Invoke(e);

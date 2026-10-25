@@ -221,7 +221,7 @@ public static class Balance
     public const float NIGHT_WARN_TIME = 30.0f;  // 동트기 경고 시작(초 전). 서사 확정, 6막 물 차오름 경고와 같은 값
     public const int NIGHT_QUOTA = 3;  // 명부 몫 = 천도만 센다(파혼 제외). 첫 밤: 무명 혼 2 + 이름혼 박돌쇠 1. 서사 확정
     public const float SHRINE_RADIUS = 4.0f;  // 서낭당 귀환 반경(m, 서낭나무 중심). 장승 한 쌍을 가장자리에 세운다. 서사 확정
-    public const int BOSS_S1_MAEDHIM = 1200;  // (시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)
+    public const int BOSS_S1_MAEDHIM = 800;  // (시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)
     public const float BOSS_S1_WAIT = 8.0f;  // (시연판 임시) S1 보스 처결 대기(초)
     public const int BOSS_S1_DAMAGE = 20;  // (시연판 임시) S1 보스 공격력(일반 12)
     public const float BOSS_S1_SPEED_MULT = 0.6f;  // (시연판 임시) S1 보스 이동속도 배율(느리지만 한 방이 아프다)
@@ -279,6 +279,7 @@ public static class Balance
     public const float NUMBERED_WAIT_ADD = 0.5f;  // (기획 act2-souls 2절) 숫자 혼: 처결 대기 +초(인 없음)
     public const float NUMBERED_BLUR_WAIT_ADD = 0.25f;  // B-08 천도 뒤 숫자 혼이 흐림이 되어 대기 +초
     public const float NUMBERED_NEOK_MULT = 1.3f;  // 숫자 혼 천도 넋 배수
+    public const float RING_COIN_SHARE = 0.6f;  // (기획 act1-enemy-check) 필드 혼 엽전은 고리 보상 배율 증가분의 60%만 받는다
     public const float CAP_COIN_PCT = 0.5f;  // (시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%
     public const float DROP_RARITY_RARE = 0.08f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 귀한 확률
     public const float DROP_RARITY_CRAFTED = 0.3f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 손본 확률(귀한 제외). 나머지는 흔한
@@ -424,7 +425,7 @@ public static class Balance
     public const int GROWTH_HP_PER_BODY = 4;  // 몸 1점당 최대 체력 +4 (기획 growth.json stats, 장비 점검 B-7)
     public const float GROWTH_CAST_PER_MIND = 0.005f;  // (성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%
     public const float GROWTH_NEOK_PER_MIND = 0.0f;  // 마음의 천도 넋 보너스는 기획에 없는 값이라 0 (장비 점검 B-7)
-    public const int BOSS_S2_MAEDHIM = 1000;  // (2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전
+    public const int BOSS_S2_MAEDHIM = 800;  // (2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전
     public const int B02_CUPS = 12;  // (2호 보스 임시) 월화 열두 거리: 굿판 가장자리 잔 수. 열두째(번호 11) 잔은 엎어져 있어 늘 안전
     public const float B02_RING_RADIUS_M = 7.0f;  // (2호 보스 임시) 잔을 둘러놓은 원 반지름(m)
     public const float B02_CUP_RADIUS_M = 2.2f;  // (2호 보스 임시) 잔 앞 바닥이 열려 피해를 주는 반지름(m)
@@ -556,7 +557,7 @@ public static class Balance
     public const int ATTACK_TOKENS_INTRO = 2;  // 첫 5분(시계 정지 중) 공격 차례 수
     public const float TOKEN_WAIT_RING_M = 4.5f;  // 차례를 못 받은 혼이 플레이어 둘레에서 기다리는 거리(m)
     public const float CAMP_DENSITY_RING1 = 0.5f;  // 고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)
-    public const float CAMP_DENSITY_RING2 = 0.7f;  // 고리2(물막이 골·폐당집)
+    public const float CAMP_DENSITY_RING2 = 0.8f;  // 고리2(검은여울 — 기획 act1-enemy-check: 고리는 RingAt 하나로)
     public const float CAMP_DENSITY_RING3 = 0.8f;  // 검은여울
     public const float NAMED_NEAR_M = 40.0f;  // 이름혼 자리 둘레(m): 이 안 군집은 인원 ×0.5, 최대 NAMED_NEAR_CAP 마리
     public const int NAMED_NEAR_CAP = 3;  // 이름혼 둘레 군집 인원 상한
