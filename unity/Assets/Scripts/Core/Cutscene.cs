@@ -1,0 +1,81 @@
+// =============================================================================
+// Cutscene.cs — 실시간 컷신의 '시간표 재생기' (순수 C#, 테스트 가능). 기획 7단계 첫 보스 연출.
+//
+// 컷신 = 시각(t)마다 붙는 단계(step)의 목록: 카메라를 어디로·얼마나 확대·대사 한 줄. 이 클래스는 시간만 흘리며
+// "지금 카메라가 어디를 보나 / 어떤 대사가 떠 있나 / 끝났나"를 알려 준다. 화면(카메라 이동·글자 그리기)은 쓰는 쪽이 맡는다.
+// 왜 코어에? 컷신이 순서 틀리거나 끝나지 않아 입력이 영영 잠기는 사고를 엔진 없이 시험으로 막으려고.
+// =============================================================================
+using System.Collections.Generic;
+
+namespace Chasa.Core
+{
+    [System.Serializable]
+    public class CutStep
+    {
+        public float t;                          // 컷 시작부터 초
+        public string cam, camTo;                // 카메라 모드(pan·push·pull·hold·cut·shake·return)와 바라볼 대상
+        public float camTime, zoom, shake;       // 이동 시간, 확대 배율(0 이면 안 바꿈), 흔들림(0 이면 없음)
+        public string text, style;               // 대사 글자와 모양(bubble·memory)
+        public float lineDur;                    // 대사가 떠 있는 시간
+    }
+
+    [System.Serializable]
+    public class CutData
+    {
+        public string id;
+        public float duration;
+        public bool @lock, pause, skippable;     // 입력 잠금 / 적 멈춤 / 건너뛸 수 있나
+        public CutStep[] steps;
+    }
+
+    public class CutPlayback
+    {
+        public readonly CutData Data;
+        public float Time;
+        public bool Done { get { return Time >= Data.duration; } }
+        public string CamTarget = "player";      // 지금 카메라가 보는 곳
+        public float CamZoom = 1f;               // 지금 확대 배율(1 = 평소)
+        public float CamTime = 0.3f;             // 가장 최근 단계가 정한 이동 시간
+        public float ShakeRequest;               // 이번 프레임에 새로 걸린 흔들림(쓴 쪽이 읽고 0 으로)
+        public string LineText = "", LineStyle = "";
+        float lineUntil;
+        int next;                                 // 다음에 적용할 단계 번호
+
+        public CutPlayback(CutData d) { Data = d; Apply(0f); }
+
+        public bool LineVisible { get { return !string.IsNullOrEmpty(LineText) && Time < lineUntil; } }
+
+        public void Tick(float dt)
+        {
+            if (Done) return;
+            Time += dt;
+            Apply(Time);
+        }
+
+        void Apply(float now)
+        {
+            while (next < Data.steps.Length && Data.steps[next].t <= now)
+            {
+                var s = Data.steps[next++];
+                if (!string.IsNullOrEmpty(s.cam))
+                {
+                    if (s.cam == "return") { CamTarget = "player"; CamZoom = 1f; }
+                    else if (!string.IsNullOrEmpty(s.camTo)) CamTarget = s.camTo;
+                    if (s.zoom > 0f) CamZoom = s.zoom;
+                    if (s.camTime > 0f) CamTime = s.camTime;
+                    if (s.shake > 0f) ShakeRequest = System.Math.Max(ShakeRequest, s.shake);
+                }
+                if (!string.IsNullOrEmpty(s.text)) { LineText = s.text; LineStyle = s.style; lineUntil = s.t + s.lineDur; }
+            }
+        }
+
+        /// <summary>건너뛰기: 끝까지 가서 남은 단계(마지막 카메라 복귀 포함)를 모두 적용한다. 보상·세계 변화는 다른 코드가 이미 처리</summary>
+        public void Skip()
+        {
+            Time = Data.duration;
+            Apply(Data.duration + 1f);
+            LineText = "";                        // 건너뛰면 대사도 지운다
+            CamTarget = "player"; CamZoom = 1f;   // 항상 플레이어로 돌아온다(마지막 단계가 return 이 아니어도 안전)
+        }
+    }
+}

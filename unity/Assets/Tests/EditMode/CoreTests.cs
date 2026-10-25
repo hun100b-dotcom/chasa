@@ -1444,4 +1444,52 @@ public class CoreTests
         Assert.AreEqual(2, b.Count("B01-"));
         Assert.AreEqual(1, b.Count("B02-"));
     }
+
+    // ---------- 컷신 재생기 (7단계) ----------
+    static CutData TestCut()
+    {
+        return new CutData
+        {
+            id = "T", duration = 3f, skippable = true, @lock = true,
+            steps = new[]
+            {
+                new CutStep { t = 0f, cam = "pan", camTo = "boss", camTime = 1f, zoom = 1.2f },
+                new CutStep { t = 1f, text = "배 떠나오.", style = "bubble", lineDur = 1f },
+                new CutStep { t = 2.9f, cam = "return" },
+            }
+        };
+    }
+
+    [Test]
+    public void Cutscene_StepsApplyInOrderAndEnd()
+    {
+        var p = new CutPlayback(TestCut());
+        Assert.AreEqual("boss", p.CamTarget); Assert.AreEqual(1.2f, p.CamZoom, 1e-4f);   // t=0 단계는 시작하자마자
+        Assert.IsFalse(p.LineVisible);
+        p.Tick(1.1f);
+        Assert.IsTrue(p.LineVisible); Assert.AreEqual("배 떠나오.", p.LineText);
+        p.Tick(1.0f);
+        Assert.IsFalse(p.LineVisible);                                                    // 대사 시간이 지나면 사라짐
+        p.Tick(1.0f);
+        Assert.IsTrue(p.Done); Assert.AreEqual("player", p.CamTarget);                    // 끝: 플레이어로 복귀
+    }
+
+    [Test]
+    public void Cutscene_SkipAlwaysReturnsToPlayer()
+    {
+        var p = new CutPlayback(TestCut());
+        p.Tick(0.5f);
+        p.Skip();
+        Assert.IsTrue(p.Done); Assert.AreEqual("player", p.CamTarget); Assert.AreEqual(1f, p.CamZoom, 1e-4f);
+        Assert.IsFalse(p.LineVisible);
+    }
+
+    [Test]
+    public void Cutscene_ShakeRequestedOnce()
+    {
+        var c = new CutData { id = "S", duration = 1f, steps = new[] { new CutStep { t = 0.2f, cam = "shake", shake = 1f } } };
+        var p = new CutPlayback(c);
+        p.Tick(0.3f); Assert.AreEqual(1f, p.ShakeRequest, 1e-4f);
+        p.ShakeRequest = 0f; p.Tick(0.3f); Assert.AreEqual(0f, p.ShakeRequest);
+    }
 }

@@ -95,6 +95,7 @@ public class JudgeSystem : MonoBehaviour
         if (e == null) e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);   // 없으면 가장 가까운 혼으로 이유를 안내
         if (e == null) { Say("대상이 없다"); return; }
         if (!e.soul.CanTendo) { Say("보낼 수 없는 넋 - 파혼만 가능"); return; }
+        if (e.soul.Boss && !e.soul.CanTendoWith(night.Clues)) cuts.Play("B01-NOCLUE");   // 명부 인이 흐려졌다 꺼진다
         if (!e.soul.CanTendoWith(night.Clues)) { Say("단서 " + Balance.BOSS_CLUES_REQUIRED + "개가 필요하다 (" + night.Clues + ") - 파혼만 가능"); return; }
         if (!e.soul.BeginSending()) return;
         player.ConsumeAct();   // 후딜·피하기를 끊고 천도 시작
@@ -132,6 +133,7 @@ public class JudgeSystem : MonoBehaviour
         if (e.soul.Boss)
         {
             night.BossDone = true; Say("나루 영감을 깨뜨렸다");
+            cuts.Play("B01-PAHON"); feel.AddShake(1f);   // 6m 대폭발, 판자가 흩어진다
             // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
             if (Demo.Gear && lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
         }
@@ -171,6 +173,7 @@ public class JudgeSystem : MonoBehaviour
             night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
             Say("나루 영감을 천도했다!");
+            if (cuts.Play("B01-TENDO")) { player.CommandStop(); enemies.graceT = Mathf.Max(enemies.graceT, 7f); }   // 7초 컷: 입력 잠김·적 멈춤
         }
         else
         {
@@ -205,6 +208,7 @@ public class JudgeSystem : MonoBehaviour
     void OnEnemyKneel(Enemy e)
     {
         Sfx.Play("sfx.kneel");   // 무릎 꿇는 소리 = '지금 고를 때'
+        if (e.soul.Boss) cuts.Play("B01-KNEEL");   // 영감: "아직… 못 건넸소."
         // 검은 술: 무릎 꿇은 혼의 대기 시간이 짧아진다 (덩어리는 제외, 최소 WAIT_FLOOR)
         if (!e.soul.Boss && e.soul.State == SoulState.Kneel)
         {
@@ -402,6 +406,7 @@ public class JudgeSystem : MonoBehaviour
             if (Demo.Day && Input.GetKeyDown(KeyCode.D)) StartDay();
             return;
         }
+        TickCutscenes(dt);
         if (clock == null) night.Tick(dt);     // 옛 방식: 밤 타이머. 필드에선 시한이 없다(시계가 흐를 뿐)
         else TickClock(dt);
         TickClues();
@@ -431,6 +436,28 @@ public class JudgeSystem : MonoBehaviour
         float target = Casting ? 1f : 0f;
         visionP = Mathf.MoveTowards(visionP, target, realDt / Mathf.Max(0.01f, Balance.TENDO_VISION_BLEND));
         UpdateStainViews();
+    }
+
+    /// <summary>컷신을 흘리고, 보스 구역 첫 진입이면 등장 컷을 건다. 잠금·적 멈춤을 반영한다</summary>
+    void TickCutscenes(float dt)
+    {
+        if (!bossIntroChecked && FieldRules.On)
+        {
+            var b = enemies.list.Find(x => x.soul.Boss);
+            if (b != null && new Vector2(b.Pos.x - player.Pos.x, b.Pos.z - player.Pos.z).magnitude < 40f)
+            {
+                bossIntroChecked = true;
+                if (cuts.Play("B01-INTRO", true))
+                {
+                    player.CommandStop();
+                    // 물에 빠진 혼 2마리가 뱃전을 잡고 올라온다 (대본)
+                    for (int i = 0; i < 2; i++) enemies.SpawnCamp(b.Pos + new Vector3(i == 0 ? -3f : 3f, 0f, -2.5f), i == 0);
+                }
+            }
+        }
+        cuts.Tick(dt);
+        if (cuts.PauseEnemies) enemies.graceT = Mathf.Max(enemies.graceT, 0.5f);   // 컷 동안 적 공격 시계를 계속 되감는다
+        float sh = cuts.TakeShake(); if (sh > 0f) feel.AddShake(sh);
     }
 
     /// <summary>지금 넋길을 탈 수 있나 (필드·밤·서낭당 곁·행동 가능). 서낭당 번호를 돌려준다(없으면 -1)</summary>
@@ -587,6 +614,8 @@ public class JudgeSystem : MonoBehaviour
     public System.Action<Vector3> onTeleport;   // 넋길로 순간이동했을 때 카메라가 따라가게 GameMain 이 받는다
     public readonly MemoryLines memories = new MemoryLines();   // 천도 기억 한 줄
     public string memLine; public float memLineT;              // 지금 화면에 띄울 기억 줄(보랏빛 자막)
+    public readonly CutscenePlayer cuts = new CutscenePlayer();   // 나루 영감 실시간 컷신
+    bool bossIntroChecked;
     public NpcWorld npcs;                       // 필드의 산 사람(엿듣기·지켜보기)
     public readonly ClueBook clueBook = new ClueBook();
     public WorldClock clock;   // 필드 모드의 흐르는 하루 (없으면 옛 '하룻밤 한 판')
@@ -735,6 +764,30 @@ public class JudgeSystem : MonoBehaviour
                 }
                 GUI.color = Color.white;
             }
+        }
+        // (2.3) 컷신 대사: 말풍선은 보스 머리 위, 기억 줄은 화면 아래 가운데(보랏빛). 건너뛰기 진행 막대
+        if (cuts.LineVisible && cam != null)
+        {
+            var cs = new GUIStyle(GUI.skin.label) { fontSize = Ko.TouchUI ? 26 : 22, alignment = TextAnchor.MiddleCenter, wordWrap = true };
+            if (cuts.LineStyle == "memory")
+            {
+                cs.normal.textColor = new Color(0.79f, 0.69f, 1f, 1f); cs.fontStyle = FontStyle.Italic;
+                GUI.Label(new Rect(Screen.width * 0.15f, Screen.height - 230, Screen.width * 0.7f, 100), "“" + cuts.LineText + "”", cs);
+            }
+            else
+            {
+                var bs = enemies.list.Find(x => x.soul.Boss);
+                var sp = bs != null ? cam.WorldToScreenPoint(bs.HeadPosition + Vector3.up * 1.2f) : new Vector3(Screen.width * 0.5f, Screen.height * 0.6f, 1f);
+                var r = new Rect(sp.x - 150, Screen.height - sp.y - 30, 300, 60);
+                GUI.color = new Color(0.95f, 0.92f, 0.82f, 0.92f); GUI.DrawTexture(r, white);
+                cs.normal.textColor = new Color(0.12f, 0.1f, 0.08f); GUI.color = Color.white;
+                GUI.Label(r, cuts.LineText, cs);
+            }
+        }
+        if (cuts.SkipProgress > 0.02f)
+        {
+            GUI.color = new Color(0, 0, 0, 0.6f); GUI.DrawTexture(new Rect(Screen.width * 0.5f - 80, Screen.height - 24, 160, 8), white);
+            GUI.color = Color.white; GUI.DrawTexture(new Rect(Screen.width * 0.5f - 79, Screen.height - 23, 158 * cuts.SkipProgress, 6), white);
         }
         // (2.4) 기억 한 줄: 천도 직후 화면 가운데 위, 기억 색(보랏빛)
         if (memLineT > 0f)

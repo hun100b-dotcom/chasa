@@ -194,13 +194,21 @@ public class GameMain : MonoBehaviour
         var wantAhead = vel.sqrMagnitude > 0.25f ? vel.normalized * Balance.CAMERA_LOOKAHEAD_M : Vector3.zero;
         ahead = Vector3.Lerp(ahead, wantAhead, 1f - Mathf.Exp(-3f * dt));   // 천천히 따라가야 방향을 바꿀 때 화면이 휙 돌지 않는다
         var goal = new Vector3(player.Pos.x, 0, player.Pos.z) + ahead;
+        // 컷신 중엔 카메라가 대본이 가리키는 곳으로 간다(보스·나룻배·서낭당 쪽 하늘 …). 끝나면 플레이어로 돌아온다
+        if (judge.cuts.Active)
+        {
+            goal = CutTarget(judge.cuts.CamTarget);
+            focus = Vector3.Lerp(focus, goal, 1f - Mathf.Exp(-3f / Mathf.Max(0.15f, judge.cuts.CamTime) * dt));
+            goal = focus;
+        }
         // 데드존: 목표가 카메라 중심에서 이 반경 안이면 움직이지 않는다 (작은 흔들림에 화면이 같이 떨리지 않게)
         var d = goal - focus; d.y = 0f;
         if (d.magnitude > Balance.CAMERA_DEADZONE_M) goal = focus + d.normalized * (d.magnitude - Balance.CAMERA_DEADZONE_M);
         else goal = focus;
         focus = Vector3.Lerp(focus, goal, k);
         // 줌(타격 펀치·천도 캐스팅)은 직교에선 화면 크기, 원근에선 카메라 거리로 만든다
-        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f;
+        wheelCut = Mathf.Lerp(wheelCut, judge.cuts.CamZoom, 1f - Mathf.Exp(-4f * dt));   // 컷신 확대 배율도 부드럽게
+        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
         wheel = Mathf.Lerp(wheel, wheelTarget, 1f - Mathf.Exp(-Balance.CAMERA_WHEEL_SMOOTH * Time.unscaledDeltaTime));   // 휠 줌은 부드럽게 따라간다
         if (judge.clock != null) ClockSky.Apply(sun, cam, judge.clock);   // 하늘·햇빛이 시계를 따른다
         cam.transform.position = focus + (View3D.On ? offset * ((1f - zoomIn) * wheel) : offset);
@@ -214,6 +222,20 @@ public class GameMain : MonoBehaviour
     }
 
     // ---- 입력: 마우스 = 이동·대상 / 키보드 = 기술 (PD 피드백 반영) --------------------
+    float wheelCut = 1f;                                              // 컷신이 정한 확대 배율(부드럽게 따라감)
+    Vector3 CutTarget(string name)
+    {
+        var boss = judge.enemies.list.Find(x => x.soul.Boss);
+        var bp = boss != null ? new Vector3(boss.Pos.x, 0f, boss.Pos.z) : new Vector3(MapLayout.BossX, 0f, MapLayout.BossZ);
+        var pp = new Vector3(player.Pos.x, 0f, player.Pos.z);
+        switch (name)
+        {
+            case "boss": case "boss_boat": return bp;
+            case "player_and_boss": return (bp + pp) * 0.5f;
+            case "far_sky_over_hub": return new Vector3(188f, 0f, 60f);   // 서낭당 쪽 먼 하늘
+            default: return pp;
+        }
+    }
     float wheel = 1f, wheelTarget = 1f;   // 카메라 거리 배율(작을수록 확대). 휠·핀치로 바뀐다
     float pinchPrev;                      // 두 손가락 사이 이전 거리(폰 확대·축소)
     bool kbMove;                          // 지금 WASD 로 걷는 중인가
@@ -253,6 +275,7 @@ public class GameMain : MonoBehaviour
     void HandleInput()
     {
         HandleZoom();
+        if (judge.cuts.InputLocked) { kbMove = false; return; }   // 잠금 컷신 중엔 입력이 먹지 않는다
         HandleKeyboardMove();
         Vector3 mouse = Input.mousePosition;
         if (Input.GetKeyDown(KeyCode.Q)) { if (player.loadout.Def.HasQuake) player.CommandQuake(); else if (player.loadout.Def.HasPull) SkillPull(mouse); }   // Q: 철삭=견인 / 육모방망이=땅울림 / 그 외 무기는 없음
