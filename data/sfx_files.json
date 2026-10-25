@@ -93,8 +93,19 @@
    "id": "sfx.dodge",
    "file": "sfx_dodge",
    "category": "전투",
-   "desc": "회피: 옷자락이 바람을 가르는 쉭",
-   "use": "회피",
+   "desc": "구르기: 옷자락이 바람을 가르는 쉭(0.05초에 가장 큼) → 어깨가 땅에 닿는 낮은 툭·옷 쓸림(0.13초) — 0.32초 구르기에 맞춤",
+   "use": "구르기(Space). 끝나는 발 디딤은 땅 재질 발소리가 따로 낸다(docs/move-sound-sync.md)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.31,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.dodge.dash",
+   "file": "sfx_dodge_dash",
+   "category": "전투",
+   "desc": "매듭 걸음(사슬 돌진): 옷자락이 바람을 가르는 쉭 — 땅에 닿지 않는 옛 회피 소리",
+   "use": "CommandKnotDash(구르지 않고 사슬로 끌려가듯 돌진)",
    "loop": false,
    "bypass_cast_filter": false,
    "length_sec": 0.32,
@@ -1692,7 +1703,7 @@
    "use": "해 넘긴 혼이 기다리는 동안 반복",
    "loop": false,
    "bypass_cast_filter": true,
-   "length_sec": 0.25,
+   "length_sec": 0.18,
    "peak_dbfs": -16
   },
   {
@@ -1703,7 +1714,7 @@
    "use": "오래된 혼·덩어리가 기다리는 동안 반복",
    "loop": false,
    "bypass_cast_filter": true,
-   "length_sec": 0.3,
+   "length_sec": 0.18,
    "peak_dbfs": -15
   },
   {

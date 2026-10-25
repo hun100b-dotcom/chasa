@@ -1641,3 +1641,8 @@
 - 찾은 고장: 컷 끝 resume 이 지정 곡을 지워 결전 곡이 싸움 중에 꺼짐(B-20 bigdam 도 같음). BgmPlayer 고침 제안 docs/boss-pattern-sound.md 6절.
 - UI 소리 4개: sfx.exec.card.open·sfx.bind.row.break·sfx.soulpath.light·sfx.soulpath.travel(넋길 이동이 sfx.tendo.done 을 쓰던 것 대신). 7절. 총 588개.
 - sfx.ui.rank.up 쓰임 문구: "처결이 쌓여 품계가 오를 때"(품계 규칙 변경).
+
+## 2026-10-26 KST — [기획·사운드] 조작 수정에 맞춘 발소리·구르기·착지 + 처결 대기 신호
+- 발소리 6종×4는 0초 시작·0.29초 이하라 1.375 m(초당 4번)에 맞음. 첫 걸음·멈춤·구르기 착지 발소리 자리 제안(docs/move-sound-sync.md).
+- sfx.dodge: 쉭 최대 0.072→0.05초(섞기 0.033초), 어깨 닿는 툭 추가. 매듭 걸음용 sfx.dodge.dash(옛 소리) 새로. 총 589개.
+- 처결 대기: 비율로 빨라져 4초·10초 혼이 처음엔 같게 들림 → 남은 초 기준 간격 제안. 해 넘긴·오래된 똑딱 0.18초로 줄임. 마지막 1.5초엔 똑딱 멈춤 제안.

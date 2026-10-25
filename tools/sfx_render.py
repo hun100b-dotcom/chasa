@@ -253,7 +253,27 @@ def _(r):
     return thud + puff * .5
 
 
-@sfx("sfx.dodge", -12, "전투", "회피: 옷자락이 바람을 가르는 쉭", use="회피")
+def _tail_fit(x, sec, fade=.03):
+    """소리를 sec초로 자르고 끝 fade초를 부드럽게 줄인다(빨리 되풀이되는 소리가 서로 번지지 않게)"""
+    y = np.array(x[:int(sec * SR)], dtype=float); m = min(len(y), int(fade * SR))
+    if m > 0: y[-m:] *= np.linspace(1, 0, m) ** 2
+    return y
+
+
+@sfx("sfx.dodge", -12, "전투", "구르기: 옷자락이 바람을 가르는 쉭(0.05초에 가장 큼) → 어깨가 땅에 닿는 낮은 툭·옷 쓸림(0.13초) — 0.32초 구르기에 맞춤", use="구르기(Space). 끝나는 발 디딤은 땅 재질 발소리가 따로 낸다(docs/move-sound-sync.md)")
+def _(r):
+    # 10-26 조작 수정: 구르기 동작이 0.033초 만에 섞여 들어가 몸이 바로 움직인다 → 쉭의 가장 큰 곳을 0.072→0.05초로 당김.
+    # 구르기인데 땅 닿는 소리가 없어 '공중 회피'처럼 들렸다 → 어깨 닿는 툭과 옷이 땅을 쓰는 소리를 더함
+    n = int(.32 * SR)
+    whoosh = sweep_filt(noise(n, r), "band", 420, 1900, 1.4) * env(n, .045, .11, 4)
+    cloth = filt(noise(n, r) * (r.random(n) > .7), "band", 3000, 2) * env(n, .04, .1) * .15
+    b = whoosh + cloth
+    place(b, _thump(r, .1, 120, 500) * .2, .13)                                   # 어깨가 땅에 닿음
+    m = int(.12 * SR); place(b, filt(noise(m, r), "band", 1100, 1.0) * env(m, .02, .08, 3) * .18, .14)   # 옷이 땅을 쓸며 구름
+    return b[:n]
+
+
+@sfx("sfx.dodge.dash", -12, "전투", "매듭 걸음(사슬 돌진): 옷자락이 바람을 가르는 쉭 — 땅에 닿지 않는 옛 회피 소리", use="CommandKnotDash(구르지 않고 사슬로 끌려가듯 돌진)")
 def _(r):
     n = int(.32 * SR)
     whoosh = sweep_filt(noise(n, r), "band", 380, 1900, 1.4) * env(n, .07, .12, 4)
@@ -1771,15 +1791,17 @@ def _(r):
 
 @sfx("sfx.wait.tick.year", -16, "처결", "대기 똑딱(해 넘긴 혼): 마른 나무를 치는 '똑'(목탁 비슷하게 속이 빈 소리)", bypass_cast=True, use="해 넘긴 혼이 기다리는 동안 반복")
 def _(r):
-    return modal(.25, [(r.uniform(560, 600), .05, 1), (r.uniform(1450, 1550), .025, .4), (2900, .01, .15)], r)
+    # 10-26: 남은 1.5초 쪽에서는 똑딱 간격이 0.18초까지 줄어든다 → 꼬리를 0.18초 안에 끝내 서로 번지지 않게(옛 0.25초)
+    return _tail_fit(modal(.18, [(r.uniform(560, 600), .04, 1), (r.uniform(1450, 1550), .02, .4), (2900, .01, .15)], r), .18)
 
 
 @sfx("sfx.wait.tick.old", -15, "처결", "대기 똑딱(오래된 혼): 녹슨 쇠를 긁듯 '칙' + 낮은 금 간 쇳소리 — 가장 거칠고 불안하다", bypass_cast=True, use="오래된 혼·덩어리가 기다리는 동안 반복")
 def _(r):
-    n = int(.3 * SR)
-    rust = modal(.3, [(410, .06, 1), (437, .06, .9), (1210, .03, .5)], r)   # 가까운 두 음이 부딪혀 거칠게 떪
+    # 10-26: 오래된 혼(4초)은 처음부터 간격이 짧다 → 0.3초 꼬리가 다음 똑딱과 겹쳐 뭉개졌다. 0.18초로 줄이고 거친 떨림은 앞쪽에 모음
+    n = int(.18 * SR)
+    rust = modal(.18, [(410, .04, 1), (437, .04, .9), (1210, .02, .5)], r)   # 가까운 두 음이 부딪혀 거칠게 떪
     grit = filt(noise(n, r), "band", 2500, 2) * env(n, .001, .02, 4)
-    return rust + grit * .6
+    return _tail_fit(rust + grit * .6, .18)
 
 
 @sfx("sfx.wait.final", -14, "처결", "대기 마지막 1.5초: 숨을 들이켜듯 올라가는 소리 + 고리가 조여드는 떨림 — 지금 고르지 않으면 일어선다", bypass_cast=True, use="남은 시간 1.5초에 한 번(혼 나이 상관없이 같음)")
