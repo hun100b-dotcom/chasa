@@ -1,60 +1,44 @@
 // =============================================================================
-// Dialogue.cs — NPC 대화 진행 규칙 (순수 C#, 테스트 가능). 대사 데이터(Resources/Data/dialogues.json)는 기획이 채운다.
-// 규칙: F 로 말을 걸면 첫 줄이 뜨고, F 를 누를 때마다 다음 줄, 마지막 줄 뒤에 F 를 누르면 닫힌다. 한 번 끝낸 대화는 '들었음'으로 기록해
-//       같은 사람에게 다시 말을 걸면 마지막 한 줄(되풀이 줄, repeat)만 말한다. 멀어지면(MaxDist) 저절로 닫힌다.
+// Dialogue.cs — '들은 말' 규칙 (순수 C#, 테스트 가능). 기획 명세 npc-interaction-spec.md v1.
+// 세계관상 산 사람은 차사를 못 본다 → '말 걸기'는 없다. 원 안에 머무르면 저절로 듣는다(엿듣기·지켜보기).
+//  - DwellTimer: 원 안에 있는 시간을 모은다. 나가면 멈추고, GraceSec(3초) 안에 돌아오면 이어서 쌓는다. 그보다 오래 비우면 처음부터.
+//  - HeardLog: 들은 말 기록(명부 '들은 말' 탭용). 같은 자리·같은 말은 한 번만 쌓는다.
 // =============================================================================
 using System.Collections.Generic;
 
 namespace Chasa.Core
 {
-    public sealed class TalkEntry
+    public sealed class DwellTimer
     {
-        public string Npc;                 // 말 걸 대상의 이름(NpcWorld 의 표시 이름)
-        public string[] Lines;             // 처음 말을 걸 때의 줄들
-        public string Repeat;              // 이미 들은 뒤 다시 걸 때 한 줄(없으면 마지막 줄)
-        public string GiveClue;            // 끝까지 들으면 얻는 단서 id(없으면 비움)
+        public const float GraceSec = 3f;      // 원을 나가도 이 시간 안에 돌아오면 진행 유지
+        public float Progress;                 // 지금까지 모은 초
+        float away;                            // 원 밖에 머문 초
+
+        /// <summary>한 프레임. inside=원 안, paused=전투 중이라 멈춤. 필요한 시간(need)을 채우면 true (한 번 채우면 다음 호출부터 다시 0에서 시작)</summary>
+        public bool Tick(float dt, bool inside, bool paused, float need)
+        {
+            if (paused) return false;
+            if (inside) { away = 0f; Progress += dt; if (Progress >= need) { Progress = 0f; return true; } }
+            else { away += dt; if (away > GraceSec) Progress = 0f; }
+            return false;
+        }
+
+        public float Ratio(float need) { return need <= 0f ? 0f : (Progress >= need ? 1f : Progress / need); }
     }
 
-    public sealed class DialogueState
+    public sealed class HeardEntry { public string Who, Place, Text, Clue; public int Slot; }
+
+    public sealed class HeardLog
     {
-        public const float MaxDist = 4.5f;
-        readonly Dictionary<string, TalkEntry> byNpc = new Dictionary<string, TalkEntry>();
-        readonly HashSet<string> heard = new HashSet<string>();
-        string[] lines; int idx; TalkEntry cur;
+        public readonly List<HeardEntry> Items = new List<HeardEntry>();
+        readonly HashSet<string> keys = new HashSet<string>();
 
-        public void Add(TalkEntry e) { if (e != null && !string.IsNullOrEmpty(e.Npc) && e.Lines != null && e.Lines.Length > 0) byNpc[e.Npc] = e; }
-        public bool Has(string npc) { return npc != null && byNpc.ContainsKey(npc); }
-        public int Count { get { return byNpc.Count; } }
-        public bool Active { get { return cur != null; } }
-        public string Speaker { get { return cur != null ? cur.Npc : null; } }
-        public string Line { get { return cur != null && idx < lines.Length ? lines[idx] : null; } }
-        public bool IsLast { get { return cur != null && idx >= lines.Length - 1; } }
-        public bool Heard(string npc) { return heard.Contains(npc); }
-        public IEnumerable<string> HeardIds { get { return heard; } }
-        public void MarkHeard(string npc) { heard.Add(npc); }
-
-        /// <summary>말을 건다. 대사가 없는 사람이면 false</summary>
-        public bool Start(string npc)
+        /// <summary>기록을 더한다. 이미 있으면 false</summary>
+        public bool Add(string who, string place, string text, string clue, int slot)
         {
-            TalkEntry e; if (!byNpc.TryGetValue(npc, out e)) return false;
-            cur = e; idx = 0;
-            lines = heard.Contains(npc) ? new[] { string.IsNullOrEmpty(e.Repeat) ? e.Lines[e.Lines.Length - 1] : e.Repeat } : e.Lines;
+            if (!keys.Add(who + "|" + place + "|" + slot + "|" + text)) return false;
+            Items.Add(new HeardEntry { Who = who, Place = place, Text = text, Clue = clue, Slot = slot });
             return true;
         }
-
-        /// <summary>F 한 번: 다음 줄. 마지막 줄 뒤면 닫고 그 대화의 단서 id(없으면 null)와 함께 true 를 돌려준다(끝났다는 뜻)</summary>
-        public bool Advance(out string clue)
-        {
-            clue = null;
-            if (cur == null) return false;
-            if (idx < lines.Length - 1) { idx++; return false; }
-            bool first = !heard.Contains(cur.Npc);
-            heard.Add(cur.Npc);
-            if (first && !string.IsNullOrEmpty(cur.GiveClue)) clue = cur.GiveClue;
-            cur = null; lines = null; idx = 0;
-            return true;
-        }
-
-        public void Close() { cur = null; lines = null; idx = 0; }
     }
 }

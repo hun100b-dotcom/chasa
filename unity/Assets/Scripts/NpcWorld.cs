@@ -22,7 +22,7 @@ public class NpcWorld
 
     class Spot
     {
-        public Row row; public string clue, line, half, verb, label; public Vector3 pos; public GameObject view; public NpcActor actor; public bool isObject;
+        public Row row; public string clue, line, half, verb, label; public Vector3 pos; public GameObject view; public NpcActor actor; public bool isObject; public DwellTimer dwell = new DwellTimer();
     }
 
     const float NoticeRadius = 3.5f;     // 이 거리 안이면 듣는다
@@ -45,6 +45,10 @@ public class NpcWorld
     int builtPhase = -1, builtNight = -1;
     HashSet<string> heard = new HashSet<string>();       // 오늘(이 시간대) 이미 들은 자리
     public System.Action onClue;                         // 단서를 처음 얻었을 때(안내용)
+    public System.Func<bool> inCombat;                   // 10m 안에 깨어 있는 혼이 있으면 true: 듣는 진행이 멈춘다(기획 §2-3)
+    public readonly HeardLog Log = new HeardLog();       // 들은 말 기록(명부 '들은 말' 탭용)
+    public float DwellRatio;                             // 지금 듣는 중인 자리의 진행(0~1). 화면 고리용
+    public Vector3 DwellPos;
     public string Subtitle; public float SubtitleT;      // JudgeSystem 이 화면에 그린다
 
     public NpcWorld(ClueBook book, System.Func<int> karma, System.Func<int> nightNo)
@@ -106,13 +110,25 @@ public class NpcWorld
         SubtitleT = Mathf.Max(0f, SubtitleT - dt);
         int ph = (int)phase, night = nightNo();
         if (ph != builtPhase || night != builtNight) Rebuild(ph, night);
+        bool dwelling = false;
         foreach (var s in spots)
         {
             float d = new Vector2(s.pos.x - playerPos.x, s.pos.z - playerPos.z).magnitude;
             if (s.view != null) s.view.SetActive(d < SpawnRadius);
             if (s.actor != null) { s.actor.hasLook = d < 12f; s.actor.lookAt = playerPos; s.actor.talking = d <= NoticeRadius + 1f; }   // 가까우면 돌아보고 말하는 동작
-            if (d <= NoticeRadius) Notice(s);
+            // 엿듣기·지켜보기는 원 안에 머무르면 저절로(엿듣기 3m 6초, 업 10 이상 2m · 지켜보기 6m 15초). 그 밖(만져 보기·사물)은 예전처럼 가까이 오면
+            bool eaves = Eavesdrop.IsEavesVerb(s.verb), watch = s.verb == "지켜보기";
+            if (eaves || watch)
+            {
+                float rad = eaves ? (karma() >= 10 ? Balance.EAVESDROP_RADIUS_EAR : Balance.EAVESDROP_RADIUS) : Balance.WATCH_RADIUS;
+                float need = eaves ? Balance.EAVESDROP_TIME : Balance.WATCH_TIME;
+                bool done = s.dwell.Tick(dt, d <= rad, inCombat != null && inCombat(), need);
+                if (d <= rad && s.dwell.Progress > 0f && !heard.Contains(HeardKey(s))) { DwellRatio = s.dwell.Ratio(need); DwellPos = s.pos; dwelling = true; }
+                if (done) Notice(s);
+            }
+            else if (d <= NoticeRadius) Notice(s);
         }
+        if (!dwelling) DwellRatio = 0f;
     }
 
     /// <summary>자동 플레이 테스트용: 지금 켜진 자리 중 아직 못 얻은 단서가 달린 곳의 좌표·이름을 모은다</summary>
@@ -164,10 +180,11 @@ public class NpcWorld
         return g;
     }
 
+    static string HeardKey(Spot s) { return s.row.npc + "|" + s.row.place + "|" + s.verb + "|" + s.clue; }
+
     void Notice(Spot s)
     {
-        string key = s.row.npc + "|" + s.row.place + "|" + s.verb + "|" + s.clue;
-        if (!heard.Add(key)) return;                                         // 이 시간대엔 한 번만
+        if (!heard.Add(HeardKey(s))) return;                                         // 이 시간대엔 한 번만
         bool bossClue = !string.IsNullOrEmpty(s.clue) && s.clue.StartsWith("B");
         var mode = Eavesdrop.Mode(karma(), Eavesdrop.IsEavesVerb(s.verb), bossClue);
         if (mode == EavesMode.Closed)
@@ -176,7 +193,7 @@ public class NpcWorld
             return;
         }
         string text = mode == EavesMode.Half && !string.IsNullOrEmpty(s.half) ? s.half : s.line;
-        if (!string.IsNullOrEmpty(text)) Say((s.isObject ? "" : s.label + ": ") + "「" + text + "」");
+        if (!string.IsNullOrEmpty(text)) { Say((s.isObject ? "" : s.label + ": ") + "「" + text + "」"); Log.Add(s.label, s.row.place, text, s.clue, s.row.time); }
         if (!string.IsNullOrEmpty(s.clue) && book.Add(s.clue))
         {
             Sfx.Play("sfx.clue");

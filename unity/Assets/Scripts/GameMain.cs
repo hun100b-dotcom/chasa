@@ -69,6 +69,12 @@ public class GameMain : MonoBehaviour
             judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
+            // 10m 안에 싸우는 혼이 있으면 엿듣기·지켜보기 진행이 멈춘다(기획 npc-interaction-spec §2-3)
+            judge.npcs.inCombat = () =>
+            {
+                foreach (var x in judge.enemies.list) if (x.alive && (x.Pos - judge.player.Pos).sqrMagnitude < 100f) return true;
+                return false;
+            };
             judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)
             var cu = (Application.absoluteURL ?? "").ToLowerInvariant();
             // 검수용 시각 고정: ?time=day|dusk|night|dawn 이면 그 시간대 한가운데에서 시작하고 첫 5분 시계 정지를 푼다(아트·PC 캡처용)

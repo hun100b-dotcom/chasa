@@ -179,11 +179,11 @@ public class BotScript : MonoBehaviour
         if (pend.Count == 0) return false;
         KeyValuePair<Vector3, string> best = pend[0]; float bd = 1e9f;
         foreach (var p in pend) { float d = Vector2.Distance(new Vector2(p.Key.x, p.Key.z), new Vector2(player.Pos.x, player.Pos.z)); if (d < bd) { bd = d; best = p; } }
-        if (bd <= 3.0f)
+        if (bd <= 2.0f)
         {
             // 단서 자리 반경(3.5m) 안인데 단서가 계속 안 열린다 → 업이 높아 귀가 닫혔거나 데이터 문제
             float since; if (!clueNearT.TryGetValue(best.Value, out since)) { since = t; clueNearT[best.Value] = t; }
-            if (t - since > 6f && warnedClue.Add(best.Value)) Issue("단서가 안 열림: " + best.Value + " (업 " + judge.ledger.Karma + ", 이미 6초 곁에 서 있음)");
+            if (t - since > 20f && warnedClue.Add(best.Value)) Issue("단서가 안 열림: " + best.Value + " (업 " + judge.ledger.Karma + ", 이미 20초 곁에 서 있음)");
             return true;   // 곁에 서서 기다린다
         }
         GoTo(best.Key, "단서 " + best.Value);

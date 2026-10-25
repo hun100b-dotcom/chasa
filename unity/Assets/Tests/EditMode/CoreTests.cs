@@ -1960,16 +1960,27 @@ public class CoreTests
     }
 
     [Test]
-    public void Dialogue_Lines_Repeat_AndClueOnce()
+    public void Dwell_FillsAfterNeed_GraceKeeps_LongAwayResets()
     {
-        var d = new DialogueState();
-        d.Add(new TalkEntry { Npc = "연이", Lines = new[] { "첫 줄", "둘째 줄" }, Repeat = "또 왔네.", GiveClue = "B01-X" });
-        Assert.IsTrue(d.Has("연이")); Assert.IsFalse(d.Has("없는 사람")); Assert.IsFalse(d.Start("없는 사람"));
-        Assert.IsTrue(d.Start("연이")); Assert.AreEqual("첫 줄", d.Line); Assert.IsFalse(d.IsLast);
-        string clue; Assert.IsFalse(d.Advance(out clue)); Assert.AreEqual("둘째 줄", d.Line); Assert.IsTrue(d.IsLast);
-        Assert.IsTrue(d.Advance(out clue)); Assert.AreEqual("B01-X", clue); Assert.IsFalse(d.Active);
-        Assert.IsTrue(d.Start("연이")); Assert.AreEqual("또 왔네.", d.Line);   // 다시 걸면 되풀이 한 줄
-        Assert.IsTrue(d.Advance(out clue)); Assert.IsNull(clue, "단서는 처음 한 번만");
+        var t = new DwellTimer();
+        Assert.IsFalse(t.Tick(3f, true, false, 6f));
+        Assert.IsFalse(t.Tick(2f, false, false, 6f));          // 2초 나갔다 옴: 유지
+        Assert.IsFalse(t.Tick(2f, true, false, 6f));           // 합 5초
+        Assert.IsTrue(t.Tick(1.5f, true, false, 6f));          // 6.5 >= 6 완료
+        Assert.AreEqual(0f, t.Progress);
+        t.Tick(4f, true, false, 6f); t.Tick(3.5f, false, false, 6f);   // 3초 넘게 비움
+        Assert.AreEqual(0f, t.Progress);
+        t.Tick(5f, true, true, 6f);                            // 전투 중: 쌓지 않음
+        Assert.AreEqual(0f, t.Progress);
+    }
+
+    [Test]
+    public void HeardLog_DedupesSameLine()
+    {
+        var l = new HeardLog();
+        Assert.IsTrue(l.Add("순임", "서낭당", "말", "B01-D3", 2));
+        Assert.IsFalse(l.Add("순임", "서낭당", "말", "B01-D3", 2));
+        Assert.AreEqual(1, l.Items.Count);
     }
 
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
