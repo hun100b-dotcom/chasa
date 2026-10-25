@@ -1193,3 +1193,4 @@
 - 2막 보스는 그동안 도형 대역이었는데 이제 아트 모델을 쓴다(동작: Attack=Windup, Attack2·3=Attack, Hit·Hit2·Stagger·Tendo·Pahon 연결).
 - 흑월 1차(B-04)는 눈 조각(snow_sh*, brim_snow)을 끄고, 머리 뼈에 붉은 점광원을 단다(표의 hide·light). B-12 는 눈 있는 그대로.
 - 미확인: 화면에서 모델 크기(scale 1.0)·방향·광원 세기 → PC 캡처 필요.
+- (추가) npc_act4·5에 기획 r7·r8_r10 지도 좌표를 붙임(13명 모두). 금줄 강제 해제 전날 예고 한 줄 3개(⑧ N-701 / ⑨ N-801 / ⑩ N-901), 흑월 1차 강제 전날 당할미 예고 한 줄(npc_act1 special).
