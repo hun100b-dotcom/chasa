@@ -170,15 +170,28 @@ def card_frame(hover=False):
     return im
 
 def branch_emblem(kind, size=40):
-    """갈래 표시. 기획 명세: ▲ 부름(청록) · ● 줄(청백) · ✕ 얼룩(보라). 색을 못 봐도 모양으로 구분. size=40(카드 아래/도술 창) 또는 80(카드 위 배지)."""
-    im = new(size, size); d = ImageDraw.Draw(im); c = size * S / 2; r = size * S * 0.36
-    def shape(dd, fill, g=0):
-        rr = r + g
-        if kind == "bureum": dd.polygon([(c, c - rr * 1.1), (c + rr * 1.05, c + rr * 0.85), (c - rr * 1.05, c + rr * 0.85)], fill=fill)
-        elif kind == "jul": dd.ellipse([c - rr, c - rr, c + rr, c + rr], fill=fill)
-        else:
-            t = rr * 0.42; dd.polygon([(c - rr, c - rr + t), (c - rr + t, c - rr), (c, c - t), (c + rr - t, c - rr), (c + rr, c - rr + t), (c + t, c), (c + rr, c + rr - t), (c + rr - t, c + rr), (c, c + t), (c - rr + t, c + rr), (c - rr, c + rr - t), (c - t, c)], fill=fill)
-    col = {"bureum": TEAL, "jul": CHAIN, "eolluk": PURPLE}[kind]; shape(d, INK + (255,), size * S * 0.07); shape(d, col + (255,))
+    """갈래 표시. 기획 명세 v1.5: ◎ 부름(청록 겹원) · ∞ 줄(청백 사슬 고리 둘) · 번진 먹점 얼룩(보라, 가장자리가 물결진 채운 점). 색을 못 봐도 모양으로 구분.
+    왜 바꿨나: 옛 ▲·✕는 처결(천도 ▲·파혼 ✕)과 같은 모양이라 첫 10분에 둘 다 나오면 헷갈려서 → 천도·파혼 전용으로 비움.
+    size=40(카드 아래/도술 창) 또는 80(카드 위 배지). 바깥에 먹 테두리를 둘러 어느 바탕에서도 읽힌다."""
+    im = new(size, size); d = ImageDraw.Draw(im); c = size * S / 2; r = size * S * 0.36; ink_g = size * S * 0.07
+    def blot(rr):
+        pts = []
+        for k in range(72):
+            a = k / 72 * math.tau; w = 1 + 0.10 * math.sin(5 * a + 0.6) + 0.06 * math.sin(9 * a + 2.0); pts.append((c + math.cos(a) * rr * w, c + math.sin(a) * rr * w))
+        return pts
+    def ring(cx, rad, wd, fill): d.ellipse([cx - rad, c - rad, cx + rad, c + rad], outline=fill, width=max(1, int(wd)))
+    if kind == "bureum":                                 # ◎
+        d.ellipse([c - r - ink_g, c - r - ink_g, c + r + ink_g, c + r + ink_g], fill=INK + (255,))
+        ring(c, r, r * 0.26, TEAL + (255,)); d.ellipse([c - r * 0.4, c - r * 0.4, c + r * 0.4, c + r * 0.4], fill=TEAL + (255,))
+    elif kind == "jul":                                  # ∞ (사슬 고리 둘이 맞물림)
+        rad = r * 0.58; dx = r * 0.52
+        for sx in (-1, 1): d.ellipse([c + sx * dx - rad - ink_g, c - rad - ink_g, c + sx * dx + rad + ink_g, c + rad + ink_g], fill=INK + (255,))
+        for sx in (-1, 1): ring(c + sx * dx, rad, r * 0.25, CHAIN + (255,))
+        ring(c - dx, rad, r * 0.25, CHAIN + (255,))      # 왼쪽 고리를 한 번 더 그려 겹친 곳에서 한쪽이 위로 가게(맞물림)
+        d.arc([c + dx - rad, c - rad, c + dx + rad, c + rad], 200, 340, fill=CHAIN + (255,), width=max(1, int(r * 0.25)))
+    else:                                                # 번진 먹점
+        d.polygon(blot(r + ink_g), fill=INK + (255,)); d.polygon(blot(r), fill=PURPLE + (255,))
+        d.polygon(blot(r * 0.5), fill=tuple(int(v * 0.7) for v in PURPLE) + (255,))     # 가운데 더 짙게(먹이 고인 곳)
     return im
 
 def card_art(kind):

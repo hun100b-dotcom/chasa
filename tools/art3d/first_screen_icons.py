@@ -63,6 +63,22 @@ def prompt_soulpath(size=48):
         flame(d, fx, fy - hh * S * 0.5, hh * S, (154, 92, 255, 255), INK + (255,), 1.2 * S)
     return im
 
+def prompt_16(kind):
+    """기록 탭 줄 앞 16px 단순판(명세 v1.5 §9-2): 48²를 16으로 줄이면 안쪽 하이라이트가 뭉개져서 따로 그린다.
+    안쪽 하이라이트·글로우·톱니 없음, 테두리 2px(16px 기준), 모양 하나만 크게. 천도 = 청록 ▲ + 실선 테두리 / 파혼 = 주황 ✕ + 점선 테두리.
+    64² 칸에 그린다."""
+    n = 128; im = Image.new("RGBA", (n, n), (0, 0, 0, 0)); d = ImageDraw.Draw(im); c = n / 2; u = n / 16     # u = 16px 기준 1px
+    d.ellipse([c - 7.6 * u, c - 7.6 * u, c + 7.6 * u, c + 7.6 * u], fill=(26, 20, 16, 235))
+    if kind == "tendo":
+        d.ellipse([c - 7 * u, c - 7 * u, c + 7 * u, c + 7 * u], outline=TEAL + (255,), width=int(2 * u))                      # 실선 테두리 2px
+        d.polygon([(c, c - 4.6 * u), (c + 3.9 * u, c + 3.2 * u), (c - 3.9 * u, c + 3.2 * u)], fill=TEAL + (255,))             # ▲
+    else:
+        for k in range(8):                                                                                                     # 점선 테두리 2px: 호 8개 사이를 비움
+            a0 = k * 45 + 4; d.arc([c - 7 * u, c - 7 * u, c + 7 * u, c + 7 * u], a0, a0 + 24, fill=ORANGE + (255,), width=int(2 * u))
+        for sx, sy in ((1, 1), (-1, 1)):                                                                                        # ✕ 굵은 두 획
+            d.line([(c - sx * 3.0 * u, c - 3.0 * u), (c + sx * 3.0 * u, c + 3.0 * u)], fill=ORANGE + (255,), width=int(2.1 * u))
+    return im.resize((32, 32), Image.LANCZOS)    # 128에 그려 32로 줄임(안티앨리어싱) → save가 1배 16px·@2x 32px로 저장
+
 def exec_card(kind):
     """처결 선택 카드(첫 처결만 화면 하단 큰 카드 둘): 280×96. 왼쪽 큰 모양 아이콘 + 오른쪽은 코드가 글자('[E] 천도 — 보낸다')를 얹는 자리. 테두리: 천도 실선 / 파혼 점선."""
     w, h = 280, 96; im = new(w, h); d = ImageDraw.Draw(im); W, H = w * S, h * S
@@ -93,7 +109,7 @@ def bind_fill():
 def map_icon_soul_wait():
     """미니맵: 처결 대기 중인 혼 — 비어 있는 청록 고리 + 가운데 점(채운 점인 일반 혼과 모양이 다름). 고리가 줄어드는 느낌은 코드가 크기로."""
     im = Image.new("RGBA", (128, 128), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
-    d.ellipse([14, 14, 114, 114], outline=INK + (255,), width=22); d.ellipse([24, 24, 104, 104], outline=TEAL + (255,), width=12); d.ellipse([52, 52, 76, 76], fill=INK + (255,)); d.ellipse([56, 56, 72, 72], fill=(225, 255, 247, 255))
+    d.ellipse([14, 14, 114, 114], outline=(26, 20, 16, 204), width=22); d.ellipse([24, 24, 104, 104], outline=TEAL + (255,), width=12); d.ellipse([52, 52, 76, 76], fill=INK + (255,)); d.ellipse([56, 56, 72, 72], fill=(225, 255, 247, 255))
     return im
 def map_icon_soulpath_off():
     """낮에는 닫힌 넋길: 기존 icon_soulpath를 흐리게(회색 먹 + 반투명)."""

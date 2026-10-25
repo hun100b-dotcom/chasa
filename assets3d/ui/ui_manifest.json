@@ -117,7 +117,7 @@
    64
   ],
   "x2": "icon_npc@2x.png",
-  "note": "NPC(갓 쓴 노란 점)"
+  "note": "NPC(노란 마름모 ◆, v1.5)"
  },
  "map/icons/icon_quest": {
   "size_px": [
@@ -1089,7 +1089,7 @@
    40
   ],
   "x2": "branch_bureum@2x.png",
-  "note": "갈래 표시 40²(▲ 부름 ● 줄 ✕ 얼룩, 도술 창·카드 아래)"
+  "note": "갈래 표시 40²(◎ 부름 ∞ 줄 번진 먹점 얼룩, 도술 창·카드 아래) — v1.5로 모양 교체"
  },
  "first10/branch_bureum_big": {
   "size_px": [
@@ -1097,7 +1097,7 @@
    80
   ],
   "x2": "branch_bureum_big@2x.png",
-  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음)"
+  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음) — v1.5로 모양 교체"
  },
  "first10/skill_card_art_jul": {
   "size_px": [
@@ -1113,7 +1113,7 @@
    40
   ],
   "x2": "branch_jul@2x.png",
-  "note": "갈래 표시 40²(▲ 부름 ● 줄 ✕ 얼룩, 도술 창·카드 아래)"
+  "note": "갈래 표시 40²(◎ 부름 ∞ 줄 번진 먹점 얼룩, 도술 창·카드 아래) — v1.5로 모양 교체"
  },
  "first10/branch_jul_big": {
   "size_px": [
@@ -1121,7 +1121,7 @@
    80
   ],
   "x2": "branch_jul_big@2x.png",
-  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음)"
+  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음) — v1.5로 모양 교체"
  },
  "first10/skill_card_art_eolluk": {
   "size_px": [
@@ -1137,7 +1137,7 @@
    40
   ],
   "x2": "branch_eolluk@2x.png",
-  "note": "갈래 표시 40²(▲ 부름 ● 줄 ✕ 얼룩, 도술 창·카드 아래)"
+  "note": "갈래 표시 40²(◎ 부름 ∞ 줄 번진 먹점 얼룩, 도술 창·카드 아래) — v1.5로 모양 교체"
  },
  "first10/branch_eolluk_big": {
   "size_px": [
@@ -1145,7 +1145,7 @@
    80
   ],
   "x2": "branch_eolluk_big@2x.png",
-  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음)"
+  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음) — v1.5로 모양 교체"
  },
  "first10/elite_ring": {
   "size_px": [
@@ -1491,5 +1491,21 @@
   ],
   "x2": "icon_soulpath_off@2x.png",
   "note": "낮에 닫힌 넋길(흐림). 밤이 되면 icon_soulpath로 바꾼다"
+ },
+ "first10/prompt_tendo_16": {
+  "size_px": [
+   16,
+   16
+  ],
+  "x2": "prompt_tendo_16@2x.png",
+  "note": "기록 탭 줄 앞 천도 단순판 16px(@2x 32): 안쪽 하이라이트 없음, 테두리 2px, 모양 하나"
+ },
+ "first10/prompt_pahon_16": {
+  "size_px": [
+   16,
+   16
+  ],
+  "x2": "prompt_pahon_16@2x.png",
+  "note": "기록 탭 줄 앞 파혼 단순판 16px(@2x 32): 안쪽 하이라이트 없음, 테두리 2px(점선), 모양 하나"
  }
 }

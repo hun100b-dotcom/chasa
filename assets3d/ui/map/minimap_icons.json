@@ -100,8 +100,8 @@
     64,
     64
    ],
-   "spec_size_px": 8,
-   "desc": "NPC(갓 쓴 노란 점)"
+   "spec_size_px": 10,
+   "desc": "NPC(노란 마름모 ◆, v1.5)"
   },
   "quest": {
    "uv_px": [
