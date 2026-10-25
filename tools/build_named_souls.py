@@ -15,6 +15,12 @@ PLACES = [  # 이름, 필드 x, z (임시), 명부 몫 여부
     ("박돌쇠", 182, 68, True), ("윤 소사", 205, 58, False), ("연이", 207, 54, False),
     ("장 둑지기", 184, 174, False), ("곽 뱃꾼", 372, 312, True), ("방물장수 막례", 384, 306, False),
 ]
+# 아트가 확정한 자리(data/art/npc_places_act1.json 의 named_souls_first_session)가 있으면 위 임시 좌표를 덮어쓴다
+art_path = os.path.join(root, "data", "art", "npc_places_act1.json")
+if os.path.exists(art_path):
+    art = json.load(open(art_path, encoding="utf-8")).get("named_souls_first_session", {})
+    fixed = {k.split(" ", 1)[1]: v for k, v in art.items() if " " in k}   # "S-001 박돌쇠" → "박돌쇠"
+    PLACES = [(n, fixed[n]["x"], fixed[n]["y"], l) if n in fixed else (n, x, z, l) for n, x, z, l in PLACES]
 AGE = {"fresh": 0, "year": 1, "old": 2}
 SEAL = {"clear": 0.0, "faded": 0.25, "missing": 0.5}
 out = []
@@ -23,8 +29,8 @@ for name, x, z, ledger in PLACES:
     out.append({"name": name, "x": x, "z": z, "age": AGE[s["age"]], "wait": SEAL[s["seal"]], "ledger": ledger})
 # 갈림(고르는 자리): 서사 첫 세션의 갈림 하나(우물가 혼자 있는 무명 혼, 대기 시간이 멈춤)와 갈림 둘(보릿들 둑길 넷에 둘러싸임)
 GROUPS = [
-    {"id": "galim1", "x": 176, "z": 52, "n": 1, "trigger": 28, "frozen": True},
-    {"id": "galim2", "x": 160, "z": 176, "n": 4, "trigger": 22, "frozen": False},
+    {"id": "galim1", "x": 198.5, "z": 53, "n": 1, "trigger": 28, "frozen": True},
+    {"id": "galim2", "x": 290, "z": 113, "n": 4, "trigger": 22, "frozen": False},
 ]
 out = {"souls": out, "groups": GROUPS}
 path = os.path.join(root, "unity", "Assets", "Resources", "Data", "named_souls.json")

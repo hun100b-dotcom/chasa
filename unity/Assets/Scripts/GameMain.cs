@@ -235,7 +235,8 @@ public class GameMain : MonoBehaviour
         {
             case "boss": case "boss_boat": return bp;
             case "player_and_boss": return (bp + pp) * 0.5f;
-            case "funeral": return new Vector3(182f, 0f, 68f);            // 박돌쇠 집(대장간) 마당 — 임시 좌표
+            case "funeral": return new Vector3(JudgeSystem.FuneralX, 0f, JudgeSystem.FuneralZ);   // 박돌쇠 집(대장간) 문 앞 마당(아트 확정 좌표)
+            case "forge": return new Vector3(218f, 0f, 62f);              // 대장간 안(건물 모델이 없어 터 좌표만)
             case "far_sky_over_hub": return new Vector3(188f, 0f, 60f);   // 서낭당 쪽 먼 하늘
             default: return pp;
         }

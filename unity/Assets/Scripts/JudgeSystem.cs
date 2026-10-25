@@ -457,6 +457,7 @@ public class JudgeSystem : MonoBehaviour
     bool openingStarted;
     int pahonOrTendo;            // 박돌쇠 처결 결과: 0 안 함 · 1 천도 · 2 파혼
     bool funeralShown;
+    public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
     void TickCutscenes(float dt)
     {
         // 오프닝(검은 화면 → 서낭당 고개에서 깨어남): 게임을 처음 켠 필드에서 한 번
@@ -473,11 +474,15 @@ public class JudgeSystem : MonoBehaviour
             var at = new Vector3(FieldRules.BossX - 4f, 0f, FieldRules.BossZ);
             npcs.AddScenery(at, bossOutcome == 1 ? "나룻배가 묶여 있다. 순임이 줄배를 맨다." : "판자 조각이 떠 있다. 물이 검다.", 1);
         }
-        // 박돌쇠 장례: 낮이 시작되면 결과에 맞는 장면 (천도 70초 / 파혼 조등 / 처결 못 함 20초). 첫 낮에 한 번만
+        // 박돌쇠 장례: 처결한 다음 낮, 그 집(대장간) 앞에 처음 다가갈 때 한 번(서사 확정). 천도 70초 / 처결 못 함 20초 / 파혼은 조등만(아무 일 없음, 컷 없음)
         if (clock != null && clock.Phase == ClockPhase.Day && !funeralShown && openingStarted && !cuts.Active)
         {
-            funeralShown = true;
-            cuts.Play(pahonOrTendo == 1 ? "FUNERAL_TENDO" : pahonOrTendo == 2 ? "FUNERAL_PAHON" : "FUNERAL_NONE");
+            if (pahonOrTendo == 2) funeralShown = true;   // 파혼: 일어나는 일이 없다
+            else if (new Vector2(player.Pos.x - FuneralX, player.Pos.z - FuneralZ).magnitude < 14f)
+            {
+                funeralShown = true;
+                cuts.Play(pahonOrTendo == 1 ? "FUNERAL_TENDO" : "FUNERAL_NONE");
+            }
         }
         if (!bossIntroChecked && FieldRules.On)
         {
@@ -830,7 +835,13 @@ public class JudgeSystem : MonoBehaviour
         if (cuts.LineVisible && cam != null)
         {
             var cs = new GUIStyle(GUI.skin.label) { fontSize = Ko.TouchUI ? 26 : 22, alignment = TextAnchor.MiddleCenter, wordWrap = true };
-            if (cuts.LineStyle == "memory")
+            if (cuts.LineStyle == "sfx")
+            {
+                // 소리 자막: 화면 아래 가운데, 흐린 흰 글씨 대괄호(대사가 아니다 — 서사: 소리가 들어오면 접근성 설정에서만 켠다)
+                cs.fontSize = Ko.TouchUI ? 22 : 18; cs.normal.textColor = new Color(0.85f, 0.85f, 0.85f, 0.85f);
+                GUI.Label(new Rect(Screen.width * 0.15f, Screen.height - 150, Screen.width * 0.7f, 40), cuts.LineText, cs);
+            }
+            else if (cuts.LineStyle == "memory")
             {
                 cs.normal.textColor = new Color(0.79f, 0.69f, 1f, 1f); cs.fontStyle = FontStyle.Italic;
                 GUI.Label(new Rect(Screen.width * 0.15f, Screen.height - 230, Screen.width * 0.7f, 100), "“" + cuts.LineText + "”", cs);

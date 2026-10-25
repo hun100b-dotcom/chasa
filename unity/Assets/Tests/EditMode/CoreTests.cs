@@ -1607,4 +1607,14 @@ public class CoreTests
             d.Update(5f, 1f, 3f, false, true); Assert.AreEqual(BgmLayer.Silent, d.Layer);   // 아직 처결 중
             d.Update(0.1f, 1f, 3f, false, false); Assert.AreEqual(BgmLayer.Explore, d.Layer); Assert.AreEqual(2f, d.Fade);
         }
+
+    // ---- 서사 control 칸: walk 구간은 잠금 컷이어도 걸을 수 있다 ----
+    [Test] public void Cutscene_WalkStepUnlocksMovement()
+    {
+        var cp = new CutPlayback(new CutData { id = "F", duration = 30f, @lock = true, steps = new[] {
+            new CutStep { t = 0f, ctl = "none" }, new CutStep { t = 14f, ctl = "walk" }, new CutStep { t = 52f, ctl = "none" } } });
+        Assert.IsFalse(cp.Walk);
+        cp.Tick(15f); Assert.IsTrue(cp.Walk);
+        cp.Skip(); Assert.IsFalse(cp.Walk);   // 건너뛰면 잠금 상태로 정리된다(컷이 끝나며 조작은 어차피 돌아온다)
+    }
 }

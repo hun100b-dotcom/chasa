@@ -19,12 +19,27 @@ public class CutscenePlayer
 
     public bool Active { get { return cur != null && !cur.Done; } }
     /// <summary>입력을 막아야 하나 (잠금 컷 재생 중)</summary>
-    public bool InputLocked { get { return Active && cur.Data.@lock; } }
+    public bool InputLocked { get { return Active && cur.Data.@lock && !cur.Walk; } }   // 서사 control=walk 구간은 잠금이 풀려 걸을 수 있다
     /// <summary>적을 멈춰야 하나</summary>
     /// <summary>시계를 세워야 하나 (오프닝 컷 20초 동안만 월드 시계가 멈춘다 — 서사 확정)</summary>
     public bool PauseClock { get { return Active && cur.Data.id == "OPENING"; } }
     /// <summary>오프닝의 검은 화면 가림 정도 0~1 (처음 8초는 완전히 검고, 그 뒤 10초에 걸쳐 걷힌다)</summary>
-    public float OpeningBlack { get { if (!PauseClock) return 0f; float t = cur.Time; return t < 8f ? 1f : 1f - Mathf.SmoothStep(0f, 1f, (t - 8f) / 10f); } }
+    public float OpeningBlack
+    {
+        get
+        {
+            if (!PauseClock) return 0f;
+            float t = cur.Time;   // 서사 오프닝 C-01 시간표: 0~3 검정 / 3~4.5 아주 어둡게 밝아짐 / 10~13 물에 잠김 / 13~15 어둠 / 15~18 손목 / 18~19 컷 / 이후 검정
+            if (t < 3f) return 1f;
+            if (t < 4.5f) return Mathf.Lerp(1f, 0.55f, (t - 3f) / 1.5f);
+            if (t < 10f) return 0.55f;
+            if (t < 13f) return Mathf.Lerp(0.55f, 0.8f, (t - 10f) / 3f);
+            if (t < 13.5f) return Mathf.Lerp(0.8f, 1f, (t - 13f) / 0.5f);
+            if (t < 15f) return 1f;
+            if (t < 18f) return 0.88f;
+            return 1f;
+        }
+    }
     public bool PauseEnemies { get { return Active && cur.Data.pause; } }
     public string CamTarget { get { return Active ? cur.CamTarget : "player"; } }
     public float CamZoom { get { return Active ? cur.CamZoom : 1f; } }
@@ -42,6 +57,9 @@ public class CutscenePlayer
         if (ta == null) return;
         var f = JsonUtility.FromJson<FileData>(ta.text);
         if (f != null && f.cuts != null) foreach (var c in f.cuts) byId[c.id] = c;
+        // 서사 첫 세션 대본(오프닝·장례): 있으면 코드 속 임시 장면보다 우선(Add 는 이미 있는 id 를 건드리지 않는다)
+        var fs = Resources.Load<TextAsset>("Data/cutscenes_first_session");
+        if (fs != null) { var f2 = JsonUtility.FromJson<FileData>(fs.text); if (f2 != null && f2.cuts != null) foreach (var c in f2.cuts) byId[c.id] = c; }
         AddBuiltIn();
     }
 
@@ -57,9 +75,6 @@ public class CutscenePlayer
         Add(new CutData { id = "FUNERAL_TENDO", duration = 70f, @lock = true, skippable = true, steps = new[] {
             new CutStep { t = 0f, cam = "pan", camTo = "funeral", camTime = 2f, zoom = 1.2f, text = "박돌쇠의 장례", style = "bubble", lineDur = 4f },
             new CutStep { t = 66f, cam = "return", camTime = 2f } } });
-        Add(new CutData { id = "FUNERAL_PAHON", duration = 4f, @lock = false, skippable = true, steps = new[] {
-            new CutStep { t = 0f, cam = "pan", camTo = "funeral", camTime = 1f, text = "대문에 조등만 걸려 있다", style = "bubble", lineDur = 3f },
-            new CutStep { t = 3.5f, cam = "return", camTime = 1f } } });
         Add(new CutData { id = "FUNERAL_NONE", duration = 20f, @lock = false, skippable = true, steps = new[] {
             new CutStep { t = 0f, cam = "pan", camTo = "funeral", camTime = 1.5f, text = "상이 아직 없다", style = "bubble", lineDur = 4f },
             new CutStep { t = 18f, cam = "return", camTime = 1.5f } } });

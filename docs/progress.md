@@ -347,3 +347,10 @@
 - `Core/BgmDirector.cs`: 전투 8m 진입·4초 뒤 복귀, 낮밤 히스테리시스(0.30/0.40)+8초 교차, 무릎 순간 1회 곡→무음→처결 끝나면 2초 복귀. 테스트 3개(138 통과).
 - `BgmPlayer.cs`: Resources/Audio/BGM 곡을 두 재생기로 교차, 낮 a·b 번갈아(끝 2초 전 교차), 볼륨 1.0, 소리 끔(M) 따름, 필드 모드에서만. 진짜 BGM이 있으면 임시 amb.field 끔(`Sfx.StopAmbient`).
 - PC 확인: .meta 생성, 곡 이음매, 전환 체감. 처결 곡은 천도·파혼 끝 판정을 `Casting||무릎 꿇은 적 있음`으로 근사.
+
+## 2026-10-25 — [코드·QA] 서사 첫 세션 대본(오프닝·장례) + 아트 확정 좌표 반영
+- `tools/build_first_session_cuts.py`: 서사 `docs/narrative/first_session_scripts.json` → `Resources/Data/cutscenes_first_session.json`(OPENING·FUNERAL_TENDO·FUNERAL_NONE). 대사 0이 canon이라 글자는 소리 자막(`[물소리]` 등, style=sfx)만. 파혼 갈래는 컷 없음(조등만).
+- 오프닝: 입력 잠금·시계 멈춤·건너뛰기 불가, 검은 화면 곡선을 대본 시간표(0~3 검정→어둡게→물에 잠김→손목→컷)로 교체.
+- 장례: 걷기 구간(`ctl=walk`, 14~52초)은 잠금이 풀려 걸을 수 있음(CutStep.ctl / CutPlayback.Walk, 테스트 1개). 트리거는 낮 + 대장간 문 앞(214,62) 14m 안으로 변경. 카메라 대상 forge/funeral 좌표는 아트 확정치.
+- 아트 `data/art/npc_places_act1.json`: 장소 38곳 절대 좌표를 NpcWorld가 우선 사용, 이름혼 6명 좌표·갈림 둘 자리 갱신.
+- 미반영: 개의 업별 반응, 장례 행렬 NPC·상여 연출(모델 없음), 아내 대사의 '마당 안에 있을 때만' 조건. PC에서 장면 확인 필요.

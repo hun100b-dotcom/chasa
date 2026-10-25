@@ -17,7 +17,7 @@ public class NpcWorld
 {
     [System.Serializable] class Row { public string npc, name, zone, place, verb, line, half, clue; public int region, unlock, time; }
     [System.Serializable] class ClueRow { public string boss, id, verb, zone, place, npc, what; public int time; }
-    [System.Serializable] class PlaceRow { public string place; public float ox, oz; }
+    [System.Serializable] class PlaceRow { public string place; public float ox, oz, ax, az; public int abs; }
     [System.Serializable] class FileData { public Row[] entries; public ClueRow[] clues; public PlaceRow[] places; }
 
     class Spot
@@ -33,6 +33,7 @@ public class NpcWorld
         { "Ravine", new Vector2(356f, 324f) }, { "Shrine", new Vector2(580f, 552f) },
     };
 
+    static readonly Dictionary<string, Vector2> placeAbs = new Dictionary<string, Vector2>();   // 아트가 확정한 필드 절대 좌표(동 +x · 북 +z). 있으면 이쪽이 우선
     static readonly Dictionary<string, Vector2> placeOffset = new Dictionary<string, Vector2>();   // 서사가 정한 장소별 위치(구역 중심 기준, 동 +x · 북 +z)
     readonly List<Spot> spots = new List<Spot>();        // 지금 시간대에 켜진 자리들
     readonly List<Spot> all = new List<Spot>();
@@ -52,8 +53,8 @@ public class NpcWorld
         var ta = Resources.Load<TextAsset>("Data/npc_flat");
         if (ta == null) return;
         var f = JsonUtility.FromJson<FileData>(ta.text);
-        placeOffset.Clear();
-        if (f.places != null) foreach (var pl in f.places) placeOffset[pl.place] = new Vector2(pl.ox, pl.oz);
+        placeOffset.Clear(); placeAbs.Clear();
+        if (f.places != null) foreach (var pl in f.places) { placeOffset[pl.place] = new Vector2(pl.ox, pl.oz); if (pl.abs == 1) placeAbs[pl.place] = new Vector2(pl.ax, pl.az); }
         var npcClueIds = new HashSet<string>();
         foreach (var r in f.entries)
         {
@@ -79,6 +80,12 @@ public class NpcWorld
     static Vector3 PosFor(string zone, string place)
     {
         Vector2 off;
+        if (placeAbs.TryGetValue(place, out off))   // 아트 확정 좌표: 그대로(막힌 곳이면만 살짝 밀어낸다)
+        {
+            float ax = off.x, az = off.y;
+            MapLayout.PushOut(ref ax, ref az, 0.6f);
+            return new Vector3(ax, 0f, az);
+        }
         if (placeOffset.TryGetValue(place, out off))   // 서사가 장소 위치를 정해 줬으면 그대로(아트 확정 전 임시 값)
         {
             var a0 = Anchors[zone]; float px = a0.x + off.x, pz = a0.y + off.y;

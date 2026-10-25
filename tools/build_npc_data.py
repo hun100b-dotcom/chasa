@@ -25,6 +25,15 @@ for boss, b in src["boss_clues"].items():
         clues.append({"boss": boss, "id": c["id"], "verb": c.get("verb", ""), "time": TIME.get(c.get("time", "낮"), 1),
                       "zone": c.get("zone", ""), "place": c.get("place", ""), "npc": c.get("npc") or "", "what": c.get("what", "")})
 places = [{"place": k, "ox": v["offset_m"][0], "oz": v["offset_m"][1]} for k, v in src.get("places", {}).items()]
+# 아트가 필드 절대 좌표(x=동, y=북 m)로 확정한 자리가 있으면 그것을 우선한다 (data/art/npc_places_act1.json)
+art_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "art", "npc_places_act1.json")
+if os.path.exists(art_path):
+    art = json.load(open(art_path, encoding="utf-8"))["places"]
+    n = 0
+    for pl in places:
+        a = art.get(pl["place"])
+        if a: pl["ax"], pl["az"], pl["abs"] = a["x"], a["y"], 1; n += 1
+    print("아트 확정 좌표 적용", n, "/", len(places))
 out = {"entries": rows, "clues": clues, "places": places}
 path = os.path.join(root, "unity", "Assets", "Resources", "Data", "npc_flat.json")
 json.dump(out, open(path, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))

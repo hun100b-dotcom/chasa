@@ -17,6 +17,7 @@ namespace Chasa.Core
         public float camTime, zoom, shake;       // 이동 시간, 확대 배율(0 이면 안 바꿈), 흔들림(0 이면 없음)
         public string text, style;               // 대사 글자와 모양(bubble·memory)
         public float lineDur;                    // 대사가 떠 있는 시간
+        public string ctl;                       // 조작 허용: none(잠금) / walk(걷기만) / restore(복귀). 비면 그대로 — 서사 대본의 control 칸
     }
 
     [System.Serializable]
@@ -37,6 +38,7 @@ namespace Chasa.Core
         public float CamZoom = 1f;               // 지금 확대 배율(1 = 평소)
         public float CamTime = 0.3f;             // 가장 최근 단계가 정한 이동 시간
         public float ShakeRequest;               // 이번 프레임에 새로 걸린 흔들림(쓴 쪽이 읽고 0 으로)
+        public bool Walk;                        // 지금 구간이 '걷기만 허용'인가(잠금 컷이어도 걸을 수 있다)
         public string LineText = "", LineStyle = "";
         float lineUntil;
         int next;                                 // 다음에 적용할 단계 번호
@@ -57,6 +59,7 @@ namespace Chasa.Core
             while (next < Data.steps.Length && Data.steps[next].t <= now)
             {
                 var s = Data.steps[next++];
+                if (s.ctl == "walk" || s.ctl == "restore") Walk = true; else if (s.ctl == "none") Walk = false;
                 if (!string.IsNullOrEmpty(s.cam))
                 {
                     if (s.cam == "return") { CamTarget = "player"; CamZoom = 1f; }
@@ -74,7 +77,7 @@ namespace Chasa.Core
         {
             Time = Data.duration;
             Apply(Data.duration + 1f);
-            LineText = "";                        // 건너뛰면 대사도 지운다
+            Walk = false; LineText = "";          // 건너뛰면 대사도 지운다
             CamTarget = "player"; CamZoom = 1f;   // 항상 플레이어로 돌아온다(마지막 단계가 return 이 아니어도 안전)
         }
     }
