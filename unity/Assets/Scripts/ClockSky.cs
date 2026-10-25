@@ -85,14 +85,14 @@ public static class ClockSky
         {
             // 아트 키프레임이 있으면 빛·그늘 색을 그것으로(해 방향·높이는 위 계산 그대로). 보름밤 ×1.25, 초승밤 ×0.8
             float moon = dl < 0.5f ? (clock.FullMoon ? 1.25f : clock.NewMoon ? 0.8f : 1f) : 1f;
-            if (sun != null) { sun.color = ks.light; sun.intensity = ks.intensity * moon * SkyState.LightMult; }
-            RenderSettings.ambientLight = ks.ambient;
+            if (sun != null) { sun.color = ks.light; sun.intensity = ks.intensity * moon * SkyState.LightMult * Mathf.Lerp(1f, Balance.SUN_DAY_MULT, dl); }   // 낮엔 해를 눌러 땅이 하얗게 날아가지 않게(밤 1.0)
+            RenderSettings.ambientLight = ks.ambient * Mathf.Lerp(1f, Balance.AMBIENT_DAY_MULT, dl);
         }
         else RenderSettings.ambientLight = Color.Lerp(AmbNight, AmbDay, dl);
         var fog = Color.Lerp(FieldZones.NightFog, Color.Lerp(FogDay, new Color(0.85f, 0.55f, 0.45f), red * 0.5f), dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);
         if (keyed) fog = Color.Lerp(FieldZones.NightFog, ks.fog, dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);   // 낮 안개는 아트 색, 밤엔 구역별 안개 그대로
         RenderSettings.fogColor = fog;
-        RenderSettings.fogDensity = Mathf.Lerp(FieldZones.NightDensity, 0.007f, dl) * SkyState.FogMult * Balance.FOG_DENSITY_MULT;   // 낮엔 구역과 상관없이 옅게. 날씨가 안개를 더 짙게
+        RenderSettings.fogDensity = Mathf.Lerp(FieldZones.NightDensity * Balance.FOG_NIGHT_MULT, 0.007f * Balance.FOG_DAY_MULT, dl) * SkyState.FogMult * Balance.FOG_DENSITY_MULT;   // 낮엔 구역과 상관없이 옅게. 날씨가 안개를 더 짙게
         if (cam != null) cam.backgroundColor = fog;
     }
 }

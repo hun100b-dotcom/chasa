@@ -44,6 +44,38 @@
    "key": "휠",
    "timed": true,
    "dur": 3
+  },
+  {
+   "id": "codex",
+   "pc": "명부 보기",
+   "touch": "메뉴에서 명부 보기",
+   "key": "C",
+   "timed": true,
+   "dur": 3
+  },
+  {
+   "id": "stain",
+   "pc": "얼룩 위에서는 느려진다",
+   "touch": "얼룩 위에서는 느려진다",
+   "key": "",
+   "timed": true,
+   "dur": 3
+  },
+  {
+   "id": "castdef",
+   "pc": "천도하는 동안은 무방비",
+   "touch": "천도하는 동안은 무방비",
+   "key": "",
+   "timed": true,
+   "dur": 3
+  },
+  {
+   "id": "offledger",
+   "pc": "명부 밖 혼 — 넋·엽전만 얻는다",
+   "touch": "명부 밖 혼 — 넋·엽전만 얻는다",
+   "key": "",
+   "timed": true,
+   "dur": 3
   }
  ]
 }

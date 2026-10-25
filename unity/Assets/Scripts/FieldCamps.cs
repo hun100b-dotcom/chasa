@@ -69,14 +69,17 @@ public class FieldCamps
         if (alive >= EarlyMaxAlive) { c.cooldown = 3f; return; }   // 지금은 더 못 세운다(조금 뒤 다시 시도)
         c.spawned = true;
         int count = CampRules.CountFor(c.row.n, SkyState.Daylight);   // 낮엔 적게
-        if (Balance.CAMP_DENSITY_MULT < 0.999f) count = Mathf.Max(1, Mathf.RoundToInt(count * Balance.CAMP_DENSITY_MULT));   // 전체 밀도 배율(난이도 조정)
+        int ring = RingOf(c.row.zone);
+        float dens = Balance.CAMP_DENSITY_MULT * (ring == 1 ? Balance.CAMP_DENSITY_RING1 : ring == 2 ? Balance.CAMP_DENSITY_RING2 : Balance.CAMP_DENSITY_RING3);   // 구역 고리별 밀도(난이도 조정)
+        if (dens < 0.999f) count = Mathf.Max(1, Mathf.RoundToInt(count * dens));
+        if (NearNamed(c.row.x, c.row.z)) count = Mathf.Max(1, Mathf.Min(Balance.NAMED_NEAR_CAP, Mathf.RoundToInt(count * 0.5f)));   // 이름혼 자리 둘레는 한산하게(이름혼 처결 때 둘러싸이지 않게)
         if (GhostMult > 1.001f)   // 날씨로 늘어나는 몫은 확률로 올려서(기댓값이 맞게) 작은 군집도 평균 +15% 가 된다
         {
             float exact = count * GhostMult; int whole = Mathf.FloorToInt(exact);
             count = whole + (Random.value < exact - whole ? 1 : 0);
         }
         if (EarlyMaxAlive != int.MaxValue) count = Mathf.Min(count, Mathf.Max(1, EarlyMaxAlive - alive));
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)   // i 는 '자리 수': 잔넋 무리는 2자리를 차지한다
         {
             // 군집 반지름 안 무작위 자리. 집·소품 안이면 밀려난다
             float a = Random.value * Mathf.PI * 2f, rr = Mathf.Sqrt(Random.value) * c.row.r;
@@ -87,7 +90,8 @@ public class FieldCamps
             if (type == SoulType.Wail && AliveWails(c.row.zone) >= Balance.SOULTYPE_WAIL_MAX_ZONE) type = SoulType.Plain;
             if (type == SoulType.Mote)
             {
-                int n = Random.Range(3, 6); var grp = new List<Enemy>();
+                i++;   // 잔넋 무리는 군집 2자리(기획 F-1b)
+                int n = ring == 1 ? Random.Range(Balance.MOTE_GROUP_MIN_RING1, Balance.MOTE_GROUP_MAX_RING1 + 1) : Random.Range(3, 6); var grp = new List<Enemy>();
                 for (int k = 0; k < n; k++)
                 {
                     float ma = Random.value * Mathf.PI * 2f, mr = Random.value * 2.5f;
@@ -101,6 +105,31 @@ public class FieldCamps
             var e = enemies.SpawnCamp(new Vector3(x, 0f, z), i % 2 == 0, type);
             c.members.Add(e);
         }
+    }
+
+    /// <summary>구역 이름 → 고리(1 솔고개·보릿들 / 2 물막이 골·폐당집 / 3 검은여울)</summary>
+    static int RingOf(string zone)
+    {
+        if (zone == "검은여울") return 3;
+        if (zone == "물막이 골" || zone == "폐당집") return 2;
+        return 1;
+    }
+
+    // 이름혼 자리(Data/named_souls.json). 그 둘레 군집은 한산하게 한다
+    [System.Serializable] class NamedRow { public float x, z; }
+    [System.Serializable] class NamedFile { public NamedRow[] souls; }
+    List<Vector2> namedPos;
+    bool NearNamed(float x, float z)
+    {
+        if (namedPos == null)
+        {
+            namedPos = new List<Vector2>();
+            var ta = Resources.Load<TextAsset>("Data/named_souls");
+            var nf = ta != null ? JsonUtility.FromJson<NamedFile>(ta.text) : null;
+            if (nf != null && nf.souls != null) foreach (var r in nf.souls) namedPos.Add(new Vector2(r.x, r.z));
+        }
+        foreach (var p in namedPos) if ((p - new Vector2(x, z)).magnitude <= Balance.NAMED_NEAR_M) return true;
+        return false;
     }
 
     /// <summary>같은 구역에서 지금 살아 있는 넋두리 수(동시 원거리 한도 계산)</summary>

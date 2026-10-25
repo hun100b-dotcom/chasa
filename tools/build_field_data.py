@@ -47,13 +47,15 @@ for p in v["props"]:
     add(p["prop"], p["x"] + ox, p["y"] + oy, p.get("rot", 0), p.get("z", 0.0))
 
 # 바닥 채움 소품(아트 field_cover.json: 풀·꽃·보리 이랑·돌·강변 소품). 기본은 tier 1(밭·강변·길가 소품, 약 5천)만 넣는다.
-# 풀·꽃(tier 2, 약 2만)은 수가 많아 코드가 GPU 인스턴싱·거리 컬링을 갖춘 뒤에 환경변수 FIELD_COVER_TIER=2 로 켠다. 0 이면 전부 뺀다.
-cover_tier = int(os.environ.get("FIELD_COVER_TIER", "1"))
+# 풀·꽃(tier 2, 약 2만)은 코드가 GPU 인스턴싱·거리 컬링을 갖췄으므로 기본으로 넣는다(FIELD_COVER_TIER=1 이면 tier 1 만, 0 이면 전부 뺀다).
+cover_tier = int(os.environ.get("FIELD_COVER_TIER", "2"))   # 10-25: 코드가 GPU 인스턴싱·거리 컬링(CoverInstancer)을 갖춰 기본 2(풀·꽃 포함)
 cp = os.path.join(art, "layouts", "field_cover.json")
 if cover_tier > 0 and os.path.exists(cp):
     n0 = len(items)
     for c in json.load(open(cp, encoding="utf-8"))["props"]:
-        if c["tier"] <= cover_tier: add(c["prop"], c["x"], c["y"], c["rot"], c.get("z", 0.0))
+        if c["tier"] <= cover_tier:
+            add(c["prop"], c["x"], c["y"], c["rot"], c.get("z", 0.0))
+            if c["tier"] >= 2: items[-1]["k"] = 2   # 풀·꽃: 코드(CoverInstancer)가 45m 안에서만 그린다(tier 1 은 70m)
     print("바닥 채움 소품", len(items) - n0, "(tier <=", cover_tier, ")")
 
 markers = [{"kind": m["kind"], "name": m["name"], "x": m["x"], "z": m["y"]} for m in f["markers"]]

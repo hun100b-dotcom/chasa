@@ -21,7 +21,11 @@ public class MiniMap : MonoBehaviour
     const int Px = 320;                 // 바탕 그림 한 변(픽셀)
     const float WorldM = 640f;          // 필드 한 변(m)
     const float M2P = Px / WorldM;      // 1m 당 픽셀
-    const float MiniRadiusM = 40f;      // 작은 지도가 보여 주는 반지름(m). 기획 표준 반경 40m(지름 80m)
+    // 작은 지도가 보여 주는 반지름(m). 기획 표준 40m(지름 80m) 기본, + / - 키로 30·40·60m 3단계(기획 명세 v1.2). 바뀔 때 부드럽게 따라간다
+    static readonly float[] RadiusSteps = { 30f, 40f, 60f };
+    int radiusStep = 1; float MiniRadiusM = 40f;
+    static Rect miniRect;   // 작은 지도 틀(GUI 좌표). 폰에서 탭하면 큰 지도가 열린다
+    public static bool OverMini(Vector2 screenPos) { return miniRect.width > 0f && miniRect.Contains(new Vector2(screenPos.x, Screen.height - screenPos.y)); }
     Texture2D baseTex, white, dot, frameTex; bool ready;
     readonly Dictionary<string, Texture2D> icons = new Dictionary<string, Texture2D>();
     void LoadIcons() { foreach (var n in new[] { "me", "boss", "enemy", "elite", "seonang", "bridge", "ferry", "quest", "soul_lump", "soul_fresh", "soul_named", "npc" }) icons[n] = SpriteLib.Texture("ui/map_icon_" + n); }
@@ -127,6 +131,17 @@ public class MiniMap : MonoBehaviour
         if (judge == null || judge.InDay || judge.NightOver) return;
         if (Input.GetKeyDown(KeyCode.M) && !CharacterPanel.Open && !SettingsPanel.Open) { BigOpen = !BigOpen; judge.guide.Complete("map"); }
         if (BigOpen && Input.GetKeyDown(KeyCode.Escape)) BigOpen = false;
+        // + 는 가깝게(반지름 작게), - 는 넓게. 숫자패드 키도 받는다
+        if (!BigOpen && (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.KeypadPlus))) radiusStep = Mathf.Max(0, radiusStep - 1);
+        if (!BigOpen && (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))) radiusStep = Mathf.Min(RadiusSteps.Length - 1, radiusStep + 1);
+        MiniRadiusM = Mathf.Lerp(MiniRadiusM, RadiusSteps[radiusStep], 1f - Mathf.Exp(-10f * Time.unscaledDeltaTime));
+        // 폰: 작은 지도를 탭하면 큰 지도(M 과 같다)
+        if (Ko.TouchUI && !BigOpen)
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                var t = Input.GetTouch(i);
+                if (t.phase == TouchPhase.Began && OverMini(t.position)) { BigOpen = true; judge.guide.Complete("map"); }
+            }
         if (BigOpen && judge.cuts.Active) BigOpen = false;
     }
 
@@ -163,6 +178,7 @@ public class MiniMap : MonoBehaviour
         float size = Ko.TouchUI ? Mathf.Clamp(Screen.height * 0.30f, 110f, 200f) : Mathf.Clamp(Screen.height * 0.24f, 150f, 300f);
         float margin = Mathf.Max(10f, 24f * Screen.height / 1080f);
         var r = new Rect(Screen.width - size - margin, margin, size, size);
+        miniRect = r;
         LeftPx = r.x - size * 20f / 260f - 8f;
         BottomPx = r.yMax + size * 20f / 260f + 14f;   // 시계 고리와 12px 이상 띄운다   // 지역 이름 줄까지 포함한 아래 끝(시계 고리가 그 밑에 놓인다)
         float scale = size / (MiniRadiusM * 2f);   // px/m
@@ -267,7 +283,7 @@ public class MiniMap : MonoBehaviour
             var v = p.Value; if (!big && (Mathf.Abs(v.x - cen.x) > half - 4f || Mathf.Abs(v.y - cen.y) > half - 4f)) continue;
             string mi = m.kind == "seonang" ? "seonang" : m.kind == "bridge" ? "bridge" : m.kind == "ferry" ? "ferry" : (m.kind == "village" || m.kind == "doctor") ? "npc" : null;
             if (mi == null || !Icon(mi, v, 17f)) { Box(new Rect(v.x - 5, v.y - 5, 10, 10), new Color(0.05f, 0.06f, 0.08f, 0.9f)); Box(new Rect(v.x - 3.5f, v.y - 3.5f, 7, 7), col); }
-            if (big && !ZoneHasName(m.name)) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(0.12f, 0.06f, 0.02f, 1f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white; /* 밝은 지도 위에서도 읽히게 짙은 글자 + 연한 그림자 */ }
+            if (big && (m.kind == "seonang" || m.kind == "village" || m.kind == "ferry" || m.kind == "doctor") && !ZoneHasName(m.name)) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(0.12f, 0.06f, 0.02f, 1f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white; /* 밝은 지도 위에서도 읽히게 짙은 글자 + 연한 그림자 */ }
         }
         // 보스(붉은 마름모) — 아직 안 나타났어도 자리를 표시한다
         for (int id = 1; id <= Bosses.Count; id++) { var bd = Bosses.Get(id); D(bd.X, bd.Z, new Color(0.95f, 0.15f, 0.12f), s + 6f, "boss"); }

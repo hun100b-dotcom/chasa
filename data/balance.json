@@ -1224,7 +1224,7 @@
   "note": "(QA 버그 B1) 밤 시작·첫 입력 뒤 이 시간 동안 적이 공격 준비를 시작하지 않는다(그 뒤 첫 공격은 ENEMY_ATTACK_INTERVAL 뒤). 서낭당에서 가만히 서 있다 죽는 것 방지"
  },
  "REGEN_DELAY": {
-  "value": 4.0,
+  "value": 3.0,
   "note": "(QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다"
  },
  "REGEN_PER_SEC": {
@@ -1426,18 +1426,6 @@
  "TRICK_REVIVE": {
   "value": 0.5,
   "note": "속임수 혼: 덮치며 되찾는 맺힘 비율"
- },
- "CAMERA_WHEEL_MIN": {
-  "value": 0.45,
-  "note": "마우스 휠 최대 확대 배율(카메라 거리의 45%)"
- },
- "CAMERA_WHEEL_MAX": {
-  "value": 1.8,
-  "note": "마우스 휠 최대 축소 배율(카메라 거리의 180%)"
- },
- "CAMERA_WHEEL_STEP": {
-  "value": 0.12,
-  "note": "휠 한 칸당 배율 변화"
  },
  "CAMERA_WHEEL_SMOOTH": {
   "value": 12.0,
@@ -1775,24 +1763,12 @@
   "value": 12.0,
   "note": "(기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)"
  },
- "CAMERA_PITCH_PER_ZOOM_DEG": {
-  "value": 22.0,
-  "note": "(기획 조작감) 줌 배율이 1.0 달라질 때 카메라 내려다보는 각도 변화(도). 확대하면 눕고(몰입), 축소하면 일어선다(지도처럼)"
- },
- "CAMERA_PITCH_MIN_DEG": {
-  "value": 28.0,
-  "note": "(기획 조작감) 줌으로 바뀌는 카메라 각도의 하한(도) — 낮으면 언덕·나무에 시야가 가려진다"
- },
- "CAMERA_PITCH_MAX_DEG": {
-  "value": 62.0,
-  "note": "(기획 조작감) 줌으로 바뀌는 카메라 각도의 상한(도)"
- },
  "JOY_RADIUS_PX": {
-  "value": 90.0,
+  "value": 120,
   "note": "(폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)"
  },
  "JOY_DEADZONE_PX": {
-  "value": 14.0,
+  "value": 14,
   "note": "(폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다"
  },
  "JOY_ZONE_WIDTH_FRAC": {
@@ -2057,7 +2033,7 @@
  },
  "CAMP_DENSITY_MULT": {
   "value": 1.0,
-  "note": "군집 인원 전체 배율(1.0=그대로). 첫 30분 난이도 조정용: 코디 지시로 봇이 첫 보스까지 2번 이하 쓰러지게 0.7~0.8 까지 낮춘다(10-25)"
+  "note": "군집 인원 전체 배율. 10-25 기획: 구역 고리별 배율(CAMP_DENSITY_RING1~3)로 대체돼 1.0"
  },
  "FOG_DENSITY_MULT": {
   "value": 0.6,
@@ -2074,5 +2050,85 @@
  "DMG_NUM_SCATTER_PX": {
   "value": 24,
   "note": "같은 자리 숫자를 좌우로 흩뿌리는 폭(px)"
+ },
+ "INTRO_DAMAGE_MULT": {
+  "value": 0.5,
+  "note": "첫 5분(시계 정지 중) 보스 아닌 혼의 피해 배율. 처음 1분 생존용(10-25)"
+ },
+ "SUN_DAY_MULT": {
+  "value": 0.7,
+  "note": "낮 햇빛 세기 배율(키프레임 ×). 낮에 땅·지붕이 하얗게 날아가는 노출 과다 보정(PC 캡처 10-25). 밤은 1.0 그대로"
+ },
+ "AMBIENT_DAY_MULT": {
+  "value": 0.85,
+  "note": "낮 그늘빛(주변광) 배율"
+ },
+ "MOTE_CHAIN_PAHON_M": {
+  "value": 4.0,
+  "note": "잔넋 대장을 파혼하면 이 반경(m) 안 같은 무리 잔넋이 함께 깨진다(기획 부록 F-1b, 10-25)"
+ },
+ "MOTE_CHAIN_COIN_MULT": {
+  "value": 0.6,
+  "note": "함께 깨진 잔넋 한 마리당 엽전 배율(파혼 1순위가 되지 않게)"
+ },
+ "MOTE_CHAIN_KARMA": {
+  "value": 0.5,
+  "note": "함께 깨진 잔넋 한 마리당 업(소수는 모았다가 1이 되면 반영)"
+ },
+ "WAIL_TENDO_MEMORY": {
+  "value": 1,
+  "note": "넋두리를 천도하면 기억 조각 추가"
+ },
+ "BURIED_TENDO_NEOK_MULT": {
+  "value": 1.25,
+  "note": "묻힌 혼을 천도하면 넋 배율"
+ },
+ "ATTACK_TOKENS": {
+  "value": 3,
+  "note": "동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음)"
+ },
+ "ATTACK_TOKENS_INTRO": {
+  "value": 2,
+  "note": "첫 5분(시계 정지 중) 공격 차례 수"
+ },
+ "TOKEN_WAIT_RING_M": {
+  "value": 4.5,
+  "note": "차례를 못 받은 혼이 플레이어 둘레에서 기다리는 거리(m)"
+ },
+ "CAMP_DENSITY_RING1": {
+  "value": 0.5,
+  "note": "고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)"
+ },
+ "CAMP_DENSITY_RING2": {
+  "value": 0.7,
+  "note": "고리2(물막이 골·폐당집)"
+ },
+ "CAMP_DENSITY_RING3": {
+  "value": 0.8,
+  "note": "검은여울"
+ },
+ "NAMED_NEAR_M": {
+  "value": 40.0,
+  "note": "이름혼 자리 둘레(m): 이 안 군집은 인원 ×0.5, 최대 NAMED_NEAR_CAP 마리"
+ },
+ "NAMED_NEAR_CAP": {
+  "value": 3,
+  "note": "이름혼 둘레 군집 인원 상한"
+ },
+ "MOTE_GROUP_MIN_RING1": {
+  "value": 3,
+  "note": "고리1 잔넋 무리 크기 최소"
+ },
+ "MOTE_GROUP_MAX_RING1": {
+  "value": 4,
+  "note": "고리1 잔넋 무리 크기 최대(3~4). 그 밖은 3~5"
+ },
+ "FOG_NIGHT_MULT": {
+  "value": 0.75,
+  "note": "밤 안개 짙기 추가 배율(FOG_DENSITY_MULT 위에). 밤 숲이 회색 판이 되던 것 완화(PC 10-25)"
+ },
+ "FOG_DAY_MULT": {
+  "value": 0.55,
+  "note": "낮 안개 짙기 추가 배율. 보릿들 낮이 희뿌옇던 것 완화"
  }
 }

@@ -15,6 +15,7 @@ public class DamageNumbers : MonoBehaviour
 
     public void Spawn(Vector3 worldPos, int value, string kind)
     {
+        if (value <= 0) return;   // 0 피해는 숫자를 띄우지 않는다(노란 0 이 떠 보이던 것: 아트 검수)
         Vector3 sp = cam.WorldToScreenPoint(worldPos);
         sp.x += Random.Range(-Balance.DMG_NUM_SCATTER_PX, Balance.DMG_NUM_SCATTER_PX);   // 같은 자리 숫자가 좌우로 흩어져 겹쳐 읽기 어렵던 것 방지
         while (items.Count >= Balance.DMG_NUM_MAX) items.RemoveAt(0);   // 한 화면 최대 개수: 가장 오래된 것부터 지운다

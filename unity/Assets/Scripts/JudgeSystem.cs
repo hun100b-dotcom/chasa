@@ -162,6 +162,7 @@ public class JudgeSystem : MonoBehaviour
         var at = e.Pos;
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
+        if (!e.soul.Boss && e.soul.Name == null) introPlainDone++;
         e.PlayFinishAnim(false);   // 파혼 동작(터짐)
         e.Finish();
         int coinBefore = ledger.Coin;
@@ -171,6 +172,20 @@ public class JudgeSystem : MonoBehaviour
         float baseCoin = e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN;
         ledger.Coin += Mathf.RoundToInt(baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult - baseCoin);
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
+        // 잔넋 대장 파혼 연쇄(기획 F-1b): 4m 안 같은 무리 잔넋이 함께 깨진다. 엽전은 마리당 ×0.6, 업은 마리당 +0.5 (파혼이 늘 1등이 되지 않게)
+        if (e.type == SoulType.Mote && e.leader && e.group != null)
+        {
+            int chained = 0;
+            foreach (var m in new List<Enemy>(e.group))
+            {
+                if (m == null || m == e || !m.alive || m.soul.Boss) continue;
+                if (new Vector2(m.Pos.x - at.x, m.Pos.z - at.z).magnitude > Balance.MOTE_CHAIN_PAHON_M) continue;
+                m.PlayFinishAnim(false); m.Finish(); chained++;
+                int c = Mathf.RoundToInt(Balance.PAHON_COIN * Balance.MOTE_CHAIN_COIN_MULT * lo.stats.CoinMult * lo.stats.PahonCoinMult);
+                ledger.Coin += c; night.RecordCoin(c); ledger.AddKarma(Balance.MOTE_CHAIN_KARMA);
+            }
+            if (chained > 0) Say("잔넋 " + chained + "마리가 함께 깨졌다");
+        }
         if (e.soul.Boss)
         {
             if (e.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
@@ -220,8 +235,8 @@ public class JudgeSystem : MonoBehaviour
     void FinishTendo()
     {
         var tp = castTarget.Pos;   // Finish 뒤엔 혼이 사라질 수 있어 자리를 미리 적어 둔다
-        FxMesh.Burst("fx_tendo_pillar", tp, 1f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f));
-        FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 1f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f));
+        FxMesh.Burst("fx_tendo_pillar", tp, 0.8f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f, 0.7f));   // 크기 −20%·알파 −30%(아트 검수: 화면 1/3을 흰 덩어리로 덮음)
+        FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 0.85f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f, 0.7f));
         TendoSuccessAt = Time.time;
         weather.ClearPlague(tp);   // 역병 안개: 천도한 자리 반경 4m 가 15초 걷힌다
         castTarget.PlayFinishAnim(true);   // 천도 동작(일어남→빛 알갱이→숨김)
@@ -256,10 +271,14 @@ public class JudgeSystem : MonoBehaviour
             int before = ledger.Neok;
             ledger.CompleteTendo();
             ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f + lo.Def.NeokPct));   // 향 내음: 천도 넋 보너스
+            // 묻힌 혼은 넋 ×1.25, 넋두리는 기억 조각 +1 (기획 F-1b)
+            if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
+            if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
             int gained = ledger.Neok - before;
             if (growth.AddNeok(gained) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
+            if (castTarget.soul.Name == null) introPlainDone++;
             if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
             if (night.TakeNamedSpawn() && clock == null) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
         }
@@ -553,6 +572,8 @@ public class JudgeSystem : MonoBehaviour
         if (ledger.Dead || night.Over || !player.Hurt()) return;
         // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
         int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult * weather.Fx.CastHit / Balance.WEATHER_CLEAR_CAST_HIT)) : by.damage;   // 안개: 천도 중 맞는 피해 ×(0.85/0.75)
+        // 첫 5분(시계 정지 중)은 배우는 시간: 보스가 아닌 혼의 피해를 절반으로(처음 1분을 못 버티고 쓰러지던 것 방지)
+        if (introFrozen && !by.soul.Boss) incoming = Mathf.Max(1, Mathf.RoundToInt(incoming * Balance.INTRO_DAMAGE_MULT));
         sinceHit = 0f;
         Hint(HintEvent.FirstHurt);
         guide.Complete("dodge");   // 맞아도 피하기 안내는 닫힌다(기획)
@@ -775,6 +796,11 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>지금 넋길을 탈 수 있나 (필드·밤·서낭당 곁·행동 가능). 서낭당 번호를 돌려준다(없으면 -1)</summary>
+    /// <summary>폰 '상호작용' 버튼을 보일 때인가(서낭당 곁 밤)</summary>
+    public bool CanSoulPathNow { get { return SoulPathStop() >= 0; } }
+    /// <summary>도술 칸 i 의 남은 재사용 대기(초). 이름이 없으면 0</summary>
+    public float SkillLeft(int slot) { string n = ActiveNameAt(slot); return n == null ? 0f : lo.active.Left(n); }
+
     int SoulPathStop()
     {
         if (clock == null || Casting || !player.CanActNow() || !SoulPath.Available(clock.Daylight)) return -1;
@@ -799,7 +825,8 @@ public class JudgeSystem : MonoBehaviour
     void TickClock(float dt)
     {
         // 처음 5분: 박돌쇠를 처결할 때까지(최대 10분) 시계를 멈춘다 — 시간 압박 없이 배우게(기획 first-5-minutes)
-        FieldCamps.EarlyMaxAlive = introFrozen ? 9 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
+        Enemy.TokenMax = FieldRules.On ? (introFrozen ? Balance.ATTACK_TOKENS_INTRO : Balance.ATTACK_TOKENS) : int.MaxValue;   // 동시에 때리는 혼 수 제한
+        FieldCamps.EarlyMaxAlive = introFrozen ? 5 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
         if (introFrozen && !cuts.Active && !inDay) introT += dt;
         if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
         if (!cuts.PauseClock && !introFrozen) clock.Tick(dt);   // 오프닝 컷 동안·첫 5분엔 시계가 멈춘다
@@ -822,6 +849,9 @@ public class JudgeSystem : MonoBehaviour
         if (debugKeys && Input.GetKeyDown(KeyCode.RightBracket)) clock.Speed = clock.Speed < 5f ? 10f : clock.Speed < 30f ? 60f : 1f;
     }
 
+    /// <summary>H: 회복약 마시기(봇도 부른다)</summary>
+    public void CommandHeal() { if (Shrine.UseHeal(ledger, dayScreen.Pack)) Say("회복약을 마셨다"); }
+
     void HandleKeys()
     {
         if (Input.GetKeyDown(KeyCode.E)) CommandTendo();
@@ -832,7 +862,7 @@ public class JudgeSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4)) UseSkill(3);
         if (Input.GetKeyDown(KeyCode.Tab)) player.CommandSwap();
         // 공물상에서 산 소모품: H = 회복약, X = 밟고 선 얼룩 지우기(씻김 부적)
-        if (Input.GetKeyDown(KeyCode.H) && Shrine.UseHeal(ledger, dayScreen.Pack)) Say("회복약을 마셨다");
+        if (Input.GetKeyDown(KeyCode.H)) CommandHeal();
         if (Input.GetKeyDown(KeyCode.X) && dayScreen.Pack.Cleanse > 0)
         {
             float sx, sz;
@@ -973,6 +1003,31 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>안내를 띄울 상황을 보고 요청하고, 화면 값(HudState)을 채운다. 컷신·낮 화면·창이 열려 있으면 쉰다</summary>
+    // ---- 보스 체력바·지역 진입 알림 값 채우기 ----
+    string lastArea; float areaT = -1f; int introPlainDone;   // 첫 5분 퀘스트: 이름 없는 혼을 처결한 수
+    void FillBossArea(HudState h)
+    {
+        h.BossName = null;
+        // 경험치(품계) 막대: 처음 넋을 얻은 뒤에만(하나씩 열기)
+        h.ShowExp = revNeok && FieldRules.On; h.Rank = growth.Rank;
+        { int lo0 = GrowthState.NeokForRank(growth.Rank), hi0 = GrowthState.NeokForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.TotalNeok - lo0) / (hi0 - lo0); }
+        // 첫 5분 퀘스트 추적(기획): 명부 — 이름 없는 혼 n/2, 박돌쇠 n/1. 시계가 풀리면(첫 처결 끝) 사라진다
+        if (introFrozen && FieldRules.On) { h.QuestTitle = "명부"; h.QuestLines = new[] { "이름 없는 혼 " + Mathf.Min(2, introPlainDone) + "/2", "박돌쇠 " + (pahonOrTendo != 0 ? 1 : 0) + "/1" }; }
+        else { h.QuestTitle = null; h.QuestLines = null; }
+        foreach (var e in enemies.list)
+        {
+            if (e == null || !e.soul.Boss || !e.alive && !e.kneeling) continue;
+            if (new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > 45f) continue;   // 가까이 가야 막대가 뜬다
+            h.BossName = e.label; h.BossKneel = e.kneeling; h.BossRatio = e.soul.MaedhimMax <= 0 ? 0f : (float)e.soul.Maedhim / e.soul.MaedhimMax;
+            break;
+        }
+        string zn = FieldRules.On ? FieldZones.CurrentName : null;
+        if (!string.IsNullOrEmpty(zn) && zn != lastArea) { lastArea = zn; areaT = 0f; }   // 구역이 바뀌면 4초 알림
+        if (areaT >= 0f && !cuts.Active) { areaT += Time.unscaledDeltaTime; if (areaT > 3.5f) areaT = -1f; }   // 나타남 0.5 + 유지 2 + 사라짐 1
+        h.AreaText = areaT >= 0f ? lastArea : null;
+        h.AreaAlpha = areaT < 0f ? 0f : Mathf.Min(areaT / 0.5f, (3.5f - areaT) / 1f, 1f);
+    }
+
     void GuideTick(HudState h)
     {
         if (!guideLoaded) LoadGuide();
@@ -1005,6 +1060,12 @@ public class JudgeSystem : MonoBehaviour
                 if (winding) guide.Request("dodge");
                 if (far && guide.IsDone("hit")) guide.Request("pull");
                 if (guideClock > 90f && guide.IsDone("hit")) guide.Request("zoom");
+                // 첫 5분 보충 안내 넷(기획): 처음 한 번만, 한 번에 하나씩(대기줄이 순서를 지킨다)
+                if (introPlainDone >= 1) guide.Request("codex");                                          // 첫 처결 뒤: [C] 명부
+                if (player.speedMult < 0.95f && stains.IsOnStain(player.Pos.x, player.Pos.z)) guide.Request("stain");   // 얼룩에 처음 들어가 느려질 때
+                if (Casting) guide.Request("castdef");                                                    // 천도 시전 중: 무방비
+                foreach (var e2 in enemies.list)                                                          // 명부 밖 이름혼이 무릎 꿇었을 때
+                    if (e2 != null && e2.kneeling && e2.soul.Name != null && NamedSoulSpawns.OffLedger.Contains(e2.soul.Name) && Vector3.Distance(e2.Pos, player.Pos) < 12f) { guide.Request("offledger"); break; }
             }
             guide.Tick(Time.deltaTime);
             int nDone = 0; foreach (var _ in guide.DoneIds) nDone++;
@@ -1039,6 +1100,7 @@ public class JudgeSystem : MonoBehaviour
         var h = ui.Hud;
         FillEdges(h);
         GuideTick(h);
+        FillBossArea(h);
         if (clock != null)
         {
             h.Peaceful = clock.Daylight > 0.6f && !Casting && !AnyEnemyNear(25f);
@@ -1137,7 +1199,8 @@ public class JudgeSystem : MonoBehaviour
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (white == null) return;
-        if (CharacterPanel.Open || SettingsPanel.Open) return;   // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
+        if (CharacterPanel.Open || SettingsPanel.Open || MiniMap.BigOpen) return;   // 큰 지도가 열리면 월드 이름표·막대도 숨긴다(아트 검수)
+        // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
         weather.DrawOverlay(player.Pos);   // 비 줄기(HUD 보다 아래)
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
@@ -1258,10 +1321,10 @@ public class JudgeSystem : MonoBehaviour
         // (2.5) 산 사람 대사 자막(엿듣기): 화면 아래 가운데
         if (npcs != null && npcs.SubtitleT > 0f)
         {
-            var st = new GUIStyle(GUI.skin.label) { fontSize = Ko.TouchUI ? 24 : 20, alignment = TextAnchor.MiddleCenter, wordWrap = true };
-            st.normal.textColor = new Color(1f, 0.97f, 0.88f, Mathf.Clamp01(npcs.SubtitleT / 0.6f));
-            var r = new Rect(Screen.width * 0.15f, Screen.height - 190, Screen.width * 0.7f, 60);
-            GUI.color = new Color(0, 0, 0, 0.5f * Mathf.Clamp01(npcs.SubtitleT / 0.6f)); GUI.DrawTexture(r, white); GUI.color = Color.white;
+            var st = new GUIStyle(GUI.skin.label) { fontSize = Mathf.RoundToInt((Ko.TouchUI ? 26 : 22) * Mathf.Max(1f, Screen.height / 720f)), alignment = TextAnchor.MiddleCenter, wordWrap = true };
+            st.normal.textColor = new Color(0.953f, 0.906f, 0.827f, Mathf.Clamp01(npcs.SubtitleT / 0.6f));   // 한지색 글자
+            var r = new Rect(Screen.width * 0.15f, Screen.height - Mathf.Max(190f, Screen.height * 0.24f), Screen.width * 0.7f, Mathf.Max(60f, Screen.height * 0.085f));
+            GUI.color = new Color(0.06f, 0.05f, 0.05f, 0.55f * Mathf.Clamp01(npcs.SubtitleT / 0.6f));   // 먹색 반투명 띠 GUI.DrawTexture(r, white); GUI.color = Color.white;
             GUI.Label(r, npcs.Subtitle, st);
         }
         // (3) 장부(넋·기억·엽전·업)와 안내
@@ -1325,7 +1388,7 @@ public class JudgeSystem : MonoBehaviour
         }
         if (Casting)
         {
-            var bar = new Rect(Screen.width / 2f - 80, Screen.height - 90, 160, 12);
+            var bar = new Rect(Screen.width / 2f - 80, Screen.height * 0.72f, 160, 12);   // 스킬바·처결 카드 위(도술 칸을 가리지 않게)
             GUI.color = new Color(0, 0, 0, 0.7f); GUI.DrawTexture(bar, white);
             GUI.color = ChasaPalette.CheondoGlow;
             GUI.DrawTexture(new Rect(bar.x + 1, bar.y + 1, 158f * Mathf.Clamp01(castT / castTotal), 10), white);
@@ -1363,21 +1426,29 @@ public class JudgeSystem : MonoBehaviour
             var artBs = new GUIStyle(bs);
             artBs.normal.background = null; artBs.hover.background = null; artBs.active.background = null; artBs.focused.background = null;
             artBs.normal.textColor = Color.white; artBs.fontSize = 18; artBs.alignment = TextAnchor.LowerCenter;
-            var rT = new Rect(24, Screen.height - 110, 110, 90); var rP = new Rect(148, Screen.height - 110, 130, 90);
+            // 폰 천도·파혼(기획 §5): 하단 가운데 지름 120px 둘을 같은 크기로 나란히(중심에서 ±110px, 아래 64px). 무릎 꿇은 혼이 가까울 때만 나타난다
+            float bs1 = Screen.height / 1080f, bd = 120f * bs1;
+            var rT = new Rect(Screen.width * 0.5f - 110f * bs1 - bd * 0.5f, Screen.height - 64f * bs1 - bd, bd, bd);
+            var rP = new Rect(Screen.width * 0.5f + 110f * bs1 - bd * 0.5f, Screen.height - 64f * bs1 - bd, bd, bd);
+            bool showJudge = nearKneel || nearTendo || Casting;
+            TouchControls.JudgeRects = showJudge ? new[] { rT, rP } : null;   // 조이스틱보다 먼저 눌리게 GameMain 에 알린다
+            if (showJudge)
+            {
             bool artT = DrawArt(rT, TouchHeld(rT) && nearTendo ? "ui_btn_cheondo_pressed" : "ui_btn_cheondo", nearTendo);
             if (GUI.Button(rT, "천도", artT ? artBs : bs)) CommandTendo();
             if (Casting && artT)   // 길게 누르기 고리: 천도 시전이 진행될수록 버튼 둘레 고리가 진해지며 커진다(원형 채움은 못 써서 투명도+크기로 대신)
             {
-                float cp = Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)), rs2 = 100f + 24f * cp;
+                float cp = Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)), rs2 = bd * (0.9f + 0.2f * cp);
                 DrawArt(new Rect(rT.center.x - rs2 * 0.5f, rT.center.y - rs2 * 0.5f, rs2, rs2), "ui_btn_hold_ring", true, 0.35f + 0.65f * cp);
             }
             GUI.enabled = wasEnabled && nearKneel;
             bool artP = DrawArt(rP, TouchHeld(rP) && nearKneel ? "ui_btn_pahon_pressed" : "ui_btn_pahon", nearKneel);
             if (GUI.Button(rP, "파혼", artP ? artBs : bs)) CommandPahon();
             GUI.enabled = wasEnabled;
-            if (SoulPathStop() >= 0 && GUI.Button(new Rect(292, Screen.height - 110, 110, 90), "넋길", bs)) CommandSoulPath();   // 서낭당 곁 밤에만 나타난다
+            }
+            if (!TouchControls.Active && SoulPathStop() >= 0 && GUI.Button(new Rect(292, Screen.height - 110, 110, 90), "넋길", bs)) CommandSoulPath();   // 서낭당 곁 밤에만 나타난다
             // 도술 세 칸과 무기 바꾸기 (위쪽 줄) — 시연판 기본 구성에서는 숨김
-            if (SkillsOn)
+            if (SkillsOn && !TouchControls.Active)   // 폰 도술은 새 부채꼴 버튼(TouchControls)이 맡는다
                 for (int i = 0; i < SkillTree.ActiveSlots; i++)
                 {
                     string an = ActiveNameAt(i); if (an == null) continue;

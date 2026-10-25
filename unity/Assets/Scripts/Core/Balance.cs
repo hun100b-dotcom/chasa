@@ -308,7 +308,7 @@ public static class Balance
     public const int SOCKET_COST_2 = 240;  // (시연판 임시) 기획서 부록 B 낮: 홈 뚫기 둘째 엽전
     public const int SOCKET_MAX = 2;  // (시연판 임시) 기획서 부록 B 낮: 장비 한 개의 인 홈 최대 수
     public const float NIGHT_GRACE = 4.0f;  // (QA 버그 B1) 밤 시작·첫 입력 뒤 이 시간 동안 적이 공격 준비를 시작하지 않는다(그 뒤 첫 공격은 ENEMY_ATTACK_INTERVAL 뒤). 서낭당에서 가만히 서 있다 죽는 것 방지
-    public const float REGEN_DELAY = 4.0f;  // (QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다
+    public const float REGEN_DELAY = 3.0f;  // (QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다
     public const float REGEN_PER_SEC = 2.0f;  // (QA M6 조정) 첫 밤 생존: 맞지 않는 동안 초당 체력 회복
     public const float SHRINE_HEAL_PER_SEC = 12.0f;  // (QA M6 조정) 첫 밤 생존: 서낭당 원 안에서 초당 체력 회복(맞은 직후에도). 서낭당 = 안전한 쉼터
     public const int FIRST_NIGHT_HEAL = 2;  // (QA M6 조정) 첫 밤 생존: 첫 밤 시작 때 당할미가 쥐여 주는 회복약 수(H 키)
@@ -359,9 +359,6 @@ public static class Balance
     public const float TRICK_TRIGGER_DIST = 3.0f;  // 속임수 혼: 플레이어가 이 거리(m) 안에 있으면 도화선이 탄다
     public const float TRICK_FUSE = 0.7f;  // 속임수 혼: 가까이 선 채로 이 시간(초)이 지나면 덮친다. 그 전에 파혼하면 안전(천도는 캐스팅이 길어 걸림)
     public const float TRICK_REVIVE = 0.5f;  // 속임수 혼: 덮치며 되찾는 맺힘 비율
-    public const float CAMERA_WHEEL_MIN = 0.45f;  // 마우스 휠 최대 확대 배율(카메라 거리의 45%)
-    public const float CAMERA_WHEEL_MAX = 1.8f;  // 마우스 휠 최대 축소 배율(카메라 거리의 180%)
-    public const float CAMERA_WHEEL_STEP = 0.12f;  // 휠 한 칸당 배율 변화
     public const float CAMERA_WHEEL_SMOOTH = 12.0f;  // 휠 줌이 따라가는 부드러움(클수록 빠름) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_ACCEL = 70.0f;  // 걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_START_FRAC = 0.5f;  // 걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발) | 기획 표준 명세 hud-controls-spec v1(10-25)
@@ -446,11 +443,8 @@ public static class Balance
     public const float MOVE_LEAN_DEG = 3.0f;  // (기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_BANK_DEG = 3.0f;  // (기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_LEAN_SMOOTH = 12.0f;  // (기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)
-    public const float CAMERA_PITCH_PER_ZOOM_DEG = 22.0f;  // (기획 조작감) 줌 배율이 1.0 달라질 때 카메라 내려다보는 각도 변화(도). 확대하면 눕고(몰입), 축소하면 일어선다(지도처럼)
-    public const float CAMERA_PITCH_MIN_DEG = 28.0f;  // (기획 조작감) 줌으로 바뀌는 카메라 각도의 하한(도) — 낮으면 언덕·나무에 시야가 가려진다
-    public const float CAMERA_PITCH_MAX_DEG = 62.0f;  // (기획 조작감) 줌으로 바뀌는 카메라 각도의 상한(도)
-    public const float JOY_RADIUS_PX = 90.0f;  // (폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)
-    public const float JOY_DEADZONE_PX = 14.0f;  // (폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다
+    public const int JOY_RADIUS_PX = 120;  // (폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)
+    public const int JOY_DEADZONE_PX = 14;  // (폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다
     public const float JOY_ZONE_WIDTH_FRAC = 0.45f;  // (폰 조작) 조이스틱이 생기는 화면 왼쪽 영역 너비 비율
     public const int ENHANCE_MAX = 5;  // (기획 4-4절 10-25, 임시) 장비 손보기 최대 단계(칸마다 +1~+5)
     public const float ENHANCE_PCT = 0.3f;  // (기획 4-4절 10-25 수정, 임시) 장비 손보기 한 단계마다 그 칸 주옵션(첫 옵션) 수치의 +30% (6%->30%)
@@ -516,9 +510,29 @@ public static class Balance
     public const float CAMERA_PITCH_NEAR = 46.0f;  // 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_MID = 52.0f;  // 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_FAR = 58.0f;  // 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
-    public const float CAMP_DENSITY_MULT = 1.0f;  // 군집 인원 전체 배율(1.0=그대로). 첫 30분 난이도 조정용: 코디 지시로 봇이 첫 보스까지 2번 이하 쓰러지게 0.7~0.8 까지 낮춘다(10-25)
+    public const float CAMP_DENSITY_MULT = 1.0f;  // 군집 인원 전체 배율. 10-25 기획: 구역 고리별 배율(CAMP_DENSITY_RING1~3)로 대체돼 1.0
     public const float FOG_DENSITY_MULT = 0.6f;  // 안개 농도 전체 배율(아트 검수 10-25: 1920 화면이 뿌옇다 → -40%)
     public const float CLOUD_SHADOW_MULT = 0.5f;  // 땅 구름 그림자 세기 배율(아트 검수: 대비 -50%)
     public const int DMG_NUM_MAX = 6;  // 화면 데미지 숫자 최대 개수(겹침 방지)
     public const int DMG_NUM_SCATTER_PX = 24;  // 같은 자리 숫자를 좌우로 흩뿌리는 폭(px)
+    public const float INTRO_DAMAGE_MULT = 0.5f;  // 첫 5분(시계 정지 중) 보스 아닌 혼의 피해 배율. 처음 1분 생존용(10-25)
+    public const float SUN_DAY_MULT = 0.7f;  // 낮 햇빛 세기 배율(키프레임 ×). 낮에 땅·지붕이 하얗게 날아가는 노출 과다 보정(PC 캡처 10-25). 밤은 1.0 그대로
+    public const float AMBIENT_DAY_MULT = 0.85f;  // 낮 그늘빛(주변광) 배율
+    public const float MOTE_CHAIN_PAHON_M = 4.0f;  // 잔넋 대장을 파혼하면 이 반경(m) 안 같은 무리 잔넋이 함께 깨진다(기획 부록 F-1b, 10-25)
+    public const float MOTE_CHAIN_COIN_MULT = 0.6f;  // 함께 깨진 잔넋 한 마리당 엽전 배율(파혼 1순위가 되지 않게)
+    public const float MOTE_CHAIN_KARMA = 0.5f;  // 함께 깨진 잔넋 한 마리당 업(소수는 모았다가 1이 되면 반영)
+    public const int WAIL_TENDO_MEMORY = 1;  // 넋두리를 천도하면 기억 조각 추가
+    public const float BURIED_TENDO_NEOK_MULT = 1.25f;  // 묻힌 혼을 천도하면 넋 배율
+    public const int ATTACK_TOKENS = 3;  // 동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음)
+    public const int ATTACK_TOKENS_INTRO = 2;  // 첫 5분(시계 정지 중) 공격 차례 수
+    public const float TOKEN_WAIT_RING_M = 4.5f;  // 차례를 못 받은 혼이 플레이어 둘레에서 기다리는 거리(m)
+    public const float CAMP_DENSITY_RING1 = 0.5f;  // 고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)
+    public const float CAMP_DENSITY_RING2 = 0.7f;  // 고리2(물막이 골·폐당집)
+    public const float CAMP_DENSITY_RING3 = 0.8f;  // 검은여울
+    public const float NAMED_NEAR_M = 40.0f;  // 이름혼 자리 둘레(m): 이 안 군집은 인원 ×0.5, 최대 NAMED_NEAR_CAP 마리
+    public const int NAMED_NEAR_CAP = 3;  // 이름혼 둘레 군집 인원 상한
+    public const int MOTE_GROUP_MIN_RING1 = 3;  // 고리1 잔넋 무리 크기 최소
+    public const int MOTE_GROUP_MAX_RING1 = 4;  // 고리1 잔넋 무리 크기 최대(3~4). 그 밖은 3~5
+    public const float FOG_NIGHT_MULT = 0.75f;  // 밤 안개 짙기 추가 배율(FOG_DENSITY_MULT 위에). 밤 숲이 회색 판이 되던 것 완화(PC 10-25)
+    public const float FOG_DAY_MULT = 0.55f;  // 낮 안개 짙기 추가 배율. 보릿들 낮이 희뿌옇던 것 완화
 }

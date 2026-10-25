@@ -1942,5 +1942,22 @@ public class CoreTests
         g.Tick(3.1f); Assert.IsNull(g.Current, "시간제 안내는 시간이 지나면 닫힌다");
     }
 
+    [Test]
+    public void GridPath_GoesAroundWall_AndNullWhenSealed()
+    {
+        // 20×20 열린 땅(폭 5m) 가운데에 세로 벽(x=10, z 0~17)을 세우면 위쪽 틈(z 18~19)으로 돌아가야 한다
+        var c = new byte[400]; for (int i = 0; i < 400; i++) c[i] = 100;
+        for (int z = 0; z < 18; z++) c[z * 20 + 10] = 0;
+        var gp = new GridPath(c, 20, 20);
+        var path = gp.Find(2, 2, 17, 2, 1f);
+        Assert.IsNotNull(path); Assert.Greater(path.Count, 1, "벽을 돌아가려면 꺾는 점이 있어야 한다");
+        float maxZ = 0; foreach (var p in path) maxZ = System.Math.Max(maxZ, p[1]);
+        Assert.GreaterOrEqual(maxZ, 18f, "틈(z>=18)을 지나야 한다");
+        Assert.AreEqual(17f, path[path.Count - 1][0], 0.01f);
+        // 틈까지 막으면 길이 없다
+        c[18 * 20 + 10] = 0; c[19 * 20 + 10] = 0;
+        Assert.IsNull(new GridPath(c, 20, 20).Find(2, 2, 17, 2, 1f));
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

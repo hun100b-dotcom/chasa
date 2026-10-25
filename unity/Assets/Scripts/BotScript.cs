@@ -36,12 +36,28 @@ public class BotScript : MonoBehaviour
     readonly List<KeyValuePair<Vector3, string>> pend = new List<KeyValuePair<Vector3, string>>();
     readonly HashSet<string> warnedClue = new HashSet<string>(); readonly Dictionary<string, float> clueNearT = new Dictionary<string, float>();
     readonly List<string> issues = new List<string>();
-    float nextAttack, stageT; bool casting;
+    float nextAttack, stageT, nextHeal; bool casting;
+    int maxNear; string maxNearAt = "";
+    float ledger_HpRatio() { return judge.ledger.MaxHp <= 0 ? 1f : (float)judge.ledger.Hp / judge.ledger.MaxHp; }
+    // 길찾기: 아트의 여유 폭 지도(1m 칸)를 A* 로 따라가 바위·물에 걸리지 않게 한다(직선으로만 가면 순간이동이 필요했다)
+    GridPath nav; List<float[]> route; int routeIdx; Vector3 routeGoal;
 
     void Start()
     {
         speed = Param("speed", 6f); maxReal = Param("max", 1800f); god = Param("god", 1f) > 0.5f;
+        LoadNav();
         Log("시작 speed=" + speed + " god=" + god + " max=" + maxReal + "s");
+    }
+
+    /// <summary>여유 폭 지도를 읽는다. 없으면 길찾기 없이 직선(예전 방식)으로 간다</summary>
+    void LoadNav()
+    {
+        var ta = Resources.Load<TextAsset>("Map/nav_clearance"); if (ta == null) return;
+        var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        if (!tex.LoadImage(ta.bytes)) return;
+        int w = tex.width, h = tex.height; var px = tex.GetPixels32(); var cells = new byte[w * h];
+        for (int z = 0; z < h; z++) for (int x = 0; x < w; x++) cells[z * w + x] = px[z * w + x].r;   // GetPixels32 는 맨 아래 줄이 0 번이라, 그림 위쪽=북(z 큰 쪽)과 z 가 그대로 맞는다
+        nav = new GridPath(cells, w, h);
     }
 
     void Log(string s) { Debug.Log("[BOT] t=" + t.ToString("0") + "s " + Stamp() + " " + s); }
@@ -83,6 +99,11 @@ public class BotScript : MonoBehaviour
         if (deaths >= 5) { Finish("5번 쓰러져 중단"); return; }
         if (t > maxReal) { Finish("시간 초과(" + maxReal + "초)"); return; }
         if (judge.BossOutcomeNow != 0) { Finish(judge.BossOutcomeNow == 1 ? "보스 천도 성공" : "보스 파혼"); return; }
+        // 체력이 30% 아래면 회복약(실제 사람처럼. 약이 없으면 아무 일도 안 일어난다)
+        if (ledger_HpRatio() < 0.3f && t >= nextHeal) { nextHeal = t + 1.5f; judge.CommandHeal(); }
+        // 둘레 25m 안 살아 있는 적 수의 최고치와 그 자리(구역 이름 포함) — 난이도 점검용
+        { int near = 0; foreach (var e in enemies.list) if (e != null && e.alive && Vector3.Distance(e.Pos, player.Pos) <= 25f) near++;
+          if (near > maxNear) { maxNear = near; maxNearAt = player.Pos.ToString("0") + " " + (FieldZones.CurrentName ?? ""); } }
         // ③ 무엇을 할까
         bool night = clk.Phase == ClockPhase.Night || clk.Phase == ClockPhase.Dusk;
         clk.Speed = (night ? 1f : speed);   // 낮 대기는 빨리, 밤 싸움은 실제 속도
@@ -183,7 +204,7 @@ public class BotScript : MonoBehaviour
     {
         if (!hasGoal || goalName != name) { goalName = name; goalPos = pos; hasGoal = true; goalSince = t; lastMovePos = player.Pos; lastMoveCheckT = t; Log("목표 → " + name + " (" + Vector3.Distance(pos, player.Pos).ToString("0") + "m)"); }
         goalPos = pos;
-        player.CommandMove(pos);
+        player.CommandMove(NextStep(pos));
         // 목표로 가는데 8초(실제) 동안 거의 안 움직이면 막힌 것: 순간이동으로 건너뛴다
         if (t - lastMoveCheckT > 8f)
         {
@@ -191,6 +212,23 @@ public class BotScript : MonoBehaviour
             lastMovePos = player.Pos; lastMoveCheckT = t;
         }
         if (t - goalSince > 120f) { Issue("목표 '" + name + "' 에 120초 넘게 못 감 → 순간이동"); Warp(pos); goalSince = t; }
+    }
+
+    /// <summary>멀면(10m 넘게) 웨이포인트를 차례로 따라가고, 가까우면 목표로 곧장 간다</summary>
+    Vector3 NextStep(Vector3 pos)
+    {
+        if (nav == null) return pos;
+        var me = player.Pos; float dist = Vector2.Distance(new Vector2(me.x, me.z), new Vector2(pos.x, pos.z));
+        if (dist < 10f) { route = null; return pos; }
+        if (route == null || Vector2.Distance(new Vector2(routeGoal.x, routeGoal.z), new Vector2(pos.x, pos.z)) > 6f)
+        {
+            route = nav.Find(me.x, me.z, pos.x, pos.z, 1.0f); if (route == null) route = nav.Find(me.x, me.z, pos.x, pos.z, 0.5f);
+            routeGoal = pos; routeIdx = 0;
+            if (route == null) { Issue("길 못 찾음: " + me.ToString("0") + " → " + pos.ToString("0")); return pos; }
+        }
+        while (routeIdx < route.Count - 1 && Vector2.Distance(new Vector2(me.x, me.z), new Vector2(route[routeIdx][0], route[routeIdx][1])) < 2.5f) routeIdx++;
+        if (routeIdx >= route.Count) return pos;
+        var wp = route[routeIdx]; return new Vector3(wp[0], me.y, wp[1]);
     }
 
     void Warp(Vector3 pos)
@@ -218,7 +256,7 @@ public class BotScript : MonoBehaviour
         var sb = new StringBuilder();
         sb.Append("{\"결과\":\"").Append(why).Append("\",\"실제초\":").Append(t.ToString("0")).Append(",\"게임\":\"").Append(Stamp()).Append("\"");
         sb.Append(",\"단서\":").Append(ClueCount()).Append(",\"넋\":").Append(judge.ledger.Neok).Append(",\"기억\":").Append(judge.ledger.Memory).Append(",\"업\":").Append(judge.ledger.Karma);
-        sb.Append(",\"쓰러짐\":").Append(deaths).Append(",\"막힘순간이동\":").Append(unstucks).Append(",\"컷\":").Append(cutsSeen).Append(",\"문제\":[");
+        sb.Append(",\"쓰러짐\":").Append(deaths).Append(",\"막힘순간이동\":").Append(unstucks).Append(",\"컷\":").Append(cutsSeen).Append(",\"최대동시적25m\":\"").Append(maxNear).Append(" @ ").Append(maxNearAt).Append("\"").Append(",\"문제\":[");
         for (int i = 0; i < issues.Count; i++) { if (i > 0) sb.Append(','); sb.Append('"').Append(issues[i].Replace("\"", "'")).Append('"'); }
         sb.Append("]}");
         Debug.Log("[BOT-REPORT] " + sb);

@@ -237,8 +237,14 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void Freeze(float seconds) { freezeT = Mathf.Max(freezeT, seconds); }
 
+    // ---- 공격 차례(토큰): 동시에 때리는 보통 혼 수를 제한해, 둘러싸여도 한꺼번에 맞아 쓰러지지 않게 한다(기획 10-25) ----
+    public static int TokenMax = int.MaxValue;                          // JudgeSystem 이 매 프레임 정한다(첫 5분엔 2, 이후 3)
+    static readonly HashSet<Enemy> tokenHolders = new HashSet<Enemy>();   // 지금 예고·공격 중인 혼들
+    public static void ResetTokens() { tokenHolders.Clear(); }
+
     public void Tick(float dt, Vector3 playerPos)
     {
+        if (gone || !alive) tokenHolders.Remove(this);
         lastPlayerPos = playerPos; LastPlayer = playerPos;
         if (boundT > 0f) boundT -= dt;
         if (gone) { TickDead(dt); return; }
@@ -271,9 +277,21 @@ public class Enemy : MonoBehaviour
             else
             {
             // 예비동작 중에는 멈춰 서서 '곧 때린다'는 신호를 준다 (피할 시간)
-            if (canAct && !atk.Winding) Chase(dt, playerPos);
+            bool gated = !soul.Boss && !extra;   // 보스·추가 혼은 차례 제한이 없다
+            if (gated) atk.Blocked = !atk.Winding && !tokenHolders.Contains(this) && tokenHolders.Count >= TokenMax;
+            else atk.Blocked = false;
+            if (canAct && !atk.Winding)
+            {
+                if (atk.Blocked && dist < Balance.TOKEN_WAIT_RING_M)   // 차례를 기다리는 혼: 둘레를 천천히 돌며 기다린다(겹쳐 서서 한 덩어리가 되지 않게)
+                {
+                    var tg = new Vector3(-(playerPos.z - Pos.z), 0f, playerPos.x - Pos.x) / Mathf.Max(0.01f, dist);
+                    Pos += tg * speed * slowMult * 0.35f * dt;
+                }
+                else Chase(dt, playerPos);
+            }
             bool wasWind = atk.Winding;
             if (atk.Tick(dt, dist, canAct)) onHitPlayer?.Invoke();
+            if (gated) { if (atk.Winding) tokenHolders.Add(this); else tokenHolders.Remove(this); }
             if (atk.Winding && !wasWind) Sfx.Play("sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
             mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)

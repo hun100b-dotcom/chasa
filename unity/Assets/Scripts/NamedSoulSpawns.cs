@@ -18,6 +18,8 @@ public class NamedSoulSpawns
     readonly HashSet<string> groupDone = new HashSet<string>();
     class Entry { public Row row; public Enemy live; public bool done; }
 
+    /// <summary>명부에 없는 이름혼(처결해도 넋·엽전만 얻는다)의 이름 모음 — 첫 5분 안내가 쓴다</summary>
+    public static readonly HashSet<string> OffLedger = new HashSet<string>();
     const float SpawnDist = 60f, ReleaseDist = 150f;
     readonly List<Entry> entries = new List<Entry>();
     readonly EnemyManager enemies;
@@ -28,7 +30,7 @@ public class NamedSoulSpawns
         var ta = Resources.Load<TextAsset>("Data/named_souls");
         if (ta == null) return;
         var f = JsonUtility.FromJson<FileData>(ta.text);
-        if (f != null && f.souls != null) foreach (var r in f.souls) entries.Add(new Entry { row = r });
+        if (f != null && f.souls != null) foreach (var r in f.souls) { entries.Add(new Entry { row = r }); if (!r.ledger) OffLedger.Add(r.name); }
         if (f != null && f.groups != null) groups.AddRange(f.groups);
     }
 

@@ -10,6 +10,7 @@ namespace Chasa.Core
         public float Cooldown = Balance.ENEMY_ATTACK_INTERVAL; // 다음 공격까지 남은 시간
         public float Windup;                                   // 예비동작 남은 시간 (0이면 준비 중 아님)
         public bool Winding => Windup > 0f;
+        public bool Blocked;   // 공격 차례(토큰)를 못 받았다: 사거리 안이어도 예비동작을 시작하지 않고 기다린다
         // 유형별로 다른 값을 쓸 수 있게 인스턴스 값으로 둔다(기본은 Balance 의 보통 혼 값). 잔넋이 짧은 선딜·간격을 쓴다
         public float WindupTime = Balance.ENEMY_ATTACK_WINDUP, Interval = Balance.ENEMY_ATTACK_INTERVAL, Range = Balance.ENEMY_ATTACK_RANGE;
         /// <summary>예비동작 진행도 0~1 (화면에서 적이 부풀거나 붉어지는 연출용)</summary>
@@ -34,8 +35,10 @@ namespace Chasa.Core
             }
 
             Cooldown -= dt;
+            // 차례(토큰)를 못 받아 기다리는 혼이 대기 시간(0)이 끝난 채 쌓여 있다가, 자리가 나자마자 한꺼번에 때리는 것을 막는다: 대기를 반 간격으로 다시 건다
+            if (Blocked && Cooldown <= 0f) Cooldown = Interval * 0.5f;
             // 사거리 안에 들어와야 예비동작을 시작한다 (멀리서 헛되이 휘두르지 않게)
-            if (Cooldown <= 0f && dist <= Range)
+            if (Cooldown <= 0f && dist <= Range && !Blocked)
                 Windup = WindupTime;
             return false;
         }
