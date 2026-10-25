@@ -713,4 +713,5 @@ public static class Balance
     public const float CANCEL_RECOVER_MOVE = 0.6f;  // (타격감 권장값 10-25, 기획) (타격감 분석 10-24) 이동으로 끊기는 후딜 60% 지난 뒤부터 [신규]
     public const float PAHON_RECOVER_DODGE_FROM = 0.1f;  // (타격감 권장값 10-25, 기획) (타격감 분석 10-24)  [신규]
     public const float CAGE_DAMAGE_MULT = 1.5f;  // (균형 2차 10-25) 쇠사슬 울 안 적이 받는 피해 배율
+    public const float SEAL_CRAFT_HOLD_S = 0.6f;  // (기획 명세 §8) 인 만들기 버튼 누르고 있기(초)
 }

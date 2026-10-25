@@ -1098,6 +1098,8 @@ public class JudgeSystem : MonoBehaviour
     float holdT, lastHold; bool prevF, heldConsumed;
     readonly List<InteractCand> candBuf = new List<InteractCand>();
 
+    /// <summary>서낭당 곁(귀환 반경 + 여유 2m)인가 — 인 만들기가 열리는 자리</summary>
+    public bool AtShrine { get { float d; ShrineNear(out d); return d <= Balance.SHRINE_RADIUS + 2f; } }
     void ShrineNear(out float dist) { dist = float.MaxValue; foreach (var sh in FieldRules.Shrines) { float d = Mathf.Sqrt((sh[0] - player.Pos.x) * (sh[0] - player.Pos.x) + (sh[1] - player.Pos.z) * (sh[1] - player.Pos.z)); if (d < dist) dist = d; } }
 
     /// <summary>매 프레임: 후보를 모아 대상 하나를 고르고, F 누름·누르고 있기(만져 보기·쉬기)를 처리한다</summary>

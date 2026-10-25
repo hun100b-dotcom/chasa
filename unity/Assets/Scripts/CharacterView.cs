@@ -69,11 +69,11 @@ public partial class CharacterPanel
         // 탭 줄
         var tabs = new VisualElement { pickingMode = PickingMode.Position }; tabs.style.flexDirection = FlexDirection.Row; tabs.style.justifyContent = Justify.SpaceBetween;
         var left = new VisualElement { pickingMode = PickingMode.Position }; left.style.flexDirection = FlexDirection.Row;
-        for (int i = 3; i < 5; i++) { int ti = i; var t = VBtn(left, TabNames[i] + (tab == i ? " *" : ""), () => { if (tab != ti) Sfx.Play("sfx.ui.tab"); tab = ti; }, tab == i ? hi : txt, 16); t.style.marginRight = 14; }
+        for (int i = 3; i < 6; i++) { int ti = i; var t = VBtn(left, TabNames[i] + (tab == i ? " *" : ""), () => { if (tab != ti) Sfx.Play("sfx.ui.tab"); tab = ti; }, tab == i ? hi : txt, 16); t.style.marginRight = 14; }
         tabs.Add(left); VBtn(tabs, "닫기", () => Open = false, txt, 16);
         box.Add(tabs);
         var body = new ScrollView(ScrollViewMode.Vertical); body.style.flexGrow = 1; body.style.marginTop = 8;
-        if (tab == 3) BuildBook(body, txt, hi, bm); else BuildHeard(body, txt, bm);
+        if (tab == 3) BuildBook(body, txt, hi, bm); else if (tab == 5) BuildSeals(body, txt, hi, bm); else BuildHeard(body, txt, bm);
         box.Add(body);
         view.Add(box);
     }
