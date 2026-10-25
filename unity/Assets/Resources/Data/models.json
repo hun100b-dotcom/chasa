@@ -975,6 +975,594 @@
     "Walk"
    ],
    "yaw": 180
+  },
+  {
+   "key": "wail_fresh",
+   "path": "Models/Soul/soul_wail_fresh",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "wail_day",
+   "path": "Models/Soul/soul_wail_day",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "wail_old",
+   "path": "Models/Soul/soul_wail_old",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "wail_lump",
+   "path": "Models/Soul/soul_wail_lump",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "mote_fresh",
+   "path": "Models/Soul/soul_mote_fresh",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "mote_day",
+   "path": "Models/Soul/soul_mote_day",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "mote_old",
+   "path": "Models/Soul/soul_mote_old",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "mote_lump",
+   "path": "Models/Soul/soul_mote_lump",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "buried_fresh",
+   "path": "Models/Soul/soul_buried_fresh",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Hidden"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Hidden"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Sink"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "buried_day",
+   "path": "Models/Soul/soul_buried_day",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Hidden"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Hidden"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Sink"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "buried_old",
+   "path": "Models/Soul/soul_buried_old",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Hidden"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Hidden"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Sink"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "buried_lump",
+   "path": "Models/Soul/soul_buried_lump",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Hidden"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Hidden"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Sink"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
   }
  ],
  "props": [

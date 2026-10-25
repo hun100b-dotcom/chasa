@@ -1866,5 +1866,61 @@ public class CoreTests
         Assert.IsTrue(CampRules.Adjust(ref x, ref z, 8f, ref n, sh, boss));
         Assert.AreEqual(4, n);
     }
+    [Test]
+    public void SoulTypes_PickByZone_FollowsRatios()
+    {
+        Assert.AreEqual(SoulType.Plain, SoulTypeRules.Pick(null, 0.1f));
+        Assert.AreEqual(SoulType.Mote, SoulTypeRules.Pick("솔고개 마을", 0.10f));      // 35% 잔넋
+        Assert.AreEqual(SoulType.Wail, SoulTypeRules.Pick("솔고개 마을", 0.40f));      // 35~50% 넋두리
+        Assert.AreEqual(SoulType.Plain, SoulTypeRules.Pick("솔고개 마을", 0.80f));     // 묻힌 혼 0%, 나머지 보통
+        Assert.AreEqual(SoulType.Wail, SoulTypeRules.Pick("검은여울", 0.15f));          // 잔넋 10% → 넋두리 10~35%
+        Assert.AreEqual(SoulType.Buried, SoulTypeRules.Pick("검은여울", 0.50f));        // 묻힌 혼 35~70%
+        Assert.AreEqual(SoulType.Mote, SoulTypeRules.Pick("검은여울", 0.05f));
+        Assert.AreEqual(SoulType.Plain, SoulTypeRules.Pick("검은여울", 0.95f));
+        Assert.AreEqual(SoulType.Plain, SoulTypeRules.Pick("알 수 없는 곳", 0.01f));
+    }
+
+    [Test]
+    public void SoulTypes_Stats_ScaleByTypeAndGrade()
+    {
+        Assert.AreEqual((int)System.Math.Round(Balance.MAEDHIM_NORMAL * Balance.SOULTYPE_MOTE_HP), SoulTypeRules.Maedhim(SoulType.Mote, SoulKind.Fresh, Balance.MAEDHIM_NORMAL));
+        Assert.AreEqual(System.Math.Round(Balance.SOULTYPE_WAIL_DAMAGE * Balance.SOULGRADE_LUMP_DAMAGE), SoulTypeRules.Damage(SoulType.Wail, SoulKind.Lump));
+        Assert.Less(SoulTypeRules.Speed(SoulType.Plain, SoulKind.Old), 1f, "묵은 혼은 느리다");
+        Assert.Greater(SoulTypeRules.Speed(SoulType.Mote, SoulKind.Fresh), 1f, "잔넋은 빠르다");
+        Assert.IsFalse(SoulTypeRules.Reachable(SoulType.Buried, BuriedPhase.Hidden));
+        Assert.IsFalse(SoulTypeRules.Reachable(SoulType.Buried, BuriedPhase.Windup), "예고 중엔 아직 못 때린다(회피 창)");
+        Assert.IsTrue(SoulTypeRules.Reachable(SoulType.Buried, BuriedPhase.Up));
+        Assert.IsTrue(SoulTypeRules.Reachable(SoulType.Wail, BuriedPhase.Hidden), "다른 유형은 늘 닿는다");
+    }
+
+    [Test]
+    public void WailAi_KeepsDistanceAndThrowsAfterWindup()
+    {
+        Assert.AreEqual(-1, WailAi.MoveDir(3f)); Assert.AreEqual(0, WailAi.MoveDir(8f)); Assert.AreEqual(1, WailAi.MoveDir(12f));
+        var w = new WailAi(); bool fired = false; float t = 0f;
+        while (t < 10f && !fired) { fired = w.Tick(0.05f, 8f, true); t += 0.05f; }
+        Assert.IsTrue(fired, "시야 안이면 결국 던진다");
+        Assert.AreEqual(Balance.SOULTYPE_WAIL_INTERVAL * 0.5f + Balance.SOULTYPE_WAIL_WINDUP, t, 0.15f);
+        var far = new WailAi(); for (int i = 0; i < 400; i++) Assert.IsFalse(far.Tick(0.05f, Balance.SOULTYPE_WAIL_SIGHT_M + 5f, true), "시야 밖이면 던지지 않는다");
+        var hit = new WailAi(); hit.Windup = 0.3f; hit.Interrupt(); Assert.IsFalse(hit.Winding, "맞으면 선딜이 끊긴다");
+    }
+
+    [Test]
+    public void BuriedAi_AmbushCycle()
+    {
+        var b = new BuriedAi();
+        Assert.IsFalse(b.Tick(0.1f, 20f)); Assert.AreEqual(BuriedPhase.Hidden, b.Phase, "멀면 숨어 있다");
+        b.Tick(0.1f, 3f); Assert.AreEqual(BuriedPhase.Windup, b.Phase, "4.5m 안이면 예고");
+        bool strike = false; float t = 0f;
+        while (t < 3f && !strike) { strike = b.Tick(0.02f, 1f); t += 0.02f; }
+        Assert.IsTrue(strike, "예고 → 솟음 → 붙잡기");
+        Assert.AreEqual(Balance.SOULTYPE_BURIED_WINDUP + 0.4f, t, 0.1f);
+        while (b.Phase != BuriedPhase.Hidden && t < 6f) { b.Tick(0.02f, 1f); t += 0.02f; }
+        Assert.AreEqual(BuriedPhase.Hidden, b.Phase, "공격 뒤 묻힌다");
+        for (int i = 0; i < 100; i++) b.Tick(0.02f, 1f); Assert.AreEqual(BuriedPhase.Hidden, b.Phase, "6초 지나기 전엔 재매복하지 않는다");
+        bool again = false; for (int i = 0; i < 400; i++) { b.Tick(0.02f, 1f); if (b.Phase != BuriedPhase.Hidden) again = true; } Assert.IsTrue(again, "6초 뒤 다시 매복");
+        Assert.IsTrue(BuriedAi.InStrike(1.5f)); Assert.IsFalse(BuriedAi.InStrike(3.5f));
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

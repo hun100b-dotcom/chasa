@@ -136,7 +136,7 @@ public class BotScript : MonoBehaviour
             float d = Vector3.Distance(e.Pos, player.Pos);
             if (e.kneeling && judge.CanTendoNow(e) && d < kd) { kd = d; kneel = e; }
             else if (e.kneeling && e.alive && d < ld) { ld = d; lumpKneel = e; }   // 무릎 꿇었지만 천도 못 하는 혼(덩어리 등) → 파혼으로 치운다
-            else if (e.alive && !e.kneeling && d < nd) { nd = d; near = e; }
+            else if (e.alive && !e.kneeling && e.Targetable && d < nd) { nd = d; near = e; }
         }
         if (kneel == null && lumpKneel != null) { player.CommandStop(); judge.CommandPahon(); return true; }
         if (kneel == null && near == null) fightSince = -1f;

@@ -258,6 +258,14 @@ public class ActorModel : MonoBehaviour
         { s.key = "boss_b03"; s.height = 2.2f; s.body = new Color(0.45f, 0.33f, 0.20f); s.accent = new Color(0.4f, 0.9f, 0.85f); s.legs = false; s.glow = 0.3f; }
         else if (name.Contains("boss"))  // 나루 영감: 크고 보랏빛, 뿔 없이 긴 도포
         { s.key = "boss"; s.height = 3.2f; s.body = new Color(0.40f, 0.30f, 0.60f); s.accent = new Color(0.8f, 0.7f, 1f); s.legs = false; s.glow = 0.5f; }
+        else if (name.Contains("soul_wail") || name.Contains("soul_mote") || name.Contains("soul_buried"))   // 필드 혼 3유형: 키 = <유형>_<등급> (모델은 models.json, 없으면 이 도형 대역)
+        {
+            string ty = name.Contains("soul_wail") ? "wail" : name.Contains("soul_mote") ? "mote" : "buried";
+            string gr = name.Contains("_lump") ? "lump" : name.Contains("_old") ? "old" : name.Contains("_day") ? "day" : "fresh";
+            s.key = ty + "_" + gr; s.height = ty == "mote" ? 0.5f : ty == "buried" ? 1.6f : 1.8f; s.legs = false; s.glow = 0.5f;
+            s.body = gr == "lump" ? new Color(0.30f, 0.14f, 0.30f) : gr == "old" ? new Color(0.45f, 0.40f, 0.52f) : gr == "day" ? new Color(0.80f, 0.70f, 0.35f) : new Color(0.65f, 0.82f, 1f);
+            s.accent = ty == "wail" ? new Color(0.69f, 0.31f, 0.82f) : new Color(0.9f, 0.97f, 1f);
+        }
         else if (name.Contains("lump"))  // 덩어리: 뭉친 한 덩이
         { s.key = "lump"; s.height = 1.5f; s.body = new Color(0.30f, 0.14f, 0.16f); s.accent = new Color(0.8f, 0.25f, 0.2f); s.blob = true; s.legs = false; s.glow = 0.3f; }
         else if (name.Contains("fierce")) // 사나운 적: 붉고 뿔 달림
@@ -277,6 +285,7 @@ public class ActorModel : MonoBehaviour
         if (name.Contains("dodge")) return Pose.Dodge;
         if (name.Contains("cast")) return Pose.Cast;
         if (name.Contains("hit")) return Pose.Hit;
+        if (name.Contains("strike")) return Pose.Attack2;   // 묻힌 혼: 솟아서 붙잡는 동작(Attack 클립)
         if (name.Contains("swing") || name.Contains("bang") || name.Contains("attack")) return Pose.Attack;
         if (name.Contains("walk")) return Pose.Walk;
         return Pose.Idle;

@@ -77,9 +77,33 @@ public class FieldCamps
             float a = Random.value * Mathf.PI * 2f, rr = Mathf.Sqrt(Random.value) * c.row.r;
             float x = c.row.x + Mathf.Cos(a) * rr, z = c.row.z + Mathf.Sin(a) * rr;
             MapLayout.PushOut(ref x, ref z, Config.ENEMY_RADIUS + 1f);
-            var e = enemies.SpawnCamp(new Vector3(x, 0f, z), i % 2 == 0);
+            // 혼 3유형(구역별 비율, 임시): 넋두리는 한 구역에 동시 WAIL_MAX_ZONE 마리까지(넘으면 보통 혼), 잔넋은 3~5마리 무리로 나온다
+            var type = SoulTypeRules.Pick(c.row.zone, Random.value);
+            if (type == SoulType.Wail && AliveWails(c.row.zone) >= Balance.SOULTYPE_WAIL_MAX_ZONE) type = SoulType.Plain;
+            if (type == SoulType.Mote)
+            {
+                int n = Random.Range(3, 6); var grp = new List<Enemy>();
+                for (int k = 0; k < n; k++)
+                {
+                    float ma = Random.value * Mathf.PI * 2f, mr = Random.value * 2.5f;
+                    float mx = x + Mathf.Cos(ma) * mr, mz = z + Mathf.Sin(ma) * mr;
+                    MapLayout.PushOut(ref mx, ref mz, Config.ENEMY_RADIUS + 0.5f);
+                    var m = enemies.SpawnCamp(new Vector3(mx, 0f, mz), true, SoulType.Mote);
+                    m.group = grp; m.leader = k == 0; grp.Add(m); c.members.Add(m);
+                }
+                continue;
+            }
+            var e = enemies.SpawnCamp(new Vector3(x, 0f, z), i % 2 == 0, type);
             c.members.Add(e);
         }
+    }
+
+    /// <summary>같은 구역에서 지금 살아 있는 넋두리 수(동시 원거리 한도 계산)</summary>
+    int AliveWails(string zone)
+    {
+        int n = 0;
+        foreach (var c in camps) if (c.row.zone == zone) foreach (var m in c.members) if (m != null && !m.gone && m.type == SoulType.Wail) n++;
+        return n;
     }
 
     /// <summary>멀어졌을 때: 아직 싸우는 혼은 걷어내고, 군집은 다음에 가까이 가면 새로 선다(무릎 꿇은 혼도 함께 사라짐)</summary>

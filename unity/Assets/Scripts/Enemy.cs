@@ -19,6 +19,31 @@ public class Enemy : MonoBehaviour
     public bool kneeling => soul.State == SoulState.Kneel;       // 처결 대기 중 (천도·파혼 선택 가능)
     public bool sending => soul.State == SoulState.Sending;      // 천도 캐스팅 받는 중
     public bool gone => soul.State == SoulState.Gone;            // 떠났거나 터짐
+    // ---- 필드 혼 3유형(넋두리·잔넋·묻힌 혼). 규칙은 Core/SoulTypes.cs, 수치는 balance.json SOULTYPE_* ----
+    public SoulType type = SoulType.Plain;
+    WailAi wail; BuriedAi buried; GameObject teleLine;
+    public List<Enemy> group; public bool leader;    // 잔넋 무리: 대장을 처결하면 나머지가 잠깐 혼란
+    public static Vector3 LastPlayer;                // 마지막으로 본 플레이어 자리(원념 탄이 명중을 재는 데 쓴다)
+    /// <summary>맞을 수 있나? 땅속에 묻힌 혼은 솟기 전·묻힌 동안 맞지도 집히지도 않는다</summary>
+    public bool Targetable { get { return type != SoulType.Buried || buried == null || SoulTypeRules.Reachable(type, buried.Phase); } }
+
+    /// <summary>유형을 정하고 등급과 곱한 수치를 입힌다(맺힘·피해·속도·공격 시계). 만든 직후 한 번 부른다</summary>
+    public void SetType(SoulType t)
+    {
+        type = t;
+        soul.MaedhimMax = SoulTypeRules.Maedhim(t, soul.Kind, soul.MaedhimMax); soul.Maedhim = soul.MaedhimMax;
+        damage = SoulTypeRules.Damage(t, soul.Kind);
+        speed *= SoulTypeRules.Speed(t, soul.Kind);
+        if (t == SoulType.Mote)
+        {
+            atk.WindupTime = Balance.SOULTYPE_MOTE_WINDUP; atk.Interval = Balance.SOULTYPE_MOTE_INTERVAL; atk.Range = Balance.SOULTYPE_MOTE_RANGE; atk.Cooldown = atk.Interval;
+            radius *= 0.55f; height *= 0.5f;   // 작은 혼
+        }
+        else if (t == SoulType.Wail) wail = new WailAi();
+        else if (t == SoulType.Buried) buried = new BuriedAi();
+        if (t != SoulType.Plain) soul.Trick = false;   // 속임수는 보통 혼만
+    }
+
     public bool camp;                                            // 필드 군집 소속: 처결되면 사라진다(제자리 재등장 없음)
     public bool extra;                                           // 얼룩 3개로 소환된 추가 적 (한 번 처리하면 사라짐)
     public float stun;             // 남은 기절 시간
@@ -108,7 +133,7 @@ public class Enemy : MonoBehaviour
     /// <summary>한 대 맞음. 맺힘이 깎이고, 0이 되면 죽는 게 아니라 무릎을 꿇는다(true)</summary>
     public bool TakeHit(int damage, Vector3 dir, float knockback, float stunTime)
     {
-        if (!alive) return false;
+        if (!alive || !Targetable) return false;
         if (boundT > 0f && BoundBonus > 0f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * (1f + BoundBonus)));
         if (damageTakenMult != 1f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * damageTakenMult));   // 보스 전용: 약점 창 규칙
         flash = 1f;
@@ -131,6 +156,8 @@ public class Enemy : MonoBehaviour
     public void Finish()
     {
         soul.Finish();
+        if (leader && group != null) foreach (var m in group) if (m != null && m != this && m.alive) { m.stun = Mathf.Max(m.stun, Balance.SOULTYPE_MOTE_RATTLE_S); m.flash = 1f; }   // 무리 대장이 떠나면 나머지가 혼란
+        if (teleLine != null) teleLine.SetActive(false);
         deathT = 0f; respawnReady = false; vel = Vector3.zero;
     }
 
@@ -198,7 +225,7 @@ public class Enemy : MonoBehaviour
 
     public void Tick(float dt, Vector3 playerPos)
     {
-        lastPlayerPos = playerPos;
+        lastPlayerPos = playerPos; LastPlayer = playerPos;
         if (boundT > 0f) boundT -= dt;
         if (gone) { TickDead(dt); return; }
         if (freezeT > 0f && alive) { freezeT -= dt; flash = 1f; ApplyVisual(); return; }
@@ -225,6 +252,10 @@ public class Enemy : MonoBehaviour
             stun -= dt;
             bool canAct = stun <= 0f;
             float dist = new Vector2(playerPos.x - Pos.x, playerPos.z - Pos.z).magnitude;
+            if (type == SoulType.Wail) TickWail(dt, playerPos, canAct, dist);
+            else if (type == SoulType.Buried) TickBuried(dt, canAct, dist);
+            else
+            {
             // 예비동작 중에는 멈춰 서서 '곧 때린다'는 신호를 준다 (피할 시간)
             if (canAct && !atk.Winding) Chase(dt, playerPos);
             bool wasWind = atk.Winding;
@@ -233,9 +264,57 @@ public class Enemy : MonoBehaviour
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
             mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)
                                     : baseColor;
+            }
         }
         ClampToArena();
         ApplyVisual();
+    }
+
+    /// <summary>넋두리: 7~9m 를 지키며(가까우면 천천히 물러난다) 선딜(바닥에 궤적 예고선) 뒤 원념 탄을 던진다</summary>
+    void TickWail(float dt, Vector3 playerPos, bool canAct, float dist)
+    {
+        var to = new Vector3(playerPos.x - Pos.x, 0f, playerPos.z - Pos.z);
+        var dir = dist > 0.01f ? to / dist : Vector3.forward;
+        if (canAct && !wail.Winding)
+        {
+            int m = WailAi.MoveDir(dist);
+            if (m != 0) Pos += dir * (m > 0 ? speed : -speed * 0.6f) * slowMult * dt;   // 물러날 땐 느리게
+        }
+        bool wasWind = wail.Winding;
+        bool fire = wail.Tick(dt, dist, canAct);
+        if (wail.Winding && !wasWind) Sfx.Play("sfx.enemy.telegraph");
+        if (fire) WonnyeomOrb.Spawn(Pos + Vector3.up * 1.0f, dir, this);
+        UpdateTeleLine(dir, Mathf.Min(dist, Balance.SOULTYPE_WAIL_ORB_RANGE_M));
+        mat.color = wail.Winding ? Color.Lerp(baseColor, new Color(0.7f, 0.3f, 0.9f), wail.WindupRatio) : baseColor;
+    }
+
+    void UpdateTeleLine(Vector3 dir, float len)
+    {
+        bool on = wail != null && wail.Winding && alive;
+        if (teleLine == null)
+        {
+            if (!on) return;
+            teleLine = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Destroy(teleLine.GetComponent<Collider>());
+            teleLine.GetComponent<Renderer>().sharedMaterial = U.Unlit(new Color(0.55f, 0.2f, 0.75f));
+        }
+        teleLine.SetActive(on);
+        if (!on) return;
+        teleLine.transform.position = Pos + dir * (len * 0.5f) + Vector3.up * 0.05f;
+        teleLine.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+        teleLine.transform.localScale = new Vector3(0.12f + 0.25f * wail.WindupRatio, 0.02f, len);   // 선딜이 찰수록 굵어진다
+    }
+
+    void OnDestroy() { if (teleLine != null) Destroy(teleLine); }
+
+    /// <summary>묻힌 혼: 땅속 → (4.5m 안) 갈라짐 예고 → 솟음 → 붙잡기(범위 2m) → 묻힘 → 6초 뒤 재매복. 이동 없음</summary>
+    void TickBuried(float dt, bool canAct, float dist)
+    {
+        var ph = buried.Phase;
+        if (!canAct && ph != BuriedPhase.Hidden) { /* 기절 중엔 단계가 멈춘다 */ }
+        else if (buried.Tick(dt, dist) && SoulTypeRules.Reachable(type, buried.Phase) && BuriedAi.InStrike(dist)) onHitPlayer?.Invoke();
+        if (buried.Phase == BuriedPhase.Windup && ph == BuriedPhase.Hidden) Sfx.Play("sfx.enemy.telegraph");
+        mat.color = buried.Phase == BuriedPhase.Windup ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), buried.T / Balance.SOULTYPE_BURIED_WINDUP) : baseColor;
     }
 
     void Chase(float dt, Vector3 playerPos)
@@ -295,6 +374,17 @@ public class Enemy : MonoBehaviour
             n = "boss/" + b + (atk.Winding ? "_attack" : down && soul.BossId > 1 ? "_kneel" : "_idle");
         }
         else if (soul.Fierce) n = "enemies/soul_fierce";
+        else if (type != SoulType.Plain)
+        {
+            // 유형 모델(아트): 이름 = soul_<유형>_<등급> + 동작 꼬리표. 묻힌 혼은 땅속(hidden)·갈라짐/솟음(strike)·묻힘(sink) 동작이 따로 있다
+            string g = soul.Kind == SoulKind.Year ? "day" : soul.Kind == SoulKind.Old ? "old" : soul.Kind == SoulKind.Lump ? "lump" : "fresh";
+            string t = type == SoulType.Wail ? "wail" : type == SoulType.Mote ? "mote" : "buried";
+            n = "enemies/soul_" + t + "_" + g;
+            if (down) n += "_kneel";
+            else if (type == SoulType.Buried) n += buried.Phase == BuriedPhase.Hidden ? "_hidden" : buried.Phase == BuriedPhase.Windup ? "_attack" : buried.Phase == BuriedPhase.Sink ? "_dodge" : buried.Phase == BuriedPhase.Strike ? "_strike" : "";
+            else if (type == SoulType.Wail && wail.Winding) n += "_attack";
+            else if (type == SoulType.Mote && atk.Winding) n += "_attack";
+        }
         else switch (soul.Kind)
         {
             case SoulKind.Year: n = down ? "enemies/soul_day_kneel" : "enemies/soul_day"; break;
@@ -303,7 +393,7 @@ public class Enemy : MonoBehaviour
             default: n = down ? "enemies/soul_fresh_kneel" : "enemies/soul_fresh"; break;
         }
         // 구역 변형(3D 모델이 있을 때만): 검은여울의 혼은 역병(푸른 멍울) 모양. 이름 뒤에 _yeoksa 를 붙이면 ActorModel 이 변형 모델을 고른다
-        if (View3D.On && !soul.Boss && !soul.Fierce)
+        if (View3D.On && !soul.Boss && !soul.Fierce && type == SoulType.Plain)
         {
             if (variant == null) variant = VariantOf(FieldZones.NameAt(Pos.x, Pos.z));
             if (variant.Length > 0) n += variant;
@@ -333,6 +423,7 @@ public class Enemy : MonoBehaviour
     /// <summary>마우스 광선이 몸통(세로 원기둥으로 근사)을 지나가나?</summary>
     public bool RayHitsBody(Ray ray)
     {
+        if (!Targetable) return false;
         if (gone) return false;
         var center = Pos + new Vector3(0, height / 2f, 0);
         float t = Vector3.Dot(center - ray.origin, ray.direction);
@@ -397,9 +488,10 @@ public class EnemyManager
     }
 
     /// <summary>필드 군집의 혼 하나를 세운다 (처결되면 그냥 사라진다: Respawn 하지 않음)</summary>
-    public Enemy SpawnCamp(Vector3 at, bool a)
+    public Enemy SpawnCamp(Vector3 at, bool a, SoulType type = SoulType.Plain)
     {
         var e = Enemy.Create(a, at);
+        if (type != SoulType.Plain) e.SetType(type);
         e.camp = true;
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
         e.onKneel = () => onEnemyKneel?.Invoke(e);
@@ -481,7 +573,7 @@ public class EnemyManager
         Enemy best = null; float bestD = nearRadius;
         foreach (var e in list)
         {
-            if (e.gone) continue;
+            if (e.gone || !e.Targetable) continue;
             float d = new Vector2(e.Pos.x - ground.Value.x, e.Pos.z - ground.Value.z).magnitude;
             if (d <= bestD) { bestD = d; best = e; }
         }
