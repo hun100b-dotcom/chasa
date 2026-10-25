@@ -718,6 +718,20 @@ public class JudgeSystem : MonoBehaviour
     [System.Serializable] class FTarget { public string name; public float[] gate; public FPt stop_object, restart_object, noje, exit; }
     [System.Serializable] class FTargetFile { public FTarget[] funerals; }
     readonly Dictionary<string, FTarget> funeralTargets = new Dictionary<string, FTarget>();
+    bool dogHome;                                         // 칠복 장례 다음 새벽부터 누렁이가 개집(191,75)으로 돌아와 머문다
+    /// <summary>누렁이 동선(기획 kennel_S004): 처결 전 둑 어귀(250,100)·밤엔 칠복 혼 자리 근처 / 장례 날 (205,86)에서 나타나 행렬을 따라 (236,98)로 사라짐 / 다음 새벽부터 개집 / 파혼·처결 못 함이면 둑 어귀 그대로</summary>
+    void DogTick()
+    {
+        bool done = funeralDone.Contains("칠복");
+        Vector3 p = Vector3.zero; bool show = true;
+        if (dogHome) p = new Vector3(191f, 0f, 75f);
+        else if (cuts.Active && cuts.CurId == "FUN-S004_TENDO") { float k = Mathf.Clamp01((cuts.CurTime - 25f) / 20f); show = cuts.CurTime >= 25f; p = Vector3.Lerp(new Vector3(205f, 0f, 86f), new Vector3(236f, 0f, 98f), k); }
+        else if (done) show = false;   // 장례가 끝난 날: 사라진 채로 다음 새벽을 기다린다
+        else if (clock != null && clock.Phase == ClockPhase.Night && !funeralPending.ContainsKey("칠복") && !funeralNoneShown.Contains("칠복")) p = new Vector3(204f, 0f, 87.5f);
+        else p = new Vector3(250f, 0f, 100f);
+        interactables.SetDog(show, show ? p : Vector3.zero);
+    }
+    bool parkUnjudged;                                    // 박돌쇠 '처결 못 함' 확정(대기 초과·동틀녘·첫 5분 10분 안전장치)
     string funeralNow;                                    // 지금 열린 장례의 혼 이름(카메라 좌표 종류를 고르는 데 쓴다)
     readonly HashSet<string> funeralNoneShown = new HashSet<string>();   // '처결 못 함' 장면을 이미 본 혼(한 혼에 한 번)
     ClockPhase lastFunPhase = ClockPhase.Night;
@@ -740,6 +754,7 @@ public class JudgeSystem : MonoBehaviour
     void MarkUnjudged(Enemy e)
     {
         string n = e.soul.Name;
+        if (n == "박돌쇠" && pahonOrTendo == 0) parkUnjudged = true;   // 박돌쇠는 첫 세션 장면(FUNERAL_NONE)이 따로 있어 표시만 한다
         if (n == null || !funeralCut.ContainsKey(n) || funeralDone.Contains(n) || funeralNoneShown.Contains(n) || funeralPending.ContainsKey(n)) return;
         funeralPending[n] = 3; funeralBorn[n] = clock != null && clock.Phase == ClockPhase.Day ? clock.Day : -1;
     }
@@ -770,7 +785,7 @@ public class JudgeSystem : MonoBehaviour
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
         if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
-        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
+        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
         if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
         return SaveStore.Write(SaveGame.Serialize(s));
     }
@@ -787,10 +802,12 @@ public class JudgeSystem : MonoBehaviour
         RefreshGrowth();
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
-        funeralPending.Clear(); funeralDone.Clear(); funeralNoneShown.Clear(); funeralBorn.Clear(); funeralDay = -1;
+        funeralPending.Clear(); funeralDone.Clear(); funeralNoneShown.Clear(); funeralBorn.Clear(); parkUnjudged = false; dogHome = false; funeralDay = -1;
         foreach (var pk in s.Picked)
         {
             if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
+            else if (pk == "pu:1") parkUnjudged = true;
+            else if (pk == "dh:1") dogHome = true;
             else if (pk.StartsWith("fn:")) funeralNoneShown.Add(pk.Substring(3));
             else if (pk.StartsWith("fb:")) { int c = pk.LastIndexOf(':'); int o; if (c > 3 && int.TryParse(pk.Substring(c + 1), out o)) funeralBorn[pk.Substring(3, c - 3)] = o; }
             else if (pk.StartsWith("fday:")) int.TryParse(pk.Substring(5), out funeralDay);
@@ -844,7 +861,7 @@ public class JudgeSystem : MonoBehaviour
         // 박돌쇠 장례: 처결한 다음 낮, 그 집(대장간) 앞에 처음 다가갈 때 한 번(서사 확정). 천도 70초 / 처결 못 함 20초 / 파혼은 조등만(아무 일 없음, 컷 없음)
         if (clock != null && clock.Phase == ClockPhase.Day && !funeralShown && openingStarted && !cuts.Active)
         {
-            if (pahonOrTendo == 2) funeralShown = true;   // 파혼: 일어나는 일이 없다
+            if (pahonOrTendo == 2 || (pahonOrTendo == 0 && !parkUnjudged)) funeralShown = pahonOrTendo == 2;   // 파혼: 일어나는 일이 없다. 처결 못 함(대기 초과·동틀녘·10분 안전장치)이 아니면 "아직"이라 장면 없음
             else if (new Vector2(player.Pos.x - FuneralX, player.Pos.z - FuneralZ).magnitude < 14f)
             {
                 funeralShown = true; funeralDay = clock.Day; FuneralPos = new Vector3(FuneralX, 0f, FuneralZ);
@@ -1030,10 +1047,11 @@ public class JudgeSystem : MonoBehaviour
         Enemy.TokenMax = FieldRules.On ? (introFrozen ? Balance.ATTACK_TOKENS_INTRO : Balance.ATTACK_TOKENS) : int.MaxValue;   // 동시에 때리는 혼 수 제한
         FieldCamps.EarlyMaxAlive = introFrozen ? 5 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
         if (introFrozen && !cuts.Active && !inDay) introT += dt;
-        if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
+        if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { if (pahonOrTendo == 0) parkUnjudged = true; introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
         if (!cuts.PauseClock && !introFrozen) clock.Tick(dt);   // 오프닝 컷 동안·첫 5분엔 시계가 멈춘다
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
         ActorModel.HeroShadowOn = clock.Phase != ClockPhase.Day;   // 낮엔 주인공 그림자 없음(산 사람에게 안 보이는 차사)
+        if (interactables != null) DogTick();
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
         if (interactables != null) interactables.Tick(player.Pos);
         if (named != null) { named.AppearMult = weather.Fx.NamedMult; named.Tick(player.Pos, clock.Daylight); }
@@ -1046,6 +1064,7 @@ public class JudgeSystem : MonoBehaviour
             Sfx.Play("sfx.bell");
             if (ph.Value == ClockPhase.Night) Hint(HintEvent.FirstNightfall);
             string n = WorldClock.PhaseName(ph.Value);
+            if (ph.Value == ClockPhase.Dawn && funeralDone.Contains("칠복") && funeralDay >= 0) dogHome = true;
             if (ph.Value == ClockPhase.Dawn)
                 foreach (var e in enemies.list) if (e.kneeling) { MarkUnjudged(e); e.soul.Finish(); Say("동이 터 처결 못 한 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
             Say(ph.Value == ClockPhase.Dusk ? "인정 — 해가 진다" : ph.Value == ClockPhase.Dawn ? "파루 — 동이 튼다" : n + "이 되었다");

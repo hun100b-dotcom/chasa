@@ -19,6 +19,7 @@ public class CutscenePlayer
 
     public string CurId { get { return cur != null ? cur.Data.id : ""; } }          // 자동 플레이 테스트가 본다
     public float CurDuration { get { return cur != null ? cur.Data.duration : 0f; } }
+    public float CurTime { get { return cur != null ? cur.Time : 0f; } }           // 지금 컷의 진행 초(누렁이가 행렬을 따라가는 위치에 쓴다)
     public bool Active { get { return cur != null && !cur.Done; } }
     /// <summary>입력을 막아야 하나 (잠금 컷 재생 중)</summary>
     public bool InputLocked { get { return Active && cur.Data.@lock && !cur.Walk; } }   // 서사 control=walk 구간은 잠금이 풀려 걸을 수 있다
