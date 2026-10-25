@@ -1,0 +1,110 @@
+{
+ "_설명": "임시 대역 BGM(코드 합성, tools/bgm_temp_render.py). 파일은 Resources/Audio/BGM/Temp/<id>.ogg. 진짜 곡을 Resources/Audio/BGM/<id>.ogg 로 넣으면 그것이 먼저 쓰인다(코드 수정 불필요).",
+ "clips": {
+  "bgm_bulgeunjae_combat": {
+   "sec": 44.44,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_bulgeunjae_day_a": {
+   "sec": 76.36,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_bulgeunjae_finish": {
+   "sec": 7.0,
+   "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_bulgeunjae_night": {
+   "sec": 87.27,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_doseong_combat": {
+   "sec": 43.64,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_doseong_day_a": {
+   "sec": 80.87,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_doseong_finish": {
+   "sec": 7.0,
+   "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_doseong_night": {
+   "sec": 83.48,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_gaetmaeul_combat": {
+   "sec": 45.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_gaetmaeul_day_a": {
+   "sec": 82.29,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_gaetmaeul_finish": {
+   "sec": 7.0,
+   "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_gaetmaeul_night": {
+   "sec": 82.29,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_s1_credits": {
+   "sec": 137.43,
+   "loop": false,
+   "lufs": -20.0
+  },
+  "bgm_s1_dawn": {
+   "sec": 101.0,
+   "loop": false,
+   "lufs": -20.0
+  },
+  "bgm_s1_finale_a": {
+   "sec": 126.0,
+   "loop": false,
+   "lufs": -20.0
+  },
+  "bgm_s1_finale_b": {
+   "sec": 96.0,
+   "loop": false,
+   "lufs": -20.0
+  },
+  "bgm_s1_heukwol": {
+   "sec": 65.9,
+   "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_soegol_combat": {
+   "sec": 44.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_soegol_day_a": {
+   "sec": 81.0,
+   "loop": true,
+   "lufs": -20.0
+  },
+  "bgm_soegol_finish": {
+   "sec": 7.0,
+   "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_soegol_night": {
+   "sec": 96.0,
+   "loop": true,
+   "lufs": -20.0
+  }
+ }
+}
