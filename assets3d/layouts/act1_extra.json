@@ -1,0 +1,54 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(필드 절대)",
+ "note": "place_act1_extra.py가 만든다. 직접 고치지 말고 스크립트의 WANT를 고친다",
+ "props": [
+  {
+   "prop": "prop_gaejip_empty",
+   "file": "assets3d/props/prop_gaejip_empty.glb",
+   "x": 200.5,
+   "y": 63.5,
+   "rot": 200,
+   "z": 0.0,
+   "note": "칠복네(기와집 담 모퉁이) 빈 개집 — 지켜보기 J-004·유품 K-004 자리. 정면이 남쪽(마당 쪽)",
+   "walk_snap": {
+    "from": [
+     202.0,
+     64.0
+    ],
+    "to": [
+     200.5,
+     63.5
+    ]
+   }
+  },
+  {
+   "prop": "prop_dry_inkstone",
+   "file": "assets3d/props/prop_dry_inkstone.glb",
+   "x": 200.0,
+   "y": 70.5,
+   "rot": 0,
+   "z": 0.0,
+   "note": "마른 벼루(서당) — 유품 K-005 자리",
+   "walk_snap": {
+    "from": [
+     202.5,
+     70.5
+    ],
+    "to": [
+     200.0,
+     70.5
+    ]
+   }
+  },
+  {
+   "prop": "prop_market_drum_frame",
+   "file": "assets3d/props/prop_market_drum_frame.glb",
+   "x": 38.0,
+   "y": 390.0,
+   "rot": 180,
+   "z": 0.0,
+   "note": "장터 북틀(덕수) — 장례 대본 소품"
+  }
+ ]
+}
