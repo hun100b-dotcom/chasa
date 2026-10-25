@@ -884,5 +884,520 @@
    14
   ],
   "note": "스킬바 위 안내 글자(14~16px) 뒤 먹판. 9칸 늘이기. 글자 폭+양옆 24px 로 늘려 깔 것. 낮에 필요, 밤엔 거의 안 보임"
+ },
+ "first10/rank_paper": {
+  "size_px": [
+   640,
+   400
+  ],
+  "x2": "rank_paper@2x.png",
+  "note": "명부 종이 640×400. 위 현판(60,64~580×56)에 '종9품' 같은 계급명, 아래는 비워 둠. 인은 rank_stamp 띠를 종이 가운데 아래쪽에 겹침"
+ },
+ "first10/rank_stamp": {
+  "size_px": [
+   3072,
+   256
+  ],
+  "x2": "rank_stamp@2x.png",
+  "note": "붉은 品 인 찍힘 1.0초(0~3 내려옴, 4 찍힘, 5~11 번짐). 종소리는 프레임 4에 맞춤. 프레임 12장 가로로 이어 붙임, 칸 256×256, 12fps"
+ },
+ "first10/craft_flash": {
+  "size_px": [
+   4096,
+   96
+  ],
+  "x2": "craft_flash@2x.png",
+  "note": "손보기 성공 금빛 훑기 0.5초. 장비 이름 글자 뒤·앞에 깔기 프레임 8장 가로로 이어 붙임, 칸 512×96, 16fps"
+ },
+ "first10/rank_dot": {
+  "size_px": [
+   12,
+   12
+  ],
+  "x2": "rank_dot@2x.png",
+  "note": "스킬바 도술 칸 모서리에 붙는 붉은 점 12×12"
+ },
+ "first10/absorb_hon_fly": {
+  "size_px": [
+   192,
+   48
+  ],
+  "x2": "absorb_hon_fly@2x.png",
+  "note": "날아가는 혼불(48²), 깜빡임 프레임 4장 가로로 이어 붙임, 칸 48×48, 12fps"
+ },
+ "first10/absorb_coin_spin": {
+  "size_px": [
+   288,
+   48
+  ],
+  "x2": "absorb_coin_spin@2x.png",
+  "note": "튀는 엽전(48²), 도는 모양 프레임 6장 가로로 이어 붙임, 칸 48×48, 12fps"
+ },
+ "first10/absorb_hon_burst": {
+  "size_px": [
+   768,
+   128
+  ],
+  "x2": "absorb_hon_burst@2x.png",
+  "note": "가슴에 흡수되는 순간(128², 0.3초) — 불티가 안으로 모임 프레임 6장 가로로 이어 붙임, 칸 128×128, 20fps"
+ },
+ "first10/absorb_coin_burst": {
+  "size_px": [
+   768,
+   128
+  ],
+  "x2": "absorb_coin_burst@2x.png",
+  "note": "발밑에 빨려 드는 순간(128², 0.3초) — 삐죽 파편이 바깥으로 튐 프레임 6장 가로로 이어 붙임, 칸 128×128, 20fps"
+ },
+ "first10/tier_mark_common": {
+  "size_px": [
+   32,
+   32
+  ],
+  "x2": "tier_mark_common@2x.png",
+  "note": "흔한 등급 꼭대기·이름표 모양 32² (모양 동그라미)"
+ },
+ "first10/drop_tag_common": {
+  "size_px": [
+   220,
+   40
+  ],
+  "x2": "drop_tag_common@2x.png",
+  "nine_slice_px": [
+   16,
+   16,
+   16,
+   16
+  ],
+  "note": "흔한 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리"
+ },
+ "first10/tier_mark_refined": {
+  "size_px": [
+   32,
+   32
+  ],
+  "x2": "tier_mark_refined@2x.png",
+  "note": "손본 등급 꼭대기·이름표 모양 32² (모양 마름모)"
+ },
+ "first10/drop_tag_refined": {
+  "size_px": [
+   220,
+   40
+  ],
+  "x2": "drop_tag_refined@2x.png",
+  "nine_slice_px": [
+   16,
+   16,
+   16,
+   16
+  ],
+  "note": "손본 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리"
+ },
+ "first10/tier_mark_rare": {
+  "size_px": [
+   32,
+   32
+  ],
+  "x2": "tier_mark_rare@2x.png",
+  "note": "귀한 등급 꼭대기·이름표 모양 32² (모양 네 갈래 별)"
+ },
+ "first10/drop_tag_rare": {
+  "size_px": [
+   220,
+   40
+  ],
+  "x2": "drop_tag_rare@2x.png",
+  "nine_slice_px": [
+   16,
+   16,
+   16,
+   16
+  ],
+  "note": "귀한 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리"
+ },
+ "first10/tier_mark_antique": {
+  "size_px": [
+   32,
+   32
+  ],
+  "x2": "tier_mark_antique@2x.png",
+  "note": "옛 차사 등급 꼭대기·이름표 모양 32² (모양 도장 네모)"
+ },
+ "first10/drop_tag_antique": {
+  "size_px": [
+   220,
+   40
+  ],
+  "x2": "drop_tag_antique@2x.png",
+  "nine_slice_px": [
+   16,
+   16,
+   16,
+   16
+  ],
+  "note": "옛 차사 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리"
+ },
+ "first10/tier_mark_named": {
+  "size_px": [
+   32,
+   32
+  ],
+  "x2": "tier_mark_named@2x.png",
+  "note": "이름 있는 등급 꼭대기·이름표 모양 32² (모양 세 뿔 관)"
+ },
+ "first10/drop_tag_named": {
+  "size_px": [
+   220,
+   40
+  ],
+  "x2": "drop_tag_named@2x.png",
+  "nine_slice_px": [
+   16,
+   16,
+   16,
+   16
+  ],
+  "note": "이름 있는 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리"
+ },
+ "first10/skill_card_frame": {
+  "size_px": [
+   320,
+   440
+  ],
+  "x2": "skill_card_frame@2x.png",
+  "note": "첫 도술 카드 틀 320×440. 갈래 배지(지름 84, 중심 160,44), 삽화 창(16,66, 288×130), 이름 띠(16,208, 288×44), 효과 글 y 262~362"
+ },
+ "first10/skill_card_frame_hover": {
+  "size_px": [
+   320,
+   440
+  ],
+  "x2": "skill_card_frame_hover@2x.png",
+  "note": "골랐을 때 금빛 테두리 번짐판(같은 크기)"
+ },
+ "first10/skill_card_art_bureum": {
+  "size_px": [
+   288,
+   130
+  ],
+  "x2": "skill_card_art_bureum@2x.png",
+  "note": "카드 삽화 288×130 (붙잡아 부르기) — 틀의 삽화 창 자리에 깔기"
+ },
+ "first10/branch_bureum": {
+  "size_px": [
+   40,
+   40
+  ],
+  "x2": "branch_bureum@2x.png",
+  "note": "갈래 표시 40²(▲ 부름 ● 줄 ✕ 얼룩, 도술 창·카드 아래)"
+ },
+ "first10/branch_bureum_big": {
+  "size_px": [
+   80,
+   80
+  ],
+  "x2": "branch_bureum_big@2x.png",
+  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음)"
+ },
+ "first10/skill_card_art_jul": {
+  "size_px": [
+   288,
+   130
+  ],
+  "x2": "skill_card_art_jul@2x.png",
+  "note": "카드 삽화 288×130 (휘감기) — 틀의 삽화 창 자리에 깔기"
+ },
+ "first10/branch_jul": {
+  "size_px": [
+   40,
+   40
+  ],
+  "x2": "branch_jul@2x.png",
+  "note": "갈래 표시 40²(▲ 부름 ● 줄 ✕ 얼룩, 도술 창·카드 아래)"
+ },
+ "first10/branch_jul_big": {
+  "size_px": [
+   80,
+   80
+  ],
+  "x2": "branch_jul_big@2x.png",
+  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음)"
+ },
+ "first10/skill_card_art_eolluk": {
+  "size_px": [
+   288,
+   130
+  ],
+  "x2": "skill_card_art_eolluk@2x.png",
+  "note": "카드 삽화 288×130 (터뜨리기) — 틀의 삽화 창 자리에 깔기"
+ },
+ "first10/branch_eolluk": {
+  "size_px": [
+   40,
+   40
+  ],
+  "x2": "branch_eolluk@2x.png",
+  "note": "갈래 표시 40²(▲ 부름 ● 줄 ✕ 얼룩, 도술 창·카드 아래)"
+ },
+ "first10/branch_eolluk_big": {
+  "size_px": [
+   80,
+   80
+  ],
+  "x2": "branch_eolluk_big@2x.png",
+  "note": "카드 위 가운데 큰 갈래 표시 80²(배지 안에 얹음)"
+ },
+ "first10/elite_ring": {
+  "size_px": [
+   1024,
+   128
+  ],
+  "x2": "elite_ring@2x.png",
+  "note": "머리 위 붉은 가시 고리 4프레임 맥동(칸 256×128, 머리 위 0.3 m에 눕혀 놓음) 프레임 4장 가로로 이어 붙임, 칸 256×128, 8fps"
+ },
+ "first10/elite_name_band": {
+  "size_px": [
+   720,
+   64
+  ],
+  "x2": "elite_name_band@2x.png",
+  "nine_slice_px": [
+   24,
+   24,
+   24,
+   24
+  ],
+  "note": "화면 위 가운데 이름 띠 720×64(9칸 24), 이름 글자 24px는 코드"
+ },
+ "first10/bind_bar_frame": {
+  "size_px": [
+   520,
+   28
+  ],
+  "x2": "bind_bar_frame@2x.png",
+  "nine_slice_px": [
+   12,
+   12,
+   12,
+   12
+  ],
+  "note": "맺힘 막대 틀 520×28"
+ },
+ "first10/bind_bar_fill": {
+  "size_px": [
+   512,
+   20
+  ],
+  "x2": "bind_bar_fill@2x.png",
+  "note": "맺힘 막대 채움 512×20(틀 안쪽 +4,+4)"
+ },
+ "first10/bind_bar_ticks": {
+  "size_px": [
+   512,
+   20
+  ],
+  "x2": "bind_bar_ticks@2x.png",
+  "note": "맺힘 3칸 눈금 덮개 512×20(채움 위에 얹음)"
+ },
+ "first10/tele_circle_fill_red": {
+  "size_px": [
+   512,
+   512
+  ],
+  "x2": "tele_circle_fill_red@2x.png",
+  "note": "원 예고 채움 512² (red 35%). 바깥에서 안으로 차오르는 마스크는 코드. 반경 2.5 m = 정사각 5 m"
+ },
+ "first10/tele_band_fill_red": {
+  "size_px": [
+   256,
+   960
+  ],
+  "x2": "tele_band_fill_red@2x.png",
+  "note": "띠 예고 채움 256×960 (red 35%). 폭 1.6 m × 길이 6 m"
+ },
+ "first10/tele_circle_fill_yellow": {
+  "size_px": [
+   512,
+   512
+  ],
+  "x2": "tele_circle_fill_yellow@2x.png",
+  "note": "원 예고 채움 512² (yellow 35%). 바깥에서 안으로 차오르는 마스크는 코드. 반경 2.5 m = 정사각 5 m"
+ },
+ "first10/tele_band_fill_yellow": {
+  "size_px": [
+   256,
+   960
+  ],
+  "x2": "tele_band_fill_yellow@2x.png",
+  "note": "띠 예고 채움 256×960 (yellow 35%). 폭 1.6 m × 길이 6 m"
+ },
+ "first10/tele_circle_border": {
+  "size_px": [
+   512,
+   512
+  ],
+  "x2": "tele_circle_border@2x.png",
+  "note": "원 예고 테두리 512²: 밝은 한지색 #FFF4E0 3px + 먹 바깥선 + 눈금. 항상 보임(채움이 없어도 위치를 알림)"
+ },
+ "first10/tele_band_border": {
+  "size_px": [
+   256,
+   960
+  ],
+  "x2": "tele_band_border@2x.png",
+  "note": "띠 예고 테두리 256×960"
+ },
+ "first10/clear_ring": {
+  "size_px": [
+   2048,
+   256
+  ],
+  "x2": "clear_ring@2x.png",
+  "note": "천도 뒤 바닥이 맑아지는 번짐 8프레임(0.5초) 프레임 8장 가로로 이어 붙임, 칸 256×256, 16fps"
+ },
+ "first10/roar_vignette": {
+  "size_px": [
+   1920,
+   1080
+  ],
+  "note": "부르기 울부짖음 화면 가장자리 붉은 먹(알파 0.6초 맥동, 코드가 투명도 0→1→0)"
+ },
+ "first10/reward_tendo": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "reward_tendo@2x.png",
+  "note": "천도 보상: 혼불+기억 쪽지 56². 파혼 아이콘과 평균 밝기를 맞춤"
+ },
+ "first10/reward_pahon": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "reward_pahon@2x.png",
+  "note": "파혼 보상: 엽전+얼룩 56². 같은 크기·밝기"
+ },
+ "first10/reward_gold_rim": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "reward_gold_rim@2x.png",
+  "note": "이름혼이면 기억 아이콘 위에 겹치는 금테 56²"
+ },
+ "first10/goal_arrow": {
+  "size_px": [
+   24,
+   24
+  ],
+  "x2": "goal_arrow@2x.png",
+  "note": "화면 가장자리 목표 화살표 24², 오른쪽을 향함(코드가 회전)"
+ },
+ "first10/goal_dist_plate": {
+  "size_px": [
+   64,
+   22
+  ],
+  "x2": "goal_dist_plate@2x.png",
+  "nine_slice_px": [
+   10,
+   10,
+   10,
+   10
+  ],
+  "note": "거리 글자 판 64×22"
+ },
+ "first10/menu_btn_normal": {
+  "size_px": [
+   360,
+   64
+  ],
+  "x2": "menu_btn_normal@2x.png",
+  "nine_slice_px": [
+   20,
+   20,
+   20,
+   20
+  ],
+  "note": "타이틀 메뉴 버튼 360×64 (normal)"
+ },
+ "first10/menu_btn_hover": {
+  "size_px": [
+   360,
+   64
+  ],
+  "x2": "menu_btn_hover@2x.png",
+  "nine_slice_px": [
+   20,
+   20,
+   20,
+   20
+  ],
+  "note": "타이틀 메뉴 버튼 360×64 (hover)"
+ },
+ "first10/menu_btn_disabled": {
+  "size_px": [
+   360,
+   64
+  ],
+  "x2": "menu_btn_disabled@2x.png",
+  "nine_slice_px": [
+   20,
+   20,
+   20,
+   20
+  ],
+  "note": "타이틀 메뉴 버튼 360×64 (disabled)"
+ },
+ "first10/title_fog_a": {
+  "size_px": [
+   2048,
+   512
+  ],
+  "note": "이음매 없는 안개 띠. 좌우로 이어 천천히(가장 느린 층 8px/초, 빠른 층 14px/초) 흘림. 밤 서낭당 배경 위"
+ },
+ "first10/title_fog_b": {
+  "size_px": [
+   2048,
+   512
+  ],
+  "note": "이음매 없는 안개 띠. 좌우로 이어 천천히(가장 느린 층 8px/초, 빠른 층 14px/초) 흘림. 밤 서낭당 배경 위"
+ },
+ "first10/loading_tip_plate": {
+  "size_px": [
+   960,
+   64
+  ],
+  "x2": "loading_tip_plate@2x.png",
+  "nine_slice_px": [
+   24,
+   24,
+   24,
+   24
+  ],
+  "note": "로딩 팁 판 960×64(9칸 24), 글 22자"
+ },
+ "first10/tier_mark_set": {
+  "size_px": [
+   32,
+   32
+  ],
+  "x2": "tier_mark_set@2x.png",
+  "note": "한 벌 등급 꼭대기·이름표 모양 32² (모양 겹 고리)"
+ },
+ "first10/drop_tag_set": {
+  "size_px": [
+   220,
+   40
+  ],
+  "x2": "drop_tag_set@2x.png",
+  "nine_slice_px": [
+   16,
+   16,
+   16,
+   16
+  ],
+  "note": "한 벌 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리"
  }
 }

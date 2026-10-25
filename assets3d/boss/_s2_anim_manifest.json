@@ -1,0 +1,981 @@
+{
+ "fps": 60,
+ "bosses": [
+  {
+   "name": "boss_b13_old_man",
+   "tris": 916,
+   "size_m": [
+    0.95,
+    3.4,
+    1.99
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "windup_end": 40,
+      "hit": 40,
+      "tell": 0,
+      "flash": 30,
+      "loaded": 30
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 46,
+     "length_sec": 0.75,
+     "loop": false,
+     "events": {
+      "thud": 24
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "stand_up": 70,
+      "dissolve": 140
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "shatter": 60
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b13_old_man.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Windup",
+     "Attack",
+     "Hit1",
+     "Hit2",
+     "Stagger",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon"
+    ],
+    "size_kb": 190
+   }
+  },
+  {
+   "name": "boss_b14_mass",
+   "tris": 1596,
+   "size_m": [
+    4.01,
+    3.9,
+    3.17
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "windup_end": 40,
+      "hit": 40,
+      "tell": 0,
+      "flash": 30,
+      "loaded": 30
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 46,
+     "length_sec": 0.75,
+     "loop": false,
+     "events": {
+      "thud": 24
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "stand_up": 70,
+      "dissolve": 140
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "shatter": 60
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b14_mass.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Windup",
+     "Attack",
+     "Hit1",
+     "Hit2",
+     "Stagger",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon"
+    ],
+    "size_kb": 266
+   }
+  },
+  {
+   "name": "boss_b15_clerk",
+   "tris": 752,
+   "size_m": [
+    2.74,
+    2.28,
+    2.1
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "windup_end": 40,
+      "hit": 40,
+      "tell": 0,
+      "flash": 30,
+      "loaded": 30
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 46,
+     "length_sec": 0.75,
+     "loop": false,
+     "events": {
+      "thud": 24
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "stand_up": 70,
+      "dissolve": 140
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "shatter": 60
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b15_clerk.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Windup",
+     "Attack",
+     "Hit1",
+     "Hit2",
+     "Stagger",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon"
+    ],
+    "size_kb": 181
+   }
+  },
+  {
+   "name": "boss_b16_inkkeeper",
+   "tris": 710,
+   "size_m": [
+    1.2,
+    1.5,
+    2.19
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "windup_end": 40,
+      "hit": 40,
+      "tell": 0,
+      "flash": 30,
+      "loaded": 30
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 46,
+     "length_sec": 0.75,
+     "loop": false,
+     "events": {
+      "thud": 24
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "stand_up": 70,
+      "dissolve": 140
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "shatter": 60
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b16_inkkeeper.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Windup",
+     "Attack",
+     "Hit1",
+     "Hit2",
+     "Stagger",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon"
+    ],
+    "size_kb": 174
+   }
+  },
+  {
+   "name": "boss_b17_gatekeeper",
+   "tris": 812,
+   "size_m": [
+    1.7,
+    1.41,
+    2.8
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "windup_end": 40,
+      "hit": 40,
+      "tell": 0,
+      "flash": 30,
+      "loaded": 30
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 46,
+     "length_sec": 0.75,
+     "loop": false,
+     "events": {
+      "thud": 24
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "stand_up": 70,
+      "dissolve": 140
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "shatter": 60
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b17_gatekeeper.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Windup",
+     "Attack",
+     "Hit1",
+     "Hit2",
+     "Stagger",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon"
+    ],
+    "size_kb": 186
+   }
+  },
+  {
+   "name": "boss_b18_sealthief",
+   "tris": 626,
+   "size_m": [
+    2.56,
+    2.63,
+    2.05
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "windup_end": 40,
+      "hit": 40,
+      "tell": 0,
+      "flash": 30,
+      "loaded": 30
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 46,
+     "length_sec": 0.75,
+     "loop": false,
+     "events": {
+      "thud": 24
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "stand_up": 70,
+      "dissolve": 140
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "shatter": 60
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b18_sealthief.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Windup",
+     "Attack",
+     "Hit1",
+     "Hit2",
+     "Stagger",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon"
+    ],
+    "size_kb": 164
+   }
+  },
+  {
+   "name": "boss_b19_first_chasa",
+   "tris": 768,
+   "size_m": [
+    1.15,
+    3.23,
+    2.47
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "windup_end": 40,
+      "hit": 40,
+      "tell": 0,
+      "flash": 30,
+      "loaded": 30
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 46,
+     "length_sec": 0.75,
+     "loop": false,
+     "events": {
+      "thud": 24
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "stand_up": 70,
+      "dissolve": 140
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "shatter": 60
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b19_first_chasa.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Windup",
+     "Attack",
+     "Hit1",
+     "Hit2",
+     "Stagger",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon"
+    ],
+    "size_kb": 181
+   }
+  },
+  {
+   "name": "boss_b20_great_dam",
+   "tris": 1856,
+   "size_m": [
+    11.02,
+    11.15,
+    6.1
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "windup_end": 40,
+      "hit": 40,
+      "tell": 0,
+      "flash": 30,
+      "loaded": 30
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 46,
+     "length_sec": 0.75,
+     "loop": false,
+     "events": {
+      "thud": 24
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "stand_up": 70,
+      "dissolve": 140
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "hit": 6,
+      "shatter": 60
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b20_great_dam.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Windup",
+     "Attack",
+     "Hit1",
+     "Hit2",
+     "Stagger",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon"
+    ],
+    "size_kb": 286
+   }
+  }
+ ]
+}

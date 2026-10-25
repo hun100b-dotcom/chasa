@@ -1,0 +1,82 @@
+{
+ "basic": {
+  "Windup": {
+   "seconds": 0.55,
+   "first_cue_s": 0.05,
+   "D_at_0.3s": 1.756,
+   "D_end": 1.783,
+   "D_front_end": 1.783,
+   "D_side_end": 1.607,
+   "D_side_at_0.3s": 1.677,
+   "pass": true
+  }
+ },
+ "wail": {
+  "Windup": {
+   "seconds": 0.7,
+   "first_cue_s": 0.0,
+   "D_at_0.3s": 0.875,
+   "D_end": 1.353,
+   "D_front_end": 1.353,
+   "D_side_end": 2.088,
+   "D_side_at_0.3s": 1.534,
+   "pass": true
+  }
+ },
+ "mote": {
+  "Windup": {
+   "seconds": 0.4,
+   "first_cue_s": 0.05,
+   "D_at_0.3s": 0.464,
+   "D_end": 0.464,
+   "D_front_end": 0.464,
+   "D_side_end": 1.028,
+   "D_side_at_0.3s": 1.028,
+   "pass": true
+  }
+ },
+ "buried": {
+  "Windup": {
+   "seconds": 0.7,
+   "first_cue_s": 0.15,
+   "D_at_0.3s": 0.148,
+   "D_end": 0.552,
+   "D_front_end": 0.552,
+   "D_side_end": 0.459,
+   "D_side_at_0.3s": 0.149,
+   "pass": true
+  }
+ },
+ "elite": {
+  "SlamWindup": {
+   "seconds": 1.2,
+   "first_cue_s": 0.15,
+   "D_at_0.3s": 0.353,
+   "D_end": 0.906,
+   "D_front_end": 0.906,
+   "D_side_end": 1.58,
+   "D_side_at_0.3s": 0.731,
+   "pass": true
+  },
+  "PounceWindup": {
+   "seconds": 1.0,
+   "first_cue_s": 0.1,
+   "D_at_0.3s": 0.511,
+   "D_end": 0.604,
+   "D_front_end": 0.604,
+   "D_side_end": 1.191,
+   "D_side_at_0.3s": 1.034,
+   "pass": true
+  },
+  "Call": {
+   "seconds": 0.8,
+   "first_cue_s": 0.1,
+   "D_at_0.3s": 0.66,
+   "D_end": 0.256,
+   "D_front_end": 0.256,
+   "D_side_end": 0.135,
+   "D_side_at_0.3s": 1.419,
+   "pass": true
+  }
+ }
+}

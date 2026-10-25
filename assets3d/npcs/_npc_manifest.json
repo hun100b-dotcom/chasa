@@ -8,10 +8,11 @@
    "file": "assets3d/npcs/npc_N101.glb",
    "template": "노인 여자(무녀)",
    "height_m": 1.61,
-   "tris": 834,
+   "tris": 862,
    "props": [
     "fan_broken",
-    "cross_cloth"
+    "cross_cloth",
+    "cane_l"
    ],
    "note": "서낭당 무녀. 오방색 천과 부러진 부채",
    "clips": [
@@ -109,6 +110,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Ritual",
      "frames": 121,
      "length_sec": 2.0,
@@ -165,12 +184,14 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Ritual",
      "Bow",
      "OpenFan",
      "ReachUp"
     ],
-    "size_kb": 373
+    "size_kb": 429
    }
   },
   {
@@ -279,6 +300,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "RopeCoil",
      "frames": 61,
      "length_sec": 1.0,
@@ -312,10 +351,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "RopeCoil",
      "ReachUp"
     ],
-    "size_kb": 317
+    "size_kb": 369
    }
   },
   {
@@ -424,6 +465,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Offer",
      "frames": 121,
      "length_sec": 2.0,
@@ -455,10 +514,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Offer",
      "Bow"
     ],
-    "size_kb": 324
+    "size_kb": 377
    }
   },
   {
@@ -567,6 +628,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Play",
      "frames": 49,
      "length_sec": 0.8,
@@ -595,9 +674,11 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Play"
     ],
-    "size_kb": 280
+    "size_kb": 333
    }
   },
   {
@@ -704,6 +785,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Play",
      "frames": 49,
      "length_sec": 0.8,
@@ -732,9 +831,11 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Play"
     ],
-    "size_kb": 263
+    "size_kb": 315
    }
   },
   {
@@ -841,6 +942,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Play",
      "frames": 49,
      "length_sec": 0.8,
@@ -869,9 +988,11 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Play"
     ],
-    "size_kb": 264
+    "size_kb": 316
    }
   },
   {
@@ -980,6 +1101,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Chant",
      "frames": 73,
      "length_sec": 1.2,
@@ -1023,10 +1162,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Chant",
      "TapPipe"
     ],
-    "size_kb": 304
+    "size_kb": 356
    }
   },
   {
@@ -1035,9 +1176,10 @@
    "file": "assets3d/npcs/npc_N106.glb",
    "template": "아낙(중년)",
    "height_m": 2.13,
-   "tris": 778,
+   "tris": 802,
    "props": [
-    "jar_on_head"
+    "jar_on_head",
+    "apron"
    ],
    "note": "우물가 아낙. 물동이",
    "clips": [
@@ -1135,6 +1277,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Haggle",
      "frames": 97,
      "length_sec": 1.6,
@@ -1160,9 +1320,11 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Haggle"
     ],
-    "size_kb": 290
+    "size_kb": 344
    }
   },
   {
@@ -1171,9 +1333,10 @@
    "file": "assets3d/npcs/npc_N107.glb",
    "template": "아낙(젊음)",
    "height_m": 1.61,
-   "tris": 698,
+   "tris": 722,
    "props": [
-    "bucket"
+    "bucket",
+    "apron"
    ],
    "note": "우물가 아낙. 두레박",
    "clips": [
@@ -1271,6 +1434,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "DrawWater",
      "frames": 73,
      "length_sec": 1.2,
@@ -1309,10 +1490,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "DrawWater",
      "Laundry"
     ],
-    "size_kb": 298
+    "size_kb": 354
    }
   },
   {
@@ -1320,10 +1503,11 @@
    "name": "덕만",
    "file": "assets3d/npcs/npc_N108.glb",
    "template": "청년(소장수 아들)",
-   "height_m": 1.8,
-   "tris": 912,
+   "height_m": 1.82,
+   "tris": 996,
    "props": [
-    "scar"
+    "scar",
+    "straw_bundle"
    ],
    "note": "왼 눈썹 흉터(+X쪽)와 고삐",
    "clips": [
@@ -1421,6 +1605,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "HoldReins",
      "frames": 97,
      "length_sec": 1.6,
@@ -1452,10 +1654,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "HoldReins",
      "SquatCoil"
     ],
-    "size_kb": 310
+    "size_kb": 371
    }
   },
   {
@@ -1564,6 +1768,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Hammer",
      "frames": 55,
      "length_sec": 0.9,
@@ -1601,10 +1823,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Hammer",
      "Bellows"
     ],
-    "size_kb": 313
+    "size_kb": 366
    }
   },
   {
@@ -1713,6 +1937,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Haggle",
      "frames": 97,
      "length_sec": 1.6,
@@ -1738,9 +1980,11 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Haggle"
     ],
-    "size_kb": 298
+    "size_kb": 351
    }
   },
   {
@@ -1849,6 +2093,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Haggle",
      "frames": 97,
      "length_sec": 1.6,
@@ -1874,9 +2136,11 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Haggle"
     ],
-    "size_kb": 294
+    "size_kb": 346
    }
   },
   {
@@ -1986,6 +2250,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Haggle",
      "frames": 97,
      "length_sec": 1.6,
@@ -2011,9 +2293,11 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Haggle"
     ],
-    "size_kb": 298
+    "size_kb": 351
    }
   },
   {
@@ -2022,9 +2306,10 @@
    "file": "assets3d/npcs/npc_N202.glb",
    "template": "처녀(약방)",
    "height_m": 1.61,
-   "tris": 690,
+   "tris": 766,
    "props": [
-    "medicine"
+    "medicine",
+    "herb_basket"
    ],
    "note": "약봉지와 약주머니",
    "clips": [
@@ -2122,6 +2407,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Mix",
      "frames": 73,
      "length_sec": 1.2,
@@ -2163,11 +2466,13 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Mix",
      "Haggle",
      "PlaceBowl"
     ],
-    "size_kb": 318
+    "size_kb": 378
    }
   },
   {
@@ -2276,6 +2581,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Serve",
      "frames": 121,
      "length_sec": 2.0,
@@ -2317,11 +2640,13 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Serve",
      "Haggle",
      "ReachUp"
     ],
-    "size_kb": 318
+    "size_kb": 370
    }
   },
   {
@@ -2430,6 +2755,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "WaveStick",
      "frames": 49,
      "length_sec": 0.8,
@@ -2462,10 +2805,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "WaveStick",
      "Haggle"
     ],
-    "size_kb": 291
+    "size_kb": 343
    }
   },
   {
@@ -2574,6 +2919,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Hawk",
      "frames": 73,
      "length_sec": 1.2,
@@ -2611,10 +2974,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Hawk",
      "Haggle"
     ],
-    "size_kb": 297
+    "size_kb": 349
    }
   },
   {
@@ -2723,6 +3088,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Read",
      "frames": 121,
      "length_sec": 2.0,
@@ -2760,10 +3143,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Read",
      "Scribble"
     ],
-    "size_kb": 289
+    "size_kb": 342
    }
   },
   {
@@ -2872,6 +3257,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Guard",
      "frames": 241,
      "length_sec": 4.0,
@@ -2903,10 +3306,12 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Guard",
      "Doze"
     ],
-    "size_kb": 319
+    "size_kb": 371
    }
   },
   {
@@ -3015,6 +3420,24 @@
      }
     },
     {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
      "name": "Guard",
      "frames": 241,
      "length_sec": 4.0,
@@ -3058,11 +3481,13 @@
      "Startle",
      "StartleHold",
      "StartleRecover",
+     "Weep",
+     "MournStand",
      "Guard",
      "Stamp",
      "ReadNotice"
     ],
-    "size_kb": 340
+    "size_kb": 393
    }
   }
  ]

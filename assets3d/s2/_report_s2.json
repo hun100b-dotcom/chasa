@@ -1,0 +1,352 @@
+[
+ {
+  "name": "s2_ferry_post",
+  "tris": 676,
+  "size_m": [
+   0.8,
+   0.6,
+   3.46
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_ferry_pier",
+  "tris": 276,
+  "size_m": [
+   4.0,
+   3.26,
+   3.45
+  ],
+  "min_z": -3.0
+ },
+ {
+  "name": "s2_ferry_boat",
+  "tris": 216,
+  "size_m": [
+   4.91,
+   2.01,
+   1.5
+  ],
+  "min_z": -0.05
+ },
+ {
+  "name": "s2_queue_stake",
+  "tris": 28,
+  "size_m": [
+   1.26,
+   0.11,
+   1.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_ferry_hut",
+  "tris": 104,
+  "size_m": [
+   4.2,
+   3.6,
+   3.1
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_ferry_inn_site",
+  "tris": 144,
+  "size_m": [
+   4.0,
+   4.0,
+   2.6
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_reed_dust",
+  "tris": 264,
+  "size_m": [
+   0.78,
+   0.89,
+   1.47
+  ],
+  "min_z": -0.002
+ },
+ {
+  "name": "s2_ink_rock",
+  "tris": 104,
+  "size_m": [
+   2.52,
+   2.0,
+   1.6
+  ],
+  "min_z": -0.2
+ },
+ {
+  "name": "s2_dam_wall",
+  "tris": 144,
+  "size_m": [
+   4.0,
+   2.0,
+   0.95
+  ],
+  "min_z": -0.035
+ },
+ {
+  "name": "s2_nabulbul",
+  "tris": 126,
+  "size_m": [
+   1.2,
+   1.2,
+   2.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_clerk_barrack",
+  "tris": 92,
+  "size_m": [
+   7.0,
+   4.4,
+   3.85
+  ],
+  "min_z": -0.005
+ },
+ {
+  "name": "s2_clerk_kitchen",
+  "tris": 52,
+  "size_m": [
+   3.8,
+   3.8,
+   3.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_inkroom_house",
+  "tris": 116,
+  "size_m": [
+   5.8,
+   4.8,
+   3.66
+  ],
+  "min_z": -0.005
+ },
+ {
+  "name": "s2_big_inkstone",
+  "tris": 240,
+  "size_m": [
+   4.2,
+   4.2,
+   1.37
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_archive_shelf",
+  "tris": 324,
+  "size_m": [
+   4.1,
+   0.95,
+   2.45
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_archive_shelf_low",
+  "tris": 204,
+  "size_m": [
+   4.1,
+   0.95,
+   1.23
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_archive_desk",
+  "tris": 60,
+  "size_m": [
+   1.6,
+   0.8,
+   1.25
+  ],
+  "min_z": -0.375
+ },
+ {
+  "name": "s2_ninth_slot",
+  "tris": 132,
+  "size_m": [
+   4.1,
+   0.95,
+   2.45
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_number_board",
+  "tris": 100,
+  "size_m": [
+   0.9,
+   0.1,
+   1.8
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_yard_desk",
+  "tris": 76,
+  "size_m": [
+   1.4,
+   0.8,
+   1.21
+  ],
+  "min_z": -0.36
+ },
+ {
+  "name": "s2_myeongbu_wall",
+  "tris": 56,
+  "size_m": [
+   4.2,
+   1.2,
+   2.9
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_myeongbu_gate",
+  "tris": 104,
+  "size_m": [
+   7.4,
+   3.4,
+   5.65
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_ninth_gate",
+  "tris": 108,
+  "size_m": [
+   8.2,
+   3.0,
+   8.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_seal_market_stall",
+  "tris": 168,
+  "size_m": [
+   3.0,
+   2.2,
+   2.93
+  ],
+  "min_z": -0.425
+ },
+ {
+  "name": "s2_seal_cave_rock_a",
+  "tris": 144,
+  "size_m": [
+   5.35,
+   3.98,
+   4.84
+  ],
+  "min_z": -0.42
+ },
+ {
+  "name": "s2_seal_cave_rock_low",
+  "tris": 144,
+  "size_m": [
+   4.67,
+   1.57,
+   1.26
+  ],
+  "min_z": -0.23
+ },
+ {
+  "name": "s2_seal_stone",
+  "tris": 36,
+  "size_m": [
+   0.8,
+   0.8,
+   0.78
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_first_hut",
+  "tris": 112,
+  "size_m": [
+   3.9,
+   3.3,
+   2.44
+  ],
+  "min_z": -0.039
+ },
+ {
+  "name": "s2_old_well",
+  "tris": 132,
+  "size_m": [
+   2.3,
+   2.3,
+   1.05
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_chain_grave",
+  "tris": 212,
+  "size_m": [
+   2.4,
+   2.4,
+   2.12
+  ],
+  "min_z": -0.72
+ },
+ {
+  "name": "s2_chain_stake",
+  "tris": 152,
+  "size_m": [
+   0.81,
+   0.42,
+   1.84
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_big_dam_wall",
+  "tris": 96,
+  "size_m": [
+   6.2,
+   2.6,
+   4.85
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_dam_stone_step",
+  "tris": 48,
+  "size_m": [
+   4.0,
+   2.0,
+   0.3
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_first_lantern",
+  "tris": 28,
+  "size_m": [
+   0.3,
+   0.3,
+   1.7
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s2_old_charcoal_mark",
+  "tris": 44,
+  "size_m": [
+   2.0,
+   2.0,
+   0.02
+  ],
+  "min_z": 0.0
+ }
+]

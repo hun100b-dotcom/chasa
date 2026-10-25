@@ -377,6 +377,7 @@ def squat_coil(idle):
 # 걸음: (보폭 sl[키1.0m 기준], 두 걸음 프레임 N, 앞기울기, 고정 팔, 흔들기 세기)
 def walk_preset(s, cover):
     sid = s["id"]; child = s.get("child"); props = s.get("props", [])
+    if s.get("walk"): return dict(s["walk"])                  # 명세가 걸음을 직접 정한 경우(애도객: 느린 행렬·상여 메기)
     if "jar_on_head" in props: return dict(sl=0.46, N=70, lean=0, hold={"R": (150, 20, 20)}, swing=0.35, head_hn=-2)       # 물동이 이고(오른팔로 받침)
     if "tray" in props: return dict(sl=0.46, N=64, lean=0, hold={"R": (70, 6, 60)}, swing=0.4)                                 # 쟁반 받침
     if "jige" in props: return dict(sl=0.50, N=68, lean=10, hold={"R": (25, 18, 70), "L": (25, 18, 70)}, swing=0.2)            # 지게 끈 쥐고
@@ -386,6 +387,64 @@ def walk_preset(s, cover):
     if cover: return dict(sl=0.46, N=62, lean=1, swing=0.4)                                                                    # 치마·도포: 걸음 좁게
     return dict(sl=0.62, N=64, lean=2, swing=0.55)
 
+# ── 장례·제사 동작(애도객 전용 + 마을 사람 공용 Weep·MournStand) ────────────────────────────
+def weep(idle, child=False):
+    """곡(哭) 서서 울기 120프레임 반복: 두 손으로 얼굴을 가리고 어깨를 떨며 두 번 크게 흐느낀다.
+    왜: 대사 없이 슬픔을 전하려면 '얼굴 가린 손 + 떨리는 어깨'가 가장 멀리서도 읽힌다(쿼터뷰에서 얼굴 표정은 안 보인다). 이벤트 sob=흐느낌 순간(곡 소리 맞춤)."""
+    ks = []
+    for fr in range(0, 121, 3):
+        t = fr / 120; sob = max(0.0, math.sin(TAU * 2 * t)) ** 2; trem = math.sin(TAU * 14 * t) * (0.4 + 1.6 * sob)
+        arms = (96 + 3 * sob, 6, 128 + 4 * sob)
+        up = P(lean=12 + 14 * sob + (4 if child else 0), hn=20 + 12 * sob, R=arms, L=arms, twist=1.4 * trem)
+        up["Chest"] = {"r": (up["Chest"]["r"][0] + 2.2 * trem * 0.5, 0, up["Chest"]["r"][2] + 2.6 * trem)}
+        ks.append((fr, full(up, -0.02 * sob)))
+    return loopfix(ks), "LINEAR", True, {"sob": 22}
+
+def mourn_stand(idle):
+    """고개 숙이고 서 있기 180프레임 반복: 두 손을 모으고 고개를 떨군 채 숨만 쉰다. 100프레임쯤 오른손 손등으로 눈가를 한 번 훔친다.
+    왜: 장례 행렬 옆·노제 구경에 서 있는 마을 사람 모두가 쓰는 '조용한 애도'. 우는 사람(Weep) 사이에 이게 섞여야 장면이 단조롭지 않다."""
+    ks = []
+    for fr in range(0, 181, 4):
+        t = fr / 180; br = math.sin(TAU * t * 2); wipe = max(0.0, math.sin(math.pi * (t - 0.52) / 0.16)) if 0.52 <= t <= 0.68 else 0.0
+        R = (60 + 38 * wipe, 6 - 4 * wipe, 92 + 36 * wipe); L = (58, 6, 88)
+        ks.append((fr, full(P(lean=7 + 1.0 * br + 3 * wipe, hn=18 + 1.5 * br + 4 * wipe, R=R, L=L), 0)))
+    return loopfix(ks), "LINEAR", True, {"wipe": 100}
+
+def wail(idle):
+    """애고곡(주저앉아 우는 곡) 150프레임 반복: 쪼그려 앉은 채 앞으로 엎드려 한 손으로 땅을 치며 운다(SitDown → Wail → StandUp으로 잇는다).
+    왜: 상주·아내의 슬픔은 서서 우는 동네 사람보다 한 단계 커야 읽힌다. 땅 치는 순간(pound)에 쿵 소리·먼지 한 점을 맞춘다."""
+    ks = []
+    for fr in range(0, 151, 3):
+        t = fr / 150; sob = max(0.0, math.sin(TAU * 3 * t)) ** 2; pound = max(0.0, math.sin(TAU * 3 * t - 0.9)) ** 6
+        up = P(lean=32 + 14 * sob, hn=-6 + 14 * sob, R=(80 - 40 * pound, 10, 24), L=(88, 12, 16))
+        ks.append((fr, full(up, SQ["dz"] + 0.02, SQ["hy"], SQ["hrx"], {"L": (-0.10, ANK, 0.0), "R": (-0.10, ANK, 0.0)})))
+    return loopfix(ks), "LINEAR", True, {"pound": 14}
+
+def hug_shoes(idle):
+    """아버지 짚신을 품에 안고 선 모습 120프레임 반복(막내딸): 두 팔로 가슴에 꼭 안고 울지 않는다. 숨만 크게 쉬고 고개가 아주 조금 떨린다.
+    왜: 시나리오 '막내딸(10대)은 울지 않고 짚신을 품에 안고 있다'. 큰 동작이 없어야 오히려 슬픔이 읽힌다."""
+    ks = []
+    for fr in range(0, 121, 6):
+        t = fr / 120; br = math.sin(TAU * t)
+        ks.append((fr, full(P(lean=5 + 1.2 * br, hn=12 + 1.0 * br, R=(78, -10, 112), L=(78, -10, 112), ht=1.2 * math.sin(TAU * t * 3)), 0)))
+    return loopfix(ks), "LINEAR", True, {}
+
+def hold_flag(idle):
+    """만장 깃대 들고 서기 120프레임 반복: 두 손으로 깃대를 가슴께에 세워 쥐고 바람에 맞춰 몸이 아주 조금 흔들린다."""
+    ks = []
+    for fr in range(0, 121, 6):
+        t = fr / 120; sw = math.sin(TAU * t)
+        ks.append((fr, full(P(lean=2 + 1 * sw, hn=10, twist=1.5 * sw, R=(62, 8, 80), L=(52, 8, 82)), 0)))
+    return loopfix(ks), "LINEAR", True, {}
+
+def pour_cup(idle):
+    """노제 술잔 올리기 150프레임(비반복): 두 손으로 잔을 받쳐 앞으로 내밀어 올리고(50) 천천히 땅에 부은 뒤(80) 절 한 번(130)."""
+    def pose(cup, bow, pour):
+        return full(P(lean=6 + 30 * bow + 8 * pour, hn=14, R=(72 + 14 * cup, 6, 70 - 20 * pour), L=(66 + 10 * cup, 6, 78), dz=-0.04 * bow), -0.04 * bow, 0, 6 * bow)
+    return [(0, idle), (24, pose(0, 0, 0)), (50, pose(1, 0, 0)), (66, pose(1, 0, 0)), (82, pose(1, 0, 1)), (100, pose(0.5, 0, 1)), (112, pose(0, 0, 0)), (130, pose(0, 1, 0)), (150, idle)], "BEZIER", False, {"raise": 50, "pour": 82}
+
+
+EXTRA_FN = {"HugShoes": hug_shoes, "HoldFlag": hold_flag, "PourCup": pour_cup, "Wail": wail}   # 애도객 전용 역할 동작
 ROLE = {   # id → 역할 동작 이름들 (설명은 위 함수 머리말)
  "N101": ["Ritual", "Bow", "OpenFan", "ReachUp"], "N102": ["RopeCoil", "ReachUp"], "N103": ["Offer", "Bow"], "N104a": ["Play"], "N104b": ["Play"], "N104c": ["Play"], "N105": ["Chant", "TapPipe"],
  "N106": ["Haggle"], "N107": ["DrawWater", "Laundry"], "N108": ["HoldReins", "SquatCoil"], "N109": ["Hammer", "Bellows"], "N110a": ["Haggle"], "N110b": ["Haggle"],
@@ -398,7 +457,7 @@ def role_clips(s, idle):
         if nm == "Haggle": out[nm] = haggle(idle, FREE.get(s["id"], "both"))
         elif nm == "Guard": out[nm] = guard(idle, "staff" if "gonjang" in s.get("props", []) else "keys")
         else:
-            fn = {"Hammer": hammer, "Bellows": bellows, "DrawWater": draw_water, "Laundry": laundry, "Hawk": hawk, "WaveStick": wave_stick, "Chant": chant, "Ritual": ritual,
+            fn = {**EXTRA_FN, "Hammer": hammer, "Bellows": bellows, "DrawWater": draw_water, "Laundry": laundry, "Hawk": hawk, "WaveStick": wave_stick, "Chant": chant, "Ritual": ritual,
                   "Offer": offer, "Bow": bow, "Play": play, "Read": read, "Stamp": stamp, "Mix": mix, "Serve": serve, "RopeCoil": rope, "HoldReins": reins, "ReachUp": reach_up, "Doze": doze, "Scribble": scribble, "ReadNotice": read_notice, "PlaceBowl": place_bowl, "TapPipe": tap_pipe, "OpenFan": open_fan, "SquatCoil": squat_coil}[nm]
             r = fn(idle); out[nm] = r if len(r) == 4 else (r[0], "LINEAR", True, {})
     return out

@@ -121,7 +121,7 @@ def export(o, path, apply=True):
                               export_materials="EXPORT", export_cameras=False, export_lights=False, export_extras=True)
 
 def setup_render(ortho, center, elev=50, size=(720, 540), sun_dir=(0.5, -0.4, -1), ground=True, ground_size=40, night=False):
-    """로스트아크식 50° 내려다보는 직교 카메라 미리보기. 정면(-Y 쪽)에서 본다."""
+    """50° 내려다보는 원근 카메라(a안) 미리보기. 정면(-Y 쪽)에서 본다."""
     sc = bpy.context.scene
     sc.render.engine = "BLENDER_EEVEE" if False else "CYCLES"
     sc.cycles.samples = 24; sc.cycles.device = "CPU"; sc.cycles.use_denoising = False
