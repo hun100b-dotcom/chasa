@@ -122,6 +122,22 @@ def camera(center, ortho, size, elev=50):
     co = bpy.data.objects.new("cam", cam); bpy.context.collection.objects.link(co); e = math.radians(elev); d = 120
     co.location = (center[0], center[1] - d * math.cos(e), center[2] + d * math.sin(e)); co.rotation_euler = (math.radians(90 - elev), 0, 0); sc.camera = co
 
+def camera_persp(loc, target, lens, size):
+    """원근 카메라(타이틀·로딩 일러스트용). loc에서 target을 바라본다. 쿼터뷰 게임 화면과 달리 낮게 깔아 극적으로."""
+    sc = bpy.context.scene; sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = int(os.environ.get("FS_SAMPLES", "96"))
+    try: sc.cycles.use_denoising = True; sc.cycles.denoiser = "OPENIMAGEDENOISE"
+    except Exception: pass
+    sc.render.resolution_x, sc.render.resolution_y = size
+    cam = bpy.data.cameras.new("cam"); cam.lens = lens; cam.clip_end = 900; cam.sensor_width = 36
+    co = bpy.data.objects.new("cam", cam); bpy.context.collection.objects.link(co); co.location = loc
+    d = Vector(target) - Vector(loc); co.rotation_euler = d.to_track_quat("-Z", "Y").to_euler(); sc.camera = co
+
+def orbs(pts, col="#BFE8FF"):
+    """떠도는 넋불(작은 발광 구 + 은은한 점광)."""
+    for i, (x, y, z) in enumerate(pts):
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.07 + 0.02 * (i % 3), location=(x, y, z), segments=12, ring_count=8); o = bpy.context.active_object; o.data.materials.append(mat(col, 6.0))
+        add_light((x, y, z), col, 0.18, 4.0, False, "넋불")
+
 def pose(name, x, y, z, rot, action, frame, scale=1.0):
     """리깅된 GLB를 불러 동작의 한 프레임을 굳혀 둔다(여러 캐릭터가 서로 다른 프레임을 쓸 수 있게)."""
     before = set(bpy.data.objects); bpy.ops.import_scene.gltf(filepath=gpath(name)); new = [o for o in bpy.data.objects if o not in before]
@@ -163,6 +179,10 @@ SHOTS = {
   "arena1t": dict(win=(360, 245, 450, 335), center=(404, 288, 0.3), ortho=46, title="패턴 예고 ① 삿대 휩쓸기 + 내려찍기"),
   "arena2t": dict(win=(550, 490, 612, 552), center=(580, 521, 2.3), ortho=30, title="패턴 예고 ② 잔이 열린다(3칸)"),
   "arena3t": dict(win=(20, 428, 72, 480), center=(46, 453, 0.35), ortho=26, title="패턴 예고 ③ 번호 낙인(16칸)"),
+  "title":  dict(win=(150, 0, 240, 80), cam=((194.0, 29.4, 1.2), (187.0, 38.4, 2.3), 27), size=(1920, 1080), title="타이틀 배경: 밤 서낭당 앞의 차사"),
+  "load_a": dict(win=(160, 10, 240, 100), cam=((196, 16, 3.2), (196, 52, 2.6), 28), size=(1920, 1080), title="로딩 ① 솔고개 마을 어귀"),
+  "load_b": dict(win=(370, 255, 450, 335), cam=((388, 262, 2.6), (404, 292, 1.2), 30), size=(1920, 1080), title="로딩 ② 물막이 골 나루"),
+  "load_c": dict(win=(540, 490, 625, 590), cam=((571, 514, 4.6), (581, 537, 3.2), 27), size=(1920, 1080), title="로딩 ③ 폐당집 터"),
   "tendo":  dict(win=(170, 30, 230, 90), center=(196, 51, 0), ortho=18, title="천도 이펙트(밤)"),
 }
 
@@ -217,6 +237,10 @@ def run(key):
         pose("boss_naru", 404, 288, 0.55, 0, "Windup", 56)
         put("fx_wait_ring_old", 404, 281, 0.4, 0, scale=1.0); 
     if key.startswith("arena"): arena_scene(key)
+    if key == "title":   # 서낭당 앞에 선 차사(서낭당을 마주 봄) + 둘레에 떠도는 넋
+        pose("hero_chasa", 189.2, 34.6, 0.3, 215, "Idle", 20)
+        orbs(((184.4, 33.6, 1.3), (191.0, 37.2, 1.9), (183.0, 40.0, 2.4), (187.6, 31.6, 0.9), (190.6, 41.5, 2.8)))
+    if key == "load_b": put("night_soulfire_pedestal", 400.5, 276.0, 0.62 + 0.3, 0)
     if key == "tendo":
         # 마을 길 한가운데(집 지붕이 기둥을 가리지 않게 길 폭 안쪽에 모은다)
         pose("hero_chasa", 195.8, 49.5, 0, 0, "Cast", 30)
@@ -226,7 +250,11 @@ def run(key):
         pose("soul_old", 197.6, 46.2, 0, 20, "Windup", 33)
         put("fx_pahon_shards_a", 193.8, 46.8, 0.36, 0, scale=0.8)
         put("fx_stain_decal", 196.4, 43.6, 0.37, 30)
-    (world_day if DAY else world_night)(); camera(cfg["center"], cfg["ortho"], (1280, 720) if not os.environ.get("FS_TEST") else (640, 360))
+    (world_day if DAY else world_night)()
+    sz = cfg.get("size", (1280, 720)); sz = (sz[0] // 3, sz[1] // 3) if os.environ.get("FS_TEST") else sz
+    if os.environ.get("FS_CAM"): v = [float(t) for t in os.environ["FS_CAM"].split(",")]; cfg["cam"] = (tuple(v[:3]), tuple(v[3:6]), v[6])   # 카메라 시험용
+    if "cam" in cfg: camera_persp(*cfg["cam"][:2], cfg["cam"][2], sz)
+    else: camera(cfg["center"], cfg["ortho"], sz)
     if os.environ.get("FS_TEST"): bpy.context.scene.cycles.samples = 16
     path = os.path.join(A3, "previews", f"scene_{key}{'_day' if DAY else ''}.png"); render(path)
     print(key, "객체", stats["objs"], "조명", len(placed_lights), "초", round(time.time() - t0)); return path
