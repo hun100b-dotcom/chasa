@@ -1001,6 +1001,61 @@
    "bypass_cast_filter": false,
    "length_sec": 6.08,
    "peak_dbfs": -15
+  },
+  {
+   "id": "amb.fortress.flag",
+   "file": "amb_fortress_flag",
+   "category": "세계",
+   "desc": "무너진 산성 위: 높은 곳의 센 바람 + 찢어진 깃발이 펄럭이다 탁 튕김(반복용 16초)",
+   "use": "③ 무너진 산성·산성 아랫마을 높은 곳",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 15.9,
+   "peak_dbfs": -22
+  },
+  {
+   "id": "amb.arrowvalley",
+   "file": "amb_arrowvalley",
+   "category": "세계",
+   "desc": "화살골: 바위틈을 지나는 가는 휘파람 바람 + 녹슨 화살촉이 바람에 떨리는 아주 작은 쇳소리(반복용 15초)",
+   "use": "③ 화살골 골짜기",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 14.9,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "amb.camp",
+   "file": "amb_camp",
+   "category": "세계",
+   "desc": "빈 군막 터: 기둥만 남은 평지, 너덜한 천 조각 펄럭임 + 밧줄 삐걱 + 먼 까마귀(반복용 14초)",
+   "use": "③ 군막 터",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 13.9,
+   "peak_dbfs": -18
+  },
+  {
+   "id": "amb.mine.wind",
+   "file": "amb_mine_wind",
+   "category": "세계",
+   "desc": "갱 입구 바람: 굴속으로 빨려 드는 낮은 웅— 공명(관 울림) + 입구 판자 덜컹(반복용 16초)",
+   "use": "④ 광부촌 갱 입구·큰 갱도 입구",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 15.9,
+   "peak_dbfs": -22
+  },
+  {
+   "id": "amb.mine.shaft",
+   "file": "amb_mine_shaft",
+   "category": "세계",
+   "desc": "큰 갱도 안: 끝없는 어둠의 울림, 물방울 똑똑 + 버팀목 삐걱 + 멀리 돌 구르는 소리 + 석탄 가루 사락(반복용 15초)",
+   "use": "④ 큰 갱도·무너진 막장",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 14.8,
+   "peak_dbfs": -24
   }
  ],
  "footsteps": {

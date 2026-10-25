@@ -1024,6 +1024,97 @@ def _(r):
     return reverb(buf, .7, .15)
 
 
+# ===== 2막 지역 환경음 (③ 붉은재 싸움터 · ④ 쇳골 광산, 2026-10-25) =====
+def _flutter(sec, r, gust, rate=(7, 16), bright=2200):
+    """천(깃발·천막) 펄럭임: 잡음을 빠르게 '툭툭' 끊어 주는 맥박(초당 rate번)으로 곱한다.
+    gust(0~1 곡선)가 셀수록 더 빠르고 크게 펄럭이고, 센 순간마다 '탁' 하고 천이 튕긴다"""
+    n = int(sec * SR)
+    hz = rate[0] + (rate[1] - rate[0]) * gust
+    ph = np.cumsum(hz) / SR
+    pulse = (0.5 + 0.5 * np.sin(2 * np.pi * ph)) ** 6                  # 뾰족한 맥박 = 천이 펄럭 접혔다 펴짐
+    cloth = filt(filt(noise(n, r), "low", bright), "high", 150) * pulse * gust
+    snaps = np.zeros(n)
+    for i in np.where(np.diff((gust > .75).astype(int)) == 1)[0]:     # 바람이 확 셀 때 '탁'
+        k = int(.03 * SR); place(snaps, filt(noise(k, r), "low", 3000) * env(k, .001, .008, 4), i / SR)
+    return cloth + snaps * .8
+
+
+def _gust_curve(sec, r, n_gust=3, base=.25):
+    """느린 돌풍 곡선(0~1): 기본 바람 위에 n번 확 불었다 잦아듦"""
+    t = T(sec); g = np.full(len(t), base)
+    for k in range(n_gust):
+        c = (k + .5) * sec / n_gust + r.uniform(-1, 1); w = r.uniform(1.2, 2.5)
+        g += (1 - base) * np.exp(-((t - c) / w) ** 2) * r.uniform(.7, 1)
+    g += .08 * filt(r.standard_normal(len(t)), "low", 2) / .02
+    return np.clip(g, 0, 1)
+
+
+@sfx("amb.fortress.flag", -22, "세계", "무너진 산성 위: 높은 곳의 센 바람 + 찢어진 깃발이 펄럭이다 탁 튕김(반복용 16초)", loop=True, use="③ 무너진 산성·산성 아랫마을 높은 곳")
+def _(r):
+    sec = 16.4; n = int(sec * SR)
+    g = _gust_curve(sec, r, 3, .3)
+    wind = sweep_filt(noise(n, r), "band", 350, 500, 1.2) * (.4 + .6 * g) + filt(noise(n, r), "low", 200) * .5
+    flag = _flutter(sec, r, g)
+    rope = grains(sec, r, 6, lambda r, k: sweep_filt(noise(int(.35 * SR), r), "band", 900, 1300, 12) * env(int(.35 * SR), .05, .1, 4, hold=.15) * .3)   # 깃대 밧줄 삐걱
+    return loopify(wind * .7 + flag * .55 + rope, .5)
+
+
+@sfx("amb.arrowvalley", -24, "세계", "화살골: 바위틈을 지나는 가는 휘파람 바람 + 녹슨 화살촉이 바람에 떨리는 아주 작은 쇳소리(반복용 15초)", loop=True, use="③ 화살골 골짜기")
+def _(r):
+    sec = 15.4; n = int(sec * SR); t = T(sec)
+    g = _gust_curve(sec, r, 2, .35)
+    base = filt(noise(n, r), "low", 300) * .6
+    whistle = np.zeros(n)
+    for f, a in ((620, 1), (930, .5), (1480, .3)):                    # 바위틈 = 좁은 구멍 → 높이가 정해진 휘파람
+        whistle += sweep_filt(noise(n, r), "band", f * .97, f * 1.03, 40) * a
+    whistle *= np.clip(g - .3, 0, 1) ** 1.5 * 2.5
+    tinks = grains(sec, r, 9, lambda r, k: modal(.4, [(r.uniform(2800, 3600), .15, 1), (r.uniform(5000, 6000), .08, .4)], r) * r.uniform(.05, .15))
+    return loopify(reverb(base + whistle * .5 + tinks, 1.6, .35, tone_hz=4000)[:n], .5)
+
+
+@sfx("amb.camp", -18, "세계", "빈 군막 터: 기둥만 남은 평지, 너덜한 천 조각 펄럭임 + 밧줄 삐걱 + 먼 까마귀(반복용 14초)", loop=True, use="③ 군막 터")
+def _(r):
+    sec = 14.4; n = int(sec * SR)
+    g = _gust_curve(sec, r, 2, .2)
+    wind = filt(noise(n, r), "low", 400) * (.5 + .5 * g)
+    rag = _flutter(sec, r, g * .8, rate=(10, 22), bright=3500) * .5           # 작은 천 조각은 더 빠르고 가볍게 떤다
+    creak = grains(sec, r, 5, lambda r, k: sweep_filt(noise(int(.5 * SR), r), "band", 600, 900, 15) * env(int(.5 * SR), .05, .15, 4, hold=.2) * .35)
+    crow = np.zeros(n)
+    for at in (3.0, 3.45, 10.2):                                      # 까악— (목소리 합성, 멀리)
+        d = .35; f0 = curve(d, [(0, 520), (.08, 600), (d, 480)])
+        place(crow, voice(f0, [(1200, 3, 1), (2400, 4, .5)], .5, r, nh=15) * env(int(d * SR), .02, .12, 3, hold=.1), at)
+    crow = reverb(filt(crow, "low", 2200), 2.0, .6, tone_hz=2000)[:n]
+    return loopify(wind * .8 + rag + creak + crow * .5, .5)
+
+
+@sfx("amb.mine.wind", -22, "세계", "갱 입구 바람: 굴속으로 빨려 드는 낮은 웅— 공명(관 울림) + 입구 판자 덜컹(반복용 16초)", loop=True, use="④ 광부촌 갱 입구·큰 갱도 입구")
+def _(r):
+    sec = 16.4; n = int(sec * SR); t = T(sec)
+    g = _gust_curve(sec, r, 3, .4)
+    tube = np.zeros(n)
+    for k, a in ((1, 1), (2, .55), (3, .3), (5, .12)):              # 긴 굴 = 큰 관. 관 길이로 정해진 낮은 음과 그 배음이 운다
+        f = 72 * k * (1 + .01 * np.sin(2 * np.pi * t / 9))
+        tube += sweep_filt(noise(n, r), "band", f[0], f[-1], 25) * a
+    tube *= .4 + .6 * g
+    hiss = filt(filt(noise(n, r), "high", 600), "low", 3000) * g * .25
+    boards = grains(sec, r, 5, lambda r, k: modal(.2, [(r.uniform(180, 260), .05, 1), (r.uniform(500, 700), .03, .5)], r) * .5)   # 입구 판자문이 바람에 덜컹
+    return loopify(reverb(tube * .9 + hiss + boards, 1.5, .3, tone_hz=1500)[:n], .5)
+
+
+@sfx("amb.mine.shaft", -24, "세계", "큰 갱도 안: 끝없는 어둠의 울림, 물방울 똑똑 + 버팀목 삐걱 + 멀리 돌 구르는 소리 + 석탄 가루 사락(반복용 15초)", loop=True, use="④ 큰 갱도·무너진 막장")
+def _(r):
+    sec = 15.4; n = int(sec * SR)
+    room = filt(noise(n, r), "low", 120) * .4
+    drips = grains(sec, r, 18, lambda r, k: bubble(.2, r.uniform(900, 1600), 2.2, .02) * r.uniform(.3, 1))
+    timber = grains(sec, r, 4, lambda r, k: sweep_filt(noise(int(.8 * SR), r), "band", 300, 420, 18) * env(int(.8 * SR), .1, .25, 4, hold=.3) * .6)   # 무거운 버팀목이 짓눌려 끄응
+    rocks = np.zeros(n)
+    for at in (6.0, 12.5):
+        place(rocks, grains(1.2, r, 12, lambda r, k: modal(.15, [(r.uniform(400, 900), .04, 1), (r.uniform(1500, 2500), .02, .3)], r) * (1 - k / 14) * .5), at)
+    dust = grains(sec, r, 300, lambda r, k: filt(noise(int(.002 * SR), r), "high", 4000) * r.uniform(.02, .1))
+    y = room + drips * .4 + timber + filt(rocks, "low", 2000) * .7 + dust
+    return loopify(reverb(y, 3.0, .55, tone_hz=2200)[:n], .6)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)
