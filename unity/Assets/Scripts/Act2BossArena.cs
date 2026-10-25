@@ -13,7 +13,7 @@ public class Act2BossArena : MonoBehaviour
     public static bool Enabled { get { return FieldRules.Act2; } }   // 2막 땅이 깔려 있으면 보스 넷도 선다(금줄이 닫혀 있는 동안은 닿을 수 없다)
 
     enum Shape { Circle, Sector, Bar, Ring }
-    class Tele { public bool weak; public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
+    class Tele { public bool drain; public float drainT; public bool weak; public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
 
     JudgeSystem judge; Enemy boss; BossDef def; Act2Brain brain; Act3Brain brain3;   // 2막(5~8)은 brain, 3막(9~12)은 brain3 — 같은 화면 코드가 둘을 다 그린다
     readonly List<Tele> teles = new List<Tele>();
@@ -258,7 +258,7 @@ public class Act2BossArena : MonoBehaviour
             case BossAct.HisPahon: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); break;
             case BossAct.NameLines:   // 위(북)에서부터 한 줄씩, 마지막 줄은 비워 둔다(안전 지대)
                 for (int i = 0; i < m.Count - 1; i++)
-                    Add(new Tele { shape = Shape.Bar, c = new Vector3(def.X, 0f, def.Z + fightArea - 3f - i * (m.Radius + 1.5f)), dir = Vector3.right, len = fightArea * 2f, wid = m.Radius, warn = m.Warn + i * 0.5f });
+                    Add(new Tele { shape = Shape.Bar, c = new Vector3(def.X, 0f, def.Z + fightArea - 3f - i * (m.Radius + 1.5f)), dir = Vector3.right, len = fightArea * 2f, wid = m.Radius, warn = m.Warn + i * 0.5f, drain = true });   // 줄이 그어진 뒤에도 6초 남아 위에 서 있으면 넋·체력이 샌다
                 Sfx.Play("sfx.boss.heukwol.line.draw"); break;
             case BossAct.Flood:       // 물살: 가로 띠가 무작위 자리에서 차례로
                 for (int i = 0; i < m.Count; i++)
@@ -325,7 +325,13 @@ public class Act2BossArena : MonoBehaviour
             }
             else if (!t.fired && t.view != null)
                 t.view.GetComponent<Renderer>().sharedMaterial.color = Color.Lerp(new Color(0.35f, 0.05f, 0.05f, 1f), new Color(0.85f, 0.12f, 0.1f, 1f), t.t / t.warn);
-            if (t.t >= (t.warn < 19f ? t.warn + 0.25f : t.warn)) { if (t.view != null) Destroy(t.view); teles.RemoveAt(i); }
+            // 명단 줄(B-12): 그어진 뒤 6초 동안 줄 위에 서 있으면 매초 넋 -2 · 피해 8
+            if (t.drain && t.fired)
+            {
+                t.drainT += dt;
+                if (t.drainT >= 1f) { t.drainT -= 1f; if (Inside(t, judge.player.Pos)) { judge.ledger.Neok = Mathf.Max(0, judge.ledger.Neok - 2); judge.BossAreaHit(boss, 8f / Mathf.Max(1, boss.damage)); } }
+            }
+            if (t.t >= (t.drain ? t.warn + 6f : t.warn < 19f ? t.warn + 0.25f : t.warn)) { if (t.view != null) Destroy(t.view); teles.RemoveAt(i); }
         }
     }
 }
