@@ -31,11 +31,11 @@ namespace Chasa.Core
             // 부름 갈래 (천도 쪽)
             new SkillNode("붙잡아 부르기", Branch.Call, true, "6m 안 무릎 꿇은 혼 대기 +3초 · 혼 0.8초 멈칫 (12초)"),
             new SkillNode("혼불 날리기", Branch.Call, true, "혼불을 던진다 · 피해 8 × 그날 천도한 수+1 (최대 5)"),
-            new SkillNode("이름 비추기", Branch.Call, true, "다음 천도 시전 −0.25초 (8초)"),
+            new SkillNode("이름 비추기", Branch.Call, true, "다음 천도 시전 -0.25초 (8초)"),
             new SkillNode("배웅길", Branch.Call, true, "천도 직후 3초 동안 적 이동 -30%"),
             new SkillNode("오래 부르기", Branch.Call, false, "연속 천도 창 +1/+2초"),
             new SkillNode("고마운 넋", Branch.Call, false, "천도 넋 +6/+12%"),
-            new SkillNode("곁을 지킴", Branch.Call, false, "천도 중 받는 피해 −10/−20%"),
+            new SkillNode("곁을 지킴", Branch.Call, false, "천도 중 받는 피해 -10/-20%"),
             new SkillNode("몫을 채움", Branch.Call, false, "그날 명부 몫을 채우면 이동 속도 +8%"),
             new SkillNode("일곱 이름", Branch.Call, true, "연속 천도 7회째 다음 천도는 하한 0.5초로 끝난다", true),
             // 줄 갈래 (싸움·제어)
