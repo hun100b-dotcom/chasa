@@ -1727,6 +1727,182 @@
    "bypass_cast_filter": true,
    "length_sec": 1.82,
    "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.boss.naru.sweep.telegraph",
+   "file": "sfx_boss_naru_sweep_telegraph",
+   "category": "보스",
+   "desc": "나루 영감 삿대 휩쓸기 예고: 삿대를 물에서 끌어올리는 물 뚝뚝 + 배가 삐걱 기울어짐(0.6초, 이 소리 끝에 휩쓸림)",
+   "use": "B-01: 삿대 휩쓸기 예비동작 시작(일반 혼 예고음 대신)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.37,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.boss.naru.sweep",
+   "file": "sfx_boss_naru_sweep",
+   "category": "보스",
+   "desc": "삿대 휩쓸기: 굵은 나무 장대가 크게 휘익 + 물보라 촤악(0.9초)",
+   "use": "B-01: 휩쓸기 판정이 나가는 순간(맞든 안 맞든)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.89,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "sfx.boss.naru.rise",
+   "file": "sfx_boss_naru_rise",
+   "category": "보스",
+   "desc": "물에 빠진 혼 둘이 올라옴(전투용 짧은 판): 물이 꿀렁 솟고 뚝뚝(0.9초)",
+   "use": "B-01 ①: 강물에서 혼 2마리가 올라올 때마다(컷신 cut.water.hands 보다 짧고 작게)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.81,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.boss.naru.flood",
+   "file": "sfx_boss_naru_flood",
+   "category": "보스",
+   "desc": "큰물: 강이 불어 바닥을 삼킴 — 낮은 우르릉 + 물이 밀려드는 쏴아아(3초, 한 번)",
+   "use": "B-01 ② 맺힘 50%: 싸울 바닥이 18m→11m로 좁아지기 시작할 때",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 4.87,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.boss.naru.bigwater",
+   "file": "sfx_boss_naru_bigwater",
+   "category": "보스",
+   "desc": "큰물귀신이 생김: 흘러간 파혼 얼룩 셋이 모여 물기둥이 솟음 — 꿀렁 셋 + 쿠와아 솟구침(1.6초)",
+   "use": "B-01 ②: 얼룩 3개가 모여 큰물귀신이 될 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.13,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "sfx.boss.wolhwa.warn",
+   "file": "sfx_boss_wolhwa_warn",
+   "category": "보스",
+   "desc": "월화 열두 거리 예고: 요령 짤랑 + 굿판 잔들이 바르르 떨림(1초, 열릴 부채꼴 쪽 잔이 운다)",
+   "use": "B-02: 파동 예고 시작(지금 컷신용 cut.yoryeong.ring 자리)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.71,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.boss.wolhwa.burst",
+   "file": "sfx_boss_wolhwa_burst",
+   "category": "보스",
+   "desc": "부채꼴이 열림: 오방 천 펄럭이는 바람 휙 + 무가 장구 '덩' 한 번(0.7초)",
+   "use": "B-02: 예고가 끝나 부채꼴 판정이 나갈 때(파동마다 1번만)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.16,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.boss.wolhwa.frenzy",
+   "file": "sfx_boss_wolhwa_frenzy",
+   "category": "보스",
+   "desc": "월화가 몰아침: 장구가 빨라지는 덩덕덩덕덩덕 + 방울을 마구 흔듦(2초) — 이제부터 잔이 더 많이 열린다",
+   "use": "B-02 맺힘 50% 이하로 처음 내려갈 때 한 번",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 2.93,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "sfx.boss.seo.burst",
+   "file": "sfx_boss_seo_burst",
+   "category": "보스",
+   "desc": "서 의원 번호 칸이 터짐: 약재 가루가 퍽 + 탕약 끓어 넘치는 지글(0.6초, 파동마다 1번)",
+   "use": "B-03: 예고(cut.floor.flash) 뒤 칸들이 실제로 터질 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.16,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.boss.seo.streak",
+   "file": "sfx_boss_seo_streak",
+   "category": "보스",
+   "desc": "파동을 피했다(약점까지 한 걸음): 약장 서랍 고리가 달칵 — 첫 번째는 낮게, 두 번째는 높게(0.3초)",
+   "use": "B-03: 파동을 맞지 않고 넘겼을 때. 1번째는 pitch 1.0, 2번째는 1.25로 재생(3번째는 cut.drawer)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.58,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.boss.seo.weak.close",
+   "file": "sfx_boss_seo_weak_close",
+   "category": "보스",
+   "desc": "약점 끝: 열렸던 약장 서랍이 탁 닫힘(0.35초) — 다시 단단해졌다",
+   "use": "B-03: 약점 3초가 끝나 서랍이 닫힐 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.7,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "amb.weather.fog",
+   "file": "amb_weather_fog",
+   "category": "날씨",
+   "desc": "낮 안개: 소리가 먹힌 듯 먹먹한 공기 + 젖은 풀잎에서 물방울 + 아주 먼 까마귀 소리가 흐릿하게(반복용 14초)",
+   "use": "낮에 안개 낀 날(밤 안개는 기존 fog_night)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 13.8,
+   "peak_dbfs": -26
+  },
+  {
+   "id": "amb.weather.plague",
+   "file": "amb_weather_plague",
+   "category": "날씨",
+   "desc": "역병 안개: 무겁게 낮게 맥놀이하는 공기 + 멀리서 앓는 기침 + 파리 웅— (반복용 16초, 서 있으면 깎이는 해로운 날씨)",
+   "use": "역병 안개(검은여울 등). 3호를 처결하면 덜 온다",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 15.7,
+   "peak_dbfs": -25
+  },
+  {
+   "id": "amb.weather.cloudy.night",
+   "file": "amb_weather_cloudy_night",
+   "category": "날씨",
+   "desc": "흐린 밤: 별 없는 하늘의 낮은 바람 웅— + 구름 너머 아주 먼 우르릉 한 번 + 먼 개 짖음 + 문풍지 떨림(반복용 18초)",
+   "use": "흐린 날 밤(낮 흐림은 기존 wind)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 17.7,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "amb.weather.rain.heavy",
+   "file": "amb_weather_rain_heavy",
+   "category": "날씨",
+   "desc": "큰비: 굵은 빗줄기가 쏴— 땅을 두드림 + 처마 낙숫물 줄줄 + 물웅덩이 첨벙(반복용 12초)",
+   "use": "나루 영감 보스 날(비), 비가 가장 셀 때",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 11.8,
+   "peak_dbfs": -21
+  },
+  {
+   "id": "sfx.weather.thunder.far",
+   "file": "sfx_weather_thunder_far",
+   "category": "날씨",
+   "desc": "먼 천둥: 쩌억 갈라지는 소리 없이 산 너머로 굴러가는 우르르릉(4초, 한 번)",
+   "use": "비·큰비 중 20~60초에 한 번 무작위(화면 번쩍 없이 소리만도 가능)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 5.37,
+   "peak_dbfs": -12
   }
  ],
  "footsteps": {

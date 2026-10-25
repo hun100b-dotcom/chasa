@@ -1048,3 +1048,10 @@
 - 왜: 지금 코드는 UI 소리를 하나도 부르지 않는다. 자주 나는 소리일수록 작고 짧게(버튼 -21, 자동 저장 -31), 큰일(품계 오름)만 크고 길게.
 - 확인: 원래 76개 파일 중 의도한 2개만 바뀜(md5), 그 밖의 파일은 그대로. 미리듣기 v12.
 - 코드팀 연결 위치(제안): CharacterPanel.Toggle(열기/닫기), CharacterView 탭 버튼, NpcWorld.Say(들은 말 창, 단서면 heard.clue), JudgeSystem 품계 오름 토스트 두 곳(258·283), SaveGameNow(설정 버튼은 save, TickAutoSave 는 save.auto), Shrine.Buy 등 실패(false) 때 deny.
+
+## 2026-10-25 밤 — [사운드] 1막 보스 전투 소리 + 날씨 환경음 (기획·사운드)
+- 점검: B01~B03 컷신 대본·첫 세션·장례 대본에 적힌 소리 id는 모두 있음(빠진 것 0). 빈 곳은 '싸우는 동안' 소리였음.
+- 보스 전투 11개: `sfx.boss.naru.sweep.telegraph`·`.sweep`·`.rise`·`.flood`·`.bigwater` / `sfx.boss.wolhwa.warn`·`.burst`·`.frenzy` / `sfx.boss.seo.burst`·`.streak`·`.weak.close`.
+- 날씨 6개: `amb.weather.fog`(낮 안개)·`.plague`(역병 안개)·`.cloudy.night`(흐린 밤)·`.rain.heavy`(큰비), `sfx.weather.thunder.far`(먼 천둥 한 번).
+- 코드 연결 제안: Sfx.SetWeatherInternal 짝 바꾸기(안개=낮 fog/밤 fog_night, 역병=plague, 흐림=낮 wind/밤 cloudy.night, 1호 보스 날 비=rain.heavy), BossArena 파동 예고·발사 시점, 나루 영감 예비동작.
+- 기존 파일 변화 없음. 효과음 총 173개. 미리듣기 v13.
