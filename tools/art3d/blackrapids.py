@@ -30,11 +30,18 @@ def deep():
 def shore():
     """남쪽 절반은 풀 둑(윗면 0.3), 북쪽 절반은 물. 둑 가장자리 돌."""
     r = rnd(13)
-    p = [box("land", (T, T / 2, 0.3), (0, -T / 4, 0.15), "ground"), box("bed", (T, T / 2, 0.12), (0, T / 4, 0.06), "#6A5B45"), water_plane("water", -T / 2, 0, T, T / 2, WZ), box("lip", (T, 0.35, 0.34), (0, 0.17, 0.17), "slope_side")]
+    p = [box("land", (T, T / 2, 0.3), (0, -T / 4, 0.15), "#7C9558"), box("bed", (T, T / 2, 0.12), (0, T / 4, 0.06), "#6A5B45"), water_plane("water", -T / 2, 0, T, T / 2, WZ), box("lip", (T, 0.35, 0.34), (0, 0.17, 0.17), "slope_side")]
     for i in range(6):
         x = -3.4 + i * 1.35 + r.uniform(-0.2, 0.2); s = r.uniform(0.2, 0.35)
         p.append(sphere(f"edge{i}", s, (x, r.uniform(0.0, 0.3), 0.26), "stone", 5, 4, (1.3, 1, 0.7)))
     p.append(box("foam", (5, 0.08, 0.02), (0.5, 0.6, WZ + 0.01), "chain"))
+    # 풀 둑이 한 가지 색 판처럼 보이던 것(지형 알베도와 이음새가 보임)을 얼룩으로 깬다: 풀 명암 얼룩 + 둑 가까운 젖은 자갈 띠
+    for i in range(22):
+        x, y = r.uniform(-3.7, 3.7), r.uniform(-3.8, -0.5); s = r.uniform(0.35, 0.9)
+        p.append(sphere(f"patch{i}", s * 1.3, (x, y, 0.3), ["#6F8A4E", "#8AA35E", "#778F52", "#6A8449"][i % 4], 10, 3, (1.0, r.uniform(0.45, 0.9), 0.03), (0, 0, r.uniform(0, 3.14))))
+    for i in range(10):
+        x, y = r.uniform(-3.8, 3.8), r.uniform(-0.9, -0.15); s = r.uniform(0.12, 0.3)
+        p.append(sphere(f"grav{i}", s, (x, y, 0.3), ["#8D8878", "#B7AE98", "#7A6648"][i % 3], 5, 3, (1.2, 0.9, 0.18)))
     return p
 
 def road_pad():
