@@ -38,7 +38,7 @@ for fn, d in files.items():
                     err(fn, f'{p}: 원본에 없는 id {m}')
 
 # ───── 2. 기억 글이 원본과 같나(memories_actN, funerals, 단서 밤 대체, 컷신 기억 줄) ─────
-MEM_ACTS = [n for n in (1, 2, 3, 4) if f'memories_act{n}.json' in files]   # 4막(시즌 2)은 만드는 대로 검사에 들어온다
+MEM_ACTS = [n for n in (1, 2, 3, 4, 5) if f'memories_act{n}.json' in files]   # 4막(시즌 2)은 만드는 대로 검사에 들어온다
 for n in MEM_ACTS:
     for r in files[f'memories_act{n}.json']['souls']:
         s = SOUL.get(r['id'])
@@ -85,7 +85,7 @@ for k, b in bc.items():
 
 # 사람 id
 NPC = {}
-for n in [n for n in (1, 2, 3, 4) if f'npc_act{n}.json' in files]:
+for n in [n for n in (1, 2, 3, 4, 5) if f'npc_act{n}.json' in files]:
     for p in files[f'npc_act{n}.json']['npcs']:
         if p['id'] in NPC: err('npc', f"{p['id']} 사람 id 겹침")
         NPC[p['id']] = p
@@ -155,7 +155,8 @@ for fn, d in files.items():
         if '동이' in v and fn not in ('endings_s1.json', 'soul_memories.json') and '동이 트' not in v:
             err(fn, f'{p}: 이름 "동이"는 결말 A에서만')
         # 추위 말: 산 사람의 대사·혼잣말 칸에서만 본다(규칙 설명 칸 제외). 박돌쇠 아내 한 줄은 허용
-        if fn != 'endings_s1.json' and COLD.search(v) and re.search(r'\.(text|line|line_half|barks\.[^.]+\[\d+\])$', p) and '어째 이리 차누' not in v:
+        # 혼의 기억(.memory)도 본다 — 10-25 S-153 "늘 추워"가 원본에 남아 있던 것을 고침
+        if fn != 'endings_s1.json' and COLD.search(v) and re.search(r'\.(text|line|line_half|memory|barks\.[^.]+\[\d+\])$', p) and '어째 이리 차누' not in v:
             err(fn, f'{p}: 추위 말 "{v}"(당할미 외 금지)')
 
 # ───── 결과 ─────
