@@ -1,0 +1,177 @@
+{
+ "equip/equip_gat": {
+  "label": "갓(흑립)",
+  "size_px": 64,
+  "x2": "equip_gat@2x.png"
+ },
+ "equip/equip_tti": {
+  "label": "띠",
+  "size_px": 64,
+  "x2": "equip_tti@2x.png"
+ },
+ "equip/equip_sin": {
+  "label": "신",
+  "size_px": 64,
+  "x2": "equip_sin@2x.png"
+ },
+ "nok/nok_blue": {
+  "label": "푸른 넋",
+  "color": "#4A8CC8",
+  "size_px": 64
+ },
+ "nok/nok_red": {
+  "label": "붉은 넋",
+  "color": "#CE4E3A",
+  "size_px": 64
+ },
+ "nok/nok_yellow": {
+  "label": "누런 넋",
+  "color": "#DEAE3E",
+  "size_px": 64
+ },
+ "nok/nok_white": {
+  "label": "흰 넋",
+  "color": "#EEEADE",
+  "size_px": 64
+ },
+ "nok/nok_black": {
+  "label": "검은 넋",
+  "color": "#2E2C3C",
+  "size_px": 64
+ },
+ "in/in_01_청청": {
+  "label": "날랜 인",
+  "combo": [
+   "푸른 넋",
+   "푸른 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_02_적적": {
+  "label": "센 인",
+  "combo": [
+   "붉은 넋",
+   "붉은 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_03_황황": {
+  "label": "굳은 인",
+  "combo": [
+   "누런 넋",
+   "누런 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_04_백백": {
+  "label": "쇠 인",
+  "combo": [
+   "흰 넋",
+   "흰 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_05_흑흑": {
+  "label": "깊은 인",
+  "combo": [
+   "검은 넋",
+   "검은 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_06_청적": {
+  "label": "서두름 인",
+  "combo": [
+   "푸른 넋",
+   "붉은 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_07_청황": {
+  "label": "길 인",
+  "combo": [
+   "푸른 넋",
+   "누런 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_08_청백": {
+  "label": "바람 인",
+  "combo": [
+   "푸른 넋",
+   "흰 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_09_청흑": {
+  "label": "물길 인",
+  "combo": [
+   "푸른 넋",
+   "검은 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_10_적황": {
+  "label": "불씨 인",
+  "combo": [
+   "붉은 넋",
+   "누런 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_11_적백": {
+  "label": "칼끝 인",
+  "combo": [
+   "붉은 넋",
+   "흰 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_12_적흑": {
+  "label": "그을음 인",
+  "combo": [
+   "붉은 넋",
+   "검은 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_13_황백": {
+  "label": "버팀 인",
+  "combo": [
+   "누런 넋",
+   "흰 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_14_황흑": {
+  "label": "무덤 인",
+  "combo": [
+   "누런 넋",
+   "검은 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ },
+ "in/in_15_백흑": {
+  "label": "찬 인",
+  "combo": [
+   "흰 넋",
+   "검은 넋"
+  ],
+  "size_px": 64,
+  "note": "큰 인은 같은 그림에 금 테 한 겹을 코드가 더 얹거나 in_big/ 를 쓴다"
+ }
+}
