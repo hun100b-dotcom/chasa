@@ -200,6 +200,11 @@ public class FieldManager : MonoBehaviour
             for (int i = 0; i < src.Length; i++)
             {
                 if (name == "terrain_tile_grass" && src[i] != null) { dst[i] = GrassVariant(src[i], x, z); continue; }   // 넓은 풀밭이 한 색 평면으로 보이지 않게 칸마다 약간 다른 초록
+                if (src[i] != null && src[i].name.Contains("water"))   // 큰 강 물면: 알파 블렌드 + 흐르는 물 재질(없으면 아래로 내려가 단색 재질)
+                {
+                    var wm = GroundTerrain.RiverWater(src[i].name.Contains("deep"));
+                    if (wm != null) { dst[i] = wm; continue; }
+                }
                 Material m;
                 if (src[i] == null || !matCache.TryGetValue(src[i], out m))
                 {

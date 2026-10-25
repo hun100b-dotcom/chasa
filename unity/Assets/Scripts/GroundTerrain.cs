@@ -83,7 +83,22 @@ public static class GroundTerrain
         return t;
     }
 
-    static Material waterMat;
+    static Material waterMat, waterDeepMat;
+
+    /// <summary>큰 강 조각(br_*)의 물면용 재질. deep=깊은 곳(어두운 그림). 그림·셰이더가 없으면 null(조각 모델 자체 재질을 그대로 쓴다)</summary>
+    public static Material RiverWater(bool deep)
+    {
+        if (!deep) return WaterMaterial();
+        if (waterDeepMat != null) return waterDeepMat;
+        var ta = Resources.Load<TextAsset>("Terrain/water_albedo_deep");
+        var shared = WaterMaterial();
+        if (ta == null || shared == null) return shared;
+        var t = Decode(ta); if (t == null) return shared;
+        t.wrapMode = TextureWrapMode.Repeat;
+        waterDeepMat = new Material(shared) { name = "WaterDeep" };
+        waterDeepMat.SetTexture("_MainTex", t);
+        return waterDeepMat;
+    }
     const float WaterY = 0.18f;   // 아트가 정한 물 높이(m)
 
     /// <summary>물 재질. 물 그림이나 셰이더가 없으면 null(물을 그리지 않는다)</summary>

@@ -10,7 +10,7 @@ OUT = os.path.join(os.path.dirname(__file__), '..', 'unity', 'Assets', 'Resource
 REQUIRED = ['terrain.json', 'heightmap.png', 'splat_a.png']
 OPTIONAL = ['splat_b.png'] + ['layer_%s.png' % n for n in ('dirt', 'grass', 'gravel', 'paddy', 'leaf')] \
     + ['detail_%s.png' % n for n in ('dirt', 'grass', 'gravel', 'paddy', 'leaf')]   # 가까이 볼 때 섞는 잔 무늬(노멀 _n 은 아직 안 씀)
-OPTIONAL += ['water_albedo.png']   # 개울물 그림(흐름은 셰이더가 만든다)
+OPTIONAL += ['water_albedo.png', 'water_albedo_deep.png']   # 개울물 그림(흐름은 셰이더가 만든다)
 
 
 def png_size(path):
