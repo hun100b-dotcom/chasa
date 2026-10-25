@@ -24,6 +24,7 @@ public class UiRoot : MonoBehaviour
     VisualElement hpFill, root, toastBox, skillBar;
     readonly System.Collections.Generic.List<VisualElement> edgePool = new System.Collections.Generic.List<VisualElement>();   // 화면 가장자리 경고 표시 재사용 묶음
     Label dodgeLabel, pullLabel, weaponLabel; VisualElement[] pips = new VisualElement[0];
+    VisualElement ringBox, ringMarker;   // 시각 고리: 바탕 원 / 해·달 표시
     string lastToasts;
     string lastLedger, lastVital, lastNight;
 
@@ -72,7 +73,7 @@ public class UiRoot : MonoBehaviour
         bar.Add(hpFill);
         note.Add(bar);
         night = Line(note, 18);
-        BuildToasts(); BuildSkillBar();
+        BuildToasts(); BuildSkillBar(); BuildTimeRing();
         hint = Line(note, 14); hint.text = HudState.KeyHint(); hint.style.opacity = 0.65f; hint.style.marginTop = 4;
     }
 
@@ -143,7 +144,7 @@ public class UiRoot : MonoBehaviour
         var a = Hud.LedgerLine(); if (a != lastLedger) { ledger.text = lastLedger = a; }
         var b = Hud.VitalLine(); if (b != lastVital) { vital.text = lastVital = b; }
         var c = Hud.NightLine(); if (c != lastNight) { night.text = lastNight = c; }
-        RefreshSkillBar(); RefreshToasts(); RefreshEdges();
+        RefreshSkillBar(); RefreshToasts(); RefreshEdges(); RefreshTimeRing();
         hpFill.style.width = Length.Percent(Hud.HpRatio * 100f);
         hpFill.style.backgroundColor = Hud.HpLow ? new Color(0.9f, 0.3f, 0.3f) : new Color(0.72f, 0.82f, 0.95f);
     }
@@ -201,5 +202,51 @@ public class UiRoot : MonoBehaviour
             v.style.top = Length.Percent(Hud.Edges[i].Ny * 100f);
             v.style.opacity = pulse;
         }
+    }
+
+    const float RingSize = 84f;   // 시각 고리 지름(px, 1280×720 기준)
+
+    /// <summary>
+    /// 시각 고리(기획 UI 밑그림): 12지시 해시계처럼 둘레에 눈금 12개, 해·달 표시가 둘레를 돈다. 동틀녘엔 붉게.
+    /// 숫자 대신 '모양'으로 시간을 읽게 하려는 것(마을 평화 시간엔 이것만 보인다). 유니티 구버전에도 되도록 회전한 작은 막대로 눈금을 만든다.
+    /// </summary>
+    void BuildTimeRing()
+    {
+        ringBox = new VisualElement { name = "time-ring", pickingMode = PickingMode.Ignore };
+        ringBox.style.position = Position.Absolute; ringBox.style.right = 14; ringBox.style.top = 64;
+        ringBox.style.width = RingSize; ringBox.style.height = RingSize;
+        ringBox.style.backgroundColor = PaperBg;
+        float rad = RingSize / 2f;
+        ringBox.style.borderTopLeftRadius = rad; ringBox.style.borderTopRightRadius = rad; ringBox.style.borderBottomLeftRadius = rad; ringBox.style.borderBottomRightRadius = rad;
+        var edge = new Color(1f, 1f, 1f, 0.3f);
+        ringBox.style.borderTopWidth = 2; ringBox.style.borderBottomWidth = 2; ringBox.style.borderLeftWidth = 2; ringBox.style.borderRightWidth = 2;
+        ringBox.style.borderTopColor = edge; ringBox.style.borderBottomColor = edge; ringBox.style.borderLeftColor = edge; ringBox.style.borderRightColor = edge;
+        for (int i = 0; i < 12; i++)
+        {
+            float a = i * 30f * Mathf.Deg2Rad;
+            bool top = i == 0;   // 꼭대기(한밤) 눈금만 굵고 길게
+            var t = new VisualElement { pickingMode = PickingMode.Ignore };
+            float w = top ? 4f : 2f, h = top ? 12f : 7f, r = rad - 2f - h / 2f - 2f;
+            t.style.position = Position.Absolute; t.style.width = w; t.style.height = h;
+            t.style.left = rad - 2f + Mathf.Sin(a) * r - w / 2f; t.style.top = rad - 2f - Mathf.Cos(a) * r - h / 2f;   // -2 는 테두리 두께
+            t.style.rotate = new Rotate(i * 30f);
+            t.style.backgroundColor = new Color(1f, 1f, 1f, top ? 0.8f : 0.4f);
+            ringBox.Add(t);
+        }
+        ringMarker = new VisualElement { pickingMode = PickingMode.Ignore };
+        ringMarker.style.position = Position.Absolute; ringMarker.style.width = 14; ringMarker.style.height = 14;
+        ringMarker.style.borderTopLeftRadius = 7; ringMarker.style.borderTopRightRadius = 7; ringMarker.style.borderBottomLeftRadius = 7; ringMarker.style.borderBottomRightRadius = 7;
+        ringBox.Add(ringMarker);
+        root.Add(ringBox);
+    }
+
+    void RefreshTimeRing()
+    {
+        // 해질녘(0)은 왼쪽 아래(7시 방향)에서 시작해 한밤(0.5)에 꼭대기, 동틀녘(1)은 오른쪽 아래(5시 방향)에 닿는다
+        float deg = Mathf.Lerp(-120f, 120f, Mathf.Clamp01(Hud.TimeOfDay));
+        float a = deg * Mathf.Deg2Rad, rad = RingSize / 2f, r = rad - 2f - 16f;
+        ringMarker.style.left = rad - 2f + Mathf.Sin(a) * r - 7f;
+        ringMarker.style.top = rad - 2f - Mathf.Cos(a) * r - 7f;
+        ringMarker.style.backgroundColor = Hud.IsDawn ? new Color(0.95f, 0.3f, 0.25f) : Color.Lerp(new Color(1f, 0.85f, 0.5f), new Color(0.8f, 0.88f, 1f), Mathf.Clamp01(Hud.TimeOfDay * 2f));   // 노을 금색 → 달 청백
     }
 }

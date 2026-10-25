@@ -20,6 +20,9 @@ namespace Chasa.Core
         // 밤
         public int SecondsLeft, Sent, Quota, Clues, CluesNeeded;
         public bool BossDone, QuotaDone, Warning;
+        // 시각 고리(오른쪽 위 해시계): TimeOfDay 0~1 = 하루 중 위치(0=해질녘 시작, 0.5=한밤, 1=동틀녘), IsDawn=붉은 구간.
+        // 지금은 밤 남은 시간에서 만들고, 3단계(월드 시계)가 오면 그 값으로 바꾼다
+        public float TimeOfDay; public bool IsDawn;
         // 아래쪽 기술 줄
         public float DodgeCharges; public int DodgeMax;     // 피하기 충전(소수는 충전 중인 칸)
         public float PullCd;                                // 끌어당김 남은 시간(초, 0이면 쓸 수 있음)

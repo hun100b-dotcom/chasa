@@ -391,12 +391,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    float walkSpeed, lastStepTime = -10f;   // 지금 걷는 속도와 마지막으로 걸은 시각(가속·감속용)
+
     void StepToward(Vector3 target, float dt)
     {
         var d = new Vector2(target.x - Pos.x, target.z - Pos.z);
         float dist = d.magnitude;
         if (dist < 1e-5f) return;
-        float step = Mathf.Min(dist, Config.PLAYER_MOVE_SPEED * speedMult * loadout.stats.MoveSpeedMult * dt);
+        float full = Config.PLAYER_MOVE_SPEED * speedMult * loadout.stats.MoveSpeedMult;
+        // 오너 피드백 '움직임이 부자연스럽다' 대응: 출발 때 서서히 빨라지고(가속), 도착 직전엔 미리 줄인다(감속).
+        // 멈췄다가 다시 걷기 시작하면(마지막 걸음이 0.1초 넘게 전이면) 속도를 처음부터 올린다
+        if (Time.time - lastStepTime > 0.1f) walkSpeed = full * Balance.MOVE_START_FRAC;
+        lastStepTime = Time.time;
+        float cap = Mathf.Max(full * Balance.MOVE_START_FRAC, dist / Mathf.Max(0.01f, Balance.MOVE_BRAKE_TIME));   // 도착이 가까울수록 허용 속도가 낮아진다
+        walkSpeed = Mathf.MoveTowards(walkSpeed, Mathf.Min(full, cap), Balance.MOVE_ACCEL * dt);
+        float step = Mathf.Min(dist, walkSpeed * dt);
         Pos += new Vector3(d.x / dist, 0, d.y / dist) * step;
         ClampToArena();
     }

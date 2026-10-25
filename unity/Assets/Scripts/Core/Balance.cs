@@ -359,4 +359,11 @@ public static class Balance
     public const float TRICK_TRIGGER_DIST = 3.0f;  // 속임수 혼: 플레이어가 이 거리(m) 안에 있으면 도화선이 탄다
     public const float TRICK_FUSE = 0.7f;  // 속임수 혼: 가까이 선 채로 이 시간(초)이 지나면 덮친다. 그 전에 파혼하면 안전(천도는 캐스팅이 길어 걸림)
     public const float TRICK_REVIVE = 0.5f;  // 속임수 혼: 덮치며 되찾는 맺힘 비율
+    public const float CAMERA_WHEEL_MIN = 0.45f;  // 마우스 휠 최대 확대 배율(카메라 거리의 45%)
+    public const float CAMERA_WHEEL_MAX = 1.8f;  // 마우스 휠 최대 축소 배율(카메라 거리의 180%)
+    public const float CAMERA_WHEEL_STEP = 0.12f;  // 휠 한 칸당 배율 변화
+    public const float CAMERA_WHEEL_SMOOTH = 10.0f;  // 휠 줌이 따라가는 부드러움(클수록 빠름)
+    public const float MOVE_ACCEL = 45.0f;  // (오너 피드백) 걷기 가속(m/s²). 클수록 기민, 작을수록 묵직
+    public const float MOVE_START_FRAC = 0.4f;  // 걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발)
+    public const float MOVE_BRAKE_TIME = 0.15f;  // 목표 도착 전 이 시간(초)만큼 미리 감속해 미끄러지듯 멈춤
 }

@@ -1426,5 +1426,33 @@
  "TRICK_REVIVE": {
   "value": 0.5,
   "note": "속임수 혼: 덮치며 되찾는 맺힘 비율"
+ },
+ "CAMERA_WHEEL_MIN": {
+  "value": 0.45,
+  "note": "마우스 휠 최대 확대 배율(카메라 거리의 45%)"
+ },
+ "CAMERA_WHEEL_MAX": {
+  "value": 1.8,
+  "note": "마우스 휠 최대 축소 배율(카메라 거리의 180%)"
+ },
+ "CAMERA_WHEEL_STEP": {
+  "value": 0.12,
+  "note": "휠 한 칸당 배율 변화"
+ },
+ "CAMERA_WHEEL_SMOOTH": {
+  "value": 10.0,
+  "note": "휠 줌이 따라가는 부드러움(클수록 빠름)"
+ },
+ "MOVE_ACCEL": {
+  "value": 45.0,
+  "note": "(오너 피드백) 걷기 가속(m/s²). 클수록 기민, 작을수록 묵직"
+ },
+ "MOVE_START_FRAC": {
+  "value": 0.4,
+  "note": "걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발)"
+ },
+ "MOVE_BRAKE_TIME": {
+  "value": 0.15,
+  "note": "목표 도착 전 이 시간(초)만큼 미리 감속해 미끄러지듯 멈춤"
  }
 }

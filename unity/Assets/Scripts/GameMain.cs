@@ -190,19 +190,58 @@ public class GameMain : MonoBehaviour
         focus = Vector3.Lerp(focus, goal, k);
         // 줌(타격 펀치·천도 캐스팅)은 직교에선 화면 크기, 원근에선 카메라 거리로 만든다
         float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f;
-        cam.transform.position = focus + (View3D.On ? offset * (1f - zoomIn) : offset);
+        wheel = Mathf.Lerp(wheel, wheelTarget, 1f - Mathf.Exp(-Balance.CAMERA_WHEEL_SMOOTH * Time.unscaledDeltaTime));   // 휠 줌은 부드럽게 따라간다
+        cam.transform.position = focus + (View3D.On ? offset * ((1f - zoomIn) * wheel) : offset);
         cam.transform.LookAt(View3D.On ? focus + Vector3.up * 0.9f : focus);   // 3D 에선 발밑이 아니라 가슴께를 본다
         cam.transform.Rotate(0f, 0f, feel.GetShakeRoll(), Space.Self);   // 충격이 클 때만 화면이 살짝 기울었다 돌아온다
         var s = feel.GetShakeOffset(); // 화면 기준 오른쪽/위쪽으로 밀어 평행하게 떨림
         cam.transform.position += cam.transform.right * s.x + cam.transform.up * s.y;
         cam.transform.position += feel.Kick;   // 맞은 방향으로 툭 밀렸다 돌아오는 카메라
         // 줌: 타격 펀치(최대 6%) + 천도 캐스팅 중 서서히 다가감(최대 9%) — 화면 크기(orthographicSize)를 줄이면 다가간 것
-        if (!View3D.On) cam.orthographicSize = Config.CAMERA_VIEW_HEIGHT / 2f * (1f - zoomIn);
+        if (!View3D.On) cam.orthographicSize = Config.CAMERA_VIEW_HEIGHT / 2f * (1f - zoomIn) * wheel;
     }
 
     // ---- 입력: 마우스 = 이동·대상 / 키보드 = 기술 (PD 피드백 반영) --------------------
+    float wheel = 1f, wheelTarget = 1f;   // 카메라 거리 배율(작을수록 확대). 휠·핀치로 바뀐다
+    float pinchPrev;                      // 두 손가락 사이 이전 거리(폰 확대·축소)
+    bool kbMove;                          // 지금 WASD 로 걷는 중인가
+
+    /// <summary>휠·핀치로 확대/축소. 한 칸마다 STEP 만큼, 범위는 MIN~MAX 로 제한</summary>
+    void HandleZoom()
+    {
+        float scroll = Input.mouseScrollDelta.y;
+        if (Mathf.Abs(scroll) > 0.01f) wheelTarget = Mathf.Clamp(wheelTarget * (1f - scroll * Balance.CAMERA_WHEEL_STEP), Balance.CAMERA_WHEEL_MIN, Balance.CAMERA_WHEEL_MAX);
+        if (Input.touchCount == 2)
+        {
+            float dist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+            if (pinchPrev > 0f) wheelTarget = Mathf.Clamp(wheelTarget * (pinchPrev / Mathf.Max(1f, dist)), Balance.CAMERA_WHEEL_MIN, Balance.CAMERA_WHEEL_MAX);   // 벌리면 확대
+            pinchPrev = dist;
+        }
+        else pinchPrev = 0f;
+    }
+
+    /// <summary>WASD·방향키: 카메라 기준 위/아래/좌/우로 걷는다. 클릭 이동과 함께 쓸 수 있다</summary>
+    void HandleKeyboardMove()
+    {
+        float x = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ? 1f : 0f) - (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) ? 1f : 0f);
+        float z = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) ? 1f : 0f) - (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ? 1f : 0f);
+        if (x == 0f && z == 0f)
+        {
+            if (kbMove) { kbMove = false; player.CommandStop(); }   // 키를 떼면 멈춘다(클릭 이동 중이었다면 건드리지 않음)
+            return;
+        }
+        // 카메라가 바라보는 방향(바닥에 눌러 편 것)이 '위'
+        var f = cam.transform.forward; f.y = 0f; f = f.sqrMagnitude < 1e-4f ? Vector3.forward : f.normalized;
+        var r = new Vector3(f.z, 0f, -f.x);
+        var dir = (f * z + r * x).normalized;
+        kbMove = true;
+        player.CommandMove(player.Pos + dir * 2.5f);   // 목표를 계속 앞에 두어, 도착 감속 없이 이어 걷게 한다
+    }
+
     void HandleInput()
     {
+        HandleZoom();
+        HandleKeyboardMove();
         Vector3 mouse = Input.mousePosition;
         if (Input.GetKeyDown(KeyCode.Q)) { if (player.loadout.Def.HasQuake) player.CommandQuake(); else if (player.loadout.Def.HasPull) SkillPull(mouse); }   // Q: 철삭=견인 / 육모방망이=땅울림 / 그 외 무기는 없음
         if (Input.GetKeyDown(KeyCode.Space)) SkillDodge(mouse); // Space: 피하기(구르기). 휘두르기는 마우스 클릭으로 충분하다(기획 타격감 분석)
