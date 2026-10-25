@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# 시즌 1 서사 데이터 일관성 검사기 (1~3막 json 교차 검사).
+# 시즌 1 서사 데이터 일관성 검사기 (1~3막 json 교차 검사). 10-25부터 시즌 2(4막~, season2_outline)도 같이 본다.
 # 왜: 서사 데이터는 생성기 20여 개가 따로 만든다. 같은 혼의 기억·같은 단서의 대사·같은 사람 id가
 #   파일마다 조금씩 어긋나면 코드가 엉뚱한 글을 띄운다. 사람 눈으로는 못 찾으니 기계가 맞춰 본다.
 # 원본(SSOT, 하나뿐인 진짜): soul_memories.json(혼·기억·F) / boss_clues_actN(단서) / npc_actN(사람).
@@ -38,12 +38,14 @@ for fn, d in files.items():
                     err(fn, f'{p}: 원본에 없는 id {m}')
 
 # ───── 2. 기억 글이 원본과 같나(memories_actN, funerals, 단서 밤 대체, 컷신 기억 줄) ─────
-for n in (1, 2, 3):
+MEM_ACTS = [n for n in (1, 2, 3, 4) if f'memories_act{n}.json' in files]   # 4막(시즌 2)은 만드는 대로 검사에 들어온다
+for n in MEM_ACTS:
     for r in files[f'memories_act{n}.json']['souls']:
         s = SOUL.get(r['id'])
         if not s: err(f'memories_act{n}', f"{r['id']} 원본 없음"); continue
         if r['memory'] != s['memory']: err(f'memories_act{n}', f"{r['id']} 기억 글이 원본과 다름")
         if r.get('fact') != s.get('fact'): err(f'memories_act{n}', f"{r['id']} F 번호가 원본과 다름")
+    if n > 3: continue   # 시즌 2엔 이승 장례가 없다(배웅·정서·잇기는 memories의 send_off 등)
     for f in files[f'funerals_act{n}.json']['funerals']:
         s = SOUL[f['soul']]
         if f['memory_link'] != s['memory']: err(f'funerals_act{n}', f"{f['soul']} memory_link가 원본과 다름")
@@ -63,6 +65,11 @@ for n in (2, 3):
         if k == 'B-12' and 'B-12' in bc:
             bc['B-12_act1'] = bc.pop('B-12')
         bc[k] = v
+# 시즌 2 단서 표(season2_outline). 같은 보스 id가 시즌 1에 있으면 안 된다
+for k, v in files.get('season2_outline.json', {}).get('boss_clues', {}).items():
+    if k in bc: err('boss_clues', f'{k}가 시즌 1과 시즌 2에 다 있음')
+    bc[k] = v
+NO_CLUE_BOSS = ('B-14', 'B-20')   # 덩어리: 단서 없음(파혼만 / 풀어내기 비율)
 clue_ids = {}
 for k, b in bc.items():
     for c in b.get('clues', []):
@@ -73,12 +80,12 @@ for k, b in bc.items():
     bid = k.split('_')[0]
     if b.get('decisive') and SOUL.get(bid, {}).get('fact') != b['decisive']:
         err('boss_clues', f"{bid} decisive {b['decisive']} ≠ 원본 {SOUL.get(bid, {}).get('fact')}")
-    if len(b.get('clues', [])) not in (4,) and not k.endswith('_act1'):
+    if len(b.get('clues', [])) not in (4,) and not k.endswith('_act1') and k not in NO_CLUE_BOSS:
         err('boss_clues', f'{k} 단서 수 {len(b.get("clues", []))}(4여야 함)')
 
 # 사람 id
 NPC = {}
-for n in (1, 2, 3):
+for n in [n for n in (1, 2, 3, 4) if f'npc_act{n}.json' in files]:
     for p in files[f'npc_act{n}.json']['npcs']:
         if p['id'] in NPC: err('npc', f"{p['id']} 사람 id 겹침")
         NPC[p['id']] = p
