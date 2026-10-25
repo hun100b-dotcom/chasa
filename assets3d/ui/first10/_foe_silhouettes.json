@@ -1,0 +1,110 @@
+{
+ "basic": {
+  "file": "foe_basic.png",
+  "size_px": [
+   192,
+   192
+  ],
+  "px_per_m": 40,
+  "body_m": [
+   0.93,
+   1.02
+  ],
+  "body_bbox_px": [
+   77,
+   81,
+   113,
+   121
+  ]
+ },
+ "wail": {
+  "file": "foe_wail.png",
+  "size_px": [
+   192,
+   192
+  ],
+  "px_per_m": 40,
+  "body_m": [
+   0.85,
+   1.0
+  ],
+  "body_bbox_px": [
+   76,
+   81,
+   109,
+   120
+  ]
+ },
+ "mote": {
+  "file": "foe_mote.png",
+  "size_px": [
+   192,
+   192
+  ],
+  "px_per_m": 40,
+  "body_m": [
+   0.28,
+   0.33
+  ],
+  "body_bbox_px": [
+   91,
+   107,
+   101,
+   119
+  ]
+ },
+ "buried": {
+  "file": "foe_buried.png",
+  "size_px": [
+   192,
+   192
+  ],
+  "px_per_m": 40,
+  "body_m": [
+   1.2,
+   1.7
+  ],
+  "body_bbox_px": [
+   73,
+   99,
+   120,
+   166
+  ]
+ },
+ "lump": {
+  "file": "foe_lump.png",
+  "size_px": [
+   192,
+   192
+  ],
+  "px_per_m": 40,
+  "body_m": [
+   1.5,
+   1.4
+  ],
+  "body_bbox_px": [
+   67,
+   77,
+   126,
+   132
+  ]
+ },
+ "elite": {
+  "file": "foe_elite.png",
+  "size_px": [
+   192,
+   192
+  ],
+  "px_per_m": 40,
+  "body_m": [
+   1.68,
+   1.68
+  ],
+  "body_bbox_px": [
+   71,
+   58,
+   137,
+   124
+  ]
+ }
+}
