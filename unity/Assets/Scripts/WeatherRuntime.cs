@@ -133,8 +133,8 @@ public class WeatherRuntime
             if (rainNear != null) rainNear.wrapMode = TextureWrapMode.Repeat;
         }
         float t = Time.unscaledTime;
-        DrawRainLayer(rainFar, 0.05f, -1.3f, 640f, 0.45f * rainA, t);
-        DrawRainLayer(rainNear, 0.12f, -2.4f, 460f, 0.6f * rainA, t);
+        DrawRainLayer(rainFar, 0.05f, -1.3f, 640f, 0.22f * rainA, t);   // 아트 검수 10-25: 비 줄기가 굵고 밝아 줄무늬였다 → 알파 절반
+        DrawRainLayer(rainNear, 0.12f, -2.4f, 460f, 0.3f * rainA, t);
         DrawSplashes(playerPos, t);
     }
 

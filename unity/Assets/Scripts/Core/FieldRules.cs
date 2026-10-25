@@ -88,6 +88,8 @@ namespace Chasa.Core
                 case "prop_sotdae": return 0.3f;
                 case "prop_choga": case "prop_giwa": return 2.5f;
                 case "night_torch_stand": return 0.3f;
+                case "prop_gaejip_empty": return 0.6f;       // 아트 walkcheck 에 맞춤(개집)
+                case "prop_market_drum_frame": return 0.5f;  // 북틀. 벼루(prop_dry_inkstone)는 0
             }
             return 0f;
         }
