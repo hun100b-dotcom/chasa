@@ -677,6 +677,9 @@ public class JudgeSystem : MonoBehaviour
     {
         if (lampT > 0f) lampT -= dt;   // 등잔 불이 타 들어간다
         if (clock != null && clock.Phase == ClockPhase.Dawn && lastPhase != ClockPhase.Dawn) tendoToday = 0;   // 새 하루
+        // 거센 혼 흔적(서사 cutscenes_b02 next_day): 폐당집 보스를 파혼한 뒤엔 밤이 올 때마다 얼룩 둥지의 흔적이 한 줄 뜬다
+        if (clock != null && clock.Phase == ClockPhase.Night && lastPhase != ClockPhase.Night && bossDoneIds.Contains(2) && !bossTendoIds.Contains(2))
+            Say("얼룩 둥지에서 거센 혼 하나가 밤마다 일어선다", 4f);
         if (clock != null) lastPhase = clock.Phase;
         bool dirty = false;
         if (wrathT > 0f) { wrathT -= dt; if (wrathT <= 0f) { lo.buffDamage = 0f; dirty = true; } }
@@ -916,7 +919,7 @@ public class JudgeSystem : MonoBehaviour
     {
         if (!FieldRules.On || !FieldRules.Act2 || clock == null) return;
         if (allDoneDay < 0 && (Application.absoluteURL ?? "").Contains("hk=")) { bossDoneIds.Add(1); bossDoneIds.Add(2); bossDoneIds.Add(3); allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }   // 검사용 ?hk=1: 1막 보스 셋을 이미 처결한 것으로 친다(흑월 1차를 바로 본다)
-        if (!lo.gear.Act2Entered && FieldRules.Act2Open && player.Pos.z > FieldRules.Size + 4f) { lo.gear.Act2Entered = true; lo.lastDrop = "새 장비 자리가 열렸다: 신 · 노리개 2"; lo.lastDropT = 6f; }   // 2막 땅에 첫 발 — 신·노리개 둘째 자리
+        if (!lo.gear.Act2Entered && FieldRules.Act2Open && player.Pos.z > FieldRules.Size + 4f) { lo.gear.Act2Entered = true; Loot.AllTilts = true; lo.lastDrop = "새 장비 자리가 열렸다: 신 · 노리개 2"; lo.lastDropT = 6f; }   // 2막 땅에 첫 발 — 신·노리개 둘째 자리
         if (enterDay < 0 && FieldZones.CurrentName == "검은여울") enterDay = clock.Day;   // ② 검은여울 첫 진입(5일 안전장치의 기준)
         int hn = Act2Gate.HeukwolNight(allDoneDay, allDoneAtNight, enterDay);
         bool open = FieldRules.Act2Open || clock.Day >= Act2Gate.OpenDay(allDoneDay, allDoneAtNight, enterDay);
@@ -1031,6 +1034,7 @@ public class JudgeSystem : MonoBehaviour
         Hint(HintEvent.FirstHurt);
         guide.Complete("dodge");   // 맞아도 피하기 안내는 닫힌다(기획)
         Sfx.Play("sfx.player.hurt");
+        incoming = Mathf.Max(1, Mathf.RoundToInt(incoming * lo.stats.DefenseMult));   // 방어 옵션(받는 피해 −%, 상한 60%)
         int dealt = godMode ? 0 : ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
         feel.AddShake(Balance.TRAUMA_PLAYER_HIT);
@@ -1595,6 +1599,7 @@ public class JudgeSystem : MonoBehaviour
         // 처음 5분: 박돌쇠를 처결할 때까지(최대 10분) 시계를 멈춘다 — 시간 압박 없이 배우게(기획 first-5-minutes)
         { var nb = NearestBoss(); float want = nb != null && Vector3.Distance(nb.Pos, player.Pos) < 24f ? 0.5f : 1f; ClockSky.ArenaFog = Mathf.MoveTowards(ClockSky.ArenaFog, want, dt * 0.5f); }   // 마당에 들어서면 2초에 걸쳐 안개가 반으로
         Enemy.IntroCalm = FieldRules.On && introFrozen && introT < 25f;
+        Enemy.FierceMult = lo.stats.FierceMult;   // 거센 혼·덩어리·보스 피해 옵션
         Enemy.TokenMax = FieldRules.On ? (Enemy.IntroCalm ? 1 : introFrozen ? Balance.ATTACK_TOKENS_INTRO : Balance.ATTACK_TOKENS) : int.MaxValue;   // 동시에 때리는 혼 수 제한
         FieldCamps.EarlyMaxAlive = introFrozen ? 5 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
         if (introFrozen && !cuts.Active && !inDay) introT += dt;

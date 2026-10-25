@@ -128,6 +128,10 @@ public partial class CharacterPanel : MonoBehaviour
             case Opt.PahonKnockbackPct: return "파혼 넉백 " + Pct(o.Value);
             case Opt.VisionShift: return "천도 중 시야 " + (o.Value >= 0 ? "+" : "") + Mathf.RoundToInt(o.Value * 100f) + "%p";
             case Opt.CastDamageReducePct: return "시전 중 받는 피해 " + Pct(-o.Value);
+            case Opt.DefensePct: return "받는 피해 " + Pct(-o.Value);
+            case Opt.SkillCdReduce: return "도술 재사용 " + Pct(-o.Value);
+            case Opt.WeaponCdReduce: return "무기 기술 재사용 " + Pct(-o.Value);
+            case Opt.FiercePct: return "거센 혼·덩어리 피해 " + Pct(o.Value);
             default: return "파혼 반경 +" + o.Value.ToString("0.0") + "m";
         }
     }

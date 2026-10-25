@@ -1007,6 +1007,16 @@
   "value": 0.2,
   "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 이동 속도 +20%"
  },
+ "CAP_DAMAGE_MINUS_PCT": {"value": 0.2, "note": "(기획 장비 점검 B-2) 피해 마이너스 상한 −20%"},
+ "CAP_CAST_SLOW_PCT": {"value": 0.3, "note": "천도 시전 느려짐 상한 +30%"},
+ "CAP_COIN_MINUS_PCT": {"value": 0.5, "note": "엽전 마이너스 상한 −50%"},
+ "CAP_TENDO_NEOK_PCT": {"value": 0.3, "note": "천도 넋 합계 상한 +30% (B-7)"},
+ "CAP_DEFENSE_PCT": {"value": 0.6, "note": "방어(받는 피해 −%) 합계 상한 60% (인 점검 1)"},
+ "CAP_SKILL_CD_PCT": {"value": 0.35, "note": "도술 재사용 단축 상한 35%"},
+ "CAP_WEAPON_CD_PCT": {"value": 0.4, "note": "무기 기술 재사용 단축 상한 40%"},
+ "CAP_FIERCE_PCT": {"value": 0.5, "note": "거센 혼·덩어리·보스 피해 상한 +50%"},
+ "SEAL_COLOR_SHARE": {"value": 0.25, "note": "(인 점검 2) 천도 넋 중 빛깔 주머니로 가는 몫"},
+ "SEAL_PAHON_COLOR": {"value": true, "note": "(인 점검 3, 서사 확정) 파혼한 혼도 빛깔 가루를 남김(그 혼 기본 천도 넋 × SEAL_COLOR_SHARE)"},
  "CAP_COIN_PCT": {
   "value": 0.5,
   "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%"
@@ -1576,16 +1586,16 @@
   "note": "(성장 1차 임시) 날램 1점당 이동 속도 +0.3%"
  },
  "GROWTH_HP_PER_BODY": {
-  "value": 5,
-  "note": "(성장 1차 임시) 몸 1점당 최대 체력 +5"
+  "value": 4,
+  "note": "몸 1점당 최대 체력 +4 (기획 growth.json stats, 장비 점검 B-7)"
  },
  "GROWTH_CAST_PER_MIND": {
   "value": 0.005,
   "note": "(성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%"
  },
  "GROWTH_NEOK_PER_MIND": {
-  "value": 0.005,
-  "note": "(성장 1차 임시) 마음 1점당 천도 넋 +0.5%"
+  "value": 0.0,
+  "note": "마음의 천도 넋 보너스는 기획에 없는 값이라 0 (장비 점검 B-7)"
  },
  "BOSS_S2_MAEDHIM": {
   "value": 1000,

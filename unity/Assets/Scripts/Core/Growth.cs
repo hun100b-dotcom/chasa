@@ -186,7 +186,7 @@ namespace Chasa.Core
             if (g == null) return;
             int str = g.Stats[0] - GrowthState.StatBase, agi = g.Stats[1] - GrowthState.StatBase,
                 body = g.Stats[2] - GrowthState.StatBase, mind = g.Stats[3] - GrowthState.StatBase;
-            s.DamagePct += str * Balance.GROWTH_DAMAGE_PER_STR;
+            s.StatDamagePct += str * Balance.GROWTH_DAMAGE_PER_STR;   // 힘은 장비 상한(+40%) 밖에서 따로 곱한다(기획 장비 점검 B-1)
             s.AttackSpeedPct += agi * Balance.GROWTH_ATKSPD_PER_AGI;
             s.MoveSpeedPct += agi * Balance.GROWTH_MOVE_PER_AGI;
             s.HpFlat += body * Balance.GROWTH_HP_PER_BODY;

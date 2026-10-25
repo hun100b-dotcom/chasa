@@ -1638,11 +1638,53 @@ public class CoreTests
         g.Learn("고마운 넋"); g.Learn("고마운 넋"); g.Learn("노잣돈");
         var s = new GearStats();
         GrowthEffects.Apply(g, s);
-        Assert.AreEqual(0.10f, s.DamagePct, 0.0001f);                                    // 힘 10점 × 1%
-        Assert.AreEqual(20, s.HpFlat);                                                   // 몸 4점 × 5
+        Assert.AreEqual(0.10f, s.StatDamagePct, 0.0001f);                                // 힘 10점 × 1% (장비 상한 밖)
+        Assert.AreEqual(16, s.HpFlat);                                                   // 몸 4점 × 4
         Assert.AreEqual(0.12f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계
         Assert.AreEqual(0.07f, s.PahonCoinPct, 0.0001f);
         GrowthEffects.Apply(null, s);                                                    // 성장이 없어도 안전
+    }
+
+    [Test] public void GearCheck_StrengthIsOutsideCapAndMinusesAreCapped()
+    {
+        var s = new GearStats { DamagePct = 0.9f, StatDamagePct = 0.4f };
+        Assert.AreEqual(1.4f * 1.4f, s.DamageMult, 0.0001f);                              // 장비 상한 +40% 에 힘 +40% 가 따로 곱해진다
+        var m = new GearStats { CastReducePct = -0.9f, DamagePct = -0.9f, CoinPct = -0.9f, PahonCoinPct = -0.9f };
+        Assert.AreEqual(1.3f, m.CastMult, 0.0001f);                                       // 느려짐 +30% 까지
+        Assert.AreEqual(0.8f, m.DamageMult, 0.0001f);                                     // 피해 −20% 까지
+        Assert.AreEqual(0.5f, m.CoinMult, 0.0001f);
+        Assert.AreEqual(0.5f, m.PahonCoinMult, 0.0001f);
+        Assert.AreEqual(1.3f, new GearStats { TendoNeokPct = 2f }.TendoNeokMult, 0.0001f); // 천도 넋 합계 상한 +30%
+        Assert.AreEqual(0.4f, new GearStats { DefensePct = 2f }.DefenseMult, 0.0001f);     // 방어 상한 60%
+    }
+
+    [Test] public void GearCheck_SameTiltCountsOnceAndBackWeaponIgnored()
+    {
+        var eq = new Equipment { FirstRingBossDone = true, Act2Entered = true };
+        var a = new ItemDef { Slot = Slot.Charm, Rarity = Rarity.Rare, Gradient = true, TiltId = "tilt_dmg_cast" };
+        a.Options.Add(new OptionRoll(Opt.DamagePct, 0.2f)); a.Options.Add(new OptionRoll(Opt.CastReducePct, -0.1f));
+        var b = new ItemDef { Slot = Slot.Hat, Rarity = Rarity.Rare, Gradient = true, TiltId = "tilt_dmg_cast" };
+        b.Options.Add(new OptionRoll(Opt.DamagePct, 0.2f)); b.Options.Add(new OptionRoll(Opt.CastReducePct, -0.1f));
+        eq.PutAt(EquipPos.Charm1, a); eq.PutAt(EquipPos.Hat, b);
+        var st = eq.Stats();
+        Assert.AreEqual(0.2f, st.DamagePct, 0.0001f);                                      // 같은 기울기는 하나만
+        var w = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Common }; w.Options.Add(new OptionRoll(Opt.DamagePct, 0.05f));
+        eq.PutAt(EquipPos.Weapon2, w);
+        Assert.AreEqual(0.2f, eq.Stats().DamagePct, 0.0001f);                              // 등에 멘 무기는 안 센다
+    }
+
+    [Test] public void GearCheck_OptionsFollowSlotAndRarityRange()
+    {
+        var rng = new System.Random(3);
+        for (int i = 0; i < 400; i++)
+        {
+            var it = Loot.Roll(() => (float)rng.NextDouble(), true, 0, new[] { Slot.Shoes });
+            foreach (var o in it.Options.GetRange(2, it.Options.Count - 2))                 // 앞 두 줄은 기울기
+            {
+                CollectionAssert.Contains(Loot.PoolFor(Slot.Shoes), o.Kind);                   // 신은 생명·이동만
+                if (o.Kind == Opt.MoveSpeedPct) Assert.That(o.Value, Is.InRange(0.05f, 0.08f)); // 귀한 이동 +5~8%
+            }
+        }
     }
 
     // ---- 보스 목록·바닥 무늬 ----

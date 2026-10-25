@@ -132,7 +132,12 @@ namespace Chasa.Core
         ChainWindowAddS,  // 연속 천도 창 +초
         PahonKnockbackPct,// 파혼 넉백 +%
         VisionShift,      // 천도 중 시야 비율 이동(음수 = 더 좁아짐)
-        CastDamageReducePct // 천도 시전 중 받는 피해 −%
+        CastDamageReducePct,// 천도 시전 중 받는 피해 −%
+        // ---- 기획 장비 점검(10-26)으로 더한 옵션: 맨 끝에 붙여 옛 저장(이름으로 저장)과 어긋나지 않게 한다
+        DefensePct,       // 방어: 받는 피해 −% (도포·갓, 합계 상한 60%)
+        SkillCdReduce,    // 도술 재사용 −% (갓, 상한 35%)
+        WeaponCdReduce,   // 무기 기술 재사용 −% (무기·갓, 상한 40%)
+        FiercePct         // 거센 혼·덩어리·보스 피해 +% (무기·노리개, 상한 50%)
     }
 
     /// <summary>
@@ -208,20 +213,28 @@ namespace Chasa.Core
         public float DamagePct, AttackSpeedPct, CastReducePct, PahonAreaPct, PahonDamagePct, MoveSpeedPct, CoinPct, PahonRadiusM;
         public float TendoNeokPct, PahonCoinPct, WaitAddS, ChainWindowAddS, PahonKnockbackPct, VisionShift, CastDamageReducePct;
         public float ReachAdd, BoundBonus, StainShorten;   // 도술 패시브: 무기 사거리 +m / 묶인 적 받는 피해 +% / 얼룩 지속 단축 비율
+        public float StatDamagePct;   // 힘(능력치) 피해: 장비 상한 밖에서 따로 곱한다(기획 점검 B-1: 힘이 장비 상한을 다 먹지 않게)
         public float DefensePct, SkillCdReduce, WeaponCdReduce, FiercePct;   // 인 전용: 방어 / 도술 재사용 단축 / 무기 기술 재사용 단축 / 사나운 적 피해 (쓰는 쪽 연결은 순서대로)
         public int HpFlat;
 
-        public float DamageMult { get { return 1f + Math.Min(DamagePct, Balance.CAP_DAMAGE_PCT); } }
+        /// <summary>피해 배율 = (1 + 장비·인·패시브 합[상한 +40%, 마이너스는 −20%까지]) × (1 + 힘). 힘은 상한 밖</summary>
+        public float DamageMult { get { return (1f + Math.Max(Math.Min(DamagePct, Balance.CAP_DAMAGE_PCT), -Balance.CAP_DAMAGE_MINUS_PCT)) * (1f + StatDamagePct); } }
+        /// <summary>받는 피해 배율(방어 상한 60%)</summary>
+        public float DefenseMult { get { return 1f - Math.Min(Math.Max(DefensePct, 0f), Balance.CAP_DEFENSE_PCT); } }
+        public float SkillCdMult { get { return 1f - Math.Min(Math.Max(SkillCdReduce, 0f), Balance.CAP_SKILL_CD_PCT); } }
+        public float WeaponCdMult { get { return 1f - Math.Min(Math.Max(WeaponCdReduce, 0f), Balance.CAP_WEAPON_CD_PCT); } }
+        /// <summary>거센 혼·덩어리·보스에게 주는 피해 배율(상한 +50%)</summary>
+        public float FierceMult { get { return 1f + Math.Min(Math.Max(FiercePct, 0f), Balance.CAP_FIERCE_PCT); } }
         public float AttackSpeedMult { get { return 1f + Math.Min(AttackSpeedPct, Balance.CAP_ATTACK_SPEED_PCT); } }
-        /// <summary>천도 캐스팅 배율. 단축은 상한 -30%까지, 느려짐(음수)은 제한 없음</summary>
-        public float CastMult { get { return 1f - Math.Min(CastReducePct, Balance.CAP_CAST_REDUCE_PCT); } }
+        /// <summary>천도 캐스팅 배율. 단축은 상한 -30%까지, 느려짐(음수)은 +30%까지(기울기 마이너스가 쌓여도 2.4초까지 안 간다)</summary>
+        public float CastMult { get { return 1f - Math.Max(Math.Min(CastReducePct, Balance.CAP_CAST_REDUCE_PCT), -Balance.CAP_CAST_SLOW_PCT); } }
         public float PahonDamageMult { get { return 1f + Math.Min(PahonDamagePct, Balance.CAP_PAHON_DAMAGE_PCT); } }
         public float MoveSpeedMult { get { return 1f + Math.Min(MoveSpeedPct, Balance.CAP_MOVE_SPEED_PCT); } }
-        public float CoinMult { get { return 1f + Math.Min(CoinPct, Balance.CAP_COIN_PCT); } }
+        public float CoinMult { get { return 1f + Math.Max(Math.Min(CoinPct, Balance.CAP_COIN_PCT), -Balance.CAP_COIN_MINUS_PCT); } }
         /// <summary>천도 넋 배율 (향 내음)</summary>
-        public float TendoNeokMult { get { return Math.Max(0f, 1f + TendoNeokPct); } }
+        public float TendoNeokMult { get { return Math.Max(0f, 1f + Math.Min(TendoNeokPct, Balance.CAP_TENDO_NEOK_PCT)); } }   // 합계 상한 +30%(기획 점검 B-7)
         /// <summary>파혼 엽전 배율 (향 내음의 마이너스). 장비 엽전 보너스(CoinMult)와 곱해진다</summary>
-        public float PahonCoinMult { get { return Math.Max(0f, 1f + PahonCoinPct); } }
+        public float PahonCoinMult { get { return Math.Max(1f - Balance.CAP_COIN_MINUS_PCT, 1f + PahonCoinPct); } }   // 마이너스는 −50%까지
         /// <summary>처결 대기 시간 보정(초). 최종 대기는 WAIT_FLOOR 밑으로 못 내려간다 — 쓰는 쪽에서 AdjustWait 로</summary>
         public float AdjustWait(float baseWait, bool lump)
         {
@@ -263,11 +276,17 @@ namespace Chasa.Core
             return Math.Min(r, cap);
         }
 
+        /// <summary>이미 센 기울기 번호(같은 기울기는 하나만 센다 — 기획 점검 B-2)</summary>
+        public readonly HashSet<string> TiltCounted = new HashSet<string>();
+
         public void Add(ItemDef it)
         {
             foreach (var sl in it.Seals) SealEffects.Apply(sl, this);   // 박힌 인의 효과
+            // 같은 기울기(TiltId)가 둘 이상이면 첫 것만 센다. 기울기 줄은 이 물건 옵션 앞쪽 두 개(플러스·마이너스)
+            bool skipTilt = it.Gradient && !string.IsNullOrEmpty(it.TiltId) && !TiltCounted.Add(it.TiltId);
             for (int oi = 0; oi < it.Options.Count; oi++)
             {
+                if (skipTilt && oi < 2) continue;
                 var o = it.Options[oi];
                 if (oi == 0 && it.Plus > 0)   // 손보기: 주옵션만 단계마다 올린다(귀한 칸 하나를 키우는 길 = 파혼 쪽 성장)
                 {
@@ -292,6 +311,10 @@ namespace Chasa.Core
                     case Opt.PahonKnockbackPct: PahonKnockbackPct += o.Value; break;
                     case Opt.VisionShift: VisionShift += o.Value; break;
                     case Opt.CastDamageReducePct: CastDamageReducePct += o.Value; break;
+                    case Opt.DefensePct: DefensePct += o.Value; break;
+                    case Opt.SkillCdReduce: SkillCdReduce += o.Value; break;
+                    case Opt.WeaponCdReduce: WeaponCdReduce += o.Value; break;
+                    case Opt.FiercePct: FiercePct += o.Value; break;
                 }
             }
         }
@@ -381,7 +404,7 @@ namespace Chasa.Core
         public GearStats Stats()
         {
             var st = new GearStats();
-            foreach (var it in pos) if (it != null) st.Add(it);
+            for (int i = 0; i < pos.Length; i++) { if (i == (int)EquipPos.Weapon2) continue; if (pos[i] != null) st.Add(pos[i]); }   // 등에 멘 무기(둘째 자리)는 세지 않는다 — 손에 든 무기만(기획 점검 B-6)
             return st;
         }
     }
@@ -395,7 +418,7 @@ namespace Chasa.Core
         static readonly Slot[] SlotPool = { Slot.Weapon, Slot.Robe, Slot.Charm };   // 기본(옛 시연판) 물건 종류. 열린 자리가 늘면 Equipment.DropKinds 를 kindPool 로 넘긴다
 
         /// <summary>true 면 시연판 밖 기울기 5종도 드롭에 나온다 (QA 검증 뒤 켠다)</summary>
-        public static bool AllTilts = false;
+        public static bool AllTilts = false;   // 2막에 들어서면 JudgeSystem 이 켠다(기획 점검 B-2)
 
         /// <summary>기울기 한 줄 고르기. 후보가 하나뿐이면 난수를 쓰지 않는다(기존 드롭 결과가 그대로 유지되도록)</summary>
         static TiltDef PickTilt(Func<float> rand)
@@ -423,7 +446,7 @@ namespace Chasa.Core
             it.Name = r + " " + it.Slot;
             int n = r == Rarity.Common ? (rand() < 0.5f ? 0 : 1) : r == Rarity.Crafted ? 1 + (rand() < 0.5f ? 0 : 1) : 3;
             // 시연판 옵션 8종 중 고르기. 중복 없이 n 개.
-            var pool = new List<Opt> { Opt.DamagePct, Opt.AttackSpeedPct, Opt.CastReducePct, Opt.PahonAreaPct, Opt.PahonDamagePct, Opt.HpFlat, Opt.MoveSpeedPct, Opt.CoinPct };
+            var pool = new List<Opt>(PoolFor(it.Slot));   // 칸마다 나오는 옵션이 다르다(기획 growth.json affixes.slots)
             if (r == Rarity.Rare)
             {
                 // 귀한 등급: 기울기 옵션 1줄 = 맺힘 피해 +20% / 천도 캐스팅 +10%(느려짐) (기획 확정). 나머지 일반 옵션 2개
@@ -436,18 +459,36 @@ namespace Chasa.Core
             {
                 int k = (int)(rand() * pool.Count) % pool.Count;
                 var kind = pool[k]; pool.RemoveAt(k);
-                it.Options.Add(new OptionRoll(kind, RollValue(kind, r)));
+                it.Options.Add(new OptionRoll(kind, RollValue(kind, r, rand)));
             }
             return it;
         }
 
         /// <summary>일반 옵션 하나를 새로 굴린다. exclude 에 든 종류는 피한다 (다시 굴리기·매듭 올리기용)</summary>
-        public static OptionRoll RollOption(Func<float> rand, Rarity r, ICollection<Opt> exclude)
+        public static OptionRoll RollOption(Func<float> rand, Rarity r, ICollection<Opt> exclude) { return RollOption(rand, r, exclude, Slot.Weapon); }
+
+        /// <summary>칸(slot)에 나올 수 있는 옵션만 후보로 굴린다</summary>
+        public static OptionRoll RollOption(Func<float> rand, Rarity r, ICollection<Opt> exclude, Slot slot)
         {
-            var pool = new List<Opt> { Opt.DamagePct, Opt.AttackSpeedPct, Opt.CastReducePct, Opt.PahonAreaPct, Opt.PahonDamagePct, Opt.HpFlat, Opt.MoveSpeedPct, Opt.CoinPct };
+            var pool = new List<Opt>(PoolFor(slot));
             if (exclude != null) pool.RemoveAll(o => exclude.Contains(o));
+            if (pool.Count == 0) pool.Add(Opt.HpFlat);
             var kind = pool[(int)(rand() * pool.Count) % pool.Count];
-            return new OptionRoll(kind, RollValue(kind, r));
+            return new OptionRoll(kind, RollValue(kind, r, rand));
+        }
+
+        /// <summary>칸별 옵션 후보(기획 growth.json affixes 의 slots). 갓=gat, 도포=dopo, 띠=tti, 신=sin, 노리개=norigae</summary>
+        public static Opt[] PoolFor(Slot slot)
+        {
+            switch (slot)
+            {
+                case Slot.Weapon: return new[] { Opt.DamagePct, Opt.AttackSpeedPct, Opt.WeaponCdReduce, Opt.FiercePct, Opt.PahonDamagePct };
+                case Slot.Charm: return new[] { Opt.DamagePct, Opt.AttackSpeedPct, Opt.FiercePct, Opt.TendoNeokPct, Opt.ChainWindowAddS, Opt.PahonRadiusM, Opt.PahonDamagePct, Opt.CoinPct, Opt.CastReducePct };
+                case Slot.Hat: return new[] { Opt.WeaponCdReduce, Opt.SkillCdReduce, Opt.DefensePct, Opt.HpFlat, Opt.CastReducePct };
+                case Slot.Robe: return new[] { Opt.HpFlat, Opt.DefensePct, Opt.CastDamageReducePct, Opt.PahonKnockbackPct };
+                case Slot.Belt: return new[] { Opt.CastReducePct, Opt.ChainWindowAddS, Opt.CastDamageReducePct, Opt.WaitAddS, Opt.PahonRadiusM, Opt.PahonDamagePct, Opt.PahonKnockbackPct, Opt.HpFlat };
+                default: return new[] { Opt.HpFlat, Opt.MoveSpeedPct };
+            }
         }
 
         /// <summary>등급별 옵션 크기 배율 (흔한 0.5 / 손본 0.8 / 귀한 1.1)</summary>
@@ -471,11 +512,40 @@ namespace Chasa.Core
         public static float GetBase(Opt k) { float v; return BaseValue.TryGetValue(k, out v) ? v : 0f; }
 
         /// <summary>옵션 하나의 값. 등급이 높을수록 크다 (임시값)</summary>
-        static float RollValue(Opt k, Rarity r)
+        static float RollValue(Opt k, Rarity r, Func<float> rand)
         {
-            float t = TierFactor(r);
-            float v = GetBase(k) * t;
+            // 기획 growth.json affixes 의 등급별 범위 안에서 굴린다(없는 옵션은 기본값 ± 20%)
+            float lo, hi; Range(k, r, out lo, out hi);
+            float v = lo + (hi - lo) * rand();
             return k == Opt.HpFlat ? (float)Math.Round(v) : v;
+        }
+
+        // 옵션별 [흔한, 손본, 귀한] 범위(% 는 소수로). 값은 growth.json affixes ranges 와 같다
+        static readonly Dictionary<Opt, float[]> Ranges = new Dictionary<Opt, float[]>
+        {
+            { Opt.DamagePct,          new[] { .03f, .05f, .05f, .09f, .09f, .14f } },
+            { Opt.AttackSpeedPct,     new[] { .02f, .03f, .03f, .06f, .06f, .09f } },
+            { Opt.CastReducePct,      new[] { .02f, .03f, .03f, .05f, .05f, .08f } },
+            { Opt.PahonDamagePct,     new[] { .04f, .06f, .06f, .10f, .10f, .16f } },
+            { Opt.HpFlat,             new[] { 8f, 12f, 12f, 20f, 20f, 32f } },
+            { Opt.MoveSpeedPct,       new[] { .02f, .03f, .03f, .05f, .05f, .08f } },
+            { Opt.CoinPct,            new[] { .04f, .06f, .06f, .10f, .10f, .15f } },
+            { Opt.PahonKnockbackPct,  new[] { .05f, .08f, .08f, .12f, .12f, .18f } },
+            { Opt.PahonRadiusM,       new[] { .05f, .10f, .10f, .20f, .20f, .30f } },
+            { Opt.TendoNeokPct,       new[] { .03f, .04f, .04f, .07f, .07f, .10f } },
+            { Opt.ChainWindowAddS,    new[] { .2f, .3f, .3f, .6f, .6f, 1.0f } },
+            { Opt.WaitAddS,           new[] { .2f, .3f, .3f, .5f, .5f, .8f } },
+            { Opt.CastDamageReducePct,new[] { .03f, .05f, .05f, .08f, .08f, .12f } },
+            { Opt.DefensePct,         new[] { .02f, .03f, .03f, .05f, .05f, .08f } },
+            { Opt.SkillCdReduce,      new[] { .03f, .05f, .05f, .08f, .08f, .12f } },
+            { Opt.WeaponCdReduce,     new[] { .04f, .06f, .06f, .10f, .10f, .15f } },
+            { Opt.FiercePct,          new[] { .05f, .08f, .08f, .14f, .14f, .20f } },
+        };
+        static void Range(Opt k, Rarity r, out float lo, out float hi)
+        {
+            float[] a; int i = r == Rarity.Common ? 0 : r == Rarity.Crafted ? 2 : 4;
+            if (Ranges.TryGetValue(k, out a)) { lo = a[i]; hi = a[i + 1]; return; }
+            float b = GetBase(k) * TierFactor(r); lo = b * 0.8f; hi = b * 1.2f;   // 파혼 반경(면적) 등 표에 없는 것
         }
     }
 

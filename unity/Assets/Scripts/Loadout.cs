@@ -35,10 +35,10 @@ public class Loadout
     public void Tick(float dt)
     {
         swapLeft = System.Math.Max(0f, swapLeft - dt);
-        quakeCd = System.Math.Max(0f, quakeCd - dt);
+        quakeCd = System.Math.Max(0f, quakeCd - dt / stats.WeaponCdMult);   // 무기 기술 재사용 단축 옵션(상한 40%)
         lastDropT -= dt;
-        skills.Tick(dt);
-        active.Tick(dt);
+        skills.Tick(dt / stats.SkillCdMult);   // 도술 재사용 단축(상한 35%): 시간을 더 빨리 흘려 보낸다
+        active.Tick(dt / stats.SkillCdMult);
     }
 
     /// <summary>새 물건을 비교해 장착. 장착했으면 합계를 다시 계산하고 true</summary>
