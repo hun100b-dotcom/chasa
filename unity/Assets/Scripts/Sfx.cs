@@ -109,6 +109,7 @@ public class Sfx : MonoBehaviour
     /// <summary>더킹(ducking, 중요한 소리 때 배경을 잠깐 줄이기): 1=그대로, 0.5=절반. 컷신·천도 시전·명부 열림 때 BGM·환경음에 곱한다. 예고음·타격음은 줄이지 않는다</summary>
     public static float Duck = 1f;
     public static void TickDuck(bool on, float dt) { Duck = Mathf.MoveTowards(Duck, on ? 0.5f : 1f, dt / (on ? 0.4f : 1.2f) * 0.5f); }   // 줄일 땐 0.4초, 돌아올 땐 1.2초(갑자기 커지지 않게)
+    public static int PhaseNow = 1;   // 지금 시각대(0 새벽 1 낮 2 저녁 3 밤 — 엿듣기 time 과 같은 순서). 2·3막 주변 소리가 본다
     public static bool NightNow;   // 지금이 밤인가(JudgeSystem 이 시계를 보고 매 프레임 알려 준다 — 날씨 소리 고르기용)
     public static void SetWeatherAmbient(Weather w) { if (I != null) I.SetWeatherInternal(w); }
 

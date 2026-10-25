@@ -225,6 +225,22 @@ public class NpcWorld
         if (!dwelling) DwellRatio = 0f;
     }
 
+    /// <summary>
+    /// 2·3막 소문 엿듣기 자리(R2-01 …)가 지금 열려 있나(그 시각대이고 장례·업으로 닫히지 않았나). 열려 있으면 자리 좌표를 준다.
+    /// 자리 소리(주변 소리 PR #44)가 이걸로 켜고 끈다.
+    /// </summary>
+    public bool RumorOpen(string id, out Vector3 pos)
+    {
+        pos = Vector3.zero;
+        foreach (var s in spots)
+        {
+            if (s.row.npc != "rm" || s.row.place == null || !s.row.place.StartsWith(id + " ")) continue;
+            if (s.gate != null && !s.gate()) return false;
+            pos = s.pos; return true;
+        }
+        return false;
+    }
+
     /// <summary>자동 플레이 테스트용: 지금 켜진 자리 중 아직 못 얻은 단서가 달린 곳의 좌표·이름을 모은다</summary>
     public void PendingClues(List<KeyValuePair<Vector3, string>> into)
     {

@@ -19,7 +19,7 @@ public class Act1Soundscape : MonoBehaviour
     [System.Serializable] class Line { public string id; public float x1, z1, x2, z2, min, max; public bool night_only; }
     [System.Serializable] class FileData { public Bed[] beds; public Pt[] points; public Prop[] props; public LonerRow loner; public Spr[] sprinkles; public Bed[] beds_day; public Line[] lines; }
 
-    class Loop { public AudioSource s; public bool want; public float gain = 1f; }
+    class Loop { public AudioSource s; public bool want; public float gain = 1f; public bool mist; }   // mist: 물안개 소리 자신(먹먹하게 깎지 않는다)
 
     FileData d;
     JudgeSystem judge; System.Func<Vector3> playerPos;
@@ -27,6 +27,7 @@ public class Act1Soundscape : MonoBehaviour
     readonly Dictionary<string, List<Vector2>> propPos = new Dictionary<string, List<Vector2>>();
     readonly HashSet<Enemy> noticed = new HashSet<Enemy>();
     float scanT;
+    float mistHz, lpNow = 22000f;   // mistHz: 물안개 안이면 그 소품의 저역 통과 값(0=밖). lpNow: 지금 필터 위치(부드럽게 옮긴다)
     const float Fade3D = 0.5f, FadeBed = 3f;
 
     public static Act1Soundscape Create(JudgeSystem j, System.Func<Vector3> pos)
@@ -71,7 +72,7 @@ public class Act1Soundscape : MonoBehaviour
 
     void Rescan(Vector3 p)
     {
-        wantCache.Clear();
+        wantCache.Clear(); mistHz = 0f;
         var pp = new Vector2(p.x, p.z);
         // 서낭당·넋길 입구·대장간 화덕
         for (int i = 0; i < d.points.Length; i++)
@@ -106,6 +107,7 @@ public class Act1Soundscape : MonoBehaviour
                 if (pr.every_m > 0f) foreach (var o in picked) if (Vector2.Distance(o, kv.Value) < pr.every_m) { tooClose = true; break; }
                 if (!tooClose) picked.Add(kv.Value);
             }
+            if (pr.inside_lowpass_hz > 0f && picked.Count > 0 && Vector2.Distance(pp, picked[0]) <= pr.max) mistHz = pr.inside_lowpass_hz;   // 물안개 덩이 안: 주변 소리만 먹먹하게(전투·UI 소리는 Sfx 본체라 그대로)
             for (int i = 0; i < picked.Count; i++) wantCache["pr:" + gkey + i] = new W { id = pr.id, pos = new Vector3(picked[i].x, 0f, picked[i].y), min = pr.min, max = pr.max, gain = !Night && pr.day_gain > 0f ? pr.day_gain : 1f };
         }
         // 외톨이 혼: 무릎 꿇고 있는 동안 곁에서 들린다. 근처에서 싸우는 중이면 0.5배, 8 m 안에 처음 들어오면 고개 드는 소리 한 번
@@ -135,8 +137,9 @@ public class Act1Soundscape : MonoBehaviour
             var s = go.AddComponent<AudioSource>(); s.clip = clip; s.loop = true; s.volume = 0f; s.playOnAwake = false;
             if (is3d) { s.spatialBlend = 1f; s.rolloffMode = AudioRolloffMode.Logarithmic; s.minDistance = min; s.maxDistance = max; go.transform.position = pos; }
             s.time = Random.value * clip.length;   // 같은 소리 여러 개가 똑같이 겹쳐 울리지 않게 시작 지점을 흩는다
+            go.AddComponent<AudioLowPassFilter>().cutoffFrequency = 22000f;   // 22 kHz = 깎지 않는 상태. 물안개 안에서만 내려간다
             s.Play();
-            l = new Loop { s = s }; loops[key] = l;
+            l = new Loop { s = s, mist = id == "amb.mist.bank" }; loops[key] = l;
         }
         else if (is3d && l.s != null) l.s.transform.position = pos;   // 움직이는 혼 곁이면 따라간다
         l.want = true; l.gain = gain;
@@ -145,9 +148,11 @@ public class Act1Soundscape : MonoBehaviour
     void ApplyVolumes()
     {
         var dead = new List<string>();
+        lpNow = Mathf.MoveTowards(lpNow, mistHz > 0f ? mistHz : 22000f, Time.unscaledDeltaTime * 20000f);   // 1초쯤 걸려 먹먹해지고, 나오면 돌아온다
         foreach (var kv in loops)
         {
             var l = kv.Value; if (l.s == null) { dead.Add(kv.Key); continue; }
+            var lp = l.s.GetComponent<AudioLowPassFilter>(); if (lp != null) lp.cutoffFrequency = l.mist ? 22000f : lpNow;
             bool bed = kv.Key.StartsWith("bed:");
             float target = l.want ? l.gain * SaveStore.Settings.Sfx * Sfx.Duck : 0f;
             l.s.volume = Mathf.MoveTowards(l.s.volume, target, Time.unscaledDeltaTime / (bed ? FadeBed : Fade3D));

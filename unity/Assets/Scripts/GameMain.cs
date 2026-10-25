@@ -140,6 +140,7 @@ public class GameMain : MonoBehaviour
         var settingsPanel = gameObject.AddComponent<SettingsPanel>(); settingsPanel.judge = judge; settingsPanel.white = Texture2D.whiteTexture;   // 설정 화면(O)
         Sfx.Create(judge);   // 효과음 재생기
         if (FieldRules.On) Act1Soundscape.Create(judge, () => player.Pos);   // 1막 주변 소리(구역 바탕·서낭당·소품·외톨이·흩뿌림)
+        if (FieldRules.On && (FieldRules.Act2 || FieldRules.Act3)) RegionSoundscape.Create(judge, () => player.Pos);   // 2·3막 주변 소리(구역 바탕·서낭당·엿듣기 자리·흩뿌림·갱 징)
         ZoneAmbient.Create(() => player.Pos);   // 2막 구역별 환경음(붉은재·쇳골)
         BgmPlayer.Create(judge);   // BGM 재생기(층 교차). 필드에서만 소리를 낸다
         if (BotScript.Wanted()) { var bs = gameObject.AddComponent<BotScript>(); bs.player = player; bs.enemies = enemies; bs.judge = judge; }   // ?bot=1 첫 세션 자동 플레이 테스트

@@ -909,6 +909,7 @@ public class JudgeSystem : MonoBehaviour
     readonly HashSet<int> bossDoneIds = new HashSet<int>();   // 처결한 1막 보스 번호(1~3)
     int allDoneDay = -1; bool allDoneAtNight; int enterDay = -1; int act2DoneDay = -1; bool gate3Announced;   // act2DoneDay: 2막 보스 넷을 모두 처결한 하루(3막 금줄은 그 다음 새벽에 풀린다)
     bool heukwolSpawned, heukwolRetreated, gateAnnounced, heukwolWarned; Enemy heukwol; float gateToastT;
+    public bool BossTendoed(int id) { return bossTendoIds.Contains(id); }   // 소리 연결 같은 곳에서 '그 보스를 천도했나' 만 묻는다
     readonly HashSet<int> bossTendoIds = new HashSet<int>();   // 천도로 처결한 보스 번호(넋길 추가 도착점)
     /// <summary>넋길 정류장: 서낭당들 + 천도로 보낸 보스의 마당 가장자리(반경 + 4m, 가까운 서낭당 쪽 = 들어오는 방향). 밤에만 쓴다</summary>
     readonly Dictionary<string, string> stopArrive = new Dictionary<string, string>();   // 도착점 이름 → 처음 닿을 때 한 줄
@@ -1184,6 +1185,7 @@ public class JudgeSystem : MonoBehaviour
         if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
         Sfx.NightNow = clock != null && clock.Phase == ClockPhase.Night;
+        if (clock != null) Sfx.PhaseNow = (int)clock.Phase;
         if (clock != null) TideWater.WorldMinutes = Tide.TotalMinutes(clock.Day, clock.Minutes);   // 썰물·밀물 시계
         if (clock != null && FieldRules.Act3 && player.Pos.x > 764f)   // 3막 ⑤ 갯마을에 있을 때만 물때 소리
         {
