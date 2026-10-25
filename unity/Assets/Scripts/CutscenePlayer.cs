@@ -67,6 +67,8 @@ public class CutscenePlayer
         if (fs != null) { var f2 = JsonUtility.FromJson<FileData>(fs.text); if (f2 != null && f2.cuts != null) foreach (var c in f2.cuts) byId[c.id] = c; }
         var fs1 = Resources.Load<TextAsset>("Data/cutscenes_s1");   // 시즌1: 2막 B-05~08·3막 B-09~11·흑월·끝 컷(소리 대본 포함)
         if (fs1 != null) { var f4 = JsonUtility.FromJson<FileData>(fs1.text); if (f4 != null && f4.cuts != null) foreach (var c in f4.cuts) byId[c.id] = c; }
+        var fs2 = Resources.Load<TextAsset>("Data/cutscenes_s2");   // 시즌2(서사 대본이 오면 tools/build_cutscenes_s1.py 가 만든다). 없으면 건너뜀
+        if (fs2 != null) { var f5 = JsonUtility.FromJson<FileData>(fs2.text); if (f5 != null && f5.cuts != null) foreach (var c in f5.cuts) byId[c.id] = c; }
         var fn = Resources.Load<TextAsset>("Data/cutscenes_funerals");   // 1막 장례 대본 8개(박돌쇠 제외)
         if (fn != null) { var f3 = JsonUtility.FromJson<FileData>(fn.text); if (f3 != null && f3.cuts != null) foreach (var c in f3.cuts) byId[c.id] = c; }
         AddBuiltIn();

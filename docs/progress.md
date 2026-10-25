@@ -1265,3 +1265,7 @@
 - 대본(서사 cutscenes_s2.json)의 sfx_request 10개: `cut.knife.notch`·`cut.door.slide`·`cut.paper.set`·`cut.wire.untie`·`cut.seal.thud`·`amb.dawn.still`·`amb.names.many`·`cut.names.release`·`cut.river.flow`·`cut.river.rush`(반복형). 서사 sfx_map.promote가 옮기면 된다.
 - 소리 대본 `tools/cutscene_audio_s2.py` → `data/cutscene_audio_s2.json`: 47컷 143박자(대본 박자와 전부 맞음 검사). 저승 규칙대로 C-18 `amb.dawn.birds`→`amb.dawn.still`, 광산 임시 소리 → `amb.inkroom`·`amb.sealcave`. 보스전 도중 맺힘 컷은 resume 대신 duck 1.0(전투 층 유지).
 - 컷 곡 4자리(bgm_s2_open·bigdam·finale_a·finale_b): Gemini 지시문 42~45 + 임시 대역 합성(Temp). 효과음 총 259개, 기존 파일 변화 없음. 미리듣기 v18, 지시문 v6.
+
+## 시즌2 컷 소리·결전 곡 반복 (코드·QA, 2026-10-25)
+- 사운드 브랜치 병합(시즌2 컷 소리 대본 data/cutscene_audio_s2.json). `build_cutscenes_s1.py s2` 로 시즌2 컷 표(cutscenes_s2.json)를 만들 수 있고, CutscenePlayer 가 있으면 읽는다. 서사의 시즌2 컷 대본(docs/narrative/cutscenes_s2.json)은 아직 없어 표는 만들지 않았다.
+- BgmPlayer: 컷이 지정한 곡 중 흑월 결전·B-20 보스전(heukwol·bigdam)은 반복 재생.

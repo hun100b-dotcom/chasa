@@ -10,10 +10,12 @@ build_cutscenes_s1.py — 시즌1 컷신 대본(docs/narrative/cutscenes_s1.json
   (gain 은 Sfx 가 소리 크기 인자를 아직 안 받아 무시한다)
 사용: python3 tools/build_cutscenes_s1.py
 """
-import json, os
+import json, os, sys
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-src = json.load(open(os.path.join(root, "docs", "narrative", "cutscenes_s1.json"), encoding="utf-8"))["cutscenes"]
-aud = json.load(open(os.path.join(root, "data", "cutscene_audio_s1.json"), encoding="utf-8"))["cuts"]
+# 시즌 번호(기본 s1). 시즌2: python3 tools/build_cutscenes_s1.py s2 → docs/narrative/cutscenes_s2.json + data/cutscene_audio_s2.json → Resources/Data/cutscenes_s2.json
+season = sys.argv[1] if len(sys.argv) > 1 else "s1"
+src = json.load(open(os.path.join(root, "docs", "narrative", "cutscenes_%s.json" % season), encoding="utf-8"))["cutscenes"]
+aud = json.load(open(os.path.join(root, "data", "cutscene_audio_%s.json" % season), encoding="utf-8"))["cuts"]
 have = {x["id"] for x in json.load(open(os.path.join(root, "data", "sfx_files.json"), encoding="utf-8"))["sounds"]}
 ZOOM = {"quarter": 1.0, "slow_zoom_in": 1.3, "low_move": 1.3, "side_track": 1.15, "tilt_up": 1.0, "move": 1.3, "pull_out": 0.9, "follow": 1.2, "close": 1.6,
         "fade_in": 1.2, "fade_out": 1.2, "black": 1.2, "push": 1.3, "pull": 1.1, "crane": 1.1, "track": 1.15, "orbit": 1.2, "two_shot": 0.95, "hold": 0.0, "cut": 0.0, "pan": 0.0, "shake": 0.0}
@@ -68,6 +70,6 @@ def convert(c):
             "skippable": c.get("skippable", True), "steps": steps}
 
 cuts = [convert(c) for c in src]
-path = os.path.join(root, "unity", "Assets", "Resources", "Data", "cutscenes_s1.json")
+path = os.path.join(root, "unity", "Assets", "Resources", "Data", "cutscenes_%s.json" % season)
 json.dump({"cuts": cuts}, open(path, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
-print("시즌1 컷", len(cuts), "소리 단계", sum(1 for c in cuts for s in c["steps"] if s.get("audio")))
+print("시즌 컷", season, len(cuts), "소리 단계", sum(1 for c in cuts for s in c["steps"] if s.get("audio")))

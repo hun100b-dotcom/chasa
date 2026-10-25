@@ -123,7 +123,7 @@ public class BgmPlayer : MonoBehaviour
         if (playId != null)   // 컷이 지정한 곡(시즌1 끝 곡 등). 파일이 없으면 fallback(silence 면 조용히)
         {
             var pc = Load(playId);
-            if (pc != null) { want = pc; wantId = "cut:" + playId; loop = false; }
+            if (pc != null) { want = pc; wantId = "cut:" + playId; loop = playId.Contains("heukwol") || playId.Contains("bigdam"); }   // 컷이 지정한 곡은 한 번만 틀지만, 결전 곡(흑월·B-20 보스전)은 싸움이 끝날 때까지 반복
             else if (playFallback == "silence") { want = null; wantId = "cut-none"; }
         }
         if (wantId != curId && regionFade) { regionFade = false; Switch(want, wantId, loop, 4f); }   // 지역이 바뀔 때는 4초에 걸쳐 넘긴다
