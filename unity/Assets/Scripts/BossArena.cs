@@ -35,12 +35,14 @@ public class BossArena : MonoBehaviour
     Vector3 CupPos(int i)
     {
         float a = i * Mathf.PI * 2f / Balance.B02_CUPS;
-        return new Vector3(def.X + Mathf.Cos(a) * Balance.B02_RING_RADIUS_M, 0.03f, def.Z + Mathf.Sin(a) * Balance.B02_RING_RADIUS_M);
+        float x = def.X + Mathf.Cos(a) * Balance.B02_RING_RADIUS_M, z = def.Z + Mathf.Sin(a) * Balance.B02_RING_RADIUS_M;
+        return new Vector3(x, 0.03f + GroundTerrain.HeightAt(x, z), z);   // 새 땅이 있으면 땅 높이 위에 깐다(비탈이 가파르면 한쪽이 묻힐 수 있어 보스 터는 평평하게 부탁)
     }
     Vector3 CellPos(int i, int j)
     {
         int n = Balance.B03_GRID; float m = Balance.B03_CELL_M;
-        return new Vector3(def.X + (i - (n - 1) * 0.5f) * m, 0.03f, def.Z + (j - (n - 1) * 0.5f) * m);
+        float x = def.X + (i - (n - 1) * 0.5f) * m, z = def.Z + (j - (n - 1) * 0.5f) * m;
+        return new Vector3(x, 0.03f + GroundTerrain.HeightAt(x, z), z);
     }
 
     void Build()

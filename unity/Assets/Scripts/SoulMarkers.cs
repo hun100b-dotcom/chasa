@@ -9,6 +9,7 @@
 // 구현: 혼마다 LineRenderer(선을 그리는 부품) 하나. 안 쓰는 건 꺼 둔다.
 // =============================================================================
 using System.Collections.Generic;
+using Chasa.Core;
 using UnityEngine;
 
 public class SoulMarkers
@@ -18,6 +19,7 @@ public class SoulMarkers
     const float BlinkBelow = 0.25f;   // 남은 시간 비율이 이 아래면 깜박인다
 
     readonly Dictionary<Enemy, LineRenderer> rings = new Dictionary<Enemy, LineRenderer>();
+    readonly Dictionary<Enemy, GameObject> pads = new Dictionary<Enemy, GameObject>();   // 발밑 대기 고리 모델(종류별 색)
     readonly List<Enemy> dead = new List<Enemy>();
     readonly Transform root;
     Material mat;
@@ -42,6 +44,14 @@ public class SoulMarkers
                 lr = Make(e); rings[e] = lr;
             }
             lr.enabled = show;
+            GameObject pad; pads.TryGetValue(e, out pad);
+            if (show && pad == null && !pads.ContainsKey(e))
+            {
+                string f = e.soul.Kind == SoulKind.Fresh ? "fx_wait_ring_fresh" : e.soul.Kind == SoulKind.Year ? "fx_wait_ring_day" : "fx_wait_ring_old";
+                pad = FxMesh.Spawn(f, e.Pos, Radius * 2f / 2.12f, null, root);   // 없으면 null → 선 고리만
+                pads[e] = pad;
+            }
+            if (pad != null) { pad.SetActive(show); pad.transform.position = new Vector3(e.Pos.x, e.Pos.y + 0.04f, e.Pos.z); }
             if (!show) continue;
 
             float ratio = Mathf.Clamp01(e.soul.WaitLeft / Mathf.Max(0.01f, e.soul.WaitTotal));
@@ -65,6 +75,9 @@ public class SoulMarkers
         dead.Clear();
         foreach (var kv in rings) if (kv.Key == null) dead.Add(kv.Key);
         foreach (var k in dead) { if (rings[k] != null) Object.Destroy(rings[k].gameObject); rings.Remove(k); }
+        dead.Clear();
+        foreach (var kv in pads) if (kv.Key == null) dead.Add(kv.Key);
+        foreach (var k in dead) { if (pads[k] != null) Object.Destroy(pads[k]); pads.Remove(k); }
     }
 
     LineRenderer Make(Enemy e)

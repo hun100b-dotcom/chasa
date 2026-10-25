@@ -387,6 +387,594 @@
     "Walk"
    ],
    "yaw": 180
+  },
+  {
+   "key": "fresh_yeoksa",
+   "path": "Models/Soul/soul_fresh_yeoksa",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "fresh_bungjae",
+   "path": "Models/Soul/soul_fresh_bungjae",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "fresh_soegol",
+   "path": "Models/Soul/soul_fresh_soegol",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "year_yeoksa",
+   "path": "Models/Soul/soul_day_yeoksa",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "year_bungjae",
+   "path": "Models/Soul/soul_day_bungjae",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "year_soegol",
+   "path": "Models/Soul/soul_day_soegol",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "old_yeoksa",
+   "path": "Models/Soul/soul_old_yeoksa",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "old_bungjae",
+   "path": "Models/Soul/soul_old_bungjae",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "old_soegol",
+   "path": "Models/Soul/soul_old_soegol",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "lump_yeoksa",
+   "path": "Models/Soul/soul_lump_yeoksa",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "lump_bungjae",
+   "path": "Models/Soul/soul_lump_bungjae",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "lump_soegol",
+   "path": "Models/Soul/soul_lump_soegol",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
   }
  ],
  "props": [

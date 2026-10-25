@@ -17,7 +17,7 @@ public class GroundFx : MonoBehaviour
     {
         if (SpriteLib.Texture(prefix + "0") == null) return;   // 그림이 없으면 조용히 건너뜀
         var go = new GameObject("GroundFx");
-        go.transform.position = new Vector3(center.x, 0.03f, center.z);   // 타일(0.004)·임시 마당(0.011) 위
+        go.transform.position = new Vector3(center.x, 0.03f + GroundTerrain.HeightAt(center.x, center.z), center.z);   // 타일(0.004)·임시 마당(0.011) 위
         float h = radius * 1.4142f * 0.5f;
         var mesh = new Mesh();
         mesh.SetVertices(new[] { new Vector3(-h, 0, -h), new Vector3(-h, 0, h), new Vector3(h, 0, h), new Vector3(h, 0, -h) });

@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
     Vector3 lastPlayerPos;         // 그림이 플레이어 쪽을 보게 하려고 기억
     Color baseColor;               // 평소 색 (예비동작 붉은 신호에서 되돌아올 색)
     public bool capsuleShape;
+    string variant;                // 구역에 따른 모양 변형 이름표(첫 호출 때 한 번 정한다). "" = 기본
 
     public Vector3 Pos { get => transform.position; set => transform.position = value; }
 
@@ -290,6 +291,12 @@ public class Enemy : MonoBehaviour
             case SoulKind.Old: n = down ? "enemies/soul_old_kneel" : "enemies/soul_old"; break;
             case SoulKind.Lump: n = "enemies/soul_lump"; break;   // 덩어리는 무릎 꿇는 그림이 없다
             default: n = down ? "enemies/soul_fresh_kneel" : "enemies/soul_fresh"; break;
+        }
+        // 구역 변형(3D 모델이 있을 때만): 검은여울의 혼은 역병(푸른 멍울) 모양. 이름 뒤에 _yeoksa 를 붙이면 ActorModel 이 변형 모델을 고른다
+        if (View3D.On && !soul.Boss && !soul.Fierce)
+        {
+            if (variant == null) variant = FieldZones.NameAt(Pos.x, Pos.z) == "검은여울" ? "_yeoksa" : "";
+            if (variant.Length > 0) n += variant;
         }
         var look = lastPlayerPos - Pos;
         // 예비동작이면 붉게, 맞은 순간이면 하얗게 번쩍 (색 도형의 flash 와 같은 신호)

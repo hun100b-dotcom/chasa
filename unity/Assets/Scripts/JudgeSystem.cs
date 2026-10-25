@@ -194,6 +194,8 @@ public class JudgeSystem : MonoBehaviour
             o.TakeHit(pahonDmg, dir, kb, 0.3f);
             numbers.Spawn(o.HeadPosition, pahonDmg, "heavy");
         }
+        // 파편 모델: 3종 중 하나를 무작위 방향으로 터뜨린다 (반경에 맞춰 크기)
+        FxMesh.Burst("fx_pahon_shards_" + "abc"[Random.Range(0, 3)], new Vector3(at.x, at.y + 0.05f, at.z), radius / 1.25f, 0.55f, 0.5f, 1.15f, 0.4f, null, Random.Range(0f, 360f));
         feel.HitStop(Balance.PAHON_HITSTOP_FRAMES);
         Sfx.Play("sfx.pahon.burst");
         feel.AddShake(Balance.PAHON_SHAKE);
@@ -211,6 +213,9 @@ public class JudgeSystem : MonoBehaviour
     int gainedExtra;   // 한 줄 꿰기로 덤으로 간 혼이 준 넋(알림용)
     void FinishTendo()
     {
+        var tp = castTarget.Pos;   // Finish 뒤엔 혼이 사라질 수 있어 자리를 미리 적어 둔다
+        FxMesh.Burst("fx_tendo_pillar", tp, 1f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f));
+        FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 1f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f));
         castTarget.Finish();
         tendoToday++;                                                    // 혼불 발 수
         if (escortArmed) { escortT = Balance.AC_ESCORT_SEC; escortArmed = false; }   // 배웅길: 천도 직후 적이 느려진다
@@ -840,11 +845,13 @@ public class JudgeSystem : MonoBehaviour
     void UpdateStainViews()
     {
         var snap = stains.Snapshot();
-        bool art = SpriteLib.Texture("fx/stain_0") != null;   // 아트 얼룩 그림이 있으면 그것으로, 없으면 색 원기둥으로
+        bool glb = Resources.Load<GameObject>("Models/Fx/fx_stain_decal") != null;   // 얼룩 장판 모델이 있으면 최우선
+        bool art = !glb && SpriteLib.Texture("fx/stain_0") != null;   // 없으면 아트 그림, 그것도 없으면 색 원기둥
         while (stainViews.Count < snap.Count)
         {
             GameObject go;
-            if (art) go = GroundFx.Persistent(Vector3.zero, Balance.STAIN_RADIUS, "fx/stain_0");
+            if (glb) go = FxMesh.Spawn("fx_stain_decal", Vector3.zero, 1f, ChasaPalette.WonnyeomStain);
+            else if (art) go = GroundFx.Persistent(Vector3.zero, Balance.STAIN_RADIUS, "fx/stain_0");
             else
             {
                 // 납작한 원기둥으로 웅덩이를 만든다. 색은 아트팀 팔레트의 '원념 얼룩'
@@ -859,16 +866,23 @@ public class JudgeSystem : MonoBehaviour
         {
             float life = snap[i][2];
             float fade = Mathf.Clamp01(life * Balance.STAIN_DURATION / 2f);   // 마지막 2초 동안 줄어들며 사라진다(언제 없어지는지 보이게)
-            if (art)
+            if (glb)
+            {
+                // 모델 얼룩(지름 약 2.2m)을 STAIN_RADIUS 에 맞추고, 마지막 2초에 줄어든다
+                float d = Balance.STAIN_RADIUS * 2f / 2.2f * fade;
+                stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f + GroundTerrain.HeightAt(snap[i][0], snap[i][1]), snap[i][1]);
+                stainViews[i].transform.localScale = new Vector3(d, d, d);
+            }
+            else if (art)
             {
                 // 그림 얼룩은 같은 크기에서 점점 작아진다 (그림 쿼드의 기본 크기는 반경 STAIN_RADIUS 기준)
-                stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f, snap[i][1]);
+                stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f + GroundTerrain.HeightAt(snap[i][0], snap[i][1]), snap[i][1]);
                 stainViews[i].transform.localScale = new Vector3(fade, 1f, fade);
             }
             else
             {
                 float d = Balance.STAIN_RADIUS * 2f * fade;
-                stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f, snap[i][1]);
+                stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f + GroundTerrain.HeightAt(snap[i][0], snap[i][1]), snap[i][1]);
                 stainViews[i].transform.localScale = new Vector3(d, 0.01f, d);
             }
         }

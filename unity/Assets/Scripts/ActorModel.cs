@@ -194,6 +194,14 @@ public class ActorModel : MonoBehaviour
     // ---- 이름 → 모양 -----------------------------------------------------------
     static Spec SpecFor(string name)
     {
+        var s = SpecBase(name);
+        foreach (var suf in new[] { "_yeoksa", "_bungjae", "_soegol" })
+            if (name.Contains(suf) && ModelCatalog.Actor(s.key + suf) != null) { s.key += suf; break; }   // 변형 모델 줄이 있을 때만(없으면 기본 모양)
+        return s;
+    }
+
+    static Spec SpecBase(string name)
+    {
         var s = new Spec { legs = true };
         if (name.Contains("chasa"))      // 동이 대역: 검은 도포, 붉은 띠, 갓
         { s.key = "dongi"; s.height = 1.8f; s.body = new Color(0.10f, 0.11f, 0.17f); s.accent = new Color(0.62f, 0.12f, 0.12f); s.hat = true; s.glow = 0f; }

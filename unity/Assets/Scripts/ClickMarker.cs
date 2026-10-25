@@ -38,7 +38,7 @@ public class ClickMarker : MonoBehaviour
 
     public void Show(Vector3 p)
     {
-        transform.position = new Vector3(p.x, 0.04f, p.z);
+        transform.position = new Vector3(p.x, 0.04f + GroundTerrain.HeightAt(p.x, p.z), p.z);
         age = 0f;
         gameObject.SetActive(true);
     }

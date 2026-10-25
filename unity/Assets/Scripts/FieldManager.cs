@@ -247,7 +247,7 @@ public class FieldManager : MonoBehaviour
             float d2 = (l.x - p.x) * (l.x - p.x) + (l.z - p.z) * (l.z - p.z);
             if (d2 > 45f * 45f) { pool[i].enabled = false; poolLamp[i] = null; continue; }   // 45m 밖은 안 켠다
             Color c; if (!ColorUtility.TryParseHtmlString(l.color, out c)) c = new Color(1f, 0.7f, 0.4f);
-            pool[i].transform.position = new Vector3(l.x, l.y + 1.0f, l.z);
+            pool[i].transform.position = new Vector3(l.x, l.y + 1.0f + GroundTerrain.HeightAt(l.x, l.z), l.z);
             pool[i].color = c; pool[i].range = Mathf.Max(6f, l.range * 1.4f);
             pool[i].enabled = true; poolLamp[i] = l;
         }

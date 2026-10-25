@@ -38,6 +38,14 @@ public static class FieldZones
     }
     static ZoneRow[] names;
 
+    /// <summary>그 자리가 속한 구역 이름(없으면 빈 글자). 혼 모양 변형 고르기 같은 곳에 쓴다</summary>
+    public static string NameAt(float x, float z)
+    {
+        if (!loaded) Load();
+        int i = ZoneRules.Find(rects, x, z);
+        return i >= 0 ? names[i].name : "";
+    }
+
     /// <summary>플레이어 자리에 맞춰 안개 값을 한 걸음 섞는다 (구역을 넘어도 약 1.5초에 걸쳐 서서히 바뀐다)</summary>
     public static void Tick(Vector3 playerPos, float dt)
     {
