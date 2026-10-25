@@ -6600,6 +6600,94 @@
    "bypass_cast_filter": true,
    "length_sec": 1.95,
    "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.boss.naru.kneel.warn",
+   "file": "sfx_boss_naru_kneel_warn",
+   "category": "보스",
+   "desc": "나루 영감 꿇은 동안 물 혼 예고: 뱃전 아래에서 물이 보글보글 차오름 → 1초에 뚝(물 혼이 올라오는 순간)",
+   "use": "B-01 꿇은 뒤 5초 물 혼 두 번째 물결 1.0초 전(4.0초)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.02,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.boss.seo.kneel.warn",
+   "file": "sfx_boss_seo_kneel_warn",
+   "category": "보스",
+   "desc": "서 의원 꿇은 동안 낙인 예고: 쇠 낙인이 달궈지며 치이익 커짐 → 1초에 뚝(낙인 파동)",
+   "use": "B-03 꿇은 동안 낙인 파동(4.0초마다) 1.0초 전",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.02,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.boss.general.kneel.warn",
+   "file": "sfx_boss_general_kneel_warn",
+   "category": "보스",
+   "desc": "이름 없는 장수 마지막 호령 예고: 진고(큰 북)가 둥…둥.둥둥 점점 빨라짐 → 1초에 뚝(대형이 선다)",
+   "use": "B-06 꿇은 뒤 1초부터 4.5초마다 대형 하나. 대형 1.0초 전(그림 예고 1.2초보다 0.2초 늦게)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.02,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.boss.chilseong.kneel.warn",
+   "file": "sfx_boss_chilseong_kneel_warn",
+   "category": "보스",
+   "desc": "반장 칠성 낙석 예고: 갱도 천장 나무가 끼이익 휘고 흙이 사르르 흘러내림 → 1초에 뚝(돌이 떨어진다)",
+   "use": "B-07 꿇은 뒤 4.5초마다 낙석 그림자 3곳. 그림자(예고 1.0초)와 같이",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.02,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.boss.yeom.kneel.warn",
+   "file": "sfx_boss_yeom_kneel_warn",
+   "category": "보스",
+   "desc": "장부꾼 염씨 숫자 예고: 장부 장이 촤르르 빠르게 넘어가다 → 1초에 뚝(숫자 넉 장이 날아온다)",
+   "use": "B-08 꿇은 동안 4.5초마다 숫자 4장. 던지기 1.0초 전",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.02,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.boss.mangbu.kneel.warn",
+   "file": "sfx_boss_mangbu_kneel_warn",
+   "category": "보스",
+   "desc": "망부석 아낙 파도 예고: 바닷물이 쏴아 뒤로 빠지며 자갈이 끌려감 → 1초에 뚝(한 줄 파도가 친다)",
+   "use": "B-09 꿇은 동안 4.5초마다 파도 한 줄. 파도 1.0초 전",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.02,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.boss.seonjang.kneel.warn",
+   "file": "sfx_boss_seonjang_kneel_warn",
+   "category": "보스",
+   "desc": "만선호 선장 기울기 예고: 배 밑창이 끄으응 낮게 신음하며 높아짐 → 1초에 뚝(갑판이 기운다)",
+   "use": "B-10 꿇은 동안 6초마다 기울기. 기울기 1.0초 전. 이 소리가 끊긴 뒤 바로 시작하면 다음 기울기 전에 2초 시전이 끝난다",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.02,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.boss.wangcho.kneel.warn",
+   "file": "sfx_boss_wangcho_kneel_warn",
+   "category": "보스",
+   "desc": "다리 밑 왕초 거적 예고: 거적을 머리 위로 휘휘 돌리는 바람 소리가 빨라짐 → 1초에 뚝(던짐)",
+   "use": "B-11 꿇은 동안 4.5초마다 거적 던지기. 던지기 1.0초 전(그림 예고 0.8초보다 0.2초 먼저)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.02,
+   "peak_dbfs": -13
   }
  ],
  "footsteps": {

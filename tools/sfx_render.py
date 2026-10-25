@@ -6335,6 +6335,93 @@ def _(r):
     return loopify(b, .05)
 
 
+
+# ── 보스가 꿇은 동안의 약한 압박 예고음(2026-10-26, planning/combat/boss-final-moment-act1-2.md·act3.md) ──
+# 규칙(모든 보스 같음): 압박이 닿기 정확히 1.0초 전에 튼다. 소리는 1.0초 동안 커지다가 닿는 순간 뚝 끊긴다.
+#   → "차오르는 소리가 끊기면 그때 천도를 시작"이 귀에 붙는다(압박 간격 4~6초 − 2초 시전 = 여유 2~4초).
+#   바탕 한 겹(낮게 차오르는 숨)은 모두 같고, 그 위의 빛깔만 보스마다 다르다 → 처음 듣는 보스도 "예고"인 줄 안다.
+def _kneel_warn_base(r, sec=1.0):
+    """모든 보스 공통 바탕: 낮게 차오르는 숨(0→1초 동안 커지고 높아짐), 끝에서 뚝"""
+    n = int(sec * SR)
+    x = sweep_filt(noise(n, r), "band", 260, 900, 1.3) * np.linspace(0, 1, n) ** 2 * .35
+    x[-int(.015 * SR):] *= np.linspace(1, 0, int(.015 * SR))
+    return x
+
+
+def _kneel_warn(r, color, sec=1.0):
+    """바탕 + 보스 빛깔. 빛깔은 같은 길이(sec초)로 만들어 넘긴다"""
+    b = _buf(sec + .05); place(b, _kneel_warn_base(r, sec), 0); place(b, color[:int(sec * SR)], 0)
+    return b
+
+
+@sfx("sfx.boss.naru.kneel.warn", -14, "보스", "나루 영감 꿇은 동안 물 혼 예고: 뱃전 아래에서 물이 보글보글 차오름 → 1초에 뚝(물 혼이 올라오는 순간)", bypass_cast=True, use="B-01 꿇은 뒤 5초 물 혼 두 번째 물결 1.0초 전(4.0초)")
+def _(r):
+    n = int(1.0 * SR); c = _buf(1.0)
+    for k in range(14):
+        at = .05 + .9 * (k / 14) ** .7; place(c, bubble(.12, r.uniform(180, 380), 1.8, .03) * (.25 + .5 * k / 14), at)
+    c += filt(noise(n, r), "low", 300) * np.linspace(0, 1, n) ** 1.5 * .3
+    return _kneel_warn(r, c)
+
+
+@sfx("sfx.boss.seo.kneel.warn", -14, "보스", "서 의원 꿇은 동안 낙인 예고: 쇠 낙인이 달궈지며 치이익 커짐 → 1초에 뚝(낙인 파동)", bypass_cast=True, use="B-03 꿇은 동안 낙인 파동(4.0초마다) 1.0초 전")
+def _(r):
+    n = int(1.0 * SR)
+    hiss = filt(noise(n, r), "high", 3500) * (1 + .3 * np.sin(2 * np.pi * 23 * T(1.0))) * np.linspace(.1, 1, n) ** 2 * .35
+    ring = modal(1.0, [(1180, .6, .25), (2950, .4, .12)], r) * np.linspace(0, 1, n)
+    return _kneel_warn(r, hiss + ring)
+
+
+@sfx("sfx.boss.general.kneel.warn", -13, "보스", "이름 없는 장수 마지막 호령 예고: 진고(큰 북)가 둥…둥.둥둥 점점 빨라짐 → 1초에 뚝(대형이 선다)", bypass_cast=True, use="B-06 꿇은 뒤 1초부터 4.5초마다 대형 하나. 대형 1.0초 전(그림 예고 1.2초보다 0.2초 늦게)")
+def _(r):
+    c = _buf(1.0)
+    for k, at in enumerate((0.0, .38, .62, .78, .9)): place(c, _drum(r, 68, .18, .35 + .13 * k), at)
+    return _kneel_warn(r, c)
+
+
+@sfx("sfx.boss.chilseong.kneel.warn", -13, "보스", "반장 칠성 낙석 예고: 갱도 천장 나무가 끼이익 휘고 흙이 사르르 흘러내림 → 1초에 뚝(돌이 떨어진다)", bypass_cast=True, use="B-07 꿇은 뒤 4.5초마다 낙석 그림자 3곳. 그림자(예고 1.0초)와 같이")
+def _(r):
+    n = int(1.0 * SR); c = _buf(1.0)
+    place(c, _creak(r, .7, 140, 18, 600) * .5, .15)
+    dust = filt(noise(n, r) * (r.random(n) > .85), "band", 2600, 1.2) * np.linspace(0, 1, n) ** 1.5 * .5
+    for k in range(6): place(c, _stone_hit(r, .3)[:int(.08 * SR)] * .15, .5 + k * .08)
+    return _kneel_warn(r, c + dust)
+
+
+@sfx("sfx.boss.yeom.kneel.warn", -14, "보스", "장부꾼 염씨 숫자 예고: 장부 장이 촤르르 빠르게 넘어가다 → 1초에 뚝(숫자 넉 장이 날아온다)", bypass_cast=True, use="B-08 꿇은 동안 4.5초마다 숫자 4장. 던지기 1.0초 전")
+def _(r):
+    c = _buf(1.0)
+    k = 0; at = .05
+    while at < .95:
+        place(c, _paper(r, .05, 1800, 6500) * (.25 + .6 * at), at); k += 1; at += max(.035, .14 - .012 * k)
+    return _kneel_warn(r, c)
+
+
+@sfx("sfx.boss.mangbu.kneel.warn", -13, "보스", "망부석 아낙 파도 예고: 바닷물이 쏴아 뒤로 빠지며 자갈이 끌려감 → 1초에 뚝(한 줄 파도가 친다)", bypass_cast=True, use="B-09 꿇은 동안 4.5초마다 파도 한 줄. 파도 1.0초 전")
+def _(r):
+    n = int(1.0 * SR)
+    draw = sweep_filt(noise(n, r), "band", 2200, 500, .9) * np.linspace(.15, 1, n) ** 1.5 * .5   # 물이 빠지는 쏴(높→낮), 끝까지 커짐
+    peb = filt(noise(n, r) * (r.random(n) > .9), "band", 3500, 1.5) * np.linspace(1, .2, n) * .3
+    return _kneel_warn(r, draw + peb)
+
+
+@sfx("sfx.boss.seonjang.kneel.warn", -13, "보스", "만선호 선장 기울기 예고: 배 밑창이 끄으응 낮게 신음하며 높아짐 → 1초에 뚝(갑판이 기운다)", bypass_cast=True, use="B-10 꿇은 동안 6초마다 기울기. 기울기 1.0초 전. 이 소리가 끊긴 뒤 바로 시작하면 다음 기울기 전에 2초 시전이 끝난다")
+def _(r):
+    c = _buf(1.0)
+    place(c, _creak(r, .95, 85, 14, 400) * .7, 0)
+    place(c, _rope_taut(r, .9, 110) * .25, .05)
+    c = c * np.linspace(.15, 1, len(c)) ** 1.5                 # 끝으로 갈수록 커져야 '곧'으로 들린다
+    return _kneel_warn(r, c)
+
+
+@sfx("sfx.boss.wangcho.kneel.warn", -13, "보스", "다리 밑 왕초 거적 예고: 거적을 머리 위로 휘휘 돌리는 바람 소리가 빨라짐 → 1초에 뚝(던짐)", bypass_cast=True, use="B-11 꿇은 동안 4.5초마다 거적 던지기. 던지기 1.0초 전(그림 예고 0.8초보다 0.2초 먼저)")
+def _(r):
+    c = _buf(1.0); at = 0.0; k = 0
+    while at < .9:
+        m = int(.16 * SR); place(c, filt(noise(m, r), "band", 700 + 120 * k, 1.1) * env(m, .06, .07, 3) * (.3 + .1 * k), at)
+        k += 1; at += max(.11, .3 - .045 * k)
+    return _kneel_warn(r, c)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)
