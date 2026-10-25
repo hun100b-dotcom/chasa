@@ -2105,17 +2105,17 @@ public class CoreTests
     [Test]
     public void FieldRules_Extend_ChunkGrid()
     {
-        float x0 = FieldRules.WorldX, z0 = FieldRules.WorldZ;
         try
         {
+            FieldRules.ResetRegions();
             Assert.AreEqual(5, FieldRules.ChunksX); Assert.AreEqual(5, FieldRules.ChunksZ);
-            FieldRules.Extend(768f, 1280f);
+            FieldRules.AddRegion(0f, 640f, 768f, 1280f);
             Assert.AreEqual(6, FieldRules.ChunksX); Assert.AreEqual(10, FieldRules.ChunksZ);
             Assert.AreEqual(9, FieldRules.ChunkZ(1279f)); Assert.AreEqual(5, FieldRules.ChunkX(767f)); Assert.AreEqual(9, FieldRules.ChunkZ(5000f));
             Assert.AreEqual(5, FieldRules.RawChunk(640f), "붙이지 않은 번호");
             Assert.IsTrue(FieldRules.Inside(700f, 1200f));
         }
-        finally { FieldRules.Extend(x0, z0); }
+        finally { FieldRules.ResetRegions(); }
     }
 
     [Test]
@@ -2157,18 +2157,33 @@ public class CoreTests
     }
 
     [Test]
-    public void Act2Gate_GateClamp_BlocksPlayerOnlyWhileClosed()
+    public void FieldRules_Regions_WalkClamp_AndPlayerGates()
     {
-        bool a = FieldRules.Act2, o = FieldRules.Act2Open;
+        bool a2 = FieldRules.Act2, a3 = FieldRules.Act3, o2 = FieldRules.Act2Open, o3 = FieldRules.Act3Open, on0 = FieldRules.On;
         try
         {
-            FieldRules.Act2 = true; FieldRules.Act2Open = false;
-            float z = 700f; MapLayout.GateClamp(ref z, 0.5f); Assert.AreEqual(639.5f, z, 0.001f);   // 닫힘: 1막 북쪽 끝에서 멈춘다
-            FieldRules.Act2Open = true; z = 700f; MapLayout.GateClamp(ref z, 0.5f); Assert.AreEqual(700f, z, 0.001f);   // 열림: 그대로
+            FieldRules.On = true; FieldRules.ResetRegions();
+            FieldRules.AddRegion(0f, 640f, 768f, 1280f);       // 2막(북)
+            FieldRules.AddRegion(768f, 0f, 1280f, 1024f);      // ⑤ 갯마을(동)
+            FieldRules.AddRegion(-640f, 0f, 0f, 640f);         // ⑥ 도성(서)
+            FieldRules.Act2 = true; FieldRules.Act3 = true;
+            Assert.AreEqual(-640f, FieldRules.MinX); Assert.AreEqual(1280f, FieldRules.WorldX); Assert.AreEqual(1280f, FieldRules.WorldZ);
+            Assert.IsTrue(FieldRules.Walkable(100f, 900f)); Assert.IsTrue(FieldRules.Walkable(-300f, 300f)); Assert.IsTrue(FieldRules.Walkable(1000f, 500f));
+            Assert.IsFalse(FieldRules.Walkable(700f, 300f));   // 1막 동쪽 바깥 빈 구석(x 640~768, z<640)
+            Assert.AreEqual(FieldRules.Key(-5, 3), FieldRules.Key(-5, 3)); Assert.AreEqual(-5, FieldRules.KeyX(FieldRules.Key(-5, 3))); Assert.AreEqual(3, FieldRules.KeyZ(FieldRules.Key(-5, 3)));
+            Assert.IsTrue(FieldRules.ChunkHasLand(-5, 0)); Assert.IsFalse(FieldRules.ChunkHasLand(5, 2));   // (640~768, 256~384)는 빈 땅
+            // 빈 구석으로 걸어 들어가면 가장 가까운 땅으로 당겨진다
+            float x = 700f, z = 300f; FieldRules.ClampWalk(ref x, ref z, 0.5f); Assert.IsTrue(FieldRules.Walkable(x, z, 0.4f));
+            // 금줄: 닫혀 있으면 주인공만 못 들어간다
+            FieldRules.Act2Open = false; FieldRules.Act3Open = false;
+            x = 100f; z = 700f; MapLayout.PlayerClamp(ref x, ref z, 0.5f); Assert.AreEqual(639.5f, z, 0.001f);
+            x = -300f; z = 300f; MapLayout.PlayerClamp(ref x, ref z, 0.5f); Assert.AreEqual(-0f, x, 0.6f);
+            FieldRules.Act2Open = true; FieldRules.Act3Open = true;
+            x = 100f; z = 700f; MapLayout.PlayerClamp(ref x, ref z, 0.5f); Assert.AreEqual(700f, z, 0.001f);
             Assert.AreEqual(4, Act2Gate.OpenDay(3, false, -1));
             Assert.AreEqual(3, Act2Gate.HeukwolNight(3, false, -1));
         }
-        finally { FieldRules.Act2 = a; FieldRules.Act2Open = o; }
+        finally { FieldRules.ResetRegions(); FieldRules.Act2 = a2; FieldRules.Act3 = a3; FieldRules.Act2Open = o2; FieldRules.Act3Open = o3; FieldRules.On = on0; }
     }
 
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }

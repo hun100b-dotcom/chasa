@@ -30,9 +30,9 @@ namespace Chasa.Core
         public static float VillageMaxZ { get { return (MapData.Cols - 1.5f) * S; } }
 
         /// <summary>맵 경계 (월드). 구역 기능이 꺼져 있으면 마을 한 곳(기존 동작), 켜져 있으면 이어 붙인 구역 전체</summary>
-        public static float MinX { get { return FieldRules.On ? 0f : World.Enabled ? World.MinX : VillageMinX; } }
+        public static float MinX { get { return FieldRules.On ? FieldRules.MinX : World.Enabled ? World.MinX : VillageMinX; } }
         public static float MaxX { get { return FieldRules.On ? FieldRules.WorldX : World.Enabled ? World.MaxX : VillageMaxX; } }
-        public static float MinZ { get { return FieldRules.On ? 0f : World.Enabled ? World.MinZ : VillageMinZ; } }
+        public static float MinZ { get { return FieldRules.On ? FieldRules.MinZ : World.Enabled ? World.MinZ : VillageMinZ; } }
         public static float MaxZ { get { return FieldRules.On ? FieldRules.WorldZ : World.Enabled ? World.MaxZ : VillageMaxZ; } }
 
         public static float CenterX { get { return (MinX + MaxX) * 0.5f; } }
@@ -105,28 +105,18 @@ namespace Chasa.Core
             ClampL(ref x, ref z, radius);
         }
 
-        /// <summary>
-        /// 2막 땅은 1막(640×640) 북쪽에 붙은 768×640 이라 전체 모양이 'ㄴ'자다.
-        /// 사각 경계만 쓰면 1막 동쪽 바깥(x>640, z<640)의 빈 공간으로 걸어 나갈 수 있어서, 그 구석을 막는다.
-        /// 왜 '작은 쪽으로 밀기'? 경계선을 따라 미끄러지듯 자연스럽게 돌아가게 하려고.
-        /// </summary>
         static void ClampL(ref float x, ref float z, float radius)
         {
-            if (!FieldRules.Act2 || FieldRules.WorldX <= FieldRules.Size) return;
-            float lx = FieldRules.Size - radius, lz = FieldRules.Size - radius;   // 1막 정사각의 동쪽·북쪽 선(몸 반지름만큼 안쪽)
-            if (x > lx && z < lz)
-            {
-                if (x - lx < lz - z) x = lx; else z = lz;
-            }
+            if (FieldRules.On && (FieldRules.Act2 || FieldRules.Act3)) FieldRules.ClampWalk(ref x, ref z, radius);   // 땅이 여러 사각형이면 사각형 밖 빈 구석으로 못 나가게 가장 가까운 땅 안으로 당긴다
         }
 
         /// <summary>
-        /// 2막 금줄: 닫혀 있는 동안 주인공(만)은 1막 땅 북쪽 끝(z 640)을 넘지 못한다. 혼·NPC·보스는 2막 땅에 서 있어야 하니 일반 PushOut 은 그대로 둔다.
-        /// 왜 따로? 맵 경계(MaxZ)를 줄이면 2막에 세운 사람과 보스가 모두 경계선으로 끌려 나온다.
+        /// 주인공 전용 금줄: 2막(금줄 둘)·3막(금줄 셋)이 아직 닫혀 있으면 그 땅 안으로 못 들어간다. 혼·NPC·보스는 그 땅에 서 있어야 하니 일반 PushOut 은 그대로 둔다.
+        /// 왜 따로? 맵 경계를 줄이면 닫힌 땅에 세운 사람과 보스가 모두 경계선으로 끌려 나온다.
         /// </summary>
-        public static void GateClamp(ref float z, float radius)
+        public static void PlayerClamp(ref float x, ref float z, float radius)
         {
-            if (FieldRules.Act2 && !FieldRules.Act2Open) z = System.Math.Min(z, FieldRules.Size - radius);
+            if (FieldRules.On && (FieldRules.Act2 || FieldRules.Act3) && (!FieldRules.Act2Open || !FieldRules.Act3Open)) FieldRules.ClampWalk(ref x, ref z, radius, true);
         }
 
         /// <summary>점 하나를 맵 안으로만 가둔다 (이동 목표점 등, 막힌 곳은 따지지 않음)</summary>

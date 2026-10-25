@@ -10,18 +10,18 @@ using System.Collections.Generic;
 using Chasa.Core;
 using UnityEngine;
 
-/// <summary>물판 하나. 놓인 높이(만조)에서 lowDrop 만큼 내려가 간조가 된다</summary>
+/// <summary>물판 하나. 놓인 높이가 간조(썰물)이고, 만조 때 rise 만큼 올라온다</summary>
 public class TideWater : MonoBehaviour
 {
     public static float WorldMinutes;   // JudgeSystem 이 매 프레임 알려 준다(하루 수 × 40 + 하루 안의 분)
-    public float lowDrop = 1.2f;        // 간조 때 내려가는 높이(m). 갯벌이 드러나 걸어 들어갈 만큼
-    float highY; bool init;
+    public float rise = 1.1f;           // 간조(놓인 높이, 아트 기준 -0.5)에서 만조(+0.6)까지 올라가는 높이(m)
+    float lowY; bool init;
 
     void LateUpdate()
     {
-        if (!init) { highY = transform.position.y; init = true; }
+        if (!init) { lowY = transform.position.y; init = true; }   // 아트 약속: 배치표의 높이가 썰물(간조) 높이
         var p = transform.position;
-        p.y = highY - (1f - Tide.Level(WorldMinutes)) * lowDrop;
+        p.y = lowY + Tide.Level(WorldMinutes) * rise;
         transform.position = p;
     }
 }

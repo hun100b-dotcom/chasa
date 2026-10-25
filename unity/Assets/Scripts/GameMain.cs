@@ -40,6 +40,8 @@ public class GameMain : MonoBehaviour
         var fieldUrl = (Application.absoluteURL ?? "").ToLowerInvariant();
         FieldRules.On = !(fieldUrl.Contains("field=0") || fieldUrl.Contains("field=off"));
         FieldRules.Act2 = FieldRules.On && !fieldUrl.Contains("act2=0");   // 2막 땅은 기본으로 깔고(금줄은 흑월 1차 뒤 새벽에 풀림), 검사용 ?act2=1 은 금줄을 처음부터 열어 둔다, ?act2=0 은 2막 땅을 끈다.
+        FieldRules.Act3 = FieldRules.On && !fieldUrl.Contains("act3=0") && !fieldUrl.Contains("act2=0");   // 3막 땅(⑤ 동·⑥ 서)도 기본으로 깐다(금줄은 2막 마지막 일 다음 새벽). 검사용 ?act3=1 은 금줄을 처음부터 열어 둔다
+        FieldRules.Act3Open = !FieldRules.Act3 || fieldUrl.Contains("act3=1");
         FieldRules.Act2Open = !FieldRules.Act2 || fieldUrl.Contains("act2=1");   // 마커·땅·바닥판이 만들어지기 전에 정해야 한다
         if (FieldRules.On) { FieldManager.ApplyMarkers(); MapLayout.Blockers.Clear(); }   // 마을 옛 충돌표는 비우고 필드 소품 충돌을 쓴다
         World.Enabled = !FieldRules.On && (Balance.WORLD_ZONES || Application.absoluteURL.Contains("zones"));

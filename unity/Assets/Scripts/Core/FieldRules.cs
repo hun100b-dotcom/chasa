@@ -50,20 +50,82 @@ namespace Chasa.Core
         }
 
         /// <summary>청크 (cx, cz)를 하나의 정수 키로</summary>
-        // ---- 2막으로 넓힌 땅(직사각): 기본은 1막 정사각(640×640). 2막 땅이 켜지면 Extend 로 동서 768·남북 1280 까지 ----
-        public static float WorldX = Size, WorldZ = Size;
-        public static bool Act2Open = true;   // 2막 금줄이 풀렸나(Act2 땅이 있을 때만 뜻이 있다). 닫혀 있으면 걸을 수 있는 땅이 1막(640×640)까지다. JudgeSystem 이 해금 날을 보고 정한다
-        public static bool Act2;   // 2막 땅이 열렸다(주소 ?act2=1 검사용 — 2막 입장 조건이 구현되면 그 사건이 켠다)
-        public static void Extend(float worldX, float worldZ) { WorldX = Math.Max(Size, worldX); WorldZ = Math.Max(Size, worldZ); }
-        public static int ChunksX { get { return (int)Math.Ceiling(WorldX / ChunkSize); } }
+        // ---- 넓힌 땅(여러 직사각의 합): 1막 정사각(0~640)이 기본, 2막(북)·3막 ⑤(동)·⑥(서)을 AddRegion 으로 붙인다 ----
+        // 왜 사각형 목록? 땅 모양이 정사각이 아니라 'ㄴ'·'ㄷ' 꼴이라, 경계 상자 하나로는 빈 구석(1막 동쪽 바깥 등)으로 걸어 나갈 수 있다.
+        public static float MinX = 0f, MinZ = 0f, WorldX = Size, WorldZ = Size;   // 걸을 수 있는 땅 전체의 경계 상자(서·남 끝, 동·북 끝)
+        static readonly List<float[]> walk = new List<float[]> { new[] { 0f, 0f, Size, Size } };   // [x0, z0, x1, z1] 걸을 수 있는 사각형들
+        public static bool Act2Open = true;   // 2막 금줄이 풀렸나(Act2 땅이 있을 때만 뜻이 있다). 닫혀 있으면 주인공은 1막(640×640)까지만. JudgeSystem 이 해금 날을 보고 정한다
+        public static bool Act3Open = true;   // 3막 금줄 셋(강둑길·큰길·갱도 출구)이 풀렸나. 닫혀 있으면 주인공은 ⑤·⑥ 땅에 못 들어간다
+        public static bool Act2, Act3;        // 2막 땅 / 3막 땅이 깔려 있다(Act3 는 ⑤ 갯마을·⑥ 도성 둘 다)
+        /// <summary>땅 사각형을 하나 더한다(경계 상자도 넓어진다)</summary>
+        public static void AddRegion(float x0, float z0, float x1, float z1)
+        {
+            walk.Add(new[] { x0, z0, x1, z1 });
+            MinX = Math.Min(MinX, x0); MinZ = Math.Min(MinZ, z0); WorldX = Math.Max(WorldX, x1); WorldZ = Math.Max(WorldZ, z1);
+        }
+        /// <summary>처음(1막 정사각 하나)으로 되돌린다(테스트·다시 시작용)</summary>
+        public static void ResetRegions() { walk.Clear(); walk.Add(new[] { 0f, 0f, Size, Size }); MinX = 0f; MinZ = 0f; WorldX = Size; WorldZ = Size; }
+        public static void Extend(float worldX, float worldZ) { WorldX = Math.Max(Size, worldX); WorldZ = Math.Max(Size, worldZ); }   // (옛 방식: 경계 상자만. 새 코드는 AddRegion)
+        public static int ChunkMinX { get { return (int)Math.Floor(MinX / ChunkSize); } }
+        public static int ChunkMinZ { get { return (int)Math.Floor(MinZ / ChunkSize); } }
+        public static int ChunksX { get { return (int)Math.Ceiling(WorldX / ChunkSize); } }   // 가장 동쪽 청크 번호 + 1
         public static int ChunksZ { get { return (int)Math.Ceiling(WorldZ / ChunkSize); } }
-        /// <summary>청크 번호(범위 안으로 붙임): 동서(X)·남북(Z)이 개수가 다르다</summary>
-        public static int ChunkX(float v) { return Math.Max(0, Math.Min(ChunksX - 1, (int)Math.Floor(v / ChunkSize))); }
-        public static int ChunkZ(float v) { return Math.Max(0, Math.Min(ChunksZ - 1, (int)Math.Floor(v / ChunkSize))); }
-        /// <summary>붙이지 않은 청크 번호(배치표 항목을 담을 때: 2막 항목이 1막 가장자리 청크에 섞이지 않게)</summary>
+        /// <summary>청크 번호(범위 안으로 붙임): 서쪽 땅이 있으면 번호가 음수까지 간다</summary>
+        public static int ChunkX(float v) { return Math.Max(ChunkMinX, Math.Min(ChunksX - 1, (int)Math.Floor(v / ChunkSize))); }
+        public static int ChunkZ(float v) { return Math.Max(ChunkMinZ, Math.Min(ChunksZ - 1, (int)Math.Floor(v / ChunkSize))); }
+        /// <summary>붙이지 않은 청크 번호(배치표 항목을 담을 때: 안 열린 땅의 항목이 가장자리 청크에 섞이지 않게)</summary>
         public static int RawChunk(float v) { return (int)Math.Floor(v / ChunkSize); }
 
-        public static int Key(int cx, int cz) { return cx * 100 + cz; }
+        /// <summary>청크 (cx, cz)를 하나의 정수 키로. 서쪽 청크 번호는 음수라 20 을 더해 양수로 만든다</summary>
+        public static int Key(int cx, int cz) { return (cx + 20) * 100 + cz; }
+        public static int KeyX(int key) { return key / 100 - 20; }
+        public static int KeyZ(int key) { return key % 100; }
+
+        /// <summary>이 청크(128m 칸)가 걸을 수 있는 땅과 조금이라도 겹치나(빈 칸은 만들지 않는다)</summary>
+        public static bool ChunkHasLand(int cx, int cz)
+        {
+            float x0 = cx * ChunkSize, z0 = cz * ChunkSize, x1 = x0 + ChunkSize, z1 = z0 + ChunkSize;
+            foreach (var r in walk) if (x0 < r[2] && x1 > r[0] && z0 < r[3] && z1 > r[1]) return true;
+            return false;
+        }
+
+        /// <summary>점이 걸을 수 있는 땅 안인가(반지름 radius 만큼 안쪽)</summary>
+        public static bool Walkable(float x, float z, float radius = 0f)
+        {
+            foreach (var r in walk) if (x >= r[0] + radius && x <= r[2] - radius && z >= r[1] + radius && z <= r[3] - radius) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// 점이 걸을 수 있는 땅 밖이면 가장 가까운 땅 안쪽으로 당겨 넣는다. 사각형마다 '가장 가까운 안쪽 점'을 구해 제일 짧은 것을 고른다.
+        /// 왜? 경계선을 따라 미끄러지듯 자연스럽게 돌아가게 하려고. gate 가 켜 있으면 주인공이 아직 못 가는 땅(금줄 앞)은 빼고 계산한다.
+        /// </summary>
+        public static void ClampWalk(ref float x, ref float z, float radius, bool player = false)
+        {
+            if (Walkable(x, z, radius, player)) return;
+            float bx = x, bz = z, bd = float.MaxValue;
+            foreach (var r in walk)
+            {
+                if (player && !Open(r)) continue;
+                float cx = Math.Max(r[0] + radius, Math.Min(r[2] - radius, x)), cz = Math.Max(r[1] + radius, Math.Min(r[3] - radius, z));
+                float d = (cx - x) * (cx - x) + (cz - z) * (cz - z);
+                if (d < bd) { bd = d; bx = cx; bz = cz; }
+            }
+            x = bx; z = bz;
+        }
+        static bool Walkable(float x, float z, float radius, bool player)
+        {
+            foreach (var r in walk) if ((!player || Open(r)) && x >= r[0] + radius && x <= r[2] - radius && z >= r[1] + radius && z <= r[3] - radius) return true;
+            return false;
+        }
+        /// <summary>금줄이 막지 않는 사각형인가: 2막(z≥640 이고 x&lt;768)은 Act2Open, ⑤(x≥768)·⑥(x&lt;0)은 Act3Open 이 필요하다</summary>
+        static bool Open(float[] r)
+        {
+            if (r[0] >= Size + 100f) return Act3Open;   // ⑤ 갯마을(동)
+            if (r[2] <= 0f) return Act3Open;            // ⑥ 도성(서)
+            if (r[1] >= Size) return Act2Open;          // 2막(북)
+            return true;
+        }
 
         /// <summary>
         /// 모델 이름으로 충돌(막힘) 반지름을 정한다. 0 이면 지나갈 수 있다(덤불·갈대·길·금줄 등).
@@ -148,6 +210,6 @@ namespace Chasa.Core
         }
 
         /// <summary>월드 점이 필드 안인가</summary>
-        public static bool Inside(float x, float z) { return x >= 0f && x <= WorldX && z >= 0f && z <= WorldZ; }
+        public static bool Inside(float x, float z) { return Walkable(x, z, 0f); }
     }
 }

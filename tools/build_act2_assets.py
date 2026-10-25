@@ -27,7 +27,7 @@ for n in names:
 # 3) 배치표 합치기
 fp = os.path.join(res, "Data", "field.json")
 f = json.load(open(fp, encoding="utf-8"))
-f["items"] = [i for i in f["items"] if i["z"] < 640.0]   # 이미 합쳐 둔 2막 항목은 뺀다(멱등). 1막 경계(z=640)의 한 그루는 아래에서 다시 들어온다
+f["items"] = [i for i in f["items"] if not (i["z"] >= 640.0 and 0.0 <= i["x"] < 768.0)]   # 이미 합쳐 둔 2막 항목(z>=640, x<768)만 뺀다(멱등). 3막 항목(x>=768, x<0)은 build_act3_assets.py 가 맡는다
 items = [{"n": p["prop"], "x": round(p["x"], 2), "z": round(p["y"], 2), "y": round(p.get("z", 0.0), 2), "r": int(p.get("rot", 0)) % 360, "t": 0} for p in lay["props"]]
 f["items"] += items
 json.dump(f, open(fp, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))

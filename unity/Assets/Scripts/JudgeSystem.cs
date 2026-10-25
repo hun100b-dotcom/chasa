@@ -562,12 +562,13 @@ public class JudgeSystem : MonoBehaviour
     // 1막 보스 셋(나루 영감·월화·서 의원)을 모두 처결한 다음 첫 밤(또는 ② 검은여울에 처음 들어간 뒤 5일째 밤) 무덤골에 흑월이 나타난다.
     // 처결은 없다: 맺힘 50% 에서 사슬을 거두고 "너는 아직 모른다." 한 마디를 남기고 물러난다. 그 밤의 다음 새벽에 두 금줄이 함께 풀린다(싸우지 않았어도).
     readonly HashSet<int> bossDoneIds = new HashSet<int>();   // 처결한 1막 보스 번호(1~3)
-    int allDoneDay = -1; bool allDoneAtNight; int enterDay = -1;
+    int allDoneDay = -1; bool allDoneAtNight; int enterDay = -1; int act2DoneDay = -1; bool gate3Announced;   // act2DoneDay: 2막 보스 넷을 모두 처결한 하루(3막 금줄은 그 다음 새벽에 풀린다)
     bool heukwolSpawned, heukwolRetreated, gateAnnounced, heukwolWarned; Enemy heukwol; float gateToastT;
     void MarkBossDone(int id)
     {
-        if (id < 1 || id > 3 || clock == null || !bossDoneIds.Add(id)) return;
-        if (bossDoneIds.Count >= 3 && allDoneDay < 0) { allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }
+        if (id < 1 || id > 8 || id == 4 || clock == null || !bossDoneIds.Add(id)) return;
+        if (id <= 3 && bossDoneIds.Contains(1) && bossDoneIds.Contains(2) && bossDoneIds.Contains(3) && allDoneDay < 0) { allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }
+        if (id >= 5 && bossDoneIds.Contains(5) && bossDoneIds.Contains(6) && bossDoneIds.Contains(7) && bossDoneIds.Contains(8) && act2DoneDay < 0) act2DoneDay = clock.Day;   // 2막 마지막 일
     }
     void TickHeukwol()
     {
@@ -578,9 +579,13 @@ public class JudgeSystem : MonoBehaviour
         bool open = FieldRules.Act2Open || clock.Day >= Act2Gate.OpenDay(allDoneDay, allDoneAtNight, enterDay);
         if (open && !FieldRules.Act2Open) { FieldRules.Act2Open = true; }
         if (open && !gateAnnounced && hn != int.MaxValue) { gateAnnounced = true; Say("두 금줄이 풀렸다 — 붉은재 고개길 · 쇳골 산길"); }
+        // 3막 금줄 셋(강둑길·큰길·갱도 출구): 2막 마지막 일 다음 새벽에 함께 풀린다(서사·기획 act3_map unlock)
+        if (!FieldRules.Act3Open && FieldRules.Act3 && act2DoneDay >= 0 && clock.Day >= act2DoneDay + 1) FieldRules.Act3Open = true;
+        if (FieldRules.Act3Open && !gate3Announced && act2DoneDay >= 0) { gate3Announced = true; Say("세 금줄이 풀렸다 — 강둑길 · 큰길 · 갱도 출구"); }
+        if (FieldRules.Act3 && !FieldRules.Act3Open && gateToastT <= 0f && ((player.Pos.x < 4f && player.Pos.z < FieldRules.Size) || (player.Pos.x > 764f && player.Pos.z > FieldRules.Size))) { gateToastT = 8f; Say(Act2Gate.BlockedLine); }
         // 금줄 앞: 열리기 전에는 한 줄 안내
         gateToastT -= Time.deltaTime;
-        if (!open && player.Pos.z > FieldRules.Size - 4f && gateToastT <= 0f) { gateToastT = 8f; Say(Act2Gate.BlockedLine); }
+        if (!open && player.Pos.z > FieldRules.Size - 4f && player.Pos.x < 768f && gateToastT <= 0f) { gateToastT = 8f; Say(Act2Gate.BlockedLine); }
         // 예고: 흑월이 나타날 날 해질녘 서낭당 당할미의 한 줄(서사 B-04 낮 단서의 혼잣말 — 단서로 세지 않는다)
         if (hn != int.MaxValue && clock.Day == hn && !heukwolWarned && clock.Phase == ClockPhase.Dusk) { heukwolWarned = true; Say("당할미: “예전 차사님은 갓끈이 붉었는데…”"); }
         // 등장: 그 밤이 되면 무덤골에
@@ -864,7 +869,7 @@ public class JudgeSystem : MonoBehaviour
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
         if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
-        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); foreach (var bi in bossDoneIds) s.Picked.Add("bd:" + bi); if (allDoneDay >= 0) s.Picked.Add("ad:" + allDoneDay + ":" + (allDoneAtNight ? 1 : 0)); if (enterDay >= 0) s.Picked.Add("ed:" + enterDay); if (heukwolSpawned) s.Picked.Add("hks:1"); if (gateAnnounced) s.Picked.Add("ga:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
+        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); foreach (var bi in bossDoneIds) s.Picked.Add("bd:" + bi); if (act2DoneDay >= 0) s.Picked.Add("a2d:" + act2DoneDay); if (allDoneDay >= 0) s.Picked.Add("ad:" + allDoneDay + ":" + (allDoneAtNight ? 1 : 0)); if (enterDay >= 0) s.Picked.Add("ed:" + enterDay); if (heukwolSpawned) s.Picked.Add("hks:1"); if (gateAnnounced) s.Picked.Add("ga:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
         if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
         return SaveStore.Write(SaveGame.Serialize(s));
     }
@@ -882,7 +887,7 @@ public class JudgeSystem : MonoBehaviour
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
         funeralPending.Clear(); funeralDone.Clear(); funeralNoneShown.Clear(); funeralBorn.Clear(); parkUnjudged = false; dogHome = false; funeralDay = -1;
-        bossDoneIds.Clear(); allDoneDay = -1; allDoneAtNight = false; enterDay = -1; heukwolSpawned = false; heukwolRetreated = false; gateAnnounced = false; heukwolWarned = false; heukwol = null;
+        bossDoneIds.Clear(); allDoneDay = -1; allDoneAtNight = false; enterDay = -1; act2DoneDay = -1; gate3Announced = false; heukwolSpawned = false; heukwolRetreated = false; gateAnnounced = false; heukwolWarned = false; heukwol = null;
         foreach (var pk in s.Picked)
         {
             if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
@@ -891,6 +896,7 @@ public class JudgeSystem : MonoBehaviour
             else if (pk.StartsWith("bd:")) { int bi; if (int.TryParse(pk.Substring(3), out bi)) bossDoneIds.Add(bi); }
             else if (pk.StartsWith("ad:")) { var q = pk.Split(':'); int d0; if (q.Length == 3 && int.TryParse(q[1], out d0)) { allDoneDay = d0; allDoneAtNight = q[2] == "1"; } }
             else if (pk.StartsWith("ed:")) int.TryParse(pk.Substring(3), out enterDay);
+            else if (pk.StartsWith("a2d:")) int.TryParse(pk.Substring(4), out act2DoneDay);
             else if (pk == "hks:1") { heukwolSpawned = true; heukwolRetreated = true; heukwolWarned = true; }   // 이미 나타났던 밤: 다시 나오지 않는다
             else if (pk == "ga:1") gateAnnounced = true;
             else if (pk.StartsWith("fn:")) funeralNoneShown.Add(pk.Substring(3));
@@ -1111,6 +1117,9 @@ public class JudgeSystem : MonoBehaviour
     const int Shop_Max = Balance.SHOP_HEAL_MAX;
     string forecastNote; float forecastT;   // 쉬고 난 뒤 시간 고리 곁에 잠시 띄우는 예보
 
+    /// <summary>금줄이 닫힌 땅의 서낭당인가(2막 z≥640 · 3막 x≥768 또는 x&lt;0)</summary>
+    static bool ShrineLocked(float[] s) { return (s[1] >= FieldRules.Size && s[0] >= 0f && s[0] < 768f && !FieldRules.Act2Open) || ((s[0] >= 768f || s[0] < 0f) && !FieldRules.Act3Open); }
+
     /// <summary>넋길: 다음 서낭당으로 즉시 이동</summary>
     public void CommandSoulPath()
     {
@@ -1118,7 +1127,7 @@ public class JudgeSystem : MonoBehaviour
         if (at < 0) return;
         int to = SoulPath.Next(at, FieldRules.Shrines.Length);
         // 2막 금줄이 닫혀 있으면 2막 서낭당(z 640 이상)은 건너뛰고 1막 처음으로 돌아간다
-        for (int guard = 0; guard < FieldRules.Shrines.Length && FieldRules.Shrines[to][1] >= FieldRules.Size && !FieldRules.Act2Open; guard++) to = SoulPath.Next(to, FieldRules.Shrines.Length);
+        for (int guard = 0; guard < FieldRules.Shrines.Length && ShrineLocked(FieldRules.Shrines[to]); guard++) to = SoulPath.Next(to, FieldRules.Shrines.Length);
         var s = FieldRules.Shrines[to];
         var dest = new Vector3(s[0], 0f, s[1] - 3f);   // 서낭당 바로 앞(남쪽)에 선다
         player.CommandStop(); player.Pos = dest;
