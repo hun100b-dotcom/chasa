@@ -12,7 +12,7 @@ public partial class CharacterPanel : MonoBehaviour
     public JudgeSystem judge;
     public Texture2D white;
     int tab = 3;                             // 0 장비 1 도술 2 능력치 3 명부(책). 기본은 명부
-    static readonly string[] TabNames = { "장비", "도술", "능력치", "명부", "들은 말" };
+    static readonly string[] TabNames = { "장비", "도술", "능력치", "기록", "들은 말" };
     string hoverDesc = "";
     // 명부 책 색(코디 결정 10-25): 글자는 먹색, 강조는 붉은 인. 책 그림(한지 바탕)이 있을 때만 쓴다
     static readonly Color Ink = new Color32(0x1E, 0x1A, 0x17, 255), Seal = new Color32(0xB5, 0x47, 0x3F, 255);
@@ -95,7 +95,7 @@ public partial class CharacterPanel : MonoBehaviour
             else
             {
                 DrawIcon(slot, it, icon);
-                label += Ko.ItemName(it) + (it.Gradient ? "  [기울기: " + Ko.TiltName(it) + "]" : "");
+                label += Ko.ItemName(it) + (it.Gradient ? "  [기울기 " + Ko.TiltName(it) + "]" : "");
             }
             GUI.Label(new Rect(box.x + 76, y, box.width - 110, 24), label, body);
             if (it != null)
@@ -115,7 +115,7 @@ public partial class CharacterPanel : MonoBehaviour
             case Opt.DamagePct: return "피해 " + Pct(o.Value);
             case Opt.AttackSpeedPct: return "공격 속도 " + Pct(o.Value);
             case Opt.CastReducePct: return "천도 시전 시간 " + Pct(-o.Value);   // 단축이 +이므로 시간은 반대 부호로 보여 준다
-            case Opt.PahonAreaPct: return "파혼 범위 " + Pct(o.Value);
+            case Opt.PahonAreaPct: return "파혼 반경 " + Pct(o.Value);
             case Opt.PahonDamagePct: return "파혼 피해 " + Pct(o.Value);
             case Opt.HpFlat: return "체력 +" + (int)o.Value;
             case Opt.MoveSpeedPct: return "이동 " + Pct(o.Value);
@@ -149,7 +149,7 @@ public partial class CharacterPanel : MonoBehaviour
     void DrawHeard(Rect box, float y, GUIStyle body, GUIStyle title)
     {
         var log = judge.npcs != null ? judge.npcs.Log : null;
-        if (log == null || log.Items.Count == 0) { GUI.Label(new Rect(box.x + 16, y, box.width - 32, 60), "아직 들은 말이 없다. 산 사람 곁에 가만히 서 있으면 들린다.", body); return; }
+        if (log == null || log.Items.Count == 0) { GUI.Label(new Rect(box.x + 16, y, box.width - 32, 60), "아직 들은 말이 없다. 산 사람 곁에 가만히 서 있으면 들린다", body); return; }
         var view = new Rect(box.x + 12, y, box.width - 24, box.height - (y - box.y) - 12);
         var content = new Rect(0, 0, view.width - 24, log.Items.Count * 62f);
         heardScroll = GUI.BeginScrollView(view, heardScroll, content);
@@ -168,7 +168,7 @@ public partial class CharacterPanel : MonoBehaviour
     {
         string[] desc =
         {
-            "반경 " + Balance.SKILL_HOLD_RADIUS + "m: 무릎 꿇은 넋의 대기 +" + Balance.SKILL_HOLD_WAIT_BONUS + "초, 적은 " + Balance.SKILL_HOLD_STUN + "초 움찔",
+            "반경 " + Balance.SKILL_HOLD_RADIUS + "m 안 무릎 꿇은 혼 대기 +" + Balance.SKILL_HOLD_WAIT_BONUS + "초, 적은 " + Balance.SKILL_HOLD_STUN + "초 움찔",
             "반경 " + Balance.SKILL_BIND_RADIUS + "m: 적을 " + Balance.SKILL_BIND_STUN + "초 동안 묶는다",
             "가장 가까운 얼룩을 터뜨린다: 반경 " + Balance.SKILL_BURST_RADIUS + "m, 피해 " + Balance.SKILL_BURST_DAMAGE + ", 업은 그대로",
         };
@@ -199,7 +199,7 @@ public partial class CharacterPanel : MonoBehaviour
         y += 70;
         // 능력치 4종(시연판: 표시 전용). 넋 30마다 1점
         int pts = StatPoints.Earned(judge.ledger.Neok);
-        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "힘 10   민첩 10   몸 10   정신 10      얻은 점수: " + pts + " (쓰기: 나중에)", body);
+        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "힘 10 · 날램 10 · 몸 10 · 마음 10   남은 점수 " + pts + " (쓰기: 나중에)", body);
         y += 30;
         string d1 = "피해 x" + st.DamageMult.ToString("0.00") + "   공격 속도 x" + st.AttackSpeedMult.ToString("0.00") + "   이동 x" + st.MoveSpeedMult.ToString("0.00") + "   최대 체력 " + st.MaxHp;
         string d2 = "천도 시전 x" + st.CastMult.ToString("0.00") + " (최소 " + Balance.CAST_MIN_TIME + "초)   파혼 피해 x" + (lo.Def.PahonDamageMult * st.PahonDamageMult).ToString("0.00") +
@@ -254,7 +254,7 @@ public partial class CharacterPanel : MonoBehaviour
                 bool can = g.CanLearn(n.Name);
                 bool locked = n.Deep && g.BranchPoints(br) < SkillTree.DeepNeeds;
                 int barAt = n.Active ? g.ActiveBar.IndexOf(n.Name) : -1;
-                string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[기] ") : "[패] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
+                string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[쓰는] ") : "[늘] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
                 var r = new Rect(x, yy, colW, 26);
                 GUI.color = lv > 0 ? Color.white : (can ? new Color(1f, 1f, 1f, 0.9f) : new Color(1f, 1f, 1f, 0.45f));
                 if (GUI.Button(r, label, bookMode ? bookBtn : GUI.skin.button))
@@ -270,11 +270,11 @@ public partial class CharacterPanel : MonoBehaviour
         y += 28 + 9 * 28 + 6;
 
         // 4) 설명 한 줄 + 액티브 칸 + 장비 칸
-        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), hoverDesc.Length > 0 ? hoverDesc : "도술을 누르면 점수 1을 써서 배운다(배운 액티브는 누르면 칸에 올리고 내림). [기]=액티브 [패]=패시브(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)", small);
+        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), hoverDesc.Length > 0 ? hoverDesc : "도술을 누르면 점수 1을 써서 배운다(배운 쓰는 도술은 누르면 칸에 올리고 내림). [쓰는] 눌러 쓰는 도술 · [늘] 늘 켜진 도술(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)", small);
         y += 26;
         string bar4 = "";
         for (int i = 0; i < SkillTree.ActiveSlots; i++) bar4 += "[" + (i + 1) + ": " + (i < g.ActiveBar.Count ? g.ActiveBar[i] : "빈 칸") + "]  ";
-        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "액티브 칸  " + bar4, small);
+        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "도술 칸  " + bar4, small);
         y += 26;
         // 무기 2자루: 손에 든 것 / 등에 멘 것(Tab 으로 바꿔 듦). 다섯 계열 모두 고를 수 있다
         var lo = judge.player.loadout;

@@ -10,5 +10,7 @@ public static class Demo
     public static bool Skills { get { return Balance.DEMO_SKILLS; } }     // 도술 1/2/3
     public static bool Gear { get { return Balance.DEMO_GEAR; } }         // 장비 드롭·장착
     public static bool Day { get { return Balance.DEMO_DAY; } }           // 낮 화면·서낭당
+    /// <summary>개발용 글자(구역·청크 상태, 추리판 켜짐 등)를 보일까. 에디터이거나 주소에 debug=1 이 있을 때만(플레이어 화면에서는 숨김, 기획 §9)</summary>
+    public static bool DebugUi { get { return UnityEngine.Application.isEditor || (UnityEngine.Application.absoluteURL ?? "").Contains("debug=1"); } }
     public static bool Panel { get { return Balance.DEMO_PANEL; } }       // C 캐릭터 창
 }

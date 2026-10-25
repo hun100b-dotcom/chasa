@@ -145,7 +145,7 @@ namespace Chasa.Core
                 case "03": return "연속 천도 창 +" + m + "초";
                 case "01": return "이동 속도 +" + 5 * m + "%";
                 case "04": return "무기 기술 재사용 -" + 10 * m + "%";
-                case "02": return "천도 캐스팅 -" + 6 * m + "%";
+                case "02": return "천도 시전 -" + 6 * m + "%";
                 case "13": return "파혼 피해 +" + 15 * m + "%";
                 case "34": return "사나운 적·덩어리 피해 +" + 12 * m + "%";
                 case "23": return "얼룩 지속 -" + 20 * m + "%";

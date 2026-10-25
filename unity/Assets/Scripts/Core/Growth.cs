@@ -29,17 +29,17 @@ namespace Chasa.Core
         public static readonly SkillNode[] All =
         {
             // 부름 갈래 (천도 쪽)
-            new SkillNode("붙잡아 부르기", Branch.Call, true, "반경 6m 무릎 꿇은 혼의 대기 +3초, 일반 적 0.8초 멈칫 (12초)"),
-            new SkillNode("혼불 날리기", Branch.Call, true, "혼불을 던져 맺힘 피해. 그날 천도한 혼 수만큼 혼불 +1 (최대 5)"),
-            new SkillNode("이름 비추기", Branch.Call, true, "다음 천도 캐스팅 -0.4초 (8초)"),
+            new SkillNode("붙잡아 부르기", Branch.Call, true, "6m 안 무릎 꿇은 혼 대기 +3초 · 혼 0.8초 멈칫 (12초)"),
+            new SkillNode("혼불 날리기", Branch.Call, true, "혼불을 던진다 · 피해 8 × 그날 천도한 수+1 (최대 5)"),
+            new SkillNode("이름 비추기", Branch.Call, true, "다음 천도 시전 −0.25초 (8초)"),
             new SkillNode("배웅길", Branch.Call, true, "천도 직후 3초 동안 적 이동 -30%"),
             new SkillNode("오래 부르기", Branch.Call, false, "연속 천도 창 +1/+2초"),
             new SkillNode("고마운 넋", Branch.Call, false, "천도 넋 +6/+12%"),
-            new SkillNode("곁을 지킴", Branch.Call, false, "천도 중 받는 피해 -10/-20%"),
+            new SkillNode("곁을 지킴", Branch.Call, false, "천도 중 받는 피해 −10/−20%"),
             new SkillNode("몫을 채움", Branch.Call, false, "그날 명부 몫을 채우면 이동 속도 +8%"),
             new SkillNode("일곱 이름", Branch.Call, true, "연속 천도 7회째 다음 천도는 하한 0.5초로 끝난다", true),
             // 줄 갈래 (싸움·제어)
-            new SkillNode("휘감기", Branch.Chain, true, "반경 4m 적 1.5초 묶기 (10초)"),
+            new SkillNode("휘감기", Branch.Chain, true, "4m 안 혼 1.5초 묶기 (8초)"),
             new SkillNode("여럿 끌기", Branch.Chain, true, "적 셋을 한꺼번에 끌어온다 (8초)"),
             new SkillNode("매듭 걸음", Branch.Chain, true, "사슬을 걸어 8m 돌진, 지나는 동안 피격 없음 (7초)"),
             new SkillNode("한 줄 꿰기", Branch.Chain, true, "무릎 꿇은 혼 둘을 한 줄로 묶어 함께 천도 또는 함께 파혼"),
@@ -49,8 +49,8 @@ namespace Chasa.Core
             new SkillNode("손에 익음", Branch.Chain, false, "지금 든 무기 계열의 특성 하나 강화"),
             new SkillNode("쇠사슬 울", Branch.Chain, true, "반경 5m 원 안의 적 3초 고정 (20초)", true),
             // 얼룩 갈래 (파혼 쪽)
-            new SkillNode("터뜨리기", Branch.Stain, true, "가까운 얼룩 하나를 터뜨려 없앤다. 반경 2.5m 맺힘 40, 업은 그대로 (9초)"),
-            new SkillNode("원념 두르기", Branch.Stain, true, "5초간 업 단계에 따라 공격력 +5/10/15/20%"),
+            new SkillNode("터뜨리기", Branch.Stain, true, "가까운 얼룩 하나를 터뜨려 없앤다 · 2.5m 피해 30 · 업은 그대로 (9초)"),
+            new SkillNode("원념 두르기", Branch.Stain, true, "5초 동안 업 단계만큼 공격 +5/10/15/20% (10초)"),
             new SkillNode("얼룩 타기", Branch.Stain, true, "6초간 얼룩 위에서 둔화 대신 이동 +15%"),
             new SkillNode("깨진 이름 던지기", Branch.Stain, true, "방금 파혼한 혼의 파편을 던져 원거리 피해 (8초마다)"),
             new SkillNode("큰 폭발", Branch.Stain, false, "파혼 반경 +0.2/+0.4m (합계 상한 안)"),

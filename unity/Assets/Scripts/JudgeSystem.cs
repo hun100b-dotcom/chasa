@@ -67,7 +67,7 @@ public class JudgeSystem : MonoBehaviour
         lo.growth = growth;   // 성장(능력치·패시브)이 전투 수치 합계에 얹히도록 연결
         RefreshGrowth();
         enemies.onPlayerHit = OnPlayerHit;
-        player.onDodgeCancelCast = () => { if (Casting) { castTarget.soul.CancelSending(); EndCast(); Say("천도를 거두고 피했다"); } };   // 천도 중 피하기: 캐스팅만 취소, 혼은 무릎 꿇은 채 대기
+        player.onDodgeCancelCast = () => { if (Casting) { castTarget.soul.CancelSending(); EndCast(); Say("천도를 멈추고 피했다"); } };   // 천도 중 피하기: 캐스팅만 취소, 혼은 무릎 꿇은 채 대기
         enemies.onEnemyKneel = OnEnemyKneel;
         dayScreen = new DayScreen(ledger, lo);
         SetupNight();   // 적 공격이 명중하면 체력 처리로 연결
@@ -128,9 +128,9 @@ public class JudgeSystem : MonoBehaviour
         var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE, x => x.soul.CanTendoWith(CluesFor(x.soul)));
         if (e == null) e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);   // 없으면 가장 가까운 혼으로 이유를 안내
         if (e == null) { Say("대상이 없다"); return; }
-        if (!e.soul.CanTendo) { Say("보낼 수 없는 넋 - 파혼만 가능"); return; }
+        if (!e.soul.CanTendo) { Say("보낼 수 없는 혼이다. 파혼만 된다"); return; }
         if (e.soul.Boss && !e.soul.CanTendoWith(CluesFor(e.soul))) cuts.Play(BossCut(e.soul, "NOCLUE"));   // 명부 인이 흐려졌다 꺼진다
-        if (!e.soul.CanTendoWith(CluesFor(e.soul))) { Say("단서 " + Balance.BOSS_CLUES_REQUIRED + "개가 필요하다 (" + CluesFor(e.soul) + ") - 파혼만 가능"); return; }
+        if (!e.soul.CanTendoWith(CluesFor(e.soul))) { Say("단서 " + Balance.BOSS_CLUES_REQUIRED + "개가 필요하다 (" + CluesFor(e.soul) + "). 파혼만 된다"); return; }
         if (!e.soul.BeginSending()) return;
         player.ConsumeAct();   // 후딜·피하기를 끊고 천도 시작
         castTarget = e;
@@ -239,7 +239,7 @@ public class JudgeSystem : MonoBehaviour
         if (stains.Add(at.x, at.z, out cx, out cz))
         {
             enemies.SpawnFierce(new Vector3(cx, 0, cz));
-            Say("사나운 넋이 깨어났다!");
+            Say("사나운 혼이 깨어났다!");
         }
     }
 
@@ -285,7 +285,7 @@ public class JudgeSystem : MonoBehaviour
             ui?.Hud.Toasts.Add("도술 점수 +1");
             CreditSoulColor(castTarget.Pos, g); night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
-            Say(castTarget.label + "을(를) 천도했다!"); if (castTarget.soul.BossId <= 1) bossOutcome = 1;
+            Say(castTarget.label + "을(를) 보냈다"); if (castTarget.soul.BossId <= 1) bossOutcome = 1;
             MarkBossDone(castTarget.soul.BossId);
             if (cuts.Play(BossCut(castTarget.soul, "TENDO"))) { player.CommandStop(); enemies.graceT = Mathf.Max(enemies.graceT, 7f); }   // 7초 컷: 입력 잠김·적 멈춤
         }
@@ -309,7 +309,7 @@ public class JudgeSystem : MonoBehaviour
         // 기억 한 줄: 천도해야만 보이는 이야기(파혼엔 없다). 이름혼의 기억은 추리판 사실도 켠다
         if (castTarget.soul.Name == "곽 뱃꾼" && clueBook.Add("B01-D4")) Say("단서 — 곽 뱃꾼의 기억");   // 밤 대체 단서(서사 확정): 천도해야만 얻는다
         string fact; var ml = memories.Collect(castTarget.soul, out fact);
-        if (ml != null) { memLine = ml; memLineT = 5f; if (fact != null) ui?.Hud.Toasts.Add("추리판 " + fact + " 켜짐"); }
+        if (ml != null) { memLine = ml; memLineT = 5f; if (fact != null && Demo.DebugUi) ui?.Hud.Toasts.Add("추리판 " + fact + " 켜짐"); }
         chainLeft = lo.stats.ChainWindow + lo.Def.ChainWindowAddS;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
         Sfx.Play("sfx.tendo.done." + Sfx.WeaponTag(lo.weapon));
@@ -361,9 +361,9 @@ public class JudgeSystem : MonoBehaviour
         if (lo.Equip(it))
         {
             ledger.SetMaxHp(lo.stats.MaxHp);
-            lo.lastDrop = "획득·장착: " + txt;
+            lo.lastDrop = "얻어서 찼다: " + txt;
         }
-        else lo.lastDrop = "획득(더 나쁨, 두고 감): " + txt;
+        else lo.lastDrop = "얻었다(지금 것이 낫다): " + txt;
         lo.lastDropT = 5f;
         TimedSprite.Spawn("fx/loot_" + (it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common"), e.Pos, 3f);   // 드롭 빛줄기
     }
@@ -433,7 +433,7 @@ public class JudgeSystem : MonoBehaviour
                     if (e.kneeling) { e.soul.WaitLeft += Balance.SKILL_HOLD_WAIT_BONUS; e.soul.WaitTotal += Balance.SKILL_HOLD_WAIT_BONUS; n++; }
                     else if (e.alive) { e.stun = Mathf.Max(e.stun, Balance.SKILL_HOLD_STUN); e.atk.Interrupt(); n++; }
                 }
-                if (n == 0) { Say("범위 안에 아무도 없다"); return false; }
+                if (n == 0) { Say("반경 안에 아무도 없다"); return false; }
                 GroundFx.Play(player.Pos, Balance.SKILL_HOLD_RADIUS, "fx/fx_call_", 3, 0.7f);
                 Say(name); return true;
             }
@@ -445,7 +445,7 @@ public class JudgeSystem : MonoBehaviour
                     if (!e.alive || new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > Balance.SKILL_BIND_RADIUS + e.radius) continue;
                     e.stun = Mathf.Max(e.stun, Balance.SKILL_BIND_STUN); e.boundT = Balance.SKILL_BIND_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; n++;
                 }
-                if (n == 0) { Say("범위 안에 아무도 없다"); return false; }
+                if (n == 0) { Say("반경 안에 아무도 없다"); return false; }
                 GroundFx.Play(player.Pos, Balance.SKILL_BIND_RADIUS, "fx/fx_bind_", 3, 0.6f);
                 Say(name); return true;
             }
@@ -505,7 +505,7 @@ public class JudgeSystem : MonoBehaviour
             case "쇠사슬 울": // 반경 5m 적 3초 고정(보스 제외)
             {
                 var near = AliveNear(player.Pos, Balance.AC_CAGE_RADIUS, false);
-                if (near.Count == 0) { Say("범위 안에 아무도 없다"); return false; }
+                if (near.Count == 0) { Say("반경 안에 아무도 없다"); return false; }
                 foreach (var e in near) { e.stun = Mathf.Max(e.stun, Balance.AC_CAGE_STUN); e.boundT = Balance.AC_CAGE_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; }
                 GroundFx.Play(player.Pos, Balance.AC_CAGE_RADIUS, "fx/fx_bind_", 3, 0.8f);
                 Say(name); return true;
@@ -538,7 +538,7 @@ public class JudgeSystem : MonoBehaviour
         // 플레이어 앞쪽 7m 에서 나타난다 (길 위, 집 밖)
         var at = new Vector3(MapLayout.NamedX, 0, MapLayout.NamedZ);   // 아트 배치표가 정한 자리
         enemies.SpawnNamed(at, "박돌쇠");
-        Say("명부에 오른 이름이 나타났다...");
+        Say("명부에 오른 이름이 나타났다");
     }
 
     /// <summary>한 판 시작: 마을 어귀에 보스, 마을 곳곳에 단서 3개</summary>
@@ -1103,7 +1103,7 @@ public class JudgeSystem : MonoBehaviour
         if (Target == InteractKind.Rest || Target == InteractKind.SoulPath)
             foreach (var x in enemies.list) if (x.alive && (x.Pos - player.Pos).sqrMagnitude < Balance.SHRINE_REST_BLOCK_M * Balance.SHRINE_REST_BLOCK_M) { RestBlocked = true; break; }
         bool nightBoth = Target == InteractKind.SoulPath;   // 밤 서낭당: 톡 = 넋길, 꾹 = 쉬기
-        TargetLabel = Target == InteractKind.None ? "" : nightBoth ? (RestBlocked ? "넋길 (혼이 가까이 있다)" : "넋길 · 꾹 눌러 쉬기")
+        TargetLabel = Target == InteractKind.None ? "" : nightBoth ? (RestBlocked ? "넋길 (혼이 가까이 있다)" : "넋길 · 길게 눌러 쉬기")
             : Target == InteractKind.Rest && RestBlocked ? "혼이 가까이 있다" : Interact.Label(Target);
 
         // F 상태: 키보드 또는 폰 버튼. 한 번 쓴 뒤에는 뗄 때까지 새 대상으로 이어지지 않는다
@@ -1206,7 +1206,7 @@ public class JudgeSystem : MonoBehaviour
             string n = WorldClock.PhaseName(ph.Value);
             if (ph.Value == ClockPhase.Dawn && funeralDone.Contains("칠복") && funeralDay >= 0) dogHome = true;
             if (ph.Value == ClockPhase.Dawn)
-                foreach (var e in enemies.list) if (e.kneeling) { MarkUnjudged(e); e.soul.Finish(); Say("동이 터 처결 못 한 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
+                foreach (var e in enemies.list) if (e.kneeling) { MarkUnjudged(e); e.soul.Finish(); Say("동이 터 무릎 꿇은 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
             Say(ph.Value == ClockPhase.Dusk ? "인정 — 해가 진다" : ph.Value == ClockPhase.Dawn ? "파루 — 동이 튼다" : n + "이 되었다");
         }
         // 검사용: ] 로 배속 순환(1→10→60→1)

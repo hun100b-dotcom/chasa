@@ -22,10 +22,10 @@ public class SettingsPanel : MonoBehaviour
         "이동        WASD / 방향키 / 땅을 클릭   (폰: 왼쪽 화면을 눌러 떠다니는 조이스틱)",
         "공격        마우스 왼쪽 클릭(적 쪽으로, 3타 콤보)   우클릭: 커서 방향 즉시 공격",
         "피하기      Space",
-        "천도        E (무릎 꿇은 혼 가까이)       파혼   R",
-        "도술 4칸    1 2 3 4                      Q  철삭=끌어당김 / 육모방망이=땅울림",
-        "무기 바꾸기 Tab                           회복약  H     얼룩 지우기  X",
-        "넋길        F (서낭당 곁, 밤)",
+        "천도        E                             파혼   R      (무릎 꿇은 혼 곁에서)",
+        "도술        1 2 3 4                      Q  끌기(철삭) · 땅울림(육모방망이)",
+        "무기 바꾸기 Tab                           회복약  H     씻김 부적  X",
+        "상호작용    F (줍기 · 만져 보기 · 넋길 · 쉬기)",
         "명부(캐릭터) C                            설정   O",
         "소리 켜고 끄기 N                          줌   마우스 휠",
         "지도 M (크게 보기)",
@@ -93,21 +93,21 @@ public class SettingsPanel : MonoBehaviour
             SliderRow(box, "배경음", s.Bgm, 1f, v => s.Bgm = v);
             SliderRow(box, "효과음", s.Sfx, 1f, v => s.Sfx = v);
             SliderRow(box, "화면 흔들림", s.Shake, 1.5f, v => s.Shake = v);
-            Txt(box, "흔들림 0 = 흔들리지 않음(멀미가 나면 줄이세요). 1 = 기본.", 13);
+            Txt(box, "0 = 흔들림 없음 · 1 = 기본 (멀미가 나면 줄이기)", 13);
             var r1 = new VisualElement { pickingMode = PickingMode.Position }; r1.style.flexDirection = FlexDirection.Row; r1.style.marginTop = 10; box.Add(r1);
             bool field = judge.FieldMode;
             Btn(r1, "조작 키 보기", () => showKeys = true);
             Btn(r1, "지금 저장", () => { bool ok = judge.SaveGameNow(); Sfx.Play(ok ? "sfx.ui.save" : "sfx.ui.deny"); note = ok ? "저장했다" : "저장하지 못했다"; }, field, 130);
             Btn(r1, "불러오기", () => { if (judge.LoadGameNow()) { note = "불러왔다"; Close(); } else note = "저장이 없거나 읽지 못했다"; }, field && SaveStore.Exists, 130);
             var r2 = new VisualElement { pickingMode = PickingMode.Position }; r2.style.flexDirection = FlexDirection.Row; r2.style.alignItems = Align.Center; box.Add(r2);
-            if (!confirmReset) Btn(r2, "처음부터 (저장 지움)", () => confirmReset = true, true, 200);
+            if (!confirmReset) Btn(r2, "처음부터 (저장 지우기)", () => confirmReset = true, true, 200);
             else
             {
-                Txt(r2, "저장을 지우고 다시 켜면 새 게임. 정말?", 16).style.marginRight = 12;
-                Btn(r2, "지움", () => { SaveStore.Delete(); note = "저장을 지웠다. 새로고침하면 처음부터"; confirmReset = false; }, true, 70);
+                Txt(r2, "저장을 지우고 처음부터 할까요?", 16).style.marginRight = 12;
+                Btn(r2, "지움", () => { SaveStore.Delete(); note = "저장을 지웠다. 다시 켜면 처음부터"; confirmReset = false; }, true, 70);
                 Btn(r2, "취소", () => confirmReset = false, true, 70);
             }
-            Txt(box, note.Length > 0 ? note : "45초마다 안전할 때 자동 저장됩니다(필드에서).", 14).style.marginTop = 10;
+            Txt(box, note.Length > 0 ? note : "싸움이 없을 때 45초마다 저장한다", 14).style.marginTop = 10;
         }
         else
         {
@@ -186,7 +186,7 @@ public class SettingsPanel : MonoBehaviour
             y = Slider(x, y, box.width - 40, "배경음", ref s.Bgm, 1f, body);
             y = Slider(x, y, box.width - 40, "효과음", ref s.Sfx, 1f, body);
             y = Slider(x, y, box.width - 40, "화면 흔들림", ref s.Shake, 1.5f, body);
-            GUI.Label(new Rect(x, y, box.width - 40, 22), "흔들림 0 = 흔들리지 않음(멀미가 나면 줄이세요). 1 = 기본.", new GUIStyle(mono) { fontSize = 13 });
+            GUI.Label(new Rect(x, y, box.width - 40, 22), "0 = 흔들림 없음 · 1 = 기본 (멀미가 나면 줄이기)", new GUIStyle(mono) { fontSize = 13 });
             y += 34;
             if (GUI.Button(new Rect(x, y, 190, 40), "조작 키 보기")) showKeys = true;
             bool field = judge.FieldMode;
@@ -196,15 +196,15 @@ public class SettingsPanel : MonoBehaviour
             if (GUI.Button(new Rect(x + 340, y, 130, 40), "불러오기")) { if (judge.LoadGameNow()) { note = "불러왔다"; Close(); } else note = "저장이 없거나 읽지 못했다"; }
             GUI.enabled = true;
             y += 52;
-            if (!confirmReset) { if (GUI.Button(new Rect(x, y, 190, 36), "처음부터 (저장 지움)")) confirmReset = true; }
+            if (!confirmReset) { if (GUI.Button(new Rect(x, y, 190, 36), "처음부터 (저장 지우기)")) confirmReset = true; }
             else
             {
-                GUI.Label(new Rect(x, y, 300, 30), "저장을 지우고 다시 켜면 새 게임. 정말?", body);
-                if (GUI.Button(new Rect(x + 320, y, 70, 32), "지움")) { SaveStore.Delete(); note = "저장을 지웠다. 새로고침하면 처음부터"; confirmReset = false; }
+                GUI.Label(new Rect(x, y, 300, 30), "저장을 지우고 처음부터 할까요?", body);
+                if (GUI.Button(new Rect(x + 320, y, 70, 32), "지움")) { SaveStore.Delete(); note = "저장을 지웠다. 다시 켜면 처음부터"; confirmReset = false; }
                 if (GUI.Button(new Rect(x + 400, y, 70, 32), "취소")) confirmReset = false;
             }
             y += 44;
-            GUI.Label(new Rect(x, y, box.width - 40, 26), note.Length > 0 ? note : "45초마다 안전할 때 자동 저장됩니다(필드에서).", mono);
+            GUI.Label(new Rect(x, y, box.width - 40, 26), note.Length > 0 ? note : "싸움이 없을 때 45초마다 저장한다", mono);
         }
         else
         {

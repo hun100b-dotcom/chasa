@@ -22,7 +22,7 @@ public class DayScreen
     int selSlot;                               // 손보기에서 고른 장비 칸
     string msg = "";
     public bool WantsNight;                    // 해 넘기기를 눌렀다 → JudgeSystem 이 밤을 시작
-    bool funeralOn;                            // 장례를 지켜보는 중 (눈금 0, 시간이 흐른다)
+    bool funeralOn;                            // 장례를 보는 중 (눈금 0, 시간이 흐른다)
     float emptyT;                              // 할 것 없는 낮 안내 남은 시간
 
     public DayScreen(Ledger l, Loadout loadout) { ledger = l; lo = loadout; Pack.Heal = Balance.FIRST_NIGHT_HEAL; }   // 첫 밤: 당할미가 회복약 두 첩을 쥐여 준다
@@ -63,7 +63,7 @@ public class DayScreen
                 if (action.Spot.Kind == SpotKind.BossClue)
                     BossCluesHave = Mathf.Min(Balance.BOSS_CLUES_REQUIRED, BossCluesHave + 1);
                 msg = action.Spot.Kind == SpotKind.NamedHouse ? "이름혼의 자리가 명부에 올랐다" :
-                      action.Half ? "반쪽 문장만 들렸다 (업이 귀를 닫고 있다)" : "단서를 얻었다";
+                      action.Half ? "반쪽만 들렸다 (업이 귀를 막는다)" : "단서를 얻었다";
                 action = null;
             }
         }
@@ -94,7 +94,7 @@ public class DayScreen
 
         string sun = "";
         for (int i = 0; i < Balance.DAY_TICKS; i++) sun += i < Run.TicksLeft ? "● " : "○ ";
-        GUI.Label(new Rect(x, y, w, 44), (Run.Phase == DayPhase.Day ? "낮" : "해 질 녘") + "   해 그림자 " + sun, h); y += 50;
+        GUI.Label(new Rect(x, y, w, 44), (Run.Phase == DayPhase.Day ? "낮" : "해질녘") + "   해 그림자 " + sun, h); y += 50;
         GUI.Label(new Rect(x, y, w, 26), "엽전 " + ledger.Coin + "   광석 " + ledger.Ore + "   업 " + ledger.Karma + "   보스 단서 " + BossCluesHave + "/" + Balance.BOSS_CLUES_REQUIRED + "   " + KarmaNote(), body); y += 30;
         if (msg != "") { GUI.Label(new Rect(x, y, w, 26), msg, body); }
         y += 30;
@@ -107,7 +107,7 @@ public class DayScreen
             GUI.Label(new Rect(x, y, w, 26), VerbName(action.Spot.Verb) + ": " + names[action.Spot.Id], body); y += 30;
             GUI.color = new Color(0, 0, 0, 0.7f); GUI.DrawTexture(new Rect(x, y, w, 16), white);
             GUI.color = ChasaPalette.MemoryRim; GUI.DrawTexture(new Rect(x + 1, y + 1, (w - 2) * Mathf.Clamp01(action.Progress / action.Need), 14), white); GUI.color = Color.white; y += 28;
-            if (GUI.Button(new Rect(x, y, 260, 44), action.Spot.Verb == ClueVerb.Touch ? "손을 뗀다 (멈춤)" : "자리를 벗어난다 (처음부터)", btn))
+            if (GUI.Button(new Rect(x, y, 260, 44), action.Spot.Verb == ClueVerb.Touch ? "손을 떼면 멈춘다" : "자리를 벗어나면 처음부터", btn))
                 action = null;   // 중단: 엿듣기·지켜보기는 처음부터, 만져 보기는 눈금을 쓰지 않은 채 멈춘다
             return;
         }
@@ -115,12 +115,12 @@ public class DayScreen
         // 장례 (눈금 0, 건너뛸 수 있음)
         if (Run.FuneralAvailable && !Run.FuneralDone)
         {
-            string f = funeralOn ? "장례를 지켜보는 중 " + Mathf.CeilToInt(Balance.FUNERAL_TIME - Run.FuneralWatched) + "초 (누르면 멈춤)" : "어젯밤 천도한 이의 장례를 본다 (70초, 눈금 0)";
+            string f = funeralOn ? "장례를 보는 중 " + Mathf.CeilToInt(Balance.FUNERAL_TIME - Run.FuneralWatched) + "초" : "어젯밤 천도한 이의 장례를 본다 (70초, 눈금 0)";
             if (GUI.Button(new Rect(x, y, w - 120, 44), f, btn)) funeralOn = !funeralOn;
             if (GUI.Button(new Rect(x + w - 110, y, 110, 44), "건너뛰기", btn)) { Run.SkipFuneral(); funeralOn = false; }
             y += 52;
         }
-        else if (Run.FuneralDone) { GUI.Label(new Rect(x, y, w, 26), "장례를 끝까지 보았다. 두루마리에 남는다.", body); y += 32; }
+        else if (Run.FuneralDone) { GUI.Label(new Rect(x, y, w, 26), "장례를 끝까지 보았다 — 기록에 남는다", body); y += 32; }
 
         // 열린 구역 목록 (낮에는 걸어갈 필요 없이 바로 간다)
         if (Run.Phase == DayPhase.Day)
@@ -128,7 +128,7 @@ public class DayScreen
             foreach (var s in Run.Spots)
             {
                 var acc = Run.Access(s, ledger.Karma);
-                string tag = acc == SpotAccess.Done ? " (끝)" : acc == SpotAccess.Closed ? " (귀가 닫혔다)" : "";
+                string tag = acc == SpotAccess.Done ? " (끝)" : acc == SpotAccess.Closed ? " (업이 귀를 막는다)" : "";
                 bool can = acc == SpotAccess.Open && Run.TicksLeft > 0;
                 GUI.enabled = can;
                 if (GUI.Button(new Rect(x, y, w, 44), VerbName(s.Verb) + " · " + names[s.Id] + tag, btn))
@@ -139,7 +139,7 @@ public class DayScreen
         }
         else { GUI.Label(new Rect(x, y, w, 26), "해가 기울었다. 서낭당에서 채비를 하고 밤으로 간다.", body); y += 32; }
 
-        if (GUI.Button(new Rect(x, y + 6, 220, 52), "서낭당 (공물상·손보기)", btn)) { shrineOpen = true; msg = ""; }
+        if (GUI.Button(new Rect(x, y + 6, 220, 52), "서낭당 — 공물상 · 손보기", btn)) { shrineOpen = true; msg = ""; }
         if (GUI.Button(new Rect(x + w - 220, y + 6, 220, 52), "해 넘기기 → 밤", btn)) WantsNight = true;
     }
 
@@ -161,7 +161,7 @@ public class DayScreen
         {
             var it = (ShopItem)i;
             if (GUI.Button(new Rect(x, y, w, 40), names3[i] + "  엽전 " + Shrine.Price(it) + "   (지님 " + have[i] + ")" + ShopHelp(it), btn))
-                { bool bought = Shrine.Buy(it, ledger, Pack); Sfx.Play(bought ? "sfx.ui.confirm" : "sfx.ui.deny"); msg = bought ? names3[i] + "을 샀다" : "엽전이 모자라거나 더 지닐 수 없다"; }
+                { bool bought = Shrine.Buy(it, ledger, Pack); Sfx.Play(bought ? "sfx.ui.confirm" : "sfx.ui.deny"); msg = bought ? names3[i] + "을 샀다" : "엽전이 모자라거나 더 들 수 없다"; }
             y += 44;
         }
         y += 8;
@@ -182,7 +182,7 @@ public class DayScreen
         if (cur != null)
         {
             GUI.enabled = Shrine.CanReroll(cur);
-            if (GUI.Button(new Rect(x, y, w / 2f - 4, 40), "다시 굴리기 (옵션 1번)  엽전 " + Shrine.RerollCost(cur.Rerolls), btn))
+            if (GUI.Button(new Rect(x, y, w / 2f - 4, 40), "옵션 다시 굴리기  엽전 " + Shrine.RerollCost(cur.Rerolls), btn))
             { msg = Shrine.Reroll(cur, 0, ledger, () => Random.value) ? "옵션을 다시 굴렸다" : "굴릴 수 없다"; lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
             // 장비 손보기: 칸마다 +1~+5, 단계마다 주옵션 +6% (엽전만 쓴다)
             GUI.enabled = Shrine.CanEnhance(cur);
@@ -193,7 +193,7 @@ public class DayScreen
             if (GUI.Button(new Rect(x + w / 2f, y, w / 2f, 40), "매듭 올리기  " + UpgradeCost(cur), btn))
             { msg = Shrine.Upgrade(cur, ledger, () => Random.value) ? "등급이 올랐다" : "엽전이나 광석이 모자라다"; lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
             GUI.enabled = true; y += 44;
-            if (GUI.Button(new Rect(x, y, w / 2f - 4, 40), "풀기(광석 " + Shrine.OreFor(cur.Rarity) + ")", btn) && Shrine.Dismantle(cur, ledger))
+            if (GUI.Button(new Rect(x, y, w / 2f - 4, 40), "풀기 (광석 " + Shrine.OreFor(cur.Rarity) + ")", btn) && Shrine.Dismantle(cur, ledger))
             { lo.gear.RemoveAt((EquipPos)selSlot); lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); msg = "장비를 풀었다"; }
             GUI.enabled = cur.Sockets < Balance.SOCKET_MAX && ledger.Coin >= (cur.Sockets == 0 ? Balance.SOCKET_COST_1 : Balance.SOCKET_COST_2);
             if (GUI.Button(new Rect(x + w / 2f, y, w / 2f, 40), "홈 뚫기  엽전 " + (cur.Sockets == 0 ? Balance.SOCKET_COST_1 : Balance.SOCKET_COST_2), btn))

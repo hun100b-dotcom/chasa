@@ -22,7 +22,7 @@ public class Interactables
     class Node { public JudgeSystem.InteractSpot spot; public GameObject view, ashView; public string kind, id, extra; }
     readonly List<Node> nodes = new List<Node>();
     readonly JudgeSystem j;
-    Transform root; string goneText = "이미 떠난 사람의 물건이다.";
+    Transform root; string goneText = "이미 떠난 사람의 물건이다";
 
     public readonly HashSet<string> Picked = new HashSet<string>();            // 주운 엽전·만진 유품(저장됨)
     public readonly Dictionary<string, int> HerbTaken = new Dictionary<string, int>();   // 쑥 id → 딴 날(저장됨)

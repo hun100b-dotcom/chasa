@@ -81,7 +81,7 @@ public partial class CharacterPanel
     void BuildHeard(VisualElement p, Color txt, bool bm)
     {
         var log = judge.npcs != null ? judge.npcs.Log : null;
-        if (log == null || log.Items.Count == 0) { VTxt(p, "아직 들은 말이 없다. 산 사람 곁에 가만히 서 있으면 들린다.", 16, txt); return; }
+        if (log == null || log.Items.Count == 0) { VTxt(p, "아직 들은 말이 없다. 산 사람 곁에 가만히 서 있으면 들린다", 16, txt); return; }
         for (int i = log.Items.Count - 1; i >= 0; i--)   // 최근 것이 위
         {
             var e = log.Items[i]; bool clue = !string.IsNullOrEmpty(e.Clue);
@@ -118,7 +118,7 @@ public partial class CharacterPanel
         p.Add(r2);
         // 3) 도술 세 갈래(세 열). 설명은 아래 한 줄에 마우스를 올린 것을 보여 준다
         var desc = new Label(); desc.pickingMode = PickingMode.Ignore;
-        string idle = "도술을 누르면 점수 1을 써서 배운다(배운 액티브는 누르면 칸에 올리고 내림). [기]=액티브 [패]=패시브(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)";
+        string idle = "도술을 누르면 점수 1을 써서 배운다(배운 쓰는 도술은 누르면 칸에 올리고 내림). [쓰는] 눌러 쓰는 도술 · [늘] 늘 켜진 도술(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)";
         var cols = new VisualElement { pickingMode = PickingMode.Position }; cols.style.flexDirection = FlexDirection.Row;
         for (int b = 0; b < 3; b++)
         {
@@ -129,7 +129,7 @@ public partial class CharacterPanel
                 if (n.Branch != br) continue;
                 var node = n; int lv = g.LevelOf(n.Name); bool can = g.CanLearn(n.Name); bool locked = n.Deep && g.BranchPoints(br) < SkillTree.DeepNeeds;
                 int barAt = n.Active ? g.ActiveBar.IndexOf(n.Name) : -1;
-                string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[기] ") : "[패] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
+                string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[쓰는] ") : "[늘] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
                 var c = lv > 0 ? txt : new Color(txt.r, txt.g, txt.b, can ? 0.9f : 0.45f);
                 var bt = VBtn(col, label, () =>
                 {
@@ -147,7 +147,7 @@ public partial class CharacterPanel
         var kf = Ko.GetFont(); if (kf != null) desc.style.unityFontDefinition = FontDefinition.FromFont(kf);
         p.Add(desc);
         string bar4 = ""; for (int i = 0; i < SkillTree.ActiveSlots; i++) bar4 += "[" + (i + 1) + ": " + (i < g.ActiveBar.Count ? g.ActiveBar[i] : "빈 칸") + "]  ";
-        VTxt(p, "액티브 칸  " + bar4, 13, txt).style.marginTop = 4;
+        VTxt(p, "도술 칸  " + bar4, 13, txt).style.marginTop = 4;
         var lo = judge.player.loadout;
         for (int row = 0; row < 2; row++)
         {

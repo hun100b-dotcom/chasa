@@ -139,18 +139,18 @@ public class UiRoot : MonoBehaviour
         root.Add(toastBox);
     }
 
-    /// <summary>아래쪽 기술 줄: 가운데 아래에 무기 / E 천도 / R 파혼 / Q 끌어당김 / 피하기 충전 칸</summary>
+    /// <summary>아래쪽 기술 줄: 가운데 아래에 무기 / E 천도 / R 파혼 / Q 끌기 / 피하기 충전 칸</summary>
     void BuildSkillBar()
     {
         skillBar = new VisualElement { name = "skillbar", pickingMode = PickingMode.Ignore };
         skillBar.style.position = Position.Absolute; skillBar.style.left = 0; skillBar.style.right = 0; skillBar.style.bottom = 14;
         skillBar.style.flexDirection = FlexDirection.Row; skillBar.style.justifyContent = Justify.Center;
         root.Add(skillBar);
-        weaponLabel = Slot("무기"); Slot("E 천도"); Slot("R 파혼"); pullLabel = Slot("Q 끌어당김");
+        weaponLabel = Slot("무기"); Slot("E 천도"); Slot("R 파혼"); pullLabel = Slot("Q 끌기");
         // 피하기: 글자 + 충전 칸(켜진 칸 = 지금 쓸 수 있는 횟수)
         var d = new VisualElement { pickingMode = PickingMode.Ignore }; Panel(d);
         d.style.flexDirection = FlexDirection.Row; d.style.alignItems = Align.Center; d.style.marginLeft = 6;
-        dodgeLabel = Line(d, 16); dodgeLabel.text = "Space 피하기 ";
+        dodgeLabel = Line(d, 16); dodgeLabel.text = "Space 피하기";
         pips = new VisualElement[Mathf.Max(1, Balance.DODGE_CHARGES)];
         for (int i = 0; i < pips.Length; i++)
         {
@@ -305,8 +305,8 @@ public class UiRoot : MonoBehaviour
         cardRow = new VisualElement { name = "judge-cards", pickingMode = PickingMode.Ignore };
         cardRow.style.position = Position.Absolute; cardRow.style.left = 0; cardRow.style.right = 0; cardRow.style.bottom = U(150);
         cardRow.style.flexDirection = FlexDirection.Row; cardRow.style.justifyContent = Justify.Center; cardRow.style.display = DisplayStyle.None;
-        cardRow.Add(Card("E", "천도", "보낸다", new Color(0.12f, 0.45f, 0.45f, 0.92f)));
-        cardRow.Add(Card("R", "파혼", "깨뜨린다", new Color(0.62f, 0.25f, 0.12f, 0.92f)));
+        cardRow.Add(Card("E", "천도", "보내기", new Color(0.12f, 0.45f, 0.45f, 0.92f)));
+        cardRow.Add(Card("R", "파혼", "깨뜨리기", new Color(0.62f, 0.25f, 0.12f, 0.92f)));
         root.Add(cardRow);
     }
     VisualElement Card(string key, string name, string sub, Color bg)
@@ -328,7 +328,7 @@ public class UiRoot : MonoBehaviour
     VisualElement[] bSlot = new VisualElement[BarN], bIcon = new VisualElement[BarN], bShade = new VisualElement[BarN]; Label[] bKey = new Label[BarN], bTxt = new Label[BarN], bSec = new Label[BarN];
     VisualElement[] bPips = new VisualElement[0]; float pullMax = 1f; VisualElement bPipRow; Label bWeapon;
     static readonly string[] BarKeys = { "Q", "1", "2", "3", "4", "E", "R", "H" };
-    static readonly string[] BarNames = { "견인", "", "", "", "", "천도", "파혼", "약" };
+    static readonly string[] BarNames = { "끌기", "", "", "", "", "천도", "파혼", "약" };
 
     void BuildSlots()
     {
@@ -438,7 +438,7 @@ public class UiRoot : MonoBehaviour
     void RefreshSkillBar()
     {
         weaponLabel.text = "무기 " + Hud.WeaponName;
-        pullLabel.text = Hud.PullCd > 0.05f ? "Q 끌어당김 " + Mathf.CeilToInt(Hud.PullCd) + "s" : "Q 끌어당김";
+        pullLabel.text = Hud.PullCd > 0.05f ? "Q 끌기 " + Mathf.CeilToInt(Hud.PullCd) + "s" : "Q 끌기";
         pullLabel.style.opacity = Hud.PullCd > 0.05f ? 0.5f : 1f;
         for (int i = 0; i < pips.Length; i++)
         {

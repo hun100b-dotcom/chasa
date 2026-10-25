@@ -22,12 +22,12 @@ namespace Chasa.Core
             if (!Enabled || !shown.Add(e)) return null;
             switch (e)
             {
-                case HintEvent.FirstMove: return touch ? "왼쪽 아래를 눌러 걷고, 혼을 눌러 사슬을 날린다" : "WASD 또는 마우스 클릭으로 걷고, 혼을 눌러 사슬을 날린다 (휠: 확대·축소)";
-                case HintEvent.FirstKneel: return touch ? "혼이 무릎 꿇었다 — 천도(보냄) 또는 파혼(깨뜨림) 버튼" : "혼이 무릎 꿇었다 — E 천도(보냄) / R 파혼(깨뜨림). 발밑 고리가 줄어들기 전에";
-                case HintEvent.FirstHurt: return touch ? "붉게 달아오르면 곧 때린다 — 피하기 버튼" : "혼이 붉게 달아오르면 곧 때린다 — Space 로 피하기";
-                case HintEvent.FirstEdgeWarn: return "화면 가장자리 붉은 표시 = 시야 밖에서 덮쳐 오는 혼의 방향";
-                case HintEvent.FirstNightfall: return "밤이 되면 혼이 일어선다 — 서낭당 곁에서 F(넋길)로 멀리 이동";
-                case HintEvent.FirstClue: return "산 사람 곁에 서서 말을 엿들으면 단서가 된다 (보스는 단서 3개가 있어야 천도)";
+                case HintEvent.FirstMove: return touch ? "왼쪽 화면을 끌어 걷기 · 공격 버튼으로 때리기" : "왼쪽 버튼을 누르고 있으면 걷는다 · 혼을 눌러 때리기";
+                case HintEvent.FirstKneel: return touch ? "혼이 무릎 꿇었다 — 천도(보내기)·파혼(깨뜨리기)" : "혼이 무릎 꿇었다 — E 천도(보내기) · R 파혼(깨뜨리기). 고리가 닫히기 전에";
+                case HintEvent.FirstHurt: return touch ? "붉게 차오르면 곧 때린다 — 피하기 버튼" : "붉게 차오르면 곧 때린다 — Space 피하기";
+                case HintEvent.FirstEdgeWarn: return "화면 가장자리 화살표 = 보이지 않는 혼이 오는 쪽";
+                case HintEvent.FirstNightfall: return "밤에는 서낭당에서 F 넋길로 멀리 간다";
+                case HintEvent.FirstClue: return "산 사람 곁에 가만히 서 있으면 말이 들린다 · 보스는 단서 3개로 천도";
                 default: return null;
             }
         }

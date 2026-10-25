@@ -20,8 +20,8 @@ namespace Chasa.Core
             if (zone == null) return;
             if (zone.Contains("솔고개")) { mote = Balance.SOULTYPE_SOLGOGAE_MOTE_PCT; wail = Balance.SOULTYPE_SOLGOGAE_WAIL_PCT; buried = Balance.SOULTYPE_SOLGOGAE_BURIED_PCT; }
             else if (zone.Contains("보릿들")) { mote = Balance.SOULTYPE_BORIT_MOTE_PCT; wail = Balance.SOULTYPE_BORIT_WAIL_PCT; buried = Balance.SOULTYPE_BORIT_BURIED_PCT; }
-            else if (zone.Contains("물막이")) { mote = Balance.SOULTYPE_MULMAGI_MOTE_PCT; wail = Balance.SOULTYPE_MULMAGI_WAIL_PCT; buried = Balance.SOULTYPE_MULMAGI_BURIED_PCT; }
-            else if (zone.Contains("폐당")) { mote = Balance.SOULTYPE_PYEDANG_MOTE_PCT; wail = Balance.SOULTYPE_PYEDANG_WAIL_PCT; buried = Balance.SOULTYPE_PYEDANG_BURIED_PCT; }
+            else if (zone.Contains("물막이 골")) { mote = Balance.SOULTYPE_MULMAGI_MOTE_PCT; wail = Balance.SOULTYPE_MULMAGI_WAIL_PCT; buried = Balance.SOULTYPE_MULMAGI_BURIED_PCT; }
+            else if (zone.Contains("폐당집")) { mote = Balance.SOULTYPE_PYEDANG_MOTE_PCT; wail = Balance.SOULTYPE_PYEDANG_WAIL_PCT; buried = Balance.SOULTYPE_PYEDANG_BURIED_PCT; }
             else if (zone.Contains("검은여울")) { mote = Balance.SOULTYPE_RAPIDS_MOTE_PCT; wail = Balance.SOULTYPE_RAPIDS_WAIL_PCT; buried = Balance.SOULTYPE_RAPIDS_BURIED_PCT; }
         }
 
