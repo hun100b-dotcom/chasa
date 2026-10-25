@@ -293,7 +293,7 @@ public class JudgeSystem : MonoBehaviour
         cluePos.Clear();
         foreach (var v in clueViews) Destroy(v);
         clueViews.Clear();
-        foreach (var cp in MapLayout.CluePoints())
+        foreach (var cp in FieldRules.On ? new float[0][] : MapLayout.CluePoints())   // 필드에선 단서를 산 사람에게서 얻는다(NpcWorld)
         {
             var p = new Vector3(cp[0], 0, cp[1]);
             cluePos.Add(p);
@@ -407,7 +407,7 @@ public class JudgeSystem : MonoBehaviour
         enemies.spawnPaused = enemySpawnPause > 0f || (Casting && castTarget.soul.Boss);   // 보스 천도 중·직후엔 잡몹이 새로 나오지 않는다
         // 귀환: 서낭당 위에 서면 즉시. 단 출발 직후(몫을 하나도 못 채움)에는 자동 귀환하지 않는다 — 밤을 시작도 못 하고 끝나는 것 방지
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
-        if (night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");
+        if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
         stains.Tick(dt);
         flashA = Mathf.Max(0f, flashA - realDt * 2.2f);
@@ -456,6 +456,8 @@ public class JudgeSystem : MonoBehaviour
     {
         clock.Tick(dt);
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
+        if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
+        night.Clues = Mathf.Min(Balance.BOSS_CLUES_REQUIRED, clueBook.Count("B01-"));   // 1막 첫 보스(나루 영감)의 낮 단서 수 = 보스 천도 조건
         var ph = clock.Consume();
         if (ph.HasValue)
         {
@@ -580,6 +582,8 @@ public class JudgeSystem : MonoBehaviour
     // ===== 화면 ====================================================================
     /// <summary>화면에 보일 값을 모아(HudState) 새 화면(UI Toolkit)에 넘긴다</summary>
     public System.Action<Vector3> onTeleport;   // 넋길로 순간이동했을 때 카메라가 따라가게 GameMain 이 받는다
+    public NpcWorld npcs;                       // 필드의 산 사람(엿듣기·지켜보기)
+    public readonly ClueBook clueBook = new ClueBook();
     public WorldClock clock;   // 필드 모드의 흐르는 하루 (없으면 옛 '하룻밤 한 판')
     public FieldCamps camps;   // 필드 모드에서만 있다
     SoulMarkers soulMarkers;
@@ -726,6 +730,15 @@ public class JudgeSystem : MonoBehaviour
                 }
                 GUI.color = Color.white;
             }
+        }
+        // (2.5) 산 사람 대사 자막(엿듣기): 화면 아래 가운데
+        if (npcs != null && npcs.SubtitleT > 0f)
+        {
+            var st = new GUIStyle(GUI.skin.label) { fontSize = Ko.TouchUI ? 24 : 20, alignment = TextAnchor.MiddleCenter, wordWrap = true };
+            st.normal.textColor = new Color(1f, 0.97f, 0.88f, Mathf.Clamp01(npcs.SubtitleT / 0.6f));
+            var r = new Rect(Screen.width * 0.15f, Screen.height - 190, Screen.width * 0.7f, 60);
+            GUI.color = new Color(0, 0, 0, 0.5f * Mathf.Clamp01(npcs.SubtitleT / 0.6f)); GUI.DrawTexture(r, white); GUI.color = Color.white;
+            GUI.Label(r, npcs.Subtitle, st);
         }
         // (3) 장부(넋·기억·엽전·업)와 안내
         var small = new GUIStyle(GUI.skin.label) { fontSize = 16 };

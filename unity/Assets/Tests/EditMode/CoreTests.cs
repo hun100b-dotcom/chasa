@@ -1415,4 +1415,33 @@ public class CoreTests
         Assert.AreEqual(1, SoulPath.NearIndex(98f, 0f, sh));
         Assert.AreEqual(-1, SoulPath.NearIndex(50f, 0f, sh));       // 어느 서낭당 곁도 아님
     }
+
+    // ---------- 엿듣기·단서 (5단계) ----------
+    [Test]
+    public void Eavesdrop_KarmaClosesEars()
+    {
+        Assert.AreEqual(EavesMode.Full, Eavesdrop.Mode(9, true, true));
+        Assert.AreEqual(EavesMode.Half, Eavesdrop.Mode(10, true, false));
+        Assert.AreEqual(EavesMode.Half, Eavesdrop.Mode(29, true, true));
+        Assert.AreEqual(EavesMode.Closed, Eavesdrop.Mode(30, true, true));    // 보스 엿듣기 닫힘
+        Assert.AreEqual(EavesMode.Half, Eavesdrop.Mode(30, true, false));     // 일반 소문은 아직 반쪽
+        Assert.AreEqual(EavesMode.Closed, Eavesdrop.Mode(60, true, false));   // 소문까지 닫힘
+    }
+
+    [Test]
+    public void Eavesdrop_WatchingAndTouchingIgnoreKarma()
+    {
+        Assert.AreEqual(EavesMode.Full, Eavesdrop.Mode(99, false, true));
+    }
+
+    [Test]
+    public void ClueBook_CountsPerBossAndNoDuplicates()
+    {
+        var b = new ClueBook();
+        Assert.IsTrue(b.Add("B01-D1"));
+        Assert.IsFalse(b.Add("B01-D1"));
+        b.Add("B01-D2"); b.Add("B02-D1");
+        Assert.AreEqual(2, b.Count("B01-"));
+        Assert.AreEqual(1, b.Count("B02-"));
+    }
 }
