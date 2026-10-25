@@ -1221,6 +1221,94 @@
    "bypass_cast_filter": false,
    "length_sec": 2.08,
    "peak_dbfs": -16
+  },
+  {
+   "id": "amb.harbor",
+   "file": "amb_harbor",
+   "category": "세계",
+   "desc": "갯마을 포구: 선창 기둥에 찰싹이는 잔파도 + 줄에 묶인 빈 배가 삐걱 + 먼 갈매기(반복용 16초)",
+   "use": "⑤ 포구(Harbor)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 15.9,
+   "peak_dbfs": -22
+  },
+  {
+   "id": "sfx.tide.flood",
+   "file": "sfx_tide_flood",
+   "category": "세계",
+   "desc": "밀물 신호: 먼바다에서 낮게 웅— 밀려오는 큰 물소리가 점점 차오름 + 징 한 번(약 5초) — 20초 안에 붙잡아라",
+   "use": "⑤ 밀물 신호 순간(물 혼이 떠밀려 가기 시작)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 7.05,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "amb.tide.ebb",
+   "file": "amb_tide_ebb",
+   "category": "세계",
+   "desc": "썰물 갯벌: 물 빠진 갯벌이 뽀글뽀글 숨 쉼 + 게 구멍 톡톡 + 멀어진 파도(반복용 15초)",
+   "use": "⑤ 썰물 때 포구·난파 여울 바닥",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 14.9,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "amb.saltfield",
+   "file": "amb_saltfield",
+   "category": "세계",
+   "desc": "소금밭: 탁 트인 바닷바람 + 소금 결정이 바람에 서걱 + 아주 먼 파도(반복용 14초)",
+   "use": "⑤ 소금밭(SaltField)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 13.9,
+   "peak_dbfs": -23
+  },
+  {
+   "id": "amb.wreckshoal",
+   "file": "amb_wreckshoal",
+   "category": "세계",
+   "desc": "난파 여울: 암초 사이를 빠르게 흐르는 물살 + 부서진 배 나무가 물에 부딪혀 쿵·삐걱(반복용 15초)",
+   "use": "⑤ 난파 여울(WreckShoal)·B-10 갑판",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 14.9,
+   "peak_dbfs": -21
+  },
+  {
+   "id": "amb.capital.market",
+   "file": "amb_capital_market",
+   "category": "세계",
+   "desc": "도성 저잣거리: 촘촘한 사람 소리(뜻 안 들림) + 장사꾼의 길게 끄는 외침 + 엽전·그릇·수레·소 방울 + 먼 장구(반복용 16초)",
+   "use": "⑥ 저잣거리(Market) — 1막 장터보다 크고 바쁘다",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 15.9,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "amb.bridge.under",
+   "file": "amb_bridge_under",
+   "category": "세계",
+   "desc": "큰 다리 밑: 다리 아래로 흐르는 강물 + 머리 위 돌다리를 지나는 둔탁한 발소리·수레 + 거적 움막 바스락(반복용 15초)",
+   "use": "⑥ 큰 다리 밑(BridgeUnder)·움막촌",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 14.9,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "amb.citygate",
+   "file": "amb_citygate",
+   "category": "세계",
+   "desc": "닫힌 성문 밖의 밤: 성벽을 따라 부는 찬 바람 + 성문 쇠고리가 가끔 덜컥 + 아주 먼 개 짖음(반복용 16초)",
+   "use": "⑥ 성문 밖(CityGate)·팻말 없는 무덤",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 15.9,
+   "peak_dbfs": -21
   }
  ],
  "footsteps": {
