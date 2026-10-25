@@ -240,6 +240,7 @@ public class Enemy : MonoBehaviour
     public void Freeze(float seconds) { freezeT = Mathf.Max(freezeT, seconds); }
 
     // ---- 공격 차례(토큰): 동시에 때리는 보통 혼 수를 제한해, 둘러싸여도 한꺼번에 맞아 쓰러지지 않게 한다(기획 10-25) ----
+    public static bool IntroCalm;                                       // 첫 25초(첫 5분 안): 가만히 서 있어도 쓰러지지 않게 원거리 혼(넋두리·묻힌 혼)은 쏘지 않고 근접도 한 마리씩만(PC 유휴 1분 검증)
     public static int TokenMax = int.MaxValue;                          // JudgeSystem 이 매 프레임 정한다(첫 5분엔 2, 이후 3)
     static readonly HashSet<Enemy> tokenHolders = new HashSet<Enemy>();   // 지금 예고·공격 중인 혼들
     public static void ResetTokens() { tokenHolders.Clear(); }
@@ -275,8 +276,8 @@ public class Enemy : MonoBehaviour
             stun -= dt;
             bool canAct = stun <= 0f;
             float dist = new Vector2(playerPos.x - Pos.x, playerPos.z - Pos.z).magnitude;
-            if (type == SoulType.Wail) TickWail(dt, playerPos, canAct, dist);
-            else if (type == SoulType.Buried) TickBuried(dt, canAct, dist);
+            if (type == SoulType.Wail) TickWail(dt, playerPos, canAct && !IntroCalm, dist);
+            else if (type == SoulType.Buried) { if (!IntroCalm) TickBuried(dt, canAct, dist); }
             else
             {
             // 예비동작 중에는 멈춰 서서 '곧 때린다'는 신호를 준다 (피할 시간)

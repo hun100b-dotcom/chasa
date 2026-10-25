@@ -27,7 +27,8 @@ public class SettingsPanel : MonoBehaviour
         "무기 바꾸기 Tab                           회복약  H     얼룩 지우기  X",
         "넋길        F (서낭당 곁, 밤)",
         "명부(캐릭터) C                            설정   O",
-        "소리 켜고 끄기 M                          줌   마우스 휠",
+        "소리 켜고 끄기 N                          줌   마우스 휠",
+        "지도 M (크게 보기)",
     };
 
     // ---- UI Toolkit 판(UiRoot 가 있을 때). 옛 IMGUI 판은 아래 OnGUI 에 그대로 남아 UiRoot 가 없을 때만 쓴다 ----

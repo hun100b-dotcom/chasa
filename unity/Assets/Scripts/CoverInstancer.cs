@@ -62,11 +62,12 @@ public class CoverInstancer : MonoBehaviour
 
     // 검사용 주소 ?covertest=1: 바닥 소품을 3배 크게 + 분홍색으로 그린다(그려지는데 눈에 안 띄는 건지, 아예 안 그려지는 건지 가르려고)
     static readonly bool Test = (Application.absoluteURL ?? "").Contains("covertest=1");
+    static readonly bool Off = (Application.absoluteURL ?? "").Contains("cover=off");   // 검사용 ?cover=off: 바닥 소품을 안 그려 프레임 비용만 비교한다
     public int DrawnCount { get { int n = 0; foreach (var g in groups.Values) n += g.count; return n; } }   // 지금 그리는 개수(검사용)
     const int Batch = 1023;   // DrawMeshInstanced 한 번에 그릴 수 있는 최대 개수
     void Update()
     {
-        if (player == null || chunks.Count == 0) return;
+        if (player == null || chunks.Count == 0 || Off) return;
         rescan -= Time.unscaledDeltaTime;
         var p = player.Pos;
         if (rescan <= 0f || (p - lastScan).sqrMagnitude > 4f) { rescan = 0.25f; lastScan = p; Rescan(p); }

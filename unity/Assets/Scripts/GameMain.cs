@@ -78,12 +78,12 @@ public class GameMain : MonoBehaviour
             // 10m 안에 싸우는 혼이 있으면 엿듣기·지켜보기 진행이 멈춘다(기획 npc-interaction-spec §2-3)
             judge.npcs.enemyWithin = r =>
             {
-                foreach (var x in judge.enemies.list) if (x.alive && (x.Pos - judge.player.Pos).sqrMagnitude < r * r) return true;
+                foreach (var x in judge.enemies.list) if (x.alive && !x.kneeling && x.Targetable && (x.Pos - judge.player.Pos).sqrMagnitude < r * r) return true;   // 무릎 꿇어 처결을 기다리는 혼·땅에 묻힌 혼은 싸움이 아니다(봇이 20초 서 있어도 단서가 안 열리던 원인 후보)
                 return false;
             };
             judge.npcs.inCombat = () =>
             {
-                foreach (var x in judge.enemies.list) if (x.alive && (x.Pos - judge.player.Pos).sqrMagnitude < 100f) return true;
+                foreach (var x in judge.enemies.list) if (x.alive && !x.kneeling && x.Targetable && (x.Pos - judge.player.Pos).sqrMagnitude < 100f) return true;
                 return false;
             };
             judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)

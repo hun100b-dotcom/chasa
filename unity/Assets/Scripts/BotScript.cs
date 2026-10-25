@@ -208,7 +208,7 @@ public class BotScript : MonoBehaviour
         // 목표로 가는데 8초(실제) 동안 거의 안 움직이면 막힌 것: 순간이동으로 건너뛴다
         if (t - lastMoveCheckT > 8f)
         {
-            if (Vector3.Distance(player.Pos, lastMovePos) < 1.0f) { Issue("이동이 막힘: 목표 '" + name + "' 까지 " + Vector3.Distance(pos, player.Pos).ToString("0") + "m, 위치 변화 없음 " + player.Pos.ToString("0") + " → 순간이동"); Warp(pos); }
+            if (Vector3.Distance(player.Pos, lastMovePos) < 1.0f && Vector3.Distance(pos, player.Pos) > 2f) {   // 이미 목표 곁(2m 안)이면 서 있는 게 맞다 — 막힘이 아니다 Issue("이동이 막힘: 목표 '" + name + "' 까지 " + Vector3.Distance(pos, player.Pos).ToString("0") + "m, 위치 변화 없음 " + player.Pos.ToString("0") + " → 순간이동"); Warp(pos); }
             lastMovePos = player.Pos; lastMoveCheckT = t;
         }
         if (t - goalSince > 120f) { Issue("목표 '" + name + "' 에 120초 넘게 못 감 → 순간이동"); Warp(pos); goalSince = t; }
