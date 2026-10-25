@@ -63,6 +63,7 @@ public class Enemy : MonoBehaviour
         e.mat = U.Flashable(e.baseColor);
         body.GetComponent<Renderer>().sharedMaterial = e.mat;
         root.transform.position = at;
+        GroundSnap.Attach(root);   // 새 땅 높이 따라 서 있는다
         return e;
     }
 

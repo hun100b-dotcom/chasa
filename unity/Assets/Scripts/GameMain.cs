@@ -44,6 +44,7 @@ public class GameMain : MonoBehaviour
         var url = Application.absoluteURL;
         UiRoot.Enabled = Balance.UI_TOOLKIT || url.Contains("?ui") || url.Contains("&ui");   // 주소에 ?ui 가 있으면 UI Toolkit HUD ("build" 같은 글자에 걸리지 않게 ? 와 & 를 붙여 본다)
         GrowthData.Load();   // 기획팀 도술·옵션 JSON 덮어쓰기(있을 때만)
+        if (FieldRules.On) GroundTerrain.Init();   // 아트의 새 땅(Resources/Terrain)이 있으면 읽는다. 없으면 옛 타일 땅
         BuildStage();
         var startPos = FieldRules.On ? new Vector3(FieldRules.StartX, 0f, FieldRules.StartZ) : Vector3.zero;
         if (FieldRules.On) focus = startPos;   // 카메라가 원점에서 날아오지 않게 시작 위치에서 시작
@@ -53,6 +54,7 @@ public class GameMain : MonoBehaviour
         marker = ClickMarker.Create();
         player = Player.Create();
         player.Pos = startPos;
+        GroundSnap.Attach(player.gameObject);   // 새 땅이 있으면 높이를 따라 걷는다
         player.enemies = enemies; player.feel = feel; player.numbers = numbers;
         player.chain = ChainVisual.Create();
         // 처결(천도·파혼): 규칙은 Core, 화면 연결은 JudgeSystem
@@ -199,7 +201,7 @@ public class GameMain : MonoBehaviour
         vel.y = 0f;
         var wantAhead = vel.sqrMagnitude > 0.25f ? vel.normalized * Balance.CAMERA_LOOKAHEAD_M : Vector3.zero;
         ahead = Vector3.Lerp(ahead, wantAhead, 1f - Mathf.Exp(-3f * dt));   // 천천히 따라가야 방향을 바꿀 때 화면이 휙 돌지 않는다
-        var goal = new Vector3(player.Pos.x, 0, player.Pos.z) + ahead;
+        var goal = new Vector3(player.Pos.x, player.Pos.y, player.Pos.z) + ahead;   // 높이는 발 높이(새 땅 오르막에서 카메라도 같이 오른다)
         // 컷신 중엔 카메라가 대본이 가리키는 곳으로 간다(보스·나룻배·서낭당 쪽 하늘 …). 끝나면 플레이어로 돌아온다
         if (judge.cuts.Active)
         {

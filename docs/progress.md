@@ -435,3 +435,9 @@
 ## 2026-10-25 [코드·QA] 무기 5계열 균형 시뮬 + 아트 외형 2차 반영
 - tools/sim-act1: `bash tools/sim-act1/run.sh 4000 --weapons` 로 무기별 ①~④ 표. 요령방울 콤보 피해 12/12/24 로 올림(파혼만으로 1호 보스 ③ 통과). 표·가정은 docs/BALANCE-ACT1-SIM.md.
 - 아트 외형 2차(e36e7cd): 주인공·마을 사람 22명 GLB 교체. 아직 연결 안 된 것: 무기 GLB 5개, 혼 GLB(souls/*) — 코드가 도형 대역을 씀(다음 일).
+
+## 2026-10-25 [코드·QA] 새 땅 받는 쪽 (하이트맵·스플랫맵·높이 붙이기) — 클라우드, 화면 확인 전
+- 형식 약속: docs/TERRAIN-FORMAT.md (heightmap.png = R·G 16비트, splat_a = 흙/풀/자갈/논, splat_b = 낙엽, 층별 타일 선택, terrain.json). 넣는 도구 tools/build_terrain_data.py(크기 검사, `--demo` 시험용 언덕 땅 생성).
+- 코드: Core/TerrainField.cs(HeightField·SplatField, 테스트 3개 = 152 통과), GroundTerrain.cs(파일 읽기·청크 메쉬·재질·높이 묻기), Resources/Shaders/ChasaTerrainSplat.shader(5층 섞기, 월드 좌표 타일), GroundSnap(주인공·적·NPC), FieldManager(새 땅이면 옛 타일 생략·소품 높이 더함), 카메라 초점 높이.
+- 안전장치: Resources/Terrain 파일이 없으면 Active=false 라 지금 화면은 그대로. 셰이더가 안 되는 기기는 한 색 땅.
+- 아직: 불빛 높이, 얼룩·그림자 원판, 보스 구역 붉은 타일 높이, 가파른 곳 이동 제한, 재질별 발소리. PC 확인: --demo 땅을 넣어 셰이더 컴파일·이음매·성능(청크당 4225 꼭짓점).

@@ -141,6 +141,7 @@ public class FieldManager : MonoBehaviour
     IEnumerator Build(int cx, int cz, int key, GameObject root, List<Item> items)
     {
         int n = 0;
+        GroundTerrain.BuildChunk(root.transform, cx, cz);   // 새 땅(하이트맵·스플랫맵)이 있으면 이 청크의 땅 메쉬를 깐다. 없으면 아무것도 안 함
         // 1) 풀밭: 표에 없는 8m 칸을 채운다 (이 청크 16×16 칸)
         float tile = data.tile > 0 ? data.tile : 8f;
         int per = Mathf.RoundToInt(FieldRules.ChunkSize / tile);
@@ -149,7 +150,7 @@ public class FieldManager : MonoBehaviour
         for (int ix = cx * per; ix < (cx + 1) * per; ix++)
             for (int iz = cz * per; iz < (cz + 1) * per; iz++)
             {
-                if (listed.Contains(ix * 1000 + iz)) continue;
+                if (GroundTerrain.Active || listed.Contains(ix * 1000 + iz)) continue;   // 새 땅이면 풀 타일도 필요 없다
                 if (root == null) yield break;
                 Place(root.transform, "terrain_tile_grass", ix * tile + tile * 0.5f, 0f, iz * tile + tile * 0.5f, 0);
                 if (++n % ItemsPerFrame == 0) yield return null;
@@ -158,7 +159,8 @@ public class FieldManager : MonoBehaviour
         foreach (var it in items)
         {
             if (root == null) yield break;
-            Place(root.transform, it.n, it.x, HeightOf(it), it.z, it.r);
+            if (GroundTerrain.Active && it.t == 1) continue;   // 옛 땅 타일은 새 땅 메쉬가 대신한다
+            Place(root.transform, it.n, it.x, HeightOf(it) + GroundTerrain.HeightAt(it.x, it.z), it.z, it.r);   // 소품·집은 땅 높이 위에 붙인다(옛 평지는 +0)
             if (++n % ItemsPerFrame == 0) yield return null;
         }
         loading.Remove(key);

@@ -1754,4 +1754,36 @@ public class CoreTests
         var c = new WorldClock(); c.Set(3, WorldClock.DayLength - 1f);
         Assert.AreEqual(3, c.Day); Assert.AreEqual(ClockPhase.Night, c.Phase); Assert.IsNull(c.Changed);
     }
+
+    [Test]
+    public void Height_BilinearAndEdgeClamp()
+    {
+        // 2x2 지도(한 변 10m): 네 모서리 높이 0, 2, 4, 6
+        var h = new HeightField(2, 2, 10f, new float[] { 0f, 2f, 4f, 6f });
+        Assert.AreEqual(0f, h.At(0, 0), 1e-4f); Assert.AreEqual(2f, h.At(10, 0), 1e-4f); Assert.AreEqual(6f, h.At(10, 10), 1e-4f);
+        Assert.AreEqual(3f, h.At(5, 5), 1e-4f, "가운데는 네 모서리 평균");
+        Assert.AreEqual(6f, h.At(99, 99), 1e-4f, "지도 밖은 가장자리 값");
+        Assert.AreEqual(0f, h.At(-5, -5), 1e-4f);
+        Assert.Greater(h.Slope(5, 5), 0.1f);
+    }
+
+    [Test]
+    public void Height_FromRG_DecodesSixteenBit()
+    {
+        var h = HeightField.FromRG(2, 2, 10f, new byte[] { 0, 255, 128, 0 }, new byte[] { 0, 255, 0, 0 }, 0f, 10f);
+        Assert.AreEqual(0f, h.At(0, 0), 1e-4f); Assert.AreEqual(10f, h.At(10, 0), 1e-4f);
+        Assert.AreEqual(128f * 256f / 65535f * 10f, h.At(0, 10), 1e-3f);
+    }
+
+    [Test]
+    public void Splat_WeightsSumToOne_EmptyIsGrass()
+    {
+        var layers = new float[SplatField.Layers][];
+        for (int l = 0; l < layers.Length; l++) layers[l] = new float[4];
+        layers[(int)GroundLayer.Dirt] = new float[] { 1f, 1f, 0f, 0f };   // 위쪽 줄만 흙
+        var s = new SplatField(2, 2, 10f, layers); var o = new float[SplatField.Layers];
+        s.Weights(0, 0, o); Assert.AreEqual(1f, o[(int)GroundLayer.Dirt], 1e-4f);
+        s.Weights(5, 5, o); Assert.AreEqual(1f, o[(int)GroundLayer.Dirt], 1e-4f, "위쪽만 칠해졌어도 합을 1로 맞춘다");
+        s.Weights(5, 10, o); Assert.AreEqual(1f, o[(int)GroundLayer.Grass], 1e-4f, "아무 층도 안 칠한 자리는 풀 100%");
+    }
 }

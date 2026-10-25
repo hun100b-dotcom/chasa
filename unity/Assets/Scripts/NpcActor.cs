@@ -27,6 +27,7 @@ public class NpcActor : MonoBehaviour
         var root = new GameObject("Npc_" + prefab.name);
         root.transform.SetParent(parent, false);
         root.transform.position = pos;
+        GroundSnap.Attach(root);   // 새 땅 높이 따라 선다
         var a = root.AddComponent<NpcActor>();
         if (!a.Build(prefab, resourcePath)) { Destroy(root); return null; }
         return a;

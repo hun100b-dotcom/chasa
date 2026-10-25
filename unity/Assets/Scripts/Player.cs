@@ -432,7 +432,7 @@ public class Player : MonoBehaviour
         // 맵 경계 + 막힌 곳(집·장승)에서 미끄러지듯 밀려난다
         float x = Pos.x, z = Pos.z;
         Chasa.Core.MapLayout.PushOut(ref x, ref z, Config.PLAYER_RADIUS);
-        Pos = new Vector3(x, 0, z);
+        Pos = new Vector3(x, Pos.y, z);   // 높이는 땅 붙이기(GroundSnap)가 맡으니 건드리지 않는다
     }
 
     Vector3 Hand => new Vector3(Pos.x, Config.PLAYER_HAND_HEIGHT, Pos.z);
