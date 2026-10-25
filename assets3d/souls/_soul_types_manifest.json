@@ -93,6 +93,15 @@
      }
     },
     {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "note": "처결 대기 반복"
+     }
+    },
+    {
      "name": "Tendo",
      "frames": 48,
      "length_sec": 0.783,
@@ -204,6 +213,15 @@
       ],
       "recover_start": 24,
       "knockback_hint_m": 3.5
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "note": "처결 대기 반복"
      }
     },
     {
@@ -330,6 +348,15 @@
      }
     },
     {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "note": "처결 대기 반복"
+     }
+    },
+    {
      "name": "Tendo",
      "frames": 48,
      "length_sec": 0.783,
@@ -385,10 +412,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 132
+   "size_kb": 138
   },
   {
    "file": "soul_wail_day.glb",
@@ -402,10 +430,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 132
+   "size_kb": 138
   },
   {
    "file": "soul_wail_old.glb",
@@ -419,10 +448,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 132
+   "size_kb": 138
   },
   {
    "file": "soul_wail_lump.glb",
@@ -436,10 +466,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 132
+   "size_kb": 138
   },
   {
    "file": "soul_mote_fresh.glb",
@@ -453,10 +484,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 56
+   "size_kb": 61
   },
   {
    "file": "soul_mote_day.glb",
@@ -470,10 +502,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 56
+   "size_kb": 61
   },
   {
    "file": "soul_mote_old.glb",
@@ -487,10 +520,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 56
+   "size_kb": 61
   },
   {
    "file": "soul_mote_lump.glb",
@@ -504,10 +538,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 56
+   "size_kb": 61
   },
   {
    "file": "soul_buried_fresh.glb",
@@ -522,10 +557,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 157
+   "size_kb": 163
   },
   {
    "file": "soul_buried_day.glb",
@@ -540,10 +576,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 156
+   "size_kb": 163
   },
   {
    "file": "soul_buried_old.glb",
@@ -558,10 +595,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 156
+   "size_kb": 163
   },
   {
    "file": "soul_buried_lump.glb",
@@ -576,10 +614,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 157
+   "size_kb": 163
   }
  ]
 }

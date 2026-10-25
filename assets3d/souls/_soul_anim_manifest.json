@@ -79,6 +79,15 @@
    }
   },
   {
+   "name": "KneelHold",
+   "frames": 121,
+   "length_sec": 2.0,
+   "loop": true,
+   "events": {
+    "note": "처결 대기 반복"
+   }
+  },
+  {
    "name": "Tendo",
    "frames": 48,
    "length_sec": 0.783,
@@ -117,10 +126,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 79
+   "size_kb": 84
   },
   {
    "file": "soul_day.glb",
@@ -134,10 +144,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 110
+   "size_kb": 115
   },
   {
    "file": "soul_old.glb",
@@ -151,10 +162,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 76
+   "size_kb": 81
   },
   {
    "file": "soul_lump.glb",
@@ -168,10 +180,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 137
+   "size_kb": 142
   },
   {
    "file": "soul_fresh_yeoksa.glb",
@@ -185,10 +198,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 95
+   "size_kb": 100
   },
   {
    "file": "soul_day_yeoksa.glb",
@@ -202,10 +216,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 126
+   "size_kb": 131
   },
   {
    "file": "soul_old_yeoksa.glb",
@@ -219,10 +234,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 92
+   "size_kb": 97
   },
   {
    "file": "soul_lump_yeoksa.glb",
@@ -236,10 +252,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 153
+   "size_kb": 158
   },
   {
    "file": "soul_fresh_bungjae.glb",
@@ -253,10 +270,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 91
+   "size_kb": 96
   },
   {
    "file": "soul_day_bungjae.glb",
@@ -270,10 +288,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 121
+   "size_kb": 126
   },
   {
    "file": "soul_old_bungjae.glb",
@@ -287,10 +306,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 87
+   "size_kb": 92
   },
   {
    "file": "soul_lump_bungjae.glb",
@@ -304,10 +324,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 148
+   "size_kb": 153
   },
   {
    "file": "soul_fresh_soegol.glb",
@@ -321,10 +342,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 92
+   "size_kb": 97
   },
   {
    "file": "soul_day_soegol.glb",
@@ -338,10 +360,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 122
+   "size_kb": 127
   },
   {
    "file": "soul_old_soegol.glb",
@@ -355,10 +378,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 88
+   "size_kb": 93
   },
   {
    "file": "soul_lump_soegol.glb",
@@ -372,10 +396,11 @@
     "Hit1",
     "Hit2",
     "Stagger",
+    "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 149
+   "size_kb": 154
   }
  ]
 }

@@ -45,6 +45,13 @@ def kneel(t, tail):
     bounce = {**B(r=(22, 0, 0), s=(1.1, 1.1, 0.7)), **ex(0.2)}
     return ([(0, {}), (6, sag), (14, thud), (19, bounce), (27, tail), (36, tail)], "BEZIER", False, {"thud": 14, "bounce": 19, "end_pose_held": True})
 
+def kneel_hold(t, tail):
+    """처결 대기: 무릎 꿇은 혼이 천도·파혼 선택을 기다리는 동안 반복(120f). 끝 자세(tail)에서 시작해 숨 쉬듯 한 번 부풀었다 가라앉고,
+    머리(몸 윗부분)를 천천히 끄덕인다. 첫·끝 프레임이 Kneel 끝 자세와 같아서 Kneel→KneelHold, KneelHold→Tendo/Pahon 모두 끊김 없이 이어진다."""
+    b = tail["Body"]
+    br = lambda dz, dr, dxy: {**tail, "Body": S(r=(b["r"][0] + dr, b["r"][1], b["r"][2]), s=(b["s"][0] * dxy, b["s"][1] * dxy, b["s"][2] * dz), l=b["l"])}
+    return ([(0, tail), (40, br(1.08, -3.5, 0.985)), (70, br(1.0, -1.0, 1.0)), (100, br(1.05, 2.0, 0.99)), (120, tail)], "BEZIER", True, {"note": "처결 대기 반복"})
+
 TAIL = {  # 기존 Kneel의 끝 자세(수정 전과 같다)
     "basic": {"Body": S(r=(26, 0, 0), s=(1.15, 1.15, 0.53))},
     "mote": {"Body": S(r=(20, 0, 0), s=(1.34, 1.34, 0.26))},
@@ -79,5 +86,5 @@ def pahon(t):
 def soul_clips(t):
     """혼 한 형태에 더할 동작 6개. t: basic|mote|wail|buried"""
     C = {k: hit(t, k) for k in ("Hit1", "Hit2", "Stagger")}
-    C["Kneel"] = kneel(t, TAIL[t]); C["Tendo"] = tendo(t); C["Pahon"] = pahon(t)
+    C["Kneel"] = kneel(t, TAIL[t]); C["KneelHold"] = kneel_hold(t, TAIL[t]); C["Tendo"] = tendo(t); C["Pahon"] = pahon(t)
     return C
