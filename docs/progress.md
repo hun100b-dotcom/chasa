@@ -643,3 +643,4 @@
 - 혼 GLB(등급·지역·유형) 새 동작판으로 교체, 보스 월화·서 의원 GLB 교체(+`fx_hon_shards.glb` 복사만, 아직 안 씀). `models.json` 혼 행: Hit→Hit1, Hit2·Stagger·Tendo·Pahon 추가(묻힌 혼 제외).
 - 1타 Hit1·2타 Hit2·3타 Stagger(죽지 않을 때만), 천도 Tendo(0.8초)·파혼 Pahon(0.3초)을 틀고 그 길이만큼 몸을 남김(`Enemy.ReactHit`/`PlayFinishAnim`).
 - 아직: 견인 Hit2, 무릎 쿵 프레임 14 먼지·소리, 천도 빛 알갱이 f36, 파혼 파편 fx_hon_shards Burst f9, 보스 전용 동작. 나루 보스 GLB 는 Models/Boss 에 없어(그림 방식) 연결 안 함.
+- (2026-10-25) 주인공 출발·정지 동작 연결: 서 있다 달릴 때 Run_Start(0.15초), 0.3초 넘게 달리다 멈출 때 Run_Stop(0.27초). 180도 돌기·TurnL/R 은 아직(회전 속도가 30 rad/s 라 보통 한 프레임에 끝나 효과가 작음). PC 확인: 출발·정지 때 몸이 튀지 않는지.

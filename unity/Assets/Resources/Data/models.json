@@ -43,6 +43,14 @@
     {
      "pose": "Dodge",
      "clip": "Roll"
+    },
+    {
+     "pose": "RunStart",
+     "clip": "Run_Start"
+    },
+    {
+     "pose": "RunStop",
+     "clip": "Run_Stop"
     }
    ],
    "loop": [
