@@ -1,0 +1,65 @@
+{
+ "count": 564,
+ "dropped": [],
+ "overlaps": [],
+ "moved": [
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -317.43,
+   "y": 428.54,
+   "rot": 0,
+   "z": 0.6,
+   "note": "저잣 좌판(남쪽 줄)",
+   "walk_snap": {
+    "from": [
+     -317,
+     431
+    ],
+    "to": [
+     -317.43,
+     428.54
+    ]
+   }
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -152.5,
+   "y": 430.13,
+   "rot": 0,
+   "z": 0.95,
+   "note": "저잣 좌판(남쪽 줄)",
+   "walk_snap": {
+    "from": [
+     -152,
+     431
+    ],
+    "to": [
+     -152.5,
+     430.13
+    ]
+   }
+  }
+ ],
+ "per_model": {
+  "bridge_deck": 5,
+  "bridge_pier": 5,
+  "city_gate": 1,
+  "city_gate_inn": 1,
+  "city_gatekeeper_hut": 1,
+  "city_pit_grave": 1,
+  "city_skyline": 32,
+  "city_wall": 78,
+  "market_jige": 1,
+  "market_lantern_string": 6,
+  "market_ricecake_stall": 1,
+  "market_stall": 24,
+  "market_tile_house": 8,
+  "river_hut_mat": 2,
+  "shack_a": 5,
+  "shack_b": 3,
+  "shack_well": 1,
+  "snow_patch": 389
+ }
+}
