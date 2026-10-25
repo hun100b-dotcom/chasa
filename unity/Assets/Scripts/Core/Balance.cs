@@ -7,9 +7,9 @@ public static class Balance
     public const float CAMERA_VIEW_HEIGHT = 16.0f;  // 화면 세로로 보이는 월드 길이 (작을수록 확대)
     public const float CAMERA_FOLLOW_SMOOTHNESS = 8.0f;  // 카메라가 따라가는 부드러움
     public const float ARENA_HALF_SIZE = 14.0f;  // 28 x 28 정사각형 바닥
-    public const float PLAYER_MOVE_SPEED = 6.0f;
+    public const float PLAYER_MOVE_SPEED = 5.5f;  //  | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float PLAYER_RADIUS = 0.5f;
-    public const float PLAYER_TURN_SPEED = 22.0f;  // 몸 돌리는 속도(라디안/초)
+    public const float PLAYER_TURN_SPEED = 30.0f;  // 몸 돌리는 속도(라디안/초) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float PLAYER_HAND_HEIGHT = 1.0f;  // 사슬이 시작되는 손 높이
     public const float PLAYER_ARRIVE_DISTANCE = 0.15f;
     public const float COMBO_RESET_TIME = 0.6f;  // 콤보 이음 허용 시간
@@ -321,8 +321,8 @@ public static class Balance
     public const float ZONE_SIZE_M = 128.0f;  // 구역 한 칸 한 변(m). 기획 확정(10-24): 128×128m, 3×3 로딩. 마을(28×36m)은 0번 구역 안쪽에 들어간다
     public const float ZONE_HYSTERESIS_M = 6.0f;  // 구역 경계에서 '현재 구역'이 바뀌기 전 여유(m). 경계에서 켜졌다 꺼졌다 반복하지 않게
     public const int ZONE_LOAD_PROPS_PER_FRAME = 6;  // 구역을 불러올 때 한 프레임에 세우는 소품 수(웹은 쓰레드가 없어 나눠서 해야 끊기지 않음)
-    public const float CAMERA_LOOKAHEAD_M = 2.5f;  // (시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게
-    public const float CAMERA_DEADZONE_M = 0.6f;  // (시연판 임시) 카메라 중심에서 이 반경(m) 안에서는 카메라가 안 움직임. 0이면 끔. 잔떨림·멀미 감소
+    public const float CAMERA_LOOKAHEAD_M = 1.5f;  // (시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게 | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float CAMERA_DEADZONE_M = 0.3f;  // (시연판 임시) 카메라 중심에서 이 반경(m) 안에서는 카메라가 안 움직임. 0이면 끔. 잔떨림·멀미 감소 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float SHAKE_MAX_ROLL_DEG = 1.2f;  // (기획 타격감 분석 10-24, 임시) 흔들림 최대 화면 기울기(도). 위치보다 덜 어지럽고 묵직함
     public const float SHAKE_NOISE_FREQ = 22.0f;  // (기획 타격감 분석 10-24, 임시) 흔들림 빈도(Hz). 매 프레임 무작위 대신 펄린 노이즈 → 지글거림 제거
     public const float SHAKE_MOBILE_MULT = 0.7f;  // (기획 타격감 분석 10-24, 임시) 폰 화면은 흔들림 70%
@@ -338,12 +338,12 @@ public static class Balance
     public const float TENDO_COMPLETE_SLOWMO_SCALE = 0.5f;  // (기획 타격감 분석 10-24, 임시) 위 느린 시간의 속도 배율
     public const float PLAYER_HIT_INVULN = 0.5f;  // (기획 타격감 분석 10-24, 임시) 피격 직후 무적(초) [0.6→0.5]
     public const bool DODGE_ENABLED = true;  // (기획 타격감 분석 10-24, 임시) 피하기(구르기) 켜기. PC Space, 폰 오른쪽 아래 버튼
-    public const float DODGE_DISTANCE = 3.2f;  // (기획 타격감 분석 10-24, 임시) 피하는 거리(m)
+    public const float DODGE_DISTANCE = 4.0f;  // (기획 타격감 분석 10-24, 임시) 피하는 거리(m) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float DODGE_TIME = 0.32f;  // (기획 타격감 분석 10-24, 임시) 피하기 전체 시간(초)
     public const float DODGE_IFRAME_START = 0.03f;  // (기획 타격감 분석 10-24, 임시) 무적 시작(초)
     public const float DODGE_IFRAME_END = 0.25f;  // (기획 타격감 분석 10-24, 임시) 무적 끝(초) → 무적 0.22초(60fps 13프레임)
     public const int DODGE_CHARGES = 2;  // (기획 타격감 분석 10-24, 임시) 연속으로 피할 수 있는 횟수
-    public const float DODGE_RECHARGE = 1.1f;  // (기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초)
+    public const float DODGE_RECHARGE = 3.0f;  // (기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float DODGE_CANCEL_TO_ATTACK = 0.22f;  // (기획 타격감 분석 10-24, 임시) 피하기 시작 후 이 시점부터 공격·처결로 끊을 수 있음(초)
     public const bool DODGE_CANCELS_TENDO = true;  // (기획 타격감 분석 10-24, 임시) 천도 캐스팅 중 피하면 캐스팅만 취소, 혼은 계속 무릎 꿇고 대기(다시 천도 가능)
     public const float COMBO3_RECOVER_DODGE_LOCK = 0.5f;  // (기획 타격감 분석 10-24, 임시) 3타 후딜 앞쪽 이 비율은 피하기도 불가(마무리의 대가)
@@ -362,10 +362,10 @@ public static class Balance
     public const float CAMERA_WHEEL_MIN = 0.45f;  // 마우스 휠 최대 확대 배율(카메라 거리의 45%)
     public const float CAMERA_WHEEL_MAX = 1.8f;  // 마우스 휠 최대 축소 배율(카메라 거리의 180%)
     public const float CAMERA_WHEEL_STEP = 0.12f;  // 휠 한 칸당 배율 변화
-    public const float CAMERA_WHEEL_SMOOTH = 10.0f;  // 휠 줌이 따라가는 부드러움(클수록 빠름)
-    public const float MOVE_ACCEL = 60.0f;  // 걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1
-    public const float MOVE_START_FRAC = 0.4f;  // 걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발)
-    public const float MOVE_BRAKE_TIME = 0.1f;  // 도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터)
+    public const float CAMERA_WHEEL_SMOOTH = 12.0f;  // 휠 줌이 따라가는 부드러움(클수록 빠름) | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float MOVE_ACCEL = 70.0f;  // 걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1 | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float MOVE_START_FRAC = 0.5f;  // 걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발) | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float MOVE_BRAKE_TIME = 0.06f;  // 도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_SLOPE_SLOW = 0.5f;  // 오르막 기울기(오른 높이÷간 거리)가 이 값을 넘으면 걸음이 느려지기 시작(0.5 = 약 27도)
     public const float MOVE_SLOPE_BLOCK = 1.1f;  // 오르막 기울기가 이 값 이상이면 못 오른다(1.1 = 약 48도). 그 사이는 선형으로 느려짐
     public const float FOOTSTEP_STRIDE_M = 1.15f;  // 발소리 한 번이 나는 걸음 거리(m)
@@ -442,9 +442,9 @@ public static class Balance
     public const int AC_THROWNAME_DMG = 40;  // (액티브 도술 임시) 깨진 이름 던지기 피해
     public const float AC_THROWNAME_WINDOW = 5.0f;  // (액티브 도술 임시) 깨진 이름 던지기: 방금 파혼했다고 칠 시간(초)
     public const float AC_SHADOW_SEC = 10.0f;  // (액티브 도술 임시) 검은 갓의 그림자 지속(초)
-    public const float MOVE_TURN_RADPS = 14.0f;  // (기획 조작감) 이동·몸 회전 최대 속도(rad/s). 22는 순간 회전처럼 보여 14로 낮춤
-    public const float MOVE_LEAN_DEG = 6.0f;  // (기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서
-    public const float MOVE_BANK_DEG = 8.0f;  // (기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도)
+    public const float MOVE_TURN_RADPS = 30.0f;  // (기획 조작감) 이동·몸 회전 최대 속도(rad/s). 22는 순간 회전처럼 보여 14로 낮춤 | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float MOVE_LEAN_DEG = 3.0f;  // (기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서 | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float MOVE_BANK_DEG = 3.0f;  // (기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_LEAN_SMOOTH = 12.0f;  // (기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)
     public const float CAMERA_PITCH_PER_ZOOM_DEG = 22.0f;  // (기획 조작감) 줌 배율이 1.0 달라질 때 카메라 내려다보는 각도 변화(도). 확대하면 눕고(몰입), 축소하면 일어선다(지도처럼)
     public const float CAMERA_PITCH_MIN_DEG = 28.0f;  // (기획 조작감) 줌으로 바뀌는 카메라 각도의 하한(도) — 낮으면 언덕·나무에 시야가 가려진다
@@ -510,4 +510,10 @@ public static class Balance
     public const int SOULTYPE_RAPIDS_MOTE_PCT = 10;  // (필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 잔넋이 될 비율(%)
     public const int SOULTYPE_RAPIDS_WAIL_PCT = 25;  // (필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 넋두리가 될 비율(%)
     public const int SOULTYPE_RAPIDS_BURIED_PCT = 35;  // (필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼
+    public const float CAMERA_DIST_NEAR = 11.0f;  // 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMERA_DIST_MID = 16.0f;  // 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMERA_DIST_FAR = 20.0f;  // 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMERA_PITCH_NEAR = 46.0f;  // 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMERA_PITCH_MID = 52.0f;  // 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMERA_PITCH_FAR = 58.0f;  // 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
 }

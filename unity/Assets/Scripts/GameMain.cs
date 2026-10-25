@@ -143,6 +143,7 @@ public class GameMain : MonoBehaviour
         }
         offset = new Vector3(Mathf.Cos(yaw) * Mathf.Cos(pitch), Mathf.Sin(pitch), Mathf.Sin(yaw) * Mathf.Cos(pitch)) * dist;
         camYaw = yaw; camPitch = pitch; camDist = dist;
+        if (View3D.On) { SetZoomStep(1); wheel = wheelTarget; }   // 시작은 기본 거리(16 m)에서
 
         // 조명: 은은한 전체 조명 + 그림자 만드는 햇빛 (밝기는 다른 판과 눈으로 맞춤)
         RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
@@ -226,7 +227,12 @@ public class GameMain : MonoBehaviour
         Vector3 off = offset;
         if (View3D.On)
         {
-            float p = Mathf.Clamp(camPitch * Mathf.Rad2Deg + Balance.CAMERA_PITCH_PER_ZOOM_DEG * (wheel - 1f), Balance.CAMERA_PITCH_MIN_DEG, Balance.CAMERA_PITCH_MAX_DEG) * Mathf.Deg2Rad;
+            // 각도는 거리 따라 46°(가깝게) ~ 52°(기본) ~ 58°(멀리)로 부드럽게 이어진다 (기획 표준)
+            float curD = camDist * wheel;
+            float pd = curD <= Balance.CAMERA_DIST_MID
+                ? Mathf.Lerp(Balance.CAMERA_PITCH_NEAR, Balance.CAMERA_PITCH_MID, Mathf.InverseLerp(Balance.CAMERA_DIST_NEAR, Balance.CAMERA_DIST_MID, curD))
+                : Mathf.Lerp(Balance.CAMERA_PITCH_MID, Balance.CAMERA_PITCH_FAR, Mathf.InverseLerp(Balance.CAMERA_DIST_MID, Balance.CAMERA_DIST_FAR, curD));
+            float p = pd * Mathf.Deg2Rad;
             off = new Vector3(Mathf.Cos(camYaw) * Mathf.Cos(p), Mathf.Sin(p), Mathf.Sin(camYaw) * Mathf.Cos(p)) * camDist;
         }
         cam.transform.position = focus + (View3D.On ? off * ((1f - zoomIn) * wheel) : offset);
@@ -260,16 +266,26 @@ public class GameMain : MonoBehaviour
     float pinchPrev;                      // 두 손가락 사이 이전 거리(폰 확대·축소)
     bool kbMove;                          // 지금 WASD 로 걷는 중인가
 
-    /// <summary>휠·핀치로 확대/축소. 한 칸마다 STEP 만큼, 범위는 MIN~MAX 로 제한</summary>
+    /// <summary>휠·핀치로 3단계(가깝게/기본/멀리) 줌. 단계 거리는 balance.json 의 CAMERA_DIST_* (기획 표준: 11/16/20 m)</summary>
+    int zoomStep = 1;   // 0=가깝게 1=기본 2=멀리
+    float StepDist(int i) { return i <= 0 ? Balance.CAMERA_DIST_NEAR : i == 1 ? Balance.CAMERA_DIST_MID : Balance.CAMERA_DIST_FAR; }
+    void SetZoomStep(int i) { zoomStep = Mathf.Clamp(i, 0, 2); wheelTarget = StepDist(zoomStep) / Mathf.Max(0.1f, camDist); }   // 배율 = 목표 거리 / 기준 거리
     void HandleZoom()
     {
+        // 휠 한 칸 = 한 단계(앞으로 굴리면 가깝게). 연속 값이 아니라 단계라서 '딱 3번'만 멈춘다
         float scroll = Input.mouseScrollDelta.y;
-        if (Mathf.Abs(scroll) > 0.01f) wheelTarget = Mathf.Clamp(wheelTarget * (1f - scroll * Balance.CAMERA_WHEEL_STEP), Balance.CAMERA_WHEEL_MIN, Balance.CAMERA_WHEEL_MAX);
+        if (Mathf.Abs(scroll) > 0.01f) SetZoomStep(zoomStep - (scroll > 0f ? 1 : -1));
         if (Input.touchCount == 2)
         {
             float dist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
-            if (pinchPrev > 0f) wheelTarget = Mathf.Clamp(wheelTarget * (pinchPrev / Mathf.Max(1f, dist)), Balance.CAMERA_WHEEL_MIN, Balance.CAMERA_WHEEL_MAX);   // 벌리면 확대
-            pinchPrev = dist;
+            // 손가락을 12% 이상 벌리면 한 단계 가깝게, 오므리면 한 단계 멀리. 한 번 바꾸면 기준을 새로 잡아 연속으로 바뀌지 않게 한다
+            if (pinchPrev > 0f)
+            {
+                float ratio = dist / pinchPrev;
+                if (ratio > 1.12f) { SetZoomStep(zoomStep - 1); pinchPrev = dist; }
+                else if (ratio < 0.88f) { SetZoomStep(zoomStep + 1); pinchPrev = dist; }
+            }
+            else pinchPrev = dist;
         }
         else pinchPrev = 0f;
     }

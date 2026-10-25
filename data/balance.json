@@ -20,16 +20,16 @@
   "note": "28 x 28 정사각형 바닥"
  },
  "PLAYER_MOVE_SPEED": {
-  "value": 6.0,
-  "note": ""
+  "value": 5.5,
+  "note": " | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "PLAYER_RADIUS": {
   "value": 0.5,
   "note": ""
  },
  "PLAYER_TURN_SPEED": {
-  "value": 22.0,
-  "note": "몸 돌리는 속도(라디안/초)"
+  "value": 30.0,
+  "note": "몸 돌리는 속도(라디안/초) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "PLAYER_HAND_HEIGHT": {
   "value": 1.0,
@@ -1276,12 +1276,12 @@
   "note": "구역을 불러올 때 한 프레임에 세우는 소품 수(웹은 쓰레드가 없어 나눠서 해야 끊기지 않음)"
  },
  "CAMERA_LOOKAHEAD_M": {
-  "value": 2.5,
-  "note": "(시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게"
+  "value": 1.5,
+  "note": "(시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게 | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "CAMERA_DEADZONE_M": {
-  "value": 0.6,
-  "note": "(시연판 임시) 카메라 중심에서 이 반경(m) 안에서는 카메라가 안 움직임. 0이면 끔. 잔떨림·멀미 감소"
+  "value": 0.3,
+  "note": "(시연판 임시) 카메라 중심에서 이 반경(m) 안에서는 카메라가 안 움직임. 0이면 끔. 잔떨림·멀미 감소 | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "SHAKE_MAX_ROLL_DEG": {
   "value": 1.2,
@@ -1344,8 +1344,8 @@
   "note": "(기획 타격감 분석 10-24, 임시) 피하기(구르기) 켜기. PC Space, 폰 오른쪽 아래 버튼"
  },
  "DODGE_DISTANCE": {
-  "value": 3.2,
-  "note": "(기획 타격감 분석 10-24, 임시) 피하는 거리(m)"
+  "value": 4.0,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하는 거리(m) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "DODGE_TIME": {
   "value": 0.32,
@@ -1364,8 +1364,8 @@
   "note": "(기획 타격감 분석 10-24, 임시) 연속으로 피할 수 있는 횟수"
  },
  "DODGE_RECHARGE": {
-  "value": 1.1,
-  "note": "(기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초)"
+  "value": 3.0,
+  "note": "(기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "DODGE_CANCEL_TO_ATTACK": {
   "value": 0.22,
@@ -1440,20 +1440,20 @@
   "note": "휠 한 칸당 배율 변화"
  },
  "CAMERA_WHEEL_SMOOTH": {
-  "value": 10.0,
-  "note": "휠 줌이 따라가는 부드러움(클수록 빠름)"
+  "value": 12.0,
+  "note": "휠 줌이 따라가는 부드러움(클수록 빠름) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "MOVE_ACCEL": {
-  "value": 60.0,
-  "note": "걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1"
+  "value": 70.0,
+  "note": "걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1 | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "MOVE_START_FRAC": {
-  "value": 0.4,
-  "note": "걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발)"
+  "value": 0.5,
+  "note": "걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "MOVE_BRAKE_TIME": {
-  "value": 0.1,
-  "note": "도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터)"
+  "value": 0.06,
+  "note": "도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "MOVE_SLOPE_SLOW": {
   "value": 0.5,
@@ -1760,16 +1760,16 @@
   "note": "(액티브 도술 임시) 검은 갓의 그림자 지속(초)"
  },
  "MOVE_TURN_RADPS": {
-  "value": 14.0,
-  "note": "(기획 조작감) 이동·몸 회전 최대 속도(rad/s). 22는 순간 회전처럼 보여 14로 낮춤"
+  "value": 30.0,
+  "note": "(기획 조작감) 이동·몸 회전 최대 속도(rad/s). 22는 순간 회전처럼 보여 14로 낮춤 | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "MOVE_LEAN_DEG": {
-  "value": 6.0,
-  "note": "(기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서"
+  "value": 3.0,
+  "note": "(기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서 | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "MOVE_BANK_DEG": {
-  "value": 8.0,
-  "note": "(기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도)"
+  "value": 3.0,
+  "note": "(기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "MOVE_LEAN_SMOOTH": {
   "value": 12.0,
@@ -2030,5 +2030,29 @@
  "SOULTYPE_RAPIDS_BURIED_PCT": {
   "value": 35,
   "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼"
+ },
+ "CAMERA_DIST_NEAR": {
+  "value": 11.0,
+  "note": "휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_DIST_MID": {
+  "value": 16.0,
+  "note": "휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_DIST_FAR": {
+  "value": 20.0,
+  "note": "휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_PITCH_NEAR": {
+  "value": 46.0,
+  "note": "가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_PITCH_MID": {
+  "value": 52.0,
+  "note": "기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_PITCH_FAR": {
+  "value": 58.0,
+  "note": "멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))"
  }
 }

@@ -15,11 +15,12 @@ public class MiniMap : MonoBehaviour
 {
     public JudgeSystem judge; public Player player; public Camera cam;
     public static bool BigOpen;
+    public static float BottomPx = 150f;   // 작은 지도 + 지역 이름 줄의 아래 끝(화면 px, 위가 0). UiRoot 가 시계 고리를 이 아래에 둔다
 
     const int Px = 320;                 // 바탕 그림 한 변(픽셀)
     const float WorldM = 640f;          // 필드 한 변(m)
     const float M2P = Px / WorldM;      // 1m 당 픽셀
-    const float MiniRadiusM = 38f;      // 작은 지도가 보여 주는 반지름(m). 폰 화면에서도 읽히게 지름 76m
+    const float MiniRadiusM = 40f;      // 작은 지도가 보여 주는 반지름(m). 기획 표준 반경 40m(지름 80m)
     Texture2D baseTex, white, dot; bool ready;
     [Serializable] class Item { public string n; public float x, z; public int t; }
     [Serializable] class Mark { public string kind, name; public float x, z; }
@@ -132,8 +133,11 @@ public class MiniMap : MonoBehaviour
 
     void DrawMini()
     {
-        float size = Mathf.Clamp(Mathf.Min(Screen.width, Screen.height) * 0.30f, 150f, 260f);
-        var r = new Rect(Screen.width - size - 14f, 14f, size, size);
+        // 기획 표준: 1080p 에서 260px(화면 높이의 24%), 우상 여백 24px. 폰은 200px 급(높이의 30%, 읽히는 하한 110px)
+        float size = Ko.TouchUI ? Mathf.Clamp(Screen.height * 0.30f, 110f, 200f) : Mathf.Clamp(Screen.height * 0.24f, 150f, 300f);
+        float margin = Mathf.Max(10f, 24f * Screen.height / 1080f);
+        var r = new Rect(Screen.width - size - margin, margin, size, size);
+        BottomPx = r.yMax + 4f + 28f;   // 지역 이름 줄까지 포함한 아래 끝(시계 고리가 그 밑에 놓인다)
         float scale = size / (MiniRadiusM * 2f);   // px/m
         float H = CamHeading();
         Box(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), new Color(0.05f, 0.06f, 0.09f, 0.92f));
