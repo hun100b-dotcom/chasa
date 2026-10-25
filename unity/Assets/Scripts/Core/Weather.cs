@@ -50,6 +50,16 @@ namespace Chasa.Core
             return Weather.Clear;
         }
 
+        /// <summary>컷 날씨 이름("rain" 등) → 날씨. 모르는 이름·null 이면 null(무작위 그대로)</summary>
+        public static Weather? Parse(string name)
+        {
+            switch ((name ?? "").ToLowerInvariant())
+            {
+                case "clear": return Weather.Clear; case "cloudy": return Weather.Cloudy; case "rain": return Weather.Rain;
+                case "fog": return Weather.Fog; case "plague": return Weather.Plague; default: return null;
+            }
+        }
+
         /// <summary>보스 마당 고정 날씨. 보스가 아니면 null</summary>
         public static Weather? BossFixed(int bossId)
         {

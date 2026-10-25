@@ -40,6 +40,8 @@ public class CutscenePlayer
             return 1f;
         }
     }
+    /// <summary>지금 컷이 정한 장면 날씨(소문자 영문 이름). 컷이 없거나 정하지 않았으면 null</summary>
+    public string SceneWeather { get { return Active ? cur.SceneWeather : null; } }
     public bool PauseEnemies { get { return Active && cur.Data.pause; } }
     public string CamTarget { get { return Active ? cur.CamTarget : "player"; } }
     public float CamZoom { get { return Active ? cur.CamZoom : 1f; } }

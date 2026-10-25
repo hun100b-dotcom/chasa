@@ -4,6 +4,7 @@
 // 좌표: 월드 x,z (미터). 지도는 0..Size 를 덮고, 칸 사이는 부드럽게 이어 읽는다(쌍선형 보간 = 네 칸을 거리 비율로 섞음).
 // =============================================================================
 using System;
+using System.Collections.Generic;
 
 namespace Chasa.Core
 {
@@ -27,6 +28,36 @@ namespace Chasa.Core
             var f = new float[w * h];
             for (int i = 0; i < f.Length; i++) f[i] = minM + (r[i] * 256 + g[i]) / 65535f * (maxM - minM);
             return new HeightField(w, h, sizeM, f);
+        }
+
+        /// <summary>
+        /// 물길 틈 메우기: 강 조각 칸 안쪽만 파여 있어 칸 사이에 1~2m 둑이 남는다. 같은 줄(가로·세로)에서
+        /// 양쪽 maxGap 칸 안에 물보다 낮은 칸이 다 있고, 자기 높이가 rimMaxM 이하인 칸을 floorM 으로 낮춰 물길을 잇는다.
+        /// (둑이 한쪽에만 물이 있으면 강둑이므로 건드리지 않는다)
+        /// </summary>
+        public int CloseWaterGaps(float waterM, float rimMaxM, int maxGap, float floorM)
+        {
+            var lower = new List<int>();
+            for (int z = 0; z < H; z++)
+                for (int x = 0; x < W; x++)
+                {
+                    float h = m[z * W + x]; if (h < waterM || h > rimMaxM) continue;
+                    if ((LowWithin(x, z, -1, 0, waterM, maxGap) && LowWithin(x, z, 1, 0, waterM, maxGap)) ||
+                        (LowWithin(x, z, 0, -1, waterM, maxGap) && LowWithin(x, z, 0, 1, waterM, maxGap))) lower.Add(z * W + x);
+                }
+            foreach (var i in lower) m[i] = floorM;   // 한꺼번에 낮춘다(낮추는 도중 판정이 바뀌지 않게)
+            return lower.Count;
+        }
+
+        bool LowWithin(int x, int z, int dx, int dz, float waterM, int maxGap)
+        {
+            for (int k = 1; k <= maxGap; k++)
+            {
+                int xx = x + dx * k, zz = z + dz * k;
+                if (xx < 0 || zz < 0 || xx >= W || zz >= H) return false;
+                if (m[zz * W + xx] < waterM) return true;
+            }
+            return false;
         }
 
         public float Texel { get { return Size / (W - 1); } }   // 한 칸의 실제 길이(m)

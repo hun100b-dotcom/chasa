@@ -28,6 +28,8 @@ namespace Chasa.Core
         public int BossOutcome, NamedOutcome;     // 보스 결과(1 천도·2 파혼) / 이름혼 박돌쇠 결과
         public bool OpeningSeen, FuneralShown;    // 오프닝·장례 컷을 이미 봤나(불러오면 다시 틀지 않는다)
         public WeaponId Weapon = WeaponId.Chain, Other = WeaponId.Mace;   // 손에 든 / 등에 멘 무기
+        public int[] WeatherNow;                  // 구역별 지금 날씨(Weather 순서, WeatherRules.Zones 순). null 이면 불러올 때 새로 굴린다
+        public bool PlagueEased;                  // 3호 처결 뒤 역병 가중치 감소
     }
 
     public static class SaveGame
@@ -73,6 +75,7 @@ namespace Chasa.Core
             for (int i = 0; i < s.Gear.Length; i++) w("gear" + i, ItemText(s.Gear[i]));
             var c = new List<string>(); foreach (var n in s.Clues) c.Add(Clean(n)); w("clues", string.Join(",", c));
             w("boss", s.BossOutcome); w("named", s.NamedOutcome); w("opening", s.OpeningSeen ? 1 : 0); w("funeral", s.FuneralShown ? 1 : 0); w("weapon", (int)s.Weapon); w("other", (int)s.Other);
+            if (s.WeatherNow != null) w("wx", string.Join(",", s.WeatherNow)); w("plagueEased", s.PlagueEased ? 1 : 0);
             return b.ToString();
         }
 
@@ -97,6 +100,8 @@ namespace Chasa.Core
                 if (d.ContainsKey("bar") && d["bar"].Length > 0) foreach (var n in d["bar"].Split(',')) if (SkillTree.Find(n) != null && s.Learned.ContainsKey(n)) s.ActiveBar.Add(n);
                 for (int i = 0; i < s.Gear.Length; i++) s.Gear[i] = d.ContainsKey("gear" + i) ? ItemFrom(d["gear" + i], (Slot)i) : null;
                 if (d.ContainsKey("clues") && d["clues"].Length > 0) s.Clues.AddRange(d["clues"].Split(','));
+                s.PlagueEased = I("plagueEased") == 1;
+                if (d.ContainsKey("wx") && d["wx"].Length > 0) { var wp = d["wx"].Split(','); s.WeatherNow = new int[wp.Length]; for (int i = 0; i < wp.Length; i++) s.WeatherNow[i] = Math.Max(0, Math.Min(4, int.Parse(wp[i]))); }
                 return s;
             }
             catch (Exception) { return null; }

@@ -1818,4 +1818,27 @@ public class CoreTests
         ws.MidNight(rng); Assert.AreEqual(0, ws.MidNight(rng), "밤 중간은 밤마다 한 번만");
         Assert.AreEqual("역병 안개", WeatherState.Name(Weather.Plague));
     }
+
+    [Test]
+    public void HeightField_CloseWaterGaps_FillsThinRimOnly()
+    {
+        // 한 줄 높이: 물(-0.1) 물 둑(0.4) 물 | 땅(1.0) 물 | 강둑 한쪽만 물(-0.1) 평지(0.3) 평지(0.3) 평지(0.3)
+        var h = new float[] { -0.1f, 0.4f, -0.1f, 1.0f, -0.1f, 0.3f, 0.3f, 0.3f, 0.3f };
+        var f = new HeightField(9, 2, 8f, new float[18]);
+        var row = new float[18]; for (int i = 0; i < 9; i++) { row[i] = h[i]; row[9 + i] = 5f; }   // 둘째 줄은 높은 벽(세로 판정이 틈을 만들지 않게)
+        f = new HeightField(9, 2, 8f, row);
+        int n = f.CloseWaterGaps(0.18f, 0.8f, 3, -0.1f);
+        Assert.AreEqual(1, n, "둑(0.4) 하나만 낮춘다");
+        Assert.AreEqual(-0.1f, f.At(1f, 0f), 1e-3f); Assert.AreEqual(1.0f, f.At(3f, 0f), 1e-3f, "rimMax 넘는 땅은 그대로"); Assert.AreEqual(0.3f, f.At(5f, 0f), 1e-3f, "한쪽만 물이면 강둑");
+    }
+
+    [Test]
+    public void Weather_SaveRoundTrip_AndParse()
+    {
+        var snap = new SaveSnapshot { WeatherNow = new[] { 0, 2, 3, 4, 1 }, PlagueEased = true };
+        var back = SaveGame.Deserialize(SaveGame.Serialize(snap));
+        CollectionAssert.AreEqual(new[] { 0, 2, 3, 4, 1 }, back.WeatherNow); Assert.IsTrue(back.PlagueEased);
+        Assert.IsNull(SaveGame.Deserialize(SaveGame.Serialize(new SaveSnapshot())).WeatherNow, "옛 저장·날씨 없음은 null");
+        Assert.AreEqual(Weather.Fog, WeatherRules.Parse("FOG").Value); Assert.IsNull(WeatherRules.Parse("auto"));
+    }
 }

@@ -628,6 +628,7 @@ public class JudgeSystem : MonoBehaviour
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
         if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
+        weather.state.Override = WeatherRules.Parse(cuts.SceneWeather);   // 서사 컷이 정한 날씨가 무작위보다 우선
         float wxSlow; int wxDrain;
         weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
         stains.Tick(dt * weather.Fx.StainMult);   // 비 오는 밤: 얼룩이 절반만 오래간다
@@ -670,6 +671,7 @@ public class JudgeSystem : MonoBehaviour
         var s = SaveGame.Capture(growth, ledger, lo.gear, clueBook);
         s.X = player.Pos.x; s.Z = player.Pos.z; s.ClockDay = clock.Day; s.ClockMinutes = clock.Minutes;
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
+        s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
         return SaveStore.Write(SaveGame.Serialize(s));
     }
 
@@ -685,6 +687,7 @@ public class JudgeSystem : MonoBehaviour
         RefreshGrowth();
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
+        weather.Restore(s.WeatherNow, s.PlagueEased, clock);   // 날씨도 그대로(불러오자마자 다시 굴리지 않는다)
         bossOutcome = s.BossOutcome; pahonOrTendo = s.NamedOutcome; openingStarted = true; funeralShown = s.FuneralShown; sceneryAdded = false;
         player.CommandStop(); player.Pos = new Vector3(s.X, 0f, s.Z);
         if (onTeleport != null) onTeleport(player.Pos);   // 카메라가 날아오지 않고 곧바로 따라가게
@@ -1040,7 +1043,7 @@ public class JudgeSystem : MonoBehaviour
         if (white == null) return;
         if (CharacterPanel.Open || SettingsPanel.Open) return;   // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
-        weather.DrawOverlay();   // 비 줄기(HUD 보다 아래)
+        weather.DrawOverlay(player.Pos);   // 비 줄기(HUD 보다 아래)
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
         if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)

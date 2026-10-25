@@ -18,6 +18,16 @@ public class WeatherRuntime
     float clearT; Vector3 clearAt; float drainAcc;     // 역병 안개가 걷힌 자리와 남은 시간
     Vector3 lastPos;
 
+    /// <summary>저장에서 불러올 때: 날씨를 그대로 되돌리고(새로 굴리지 않는다) 지금 시계 구간에서 이어 간다</summary>
+    public void Restore(int[] now, bool eased, WorldClock clock)
+    {
+        state.PlagueEased = eased;
+        if (now != null) { var a = new Weather[now.Length]; for (int i = 0; i < a.Length; i++) a[i] = (Weather)now[i]; state.Restore(a); started = true; if (clock != null) { lastPhase = clock.Phase; midDone = clock.Phase == ClockPhase.Night && clock.Minutes >= Balance.CLOCK_DAWN_MIN + Balance.CLOCK_DAY_MIN + Balance.CLOCK_DUSK_MIN + Balance.CLOCK_NIGHT_MIN * 0.5f; } }
+        else started = false;   // 옛 저장: 새로 굴린다
+    }
+
+    public int[] Snapshot() { var sn = state.Snapshot(); var o = new int[sn.Length]; for (int i = 0; i < o.Length; i++) o[i] = (int)sn[i]; return o; }
+
     /// <summary>천도가 끝난 자리: 역병 안개가 반경 4m 에서 15초 걷힌다</summary>
     public void ClearPlague(Vector3 at) { clearAt = at; clearT = Balance.WEATHER_PLAGUE_CLEAR_SEC; }
 
@@ -83,11 +93,15 @@ public class WeatherRuntime
     float rainA; Texture2D rainFar, rainNear; bool rainTried;
 
     /// <summary>JudgeSystem.OnGUI 가 HUD 보다 먼저 부른다. 비가 아니면 서서히 걷힌다</summary>
-    public void DrawOverlay()
+    public void DrawOverlay(Vector3 playerPos)
     {
+        float ftarget = (Current == Weather.Fog || Current == Weather.Plague) ? 1f : 0f;
+        fogA = Mathf.MoveTowards(fogA, ftarget, Time.unscaledDeltaTime * 0.5f);   // 안개 층은 더 천천히(2초)
         float target = Current == Weather.Rain ? 1f : 0f;
         rainA = Mathf.MoveTowards(rainA, target, Time.unscaledDeltaTime * 0.7f);   // 약 1.4초에 걸쳐 시작·그침
-        if (rainA <= 0.01f || Event.current.type != EventType.Repaint) return;
+        if (Event.current.type != EventType.Repaint) return;
+        DrawFog();
+        if (rainA <= 0.01f) return;
         if (!rainTried)
         {
             rainTried = true;
@@ -98,6 +112,50 @@ public class WeatherRuntime
         float t = Time.unscaledTime;
         DrawRainLayer(rainFar, 0.05f, -1.3f, 640f, 0.45f * rainA, t);
         DrawRainLayer(rainNear, 0.12f, -2.4f, 460f, 0.6f * rainA, t);
+        DrawSplashes(playerPos, t);
+    }
+
+    // ---- 안개 층: fog_noise 두 겹을 서로 다른 방향으로 천천히 흘린다(sky_clock.json fog_layers). 역병 안개는 푸르스름한 회녹색
+    float fogA; Texture2D fogTex; bool fogTried;
+    void DrawFog()
+    {
+        if (fogA <= 0.01f) return;
+        if (!fogTried) { fogTried = true; fogTex = SpriteLib.Texture("sky/fog_noise"); if (fogTex != null) fogTex.wrapMode = TextureWrapMode.Repeat; }
+        if (fogTex == null) return;
+        var tint = Current == Weather.Plague ? new Color(0.45f, 0.55f, 0.50f) : new Color(0.80f, 0.85f, 0.88f);
+        float t = Time.unscaledTime, w = Screen.width / 900f, h = Screen.height / 900f;
+        GUI.color = new Color(tint.r, tint.g, tint.b, 0.20f * fogA);
+        GUI.DrawTextureWithTexCoords(new Rect(0, 0, Screen.width, Screen.height), fogTex, new Rect(t * 0.01f, t * 0.004f, w, h));
+        GUI.color = new Color(tint.r, tint.g, tint.b, 0.14f * fogA);
+        GUI.DrawTextureWithTexCoords(new Rect(0, 0, Screen.width, Screen.height), fogTex, new Rect(-t * 0.006f, t * 0.007f, w * 1.6f, h * 1.6f));
+        GUI.color = Color.white;
+    }
+
+    // ---- 비 튀김: 플레이어 둘레 땅 위 무작위 점에서 8프레임 물방울이 초당 14프레임으로 퍼진다(rain_splash_sheet 768x96)
+    struct Splash { public Vector3 at; public float t0; }
+    readonly Splash[] splashes = new Splash[18]; Texture2D splashTex; bool splashTried;
+    void DrawSplashes(Vector3 center, float now)
+    {
+        if (!splashTried) { splashTried = true; splashTex = SpriteLib.Texture("sky/rain_splash_sheet"); }
+        var cam = Camera.main; if (splashTex == null || cam == null) return;
+        for (int i = 0; i < splashes.Length; i++)
+        {
+            var sp = splashes[i]; float age = now - sp.t0;
+            if (age > 8f / 14f || sp.t0 == 0f)   // 한 번 퍼지고 나면 다른 점에서 다시(시작 시각을 흩어 놓아 한꺼번에 터지지 않게)
+            {
+                float a = Random.value * Mathf.PI * 2f, r = Mathf.Sqrt(Random.value) * 11f;
+                sp.at = new Vector3(center.x + Mathf.Cos(a) * r, 0f, center.z + Mathf.Sin(a) * r);
+                sp.at.y = GroundTerrain.HeightAt(sp.at.x, sp.at.z) + 0.05f;   // 땅 높이 바로 위
+                sp.t0 = now + Random.value * 0.5f; splashes[i] = sp; continue;
+            }
+            if (age < 0f) continue;
+            int frame = Mathf.Clamp((int)(age * 14f), 0, 7);
+            var sc = cam.WorldToScreenPoint(sp.at); if (sc.z <= 0f) continue;
+            float size = 64f;
+            GUI.color = new Color(1f, 1f, 1f, 0.85f * rainA);
+            GUI.DrawTextureWithTexCoords(new Rect(sc.x - size * 0.5f, Screen.height - sc.y - size * 0.5f, size, size), splashTex, new Rect(frame / 8f, 0f, 1f / 8f, 1f));
+        }
+        GUI.color = Color.white;
     }
 
     static void DrawRainLayer(Texture2D tex, float su, float sv, float tilePx, float alpha, float t)

@@ -18,6 +18,7 @@ namespace Chasa.Core
         public string text, style;               // 대사 글자와 모양(bubble·memory)
         public float lineDur;                    // 대사가 떠 있는 시간
         public string[] sfx;                     // 이 시각에 틀 효과음 id 들(서사 대본 sfx 칸)
+        public string weather;                   // 장면 날씨: clear·cloudy·rain·fog·plague 로 고정(서사가 정하면 무작위보다 우선), auto 면 풀림
         public string ctl;                       // 조작 허용: none(잠금) / walk(걷기만) / restore(복귀). 비면 그대로 — 서사 대본의 control 칸
     }
 
@@ -35,6 +36,7 @@ namespace Chasa.Core
         public readonly CutData Data;
         public float Time;
         public bool Done { get { return Time >= Data.duration; } }
+        public string SceneWeather;              // 컷이 정한 날씨 이름(없으면 null). 컷이 끝나면 쓰지 않는다
         public string CamTarget = "player";      // 지금 카메라가 보는 곳
         public float CamZoom = 1f;               // 지금 확대 배율(1 = 평소)
         public float CamTime = 0.3f;             // 가장 최근 단계가 정한 이동 시간
@@ -62,6 +64,7 @@ namespace Chasa.Core
             {
                 var s = Data.steps[next++];
                 if (s.sfx != null) foreach (var id in s.sfx) if (!string.IsNullOrEmpty(id)) SfxPending.Enqueue(id);
+                if (!string.IsNullOrEmpty(s.weather)) SceneWeather = s.weather == "auto" ? null : s.weather;
                 if (s.ctl == "walk" || s.ctl == "restore") Walk = true; else if (s.ctl == "none") Walk = false;
                 if (!string.IsNullOrEmpty(s.cam))
                 {
