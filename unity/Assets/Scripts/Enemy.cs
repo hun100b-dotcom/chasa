@@ -208,8 +208,20 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>S1 보스 나루 영감: 크고 느리고 한 방이 아프다</summary>
+    // 보스 목줄: 플레이어가 40m 보다 멀면 쫓지 않고 처음 자리로 돌아간다.
+    // 왜? 넓은 필드에서 몇 분 지나면 보스가 마을까지 걸어와 체력바가 마을에 뜨는 일이 있었다(PC 봇 측정).
+    const float BossLeashM = 40f;
+    Vector3 bossHome; bool bossHomeSet;
+    void ReturnHome(float dt)
+    {
+        if (!bossHomeSet) return;
+        var d = bossHome - Pos; d.y = 0f;
+        if (d.magnitude < 0.5f) return;
+        Pos += d.normalized * speed * slowMult * dt;
+    }
     public void MakeBoss(int id = 1)
     {
+        bossHome = Pos; bossHomeSet = true;
         var def = Bosses.Get(id);
         extra = true; label = def.Name;
         soul = Soul.MakeBoss(id);
@@ -291,6 +303,7 @@ public class Enemy : MonoBehaviour
                     var tg = new Vector3(-(playerPos.z - Pos.z), 0f, playerPos.x - Pos.x) / Mathf.Max(0.01f, dist);
                     Pos += tg * speed * slowMult * 0.35f * dt;
                 }
+                else if (soul.Boss && FieldRules.On && dist > BossLeashM) ReturnHome(dt);   // 보스는 마당 근처에서만 쫓는다
                 else Chase(dt, playerPos);
             }
             bool wasWind = atk.Winding;
