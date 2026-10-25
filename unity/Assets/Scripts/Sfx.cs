@@ -64,6 +64,10 @@ public class Sfx : MonoBehaviour
     {
         AudioClip c;
         if (clips.TryGetValue(id, out c)) return c;
+        // 사운드팀이 만든 WAV 파일이 있으면 그것을 먼저 쓴다(Resources/Audio/Sfx/<id의 . 을 _ 로>). 없을 때만 코드로 합성한다.
+        // 반복 소리(cast·amb)는 파일 자체에 이음매 처리가 돼 있고, 음량도 맞춰져 있어 재생 볼륨은 1.0 그대로
+        c = Resources.Load<AudioClip>("Audio/Sfx/" + id.Replace('.', '_'));
+        if (c != null) { clips[id] = c; return c; }
         var data = SfxSynth.Render(id);
         if (data == null) { clips[id] = null; return null; }
         c = AudioClip.Create(id, data.Length, 1, SfxSynth.Rate, false);

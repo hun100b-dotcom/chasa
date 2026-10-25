@@ -359,3 +359,8 @@
 - `Core/Growth.cs` `GrowthEffects`: 능력치(힘→피해, 날램→공속·이동, 몸→체력, 마음→시전 단축·천도 넋; 수치는 balance.json `GROWTH_*` 임시값)와 패시브 7종(오래 부르기·고마운 넋·곁을 지킴·단단한 손·큰 폭발·세찬 넉백·노잣돈)을 장비 합계에 얹음. 상한(CAP_*)은 GearStats가 그대로 지킴. `Loadout.Refresh`·`JudgeSystem.RefreshGrowth`, 명부에서 점수를 쓰면 바로 반영. 테스트 1개(140 통과).
 - 아직 미연결: 패시브 5종(몫을 채움·긴 사슬·묶인 자·손에 익음·마른 얼룩)과 액티브 전부(초혼·휘감기·터뜨리기는 기존 도술과 겹치니 기획 확인 필요).
 - 아트 신규 GLB 반입: `Resources/Models/Boss/`(월화 b02·서 의원 b03 + 동작표), `Resources/Models/Props/`(소품 20종). 아직 게임에서 부르지 않음(2·3 보스 전투 미구현). .meta는 PC.
+## 2026-10-25 [기획·사운드] 효과음 39개 실제 WAV 파일
+- `tools/sfx_render.py`(numpy·scipy)로 오프라인 합성 → `unity/Assets/Resources/Audio/Sfx/*.wav`, 목록 `data/sfx_files.json`. 게임 안 SfxSynth보다 풍부하게: 울림(잔향), 쇠 맥놀이, 물방울, 나무 쪼개짐·엽전 알갱이.
+- 기존 12개 id 그대로(sfx.hit.chain 등, 최대 크기도 기존 gainDb와 같음) + 기획 문서에만 있던 5개(footstep, ui.click, ui.confirm, danger.enter, clock.toll) + 보스 컷신 B01~B03 장면용 22개(cut.*, amb.river.mist).
+- 코드 연결 요청: `Sfx.Clip(id)`가 `Resources.Load<AudioClip>("Audio/Sfx/"+id.Replace('.','_'))`를 먼저 찾고 없으면 SfxSynth. 컷신 단계에 `sfx` 칸 추가 시 cut.* id 사용.
+- 다시 만들기: `python3 tools/sfx_render.py`(같은 id는 항상 같은 소리).
