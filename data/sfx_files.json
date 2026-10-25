@@ -1451,7 +1451,7 @@
    "loop": false,
    "bypass_cast_filter": false,
    "length_sec": 1.58,
-   "peak_dbfs": -10
+   "peak_dbfs": -14
   },
   {
    "id": "sfx.hit.bell.heavy",
@@ -1462,7 +1462,7 @@
    "loop": false,
    "bypass_cast_filter": false,
    "length_sec": 2.97,
-   "peak_dbfs": -7
+   "peak_dbfs": -11
   },
   {
    "id": "sfx.hit.trident",
@@ -3762,6 +3762,292 @@
    "bypass_cast_filter": true,
    "length_sec": 17.85,
    "peak_dbfs": -14
+  },
+  {
+   "id": "amb.underwater.low",
+   "file": "amb_underwater_low",
+   "category": "컷신",
+   "desc": "물속의 먹먹한 낮은 울림: 귀가 물에 잠긴 듯 웅— + 아주 느린 거품, 높은 소리는 전혀 없음(반복용 12초)",
+   "use": "C-21 16.0 · C-27A/B 48.0 · C-30 0.0 · B31-INTRO 0.0 (물속 장면 내내 깔고 장면이 바뀌면 끔)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 11.7,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "cut.water.rise",
+   "file": "cut_water_rise",
+   "category": "컷신",
+   "desc": "물이 빠르게 차오름: 사방에서 물이 밀려와 쏴아— 콸콸 높아지며 커짐(2.5초)",
+   "use": "S3-DAWN-PUSH 0.0 · B21-FLOOD 0.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.85,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.water.rise.far",
+   "file": "cut_water_rise_far",
+   "category": "컷신",
+   "desc": "멀리서 물이 차오르기 시작: 아주 먼 하류에서 낮은 우르르가 차츰 커짐(2초)",
+   "use": "S3-DAWN-WARN 0.0 (게임 중 경고는 sfx.water.warn, 이것은 컷 2초 판)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 4.29,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.laydown",
+   "file": "sfx_laydown",
+   "category": "컷신",
+   "desc": "몸이 젖은 흙에 천천히 눕는 소리: 무릎·어깨가 차례로 내려앉는 둔한 털썩 둘 + 젖은 흙 찌걱 + 천 스침(1.8초) — 방울 없음",
+   "use": "BAEK-LAY · B21~B30-LAY · C-31A 6.0: 몸이 눕는 순간(눕히기 완료음 sfx.baek.laydown 과 따로)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.28,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "cut.thread.snap",
+   "file": "cut_thread_snap",
+   "category": "컷신",
+   "desc": "검은 실이 끊김(컷신판): 물줄기 같은 실이 툭 — 낮게 웅 튕기고 물이 똑 떨어짐(1초)",
+   "use": "Bxx-KNEEL 0.0 · C-23B 0.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.58,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.bones.crumble",
+   "file": "cut_bones_crumble",
+   "category": "컷신",
+   "desc": "젖은 흙과 뼈가 함께 부서짐: 둔하게 와르르 — 마른 나무 같은 뼈 부딪침 + 흙덩이 철퍽(1.5초)",
+   "use": "Bxx-BREAK 0.0 (sfx.baek.break 폭발 바로 뒤에 겹침)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.08,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "cut.chain.taut",
+   "file": "cut_chain_taut",
+   "category": "컷신",
+   "desc": "사슬이 팽팽하게 당겨짐: 고리들이 차르륵 일어서다 팽 — 쇠가 낮게 끄응(1.3초)",
+   "use": "C-27A/B 20.0 · C-30 26.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.31,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.chain.fall",
+   "file": "cut_chain_fall",
+   "category": "컷신",
+   "desc": "사슬이 흙 위로 감기며 떨어짐: 고리가 차르르르 둥글게 쌓이며 흙에 묻히는 먹먹한 소리(1.8초)",
+   "use": "B27-LAY 8.0 · C-31A 140.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.68,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.rewind.soft",
+   "file": "cut_rewind_soft",
+   "category": "컷신",
+   "desc": "거꾸로 감김: 종이 장이 뒤에서 앞으로 부드럽게 넘어가는 소리 — 소리 자체를 거꾸로 뒤집어 '빨려 들듯' 끝남(2.4초)",
+   "use": "RITE-REVERSE 0.0 · LEDGER-REVERSE 0.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.72,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "cut.thread.reel",
+   "file": "cut_thread_reel",
+   "category": "컷신",
+   "desc": "실이 감겨 올라감: 가는 실이 위로 말려 올라가며 음이 끼잉 올라감 + 물방울 몇(2초)",
+   "use": "THREAD-RISE 0.0 · C-23A 0.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.25,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "cut.soil.shift",
+   "file": "cut_soil_shift",
+   "category": "컷신",
+   "desc": "젖은 흙에서 몸이 일어남: 흙이 몸에서 떨어지며 찌걱 + 흙알 사르르 + 무릎 펴는 둔한 소리(1.6초)",
+   "use": "STEP-ASIDE 0.0 · C-24 36.0(B-05 천도판)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.43,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "cut.hull.beach",
+   "file": "cut_hull_beach",
+   "category": "컷신",
+   "desc": "나무배가 모래에 올라앉음: 배 밑이 모래를 스으윽 밀고 올라가 쿵 멈춤 + 판자 삐걱(1.8초)",
+   "use": "C-23A 38.0 · C-23B 36.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.58,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.hull.scrape",
+   "file": "cut_hull_scrape",
+   "category": "컷신",
+   "desc": "뒤집힌 나무배가 바닥을 긁음: 배 등판이 뻘·자갈을 끄으윽 끌며 다가옴(1.8초)",
+   "use": "B21-INTRO 3.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.48,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.earth.drum",
+   "file": "cut_earth_drum",
+   "category": "컷신",
+   "desc": "땅속에서 울리는 북 같은 진동: 흙에 막힌 큰 북 둥— 둥— 둥, 높은 소리는 없음(3초)",
+   "use": "C-24 24.0 · B24-INTRO 3.0(B-06 천도 아님 판)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.37,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.straw.tie",
+   "file": "cut_straw_tie",
+   "category": "컷신",
+   "desc": "짚신 끈을 맴: 짚이 바스락 비벼지고 끈을 두 번 쭉 당겨 묶음(1.4초)",
+   "use": "B29-LAY 4.8",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.95,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "cut.rope.taut",
+   "file": "cut_rope_taut",
+   "category": "컷신",
+   "desc": "젖은 밧줄이 팽팽해짐: 여섯이 한꺼번에 당긴 줄이 끄익 + 물이 짜여 똑똑(0.9초)",
+   "use": "B22-INTRO 3.2",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.73,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.rope.fall",
+   "file": "cut_rope_fall",
+   "category": "컷신",
+   "desc": "새끼줄이 우물에 떨어짐: 줄이 스르르 미끄러져 내려와 우물 물에 철퍽 — 둥근 벽이 울림(1.8초)",
+   "use": "B30-LAY 13.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.89,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "cut.pole.lay",
+   "file": "cut_pole_lay",
+   "category": "컷신",
+   "desc": "나무 깃대 둘이 흙에 눕음: 긴 나무가 천천히 기울다 하나, 또 하나 둔하게 툭 — 나무 몸통이 낮게 울림(1.6초)",
+   "use": "B24-LAY 4.8",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.01,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.lime.step",
+   "file": "cut_lime_step",
+   "category": "컷신",
+   "desc": "마른 석회 가루를 밟음: 발이 고운 가루에 푹 — 사각, 세 걸음(1.8초)",
+   "use": "B26-INTRO 0.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.04,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "cut.lime.crack",
+   "file": "cut_lime_crack",
+   "category": "컷신",
+   "desc": "굳은 석회가 갈라짐: 쩌억 — 흰 띠가 길게 금 가며 가루가 확 피어오름(1.1초)",
+   "use": "B26-SPLIT 0.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.47,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "cut.gate.close",
+   "file": "cut_gate_close",
+   "category": "컷신",
+   "desc": "큰 나무 성문이 닫힘: 문짝이 끄으으응 밀리다 쿵 — 빗장 소리(3초)",
+   "use": "B27-GATE 0.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.7,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "cut.cloth.wave",
+   "file": "cut_cloth_wave",
+   "category": "컷신",
+   "desc": "무명 저고리가 바람에 크게 흔들림: 지붕 위에서 휘두르는 천이 펄럭 펄럭 + 높은 바람(4초)",
+   "use": "C-31A 70.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 5.37,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "cut.book.set",
+   "file": "cut_book_set",
+   "category": "컷신",
+   "desc": "묶은 장부를 젖은 돌에 내려놓음: 두꺼운 종이 묶음이 툭 + 젖은 돌이라 살짝 철벅(0.8초)",
+   "use": "C-28 36.0",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.1,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "amb.wind.dry",
+   "file": "amb_wind_dry",
+   "category": "컷신",
+   "desc": "마른 들바람: 해 질 녘 붉은재 — 물기 없는 바람이 마른 풀을 쓸고 지나감, 새·벌레 없음(반복용 14초)",
+   "use": "C-24 0.0 (붉은재 큰 무덤, 장면이 봉분 안으로 들어가면 끔)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 13.7,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "amb.ondol.fire",
+   "file": "amb_ondol_fire",
+   "category": "컷신",
+   "desc": "아궁이 불: 작은 장작불이 타닥 타닥 + 고래로 빨려 드는 바람 우—(반복용 8초)",
+   "use": "B29-INTRO 0.0 (B-29 무대 내내 깔아도 됨)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 7.8,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "vo.far.reply",
+   "file": "vo_far_reply",
+   "category": "컷신",
+   "desc": "아주 먼 물길에서 오는 짧은 대답: 사람 목소리 한마디가 물 너머로 — 말뜻은 전혀 안 들림, 아주 작게(1.6초)",
+   "use": "B25-LAY 7.0(S-209 눕힘일 때만)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.29,
+   "peak_dbfs": -20
   }
  ],
  "footsteps": {

@@ -1,0 +1,2297 @@
+{
+ "_설명": "시즌3 컷신 89컷(docs/narrative/cutscenes_s3.json)의 '소리 대본' 덧칠표 (기획·사운드, 2026-10-25 밤) — 생성: tools/cutscene_audio_s3.py",
+ "music_files": {
+  "_설명": "시즌3 컷에서 부를 곡. 없으면 Temp 임시 대역 → 그것도 없으면 fallback. 파일은 Resources/Audio/BGM/<id>",
+  "bgm_s3_open": "62 시즌3 여는 장면(C-21)",
+  "bgm_s3_knot": "56 B-23 매듭",
+  "bgm_s3_imyeong": "57 B-27 이명",
+  "bgm_s3_mybaek": "58 B-31 나의 백(C-27A/B 28초에 미리 작게)",
+  "bgm_s3_end_a": "59 결말 A",
+  "bgm_s3_end_b": "60 결말 B",
+  "bgm_s3_end_c": "61 결말 C",
+  "bgm_below_earth_night": "49 (C-24)",
+  "bgm_below_earth_finish": "51 (C-27A 첫머리)",
+  "bgm_below_ink_night": "52 (C-28)",
+  "bgm_s1_dawn": "(재사용) C-21S 요약 · C-23A 첫 배가 닿음",
+  "bgm_s2_finale_b": "(재사용) C-23B 빈 기슭",
+  "bgm_solgogae_night": "(재사용) C-30 처음과 같은 물"
+ },
+ "silent_by_design": "일부러 소리를 안 얹은 박자: 입 모양(칠성의 셈 B25-KNEEL·B25-LAY 4.8, 사공의 부름 B30-LAY 4.8, 당할미 C-31B 70.0), 당할미가 보기만 하는 박자(FAR-LIGHT-FIRST 6.0, C-23A 64.0, C-27A 60.0), 열한 몸의 빈 오른팔(C-21 48.0), 무릎 컷의 0.4·1.5(처결 고르는 시간), 거꾸로 장례의 {empty}. 백은 말하지 않는다 — 소리가 비어야 그게 들린다",
+ "cuts": {
+  "C-21": {
+   "0.0": {
+    "add": [
+     {
+      "id": "amb.river.mist",
+      "loop": true
+     }
+    ],
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_open",
+     "fade": 3.0,
+     "fallback": "silence"
+    },
+    "note": "대본의 강 소리 한 번에 더해 반복으로 깔아 둔다(16.0에서 물속으로 바뀜)"
+   },
+   "8.0": {
+    "add": [
+     {
+      "id": "amb.thread.hum",
+      "loop": true,
+      "gain": 0.5
+     }
+    ],
+    "note": "카메라가 발목까지 내려가면 실이 처음 '들린다'"
+   },
+   "16.0": {
+    "add": [
+     {
+      "stop": "amb.river.mist",
+      "fade": 1.5
+     },
+     {
+      "id": "amb.underwater.low",
+      "loop": true
+     }
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 2.0
+    }
+   },
+   "28.0": {
+    "add": [
+     {
+      "stop": "amb.underwater.low",
+      "fade": 1.0
+     },
+     {
+      "stop": "amb.thread.hum",
+      "fade": 1.0
+     },
+     {
+      "id": "sfx.water.drain",
+      "gain": 0.6
+     }
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.8,
+     "fade": 2.0
+    },
+    "note": "해 질 녘 물 빠짐 = 게임 중 sfx.water.drain 과 같은 소리를 함께(플레이어가 귀로 배워 둠)"
+   },
+   "38.0": {
+    "add": [
+     {
+      "id": "amb.below.dambed",
+      "loop": true,
+      "gain": 0.8
+     }
+    ]
+   },
+   "48.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.4,
+     "fade": 1.5
+    },
+    "note": "열한 몸·빈 오른팔: 설명 대신 음악을 낮춘다"
+   },
+   "56.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.8,
+     "fade": 1.0
+    }
+   },
+   "62.0": {
+    "add": [
+     "sfx.keeper.note"
+    ]
+   },
+   "70.0": {
+    "add": [
+     {
+      "stop": "amb.below.dambed",
+      "fade": 2.0
+     }
+    ],
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "C-21S": {
+   "0.0": {
+    "music": {
+     "op": "play",
+     "id": "bgm_s1_dawn",
+     "fade": 2.0,
+     "fallback": "silence"
+    }
+   },
+   "30.0": {
+    "add": [
+     {
+      "id": "amb.styx.ferry",
+      "loop": true,
+      "gain": 0.6
+     }
+    ]
+   },
+   "45.0": {
+    "add": [
+     {
+      "stop": "amb.styx.ferry",
+      "fade": 2.0
+     },
+     {
+      "id": "amb.thread.hum",
+      "loop": true,
+      "gain": 0.5
+     }
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 2.0
+    }
+   },
+   "60.0": {
+    "add": [
+     {
+      "stop": "amb.thread.hum",
+      "fade": 2.0
+     }
+    ],
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "S3-DUSK": {
+   "0.0": {
+    "add": [
+     {
+      "id": "sfx.water.drain",
+      "gain": 0.7
+     }
+    ],
+    "note": "대본의 cut.water.recede(짧게) 위에 게임 중 물 빠짐 소리 첫머리를 겹친다"
+   }
+  },
+  "S3-DAWN-WARN": {
+   "0.0": {
+    "add": [
+     "sfx.water.warn"
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.7,
+     "fade": 0.5
+    },
+    "note": "천도·눕히기 중에도 들리는 경고(bypass). 2분 차오름은 이 뒤에 amb.water.rising + bgm_s3_rising 을 코드가 깐다"
+   },
+   "2.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 2.0
+    }
+   }
+  },
+  "S3-DAWN-PUSH": {
+   "0.0": {
+    "add": [
+     {
+      "stop": "amb.water.rising",
+      "fade": 1.0
+     },
+     "sfx.flood.pushup"
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.4,
+     "fade": 0.3
+    }
+   },
+   "3.0": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    },
+    "note": "벌 없음: 위층 곡으로 부드럽게 돌아온다"
+   }
+  },
+  "RITE-REVERSE": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.4,
+     "fade": 1.0
+    }
+   },
+   "16.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.2,
+     "fade": 2.0
+    },
+    "note": "#1 빈 것 — 단서는 비어 있음으로 들린다"
+   },
+   "24.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "LEDGER-REVERSE": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.4,
+     "fade": 1.0
+    }
+   },
+   "12.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.2,
+     "fade": 1.5
+    }
+   },
+   "16.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "BAEK-LAY": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.3
+    },
+    "add": [
+     {
+      "stop": "amb.thread.hum",
+      "fade": 0.5
+     }
+    ]
+   },
+   "0.6": {
+    "add": [
+     {
+      "id": "sfx.baek.laydown",
+      "delay": 1.4
+     }
+    ],
+    "note": "몸이 다 누운 뒤 완료음(흙이 숨 내쉼 + 방울)"
+   },
+   "3.0": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "BAEK-BREAK": {
+   "0.0": {
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    },
+    "add": [
+     {
+      "stop": "amb.thread.hum",
+      "fade": 0.1
+     },
+     {
+      "id": "cut.bones.crumble",
+      "delay": 0.1,
+      "gain": 0.7
+     }
+    ]
+   }
+  },
+  "STEP-ASIDE": {
+   "0.0": {
+    "add": [
+     "sfx.baek.stepaside"
+    ],
+    "note": "대본 요청 cut.soil.shift(가까이) 위에 게임 중 비켜섬 소리"
+   }
+  },
+  "OWNERLESS": {
+   "0.0": {
+    "add": [
+     {
+      "id": "cut.seal.fade",
+      "gain": 0.5
+     }
+    ]
+   }
+  },
+  "THREAD-RISE": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.6,
+     "fade": 0.5
+    }
+   },
+   "3.0": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "FAR-LIGHT-FIRST": {
+   "0.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    },
+    "music": {
+     "op": "duck",
+     "to": 0.4,
+     "fade": 1.5
+    }
+   },
+   "6.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.25,
+     "fade": 1.0
+    },
+    "note": "당할미는 말하지 않는다 — 음악만 더 내린다"
+   },
+   "12.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B21-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.poolbed",
+      "loop": true,
+      "gain": 0.8
+     }
+    ],
+    "replace": {
+     "amb.river.mist": "amb.below.poolbed"
+    }
+   },
+   "4.5": {
+    "music": {
+     "op": "layer",
+     "id": "combat",
+     "fade": 1.0
+    }
+   }
+  },
+  "B21-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    }
+   }
+  },
+  "B21-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    }
+   },
+   "6.5": {
+    "add": [
+     {
+      "id": "sfx.baek.laydown",
+      "delay": 1.0
+     }
+    ]
+   },
+   "8.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "11.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B21-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    }
+   },
+   "3.2": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B21-FLOOD": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.yun.waist",
+      "delay": 0.8,
+      "gain": 0.6
+     }
+    ]
+   },
+   "3.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B22-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.wreckbed",
+      "loop": true,
+      "gain": 0.8
+     }
+    ],
+    "replace": {
+     "amb.sea.wind": "amb.below.wreckbed"
+    }
+   },
+   "4.5": {
+    "music": {
+     "op": "layer",
+     "id": "combat",
+     "fade": 1.0
+    }
+   }
+  },
+  "B22-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.boss.seven.kneel"
+    }
+   }
+  },
+  "B22-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    }
+   },
+   "8.0": {
+    "add": [
+     {
+      "id": "sfx.baek.laydown",
+      "delay": 1.0
+     }
+    ]
+   },
+   "10.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "13.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B22-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    }
+   },
+   "2.5": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B22-SEVEN": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    }
+   },
+   "2.5": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B23-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.knotdeep",
+      "loop": true,
+      "gain": 0.8
+     }
+    ],
+    "replace": {
+     "amb.river.mist": "amb.below.knotdeep"
+    }
+   },
+   "5.5": {
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_knot",
+     "fade": 1.0,
+     "fallback": "combat"
+    }
+   }
+  },
+  "B23-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    }
+   }
+  },
+  "B23-NOCOND": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.6,
+     "fade": 0.3
+    }
+   }
+  },
+  "B23-TIGHTEN": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.knot.tighten.telegraph",
+      "gain": 0.7
+     }
+    ]
+   },
+   "2.5": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B23-BOAT": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     "sfx.boss.knot.snag"
+    ]
+   },
+   "3.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "C-23A": {
+   "0.0": {
+    "add": [
+     {
+      "stop": "amb.below.knotdeep",
+      "fade": 3.0
+     }
+    ],
+    "music": {
+     "op": "play",
+     "id": "bgm_s1_dawn",
+     "fade": 4.0,
+     "fallback": "silence"
+    },
+    "note": "(재사용) 첫 배가 닿는 새벽 — 시즌1 끝 새벽 곡. 매듭 실이 감겨 올라가는 소리 뒤로 천천히"
+   },
+   "10.0": {
+    "add": [
+     {
+      "id": "sfx.styx.line.step",
+      "repeat": 3,
+      "every": 2.0,
+      "gain": 0.6
+     }
+    ],
+    "note": "줄 전체가 움직인다(시즌2 장치음 재사용)"
+   },
+   "22.0": {
+    "add": [
+     {
+      "id": "amb.river.mist",
+      "loop": true,
+      "gain": 0.7
+     }
+    ]
+   },
+   "38.0": {
+    "add": [
+     {
+      "id": "sfx.farlight.on",
+      "delay": 1.5,
+      "repeat": 4,
+      "every": 1.2,
+      "gain": 0.7
+     }
+    ],
+    "note": "불빛이 줄지어 켜진다"
+   },
+   "56.0": {
+    "add": [
+     {
+      "stop": "amb.river.mist",
+      "fade": 3.0
+     }
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.6,
+     "fade": 2.0
+    }
+   },
+   "64.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 2.0
+    },
+    "note": "짚신을 고쳐 놓지 않는다 — 소리 없이"
+   },
+   "72.0": {
+    "add": [
+     "sfx.keeper.note"
+    ]
+   },
+   "84.0": {
+    "music": {
+     "op": "silence",
+     "fade": 5.0
+    }
+   },
+   "90.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "C-23B": {
+   "0.0": {
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    },
+    "add": [
+     {
+      "stop": "amb.below.knotdeep",
+      "fade": 0.5
+     }
+    ],
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    }
+   },
+   "6.0": {
+    "add": [
+     {
+      "id": "cut.soul.rise",
+      "repeat": 3,
+      "every": 1.5,
+      "gain": 0.4
+     }
+    ]
+   },
+   "18.0": {
+    "add": [
+     {
+      "id": "amb.river.mist",
+      "loop": true,
+      "gain": 0.6
+     }
+    ],
+    "music": {
+     "op": "play",
+     "id": "bgm_s2_finale_b",
+     "fade": 4.0,
+     "fallback": "silence"
+    },
+    "note": "(재사용) 빈 기슭 곡 — 닿긴 하지만 군데군데 비어 있음"
+   },
+   "36.0": {
+    "add": [
+     {
+      "id": "sfx.farlight.on",
+      "delay": 1.5,
+      "repeat": 2,
+      "every": 2.4,
+      "gain": 0.6
+     }
+    ],
+    "note": "켜지는 불이 드문드문"
+   },
+   "50.0": {
+    "add": [
+     {
+      "stop": "amb.river.mist",
+      "fade": 3.0
+     }
+    ]
+   },
+   "62.0": {
+    "add": [
+     "sfx.keeper.note"
+    ]
+   },
+   "80.0": {
+    "music": {
+     "op": "silence",
+     "fade": 5.0
+    }
+   },
+   "90.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "C-24": {
+   "0.0": {
+    "music": {
+     "op": "play",
+     "id": "bgm_below_earth_night",
+     "fade": 3.0,
+     "fallback": "silence"
+    }
+   },
+   "8.0": {
+    "add": [
+     {
+      "stop": "amb.wind.dry",
+      "fade": 2.0
+     },
+     {
+      "id": "amb.below.tombpit",
+      "loop": true
+     }
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.6,
+     "fade": 2.0
+    }
+   },
+   "24.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.3,
+     "fade": 1.0
+    },
+    "note": "땅속 북이 들리게 음악을 비킨다"
+   },
+   "36.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.7,
+     "fade": 2.0
+    }
+   },
+   "48.0": {
+    "add": [
+     {
+      "stop": "amb.below.tombpit",
+      "fade": 3.0
+     }
+    ]
+   },
+   "60.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B24-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.tombpit",
+      "loop": true,
+      "gain": 0.8
+     }
+    ]
+   },
+   "4.5": {
+    "music": {
+     "op": "layer",
+     "id": "combat",
+     "fade": 1.0
+    }
+   }
+  },
+  "B24-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    }
+   }
+  },
+  "B24-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    }
+   },
+   "9.0": {
+    "add": [
+     {
+      "id": "sfx.baek.laydown",
+      "delay": 0.5
+     }
+    ]
+   },
+   "10.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "12.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B24-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    }
+   },
+   "3.2": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B24-MASS": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.armies.charge",
+      "gain": 0.6
+     }
+    ]
+   },
+   "3.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B25-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.sealedface",
+      "loop": true,
+      "gain": 0.8
+     }
+    ],
+    "replace": {
+     "amb.mine.shaft": "amb.below.sealedface"
+    }
+   },
+   "4.5": {
+    "music": {
+     "op": "layer",
+     "id": "combat",
+     "fade": 1.0
+    }
+   }
+  },
+  "B25-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    },
+    "note": "입 모양 '열둘' — 소리 없이"
+   }
+  },
+  "B25-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    }
+   },
+   "4.8": {
+    "music": {
+     "op": "silence",
+     "fade": 0.3
+    },
+    "note": "입 모양만 — 소리 없음"
+   },
+   "9.0": {
+    "add": [
+     {
+      "id": "sfx.boss.chilseong.count",
+      "gain": 0.6
+     },
+     {
+      "id": "sfx.baek.laydown",
+      "delay": 1.6
+     }
+    ]
+   },
+   "11.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "13.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B25-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    }
+   },
+   "2.5": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B25-PROP": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     "sfx.boss.chilseong.collapse.telegraph"
+    ]
+   },
+   "3.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B26-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.limepit",
+      "loop": true,
+      "gain": 0.8
+     }
+    ]
+   },
+   "4.5": {
+    "music": {
+     "op": "layer",
+     "id": "combat",
+     "fade": 1.0
+    }
+   }
+  },
+  "B26-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    },
+    "add": [
+     {
+      "id": "sfx.boss.plague.stones",
+      "gain": 0.6
+     }
+    ]
+   }
+  },
+  "B26-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    }
+   },
+   "8.5": {
+    "add": [
+     "sfx.baek.laydown"
+    ]
+   },
+   "9.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "11.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B26-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    }
+   },
+   "2.5": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B26-SPLIT": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.plague.fall",
+      "delay": 0.6,
+      "gain": 0.7
+     }
+    ]
+   },
+   "3.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B27-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.gatepit",
+      "loop": true,
+      "gain": 0.8
+     }
+    ]
+   },
+   "4.5": {
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_imyeong",
+     "fade": 1.0,
+     "fallback": "combat"
+    }
+   }
+  },
+  "B27-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    }
+   }
+  },
+  "B27-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "stop": "sfx.boss.imyeong.gate",
+      "fade": 1.0
+     }
+    ]
+   },
+   "10.0": {
+    "add": [
+     "sfx.baek.laydown"
+    ]
+   },
+   "11.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "13.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B27-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    },
+    "add": [
+     {
+      "stop": "sfx.boss.imyeong.gate",
+      "fade": 0.1
+     }
+    ]
+   },
+   "2.5": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B27-GATE": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.imyeong.gate",
+      "loop": true,
+      "delay": 2.0,
+      "gain": 0.6
+     }
+    ],
+    "note": "닫히는 소리 뒤로 성문 끄응을 반복으로 남긴다(게임 중 남은 시간에 따라 코드가 키움)"
+   },
+   "3.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "C-27A": {
+   "0.0": {
+    "music": {
+     "op": "play",
+     "id": "bgm_below_earth_finish",
+     "fade": 0.5,
+     "fallback": "silence"
+    },
+    "note": "짧은 처결 곡 뒤로 바람만"
+   },
+   "20.0": {
+    "music": {
+     "op": "silence",
+     "fade": 1.0
+    }
+   },
+   "28.0": {
+    "add": [
+     {
+      "id": "cut.chain.drag",
+      "repeat": 2,
+      "every": 6.0,
+      "gain": 0.5
+     }
+    ],
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_mybaek",
+     "fade": 6.0,
+     "fallback": "silence"
+    },
+    "note": "사슬 줄이 땅을 기어 물막이 골로 — 마지막 싸움 곡을 아주 작게 미리 들려 준다"
+   },
+   "48.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 2.0
+    }
+   },
+   "60.0": {
+    "add": [
+     {
+      "stop": "amb.underwater.low",
+      "fade": 2.0
+     }
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.3,
+     "fade": 2.0
+    }
+   },
+   "72.0": {
+    "add": [
+     "sfx.keeper.note"
+    ]
+   },
+   "84.0": {
+    "music": {
+     "op": "silence",
+     "fade": 5.0
+    }
+   },
+   "90.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "C-27B": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.5
+    },
+    "add": [
+     {
+      "id": "amb.wind.dry",
+      "loop": true,
+      "gain": 0.6
+     }
+    ],
+    "note": "빈 자리 — 음악 없이 바람만"
+   },
+   "20.0": {
+    "add": [
+     {
+      "stop": "amb.wind.dry",
+      "fade": 3.0
+     }
+    ]
+   },
+   "28.0": {
+    "add": [
+     {
+      "id": "cut.chain.drag",
+      "repeat": 2,
+      "every": 6.0,
+      "gain": 0.5
+     }
+    ],
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_mybaek",
+     "fade": 6.0,
+     "fallback": "silence"
+    }
+   },
+   "48.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 2.0
+    }
+   },
+   "60.0": {
+    "add": [
+     {
+      "stop": "amb.underwater.low",
+      "fade": 2.0
+     }
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.3,
+     "fade": 2.0
+    }
+   },
+   "72.0": {
+    "add": [
+     "sfx.keeper.note"
+    ]
+   },
+   "84.0": {
+    "music": {
+     "op": "silence",
+     "fade": 5.0
+    }
+   },
+   "90.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "C-28": {
+   "0.0": {
+    "music": {
+     "op": "play",
+     "id": "bgm_below_ink_night",
+     "fade": 3.0,
+     "fallback": "silence"
+    },
+    "add": [
+     {
+      "id": "cut.chain.taut",
+      "gain": 0.5
+     }
+    ],
+    "note": "사슬이 하류를 가리킴 — 당김 소리 하나"
+   },
+   "8.0": {
+    "add": [
+     {
+      "id": "amb.below.inksilt",
+      "loop": true,
+      "delay": 2.0
+     }
+    ]
+   },
+   "22.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.4,
+     "fade": 2.0
+    }
+   },
+   "46.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.7,
+     "fade": 2.0
+    },
+    "note": "일꾼들이 고개를 든다 — 웅얼거림 없음(저승 규칙: 업과 상관없이 이 장면은 말 없음)"
+   },
+   "60.0": {
+    "add": [
+     {
+      "stop": "amb.below.inksilt",
+      "fade": 3.0
+     }
+    ],
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B28-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.inksilt",
+      "loop": true,
+      "gain": 0.8
+     }
+    ]
+   },
+   "4.5": {
+    "music": {
+     "op": "layer",
+     "id": "combat",
+     "fade": 1.0
+    }
+   }
+  },
+  "B28-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    }
+   }
+  },
+  "B28-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    }
+   },
+   "10.0": {
+    "add": [
+     "sfx.baek.laydown"
+    ]
+   },
+   "12.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "14.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B28-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    }
+   },
+   "2.5": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B28-DUST": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.byeoru.inkrain",
+      "gain": 0.5
+     }
+    ]
+   },
+   "3.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B29-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.ondol",
+      "loop": true,
+      "gain": 0.8
+     }
+    ]
+   },
+   "4.5": {
+    "music": {
+     "op": "layer",
+     "id": "combat",
+     "fade": 1.0
+    }
+   }
+  },
+  "B29-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    },
+    "add": [
+     {
+      "id": "sfx.boss.halmi.shoes",
+      "delay": 0.3,
+      "gain": 0.8
+     }
+    ]
+   }
+  },
+  "B29-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    }
+   },
+   "7.0": {
+    "add": [
+     "sfx.baek.laydown"
+    ]
+   },
+   "12.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "14.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B29-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    }
+   },
+   "2.5": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B29-FLOOR": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     "sfx.boss.halmi.ondol"
+    ]
+   },
+   "2.5": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B30-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.35,
+     "fade": 0.8
+    },
+    "add": [
+     {
+      "id": "amb.below.wellbottom",
+      "loop": true,
+      "gain": 0.8
+     }
+    ],
+    "replace": {
+     "amb.river.mist": "amb.below.wellbottom"
+    }
+   },
+   "4.5": {
+    "music": {
+     "op": "layer",
+     "id": "combat",
+     "fade": 1.0
+    }
+   }
+  },
+  "B30-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "layer",
+     "id": "finish",
+     "fade": 0.3
+    },
+    "replace": {
+     "sfx.kneel": "sfx.baek.kneel"
+    }
+   }
+  },
+  "B30-LAY": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.4
+    }
+   },
+   "4.8": {
+    "music": {
+     "op": "silence",
+     "fade": 0.3
+    },
+    "note": "사공의 부름 — 입 모양만, 소리도 자막도 없음"
+   },
+   "8.0": {
+    "add": [
+     {
+      "id": "sfx.boss.mother.shoe",
+      "gain": 0.8
+     },
+     {
+      "id": "sfx.baek.laydown",
+      "delay": 1.2
+     }
+    ]
+   },
+   "15.0": {
+    "replace": {
+     "cut.lantern.light": "sfx.farlight.on"
+    }
+   },
+   "17.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B30-BREAK": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    },
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    }
+   },
+   "3.2": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  },
+  "B30-ROPE": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.mother.rope.hold",
+      "gain": 0.6
+     }
+    ]
+   },
+   "3.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B30-OAR": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.mother.oar",
+      "delay": 0.5
+     }
+    ]
+   },
+   "4.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "C-30": {
+   "0.0": {
+    "add": [
+     {
+      "stop": "amb.below.wellbottom",
+      "fade": 2.0
+     }
+    ],
+    "music": {
+     "op": "duck",
+     "to": 0.3,
+     "fade": 2.0
+    }
+   },
+   "16.0": {
+    "add": [
+     {
+      "stop": "amb.underwater.low",
+      "fade": 2.0
+     }
+    ],
+    "music": {
+     "op": "play",
+     "id": "bgm_solgogae_night",
+     "fade": 4.0,
+     "fallback": "silence"
+    },
+    "note": "1막 첫 장면과 같은 자리 — 솔고개 곡이 돌아온다(처음과 끝은 같은 물)"
+   },
+   "26.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 2.0
+    }
+   },
+   "40.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "B31-INTRO": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.3,
+     "fade": 1.0
+    },
+    "add": [
+     {
+      "id": "amb.below.pooldeep",
+      "loop": true,
+      "gain": 0.6
+     },
+     {
+      "id": "sfx.boss.mybaek.torch",
+      "loop": true,
+      "delay": 1.0
+     }
+    ]
+   },
+   "6.0": {
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_mybaek",
+     "fade": 1.5,
+     "fallback": "combat"
+    }
+   }
+  },
+  "B31-EIGHTH": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     {
+      "id": "sfx.boss.mybaek.child",
+      "gain": 0.8
+     }
+    ],
+    "note": "S-188 눕힘 판(보릿단만)에서도 같은 소리 — 실이 이미 끊겨 있으니 끝의 툭만 남는 셈"
+   },
+   "4.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B31-SEVEN": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 0.4
+    },
+    "add": [
+     "sfx.boss.mybaek.push",
+     {
+      "id": "sfx.boss.mybaek.lights",
+      "delay": 0.8
+     }
+    ]
+   },
+   "5.0": {
+    "music": {
+     "op": "duck",
+     "to": 1.0,
+     "fade": 1.0
+    }
+   }
+  },
+  "B31-KNEEL": {
+   "0.0": {
+    "music": {
+     "op": "silence",
+     "fade": 1.0
+    },
+    "replace": {
+     "sfx.kneel": "sfx.boss.mybaek.tether"
+    },
+    "add": [
+     {
+      "id": "sfx.boss.mybaek.finish",
+      "delay": 0.8
+     }
+    ],
+    "note": "백은 무릎 꿇지 않는다 → 무릎 소리 대신 사슬이 팽. 처결 대기 15초 = 마무리 15초 소리(물속이 걷힘)"
+   }
+  },
+  "B31-NOCOND": {
+   "0.0": {
+    "add": [
+     {
+      "id": "cut.seal.fade",
+      "gain": 0.6
+     }
+    ]
+   }
+  },
+  "C-31A": {
+   "0.0": {
+    "add": [
+     {
+      "stop": "sfx.boss.mybaek.torch",
+      "fade": 2.0
+     },
+     {
+      "stop": "amb.below.pooldeep",
+      "fade": 4.0
+     }
+    ],
+    "music": {
+     "op": "silence",
+     "fade": 0.5
+    }
+   },
+   "6.0": {
+    "add": [
+     {
+      "id": "sfx.baek.laydown",
+      "delay": 1.2
+     }
+    ]
+   },
+   "14.0": {
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_end_a",
+     "fade": 4.0,
+     "fallback": "silence"
+    }
+   },
+   "70.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.5,
+     "fade": 2.0
+    }
+   },
+   "78.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.15,
+     "fade": 1.5
+    },
+    "note": "부름(사람 목소리 첫 줄) — 음악을 거의 비운다"
+   },
+   "90.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.8,
+     "fade": 3.0
+    }
+   },
+   "100.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.15,
+     "fade": 1.5
+    },
+    "note": "대답 — 차사의 목소리"
+   },
+   "116.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.8,
+     "fade": 3.0
+    }
+   },
+   "140.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.4,
+     "fade": 2.0
+    }
+   },
+   "152.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.2,
+     "fade": 2.0
+    },
+    "note": "선택 — 입력 기다리는 동안 시간이 멈춘다. 음악은 작게 계속"
+   },
+   "160.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.9,
+     "fade": 3.0
+    }
+   },
+   "225.0": {
+    "music": {
+     "op": "silence",
+     "fade": 8.0
+    },
+    "note": "크레딧은 bgm_s1_credits 를 이어 틀 것(크레딧 화면 쪽)"
+   }
+  },
+  "C-31B": {
+   "0.0": {
+    "add": [
+     {
+      "stop": "sfx.boss.mybaek.torch",
+      "fade": 1.0
+     },
+     {
+      "stop": "amb.below.pooldeep",
+      "fade": 4.0
+     },
+     {
+      "id": "sfx.baek.laydown",
+      "delay": 3.0
+     }
+    ],
+    "music": {
+     "op": "silence",
+     "fade": 0.5
+    }
+   },
+   "14.0": {
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_end_b",
+     "fade": 4.0,
+     "fallback": "silence"
+    }
+   },
+   "70.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.3,
+     "fade": 2.0
+    },
+    "note": "입술만 움직인다 — 소리 없음"
+   },
+   "96.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.15,
+     "fade": 1.5
+    },
+    "note": "한 줄(당할미 목소리)"
+   },
+   "110.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.8,
+     "fade": 3.0
+    }
+   },
+   "122.0": {
+    "add": [
+     "sfx.keeper.note"
+    ]
+   },
+   "136.0": {
+    "add": [
+     {
+      "id": "cut.chain.taut",
+      "gain": 0.4
+     }
+    ],
+    "note": "풀리지 않고 가벼워질 뿐 — 아주 작은 당김"
+   },
+   "165.0": {
+    "music": {
+     "op": "silence",
+     "fade": 6.0
+    }
+   },
+   "180.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "C-31C": {
+   "0.0": {
+    "replace": {
+     "sfx.pahon.burst": "sfx.baek.break"
+    },
+    "add": [
+     {
+      "stop": "sfx.boss.mybaek.torch",
+      "fade": 0.1
+     },
+     {
+      "id": "cut.bones.crumble",
+      "delay": 0.1,
+      "gain": 0.7
+     }
+    ],
+    "music": {
+     "op": "silence",
+     "fade": 0.1
+    }
+   },
+   "10.0": {
+    "add": [
+     {
+      "id": "cut.water.rise",
+      "gain": 0.6
+     },
+     {
+      "id": "amb.below.pooldeep",
+      "loop": true,
+      "delay": 2.0,
+      "gain": 0.5
+     }
+    ],
+    "music": {
+     "op": "play",
+     "id": "bgm_s3_end_c",
+     "fade": 4.0,
+     "fallback": "silence"
+    }
+   },
+   "24.0": {
+    "add": [
+     {
+      "stop": "amb.below.pooldeep",
+      "fade": 4.0
+     }
+    ]
+   },
+   "40.0": {
+    "add": [
+     "sfx.keeper.note"
+    ]
+   },
+   "96.0": {
+    "add": [
+     {
+      "id": "sfx.pahon.burst",
+      "delay": 1.0,
+      "repeat": 3,
+      "every": 1.6,
+      "gain": 0.15
+     }
+    ],
+    "note": "아주 먼 들판의 깨뜨림 셋 — 시즌1 파혼 소리 그대로, 아주 작게(그것이 나였다)"
+   },
+   "110.0": {
+    "music": {
+     "op": "silence",
+     "fade": 6.0
+    }
+   },
+   "120.0": {
+    "music": {
+     "op": "resume",
+     "fade": 3.0
+    }
+   }
+  },
+  "S3-HALMI-TABLE": {
+   "0.0": {
+    "music": {
+     "op": "duck",
+     "to": 0.6,
+     "fade": 1.0
+    },
+    "add": [
+     {
+      "id": "sfx.boss.halmi.table",
+      "delay": 2.0,
+      "gain": 0.6
+     }
+    ],
+    "note": "B-29 상 차림과 같은 소리 — 그때 귀로도 알아보게"
+   },
+   "10.0": {
+    "music": {
+     "op": "resume",
+     "fade": 2.0
+    }
+   }
+  }
+ }
+}

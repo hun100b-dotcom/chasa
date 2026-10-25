@@ -1317,3 +1317,9 @@
 - 임시 대역 BGM 17곡(`bgm_below_{water,earth,ink}_{night,combat,finish}`, `bgm_s3_*` 8곡). `data/bgm.json` naming 에 `below`(관할→곡 이름)·`s3_special` 추가.
 - Gemini 지시문 46~62 추가(총 62). `docs/sound-direction.md` 에 시즌3 절, `docs/bgm-temp.md` 에 시즌3 표와 BgmPlayer 제안.
 - 남은 일: 서사의 시즌3 컷신 대본이 나오면 `cutscene_audio_s3` 소리 대본. 코드팀: ZoneAmbient 아래층 구역 연결, 물 주기 훅, B-27·B-30 타이머 맞춤.
+
+## 2026-10-25 밤 — [기획·사운드] 소리 용량 예산 + 시즌3 컷신 소리 대본
+- `tools/audio_budget.py` 신설. 효과음 368개와 곡 47곡의 최고점·트루 피크·음량·고음 비율을 재고, AAC(웹)·Vorbis(폰)로 시험 변환해 크기를 잰다. 결과는 `docs/audio-budget.md`(보고서)와 `data/audio_packs.json`(막별 묶음표, 소리별 가져오기 종류)이다.
+- 지금 설정(Vorbis 품질 100%, 전부 Resources)으로는 약 159MB가 첫 화면에 한꺼번에 온다. 권장 설정에서는 전체 약 45MB가 되고, 첫 화면은 공통+1막만 받는다. 코드팀 할 일은 `docs/audio-delivery-plan.md`에 정리했다.
+- 클리핑 0개. 트루 피크가 −1dB를 넘은 것은 `bgm_solgogae_finish`(−0.8) 하나. 요령방울 타격 2개를 4dB 내렸다.
+- 시즌3 컷신 89컷 소리 대본: `tools/cutscene_audio_s3.py` → `data/cutscene_audio_s3.json`(80컷 232박자). 서사가 요청한 새 소리 26개를 `sfx_render.py`에 추가했다(총 368개).
