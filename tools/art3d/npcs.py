@@ -10,6 +10,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 from lib3d import *
 from characters import rig, to_group
 import anim, hero_anim
+import npc_motion as nm
+import hero_locomotion as hl
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets3d")
 DARK = "#1A1A22"
 
@@ -241,10 +243,26 @@ def work_keys():
     dn = {"UpperArm.R": {"r": (-40, 0, 0)}, "Hand.R": {"r": (-5, 0, 0)}, "UpperArm.L": {"r": (-35, 0, 0)}, "Chest": {"r": (8, 0, 0)}, "Head": {"r": (8, 0, 0)}}
     return [(0, up), (8, dn), (12, dn), (30, up), (36, up)]
 
-def clips(cover):
-    f = 0.55 if cover else 1.0
-    return {"Idle": (hero_anim.idle_keys(), "LINEAR", True, {}), "Walk": (damp(hero_anim.walk_keys(), f), "LINEAR", True, {"step": [9, 27]}),
-            "Talk": (talk_keys(), "LINEAR", True, {}), "Work": (work_keys(), "LINEAR", True, {"hit": 8})}
+def clips(s, cover):
+    """공용(Idle·Talk·Walk·쪼그려 쉬기·놀람)과 역할별 동작. 반환 값은 (키, 보간, 반복, 이벤트[, 메타]).
+    Walk는 사람마다 보폭·속도가 달라 '재생 속도 = 이동 속도'로 맞추면 발이 안 미끄러진다(메타의 speed_mps)."""
+    f = 0.55 if cover else 1.0; k = s["k"]; child = bool(s.get("child"))
+    idle = hero_anim.idle_keys()[0][1]
+    nm.SQ["dz"] = -0.34 if cover else -0.56       # 치마·도포는 자락이 땅에 파묻히지 않게 덜 낮춘다
+    wk, meta = nm.walk(**nm.walk_preset(s, cover))
+    wk = nm.scale_keys(wk, k)
+    v = meta["speed_n"] * k; N = meta["N"]
+    meta = {**meta, "v": [v] * (N + 1), "S": [v * i / anim.FPS for i in range(N + 1)]}
+    C = {"Idle": (hero_anim.idle_keys(), "LINEAR", True, {}), "Talk": (talk_keys(), "LINEAR", True, {}), "Work": (work_keys(), "LINEAR", True, {"hit": 8}),
+         "Walk": (wk, "LINEAR", True, {"step": [0, N // 2]}, meta),
+         "SitDown": (nm.scale_keys(nm.sit_down(idle), k), "BEZIER", False, {"settle": 30}),
+         "SquatRest": (nm.scale_keys(nm.squat_rest(), k), "LINEAR", True, {}),
+         "StandUp": (nm.scale_keys(nm.stand_up(), k), "BEZIER", False, {"up": 30})}
+    st = nm.startle(idle, child); C["Startle"] = (nm.scale_keys(st[0], k),) + st[1:]
+    sh = nm.startle_hold(child); C["StartleHold"] = (nm.scale_keys(sh[0], k),) + sh[1:]
+    sr = nm.startle_recover(idle); C["StartleRecover"] = (nm.scale_keys(sr[0], k),) + sr[1:]
+    for nme, c in nm.role_clips(s, idle).items(): C[nme] = (nm.scale_keys(c[0], k),) + tuple(c[1:])
+    return C
 
 # ── 17명(21개) 명세 ───────────────────────────────────────────────────────────────
 HAIR = "#14141F"; WHITE = "#D8D0C0"; GREY = "#8E8A84"
@@ -276,8 +294,14 @@ SPECS = [
 def build_one(s, export=True):
     reset(); anim.setup_scene()
     o, arm, cover = make(s); lo, hi = bounds(o); man = []
-    for name, (keys, interp, loop, ev) in clips(cover).items():
-        info = anim.clip(arm, name, keys, interp); info.update({"loop": loop, "events": ev}); man.append(info)
+    for name, c in clips(s, cover).items():
+        keys, interp, loop, ev = c[:4]; meta = c[4] if len(c) > 4 else {}; rep = {}
+        def post(arm_, act, meta=meta, keys=keys, rep=rep):
+            if meta.get("contact"): rep["slide"] = hl.measure_slide(arm_, act, meta, keys[0][0], keys[-1][0])
+        info = anim.clip(arm, name, keys, interp, post); info.update({"loop": loop, "events": ev})
+        if meta.get("speed_n"):
+            info["walk_speed_mps"] = round(meta["v"][0], 3); info["stride_m"] = round(meta["sl"] * s["k"], 3); info["foot_slide"] = rep.get("slide")
+        man.append(info)
     path = os.path.join(OUT, "npcs", f"npc_{s['id']}.glb")
     if export: anim.export_rig(arm, path)
     return {"id": s["id"], "name": s["name"], "file": f"assets3d/npcs/npc_{s['id']}.glb", "template": s["tmpl"], "height_m": round(hi.z, 2), "tris": tris(o), "props": s.get("props", []), "note": s["note"],
@@ -300,7 +324,7 @@ def sheets():
     # 걷기·말하기 점검: 치마(당할미 계열 N107)와 바지(N109 대장장이) 두 명
     for sid, clipn, fr in (("N107", "Walk", [0, 9, 18, 27, 35]), ("N109", "Work", [0, 4, 8, 12, 20, 30]), ("N106", "Talk", [0, 15, 30, 48, 84])):
         s = [x for x in SPECS if x["id"] == sid][0]; reset(); anim.setup_scene(); o, arm, cover = make(s)
-        for name, (keys, interp, loop, ev) in clips(cover).items(): anim.clip(arm, name, keys, interp)
+        for name, c in clips(s, cover).items(): anim.clip(arm, name, c[0], c[1])
         setup_render(3.0, (0, 0, 1.0), size=(220, 280), ground_size=10)
         print(anim.sheet(arm, clipn, fr, os.path.join(OUT, "previews", f"anim_npc_{sid}_{clipn}")))
 
