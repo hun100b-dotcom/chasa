@@ -88,7 +88,7 @@ if os.path.exists(MAP) and os.path.exists(BC):
         n['schedule'] = sched
         times = {e['time'] for e in sched}
         n['barks'] = {t: v for t, v in n['barks'].items() if t in times}  # 서 있지 않는 시간대의 말은 뺀다
-        n['unlock'] = '2막 금줄이 풀린 뒤(1막 무덤골 흑월 1차 목격 다음 새벽)'
+        n['unlock'] = '2막 금줄이 풀린 뒤(1막 무덤골에 흑월 1차가 나타난 밤의 다음 새벽 — boss_clues_act2 rules.unlock)'
 
 data = {
  "_설명": "2막 산 사람(서사 10-25). schedule의 자리 이름·시간대는 기획 2막 지도(planning/openworld/act2/act2_map.json)와 같고, 좌표는 그 파일의 places에서 찾는다. 단서 대사는 boss_clues_act2.json과 같다. barks 형식과 뜻은 npc_act1.json과 같다. 장례에만 나오는 사람(광부의 며느리 등)은 funerals_act2.json에만 있다.",
