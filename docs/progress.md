@@ -963,3 +963,14 @@
   - ③ 붉은재: `amb.fortress.flag`(산성 바람·깃발), `amb.arrowvalley`(바위틈 휘파람), `amb.camp`(군막 터)
   - ④ 쇳골: `amb.mine.wind`(갱 입구 공명), `amb.mine.shaft`(큰 갱도 안)
 - 2막 BGM 방향과 Gemini 지시문 8개를 지시문 페이지에 추가(붉은재 66BPM·G, 쇳골 80BPM·C). 오너가 뽑아 주면 솔고개처럼 넣는다.
+
+## 2026-10-25 (KST 20:45) [기획·사운드] 신종 혼 예고음 5개 + 2막 보스 소리 10개
+- 넋두리(wail): `sfx.enemy.wail.telegraph`(0.7초 선딜에 맞춤, 0.66초에 번쩍), `sfx.enemy.wail.throw`
+- 잔넋(mote): `sfx.enemy.mote.telegraph`(0.3초, 동시 재생 최대 3개 권장)
+- 묻힌 혼(buried): `sfx.enemy.buried.telegraph`(0.73초 선딜), `sfx.enemy.buried.burst`(솟구침 적중)
+- 2막 보스:
+  - B-05 대돌: `sfx.boss.daedol.call`, `.number`
+  - B-06 장수: `sfx.boss.general.command`(호령 = 대형 바뀜 예고), `.formation`
+  - B-07 칠성: `sfx.boss.chilsung.count`(광부 하나 내보낼 때마다), `.rage`(셈 틀림)
+  - B-08 염씨: `sfx.boss.yeom.throw`, `.land`(지뢰 위치 예고), `.burst`(밟음), `.backpage`(뒷장 밟음, 이로움)
+- 예고음은 모두 bypass_cast(천도 중 먹먹함 무시). 총 111개.

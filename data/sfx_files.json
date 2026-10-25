@@ -1056,6 +1056,171 @@
    "bypass_cast_filter": false,
    "length_sec": 14.8,
    "peak_dbfs": -24
+  },
+  {
+   "id": "sfx.enemy.wail.telegraph",
+   "file": "sfx_enemy_wail_telegraph",
+   "category": "전투",
+   "desc": "넋두리 예고(0.7초): 흐느끼는 숨이 올라가며 원념 구슬이 웅— 차오름, 끝에 짧게 번쩍",
+   "use": "넋두리가 원념을 던지기 전 선딜 0.7초",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.18,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.enemy.wail.throw",
+   "file": "sfx_enemy_wail_throw",
+   "category": "전투",
+   "desc": "넋두리 투척: 원념 구슬이 휙 날아가며 웅웅 떨리는 소리(약 0.6초)",
+   "use": "넋두리 투척 순간(탄 발사)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.6,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.enemy.mote.telegraph",
+   "file": "sfx_enemy_mote_telegraph",
+   "category": "전투",
+   "desc": "잔넋 예고(0.3초): 작은 혼이 찍— 하고 몸을 움츠림. 여럿이 겹쳐도 시끄럽지 않게 짧고 높게",
+   "use": "잔넋 무리 선딜 0.3~0.4초(동시에 여러 마리면 최대 3개만 재생 권장)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.44,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.enemy.buried.telegraph",
+   "file": "sfx_enemy_buried_telegraph",
+   "category": "전투",
+   "desc": "묻힌 혼 예고(0.73초): 땅속에서 우르릉 올라오며 흙이 갈라지는 소리 — 커지는 쪽으로 피하라",
+   "use": "묻힌 혼이 솟기 전 선딜 0.73초(땅 갈라짐 예고와 같이)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.8,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.enemy.buried.burst",
+   "file": "sfx_enemy_buried_burst",
+   "category": "전투",
+   "desc": "묻힌 혼이 솟구침: 흙이 퍽 터지며 손이 움켜쥠 + 흙 부스러기 떨어짐(약 1초)",
+   "use": "묻힌 혼 Attack 적중 프레임(솟구침)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.21,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "sfx.boss.daedol.call",
+   "file": "sfx_boss_daedol_call",
+   "category": "보스",
+   "desc": "기수 대돌이 동료를 부름: 깃발 휘두르며 길게 외치는 소리(말뜻 없음) + 땅에서 병사 혼이 일어나는 갑옷 철컥(약 2초)",
+   "use": "B-05: 이름을 불러 병사 혼을 일으킬 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.44,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.boss.daedol.number",
+   "file": "sfx_boss_daedol_number",
+   "category": "보스",
+   "desc": "번호로 부름: 이름 대신 짧게 끊어 외치는 거친 소리 + 징이 둔탁하게 '퉁' — 더 사나운 병사가 일어난다는 경고(약 1.4초)",
+   "use": "B-05: 이름을 잊어 번호로 부를 때(맺힘 +30% 병사)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.73,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.boss.general.command",
+   "file": "sfx_boss_general_command",
+   "category": "보스",
+   "desc": "이름 없는 장수의 호령: 큰 북 두 번 '둥둥' + 짧은 외침 — 대형이 바뀐다는 신호(약 1.3초)",
+   "use": "B-06: 진법 호령(번호)으로 병사 대형을 바꾸기 직전. 이 소리를 듣고 대형을 읽는다",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.51,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.boss.general.formation",
+   "file": "sfx_boss_general_formation",
+   "category": "보스",
+   "desc": "대형이 바뀜: 병사 혼 여럿이 한꺼번에 발을 구르고 창끝이 철컥 맞춰짐(약 1.2초)",
+   "use": "B-06: 대형 이동이 끝나는 순간(빈틈이 생긴 쪽으로 파고들 때)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.18,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.boss.chilsung.count",
+   "file": "sfx_boss_chilsung_count",
+   "category": "보스",
+   "desc": "갱도 반장 칠성이 셈: 곡괭이 자루로 레일을 '깡' 한 번 + 낮게 웅얼거리는 셈(말뜻 없음). 광부 혼 하나가 출구로 걸어 나갈 때마다(약 0.9초)",
+   "use": "B-07: 광부 혼을 한 명씩 내보낼 때마다 한 번",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.57,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.boss.chilsung.rage",
+   "file": "sfx_boss_chilsung_rage",
+   "category": "보스",
+   "desc": "셈이 틀려 광폭해짐: 막장이 우르릉 흔들리며 돌가루가 쏟아지고, 반장이 짐승처럼 울부짖음(약 2.2초)",
+   "use": "B-07: 광부 혼을 파혼해 숫자가 틀렸을 때(맺힘 회복)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 4.17,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "sfx.boss.yeom.throw",
+   "file": "sfx_boss_yeom_throw",
+   "category": "보스",
+   "desc": "장부꾼 염씨가 숫자를 날림: 장부 낱장이 촤르륵 넘어가며 종이가 휙휙 날아감(약 1초)",
+   "use": "B-08: 숫자 지뢰를 날리는 순간",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.51,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.boss.yeom.land",
+   "file": "sfx_boss_yeom_land",
+   "category": "보스",
+   "desc": "숫자가 바닥에 박힘: 도장을 찍듯 '탁' + 낮게 웅 울리는 경고(이 칸 밟지 마라)(약 0.7초)",
+   "use": "B-08: 숫자 지뢰가 바닥에 꽂힐 때(위치 예고)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.87,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.boss.yeom.burst",
+   "file": "sfx_boss_yeom_burst",
+   "category": "보스",
+   "desc": "숫자를 밟음: 먹물이 퍽 터지며 붓 자국이 흩어짐(약 0.9초)",
+   "use": "B-08: 플레이어가 숫자 칸을 밟아 피해를 입을 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.08,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "sfx.boss.yeom.backpage",
+   "file": "sfx_boss_yeom_backpage",
+   "category": "보스",
+   "desc": "장부 뒷장(이름이 적힌 종이)을 밟음: 종이가 부드럽게 사락 + 맑은 방울 한 번 — 해롭지 않고 맺힘이 깎인다(약 1.2초)",
+   "use": "B-08: 뒷장 종이를 밟았을 때(이로운 쪽)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.08,
+   "peak_dbfs": -16
   }
  ],
  "footsteps": {
