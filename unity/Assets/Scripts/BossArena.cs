@@ -21,7 +21,8 @@ public class BossArena : MonoBehaviour
     bool waveHit; Tele lastOfWave;             // 이번 파동에서 맞았나 / 파동의 마지막 칸(끝났는지 보려고)
     bool built;
 
-    public void Init(JudgeSystem j, Enemy b, BossDef d) { judge = j; boss = b; def = d; }
+    ArenaDecor decor;
+    public void Init(JudgeSystem j, Enemy b, BossDef d) { judge = j; boss = b; def = d; decor = ArenaDecor.Make(j, b, d.Id); }
 
     static GameObject Flat(PrimitiveType t, Color col, Vector3 pos, Vector3 scale)
     {
@@ -48,23 +49,9 @@ public class BossArena : MonoBehaviour
     void Build()
     {
         built = true;
-        if (def.Id == 2)
+        // 잔·칸 그림은 ArenaDecor(아트 소품·바닥 무늬)가 맡는다. 여기서는 서 의원 약점 표시만 만든다
+        if (def.Id == 3)
         {
-            cups = new GameObject[Balance.B02_CUPS];
-            for (int i = 0; i < cups.Length; i++)
-            {
-                var p = CupPos(i); p.y = 0.15f;
-                // 열두째(11번)는 엎어져 있다: 눕힌 납작한 통
-                cups[i] = i == TwelveStreets.SafeCup
-                    ? Flat(PrimitiveType.Cylinder, new Color(0.45f, 0.40f, 0.34f), p + Vector3.down * 0.05f, new Vector3(0.7f, 0.12f, 0.7f))
-                    : Flat(PrimitiveType.Cylinder, new Color(0.80f, 0.74f, 0.60f), p, new Vector3(0.6f, 0.15f, 0.6f));
-            }
-        }
-        else if (def.Id == 3)
-        {
-            int n = Balance.B03_GRID; cups = new GameObject[n * n];
-            for (int i = 0; i < n; i++) for (int j = 0; j < n; j++)
-                cups[i * n + j] = Flat(PrimitiveType.Cube, new Color(0.30f, 0.26f, 0.22f), CellPos(i, j) + Vector3.down * 0.02f, new Vector3(Balance.B03_CELL_M * 0.94f, 0.02f, Balance.B03_CELL_M * 0.94f));
             weakMark = Flat(PrimitiveType.Sphere, new Color(0.25f, 0.9f, 0.85f), Vector3.zero, Vector3.one * 0.5f);
             weakMark.SetActive(false);
         }
@@ -120,9 +107,25 @@ public class BossArena : MonoBehaviour
     {
         var t = new Tele { c = c, t = 0f, warn = warn, square = square };
         t.R = r;
-        t.view = square ? Flat(PrimitiveType.Cube, new Color(0.55f, 0.08f, 0.08f), c, new Vector3(r * 2f * 0.94f, 0.03f, r * 2f * 0.94f))
-                        : Flat(PrimitiveType.Cylinder, new Color(0.55f, 0.08f, 0.08f), c, new Vector3(r * 2f, 0.03f, r * 2f));
+        t.view = TeleView(c, r, square);
         teles.Add(t);
+    }
+
+    // 예고 장판: 아트의 흰색+알파 그림(칸=tele_cell, 원=tele_circle)을 눕히고 색은 코드가 입힌다. 판정 크기와 그림 크기가 같다
+    static GameObject TeleView(Vector3 c, float r, bool square)
+    {
+        var tex = SpriteLib.Texture("boss/" + (square ? "tele_cell" : "tele_circle"));
+        if (tex == null) return Flat(square ? PrimitiveType.Cube : PrimitiveType.Cylinder, new Color(0.55f, 0.08f, 0.08f), c, new Vector3(r * 2f, 0.03f, r * 2f));
+        var g = new GameObject("Tele"); g.transform.position = c + Vector3.up * 0.03f; g.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        var sr = g.AddComponent<SpriteRenderer>();
+        sr.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), tex.width / (r * 2f));   // 그림 전체 폭 = 판정 지름
+        sr.color = new Color(0.35f, 0.05f, 0.05f, 0.3f); sr.sortingOrder = -4;
+        return g;
+    }
+    static void Tint(GameObject g, Color col)
+    {
+        var sr = g.GetComponent<SpriteRenderer>();
+        if (sr != null) sr.color = col; else g.GetComponent<Renderer>().sharedMaterial.color = col;
     }
 
     void TickTeles(float dt)
@@ -136,10 +139,10 @@ public class BossArena : MonoBehaviour
                 var d = judge.player.Pos - t.c;
                 bool inside = t.square ? (Mathf.Abs(d.x) < t.R + 0.3f && Mathf.Abs(d.z) < t.R + 0.3f) : (new Vector2(d.x, d.z).magnitude < t.R + 0.4f);
                 if (inside) { if (judge.BossAreaHit(boss)) waveHit = true; }
-                if (t.view != null) t.view.GetComponent<Renderer>().sharedMaterial.color = new Color(1f, 0.55f, 0.25f);   // 터지는 순간 밝게
+                if (t.view != null) Tint(t.view, new Color(1f, 0.55f, 0.25f, 1f));   // 터지는 순간 밝게
             }
             else if (!t.fired && t.view != null)
-                t.view.GetComponent<Renderer>().sharedMaterial.color = Color.Lerp(new Color(0.35f, 0.05f, 0.05f), new Color(0.85f, 0.12f, 0.1f), t.t / t.warn);   // 예고: 점점 붉어진다
+                Tint(t.view, Color.Lerp(new Color(0.35f, 0.05f, 0.05f, 0.3f), new Color(0.85f, 0.12f, 0.1f, 1f), t.t / t.warn));   // 예고: 점점 붉어진다
             if (t.t >= t.warn + 0.25f)
             {
                 if (t == lastOfWave) { lastOfWave = null; if (def.Id == 3) weak.WaveResolved(waveHit); }   // 파동 하나 끝
@@ -155,6 +158,7 @@ public class BossArena : MonoBehaviour
         weak.Tick(dt);
         if (!wasOpen && weak.Open) Sfx.Play("cut.drawer");   // 약장 서랍이 밀려 나온다
         boss.damageTakenMult = weak.DamageMult;
+        if (decor != null && decor.WeakLamp != null) decor.WeakLamp.enabled = weak.Open;   // 약장 맨 아래 서랍의 청록 불
         if (weakMark != null) { weakMark.SetActive(weak.Open); weakMark.transform.position = boss.HeadPosition + Vector3.up * 0.6f; }
     }
 }

@@ -490,7 +490,8 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>한 판 시작: 마을 어귀에 보스, 마을 곳곳에 단서 3개</summary>
     void SetupNight()
     {
-        enemies.SpawnBoss(new Vector3(MapLayout.BossX, 0, MapLayout.BossZ));
+        var naru = enemies.SpawnBoss(new Vector3(MapLayout.BossX, 0, MapLayout.BossZ));
+        if (FieldRules.On) ArenaDecor.Make(this, naru, 1);   // 나루터 꾸밈(말뚝·물때 표식·바닥 무늬·달빛)
         if (FieldRules.On)   // 필드: 2호 월화(폐당집 굿판)·3호 서 의원(검은여울 역병막 마당). 가까이 가면 바닥 무늬(BossArena)가 깨어난다
             for (int bid = 2; bid <= Bosses.Count; bid++)
             {
