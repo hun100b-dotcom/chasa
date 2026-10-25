@@ -100,3 +100,6 @@ def run(add):
     for nm, c in [("fresh", "#BFE8FF"), ("day", "#FFCC55"), ("old", "#FF6A3D")]:
         b = f'<ellipse cx="64" cy="32" rx="60" ry="28" fill="none" stroke="#0A1022" stroke-width="9" opacity=".6"/><ellipse cx="64" cy="32" rx="60" ry="28" fill="none" stroke="{c}" stroke-width="5" stroke-linecap="round"/>'
         add("ui", f"ui_judge_ring_{nm}", 128, 64, wrap(128, 64, b), (.5, .5), f"처결 대기 고리 · 혼 나이 색({nm}) · 코드가 호 길이로 시간 표시", tint=False)
+    # 9) 2차 키트(시각 고리 테두리·막대·도술 틀/아이콘·천도 파혼 버튼·명부 책) — gen_ui_kit2.py
+    import gen_ui_kit2
+    gen_ui_kit2.run(add)
