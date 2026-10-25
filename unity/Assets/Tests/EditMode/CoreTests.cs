@@ -1550,17 +1550,17 @@ public class CoreTests
         Assert.AreEqual(1, GrowthState.RankFor(GrowthState.NeokForRank(2) - 1));
         Assert.AreEqual(50, GrowthState.RankFor(99999999));                            // 상한
         for (int r = 2; r <= 50; r++) Assert.Greater(GrowthState.NeokForRank(r), GrowthState.NeokForRank(r - 1));
-        Assert.AreEqual(75, GrowthState.NeokForRank(2)); Assert.AreEqual(27075, GrowthState.NeokForRank(20));   // 기획 성장 곡선: 75×(품계−1)², 시즌 1 끝이 약 20품계
+        Assert.AreEqual(75, GrowthState.TallyForRank(2)); Assert.AreEqual(180 * 4, GrowthState.TallyForRank(3)); Assert.AreEqual(180 * 361, GrowthState.TallyForRank(20));   // 품계 2 만 75(첫 성장 보장), 3 부터 180×(품계−1)²
     }
 
     [Test]
     public void Growth_RankUpGivesSkillAndStatPoints()
     {
         var g = new GrowthState();
-        int ups = g.AddNeok(GrowthState.NeokForRank(4));                                // 한 번에 3단계
+        Assert.AreEqual(0, g.AddNeok(99999)); Assert.AreEqual(1, g.Rank);                // 쌓인 넋(천도 재화)으로는 품계가 오르지 않는다
+        int ups = g.AddJudge(GrowthState.TallyForRank(4));                              // 처결 셈으로 한 번에 3단계
         Assert.AreEqual(3, ups); Assert.AreEqual(4, g.Rank);
-        Assert.AreEqual(0, g.SkillPointsFree); Assert.AreEqual(3 * GrowthState.StatPerRank, g.StatPointsFree);   // 품계는 능력치만, 도술 점수는 처결 셈
-        Assert.AreEqual(3, g.AddJudge(GrowthState.NeokForRank(4))); Assert.AreEqual(3, g.SkillPointsFree);
+        Assert.AreEqual(3, g.SkillPointsFree); Assert.AreEqual(3 * GrowthState.StatPerRank, g.StatPointsFree);   // 품계 하나마다 도술 점수 1·능력치 7
         g.AddBossPoint(); Assert.AreEqual(4, g.SkillPointsFree);                       // 보스 천도 +1
     }
 
@@ -1569,7 +1569,7 @@ public class CoreTests
     {
         var g = new GrowthState();
         Assert.IsFalse(g.AddStat(0));                                                    // 점수 없이는 못 올림
-        g.AddNeok(GrowthState.NeokForRank(2));
+        g.AddJudge(GrowthState.TallyForRank(2));
         Assert.IsTrue(g.AddStat(0)); Assert.AreEqual(11, g.Stats[0]); Assert.AreEqual(GrowthState.StatPerRank - 1, g.StatPointsFree);
     }
 

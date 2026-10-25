@@ -188,7 +188,7 @@ public class JudgeSystem : MonoBehaviour
         ledger.DoPahon(e.soul.Boss, e.soul.BossId);
         TieProgress(e, 2);
         growth.AddPahon();
-        if (growth.AddJudge(Mathf.RoundToInt((e.soul.Boss ? Bosses.NeokFor(e.soul.BossId) : Balance.TENDO_NEOK * (e.soul.Ring > 1 ? RingLoot.RewardMult(e.soul.Ring) : 1f)))) > 0) ui?.Hud.Toasts.Add("도술 점수 +1");   // 처결 셈: 파혼은 그 혼의 기본 천도 넋(고리 배율 포함, 업 감쇠 전)만큼   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
+        Tally(e);   // 처결 셈: 파혼은 그 혼의 기본 천도 넋(고리 배율 포함, 업 감쇠 전)만큼   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Bosses.CoinFor(e.soul.BossId) : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3
         float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;
@@ -310,12 +310,22 @@ public class JudgeSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 처결 셈에 더한다(천도·파혼 같은 값 = 그 혼의 기본 넋 × 고리 보상 배율, 보스는 보스 기본 넋). 품계가 오르면 도술 점수 1과 인 찍는 연출.
+    /// 파혼만 해도 품계가 같은 속도로 오른다 — 파혼이 '벌받는 쪽'이 되지 않게(기획 s1-curve3-check)
+    /// </summary>
+    void Tally(Enemy e)
+    {
+        int n = e.soul.Boss ? Bosses.NeokFor(e.soul.BossId) : Mathf.RoundToInt(Balance.TENDO_NEOK * (e.soul.Ring > 1 ? RingLoot.RewardMult(e.soul.Ring) : 1f));
+        if (growth.AddJudge(n) > 0) { ui?.Hud.Toasts.Add("도술 점수 +1"); OnRankUp(); }
+    }
+
     /// <summary>품계가 올랐다: 화면 가운데에 붉은 품계 인이 1초 찍힌다(처음 10분 M6). 글자 알림은 그대로 곁들인다</summary>
     void OnRankUp()
     {
         Sfx.Play("sfx.rank.seal");   // 인이 찍히는 쿵 0.05초·종 0.18초
         if (ui == null) return;
-        ui.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 능력치 +" + GrowthState.StatPerRank);   // 도술 점수는 처결 셈이 따로 준다
+        // (서사 T1) "품계 2품 — 능력치 +5" 알림은 지웠다: 2품이 높은 벼슬로 읽히고, 인 찍는 연출과 겹친다. 도술 점수는 처결 셈이 따로 알린다
         ui.Hud.StampTitle = "품계 " + growth.Rank; ui.Hud.StampSub = Ko.RankTitle(growth.Rank); ui.Hud.StampAge = 0f;
         flashColor = new Color(0.05f, 0.02f, 0.02f); flashA = 0.35f;   // 화면이 살짝 어두워진다
         cardDelay = Mathf.Max(cardDelay, 1.6f);   // 인이 찍히는 걸 본 뒤에 도술 카드가 뜬다
@@ -458,7 +468,6 @@ public class JudgeSystem : MonoBehaviour
             if (castTarget.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
             int g = ledger.CompleteBossTendo(castTarget.soul.BossId);
             growth.AddBossPoint();                  // 보스 천도 = 도술 점수 1
-            growth.AddJudge(g);                     // 보스 넋도 처결 셈에 든다
             ui?.Hud.Toasts.Add("도술 점수 +1");
             CreditSoulColor(castTarget.Pos, g); night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
@@ -489,8 +498,8 @@ public class JudgeSystem : MonoBehaviour
             int gained = ledger.Neok - before;
             if (reward != null) reward.Tendo(tp, 1 + gained / 30);   // 혼불이 날아와 가슴에 든다
             if (numbers != null) numbers.Spawn(tp + Vector3.up * 1.7f, gained, "neok");
-            if (growth.AddJudge(gained) > 0) ui?.Hud.Toasts.Add("도술 점수 +1");   // 처결 셈: 천도는 받은 넋
-            if (growth.AddNeok(gained) > 0) OnRankUp();   // 품계 상승: 인이 찍히는 연출
+            growth.AddNeok(gained);
+            if (!castTarget.soul.Boss) Tally(castTarget);   // 처결 셈: 파혼과 같은 값(그 혼의 기본 넋 × 고리 배율). 도술·인 덧셈은 넣지 않는다. 보스는 위에서 셈
             CreditSoulColor(tp, gained); night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (OnJudged != null) OnJudged(castTarget, true);
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
@@ -991,7 +1000,7 @@ public class JudgeSystem : MonoBehaviour
         tiedA = tiedB = null; tiedKinds = 0;
         coinFrac += Balance.PAHON_COIN * 0.05f;
         neokFrac += Balance.TENDO_NEOK * 0.05f;
-        int n = Mathf.FloorToInt(neokFrac); neokFrac -= n; if (n > 0) { ledger.Neok += n; growth.AddNeok(n); growth.AddJudge(n); }
+        int n = Mathf.FloorToInt(neokFrac); neokFrac -= n; if (n > 0) { ledger.Neok += n; growth.AddNeok(n); }
         Say("한 줄 꿰기 보상");
     }
     float neokFrac;
@@ -1630,6 +1639,7 @@ public class JudgeSystem : MonoBehaviour
         { var nb = NearestBoss(); float want = nb != null && Vector3.Distance(nb.Pos, player.Pos) < 24f ? 0.5f : 1f; ClockSky.ArenaFog = Mathf.MoveTowards(ClockSky.ArenaFog, want, dt * 0.5f); }   // 마당에 들어서면 2초에 걸쳐 안개가 반으로
         Enemy.IntroCalm = FieldRules.On && introFrozen && introT < 25f;
         Player.PullCdMult = lo.weapon == WeaponId.Chain ? 1f - 0.1f * growth.LevelOf("손에 익음") : 1f;   // 손에 익음: 든 무기 특성 강화(철삭만 연결, 나머지 무기 특성은 구현 대기)
+        Player.MaceStunAdd = lo.weapon == WeaponId.Mace ? 0.1f * growth.LevelOf("손에 익음") : 0f;   // 육모방망이: 기절 +0.1/0.2/0.3초(삼지창·요령·붓은 그 무기의 기본 특성이 아직 없어 대기)
         Enemy.FierceMult = lo.stats.FierceMult;   // 거센 혼·덩어리·보스 피해 옵션
         Enemy.TokenMax = FieldRules.On ? (Enemy.IntroCalm ? 1 : introFrozen ? Balance.ATTACK_TOKENS_INTRO : Balance.ATTACK_TOKENS) : int.MaxValue;   // 동시에 때리는 혼 수 제한
         FieldCamps.EarlyMaxAlive = introFrozen ? 5 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
@@ -1847,8 +1857,8 @@ public class JudgeSystem : MonoBehaviour
         h.InteractLabel = Target != InteractKind.None && !kneelNear ? TargetLabel : null;
         h.InteractRatio = HoldRatio; h.SubNpcAlpha = npcs != null ? Mathf.Clamp01(npcs.SubtitleT / 0.6f) : 0f;
         // 경험치(품계) 막대: 처음 넋을 얻은 뒤에만(하나씩 열기)
-        h.ShowExp = revNeok && FieldRules.On; h.Rank = growth.Rank;
-        { int lo0 = GrowthState.NeokForRank(growth.Rank), hi0 = GrowthState.NeokForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.TotalNeok - lo0) / (hi0 - lo0); }
+        h.ShowExp = growth.JudgeTally > 0 && FieldRules.On; h.Rank = growth.Rank;   // 「명부의 일」 막대: 첫 처결(파혼도) 때 열린다
+        { int lo0 = GrowthState.TallyForRank(growth.Rank), hi0 = GrowthState.TallyForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.JudgeTally - lo0) / (hi0 - lo0); }
         // 첫 5분 퀘스트 추적(기획): 명부 — 이름 없는 혼 n/2, 박돌쇠 n/1. 시계가 풀리면(첫 처결 끝) 사라진다
         if (introFrozen && FieldRules.On) { h.QuestTitle = "명부"; h.QuestLines = new[] { "이름 없는 혼 " + Mathf.Min(2, introPlainDone) + "/2", "박돌쇠 " + (pahonOrTendo != 0 ? 1 : 0) + "/1" }; }
         else { h.QuestTitle = null; h.QuestLines = null; }

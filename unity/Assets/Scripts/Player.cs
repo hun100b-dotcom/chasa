@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
     float bufferAge;                                         // 저장된 공격 입력의 나이(초)
     bool hasDodgeBuffer; Vector3? dodgeBufferAim; float dodgeBufferAge;   // 눌러둔 피하기(우선순위 최고)
     PullRun pullRun;
+    public static float MaceStunAdd;   // 손에 익음(육모방망이): 타격 기절 +0.1/0.2/0.3초. JudgeSystem 이 채운다
     public static float PullCdMult = 1f;   // JudgeSystem 이 도술 「손에 익음」 단계로 채운다
     float pullCooldown;
     float chainLag;
@@ -605,7 +606,7 @@ public class Player : MonoBehaviour
         float mix = Config.FEEL_KNOCKBACK_TANGENT_MIX * cfg.dir; // 바깥 + 휘두른 방향(접선) → 쓸려 날아감
         var dir = new Vector3(rx - rz * mix, 0, rz + rx * mix).normalized;
         int dmg = Mathf.Max(1, Mathf.RoundToInt(cfg.damage * loadout.stats.DamageMult * (1f + Random.Range(-Config.DAMAGE_VARIANCE, Config.DAMAGE_VARIANCE))));
-        bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun);
+        bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun + MaceStunAdd);
         onHitLanded?.Invoke();
         if (!killed) e.ReactHit(a.step);   // 맞은 동작: 1타 약·2타 중·3타 강(아트 맞는 동작)
         // 손맛 5요소: 맞은 놈만 굳기(국소 히트스톱) · 처치/마지막 타격만 전체 정지 · 흔들림 · 줌 펀치 · 맞은 방향 카메라 밀림

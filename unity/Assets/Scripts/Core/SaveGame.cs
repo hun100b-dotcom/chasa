@@ -154,7 +154,7 @@ namespace Chasa.Core
         public static void Apply(SaveSnapshot s, GrowthState g, Ledger l, Equipment eq, ClueBook clues)
         {
             l.Neok = s.Neok; l.Memory = s.Memory; l.Coin = s.Coin; l.Ore = s.Ore; l.Karma = s.Karma; l.TendoTotal = s.TendoTotal;
-            g.TotalNeok = s.TotalNeok; g.Rank = GrowthState.RankFor(s.TotalNeok);
+            g.TotalNeok = s.TotalNeok; g.Rank = GrowthState.RankFor(s.JudgeTally);   // 품계는 처결 셈에서(옛 저장은 JudgeTally 가 totalneok 로 채워진다)
             g.SkillPointsEarned = s.SkillPointsEarned; g.SkillPointsSpent = s.SkillPointsSpent; g.StatPointsEarned = s.StatPointsEarned;
             g.JudgeTally = s.JudgeTally; g.PahonCount = s.PahonCount; g.StainPointsEarned = s.StainPointsEarned; g.StainPointsSpent = s.StainPointsSpent;
             for (int i = 0; i < 4; i++) g.Stats[i] = s.Stats[i];

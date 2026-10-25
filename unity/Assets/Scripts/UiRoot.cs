@@ -304,7 +304,8 @@ public class UiRoot : MonoBehaviour
         expBox = new VisualElement { name = "exp", pickingMode = PickingMode.Ignore };   // 경험치(품계) 막대: 화면 맨 아래 가는 띠
         expBox.style.position = Position.Absolute; expBox.style.left = 0; expBox.style.right = 0; expBox.style.bottom = 0; expBox.style.height = U(10); expBox.style.display = DisplayStyle.None;
         expBox.style.backgroundColor = new Color(0f, 0f, 0f, 0.5f);
-        expFill = new VisualElement { pickingMode = PickingMode.Ignore }; expFill.style.height = Length.Percent(100); expFill.style.backgroundColor = new Color(0.45f, 0.78f, 0.82f);
+        expFill = new VisualElement { pickingMode = PickingMode.Ignore }; expFill.style.height = Length.Percent(100); expFill.style.backgroundColor = new Color(0.17f, 0.14f, 0.13f);   // 먹빛 막대(「명부의 일」). 끝의 붉은 인은 아래 expCap. 청록·주황은 쓰지 않는다(명세 first-5-minutes v2)
+        { var cap = new VisualElement { pickingMode = PickingMode.Ignore }; cap.style.position = Position.Absolute; cap.style.right = 0; cap.style.top = 0; cap.style.bottom = 0; cap.style.width = U(4); cap.style.backgroundColor = new Color(0.66f, 0.12f, 0.12f); expFill.Add(cap); }   // 막대 끝의 붉은 인
         expBox.Add(expFill); root.Add(expBox);
         expLabel = Line(root, 13); expLabel.style.position = Position.Absolute; expLabel.style.left = U(24); expLabel.style.bottom = U(14); expLabel.style.color = new Color(0.8f, 0.9f, 0.9f); expLabel.style.display = DisplayStyle.None;
         // 천도 시전 막대: 화면 높이 72% 자리(스킬바·처결 카드 위, 도술 칸을 가리지 않게)
@@ -366,7 +367,7 @@ public class UiRoot : MonoBehaviour
     {
         if (bossBox == null) return;
         expBox.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None; expLabel.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None;
-        if (Hud.ShowExp) { expFill.style.width = Length.Percent(Mathf.Clamp01(Hud.ExpRatio) * 100f); expLabel.text = "품계 " + Hud.Rank; }
+        if (Hud.ShowExp) { expFill.style.width = Length.Percent(Mathf.Clamp01(Hud.ExpRatio) * 100f); expLabel.text = "명부의 일  " + Hud.Rank + "품"; }
         ShowSub(subSfx, Hud.SubSfx, 1f); ShowSub(subCutMem, Hud.SubCutMemory, 1f); ShowSub(subMemLine, Hud.SubMemLine, Hud.SubMemLineAlpha);
         bool hasIx = !string.IsNullOrEmpty(Hud.InteractLabel) && !Ko.TouchUI;   // 폰은 버튼 글자가 대신한다
         interactLabel.style.display = hasIx ? DisplayStyle.Flex : DisplayStyle.None;

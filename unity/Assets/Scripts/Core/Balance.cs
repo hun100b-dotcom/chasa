@@ -379,6 +379,8 @@ public static class Balance
     public const float DODGE_ANIM_SPEED = 0.9375f;  // (기획 조작 점검 10-26) 구르기 클립 재생 배율 = 클립 0.30초 ÷ DODGE_TIME 0.32. 무적 0.03~0.25초가 클립 2~14프레임과 겹친다
     public const float RUN_START_SEC = 0.167f;  // (기획 조작 점검 10-26) Run_Start 동작 시간(초). 클립 10프레임
     public const float RUN_STOP_SEC = 0.25f;  // (기획 조작 점검 10-26) Run_Stop 동작 시간(초)
+    public const int RANK_A = 180;  // (기획 s1-curve3-check 10-26) 품계 문턱 계수: 처결 셈 = RANK_A × (품계−1)². 품계는 천도·파혼 처결 셈으로 오른다(옛 75는 천도 넋만 셌다)
+    public const int RANK_2_TALLY = 75;  // (기획 first-5-minutes v2) 품계 2만 처결 셈 75 — 혼 셋과 박돌쇠(80)를 처결하면 천도든 파혼이든 5분 무렵 품계 2(첫 성장 보장)
     public const float DODGE_TIME = 0.32f;  // (기획 타격감 분석 10-24, 임시) 피하기 전체 시간(초)
     public const float DODGE_IFRAME_START = 0.03f;  // (기획 타격감 분석 10-24, 임시) 무적 시작(초)
     public const float DODGE_IFRAME_END = 0.25f;  // (기획 타격감 분석 10-24, 임시) 무적 끝(초) → 무적 0.22초(60fps 13프레임)

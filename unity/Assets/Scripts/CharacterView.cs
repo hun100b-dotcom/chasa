@@ -97,10 +97,10 @@ public partial class CharacterPanel
     {
         var g = judge.growth;
         // 1) 품계 줄과 진행 막대
-        int next = g.Rank >= GrowthState.MaxRank ? g.TotalNeok : GrowthState.NeokForRank(g.Rank + 1), cur = GrowthState.NeokForRank(g.Rank);
-        float frac = g.Rank >= GrowthState.MaxRank ? 1f : Mathf.Clamp01((g.TotalNeok - cur) / (float)Mathf.Max(1, next - cur));
+        int next = g.Rank >= GrowthState.MaxRank ? g.JudgeTally : GrowthState.TallyForRank(g.Rank + 1), cur = GrowthState.TallyForRank(g.Rank);
+        float frac = g.Rank >= GrowthState.MaxRank ? 1f : Mathf.Clamp01((g.JudgeTally - cur) / (float)Mathf.Max(1, next - cur));
         var r1 = new VisualElement { pickingMode = PickingMode.Ignore }; r1.style.flexDirection = FlexDirection.Row; r1.style.justifyContent = Justify.SpaceBetween;
-        VTxt(r1, "품계 " + g.Rank + "품   넋 " + g.TotalNeok + (g.Rank >= GrowthState.MaxRank ? "" : " / " + next), 18, hi, true);
+        VTxt(r1, "품계 " + g.Rank + " · " + Ko.RankTitle(g.Rank) + "   명부의 일 " + g.JudgeTally + (g.Rank >= GrowthState.MaxRank ? "" : " / " + next), 18, hi, true);
         VTxt(r1, "도술 점수 " + g.SkillPointsFree + (g.StainPointsFree > 0 ? " (+얼룩 전용 " + g.StainPointsFree + ")" : "") + "   능력치 점수 " + g.StatPointsFree, 14, txt);
         p.Add(r1);
         var bar = new VisualElement { pickingMode = PickingMode.Ignore }; bar.style.height = 8; bar.style.marginTop = 4; bar.style.marginBottom = 10; bar.style.backgroundColor = new Color(VInk.r, VInk.g, VInk.b, 0.18f);

@@ -99,10 +99,17 @@ namespace Chasa.Core
         }
 
         /// <summary>그 품계에 닿기까지 필요한 누적 넋(기획 성장 곡선 10-25). 2품계 75, 10품계 6075, 20품계 27075, 40품계 114075, 50품계 180075. 밤 22분 기준 시즌 1 끝이 약 20품계</summary>
-        public static int NeokForRank(int rank)
+        public static int NeokForRank(int rank) { return TallyForRank(rank); }
+
+        /// <summary>
+        /// 그 품계에 닿기까지 필요한 처결 셈(기획 s1-curve3-check 10-26). 품계 2 는 75(첫 성장 보장), 3 부터는 RANK_A(180)×(품계−1)².
+        /// 처결 셈 = 천도든 파혼이든 처결할 때마다 '그 혼의 기본 넋 × 고리 보상 배율'. 도술·인·무기의 넋 덧셈은 넣지 않는다.
+        /// </summary>
+        public static int TallyForRank(int rank)
         {
             if (rank <= 1) return 0;
-            return (int)Math.Round(75.0 * (rank - 1) * (rank - 1));
+            if (rank == 2) return Balance.RANK_2_TALLY;
+            return (int)Math.Round((double)Balance.RANK_A * (rank - 1) * (rank - 1));
         }
 
         public static int RankFor(int totalNeok)
@@ -116,19 +123,17 @@ namespace Chasa.Core
         public int AddNeok(int amount)
         {
             if (amount <= 0) return 0;
-            TotalNeok += amount;
-            int newRank = RankFor(TotalNeok), ups = newRank - Rank;
-            if (ups > 0) { Rank = newRank; StatPointsEarned += ups * StatPerRank; }   // 품계는 능력치 점수만 준다. 도술 점수는 처결 셈(AddJudge)으로
-            return Math.Max(0, ups);
+            TotalNeok += amount;   // 쌓인 넋은 인 만들기에 쓰는 재화의 누적일 뿐 — 품계는 처결 셈(AddJudge)으로 오른다
+            return 0;
         }
 
-        /// <summary>처결 셈에 더한다(천도 = 받은 넋, 파혼 = 그 혼의 기본 천도 넋). 같은 문턱(75×n²)을 넘을 때마다 도술 점수 1. 얻은 점수를 돌려준다</summary>
+        /// <summary>처결 셈에 더한다(천도·파혼 모두 그 혼의 기본 넋 × 고리 보상 배율). 문턱을 넘어 품계가 오를 때마다 도술 점수 1. 얻은 점수를 돌려준다</summary>
         public int AddJudge(int amount)
         {
             if (amount <= 0) return 0;
-            int before = RankFor(JudgeTally); JudgeTally += amount;
-            int ups = RankFor(JudgeTally) - before;
-            if (ups > 0) SkillPointsEarned += ups;
+            JudgeTally += amount;
+            int newRank = RankFor(JudgeTally), ups = newRank - Rank;
+            if (ups > 0) { Rank = newRank; StatPointsEarned += ups * StatPerRank; SkillPointsEarned += ups; }   // 품계가 오를 때마다 능력치 7점·도술 점수 1
             return Math.Max(0, ups);
         }
 

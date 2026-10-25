@@ -223,10 +223,10 @@ public partial class CharacterPanel : MonoBehaviour
         var g = judge.growth;
         var small = new GUIStyle(body) { fontSize = 14 };
         // 1) 품계 줄: 다음 품계까지 얼마나 남았는지 막대로
-        int next = g.Rank >= GrowthState.MaxRank ? g.TotalNeok : GrowthState.NeokForRank(g.Rank + 1);
-        int cur = GrowthState.NeokForRank(g.Rank);
-        float frac = g.Rank >= GrowthState.MaxRank ? 1f : Mathf.Clamp01((g.TotalNeok - cur) / (float)Mathf.Max(1, next - cur));
-        GUI.Label(new Rect(box.x + 16, y, 420, 28), "품계 " + g.Rank + "품   넋 " + g.TotalNeok + (g.Rank >= GrowthState.MaxRank ? "" : " / " + next), title);
+        int next = g.Rank >= GrowthState.MaxRank ? g.JudgeTally : GrowthState.TallyForRank(g.Rank + 1);
+        int cur = GrowthState.TallyForRank(g.Rank);
+        float frac = g.Rank >= GrowthState.MaxRank ? 1f : Mathf.Clamp01((g.JudgeTally - cur) / (float)Mathf.Max(1, next - cur));
+        GUI.Label(new Rect(box.x + 16, y, 420, 28), "품계 " + g.Rank + " · " + Ko.RankTitle(g.Rank) + "   명부의 일 " + g.JudgeTally + (g.Rank >= GrowthState.MaxRank ? "" : " / " + next), title);
         GUI.Label(new Rect(box.x + 460, y + 2, box.width - 480, 24), "도술 점수 " + g.SkillPointsFree + (g.StainPointsFree > 0 ? " (+얼룩 전용 " + g.StainPointsFree + ")" : "") + "   능력치 점수 " + g.StatPointsFree, body);
         var bar = new Rect(box.x + 16, y + 30, box.width - 32, 8);
         GUI.color = bookMode ? new Color(Ink.r, Ink.g, Ink.b, 0.18f) : new Color(0, 0, 0, 0.6f); GUI.DrawTexture(bar, white);
