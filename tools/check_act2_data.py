@@ -32,5 +32,14 @@ n2 = load("docs/narrative/npc_act2.json")
 noSched = sum(1 for x in n2["npcs"] if "schedule" not in x)
 print("2막 기억 %d명 · 장례 %d개 · 장례 조건 %s · 산 사람 %d명(일정표 없는 사람 %d명)" % (len(m2["souls"]), len(f2["funerals"]), sorted(conds), len(n2["npcs"]), noSched))
 if noSched: print("알림: npc_act2 는 일정표가 없어 NpcWorld 에 아직 못 넣는다(2막 지도·자리 대기)")
+# 기획 2막 지도(act2_map.json)와 서사 일정표의 자리 이름·구역 대조
+am = load("unity/Assets/Resources/Data/act2_map.json")
+places = set(am["places"].keys()); zones = {z["code"] for z in am["zones"]}
+for x in n2["npcs"]:
+    for sc in x.get("schedule", []):
+        if sc.get("place") not in places: bad.append("npc_act2 %s: 자리 '%s' 가 act2_map places 에 없음" % (x.get("id"), sc.get("place")))
+for pl, v in am["places"].items():
+    if v["zone"] not in zones: bad.append("act2_map 자리 '%s' 의 구역 %s 없음" % (pl, v["zone"]))
+print("2막 지도: 구역 %d · 서낭당 %d · 보스 자리 %d · 자리 이름 %d" % (len(zones), len(am["shrines"]), len(am["boss_arenas"]), len(places)))
 for b in bad: print("문제:", b)
 sys.exit(1 if bad else 0)
