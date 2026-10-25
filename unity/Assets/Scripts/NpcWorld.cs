@@ -68,6 +68,13 @@ public class NpcWorld
                 all.Add(new Spot { row = new Row { npc = "obj", name = c.place, zone = c.zone, place = c.place, time = c.time, unlock = 1, region = 1 }, clue = c.id, line = c.what, half = c.what, verb = c.verb, label = c.place, pos = PosFor(c.zone, c.place), isObject = true });
     }
 
+    /// <summary>처결 결과로 바뀐 풍경 한 곳을 더한다(예: 보스를 천도하면 나루에 배가 묶여 있다). 다가서면 글이 뜬다. timeSlot: 0 동틀녘 1 낮 2 해질녘 3 밤</summary>
+    public void AddScenery(Vector3 pos, string text, int timeSlot)
+    {
+        all.Add(new Spot { row = new Row { npc = "scn", name = "풍경", zone = "Ravine", place = text, time = timeSlot, unlock = 1, region = 1 }, clue = "", line = text, half = text, verb = "지켜보기", label = "풍경", pos = pos, isObject = true });
+        builtPhase = -1;   // 켜진 자리를 다음 프레임에 다시 고른다
+    }
+
     /// <summary>구역 중심에서 장소 이름으로 정한 방향·거리(6~16m)의 자리. 막힌 곳이면 밀려난다</summary>
     static Vector3 PosFor(string zone, string place)
     {

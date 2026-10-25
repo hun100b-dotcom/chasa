@@ -123,6 +123,7 @@ public class JudgeSystem : MonoBehaviour
     void DoPahon(Enemy e)
     {
         var at = e.Pos;
+        if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
         e.Finish();
         int coinBefore = ledger.Coin;
         ledger.DoPahon(e.soul.Boss);
@@ -132,7 +133,7 @@ public class JudgeSystem : MonoBehaviour
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         if (e.soul.Boss)
         {
-            night.BossDone = true; Say("나루 영감을 깨뜨렸다");
+            night.BossDone = true; Say("나루 영감을 깨뜨렸다"); bossOutcome = 2;
             cuts.Play("B01-PAHON"); feel.AddShake(1f);   // 6m 대폭발, 판자가 흩어진다
             // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
             if (Demo.Gear && lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
@@ -172,7 +173,7 @@ public class JudgeSystem : MonoBehaviour
             int g = ledger.CompleteBossTendo();
             night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
-            Say("나루 영감을 천도했다!");
+            Say("나루 영감을 천도했다!"); bossOutcome = 1;
             if (cuts.Play("B01-TENDO")) { player.CommandStop(); enemies.graceT = Mathf.Max(enemies.graceT, 7f); }   // 7초 컷: 입력 잠김·적 멈춤
         }
         else
@@ -181,6 +182,7 @@ public class JudgeSystem : MonoBehaviour
             ledger.CompleteTendo();
             ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f));   // 향 내음: 천도 넋 보너스
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
+            if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
             if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
             if (night.TakeNamedSpawn() && clock == null) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
         }
@@ -442,8 +444,33 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>컷신을 흘리고, 보스 구역 첫 진입이면 등장 컷을 건다. 잠금·적 멈춤을 반영한다</summary>
+    int bossOutcome;             // 나루 영감 처결 결과: 1 천도 · 2 파혼 (낮 풍경이 바뀐다)
+    bool sceneryAdded;
+    bool openingStarted;
+    int pahonOrTendo;            // 박돌쇠 처결 결과: 0 안 함 · 1 천도 · 2 파혼
+    bool funeralShown;
     void TickCutscenes(float dt)
     {
+        // 오프닝(검은 화면 → 서낭당 고개에서 깨어남): 게임을 처음 켠 필드에서 한 번
+        if (!openingStarted && FieldRules.On && clock != null)
+        {
+            openingStarted = true;
+            player.CommandStop();
+            cuts.Play("OPENING", true);
+        }
+        // 나루 풍경: 보스를 처결한 뒤의 낮에 물막이 골 나루 곁에 결과가 보인다 (천도: 배가 묶임·순임이 줄배 / 파혼: 판자 조각과 검은 물)
+        if (npcs != null && bossOutcome != 0 && !sceneryAdded && clock != null && clock.Phase == ClockPhase.Day)
+        {
+            sceneryAdded = true;
+            var at = new Vector3(FieldRules.BossX - 4f, 0f, FieldRules.BossZ);
+            npcs.AddScenery(at, bossOutcome == 1 ? "나룻배가 묶여 있다. 순임이 줄배를 맨다." : "판자 조각이 떠 있다. 물이 검다.", 1);
+        }
+        // 박돌쇠 장례: 낮이 시작되면 결과에 맞는 장면 (천도 70초 / 파혼 조등 / 처결 못 함 20초). 첫 낮에 한 번만
+        if (clock != null && clock.Phase == ClockPhase.Day && !funeralShown && openingStarted && !cuts.Active)
+        {
+            funeralShown = true;
+            cuts.Play(pahonOrTendo == 1 ? "FUNERAL_TENDO" : pahonOrTendo == 2 ? "FUNERAL_PAHON" : "FUNERAL_NONE");
+        }
         if (!bossIntroChecked && FieldRules.On)
         {
             var b = enemies.list.Find(x => x.soul.Boss);
@@ -487,7 +514,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>세계 시계를 흘리고, 단계가 바뀌면 종을 울리고 알린다</summary>
     void TickClock(float dt)
     {
-        clock.Tick(dt);
+        if (!cuts.PauseClock) clock.Tick(dt);   // 오프닝 컷 동안만 시계가 멈춘다
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
         if (named != null) named.Tick(player.Pos, clock.Daylight);
@@ -776,6 +803,8 @@ public class JudgeSystem : MonoBehaviour
                 GUI.color = Color.white;
             }
         }
+        // (2.2) 오프닝 검은 화면
+        if (cuts.OpeningBlack > 0.01f) { GUI.color = new Color(0, 0, 0, cuts.OpeningBlack); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
         // (2.3) 컷신 대사: 말풍선은 보스 머리 위, 기억 줄은 화면 아래 가운데(보랏빛). 건너뛰기 진행 막대
         if (cuts.LineVisible && cam != null)
         {

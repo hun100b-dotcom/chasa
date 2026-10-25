@@ -21,6 +21,10 @@ public class CutscenePlayer
     /// <summary>입력을 막아야 하나 (잠금 컷 재생 중)</summary>
     public bool InputLocked { get { return Active && cur.Data.@lock; } }
     /// <summary>적을 멈춰야 하나</summary>
+    /// <summary>시계를 세워야 하나 (오프닝 컷 20초 동안만 월드 시계가 멈춘다 — 서사 확정)</summary>
+    public bool PauseClock { get { return Active && cur.Data.id == "OPENING"; } }
+    /// <summary>오프닝의 검은 화면 가림 정도 0~1 (처음 8초는 완전히 검고, 그 뒤 10초에 걸쳐 걷힌다)</summary>
+    public float OpeningBlack { get { if (!PauseClock) return 0f; float t = cur.Time; return t < 8f ? 1f : 1f - Mathf.SmoothStep(0f, 1f, (t - 8f) / 10f); } }
     public bool PauseEnemies { get { return Active && cur.Data.pause; } }
     public string CamTarget { get { return Active ? cur.CamTarget : "player"; } }
     public float CamZoom { get { return Active ? cur.CamZoom : 1f; } }
@@ -38,7 +42,30 @@ public class CutscenePlayer
         if (ta == null) return;
         var f = JsonUtility.FromJson<FileData>(ta.text);
         if (f != null && f.cuts != null) foreach (var c in f.cuts) byId[c.id] = c;
+        AddBuiltIn();
     }
+
+    /// <summary>
+    /// 서사 대본 파일에는 없는 장면(첫 세션 오프닝·박돌쇠 장례)을 코드로 만든다. 서사 첫 세션 흐름의 장면 길이를 그대로 따랐고,
+    /// 글자는 장면 설명 이상으로 지어내지 않았다(대사는 서사팀 몫). 대본이 오면 데이터 파일 쪽 같은 id 가 이 값을 덮어쓴다.
+    /// </summary>
+    void AddBuiltIn()
+    {
+        Add(new CutData { id = "OPENING", duration = 20f, @lock = true, pause = true, skippable = true, steps = new[] {
+            new CutStep { t = 0f, cam = "hold", camTo = "player", zoom = 1.35f, camTime = 1f },
+            new CutStep { t = 16f, cam = "return", camTime = 1.5f } } });
+        Add(new CutData { id = "FUNERAL_TENDO", duration = 70f, @lock = true, skippable = true, steps = new[] {
+            new CutStep { t = 0f, cam = "pan", camTo = "funeral", camTime = 2f, zoom = 1.2f, text = "박돌쇠의 장례", style = "bubble", lineDur = 4f },
+            new CutStep { t = 66f, cam = "return", camTime = 2f } } });
+        Add(new CutData { id = "FUNERAL_PAHON", duration = 4f, @lock = false, skippable = true, steps = new[] {
+            new CutStep { t = 0f, cam = "pan", camTo = "funeral", camTime = 1f, text = "대문에 조등만 걸려 있다", style = "bubble", lineDur = 3f },
+            new CutStep { t = 3.5f, cam = "return", camTime = 1f } } });
+        Add(new CutData { id = "FUNERAL_NONE", duration = 20f, @lock = false, skippable = true, steps = new[] {
+            new CutStep { t = 0f, cam = "pan", camTo = "funeral", camTime = 1.5f, text = "상이 아직 없다", style = "bubble", lineDur = 4f },
+            new CutStep { t = 18f, cam = "return", camTime = 1.5f } } });
+    }
+    void Add(CutData d) { if (!byId.ContainsKey(d.id)) byId[d.id] = d; }
+
 
     /// <summary>컷 재생 시작. once 면 한 번만(이미 봤으면 false). 이미 다른 잠금 컷 중이면 시작하지 않는다</summary>
     public bool Play(string id, bool once = false)

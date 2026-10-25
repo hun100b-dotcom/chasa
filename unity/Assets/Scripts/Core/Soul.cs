@@ -26,6 +26,7 @@ namespace Chasa.Core
         public bool Boss;            // 보스 여부 (천도에 단서 3개 필요, 보상이 큼)
         public string Name;          // 이름혼/보스의 이름 (무명 혼은 null)
         public float WaitBonus;      // 인(seal)이 흐리면 처결 대기가 늘어난다(흐림 +0.25 · 없음 +0.5초). 서사 규칙
+        public bool Frozen;          // 처결 대기 시간이 흐르지 않는다 (첫 갈림: 처음 배우는 사람이 천천히 고르게)
         public bool Trick;           // 속임수 혼: 무릎 꿇은 척하다 가까이 오면 덮친다 (한 번만)
         public float Fuse;           // 속임수 도화선: 플레이어가 가까이 있는 동안 쌓이는 시간 (화면이 붉은 고리로 보여 줌)
 
@@ -123,7 +124,7 @@ namespace Chasa.Core
         /// <summary>시간이 흐른다. 대기가 끝나면 맺힘 일부를 되찾고 다시 일어선다 (W-005 임시 해석)</summary>
         public void Tick(float dt)
         {
-            if (State != SoulState.Kneel) return;
+            if (State != SoulState.Kneel || Frozen) return;
             WaitLeft -= dt;
             if (WaitLeft <= 0f)
             {

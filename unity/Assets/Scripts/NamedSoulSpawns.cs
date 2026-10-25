@@ -12,7 +12,10 @@ using Chasa.Core;
 public class NamedSoulSpawns
 {
     [System.Serializable] class Row { public string name; public float x, z, wait; public int age; public bool ledger; }
-    [System.Serializable] class FileData { public Row[] souls; }
+    [System.Serializable] class Group { public string id; public float x, z, trigger; public int n; public bool frozen; }
+    [System.Serializable] class FileData { public Row[] souls; public Group[] groups; }
+    readonly List<Group> groups = new List<Group>();
+    readonly HashSet<string> groupDone = new HashSet<string>();
     class Entry { public Row row; public Enemy live; public bool done; }
 
     const float SpawnDist = 60f, ReleaseDist = 150f;
@@ -26,12 +29,14 @@ public class NamedSoulSpawns
         if (ta == null) return;
         var f = JsonUtility.FromJson<FileData>(ta.text);
         if (f != null && f.souls != null) foreach (var r in f.souls) entries.Add(new Entry { row = r });
+        if (f != null && f.groups != null) groups.AddRange(f.groups);
     }
 
     /// <summary>daylight: 하늘 밝기(0=밤). 밤에만 혼이 보인다</summary>
     public void Tick(Vector3 playerPos, float daylight)
     {
         bool night = daylight < 0.35f;
+        if (night) foreach (var g in groups) TickGroup(g, playerPos);
         foreach (var e in entries)
         {
             if (e.done) continue;
@@ -51,6 +56,22 @@ public class NamedSoulSpawns
             en.MakeNamed(e.row.name, (SoulKind)Mathf.Clamp(e.row.age, 0, 2), e.row.wait);
             en.extra = false;
             e.live = en;
+        }
+    }
+
+    /// <summary>갈림: 처음 가까이 오면 한 번 세운다. frozen 이면 처결 대기가 멈춘 채 무릎 꿇는다(첫 고르기 연습). 둘 이상이면 플레이어를 둘러싼다</summary>
+    void TickGroup(Group g, Vector3 playerPos)
+    {
+        if (groupDone.Contains(g.id)) return;
+        if (new Vector2(g.x - playerPos.x, g.z - playerPos.z).magnitude > g.trigger) return;
+        groupDone.Add(g.id);
+        for (int i = 0; i < g.n; i++)
+        {
+            float a = g.n == 1 ? 0f : i / (float)g.n * Mathf.PI * 2f + 0.4f, r = g.n == 1 ? 0f : 5f;
+            float x = (g.n == 1 ? g.x : playerPos.x) + Mathf.Cos(a) * r, z = (g.n == 1 ? g.z : playerPos.z) + Mathf.Sin(a) * r;
+            MapLayout.PushOut(ref x, ref z, Config.ENEMY_RADIUS + 1f);
+            var en = enemies.SpawnCamp(new Vector3(x, 0f, z), true);
+            if (g.frozen) { en.soul.Frozen = true; en.soul.Kind = SoulKind.Fresh; }   // 정확히 한 마리 연습용: 시간이 멈춘 처결
         }
     }
 }

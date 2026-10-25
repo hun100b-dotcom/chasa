@@ -21,6 +21,12 @@ out = []
 for name, x, z, ledger in PLACES:
     s = by[name]
     out.append({"name": name, "x": x, "z": z, "age": AGE[s["age"]], "wait": SEAL[s["seal"]], "ledger": ledger})
+# 갈림(고르는 자리): 서사 첫 세션의 갈림 하나(우물가 혼자 있는 무명 혼, 대기 시간이 멈춤)와 갈림 둘(보릿들 둑길 넷에 둘러싸임)
+GROUPS = [
+    {"id": "galim1", "x": 176, "z": 52, "n": 1, "trigger": 28, "frozen": True},
+    {"id": "galim2", "x": 160, "z": 176, "n": 4, "trigger": 22, "frozen": False},
+]
+out = {"souls": out, "groups": GROUPS}
 path = os.path.join(root, "unity", "Assets", "Resources", "Data", "named_souls.json")
-json.dump({"souls": out}, open(path, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
-print("이름혼", len(out))
+json.dump(out, open(path, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+print("이름혼", len(out["souls"]), "갈림", len(GROUPS))
