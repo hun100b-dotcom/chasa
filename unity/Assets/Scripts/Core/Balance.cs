@@ -424,4 +424,14 @@ public static class Balance
     public const int AC_THROWNAME_DMG = 40;  // (액티브 도술 임시) 깨진 이름 던지기 피해
     public const float AC_THROWNAME_WINDOW = 5.0f;  // (액티브 도술 임시) 깨진 이름 던지기: 방금 파혼했다고 칠 시간(초)
     public const float AC_SHADOW_SEC = 10.0f;  // (액티브 도술 임시) 검은 갓의 그림자 지속(초)
+    public const float MOVE_TURN_RADPS = 14.0f;  // (기획 조작감) 이동·몸 회전 최대 속도(rad/s). 22는 순간 회전처럼 보여 14로 낮춤
+    public const float MOVE_LEAN_DEG = 6.0f;  // (기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서
+    public const float MOVE_BANK_DEG = 8.0f;  // (기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도)
+    public const float MOVE_LEAN_SMOOTH = 12.0f;  // (기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)
+    public const float CAMERA_PITCH_PER_ZOOM_DEG = 22.0f;  // (기획 조작감) 줌 배율이 1.0 달라질 때 카메라 내려다보는 각도 변화(도). 확대하면 눕고(몰입), 축소하면 일어선다(지도처럼)
+    public const float CAMERA_PITCH_MIN_DEG = 28.0f;  // (기획 조작감) 줌으로 바뀌는 카메라 각도의 하한(도) — 낮으면 언덕·나무에 시야가 가려진다
+    public const float CAMERA_PITCH_MAX_DEG = 62.0f;  // (기획 조작감) 줌으로 바뀌는 카메라 각도의 상한(도)
+    public const float JOY_RADIUS_PX = 90.0f;  // (폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)
+    public const float JOY_DEADZONE_PX = 14.0f;  // (폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다
+    public const float JOY_ZONE_WIDTH_FRAC = 0.45f;  // (폰 조작) 조이스틱이 생기는 화면 왼쪽 영역 너비 비율
 }

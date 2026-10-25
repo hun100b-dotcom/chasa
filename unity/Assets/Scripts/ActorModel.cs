@@ -9,6 +9,7 @@
 // ActorSprite 가 그림 이름(예: characters/chasa_swing)을 알려 주면 여기서 상태로 바꿔 쓴다 → 전투 코드는 그대로.
 // =============================================================================
 using System.Collections.Generic;
+using Chasa.Core;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
@@ -30,7 +31,7 @@ public class ActorModel : MonoBehaviour
     Pose pose = Pose.Idle; float poseT;
     Pose atkPose = Pose.Attack;           // 지금 공격이 쓸 모델 동작(1·2·3타)
     float heroSpeed = 1f;                 // 한 번짜리 동작(공격) 재생 속도 배율 — 타격 순간을 판정 시각에 맞추려고
-    float walkPhase, yaw, lastYawSet;
+    float walkPhase, yaw, lastYawSet, leanNow, bankNow;   // 몸 기울임(앞으로/옆으로, 도)
     Vector3 lastPos;
     float speed;                          // 이동 속도(m/s) — 걷기 판정에 쓴다
     bool hasGlow; float glowAmt;
@@ -308,8 +309,16 @@ public class ActorModel : MonoBehaviour
         float sp = dt > 0f ? new Vector2(p.x - lastPos.x, p.z - lastPos.z).magnitude / dt : 0f; lastPos = p;
         speed = Mathf.Lerp(speed, sp, 0.3f);
         // 방향: 목표 각도로 빠르게 돈다(순간 회전은 부자연스럽다)
-        var cur = modelRoot.transform.localEulerAngles.y;
-        modelRoot.transform.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(cur, yaw, 1f - Mathf.Exp(-18f * dt)), 0);
+        // 회전은 최대 속도(MOVE_TURN_RADPS)로 제한해 순간 회전처럼 보이지 않게 하고, 걸을 때 몸을 앞으로 기울이며 급하게 틀 때 안쪽으로 살짝 눕힌다
+        var curYaw = modelRoot.transform.localEulerAngles.y;
+        float newYaw = Mathf.MoveTowardsAngle(curYaw, yaw, Balance.MOVE_TURN_RADPS * Mathf.Rad2Deg * dt);
+        float yawRate = dt > 0f ? Mathf.DeltaAngle(curYaw, newYaw) / dt : 0f;                              // 도/초(왼쪽 +)
+        bool walkingPose = pose == Pose.Idle || pose == Pose.Walk;
+        float leanT = walkingPose ? Mathf.Clamp01(speed / Mathf.Max(0.1f, Config.PLAYER_MOVE_SPEED)) * Balance.MOVE_LEAN_DEG : 0f;
+        float bankT = walkingPose ? -Mathf.Clamp(yawRate / (Balance.MOVE_TURN_RADPS * Mathf.Rad2Deg), -1f, 1f) * Balance.MOVE_BANK_DEG * Mathf.Clamp01(speed / 2f) : 0f;
+        leanNow = Mathf.Lerp(leanNow, leanT, 1f - Mathf.Exp(-Balance.MOVE_LEAN_SMOOTH * dt));
+        bankNow = Mathf.Lerp(bankNow, bankT, 1f - Mathf.Exp(-Balance.MOVE_LEAN_SMOOTH * dt));
+        modelRoot.transform.localRotation = Quaternion.Euler(leanNow, newYaw, bankNow);
 
         bool moving = speed > 0.6f && (pose == Pose.Idle || pose == Pose.Walk);
         if (hero != null) { HeroUpdate(dt, moving); return; }   // 진짜 모델은 자기 움직임으로

@@ -37,7 +37,7 @@ public static class Config
     // 3) 플레이어
     public const float PLAYER_MOVE_SPEED = 9f;
     public const float PLAYER_RADIUS = 0.5f;
-    public const float PLAYER_TURN_SPEED = 22f;
+    public const float PLAYER_TURN_SPEED = Balance.MOVE_TURN_RADPS;   // 원본은 balance.json (기획: 14 rad/s)
     public const float PLAYER_HAND_HEIGHT = 1.0f;
     public const float PLAYER_ARRIVE_DISTANCE = 0.15f;
 

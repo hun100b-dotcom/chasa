@@ -21,6 +21,7 @@ public class GameMain : MonoBehaviour
     ClickMarker marker;
     JudgeSystem judge;
     Vector3 focus, offset;
+    float camYaw, camPitch, camDist;   // 기본 카메라 각도·거리(줌에 따라 각도를 바꿀 때의 기준)
     Vector3 camPrevPlayer, ahead;   // 카메라 앞쪽 보기용: 지난 프레임 플레이어 위치, 현재 앞쪽 치우침
     bool holdingMove;
 
@@ -135,6 +136,7 @@ public class GameMain : MonoBehaviour
             pitch = Config.CAMERA_PITCH_DEG * Mathf.Deg2Rad; dist = 60f;
         }
         offset = new Vector3(Mathf.Cos(yaw) * Mathf.Cos(pitch), Mathf.Sin(pitch), Mathf.Sin(yaw) * Mathf.Cos(pitch)) * dist;
+        camYaw = yaw; camPitch = pitch; camDist = dist;
 
         // 조명: 은은한 전체 조명 + 그림자 만드는 햇빛 (밝기는 다른 판과 눈으로 맞춤)
         RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
@@ -214,7 +216,14 @@ public class GameMain : MonoBehaviour
         float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
         wheel = Mathf.Lerp(wheel, wheelTarget, 1f - Mathf.Exp(-Balance.CAMERA_WHEEL_SMOOTH * Time.unscaledDeltaTime));   // 휠 줌은 부드럽게 따라간다
         if (judge.clock != null) ClockSky.Apply(sun, cam, judge.clock, player.Pos, dt);   // 하늘·햇빛이 시계를 따른다
-        cam.transform.position = focus + (View3D.On ? offset * ((1f - zoomIn) * wheel) : offset);
+        // 줌하면 카메라 각도도 함께 바뀐다: 확대(wheel<1)하면 눕고(몰입), 축소하면 일어선다(지도처럼). 기준 각도는 wheel=1
+        Vector3 off = offset;
+        if (View3D.On)
+        {
+            float p = Mathf.Clamp(camPitch * Mathf.Rad2Deg + Balance.CAMERA_PITCH_PER_ZOOM_DEG * (wheel - 1f), Balance.CAMERA_PITCH_MIN_DEG, Balance.CAMERA_PITCH_MAX_DEG) * Mathf.Deg2Rad;
+            off = new Vector3(Mathf.Cos(camYaw) * Mathf.Cos(p), Mathf.Sin(p), Mathf.Sin(camYaw) * Mathf.Cos(p)) * camDist;
+        }
+        cam.transform.position = focus + (View3D.On ? off * ((1f - zoomIn) * wheel) : offset);
         cam.transform.LookAt(View3D.On ? focus + Vector3.up * 0.9f : focus);   // 3D 에선 발밑이 아니라 가슴께를 본다
         cam.transform.Rotate(0f, 0f, feel.GetShakeRoll(), Space.Self);   // 충격이 클 때만 화면이 살짝 기울었다 돌아온다
         var s = feel.GetShakeOffset(); // 화면 기준 오른쪽/위쪽으로 밀어 평행하게 떨림
@@ -260,11 +269,65 @@ public class GameMain : MonoBehaviour
     }
 
     /// <summary>WASD·방향키: 카메라 기준 위/아래/좌/우로 걷는다. 클릭 이동과 함께 쓸 수 있다</summary>
+    // ---- 폰: 떠다니는 조이스틱 ----------------------------------------------------
+    // 왼쪽 영역을 누르면 그 자리에 조이스틱이 생기고, 끌면 끈 방향으로 걷는다(카메라 기준 위=앞). 떼면 멈추고 사라진다.
+    // 오른쪽·아래 버튼 영역은 건드리지 않는다. 터치가 마우스처럼도 들어와 '눌러서 이동'과 겹치므로 영역 안은 OverTouchButtons 가 막는다.
+    bool joyActive; int joyFinger = -1; Vector2 joyOrigin, joyPos, joyAxes;   // 화면 좌표(아래가 0)
+    Texture2D joyTex;
+
+    bool InJoyZone(Vector2 screenPos)
+    {
+        if (!Ko.TouchUI) return false;
+        float py = Screen.height - screenPos.y;   // GUI 좌표(위가 0)
+        return screenPos.x < Screen.width * Balance.JOY_ZONE_WIDTH_FRAC && py > 60f && py < Screen.height - 215f;   // 아래쪽은 천도·파혼·도술 버튼 줄
+    }
+
+    void UpdateJoystick()
+    {
+        if (Input.touchCount == 0) { joyActive = false; joyFinger = -1; joyAxes = Vector2.zero; return; }
+        if (!joyActive)
+        {
+            foreach (var t in Input.touches)
+                if (t.phase == TouchPhase.Began && InJoyZone(t.position)) { joyActive = true; joyFinger = t.fingerId; joyOrigin = joyPos = t.position; break; }
+            if (!joyActive) return;
+        }
+        bool found = false;
+        foreach (var t in Input.touches)
+        {
+            if (t.fingerId != joyFinger) continue;
+            found = true;
+            if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled) { joyActive = false; joyFinger = -1; joyAxes = Vector2.zero; return; }
+            var v = t.position - joyOrigin;
+            if (v.magnitude > Balance.JOY_RADIUS_PX) v = v.normalized * Balance.JOY_RADIUS_PX;   // 손잡이는 반지름 안에서만
+            joyPos = joyOrigin + v;
+            joyAxes = v.magnitude < Balance.JOY_DEADZONE_PX ? Vector2.zero : v / Balance.JOY_RADIUS_PX;
+        }
+        if (!found) { joyActive = false; joyFinger = -1; joyAxes = Vector2.zero; }
+    }
+
+    void DrawJoystick()
+    {
+        if (!joyActive) return;
+        if (joyTex == null)
+        {
+            joyTex = new Texture2D(64, 64) { filterMode = FilterMode.Bilinear };   // 속이 찬 동그라미(알파 가장자리)
+            for (int y = 0; y < 64; y++) for (int x = 0; x < 64; x++) { float d = Vector2.Distance(new Vector2(x, y), new Vector2(31.5f, 31.5f)); joyTex.SetPixel(x, y, new Color(1, 1, 1, Mathf.Clamp01(32f - d))); }
+            joyTex.Apply();
+        }
+        float R = Balance.JOY_RADIUS_PX;
+        var o = new Vector2(joyOrigin.x, Screen.height - joyOrigin.y); var p = new Vector2(joyPos.x, Screen.height - joyPos.y);
+        GUI.color = new Color(1, 1, 1, 0.18f); GUI.DrawTexture(new Rect(o.x - R, o.y - R, R * 2, R * 2), joyTex);
+        GUI.color = new Color(1, 1, 1, 0.45f); GUI.DrawTexture(new Rect(p.x - 32, p.y - 32, 64, 64), joyTex);
+        GUI.color = Color.white;
+    }
+
     void HandleKeyboardMove()
     {
+        UpdateJoystick();
         float x = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ? 1f : 0f) - (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) ? 1f : 0f);
         float z = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) ? 1f : 0f) - (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ? 1f : 0f);
-        if (x == 0f && z == 0f)
+        if (joyActive) { x = joyAxes.x; z = joyAxes.y; }   // 폰 조이스틱이 눌려 있으면 그 값을 쓴다
+        if (Mathf.Abs(x) < 0.01f && Mathf.Abs(z) < 0.01f)
         {
             if (kbMove) { kbMove = false; player.CommandStop(); }   // 키를 떼면 멈춘다(클릭 이동 중이었다면 건드리지 않음)
             return;
@@ -341,6 +404,7 @@ public class GameMain : MonoBehaviour
     bool OverTouchButtons(Vector3 mouse)
     {
         if (!Ko.TouchUI) return false;
+        if (InJoyZone(mouse) || joyActive) return true;   // 조이스틱 영역은 '눌러서 이동'이 아니다
         var p = new Vector2(mouse.x, Screen.height - mouse.y);
         return PullBtn.Contains(p) || SwingBtn.Contains(p) || DodgeBtn.Contains(p);
     }
@@ -353,6 +417,7 @@ public class GameMain : MonoBehaviour
         hint.normal.textColor = new Color(1, 1, 1, 0.55f);
         GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 피하기" + ((Demo.Panel || FieldRules.On) ? "   C: 명부(품계·도술)" : ""), hint);
         if (!Ko.TouchUI) return;
+        DrawJoystick();
         var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
         if (GUI.Button(PullBtn, "끌기", bs)) { var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); }
         if (Balance.DODGE_ENABLED && GUI.Button(DodgeBtn, "피하기", bs)) player.CommandDodge(null);   // 폰: 걷던 방향으로
