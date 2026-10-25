@@ -69,7 +69,7 @@ namespace Chasa.Core
 
         /// <summary>
         /// 위치로 본 고리. ① 솔고개·보릿들·물막이 골·폐당집=1, ② 검은여울=2, ③ 붉은재=3, ④ 쇳골=4, ⑤ 갯마을=5, ⑥ 도성=6.
-        /// 2막 ③④는 x 360 을 경계로 가른다(BgmPlayer.RegionKeyAt 과 같은 선). blackRiver: 지금 있는 구역이 검은여울인가.
+        /// 2막(z 640 이상)은 구역마다 고리가 달라 여기선 기본 3 만 준다 — 구역별 값은 FieldZones.RingAt(act2_map.json 의 ring). blackRiver: 지금 있는 구역이 검은여울인가.
         /// </summary>
         /// <summary>필드 혼 고리 배율(기획 act1-enemy-check, 시뮬 Sim.cs 와 같은 표). 고리 1~6</summary>
         static readonly float[] RingMaedhim = { 1f, 1.2f, 1.4f, 1.7f, 2.0f, 2.3f, 2.6f, 2.9f }, RingDamage = { 1f, 1.15f, 1.3f, 1.5f, 1.7f, 1.9f, 2.1f, 2.3f }, RingReward = { 1f, 1.25f, 1.5f, 1.75f, 2.0f, 2.3f, 2.6f, 2.9f };

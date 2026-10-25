@@ -1615,3 +1615,10 @@
 - 세트 완성음(`sfx.equip.set.complete`)은 `Loadout.Equip`에서, 풀기 소리는 `DayScreen`에서 `GearSfx.Remove()`로 연결.
 - `act2_field_camps.json`을 기획 최신본(외톨이 두 줄 수정)으로 교체.
 - 아직 안 함: 물안개 저역 필터, 2·3막 주변 소리(PR #44) 연결 — 다음 작업.
+
+### 아트 PR #46 연결 (클라우드, PC 미확인)
+- 숫자 혼 모델 8종: `models.json` 에 `{fresh,year,old,lump}_number` / `_number_named` 추가. `Enemy` 가 `Numbered` 혼에 `_number`(B-08 천도 뒤 `_number_named`)를 붙이고 `ActorModel.SpecFor` 가 고른다. 2막 군집표의 numbered 표식 혼이 이 모양으로 보인다.
+- `act1_route.json`(72개) 을 `build_field_data.py` 가 `act1_life.json` 옆에서 같이 읽고, 지금 `field.json` 에도 합침.
+- 막힘 반경 등록(`FieldRules.BlockerRadius`): 원두막 1.8, 두엄 1.0, 보릿단 0.5, 쉼터 0.7, 물독 0.6. 물꼬·새 쫓는 줄·박 시렁·두렁 말뚝은 0.
+- 2막 고리: x=360 한 줄이 아니라 구역별 — `FieldZones.RingAt` 이 act2_map.json 의 구역 ring 을 읽는다(군막 터·큰 무덤·큰 갱도·막장 4, 나머지 3). 군집 밖 혼의 장비 고리도 이걸 쓴다.
+- PC 확인: 숫자 혼 실루엣(목패)이 일반·광부 혼과 갈리는가, 둑길 동쪽 소품이 길을 막지 않는가.

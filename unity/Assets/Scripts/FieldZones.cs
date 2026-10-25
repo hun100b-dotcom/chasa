@@ -38,6 +38,29 @@ public static class FieldZones
     }
     static ZoneRow[] names;
 
+    [System.Serializable] class RingZone { public string name; public int ring; public float[] rect_m; }
+    [System.Serializable] class RingMap { public RingZone[] zones; }
+    static RingZone[] ringZones;
+
+    /// <summary>
+    /// 그 자리의 고리. 2막(z 640 이상)은 x=360 같은 한 줄로 가르지 않고 기획 act2_map.json 의 구역별 ring 을 쓴다
+    /// (붉은재 ③·쇳골 ④ 안에서도 마을·밭머리는 3, 군막 터·큰 무덤·큰 갱도·막장은 4 라서 한 줄로는 안 갈린다). 구역 밖·1막·3막은 RingLoot.RingAt 그대로.
+    /// </summary>
+    public static int RingAt(float x, float z, bool blackRiver)
+    {
+        if (z >= FieldRules.Size && x >= 0f && x < FieldRules.Size + 128f)
+        {
+            if (ringZones == null)
+            {
+                var ta = Resources.Load<TextAsset>("Data/act2_map"); var m = ta != null ? JsonUtility.FromJson<RingMap>(ta.text) : null;
+                ringZones = m != null && m.zones != null ? m.zones : new RingZone[0];
+            }
+            foreach (var r in ringZones)
+                if (r.ring > 0 && r.rect_m != null && r.rect_m.Length >= 4 && x >= r.rect_m[0] && x <= r.rect_m[2] && z >= r.rect_m[1] && z <= r.rect_m[3]) return r.ring;
+        }
+        return RingLoot.RingAt(x, z, blackRiver);
+    }
+
     /// <summary>구역 이름과 네모(지도 글자용). 없으면 빈 목록</summary>
     public static List<KeyValuePair<string, Rect>> Labels()
     {

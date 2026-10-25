@@ -316,7 +316,7 @@ public class ActorModel : MonoBehaviour
     static Spec SpecFor(string name)
     {
         var s = SpecBase(name);
-        foreach (var suf in new[] { "_yeoksa", "_bungjae", "_soegol" })
+        foreach (var suf in new[] { "_yeoksa", "_bungjae", "_soegol", "_number_named", "_number" }   /* 숫자 혼: _number_named 를 _number 보다 먼저 봐야 한다(앞쪽이 뒤쪽을 품고 있어서) */)
             if (name.Contains(suf) && ModelCatalog.Actor(s.key + suf) != null) { s.key += suf; break; }   // 변형 모델 줄이 있을 때만(없으면 기본 모양)
         return s;
     }

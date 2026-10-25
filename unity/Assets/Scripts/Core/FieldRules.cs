@@ -167,6 +167,13 @@ namespace Chasa.Core
                 case "prop_sotdae": return 0.3f;
                 case "prop_choga": case "prop_giwa": return 2.5f;
                 case "night_torch_stand": return 0.3f;
+                // 1막 처음 10분 길 소품(아트 PR #46). 길을 막는 덩치만 등록한다: 원두막은 기둥 넷 터 전체(기둥 사이로 끼어들어 갇히지 않게 한 원으로),
+                // 두엄·보릿단 말림·쉼터 돌·물독은 몸통만. 물꼬·새 쫓는 줄·박 시렁·두렁 말뚝은 지나다니는 길목이라 0(걸리적거리면 안 된다)
+                case "a1r_lean_to": return 1.8f;
+                case "a1r_manure_heap": return 1.0f;
+                case "a1r_sheaf_stack": return 0.5f;
+                case "a1r_wayside_rest": return 0.7f;
+                case "a1r_drink_jars": return 0.6f;
                 // 2막 소품(아트 place_act2.py 의 충돌 반지름 표 그대로. 갱도 골 바닥 모듈은 걷는 곳이라 0)
                 case "sanseong_wall_straight": return 2.0f;
                 case "sanseong_wall_ruin": return 2.0f;

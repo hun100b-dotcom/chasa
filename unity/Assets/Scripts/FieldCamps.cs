@@ -86,7 +86,7 @@ public class FieldCamps
         if (alive >= EarlyMaxAlive) { c.cooldown = 3f; return; }   // 지금은 더 못 세운다(조금 뒤 다시 시도)
         c.spawned = true;
         int count = CampRules.CountFor(c.row.n, SkyState.Daylight);   // 낮엔 적게
-        int ring = c.row.ring > 0 ? c.row.ring : RingLoot.RingAt(c.row.x, c.row.z, c.row.zone == "검은여울");   // 2막 행은 행의 ring(구역 단위), 1막은 RingAt(기획 act1-enemy-check 2)
+        int ring = c.row.ring > 0 ? c.row.ring : FieldZones.RingAt(c.row.x, c.row.z, c.row.zone == "검은여울");   // 2막 행은 행의 ring(구역 단위), 1막은 RingAt(기획 act1-enemy-check 2)
         float dens = c.row.ring > 0 ? 1f : Balance.CAMP_DENSITY_MULT * (ring == 1 ? Balance.CAMP_DENSITY_RING1 : ring == 2 ? Balance.CAMP_DENSITY_RING2 : Balance.CAMP_DENSITY_RING3);   // 구역 고리별 밀도(난이도 조정)
         if (dens < 0.999f) count = Mathf.Max(1, Mathf.RoundToInt(count * dens));
         if (NearNamed(c.row.x, c.row.z)) count = Mathf.Max(1, Mathf.Min(Balance.NAMED_NEAR_CAP, Mathf.RoundToInt(count * 0.5f)));   // 이름혼 자리 둘레는 한산하게(이름혼 처결 때 둘러싸이지 않게)

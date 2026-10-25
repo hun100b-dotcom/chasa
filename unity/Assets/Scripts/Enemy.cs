@@ -490,7 +490,10 @@ public class Enemy : MonoBehaviour
         if (View3D.On && !soul.Boss && !soul.Fierce && type == SoulType.Plain)
         {
             if (variant == null) variant = VariantOf(FieldZones.NameAt(Pos.x, Pos.z));
-            if (variant.Length > 0) n += variant;
+            /* 숫자 혼(인 없음)은 구역 모양 대신 번호 목패 모양을 쓴다. B-08 천도 뒤엔 이름 쪽지가 달린 모양으로 바뀌므로
+               구역 이름표처럼 한 번에 굳히지 않고 매번 본다(Numbered 표식은 맺힌 뒤에 붙을 수 있어서이기도 하다) */
+            if (soul.Numbered) n += Soul.NumberedBlurred ? "_number_named" : "_number";
+            else if (variant.Length > 0) n += variant;
         }
         var look = lastPlayerPos - Pos;
         // 예비동작이면 붉게, 맞은 순간이면 하얗게 번쩍 (색 도형의 flash 와 같은 신호)
