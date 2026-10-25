@@ -57735,684 +57735,2484 @@
    "z": 0.0
   },
   {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 605.8,
-   "y": 530.9,
-   "rot": 315,
-   "z": 2.0
+   "zone": "생활감",
+   "prop": "prop_firewood",
+   "x": 181.3,
+   "y": 48.6,
+   "rot": -90,
+   "z": 0.0
   },
   {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 613.9,
-   "y": 550.2,
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 179.1,
+   "y": 44.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_sacks",
+   "x": 182.3,
+   "y": 45.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 179.6,
+   "y": 49.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 179.6,
+   "y": 46.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "마을 가축",
+   "prop": "prop_cow",
+   "x": 179.5,
+   "y": 49.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_firewood",
+   "x": 181.3,
+   "y": 58.6,
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 179.1,
+   "y": 54.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_sacks",
+   "x": 182.3,
+   "y": 55.2,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 179.6,
+   "y": 59.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 179.6,
+   "y": 56.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_firewood",
+   "x": 181.3,
+   "y": 68.6,
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 179.1,
+   "y": 64.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_sacks",
+   "x": 182.3,
+   "y": 65.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 179.6,
+   "y": 69.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 179.6,
+   "y": 66.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "마을 가축",
+   "prop": "prop_cow",
+   "x": 179.5,
+   "y": 69.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_firewood",
+   "x": 210.7,
+   "y": 51.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 212.9,
+   "y": 47.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_sacks",
+   "x": 209.7,
+   "y": 48.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 212.4,
+   "y": 52.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 212.4,
+   "y": 49.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_firewood",
+   "x": 210.7,
+   "y": 61.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 212.9,
+   "y": 57.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_sacks",
+   "x": 209.7,
+   "y": 58.2,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 212.4,
+   "y": 62.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 212.4,
+   "y": 59.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "마을 가축",
+   "prop": "prop_cow",
+   "x": 212.5,
+   "y": 62.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_firewood",
+   "x": 210.7,
+   "y": 70.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 212.9,
+   "y": 66.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_sacks",
+   "x": 209.7,
+   "y": 67.2,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 212.4,
+   "y": 71.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 212.4,
+   "y": 68.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_firewood",
+   "x": 189.8,
+   "y": 80.6,
+   "rot": -90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 187.6,
+   "y": 76.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_sacks",
+   "x": 190.8,
+   "y": 77.2,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 188.1,
+   "y": 81.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 188.1,
+   "y": 78.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "마을 가축",
+   "prop": "prop_cow",
+   "x": 188.0,
+   "y": 81.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_millstone",
+   "x": 201.0,
+   "y": 53.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_millstone",
+   "x": 190.8,
+   "y": 74.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "마을 모닥불",
+   "prop": "prop_campfire",
+   "x": 202.2,
+   "y": 49.5,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_log_pile",
+   "x": 204.0,
+   "y": 48.5,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_stepstones",
+   "x": 201.8,
+   "y": 63.2,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_stepstones",
+   "x": 190.2,
+   "y": 51.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 207.3,
+   "y": 43.5,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 209.2,
+   "y": 75.8,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 207.6,
+   "y": 61.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 209.9,
+   "y": 45.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 184.6,
+   "y": 62.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_haystack",
+   "x": 184.3,
+   "y": 50.4,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 231.0,
+   "y": 55.2,
+   "rot": -20,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 221.5,
+   "y": 53.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 223.0,
+   "y": 62.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 226.0,
+   "y": 62.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 251.5,
+   "y": 82.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 236.9,
+   "y": 102.9,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 가축",
+   "prop": "prop_cow",
+   "x": 250.0,
+   "y": 97.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 221.5,
+   "y": 173.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 235.7,
+   "y": 222.2,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 223.0,
+   "y": 230.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 226.0,
+   "y": 230.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 283.5,
+   "y": 58.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 270.1,
+   "y": 78.0,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 253.5,
+   "y": 77.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 가축",
+   "prop": "prop_cow",
+   "x": 282.0,
+   "y": 97.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 267.3,
+   "y": 128.0,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 255.0,
+   "y": 134.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 258.0,
+   "y": 134.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 283.5,
+   "y": 154.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 253.5,
+   "y": 149.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 272.8,
+   "y": 175.4,
+   "rot": -20,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 270.7,
+   "y": 222.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 253.5,
+   "y": 221.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 가축",
+   "prop": "prop_cow",
+   "x": 282.0,
+   "y": 217.0,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 255.0,
+   "y": 230.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 258.0,
+   "y": 230.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 315.5,
+   "y": 58.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 296.0,
+   "y": 78.5,
+   "rot": -20,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 285.5,
+   "y": 101.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 297.6,
+   "y": 202.1,
+   "rot": -20,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 287.0,
+   "y": 206.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 290.0,
+   "y": 206.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 315.5,
+   "y": 226.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 가축",
+   "prop": "prop_cow",
+   "x": 314.0,
+   "y": 217.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 335.4,
+   "y": 56.6,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 317.5,
+   "y": 53.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 331.9,
+   "y": 106.7,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 319.0,
+   "y": 110.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 322.0,
+   "y": 110.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 347.5,
+   "y": 130.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 317.5,
+   "y": 125.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 331.9,
+   "y": 223.7,
+   "rot": -20,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 가축",
+   "prop": "prop_cow",
+   "x": 346.0,
+   "y": 217.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 368.9,
+   "y": 78.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 349.5,
+   "y": 77.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 351.0,
+   "y": 86.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 354.0,
+   "y": 86.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 411.5,
+   "y": 82.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 399.9,
+   "y": 103.4,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 381.5,
+   "y": 125.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 가축",
+   "prop": "prop_cow",
+   "x": 410.0,
+   "y": 121.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 396.1,
+   "y": 173.2,
+   "rot": -20,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 383.0,
+   "y": 182.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 386.0,
+   "y": 182.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 411.5,
+   "y": 202.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 431.9,
+   "y": 54.1,
+   "rot": -20,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 413.5,
+   "y": 53.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 432.1,
+   "y": 104.1,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 가축",
+   "prop": "prop_cow",
+   "x": 442.0,
+   "y": 97.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 415.0,
+   "y": 110.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 418.0,
+   "y": 110.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 원두막",
+   "prop": "prop_wonduumak",
+   "x": 443.5,
+   "y": 130.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 413.5,
+   "y": 125.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 429.5,
+   "y": 151.1,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 허수아비",
+   "prop": "prop_scarecrow",
+   "x": 423.8,
+   "y": 199.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "보릿들 볏가리",
+   "prop": "prop_haystack",
+   "x": 413.5,
+   "y": 197.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 415.0,
+   "y": 206.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "생활감",
+   "prop": "prop_fence",
+   "x": 418.0,
+   "y": 206.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "이정표",
+   "prop": "prop_signpost",
+   "x": 360.4,
+   "y": 321.5,
+   "rot": -15,
+   "z": 0.0
+  },
+  {
+   "zone": "이정표",
+   "prop": "prop_signpost",
+   "x": 360.4,
+   "y": 289.5,
+   "rot": -15,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 539.2,
+   "y": 495.4,
+   "rot": -15,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 528.5,
+   "y": 510.8,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 533.3,
+   "y": 510.7,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 559.7,
+   "y": 543.4,
    "rot": 0,
    "z": 2.0
   },
   {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 565.7,
-   "y": 571.5,
-   "rot": 180,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_cluster",
-   "x": 547.5,
-   "y": 581.6,
-   "rot": 270,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_medium",
-   "x": 570.1,
-   "y": 526.9,
-   "rot": 270,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 569.8,
-   "y": 572.6,
-   "rot": 315,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_a",
-   "x": 570.2,
-   "y": 586.6,
-   "rot": 315,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_cluster",
-   "x": 568.7,
-   "y": 570.3,
-   "rot": 45,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_c",
-   "x": 595.8,
-   "y": 514.0,
-   "rot": 270,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 547.1,
-   "y": 528.5,
-   "rot": 180,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_small",
-   "x": 591.2,
-   "y": 549.9,
-   "rot": 180,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_cluster",
-   "x": 549.1,
-   "y": 529.2,
-   "rot": 135,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_a",
-   "x": 594.3,
-   "y": 590.5,
-   "rot": 45,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_small",
-   "x": 577.8,
-   "y": 554.8,
-   "rot": 315,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_medium",
-   "x": 585.6,
-   "y": 569.1,
-   "rot": 180,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_a",
-   "x": 597.2,
-   "y": 582.7,
-   "rot": 90,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_a",
-   "x": 614.9,
-   "y": 588.1,
-   "rot": 45,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_cluster",
-   "x": 579.7,
-   "y": 534.0,
-   "rot": 45,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 550.1,
-   "y": 543.3,
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 564.6,
+   "y": 543.1,
    "rot": 0,
    "z": 2.0
   },
   {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_cluster",
-   "x": 551.4,
-   "y": 578.3,
-   "rot": 90,
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 570.5,
+   "y": 544.8,
+   "rot": 0,
    "z": 2.0
   },
   {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_medium",
-   "x": 588.1,
-   "y": 589.3,
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 560.1,
+   "y": 550.3,
+   "rot": 20,
+   "z": 2.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 565.0,
+   "y": 550.7,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 570.6,
+   "y": 551.9,
+   "rot": 20,
+   "z": 2.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 559.1,
+   "y": 558.4,
+   "rot": -15,
+   "z": 2.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 175.8,
+   "y": 80.3,
+   "rot": -15,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 180.8,
+   "y": 79.3,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 186.5,
+   "y": 80.8,
+   "rot": -15,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 176.6,
+   "y": 87.6,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 182.1,
+   "y": 87.9,
+   "rot": -15,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 187.9,
+   "y": 87.7,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 160.1,
+   "y": 113.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 164.8,
+   "y": 111.5,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 170.7,
+   "y": 111.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 159.9,
+   "y": 118.4,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 164.7,
+   "y": 119.3,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 102.2,
+   "y": 495.9,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 106.5,
+   "y": 495.5,
+   "rot": -15,
+   "z": 0.0
+  },
+  {
+   "zone": "무덤",
+   "prop": "prop_grave",
+   "x": 102.4,
+   "y": 503.4,
+   "rot": 20,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 274.5,
+   "y": 436.7,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 419.4,
+   "y": 210.9,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 453.9,
+   "y": 379.2,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 388.2,
+   "y": 362.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 367.5,
+   "y": 210.3,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 293.4,
+   "y": 190.9,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 439.4,
+   "y": 255.0,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 453.1,
+   "y": 219.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 407.3,
+   "y": 214.8,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 339.0,
+   "y": 350.2,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 492.2,
+   "y": 154.6,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 188.5,
+   "y": 254.6,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 416.8,
+   "y": 288.7,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 273.9,
+   "y": 405.8,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 226.3,
+   "y": 389.5,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 225.7,
+   "y": 396.9,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 251.7,
+   "y": 403.1,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 457.6,
+   "y": 393.1,
    "rot": 315,
    "z": 2.0
   },
   {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_medium",
-   "x": 557.4,
-   "y": 597.1,
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 454.9,
+   "y": 427.4,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 198.9,
+   "y": 307.2,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 341.0,
+   "y": 439.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 439.3,
+   "y": 354.8,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 345.6,
+   "y": 412.2,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 493.3,
+   "y": 481.2,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 310.6,
+   "y": 399.1,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 255.3,
+   "y": 352.6,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 149.5,
+   "y": 403.1,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 286.0,
+   "y": 438.7,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 211.8,
+   "y": 254.5,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 446.2,
+   "y": 226.3,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 254.1,
+   "y": 139.6,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 497.8,
+   "y": 450.4,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 384.9,
+   "y": 141.5,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 485.5,
+   "y": 385.6,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 315.0,
+   "y": 425.2,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 170.1,
+   "y": 238.5,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 307.9,
+   "y": 314.4,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 253.2,
+   "y": 182.7,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 136.6,
+   "y": 331.6,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 242.4,
+   "y": 337.4,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 438.9,
+   "y": 185.0,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 454.2,
+   "y": 269.3,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 253.6,
+   "y": 196.8,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 435.5,
+   "y": 437.8,
    "rot": 270,
    "z": 2.0
   },
   {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 291.0,
+   "y": 308.9,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 503.0,
+   "y": 304.9,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 410.9,
+   "y": 155.5,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 341.9,
+   "y": 341.1,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 422.4,
+   "y": 252.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 163.6,
+   "y": 146.9,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 233.4,
+   "y": 335.1,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 436.1,
+   "y": 443.3,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 380.2,
+   "y": 441.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 413.2,
+   "y": 206.2,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 281.5,
+   "y": 412.9,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 152.5,
+   "y": 355.3,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 294.0,
+   "y": 213.8,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 197.1,
+   "y": 381.8,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 300.4,
+   "y": 252.8,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 203.3,
+   "y": 298.9,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 417.7,
+   "y": 211.2,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 436.2,
+   "y": 415.1,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 396.8,
+   "y": 401.6,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 441.8,
+   "y": 278.4,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 321.2,
+   "y": 242.6,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 499.9,
+   "y": 260.2,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 199.1,
+   "y": 238.5,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 364.0,
+   "y": 153.1,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 476.9,
+   "y": 484.4,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "통나무",
+   "prop": "prop_log_pile",
+   "x": 131.4,
+   "y": 340.9,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "숲 야영",
+   "prop": "prop_campfire",
+   "x": 364.7,
+   "y": 359.1,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "숲 야영",
+   "prop": "prop_campfire",
+   "x": 419.5,
+   "y": 370.3,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "숲 야영",
+   "prop": "prop_campfire",
+   "x": 454.1,
+   "y": 273.0,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "숲 야영",
+   "prop": "prop_campfire",
+   "x": 259.9,
+   "y": 258.7,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "나루터 모닥불",
+   "prop": "prop_campfire",
+   "x": 99.5,
+   "y": 548.0,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "나루터",
+   "prop": "prop_log_pile",
+   "x": 100.8,
+   "y": 551.0,
+   "rot": 70,
+   "z": 0.0
+  },
+  {
    "zone": "폐당집 터",
-   "prop": "nature_dead_c",
-   "x": 563.2,
-   "y": 542.2,
+   "prop": "terrain_rock_cluster",
+   "x": 608.8,
+   "y": 557.1,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_medium",
+   "x": 562.2,
+   "y": 558.9,
    "rot": 135,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
    "prop": "nature_dead_a",
-   "x": 558.3,
-   "y": 586.0,
-   "rot": 45,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_c",
-   "x": 546.1,
-   "y": 530.8,
-   "rot": 135,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 564.1,
-   "y": 560.9,
-   "rot": 315,
+   "x": 598.2,
+   "y": 545.4,
+   "rot": 180,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
    "prop": "terrain_rock_cluster",
-   "x": 582.7,
-   "y": 573.6,
-   "rot": 90,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_c",
-   "x": 558.9,
-   "y": 517.6,
-   "rot": 135,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "terrain_rock_medium",
-   "x": 590.1,
-   "y": 556.4,
+   "x": 594.9,
+   "y": 556.8,
    "rot": 225,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 570.8,
+   "y": 587.5,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 584.8,
+   "y": 579.2,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 596.2,
+   "y": 579.5,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
    "prop": "terrain_rock_small",
-   "x": 551.1,
+   "x": 601.3,
+   "y": 563.1,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 579.3,
+   "y": 576.9,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 548.8,
+   "y": 552.6,
+   "rot": 135,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 584.8,
+   "y": 550.3,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 590.7,
+   "y": 582.7,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 571.7,
+   "y": 572.3,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 587.0,
+   "y": 548.7,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 553.7,
+   "y": 586.6,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 614.8,
+   "y": 595.8,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 581.6,
+   "y": 580.6,
+   "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 564.3,
+   "y": 513.4,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 572.3,
+   "y": 555.0,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 581.6,
+   "y": 528.6,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 604.8,
+   "y": 516.0,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 545.0,
+   "y": 588.5,
+   "rot": 270,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_c",
+   "x": 548.0,
+   "y": 517.5,
+   "rot": 0,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 570.6,
+   "y": 587.4,
+   "rot": 315,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 584.9,
+   "y": 577.7,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 579.4,
+   "y": 596.6,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 594.0,
+   "y": 518.1,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 558.7,
+   "y": 515.8,
+   "rot": 45,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 578.7,
+   "y": 579.9,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_b",
+   "x": 600.9,
    "y": 574.6,
    "rot": 225,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
-   "prop": "terrain_rock_medium",
-   "x": 598.9,
-   "y": 596.3,
-   "rot": 0,
+   "prop": "nature_dead_a",
+   "x": 565.1,
+   "y": 595.1,
+   "rot": 45,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
    "prop": "nature_dead_c",
-   "x": 549.9,
-   "y": 569.8,
-   "rot": 0,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 581.4,
-   "y": 521.1,
-   "rot": 0,
+   "x": 591.5,
+   "y": 575.4,
+   "rot": 270,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
    "prop": "terrain_rock_cluster",
-   "x": 588.9,
-   "y": 574.5,
-   "rot": 315,
+   "x": 614.9,
+   "y": 575.2,
+   "rot": 270,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
    "prop": "terrain_rock_cluster",
-   "x": 570.3,
-   "y": 532.8,
-   "rot": 90,
+   "x": 561.2,
+   "y": 539.7,
+   "rot": 180,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
    "prop": "terrain_rock_cluster",
-   "x": 574.5,
-   "y": 581.8,
-   "rot": 225,
+   "x": 564.2,
+   "y": 541.9,
+   "rot": 180,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
    "prop": "terrain_rock_small",
-   "x": 562.5,
-   "y": 572.7,
-   "rot": 135,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_c",
-   "x": 603.4,
-   "y": 514.9,
-   "rot": 225,
-   "z": 2.0
-  },
-  {
-   "zone": "폐당집 터",
-   "prop": "nature_dead_b",
-   "x": 589.9,
-   "y": 579.2,
-   "rot": 135,
+   "x": 610.7,
+   "y": 570.1,
+   "rot": 180,
    "z": 2.0
   },
   {
    "zone": "폐당집 터",
    "prop": "terrain_rock_cluster",
-   "x": 598.0,
-   "y": 556.2,
+   "x": 581.3,
+   "y": 566.9,
    "rot": 225,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "nature_dead_a",
+   "x": 578.3,
+   "y": 576.7,
+   "rot": 90,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_small",
+   "x": 561.2,
+   "y": 588.1,
+   "rot": 180,
+   "z": 2.0
+  },
+  {
+   "zone": "폐당집 터",
+   "prop": "terrain_rock_cluster",
+   "x": 544.6,
+   "y": 530.9,
+   "rot": 270,
    "z": 2.0
   },
   {
    "zone": "폐당집 둘레",
    "prop": "nature_dead_c",
-   "x": 491.7,
-   "y": 578.0,
-   "rot": 180,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_a",
-   "x": 559.2,
-   "y": 622.0,
+   "x": 624.6,
+   "y": 521.5,
    "rot": 135,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_a",
-   "x": 636.7,
-   "y": 594.1,
-   "rot": 315,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_c",
-   "x": 487.0,
-   "y": 570.5,
-   "rot": 135,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_a",
-   "x": 598.7,
-   "y": 457.7,
-   "rot": 135,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_b",
-   "x": 492.2,
-   "y": 578.6,
-   "rot": 270,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_b",
-   "x": 508.5,
-   "y": 510.6,
-   "rot": 315,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_c",
-   "x": 624.8,
-   "y": 528.7,
-   "rot": 270,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_c",
-   "x": 633.9,
-   "y": 621.8,
-   "rot": 135,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_b",
-   "x": 548.0,
-   "y": 608.8,
-   "rot": 90,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_b",
-   "x": 529.7,
-   "y": 580.9,
-   "rot": 315,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_b",
-   "x": 558.0,
-   "y": 467.7,
-   "rot": 270,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_c",
-   "x": 609.6,
-   "y": 633.1,
-   "rot": 315,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_c",
-   "x": 627.4,
-   "y": 455.0,
-   "rot": 225,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_c",
-   "x": 517.8,
-   "y": 542.9,
-   "rot": 270,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_b",
-   "x": 521.2,
-   "y": 622.0,
-   "rot": 225,
    "z": 0.0
   },
   {
    "zone": "폐당집 둘레",
    "prop": "nature_pine_a",
-   "x": 514.9,
-   "y": 605.6,
-   "rot": 45,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_a",
-   "x": 531.5,
-   "y": 519.4,
-   "rot": 315,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_b",
-   "x": 523.2,
-   "y": 487.4,
-   "rot": 270,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_b",
-   "x": 508.0,
-   "y": 556.2,
-   "rot": 180,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_b",
-   "x": 598.2,
-   "y": 610.2,
-   "rot": 315,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_b",
-   "x": 538.5,
-   "y": 457.0,
-   "rot": 90,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_c",
-   "x": 604.9,
-   "y": 636.1,
-   "rot": 225,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_b",
-   "x": 522.0,
-   "y": 635.6,
-   "rot": 225,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_c",
-   "x": 638.2,
-   "y": 498.3,
-   "rot": 135,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_b",
-   "x": 541.5,
-   "y": 448.6,
-   "rot": 315,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_c",
-   "x": 612.9,
-   "y": 489.8,
-   "rot": 180,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_b",
-   "x": 628.0,
-   "y": 590.7,
-   "rot": 270,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_c",
-   "x": 495.1,
-   "y": 555.3,
-   "rot": 180,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_a",
-   "x": 553.3,
-   "y": 492.6,
-   "rot": 225,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_a",
-   "x": 608.5,
-   "y": 473.9,
-   "rot": 270,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_c",
-   "x": 571.9,
-   "y": 610.4,
-   "rot": 135,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_b",
-   "x": 486.6,
-   "y": 611.0,
-   "rot": 270,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_a",
-   "x": 619.5,
-   "y": 473.0,
-   "rot": 225,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_c",
-   "x": 582.8,
-   "y": 481.3,
+   "x": 492.4,
+   "y": 504.5,
    "rot": 45,
    "z": 0.0
   },
   {
    "zone": "폐당집 둘레",
    "prop": "nature_pine_c",
-   "x": 516.9,
-   "y": 581.2,
-   "rot": 270,
+   "x": 603.5,
+   "y": 625.9,
+   "rot": 180,
    "z": 0.0
   },
   {
    "zone": "폐당집 둘레",
-   "prop": "nature_dead_c",
-   "x": 541.6,
-   "y": 484.8,
-   "rot": 135,
+   "prop": "nature_dead_b",
+   "x": 515.9,
+   "y": 594.3,
+   "rot": 315,
    "z": 0.0
   },
   {
    "zone": "폐당집 둘레",
-   "prop": "nature_dead_a",
-   "x": 635.5,
-   "y": 605.8,
-   "rot": 270,
+   "prop": "nature_pine_a",
+   "x": 636.8,
+   "y": 546.1,
+   "rot": 45,
    "z": 0.0
   },
   {
    "zone": "폐당집 둘레",
-   "prop": "nature_dead_c",
-   "x": 565.5,
-   "y": 639.0,
+   "prop": "nature_pine_b",
+   "x": 495.5,
+   "y": 636.2,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 571.4,
+   "y": 473.6,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 605.2,
+   "y": 628.8,
    "rot": 0,
    "z": 0.0
   },
   {
    "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 633.4,
+   "y": 480.7,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 563.1,
+   "y": 631.4,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 481.4,
+   "y": 634.8,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 548.6,
+   "y": 632.6,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
    "prop": "nature_dead_c",
+   "x": 481.9,
+   "y": 630.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 526.5,
+   "y": 550.1,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 597.9,
+   "y": 628.4,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 535.2,
+   "y": 617.9,
+   "rot": 90,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
    "x": 618.9,
-   "y": 459.5,
+   "y": 609.6,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 626.0,
+   "y": 563.7,
    "rot": 180,
    "z": 0.0
   },
   {
    "zone": "폐당집 둘레",
-   "prop": "nature_pine_b",
-   "x": 531.7,
-   "y": 618.2,
-   "rot": 90,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_dead_a",
-   "x": 497.5,
-   "y": 633.6,
-   "rot": 225,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
-   "prop": "nature_pine_b",
-   "x": 533.0,
-   "y": 545.4,
-   "rot": 225,
-   "z": 0.0
-  },
-  {
-   "zone": "폐당집 둘레",
    "prop": "nature_dead_c",
-   "x": 636.1,
-   "y": 603.3,
+   "x": 522.7,
+   "y": 611.6,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 634.7,
+   "y": 629.2,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 626.7,
+   "y": 456.9,
    "rot": 0,
    "z": 0.0
   },
   {
    "zone": "폐당집 둘레",
    "prop": "nature_pine_b",
-   "x": 629.3,
-   "y": 475.9,
+   "x": 565.9,
+   "y": 631.2,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 617.3,
+   "y": 497.0,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 504.8,
+   "y": 553.3,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 520.6,
+   "y": 519.0,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 531.1,
+   "y": 568.6,
    "rot": 45,
    "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 503.2,
+   "y": 604.5,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 634.3,
+   "y": 604.4,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 498.0,
+   "y": 534.9,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 639.3,
+   "y": 449.2,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_a",
+   "x": 518.2,
+   "y": 619.2,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 621.1,
+   "y": 459.6,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 631.2,
+   "y": 554.4,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 561.1,
+   "y": 461.6,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 531.9,
+   "y": 618.8,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 534.3,
+   "y": 580.7,
+   "rot": 315,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 633.1,
+   "y": 486.8,
+   "rot": 45,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 612.0,
+   "y": 639.2,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 514.3,
+   "y": 579.4,
+   "rot": 180,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_b",
+   "x": 503.2,
+   "y": 557.4,
+   "rot": 135,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_dead_c",
+   "x": 526.3,
+   "y": 468.0,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 515.7,
+   "y": 616.7,
+   "rot": 0,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_c",
+   "x": 561.8,
+   "y": 470.9,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_b",
+   "x": 530.5,
+   "y": 537.0,
+   "rot": 225,
+   "z": 0.0
+  },
+  {
+   "zone": "폐당집 둘레",
+   "prop": "nature_pine_a",
+   "x": 530.4,
+   "y": 457.7,
+   "rot": 270,
+   "z": 0.0
+  },
+  {
+   "zone": "서낭당 돌탑",
+   "prop": "prop_cairn",
+   "x": 112.0,
+   "y": 452.8,
+   "rot": 0,
+   "z": 0
+  },
+  {
+   "zone": "서낭당 돌탑",
+   "prop": "prop_cairn",
+   "x": 192.0,
+   "y": 36.8,
+   "rot": 0,
+   "z": 0
+  },
+  {
+   "zone": "서낭당 돌탑",
+   "prop": "prop_cairn",
+   "x": 164.0,
+   "y": 180.8,
+   "rot": 0,
+   "z": 0
+  },
+  {
+   "zone": "서낭당 돌탑",
+   "prop": "prop_cairn",
+   "x": 360.0,
+   "y": 324.8,
+   "rot": 0,
+   "z": 0
   },
   {
    "zone": "검은여울",
@@ -59250,7 +61050,7 @@
  ],
  "counts": {
   "tiles(비풀밭)": 1277,
-  "props": 6208,
+  "props": 6433,
   "structures": 23,
   "paddy": 0,
   "barley": 222

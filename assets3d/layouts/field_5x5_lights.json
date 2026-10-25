@@ -4,6 +4,66 @@
  "note": "field_scene.py가 조립하며 놓은 점광원. intensity 1.0 = 블렌더 900W 기준 보통 밝기",
  "lights": [
   {
+   "x": 202.2,
+   "y": 49.5,
+   "z": 0.6,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 364.7,
+   "y": 359.1,
+   "z": 0.6,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 419.5,
+   "y": 370.3,
+   "z": 0.6,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 454.1,
+   "y": 273.0,
+   "z": 0.6,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 259.9,
+   "y": 258.7,
+   "z": 0.6,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 99.5,
+   "y": 548.0,
+   "z": 0.6,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
    "x": 91.8,
    "y": 548.6,
    "z": 2.1,
@@ -24,8 +84,8 @@
    "tag": "br_ferry_boat"
   },
   {
-   "x": 410.5,
-   "y": 305.7,
+   "x": 411.0,
+   "y": 290.7,
    "z": 1.45,
    "color": "#FFB066",
    "intensity": 0.7,

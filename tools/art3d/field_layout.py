@@ -94,6 +94,8 @@ WEIR = (50.5 * T, 48 * T)   # 물막이 위치(m)
 # ── 4-2) 검은여울(2막): 남북으로 흐르는 강, 돌다리, 나루터, 의원 집 ─────────────────────────
 RIVER_X = (9, 10, 11); RIVER_Y = (34, 79)
 structures = []; br_props = []
+import json as _j
+VIL_B = _j.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "assets3d", "layouts", "solgogae_village.json")))["buildings"]
 for iy in range(RIVER_Y[0], RIVER_Y[1] + 1):
     setT(9, iy, "br_shore", -90)                       # 서쪽 물가(물은 동쪽 절반)
     setT(10, iy, "br_rapids" if (iy // 3) % 2 == 0 else "br_deep", 90)   # 가운데는 여울과 깊은 물이 번갈아(위쪽으로 흐름)
@@ -164,6 +166,38 @@ cluster_grid("보릿들 바깥 숲 띠", (24, 2, 58, 6), FOREST, 18); cluster_gr
 cluster_grid("북서 숲 군집", (0, 16, 31, 47), FOREST, 30, skip=0.2)
 cluster_grid("북쪽 빈 청크 채움", (16, 48, 31, 79), WILD, 28, skip=0.25); cluster_grid("북쪽 빈 청크 채움", (32, 64, 63, 79), WILD, 28, skip=0.25)
 cluster_grid("마을~보릿들 길가", (24, 6, 40, 24), ZEL + BUSH + ROCK, 22, per=(4, 8), skip=0.3)
+
+# ── 5-2) 생활감 소품(오너 피드백: 필드가 텅 비어 있다). 마을 마당·밭·갈림길·무덤·야영·가축 ─────────────────────────────
+def life(prop, x, y, rot=0, zone="생활감", z=0.0):
+    ix, iy = int(x // T), int(y // T)
+    if 0 <= ix < N and 0 <= iy < N and getT(ix, iy)["t"].startswith(("slope", "br_", "road", "paddy", "stream")): return
+    props.append({"zone": zone, "prop": prop, "x": round(x, 1), "y": round(y, 1), "rot": rot, "z": round(z if z else lv(ix, iy) * 2.0 if 0 <= ix < N and 0 <= iy < N else 0, 2)})
+VX_, VY_ = 196.0, 60.0
+for b_ in VIL_B:   # 집마다 뒷마당(마을 길 반대쪽): 장작·볏가리·자루·소·울타리
+    sd = 1 if b_["x"] > 0 else -1; bx_, by_ = VX_ + b_["x"], VY_ + b_["y"]
+    life("prop_firewood", bx_ + sd * 6.2, by_ + 1.6, 90 * sd); life("prop_haystack", bx_ + sd * 8.4, by_ - 2.2, rnd.choice((0, 90)))
+    life("prop_sacks", bx_ + sd * 5.2, by_ - 1.8, rnd.choice((0, 180))); life("prop_fence", bx_ + sd * 7.9, by_ + 2.2, 90); life("prop_fence", bx_ + sd * 7.9, by_ - 1.0, 90)
+    if rnd.random() < 0.7: life("prop_cow", bx_ + sd * 8.0, by_ + 2.8, rnd.choice((0, 90, 180, 270)), zone="마을 가축")
+life("prop_cart", VX_ + 2.9, VY_ + 11.5, 80); life("prop_cart", VX_ - 3.0, VY_ - 17.5, -100); life("prop_millstone", VX_ + 5.0, VY_ - 6.8); life("prop_millstone", VX_ - 5.2, VY_ + 14.0)
+life("prop_campfire", VX_ + 6.2, VY_ - 10.5, zone="마을 모닥불"); life("prop_log_pile", VX_ + 8.0, VY_ - 11.5, 20); life("prop_stepstones", VX_ + 5.8, VY_ + 3.2, 90); life("prop_stepstones", VX_ - 5.8, VY_ - 8.2, 90)
+for k_ in range(6): life("prop_haystack", VX_ + rnd.choice((-1, 1)) * rnd.uniform(11, 14), VY_ + rnd.uniform(-22, 20), rnd.choice((0, 90)))
+# 보릿들: 밭마다 허수아비·원두막·볏가리·소
+for n_, (bx, by) in enumerate(fields):
+    cx_, cy_ = (bx + 1.5) * T, (by + 1) * T
+    if n_ % 2 == 0: life("prop_scarecrow", cx_ + rnd.uniform(-5, 5), cy_ + rnd.uniform(-3, 3), rnd.choice((0, 20, -20)), zone="보릿들 허수아비")
+    if n_ % 4 == 1: life("prop_wonduumak", cx_ + 15.5, cy_ + 2.0, 0, zone="보릿들 원두막")
+    if n_ % 3 == 0: life("prop_haystack", cx_ - 14.5, cy_ - 3.0, rnd.choice((0, 90)), zone="보릿들 볏가리")
+    if n_ % 5 == 2: life("prop_cow", cx_ + 14.0, cy_ - 7.0, rnd.choice((0, 90, 180, 270)), zone="보릿들 가축")
+    if n_ % 4 == 0: life("prop_fence", cx_ - 13.0, cy_ + 6.0, 0); life("prop_fence", cx_ - 10.0, cy_ + 6.0, 0)
+# 길 갈림 팻말(갈림길 첫 칸 곁)
+for pts in BRANCH.values(): life("prop_signpost", pts[0][0] * T + 8.4, pts[0][1] * T + 1.5, -15, zone="이정표")
+life("prop_signpost", VX_ + 3.8, 30.0, 10, zone="이정표"); life("prop_signpost", 6 * T + 4.0, 56 * T + 7.5, 0, zone="이정표")
+# 무덤: 폐당집 고지 둘레·보릿들 서쪽 언덕·검은여울 둑
+for gx_, gy_, n_ in ((66 * T, 62 * T, 9), (70 * T, 68 * T, 7), (22 * T, 10 * T, 6), (20 * T, 14 * T, 5), (12 * T, 62 * T, 5)):
+    for g in range(n_): life("prop_grave", gx_ + (g % 3) * 5.5 + rnd.uniform(-1, 1), gy_ + (g // 3) * 7.0 + rnd.uniform(-1, 1), rnd.choice((0, 0, 20, -15)), zone="무덤")
+# 숲 속 쓰러진 통나무·그루터기, 숲길 야영 불
+scatter("통나무", (16, 16, 63, 62), ["prop_log_pile"], 70); scatter("숲 야영", (28, 30, 56, 60), ["prop_campfire"], 4, lvl=0)
+life("prop_campfire", 99.5, 548.0, zone="나루터 모닥불"); life("prop_log_pile", 100.8, 551.0, 70, zone="나루터")
 scatter("폐당집 터", (66, 62, 78, 76), DEAD + ROCK, 40, lvl=1); scatter("폐당집 둘레", (60, 56, 79, 79), DEAD + PINE, 45, lvl=0)
 
 # ── 6) 표식: 동선·거점(코드팀이 NPC·서낭당·굴 입구·혼 무리 자리로 쓴다) ──────────────
@@ -177,6 +211,7 @@ for bx_, by_, bz_, br_, nt_ in ((84.6, 553.0, 0.0, 0, "나루터 곁에 맨 빈 
     structures.append({"piece": "br_ferry_boat", "file": "assets3d/blackrapids/br_ferry_boat.glb", "x": bx_, "y": by_, "z": bz_, "rot": br_, "note": nt_})
 for m_ in [m for m in markers if m["kind"] == "seonang"]:   # 서낭당 4곳에 실제 모델+양옆 횃대(밤 불빛). 마커만 있고 모델이 비어 있던 빈칸 보정
     structures.append({"piece": "prop_seonangdang", "file": "assets3d/props/prop_seonangdang.glb", "x": m_["x"], "y": m_["y"], "z": 0, "rot": 0, "note": m_["name"]})
+    props.append({"zone": "서낭당 돌탑", "prop": "prop_cairn", "x": round(m_["x"] + 4.0, 1), "y": round(m_["y"] + 0.8, 1), "rot": 0, "z": 0})
     for dx_ in (-2.6, 2.6):
         structures.append({"piece": "night_torch_stand", "file": "assets3d/night/night_torch_stand.glb", "x": m_["x"] + dx_, "y": m_["y"] - 1.2, "z": 0, "rot": 0, "note": "서낭당 횃대(Light_ 포함)"})
 zones = [{"name": "검은여울", "rect_m": [0, 272, 200, 640]}, {"name": "솔고개 마을", "rect_m": [160, 24, 232, 100]}, {"name": "보릿들", "rect_m": [208, 40, 448, 240]}, {"name": "물막이 골", "rect_m": [264, 240, 504, 500]}, {"name": "폐당집", "rect_m": [520, 500, 620, 620]}]
