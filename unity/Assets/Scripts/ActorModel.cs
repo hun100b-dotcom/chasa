@@ -163,6 +163,10 @@ public class ActorModel : MonoBehaviour
         var s = new Spec { legs = true };
         if (name.Contains("chasa"))      // 동이 대역: 검은 도포, 붉은 띠, 갓
         { s.key = "dongi"; s.height = 1.8f; s.body = new Color(0.10f, 0.11f, 0.17f); s.accent = new Color(0.62f, 0.12f, 0.12f); s.hat = true; s.glow = 0f; }
+        else if (name.Contains("boss_b02"))  // 월화: 오방색 쾌자의 늙은 무당(3D 모델이 없을 때의 도형 대역)
+        { s.key = "boss_b02"; s.height = 2.4f; s.body = new Color(0.72f, 0.25f, 0.38f); s.accent = new Color(0.95f, 0.8f, 0.4f); s.legs = false; s.glow = 0.4f; }
+        else if (name.Contains("boss_b03"))  // 서 의원: 약장을 진 마른 의원
+        { s.key = "boss_b03"; s.height = 2.2f; s.body = new Color(0.45f, 0.33f, 0.20f); s.accent = new Color(0.4f, 0.9f, 0.85f); s.legs = false; s.glow = 0.3f; }
         else if (name.Contains("boss"))  // 나루 영감: 크고 보랏빛, 뿔 없이 긴 도포
         { s.key = "boss"; s.height = 3.2f; s.body = new Color(0.40f, 0.30f, 0.60f); s.accent = new Color(0.8f, 0.7f, 1f); s.legs = false; s.glow = 0.5f; }
         else if (name.Contains("lump"))  // 덩어리: 뭉친 한 덩이

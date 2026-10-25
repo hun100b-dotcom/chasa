@@ -91,16 +91,39 @@ public class JudgeSystem : MonoBehaviour
     public void StartPlaying() { if (!played) { played = true; enemies.graceT = Balance.NIGHT_GRACE; } }
 
     // ===== 명령 ====================================================================
+    /// <summary>이 보스의 낮 단서 수. 1호는 밤 장부(night.Clues), 2·3호는 단서장에서 그 보스 접두어("B02-")로 센다(최대 필요 수까지)</summary>
+    int CluesFor(Soul s)
+    {
+        if (!s.Boss || s.BossId <= 1) return night.Clues;
+        return Mathf.Min(Balance.BOSS_CLUES_REQUIRED, clueBook.Count(Bosses.Get(s.BossId).CluePrefix));
+    }
+
+    /// <summary>보스별 컷 이름: 예) B02-KNEEL</summary>
+    static string BossCut(Soul s, string kind) { return Bosses.Get(Mathf.Max(1, s.BossId)).Cut + "-" + kind; }
+
+    /// <summary>플레이어에게 가장 가까운 살아 있는 보스(컷신 카메라·말풍선이 따라간다)</summary>
+    public Enemy NearestBoss()
+    {
+        Enemy best = null; float bd = float.MaxValue;
+        foreach (var x in enemies.list)
+        {
+            if (!x.soul.Boss) continue;
+            float d = (x.Pos - player.Pos).sqrMagnitude;
+            if (d < bd) { bd = d; best = x; }
+        }
+        return best;
+    }
+
     public void CommandTendo()
     {
         if (Casting || !player.CanActNow()) return;
         // 천도는 보낼 수 있는 혼 중 가장 가까운 것을 고른다 — 곁에 덩어리(천도 불가)가 있어도 막히지 않게(QA)
-        var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE, x => x.soul.CanTendoWith(night.Clues));
+        var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE, x => x.soul.CanTendoWith(CluesFor(x.soul)));
         if (e == null) e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);   // 없으면 가장 가까운 혼으로 이유를 안내
         if (e == null) { Say("대상이 없다"); return; }
         if (!e.soul.CanTendo) { Say("보낼 수 없는 넋 - 파혼만 가능"); return; }
-        if (e.soul.Boss && !e.soul.CanTendoWith(night.Clues)) cuts.Play("B01-NOCLUE");   // 명부 인이 흐려졌다 꺼진다
-        if (!e.soul.CanTendoWith(night.Clues)) { Say("단서 " + Balance.BOSS_CLUES_REQUIRED + "개가 필요하다 (" + night.Clues + ") - 파혼만 가능"); return; }
+        if (e.soul.Boss && !e.soul.CanTendoWith(CluesFor(e.soul))) cuts.Play(BossCut(e.soul, "NOCLUE"));   // 명부 인이 흐려졌다 꺼진다
+        if (!e.soul.CanTendoWith(CluesFor(e.soul))) { Say("단서 " + Balance.BOSS_CLUES_REQUIRED + "개가 필요하다 (" + CluesFor(e.soul) + ") - 파혼만 가능"); return; }
         if (!e.soul.BeginSending()) return;
         player.ConsumeAct();   // 후딜·피하기를 끊고 천도 시작
         castTarget = e;
@@ -111,7 +134,7 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>이 혼을 지금 천도할 수 있나(덩어리·단서 부족이면 아니오). 데모가 대상을 고를 때 쓴다</summary>
-    public bool CanTendoNow(Enemy e) { return e != null && e.soul.CanTendo && e.soul.CanTendoWith(night.Clues); }
+    public bool CanTendoNow(Enemy e) { return e != null && e.soul.CanTendo && e.soul.CanTendoWith(CluesFor(e.soul)); }
 
     public void CommandPahon()
     {
@@ -137,10 +160,11 @@ public class JudgeSystem : MonoBehaviour
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         if (e.soul.Boss)
         {
-            night.BossDone = true; Say("나루 영감을 깨뜨렸다"); bossOutcome = 2;
-            cuts.Play("B01-PAHON"); feel.AddShake(1f);   // 6m 대폭발, 판자가 흩어진다
+            if (e.soul.BossId <= 1) { night.BossDone = true; bossOutcome = 2; }
+            Say(e.label + "을(를) 깨뜨렸다");
+            cuts.Play(BossCut(e.soul, "PAHON")); feel.AddShake(1f);   // 6m 대폭발, 판자가 흩어진다
             // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
-            if (Demo.Gear && lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
+            if (e.soul.BossId <= 1 && Demo.Gear && lo.Equip(ItemDef.MoonflowerBell())) { lo.lastDrop = "이름 있는 장비: 월화 방울 (파혼 반경 +)"; lo.lastDropT = 6f; }
         }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
         float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult * lo.stats.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
@@ -179,8 +203,8 @@ public class JudgeSystem : MonoBehaviour
             ui?.Hud.Toasts.Add("도술 점수 +1");
             night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
-            Say("나루 영감을 천도했다!"); bossOutcome = 1;
-            if (cuts.Play("B01-TENDO")) { player.CommandStop(); enemies.graceT = Mathf.Max(enemies.graceT, 7f); }   // 7초 컷: 입력 잠김·적 멈춤
+            Say(castTarget.label + "을(를) 천도했다!"); if (castTarget.soul.BossId <= 1) bossOutcome = 1;
+            if (cuts.Play(BossCut(castTarget.soul, "TENDO"))) { player.CommandStop(); enemies.graceT = Mathf.Max(enemies.graceT, 7f); }   // 7초 컷: 입력 잠김·적 멈춤
         }
         else
         {
@@ -224,7 +248,7 @@ public class JudgeSystem : MonoBehaviour
         KneelEvents++;   // BGM 재생기가 '무릎 꿇는 순간'을 알아채는 번호표
         Sfx.Play("sfx.kneel");   // 무릎 꿇는 소리 = '지금 고를 때'
         Hint(HintEvent.FirstKneel);
-        if (e.soul.Boss) cuts.Play("B01-KNEEL");   // 영감: "아직… 못 건넸소."
+        if (e.soul.Boss) cuts.Play(BossCut(e.soul, "KNEEL"));   // 영감: "아직… 못 건넸소."
         // 검은 술: 무릎 꿇은 혼의 대기 시간이 짧아진다 (덩어리는 제외, 최소 WAIT_FLOOR)
         if (!e.soul.Boss && e.soul.State == SoulState.Kneel)
         {
@@ -313,6 +337,13 @@ public class JudgeSystem : MonoBehaviour
     void SetupNight()
     {
         enemies.SpawnBoss(new Vector3(MapLayout.BossX, 0, MapLayout.BossZ));
+        if (FieldRules.On)   // 필드: 2호 월화(폐당집 굿판)·3호 서 의원(검은여울 역병막 마당). 가까이 가면 바닥 무늬(BossArena)가 깨어난다
+            for (int bid = 2; bid <= Bosses.Count; bid++)
+            {
+                var bd = Bosses.Get(bid);
+                var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
+                var arena = new GameObject("BossArena" + bid).AddComponent<BossArena>(); arena.Init(this, be, bd);
+            }
         cluePos.Clear();
         foreach (var v in clueViews) Destroy(v);
         clueViews.Clear();
@@ -344,6 +375,14 @@ public class JudgeSystem : MonoBehaviour
 
     // ===== M1: 맞음·체력·쓰러짐 ======================================================
     /// <summary>적 공격이 명중했을 때. 무적 시간이면 무시. 천도 캐스팅 중이면 끊긴다 (무방비의 대가)</summary>
+    /// <summary>보스 바닥 무늬(BossArena)에 맞았을 때. 피하기 무적이면 false(안 맞음)</summary>
+    public bool BossAreaHit(Enemy by)
+    {
+        if (ledger.Dead || night.Over) return false;
+        float hp = ledger.Hp; OnPlayerHit(by);
+        return ledger.Hp < hp || godMode;
+    }
+
     void OnPlayerHit(Enemy by)
     {
         if (ledger.Dead || night.Over || !player.Hurt()) return;
@@ -488,20 +527,19 @@ public class JudgeSystem : MonoBehaviour
                 cuts.Play(pahonOrTendo == 1 ? "FUNERAL_TENDO" : "FUNERAL_NONE");
             }
         }
-        if (!bossIntroChecked && FieldRules.On)
-        {
-            var b = enemies.list.Find(x => x.soul.Boss);
-            if (b != null && new Vector2(b.Pos.x - player.Pos.x, b.Pos.z - player.Pos.z).magnitude < 40f)
+        if (FieldRules.On)
+            foreach (var b in enemies.list)
             {
-                bossIntroChecked = true;
-                if (cuts.Play("B01-INTRO", true))
+                if (!b.soul.Boss || b.soul.BossId < 1 || bossIntroDone.Contains(b.soul.BossId)) continue;
+                if (new Vector2(b.Pos.x - player.Pos.x, b.Pos.z - player.Pos.z).magnitude >= 40f) continue;
+                bossIntroDone.Add(b.soul.BossId);
+                if (cuts.Play(BossCut(b.soul, "INTRO"), true))
                 {
                     player.CommandStop();
-                    // 물에 빠진 혼 2마리가 뱃전을 잡고 올라온다 (대본)
-                    for (int i = 0; i < 2; i++) enemies.SpawnCamp(b.Pos + new Vector3(i == 0 ? -3f : 3f, 0f, -2.5f), i == 0);
+                    // 1호: 물에 빠진 혼 2마리가 뱃전을 잡고 올라온다 (대본). 2·3호는 바닥 무늬가 시작된다
+                    if (b.soul.BossId == 1) for (int i = 0; i < 2; i++) enemies.SpawnCamp(b.Pos + new Vector3(i == 0 ? -3f : 3f, 0f, -2.5f), i == 0);
                 }
             }
-        }
         cuts.Tick(dt);
         if (cuts.PauseEnemies) enemies.graceT = Mathf.Max(enemies.graceT, 0.5f);   // 컷 동안 적 공격 시계를 계속 되감는다
         float sh = cuts.TakeShake(); if (sh > 0f) feel.AddShake(sh);
@@ -667,7 +705,7 @@ public class JudgeSystem : MonoBehaviour
     public void HintClue() { Hint(HintEvent.FirstClue); }
     void Hint(HintEvent e) { var t = hints.On(e, Ko.TouchUI); if (t != null) ui?.Hud.Toasts.Add(t); }
     public readonly CutscenePlayer cuts = new CutscenePlayer();   // 나루 영감 실시간 컷신
-    bool bossIntroChecked;
+    readonly HashSet<int> bossIntroDone = new HashSet<int>();   // 등장 컷을 본 보스 번호
     public NamedSoulSpawns named;               // 첫 세션 이름혼들
     public NpcWorld npcs;                       // 필드의 산 사람(엿듣기·지켜보기)
     public readonly ClueBook clueBook = new ClueBook();
@@ -803,7 +841,7 @@ public class JudgeSystem : MonoBehaviour
             {
                 if (e.label == null || e.gone) continue;
                 var sp = cam.WorldToScreenPoint(e.HeadPosition + Vector3.up * 0.9f);
-                GUI.Label(new Rect(sp.x - 80, Screen.height - sp.y - 12, 160, 24), e.soul.Boss ? "나루 영감" : e.label, nameStyle);
+                GUI.Label(new Rect(sp.x - 80, Screen.height - sp.y - 12, 160, 24), e.soul.Boss ? (e.label ?? "나루 영감") : e.label, nameStyle);
             }
         }
         // (2) 머리 위 '맺힘' 막대 = 남은 맺힘(체력 대신 깎이는 수치). 처결 대기 시간은 발밑 고리(SoulMarkers)가 맡는다.
@@ -852,7 +890,7 @@ public class JudgeSystem : MonoBehaviour
             }
             else
             {
-                var bs = enemies.list.Find(x => x.soul.Boss);
+                var bs = NearestBoss();
                 var sp = bs != null ? cam.WorldToScreenPoint(bs.HeadPosition + Vector3.up * 1.2f) : new Vector3(Screen.width * 0.5f, Screen.height * 0.6f, 1f);
                 var r = new Rect(sp.x - 150, Screen.height - sp.y - 30, 300, 60);
                 GUI.color = new Color(0.95f, 0.92f, 0.82f, 0.92f); GUI.DrawTexture(r, white);

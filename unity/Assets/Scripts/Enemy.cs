@@ -94,6 +94,7 @@ public class Enemy : MonoBehaviour
     public bool TakeHit(int damage, Vector3 dir, float knockback, float stunTime)
     {
         if (!alive) return false;
+        if (damageTakenMult != 1f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * damageTakenMult));   // 보스 전용: 약점 창 규칙
         flash = 1f;
         stun = Mathf.Max(stun, stunTime);
         pulled = false;                 // 끌려오던 중 맞으면 견인 취소
@@ -148,14 +149,19 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>S1 보스 나루 영감: 크고 느리고 한 방이 아프다</summary>
-    public void MakeBoss()
+    public void MakeBoss(int id = 1)
     {
-        extra = true; label = "나루 영감";
-        soul = Soul.MakeBossS1();
-        damage = Balance.BOSS_S1_DAMAGE;
-        speed *= Balance.BOSS_S1_SPEED_MULT;
-        baseColor = new Color(0.55f, 0.42f, 0.78f); mat.color = baseColor;
+        var def = Bosses.Get(id);
+        extra = true; label = def.Name;
+        soul = Soul.MakeBoss(id);
+        damage = def.Damage;
+        speed *= def.Speed;
+        // 1호 보랏빛 / 2호 오방 천(붉은 자주) / 3호 약탕 갈색 — 3D 모델이 없을 때의 색 도형 대역
+        baseColor = id == 2 ? new Color(0.72f, 0.25f, 0.38f) : id == 3 ? new Color(0.45f, 0.33f, 0.20f) : new Color(0.55f, 0.42f, 0.78f);
+        mat.color = baseColor;
     }
+
+    public float damageTakenMult = 1f;     // 받는 피해 배율(서 의원: 약점이 닫혀 있으면 0.25)
 
     /// <summary>얼룩 3개가 겹쳐 소환된 사나운 적 (P-010, P-011)</summary>
     public void MakeFierce()
@@ -266,7 +272,11 @@ public class Enemy : MonoBehaviour
         if (spr == null) return;
         string n;
         bool down = kneeling || sending;
-        if (soul.Boss) n = atk.Winding ? "boss/boss_naru_attack" : "boss/boss_naru_idle";
+        if (soul.Boss)
+        {
+            string b = soul.BossId == 2 ? "boss_b02" : soul.BossId == 3 ? "boss_b03" : "boss_naru";
+            n = "boss/" + b + (atk.Winding ? "_attack" : down && soul.BossId > 1 ? "_kneel" : "_idle");
+        }
         else if (soul.Fierce) n = "enemies/soul_fierce";
         else switch (soul.Kind)
         {
@@ -339,10 +349,10 @@ public class EnemyManager
         return e;
     }
 
-    public Enemy SpawnBoss(Vector3 at)
+    public Enemy SpawnBoss(Vector3 at, int id = 1)
     {
         var e = Enemy.Create(true, at, 1.6f);
-        e.MakeBoss();
+        e.MakeBoss(id);
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
         e.onKneel = () => onEnemyKneel?.Invoke(e);
         list.Add(e);

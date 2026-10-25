@@ -29,7 +29,7 @@ namespace Chasa.Core
         public static readonly SkillNode[] All =
         {
             // 부름 갈래 (천도 쪽)
-            new SkillNode("초혼", Branch.Call, true, "반경 6m 무릎 꿇은 혼의 대기 +3초, 일반 적 0.8초 멈칫 (12초)"),
+            new SkillNode("붙잡아 부르기", Branch.Call, true, "반경 6m 무릎 꿇은 혼의 대기 +3초, 일반 적 0.8초 멈칫 (12초)"),
             new SkillNode("혼불 날리기", Branch.Call, true, "혼불을 던져 맺힘 피해. 그날 천도한 혼 수만큼 혼불 +1 (최대 5)"),
             new SkillNode("이름 비추기", Branch.Call, true, "다음 천도 캐스팅 -0.4초 (8초)"),
             new SkillNode("배웅길", Branch.Call, true, "천도 직후 3초 동안 적 이동 -30%"),

@@ -1566,7 +1566,7 @@ public class CoreTests
     {
         var g = new GrowthState { SkillPointsEarned = 30 };
         Assert.IsFalse(g.CanLearn("일곱 이름"));                                        // 부름 갈래 점수 0
-        foreach (var n in new[] { "초혼", "혼불 날리기", "이름 비추기", "배웅길" }) Assert.IsTrue(g.Learn(n));   // 액티브 4 (점수 4)
+        foreach (var n in new[] { "붙잡아 부르기", "혼불 날리기", "이름 비추기", "배웅길" }) Assert.IsTrue(g.Learn(n));   // 액티브 4 (점수 4)
         foreach (var n in new[] { "오래 부르기", "고마운 넋", "곁을 지킴" }) { Assert.IsTrue(g.Learn(n)); Assert.IsTrue(g.Learn(n)); }   // 패시브 3×2 (점수 6) → 합 10
         Assert.IsTrue(g.CanLearn("일곱 이름"));                                          // 10점 이상이라 열림
     }
@@ -1632,5 +1632,32 @@ public class CoreTests
         Assert.AreEqual(0.20f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계
         Assert.AreEqual(0.20f, s.PahonCoinPct, 0.0001f);
         GrowthEffects.Apply(null, s);                                                    // 성장이 없어도 안전
+    }
+
+    // ---- 보스 목록·바닥 무늬 ----
+    [Test] public void Bosses_TableAndTwelveStreetsNeverOpensSafeCup()
+    {
+        Assert.AreEqual("월화", Bosses.Get(2).Name); Assert.AreEqual("B03", Bosses.Get(3).Cut); Assert.AreEqual("나루 영감", Bosses.Get(1).Name);
+        var rng = new System.Random(7);
+        for (int t = 0; t < 500; t++)
+        {
+            var cups = TwelveStreets.Pick(() => (float)rng.NextDouble(), 5);
+            Assert.AreEqual(5, cups.Count); Assert.IsFalse(cups.Contains(TwelveStreets.SafeCup));
+            Assert.AreEqual(5, new System.Collections.Generic.HashSet<int>(cups).Count);   // 겹치지 않는다
+        }
+        Assert.AreEqual(Balance.B02_CUPS_PER_WAVE_P2, TwelveStreets.CupsPerWave(0.4f));
+        Assert.AreEqual(Balance.B02_CUPS_PER_WAVE, TwelveStreets.CupsPerWave(0.9f));
+    }
+    [Test] public void NumberGridAndWeakWindow()
+    {
+        var rng = new System.Random(3);
+        var g = NumberGrid.Pick(() => (float)rng.NextDouble(), 25, Balance.B03_CELLS_PER_WAVE);
+        int bad = 0; foreach (var b in g) if (b) bad++;
+        Assert.AreEqual(Balance.B03_CELLS_PER_WAVE, bad);
+        var w = new WeakWindow();
+        w.WaveResolved(false); w.WaveResolved(false); w.WaveResolved(true); Assert.AreEqual(0, w.Streak);   // 맞으면 끊김
+        for (int i = 0; i < Balance.B03_WEAK_STREAK; i++) w.WaveResolved(false);
+        Assert.IsTrue(w.Open); Assert.AreEqual(Balance.B03_WEAK_DMG_MULT, w.DamageMult);
+        w.Tick(Balance.B03_WEAK_TIME + 0.1f); Assert.IsFalse(w.Open); Assert.AreEqual(Balance.B03_CLOSED_DMG_MULT, w.DamageMult);
     }
 }

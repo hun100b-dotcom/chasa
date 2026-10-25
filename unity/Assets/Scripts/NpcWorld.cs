@@ -31,6 +31,7 @@ public class NpcWorld
     {
         { "Hub", new Vector2(188f, 36f) }, { "Village", new Vector2(196f, 62f) }, { "Field", new Vector2(160f, 180f) },
         { "Ravine", new Vector2(356f, 324f) }, { "Shrine", new Vector2(580f, 552f) },
+        { "Market", new Vector2(36f, 388f) }, { "Yamen", new Vector2(36f, 330f) }, { "Plague", new Vector2(34f, 469f) },   // 검은여울(서쪽 둑): 3호 보스 단서 자리. 아트 확정 좌표
     };
 
     static readonly Dictionary<string, Vector2> placeAbs = new Dictionary<string, Vector2>();   // 아트가 확정한 필드 절대 좌표(동 +x · 북 +z). 있으면 이쪽이 우선

@@ -228,7 +228,7 @@ public class GameMain : MonoBehaviour
     float wheelCut = 1f;                                              // 컷신이 정한 확대 배율(부드럽게 따라감)
     Vector3 CutTarget(string name)
     {
-        var boss = judge.enemies.list.Find(x => x.soul.Boss);
+        var boss = judge.NearestBoss();   // 지금 가장 가까운 보스(1·2·3호)
         var bp = boss != null ? new Vector3(boss.Pos.x, 0f, boss.Pos.z) : new Vector3(MapLayout.BossX, 0f, MapLayout.BossZ);
         var pp = new Vector3(player.Pos.x, 0f, player.Pos.z);
         switch (name)

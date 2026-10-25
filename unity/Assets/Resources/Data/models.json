@@ -1,148 +1,246 @@
 {
-  "_설명": "3D 모델 슬롯 표. 여기만 고치면 아트팀·승인된 무료 에셋을 코드 수정 없이 바꿔 끼울 수 있다. 표에 없는 것은 코드로 만든 도형 대역이 대신한다.",
-  "_규칙": "path 는 Resources 기준(확장자 없이). scale = 모델 크기 배율(키 1.8m 가 되도록). texture 는 색 지도 한 장(재질은 가져오지 않으므로). clips 는 '동작 → 모델 안의 움직임 이름'. loop 는 반복 재생할 동작. props 의 texture 가 비어 있으면 모델 안의 재질 색을 그대로 쓴다(아트팀 OBJ/GLB 변환 모델). 아트팀 직접 제작 소품(Models/Art)이 켄니 대역을 대체함(10-25). yaw = 앞 방향 보정(도). glTFast 가 읽은 GLB 는 앞이 반대라 180 을 준다(OBJ 는 0).",
-  "actors": [
+ "_설명": "3D 모델 슬롯 표. 여기만 고치면 아트팀·승인된 무료 에셋을 코드 수정 없이 바꿔 끼울 수 있다. 표에 없는 것은 코드로 만든 도형 대역이 대신한다.",
+ "_규칙": "path 는 Resources 기준(확장자 없이). scale = 모델 크기 배율(키 1.8m 가 되도록). texture 는 색 지도 한 장(재질은 가져오지 않으므로). clips 는 '동작 → 모델 안의 움직임 이름'. loop 는 반복 재생할 동작. props 의 texture 가 비어 있으면 모델 안의 재질 색을 그대로 쓴다(아트팀 OBJ/GLB 변환 모델). 아트팀 직접 제작 소품(Models/Art)이 켄니 대역을 대체함(10-25). yaw = 앞 방향 보정(도). glTFast 가 읽은 GLB 는 앞이 반대라 180 을 준다(OBJ 는 0).",
+ "actors": [
+  {
+   "key": "dongi",
+   "path": "Models/Hero/hero_chasa",
+   "scale": 0.89,
+   "texture": "",
+   "clips": [
     {
-      "key": "dongi",
-      "path": "Models/Hero/hero_chasa",
-      "scale": 0.89,
-      "texture": "",
-      "clips": [
-        {
-          "pose": "Idle",
-          "clip": "Idle"
-        },
-        {
-          "pose": "Walk",
-          "clip": "Walk"
-        },
-        {
-          "pose": "Attack",
-          "clip": "Attack"
-        },
-        {
-          "pose": "Attack2",
-          "clip": "Attack2"
-        },
-        {
-          "pose": "Attack3",
-          "clip": "Attack3"
-        },
-        {
-          "pose": "Hit",
-          "clip": "Hit"
-        },
-        {
-          "pose": "Cast",
-          "clip": "Cast"
-        },
-        {
-          "pose": "Kneel",
-          "clip": "Idle"
-        },
-        {
-          "pose": "Dodge",
-          "clip": "Dodge"
-        }
-      ],
-      "loop": [
-        "Idle",
-        "Walk",
-        "Kneel"
-      ],
-      "yaw": 180
+     "pose": "Idle",
+     "clip": "Idle"
     },
     {
-      "key": "dongi_kenney",
-      "path": "Models/Hero/character-male-a",
-      "scale": 2.7,
-      "texture": "Models/Hero/colormap",
-      "clips": [
-        {
-          "pose": "Idle",
-          "clip": "idle"
-        },
-        {
-          "pose": "Walk",
-          "clip": "walk"
-        },
-        {
-          "pose": "Attack",
-          "clip": "attack-melee-right"
-        },
-        {
-          "pose": "Hit",
-          "clip": "emote-no"
-        },
-        {
-          "pose": "Cast",
-          "clip": "pick-up"
-        },
-        {
-          "pose": "Kneel",
-          "clip": "crouch"
-        },
-        {
-          "pose": "Dodge",
-          "clip": "sprint"
-        }
-      ],
-      "loop": [
-        "Idle",
-        "Walk",
-        "Kneel",
-        "Dodge"
-      ]
+     "pose": "Walk",
+     "clip": "Walk"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Attack"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Attack2"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Attack3"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hit"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Cast"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Dodge"
     }
-  ],
-  "props": [
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "dongi_kenney",
+   "path": "Models/Hero/character-male-a",
+   "scale": 2.7,
+   "texture": "Models/Hero/colormap",
+   "clips": [
     {
-      "sprite": "choga",
-      "path": "Models/Art/prop_choga",
-      "scale": 1.0,
-      "texture": ""
+     "pose": "Idle",
+     "clip": "idle"
     },
     {
-      "sprite": "giwa",
-      "path": "Models/Art/prop_giwa",
-      "scale": 1.0,
-      "texture": ""
+     "pose": "Walk",
+     "clip": "walk"
     },
     {
-      "sprite": "jangseung",
-      "path": "Models/Art/prop_jangseung",
-      "scale": 1.0,
-      "texture": ""
+     "pose": "Attack",
+     "clip": "attack-melee-right"
     },
     {
-      "sprite": "sotdae",
-      "path": "Models/Art/prop_sotdae",
-      "scale": 1.0,
-      "texture": ""
+     "pose": "Hit",
+     "clip": "emote-no"
     },
     {
-      "sprite": "well",
-      "path": "Models/Art/prop_umul",
-      "scale": 1.0,
-      "texture": ""
+     "pose": "Cast",
+     "clip": "pick-up"
     },
     {
-      "sprite": "sangyeo",
-      "path": "Models/Art/prop_sangyeo",
-      "scale": 1.0,
-      "texture": ""
+     "pose": "Kneel",
+     "clip": "crouch"
     },
     {
-      "sprite": "jars",
-      "path": "Models/Art/prop_jangdok",
-      "scale": 1.0,
-      "texture": ""
-    },
-    {
-      "sprite": "stone_wall",
-      "path": "Models/Art/prop_dolddam",
-      "scale": 1.0,
-      "texture": ""
+     "pose": "Dodge",
+     "clip": "sprint"
     }
-  ]
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel",
+    "Dodge"
+   ]
+  },
+  {
+   "key": "boss_b02",
+   "path": "Models/Boss/boss_b02_wolhwa",
+   "scale": 1.3,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Open"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Whip"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Whip"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hurt"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  },
+  {
+   "key": "boss_b03",
+   "path": "Models/Boss/boss_b03_seo",
+   "scale": 1.3,
+   "yaw": 180,
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Stamp"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Call"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Call"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Hurt"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Idle"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "KneelHold"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Idle"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk",
+    "Kneel"
+   ]
+  }
+ ],
+ "props": [
+  {
+   "sprite": "choga",
+   "path": "Models/Art/prop_choga",
+   "scale": 1.0,
+   "texture": ""
+  },
+  {
+   "sprite": "giwa",
+   "path": "Models/Art/prop_giwa",
+   "scale": 1.0,
+   "texture": ""
+  },
+  {
+   "sprite": "jangseung",
+   "path": "Models/Art/prop_jangseung",
+   "scale": 1.0,
+   "texture": ""
+  },
+  {
+   "sprite": "sotdae",
+   "path": "Models/Art/prop_sotdae",
+   "scale": 1.0,
+   "texture": ""
+  },
+  {
+   "sprite": "well",
+   "path": "Models/Art/prop_umul",
+   "scale": 1.0,
+   "texture": ""
+  },
+  {
+   "sprite": "sangyeo",
+   "path": "Models/Art/prop_sangyeo",
+   "scale": 1.0,
+   "texture": ""
+  },
+  {
+   "sprite": "jars",
+   "path": "Models/Art/prop_jangdok",
+   "scale": 1.0,
+   "texture": ""
+  },
+  {
+   "sprite": "stone_wall",
+   "path": "Models/Art/prop_dolddam",
+   "scale": 1.0,
+   "texture": ""
+  }
+ ]
 }

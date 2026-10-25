@@ -23,6 +23,7 @@ namespace Chasa.Core
         public float WaitTotal;
         public float Stun;           // 남은 경직 시간
         public bool Fierce;          // 얼룩 3개로 소환된 사나운 적
+        public int BossId;           // 보스 번호(1~3, 보스가 아니면 0)
         public bool Boss;            // 보스 여부 (천도에 단서 3개 필요, 보상이 큼)
         public string Name;          // 이름혼/보스의 이름 (무명 혼은 null)
         public float WaitBonus;      // 인(seal)이 흐리면 처결 대기가 늘어난다(흐림 +0.25 · 없음 +0.5초). 서사 규칙
@@ -48,9 +49,13 @@ namespace Chasa.Core
         }
 
         /// <summary>시연판 S1 보스 나루 영감. 대기·맺힘은 Balance 의 보스 값</summary>
-        public static Soul MakeBossS1()
+        public static Soul MakeBossS1() { return MakeBoss(1); }
+
+        /// <summary>보스 1(나루 영감)·2(월화)·3(서 의원). 이름·맺힘은 Core/Boss.cs 의 목록에서 온다</summary>
+        public static Soul MakeBoss(int id)
         {
-            return new Soul(SoulKind.Old) { Name = "나루 영감", Boss = true, MaedhimMax = Balance.BOSS_S1_MAEDHIM, Maedhim = Balance.BOSS_S1_MAEDHIM };
+            var d = Bosses.Get(id);
+            return new Soul(SoulKind.Old) { Name = d.Name, Boss = true, BossId = id, MaedhimMax = (int)d.Maedhim, Maedhim = (int)d.Maedhim };
         }
 
         public bool Alive { get { return State == SoulState.Active; } }

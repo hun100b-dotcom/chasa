@@ -382,4 +382,16 @@ public static class Balance
     public const int GROWTH_HP_PER_BODY = 5;  // (성장 1차 임시) 몸 1점당 최대 체력 +5
     public const float GROWTH_CAST_PER_MIND = 0.005f;  // (성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%
     public const float GROWTH_NEOK_PER_MIND = 0.005f;  // (성장 1차 임시) 마음 1점당 천도 넋 +0.5%
+    public const int BOSS_S2_MAEDHIM = 1000;  // (2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전
+    public const int B02_CUPS = 12;  // (2호 보스 임시) 월화 열두 거리: 굿판 가장자리 잔 수. 열두째(번호 11) 잔은 엎어져 있어 늘 안전
+    public const float B02_RING_RADIUS_M = 7.0f;  // (2호 보스 임시) 잔을 둘러놓은 원 반지름(m)
+    public const float B02_CUP_RADIUS_M = 2.2f;  // (2호 보스 임시) 잔 앞 바닥이 열려 피해를 주는 반지름(m)
+    public const float B02_WARN_TIME = 1.0f;  // (2호 보스 임시) 열린 바닥 예고(초). 붉게 번졌다가 터진다
+    public const float B02_WAVE_GAP = 4.5f;  // (2호 보스 임시) 방울 한 번(파동)과 다음 파동 사이(초)
+    public const int B02_CUPS_PER_WAVE = 3;  // (2호 보스 임시) 1국면: 한 번에 열리는 잔 수
+    public const int B02_CUPS_PER_WAVE_P2 = 5;  // (2호 보스 임시) 2국면(맺힘 50% 이하): 한 번에 열리는 잔 수
+    public const float B03_CELL_M = 2.0f;  // (2호 보스 임시) 서 의원 번호 칸 한 칸 한 변(m). 5×5 = 10m 마당
+    public const int B03_WEAK_STREAK = 3;  // (2호 보스 임시) 연속으로 이만큼 피하면 약장 서랍이 열려 약점이 드러난다(서사: 낙인 세 번)
+    public const float B03_WEAK_DMG_MULT = 1.5f;  // (2호 보스 임시) 약점이 열렸을 때 보스가 받는 피해 배율
+    public const float B03_CLOSED_DMG_MULT = 0.25f;  // (2호 보스 임시) 약점이 닫혀 있을 때 보스가 받는 피해 배율(그냥 때려서는 잘 안 닳는다)
 }
