@@ -36,7 +36,8 @@ public class BotScript : MonoBehaviour
     readonly List<KeyValuePair<Vector3, string>> pend = new List<KeyValuePair<Vector3, string>>();
     readonly HashSet<string> warnedClue = new HashSet<string>(); readonly Dictionary<string, float> clueNearT = new Dictionary<string, float>();
     readonly List<string> issues = new List<string>();
-    float nextAttack, stageT; bool casting;
+    float nextAttack, stageT, nextHeal; bool casting;
+    float ledger_HpRatio() { return judge.ledger.MaxHp <= 0 ? 1f : (float)judge.ledger.Hp / judge.ledger.MaxHp; }
     // 길찾기: 아트의 여유 폭 지도(1m 칸)를 A* 로 따라가 바위·물에 걸리지 않게 한다(직선으로만 가면 순간이동이 필요했다)
     GridPath nav; List<float[]> route; int routeIdx; Vector3 routeGoal;
 
@@ -97,6 +98,8 @@ public class BotScript : MonoBehaviour
         if (deaths >= 5) { Finish("5번 쓰러져 중단"); return; }
         if (t > maxReal) { Finish("시간 초과(" + maxReal + "초)"); return; }
         if (judge.BossOutcomeNow != 0) { Finish(judge.BossOutcomeNow == 1 ? "보스 천도 성공" : "보스 파혼"); return; }
+        // 체력이 30% 아래면 회복약(실제 사람처럼. 약이 없으면 아무 일도 안 일어난다)
+        if (ledger_HpRatio() < 0.3f && t >= nextHeal) { nextHeal = t + 1.5f; judge.CommandHeal(); }
         // ③ 무엇을 할까
         bool night = clk.Phase == ClockPhase.Night || clk.Phase == ClockPhase.Dusk;
         clk.Speed = (night ? 1f : speed);   // 낮 대기는 빨리, 밤 싸움은 실제 속도

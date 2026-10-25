@@ -846,6 +846,9 @@ public class JudgeSystem : MonoBehaviour
         if (debugKeys && Input.GetKeyDown(KeyCode.RightBracket)) clock.Speed = clock.Speed < 5f ? 10f : clock.Speed < 30f ? 60f : 1f;
     }
 
+    /// <summary>H: 회복약 마시기(봇도 부른다)</summary>
+    public void CommandHeal() { if (Shrine.UseHeal(ledger, dayScreen.Pack)) Say("회복약을 마셨다"); }
+
     void HandleKeys()
     {
         if (Input.GetKeyDown(KeyCode.E)) CommandTendo();
@@ -856,7 +859,7 @@ public class JudgeSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4)) UseSkill(3);
         if (Input.GetKeyDown(KeyCode.Tab)) player.CommandSwap();
         // 공물상에서 산 소모품: H = 회복약, X = 밟고 선 얼룩 지우기(씻김 부적)
-        if (Input.GetKeyDown(KeyCode.H) && Shrine.UseHeal(ledger, dayScreen.Pack)) Say("회복약을 마셨다");
+        if (Input.GetKeyDown(KeyCode.H)) CommandHeal();
         if (Input.GetKeyDown(KeyCode.X) && dayScreen.Pack.Cleanse > 0)
         {
             float sx, sz;
