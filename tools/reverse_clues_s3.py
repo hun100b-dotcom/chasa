@@ -219,7 +219,7 @@ assert len(rows) == 120
 ids = [x['clue_id'] for x in rows if x['clue_id']]
 assert len(ids) == len(set(ids))
 txt = json.dumps(rows, ensure_ascii=False)
-for w in ('초혼', '동이', '춥', '추워', '추위', '한기', '으슬', '차누', '시왕', '염라', '재판', '형벌', '李明', '횃불', '열두째', '여덟째'):
+for w in ('초혼', '동이', '춥', '추워', '추위', '한기', '으슬', '차누', '시왕', '염라', '재판', '형벌', '李明', '횃불', '열두째', '여덟째'):  # ip-scan:allow (금지어 검사 목록)
     assert w not in txt, w
 for x in rows:
     if x.get('cut') == 'RITE-REVERSE' and x['baek'] in CARVE:

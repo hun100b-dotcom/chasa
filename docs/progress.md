@@ -1268,3 +1268,5 @@
 ## 2026-10-26 서사 — 거센 혼 기억 · 장례 소리 반영
 - 새 생성기 `tools/elite_memories.py` → `docs/narrative/elite_memories.json`: 첫 거센 혼 EL-001 두레 좌상 오봉(사연 · 기억 한 줄, 기획 first-elite §3) + 구역 공용 줄 30(EL-01-01 ~ EL-10-03, 시즌1 ①~⑥ 18 · 시즌2 ⑦~⑩ 12). 결말 비밀 낱말 · 기존 기억과 겹침 · 글꼴 자체 검사.
 - 사운드 PR #36(7534a05) 장례 소리 20개를 MADE에 넣음 → funerals_s3 요청 0. FUN-S-276은 cut.seal.set.nine, FUN-B28은 반복음 cut.ink.grind.room + 20초 cut.ink.grind.stop(1초 무음).
+
+- (보탬) 검사기 금지어 목록 줄 5곳에 ip-scan:allow 표시. IP-SAFETY 2-1에 "차사 셋이 한 패" 금지 구도 추가(기획 IP 점검 요청).

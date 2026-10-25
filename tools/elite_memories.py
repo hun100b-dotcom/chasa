@@ -57,7 +57,7 @@ for hi in range(0xB0, 0xC9):
         try: ok.add(bytes([hi, lo]).decode('euc-kr'))
         except Exception: pass
 ok |= set("·…—–‘’“”×%+-~「」")
-BANNED = ('초혼', '동이', '춥', '추워', '추위', '한기', '으슬', '차누', '시왕', '염라', '재판', '형벌', '열두째', '여덟째', '횃불', '큰물', '우물', '사슬 무덤')
+BANNED = ('초혼', '동이', '춥', '추워', '추위', '한기', '으슬', '차누', '시왕', '염라', '재판', '형벌', '열두째', '여덟째', '횃불', '큰물', '우물', '사슬 무덤')  # ip-scan:allow (금지어 검사 목록)
 olds = {s['memory'] for s in SOULS['souls']}
 rows = []
 for (r, nm), lines in POOL.items():

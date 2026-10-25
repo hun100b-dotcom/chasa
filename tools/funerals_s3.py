@@ -612,7 +612,7 @@ data = {
 
 # 검사 2: 금지어 · 대사 0 · 시간 범위
 txt = json.dumps(data, ensure_ascii=False)
-for w in ('초혼', '동이', '춥', '추워', '추위', '한기', '으슬', '차누', '시왕', '염라', '재판', '형벌', '李明', '이명'):
+for w in ('초혼', '동이', '춥', '추워', '추위', '한기', '으슬', '차누', '시왕', '염라', '재판', '형벌', '李明', '이명'):  # ip-scan:allow (금지어 검사 목록)
     assert w not in txt, w
 assert "'line'" not in txt and '"line"' not in txt
 

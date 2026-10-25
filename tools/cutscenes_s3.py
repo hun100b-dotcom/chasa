@@ -693,7 +693,7 @@ assert need <= set(ids), need - set(ids)
 for b in BC:   # 보스마다 등장 · 처결 대기 컷이 있어야 한다
     assert cid(b, 'INTRO') in ids and cid(b, 'KNEEL') in ids, b
 blob = json.dumps(CUTS, ensure_ascii=False)
-for w in ('초혼', '동이', '춥', '추워', '추위', '한기', '으슬', '차누', '시왕', '염라', '재판', '형벌'):
+for w in ('초혼', '동이', '춥', '추워', '추위', '한기', '으슬', '차누', '시왕', '염라', '재판', '형벌'):  # ip-scan:allow (금지어 검사 목록)
     assert w not in blob, w
 # 말풍선(bubble) 대사는 시즌 3에 0줄. 결말 대사는 line_ref 3개(A 2 · B 1)
 bubbles = [(c['id'], s['line']['text']) for c in CUTS for s in c['steps'] if s.get('line', {}).get('style') == 'bubble']
