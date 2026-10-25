@@ -30,6 +30,8 @@ public class UiRoot : MonoBehaviour
     bool artRing;   // 아트 시각 고리 틀이 있나(없으면 옛 눈금 고리로 대신 그린다)
     float ringSize = 84f;   // 시각 고리 지름(px, 1280×720 기준). 아트 틀이 있으면 키운다
     string lastLedger, lastVital, lastNight;
+    float hpFullW = 304f;   // 체력 채움의 전체 폭(틀 안 홈 길이)
+    static float U(float specPx) { return specPx * (2f / 3f); }   // 명세 px(1080p) → 패널 단위(1280×720 기준)
 
     static readonly Color PaperBg = new Color(0.05f, 0.05f, 0.09f, 0.62f);
     static readonly Color Ink = new Color(1f, 1f, 1f, 0.92f);
@@ -59,36 +61,43 @@ public class UiRoot : MonoBehaviour
         root.style.position = Position.Absolute; root.style.left = 0; root.style.top = 0; root.style.right = 0; root.style.bottom = 0;
         r.Add(root);
 
-        // 장부 쪽지(왼쪽 위, 세로로 쌓기): 장부 / 체력 / 밤
+        // 좌상(기획 표준): 초상 + 체력 막대, 그 아래 장부 글자. 기준 해상도가 1280×720 이라 명세 px(1080p)에 U=2/3 를 곱한다
         note = new VisualElement { name = "ledger-note", pickingMode = PickingMode.Ignore };
-        note.style.position = Position.Absolute; note.style.left = 12; note.style.top = 32;
-        note.style.backgroundColor = PaperBg;
-        note.style.paddingLeft = 12; note.style.paddingRight = 14; note.style.paddingTop = 8; note.style.paddingBottom = 10;
-        note.style.borderTopLeftRadius = 6; note.style.borderBottomLeftRadius = 6; note.style.borderTopRightRadius = 6; note.style.borderBottomRightRadius = 6;
+        note.style.position = Position.Absolute; note.style.left = U(24); note.style.top = U(24);
         root.Add(note);
-        ledger = Line(note, 18); vital = Line(note, 18);
-        // 체력 막대(vitals): 바탕 + 채움. 낮아지면 붉게
-        var bar = new VisualElement { name = "vitals", pickingMode = PickingMode.Ignore };
-        bar.style.height = 8; bar.style.marginTop = 2; bar.style.marginBottom = 4;
-        bar.style.backgroundColor = new Color(0, 0, 0, 0.55f);
-        hpFill = new VisualElement { pickingMode = PickingMode.Ignore };
-        hpFill.style.height = 8; hpFill.style.backgroundColor = new Color(0.72f, 0.82f, 0.95f);
-        bar.Add(hpFill);
-        if (UiTex("ui_bar_vital_frame") != null)
+        var head = new VisualElement { pickingMode = PickingMode.Ignore }; head.style.flexDirection = FlexDirection.Row; note.Add(head);
+        bool artHud = UiTex("hud_hp_frame") != null && UiTex("hud_portrait_frame") != null;
+        if (artHud)
         {
-            // 아트 막대: 틀(320x32) 안 홈(x8,y8,304x16)에 어두운 잔상 + 채움을 깔고, 채움은 폭만큼 잘라 보인다
-            bar = Img("ui_bar_vital_frame", 320, 32); bar.name = "vitals"; bar.style.marginTop = 2; bar.style.marginBottom = 4;
-            var ghost = Img("ui_bar_vital_ghost", 304, 16); ghost.style.position = Position.Absolute; ghost.style.left = 8; ghost.style.top = 8;
+            var pf = new VisualElement { pickingMode = PickingMode.Ignore }; pf.style.width = U(88); pf.style.height = U(88);
+            var pc = Img("hud_portrait_chasa", U(72), U(72)); pc.style.position = Position.Absolute; pc.style.left = U(8); pc.style.top = U(8);
+            var pr = Img("hud_portrait_frame", U(88), U(88)); pr.style.position = Position.Absolute; pr.style.left = 0; pr.style.top = 0;
+            pf.Add(pc); pf.Add(pr); head.Add(pf);
+            var col = new VisualElement { pickingMode = PickingMode.Ignore }; col.style.marginLeft = U(8); col.style.justifyContent = Justify.Center; head.Add(col);
+            var bar = Img("hud_hp_frame", U(288), U(26)); bar.name = "vitals";
+            hpFullW = U(280);
+            var ghost = Img("hud_hp_fill_loss", hpFullW, U(18)); ghost.style.position = Position.Absolute; ghost.style.left = U(4); ghost.style.top = U(4);
             vitalClip = new VisualElement { pickingMode = PickingMode.Ignore };
-            vitalClip.style.position = Position.Absolute; vitalClip.style.left = 8; vitalClip.style.top = 8; vitalClip.style.height = 16; vitalClip.style.width = 304; vitalClip.style.overflow = Overflow.Hidden;
-            vitalFillImg = Img("ui_bar_vital_fill", 304, 16);
+            vitalClip.style.position = Position.Absolute; vitalClip.style.left = U(4); vitalClip.style.top = U(4); vitalClip.style.height = U(18); vitalClip.style.width = hpFullW; vitalClip.style.overflow = Overflow.Hidden;
+            vitalFillImg = Img("hud_hp_fill", hpFullW, U(18));
             vitalClip.Add(vitalFillImg); bar.Add(ghost); bar.Add(vitalClip);
+            col.Add(bar);
+            vital = Line(col, 15); vital.style.marginTop = 4;
             hpFill = null;
         }
-        note.Add(bar);
-        night = Line(note, 18);
+        else
+        {
+            vital = Line(head, 18);
+            var bar = new VisualElement { name = "vitals", pickingMode = PickingMode.Ignore };
+            bar.style.height = 8; bar.style.width = 200; bar.style.backgroundColor = new Color(0, 0, 0, 0.55f);
+            hpFill = new VisualElement { pickingMode = PickingMode.Ignore };
+            hpFill.style.height = 8; hpFill.style.backgroundColor = new Color(0.72f, 0.82f, 0.95f);
+            bar.Add(hpFill); note.Add(bar);
+        }
+        // 장부·밤 글자: 배경 위에서도 읽히게 짙은 반투명 판 위에 둔다
+        var texts = new VisualElement { pickingMode = PickingMode.Ignore }; texts.style.marginTop = 6; Panel(texts); note.Add(texts);
+        ledger = Line(texts, 15); night = Line(texts, 15);
         BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
-        hint = Line(note, 14); hint.text = HudState.KeyHint(); hint.style.opacity = 0.65f; hint.style.marginTop = 4;
     }
 
     // ---- 아트팀 UI 그림(Resources/Sprites/ui). 없으면 null 이라 부르는 쪽이 옛 색 도형으로 대신 그린다(그림 없이도 돈다)
@@ -124,7 +133,7 @@ public class UiRoot : MonoBehaviour
     void BuildToasts()
     {
         toastBox = new VisualElement { name = "toasts", pickingMode = PickingMode.Ignore };
-        toastBox.style.position = Position.Absolute; toastBox.style.left = 12; toastBox.style.top = Length.Percent(42);
+        toastBox.style.position = Position.Absolute; toastBox.style.left = U(24); toastBox.style.bottom = U(140); toastBox.style.flexDirection = FlexDirection.Column;
         root.Add(toastBox);
     }
 
@@ -150,45 +159,69 @@ public class UiRoot : MonoBehaviour
         skillBar.Add(d);
     }
 
-    /// <summary>도술 4칸(PC): 틀 + 아이콘 + 대기 덮개 + 단축키 숫자. 폰에서는 터치 버튼(IMGUI)이 같은 그림으로 대신한다</summary>
+    // ---- 스킬바 8칸(기획 표준 v1.1): [Q 견인][1][2][3][4][E 천도][R 파혼][H 회복약], 칸 64px·간격 8px·아래 40px ------------
+    const int BarN = 8;
+    VisualElement[] bSlot = new VisualElement[BarN], bIcon = new VisualElement[BarN], bShade = new VisualElement[BarN]; Label[] bKey = new Label[BarN], bTxt = new Label[BarN], bSec = new Label[BarN];
+    VisualElement[] bPips = new VisualElement[0]; float pullMax = 1f; VisualElement bPipRow; Label bWeapon;
+    static readonly string[] BarKeys = { "Q", "1", "2", "3", "4", "E", "R", "H" };
+    static readonly string[] BarNames = { "견인", "", "", "", "", "천도", "파혼", "약" };
+
     void BuildSlots()
     {
-        if (UiTex("ui_skill_slot") == null) return;   // 그림 없으면 만들지 않는다
-        int n = SkillTree.ActiveSlots;
-        slotBox = new VisualElement[n]; slotIcon = new VisualElement[n]; slotCool = new VisualElement[n]; slotKey = new Label[n]; slotSec = new Label[n];
+        if (UiTex("hud_slot_normal") == null) return;   // 그림 없으면 옛 기술 줄(skillBar)만 쓴다
         slotBar = new VisualElement { name = "skill-slots", pickingMode = PickingMode.Ignore };
-        slotBar.style.position = Position.Absolute; slotBar.style.left = 0; slotBar.style.right = 0; slotBar.style.bottom = 64;
-        slotBar.style.flexDirection = FlexDirection.Row; slotBar.style.justifyContent = Justify.Center;
+        slotBar.style.position = Position.Absolute; slotBar.style.left = 0; slotBar.style.right = 0; slotBar.style.bottom = U(40 - 4);
+        slotBar.style.alignItems = Align.Center;
         root.Add(slotBar);
-        for (int i = 0; i < n; i++)
+        // 회피 충전 점(스킬바 바로 위 가운데) + 무기 이름
+        bPipRow = new VisualElement { pickingMode = PickingMode.Ignore }; bPipRow.style.flexDirection = FlexDirection.Row; bPipRow.style.alignItems = Align.Center; bPipRow.style.marginBottom = U(6);
+        bWeapon = Line(bPipRow, 14); bWeapon.style.marginRight = 10;
+        bPips = new VisualElement[Mathf.Max(1, Balance.DODGE_CHARGES)];
+        for (int i = 0; i < bPips.Length; i++) { var p = Img("hud_dodge_pip_empty", U(14), U(14)); p.style.marginLeft = 3; p.style.marginRight = 3; bPipRow.Add(p); bPips[i] = p; }
+        var sp = Line(bPipRow, 14); sp.text = "Space 피하기"; sp.style.marginLeft = 8; sp.style.opacity = 0.8f;
+        slotBar.Add(bPipRow);
+        var row = new VisualElement { pickingMode = PickingMode.Ignore }; row.style.flexDirection = FlexDirection.Row; slotBar.Add(row);
+        for (int i = 0; i < BarN; i++)
         {
-            var b = Img("ui_skill_slot", 64, 64); b.style.marginLeft = 4; b.style.marginRight = 4;
-            var ic = Img("ui_skill_slot", 52, 52); ic.style.position = Position.Absolute; ic.style.left = 6; ic.style.top = 6; ic.style.backgroundImage = StyleKeyword.None;
-            var cool = Img("ui_skill_slot_cool", 64, 64); cool.style.position = Position.Absolute; cool.style.left = 0; cool.style.top = 0; cool.style.opacity = 0f;
-            var key = Line(b, 14); key.text = (i + 1).ToString(); key.style.position = Position.Absolute; key.style.left = 4; key.style.top = 1;
-            var sec = Line(b, 18); sec.style.position = Position.Absolute; sec.style.left = 0; sec.style.right = 0; sec.style.top = 20; sec.style.unityTextAlign = TextAnchor.MiddleCenter;
-            b.Insert(0, ic); b.Insert(1, cool);
-            slotBar.Add(b); slotBox[i] = b; slotIcon[i] = ic; slotCool[i] = cool; slotKey[i] = key; slotSec[i] = sec;
+            var b = Img("hud_slot_normal", U(72), U(72)); b.style.marginLeft = U(4); b.style.marginRight = U(4);   // 그림자 4px 포함 72 → 칸 64 + 간격 8
+            var ic = new VisualElement { pickingMode = PickingMode.Ignore }; ic.style.position = Position.Absolute; ic.style.left = U(8); ic.style.top = U(8); ic.style.width = U(56); ic.style.height = U(56);
+            var shade = new VisualElement { pickingMode = PickingMode.Ignore };   // 쿨타임 어둠 판: 아래에서부터 남은 비율만큼 덮는다
+            shade.style.position = Position.Absolute; shade.style.left = U(4); shade.style.right = U(8); shade.style.bottom = U(8); shade.style.height = 0; shade.style.backgroundColor = new Color(0f, 0f, 0.03f, 0.62f);
+            var key = Line(b, 14); key.text = BarKeys[i]; key.style.position = Position.Absolute; key.style.left = U(8); key.style.top = U(4);
+            var txt = Line(b, 17); txt.text = BarNames[i]; txt.style.position = Position.Absolute; txt.style.left = 0; txt.style.right = U(4); txt.style.top = U(24); txt.style.unityTextAlign = TextAnchor.MiddleCenter;
+            var sec = Line(b, 20); sec.style.position = Position.Absolute; sec.style.left = 0; sec.style.right = U(4); sec.style.top = U(22); sec.style.unityTextAlign = TextAnchor.MiddleCenter;
+            b.Insert(0, ic); b.Insert(1, shade);
+            row.Add(b); bSlot[i] = b; bIcon[i] = ic; bShade[i] = shade; bKey[i] = key; bTxt[i] = txt; bSec[i] = sec;
         }
+    }
+
+    void SetSlot(int i, bool enabled, float cd, float sec, string iconName)
+    {
+        var t = iconName != null ? UiTex(iconName) : null;
+        bIcon[i].style.backgroundImage = t != null ? new StyleBackground(Background.FromTexture2D(t)) : new StyleBackground(StyleKeyword.None);
+        bTxt[i].style.display = t == null ? DisplayStyle.Flex : DisplayStyle.None;   // 아이콘이 없는 칸(견인·천도·파혼·약)은 글자로
+        bSlot[i].style.opacity = enabled ? 1f : 0.4f;
+        bShade[i].style.height = cd > 0f ? U(56) * Mathf.Clamp01(cd) : 0f;
+        bSec[i].text = sec > 0.05f ? Mathf.CeilToInt(sec).ToString() : "";
     }
 
     void RefreshSlots()
     {
         if (slotBar == null) return;
-        bool any = false;
-        for (int i = 0; i < slotBox.Length && i < Hud.Slots.Length; i++) if (Hud.Slots[i].Name != null) any = true;
-        slotBar.style.display = any && !Ko.TouchUI ? DisplayStyle.Flex : DisplayStyle.None;   // 폰은 터치 버튼이 그린다
-        if (!any || Ko.TouchUI) return;
-        for (int i = 0; i < slotBox.Length && i < Hud.Slots.Length; i++)
+        slotBar.style.display = Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 폰은 터치 버튼이 맡는다
+        if (Ko.TouchUI) return;
+        pullMax = Mathf.Max(pullMax, Hud.PullCd);
+        SetSlot(0, true, Hud.PullCd > 0.05f ? Hud.PullCd / pullMax : 0f, Hud.PullCd, null);
+        for (int i = 0; i < 4; i++)
         {
-            var sv = Hud.Slots[i];
-            bool has = sv.Name != null;
-            slotBox[i].style.opacity = has ? 1f : 0.35f;
-            var t = has ? UiTex(SkillIcon(sv.Name)) : null;
-            slotIcon[i].style.backgroundImage = t != null ? new StyleBackground(Background.FromTexture2D(t)) : new StyleBackground(StyleKeyword.None);
-            slotCool[i].style.opacity = has && sv.Cd > 0f ? 0.4f + 0.6f * sv.Cd : 0f;   // 막 쓴 직후일수록 진한 덮개
-            slotSec[i].text = has && sv.CdSec > 0.05f ? Mathf.CeilToInt(sv.CdSec).ToString() : "";
+            var sv = Hud.Slots[i]; bool has = sv.Name != null;
+            SetSlot(1 + i, has, has ? sv.Cd : 0f, has ? sv.CdSec : 0f, has ? SkillIcon(sv.Name) : null);
+            bTxt[1 + i].text = "";
         }
+        SetSlot(5, true, 0f, 0f, null); SetSlot(6, true, 0f, 0f, null);
+        SetSlot(7, Hud.Heal > 0, 0f, 0f, null); bTxt[7].text = "약 " + Hud.Heal;
+        bWeapon.text = "무기 " + Hud.WeaponName + " (Tab)";
+        for (int i = 0; i < bPips.Length; i++) SetImg(bPips[i], Hud.DodgeCharges - i >= 0.999f ? "hud_dodge_pip_full" : "hud_dodge_pip_empty");
     }
 
     Label Slot(string text)
@@ -221,6 +254,7 @@ public class UiRoot : MonoBehaviour
         // 시계 고리는 미니맵 바로 아래(화면 px → 패널 단위로 환산: 패널은 1280×720 기준, 가로·세로 비율을 절반씩 섞는다)
         float pscale = Mathf.Sqrt((Screen.width / 1280f) * (Screen.height / 720f));
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
+        skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         if (hpFill != null)
         {
@@ -229,7 +263,7 @@ public class UiRoot : MonoBehaviour
         }
         else if (vitalClip != null)
         {
-            vitalClip.style.width = 304f * Hud.HpRatio;   // 틀 안 홈 길이에 맞춰 자른다(그림이 찌그러지지 않게)
+            vitalClip.style.width = hpFullW * Hud.HpRatio;   // 틀 안 홈 길이에 맞춰 자른다(그림이 찌그러지지 않게)
             vitalFillImg.style.unityBackgroundImageTintColor = Hud.HpLow ? new Color(1f, 0.45f, 0.4f) : Color.white;   // 위험하면 붉게
         }
     }
@@ -374,9 +408,8 @@ public class UiRoot : MonoBehaviour
     float peace = 1f;
     void RefreshPeace()
     {
-        peace = Mathf.MoveTowards(peace, Hud.Peaceful ? 0f : 1f, Time.unscaledDeltaTime * (Hud.Peaceful ? 0.8f : 4f));   // 천천히 사라지고 빨리 돌아온다
-        note.style.opacity = peace; skillBar.style.opacity = peace; if (slotBar != null) slotBar.style.opacity = peace;
-        note.style.display = peace < 0.01f ? DisplayStyle.None : DisplayStyle.Flex;
-        skillBar.style.display = peace < 0.01f ? DisplayStyle.None : DisplayStyle.Flex;
+        // 기획 표준: 체력·스킬바·미니맵은 처음부터 항상 보인다(예전의 '평화로운 낮 숨김'은 폐지)
+        note.style.opacity = 1f; note.style.display = DisplayStyle.Flex;
+        if (slotBar != null) slotBar.style.opacity = 1f;
     }
 }

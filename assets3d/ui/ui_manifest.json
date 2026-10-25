@@ -686,5 +686,189 @@
   ],
   "x2": "cursor_talk@2x.png",
   "note": "마우스 커서 32×32, 눌리는 점(hotspot) x=8 y=28"
+ },
+ "hud/skill/icon_bureum_1": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_bureum_1@2x.png",
+  "note": "도술 부름(혼을 불러 모음) 1번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_bureum_2": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_bureum_2@2x.png",
+  "note": "도술 부름(혼을 불러 모음) 2번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_bureum_3": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_bureum_3@2x.png",
+  "note": "도술 부름(혼을 불러 모음) 3번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_bureum_4": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_bureum_4@2x.png",
+  "note": "도술 부름(혼을 불러 모음) 4번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_bureum_5": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_bureum_5@2x.png",
+  "note": "도술 부름(혼을 불러 모음) 5번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). 5번은 궁극기: slot_ultimate 틀과 함께"
+ },
+ "hud/skill/icon_eolluk_1": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_eolluk_1@2x.png",
+  "note": "도술 얼럭(원념 터뜨림) 1번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_eolluk_2": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_eolluk_2@2x.png",
+  "note": "도술 얼럭(원념 터뜨림) 2번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_eolluk_3": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_eolluk_3@2x.png",
+  "note": "도술 얼럭(원념 터뜨림) 3번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_eolluk_4": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_eolluk_4@2x.png",
+  "note": "도술 얼럭(원념 터뜨림) 4번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_eolluk_5": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_eolluk_5@2x.png",
+  "note": "도술 얼럭(원념 터뜨림) 5번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). 5번은 궁극기: slot_ultimate 틀과 함께"
+ },
+ "hud/skill/icon_jul_1": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_jul_1@2x.png",
+  "note": "도술 줄(사슬 기술) 1번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_jul_2": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_jul_2@2x.png",
+  "note": "도술 줄(사슬 기술) 2번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_jul_3": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_jul_3@2x.png",
+  "note": "도술 줄(사슬 기술) 3번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_jul_4": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_jul_4@2x.png",
+  "note": "도술 줄(사슬 기술) 4번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). "
+ },
+ "hud/skill/icon_jul_5": {
+  "size_px": [
+   56,
+   56
+  ],
+  "x2": "icon_jul_5@2x.png",
+  "note": "도술 줄(사슬 기술) 5번 — 칸 안쪽 56×56(칸 왼쪽 위에서 +4,+4). 5번은 궁극기: slot_ultimate 틀과 함께"
+ },
+ "hud/slot_ultimate": {
+  "size_px": [
+   72,
+   72
+  ],
+  "x2": "slot_ultimate@2x.png",
+  "note": "궁극기 칸(금빛 테두리 빛). 도술 5번 아이콘용"
+ },
+ "hud/damage/dmg_normal": {
+  "size_px": [
+   328,
+   38
+  ],
+  "x2": "dmg_normal@2x.png",
+  "note": "일반 피해 28px. 글자 이어 붙인 띠(한 줄 가로 글자 칸, JSON 참고)"
+ },
+ "hud/damage/dmg_crit": {
+  "size_px": [
+   460,
+   52
+  ],
+  "x2": "dmg_crit@2x.png",
+  "note": "치명 40px(노랑) — 주황이 아니라 노랑. 글자 이어 붙인 띠(한 줄 가로 글자 칸, JSON 참고)"
+ },
+ "hud/damage/dmg_taken": {
+  "size_px": [
+   353,
+   40
+  ],
+  "x2": "dmg_taken@2x.png",
+  "note": "받은 피해(붉음). 글자 이어 붙인 띠(한 줄 가로 글자 칸, JSON 참고)"
+ },
+ "hud/damage/dmg_heal": {
+  "size_px": [
+   328,
+   38
+  ],
+  "x2": "dmg_heal@2x.png",
+  "note": "회복(청록). 글자 이어 붙인 띠(한 줄 가로 글자 칸, JSON 참고)"
+ },
+ "hud/damage/word_miss": {
+  "size_px": [
+   89,
+   40
+  ],
+  "x2": "word_miss@2x.png",
+  "note": "'빗나감' 글자 그림(26px)"
+ },
+ "hud/damage/word_dodge": {
+  "size_px": [
+   66,
+   40
+  ],
+  "x2": "word_dodge@2x.png",
+  "note": "'회피' 글자 그림(26px)"
+ },
+ "hud/portrait_chasa": {
+  "size_px": [
+   72,
+   72
+  ],
+  "x2": "portrait_chasa@2x.png",
+  "note": "차사 초상 72×72(@2x 144). portrait_frame 의 뚫린 가운데 아래에 깐다"
  }
 }

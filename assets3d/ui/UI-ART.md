@@ -42,7 +42,12 @@
 | 커서 | `cursor/cursor_default/attack/talk` 32×32 | 눌리는 점: default(2,2) attack(24,6) talk(8,28) |
 9칸 늘이기 값은 manifest 의 `nine_slice_px`. 시안에서 늘린 모습: `hud_mock_*.jpg`.
 
-## 3. 아직 안 한 것 / 확인
-- 스킬 아이콘 8종, 차사 초상 그림, 데미지 숫자 글꼴(글꼴은 외곽선 굵은 것 권장), 버프 아이콘 — 요청 주시면 이어서.
+## 3. 2차 추가(10-25): 도술 아이콘·초상·데미지 숫자
+- **도술 아이콘 15종** `hud/skill/icon_{bureum,eolluk,jul}_{1..5}.png` — 기존 128px 아이콘의 옛 틀을 걷어 내고 칸 안쪽 **56×56**(칸 왼쪽 위에서 +4,+4)에 맞춰 둥글게 잘라 1배/@2x(112)로 다시 냄. 5번은 궁극기 → `slot_ultimate`(금빛 테두리 칸)와 함께 쓸 것.
+- **차사 초상** `hud/portrait_chasa.png` 72×72(@2x 144): 3D 모델 정면 가슴 위 렌더(밤 색보정). `portrait_frame` 구멍 아래에 깐다. 큰 판 `portrait_chasa_large.png`(288) — 명부(C) 화면용.
+- **데미지 숫자 그림 글꼴** `hud/damage/dmg_{normal,crit,taken,heal}.png` + `damage_font.json`: 숫자 0~9와 `, . + - !` 를 가로로 이어 붙인 띠(각 글자 x·폭은 JSON). 일반 28px(흰색)·치명 40px(노랑, 주황 아님)·받은 피해 30px(붉음)·회복 28px(청록). 글자 한 장씩 잘라 이어 붙이고 0.6초 동안 위로 0.8m 뜨며 흐려지게. 한글 낱말 `word_miss`(빗나감)·`word_dodge`(회피). 동적 글자용 TTF는 `assets3d/ui/fonts/BlackHanSans-Regular.ttf`(SIL OFL, 라이선스 같이 둠).
+
+## 4. 확인
 - 미니맵 지도는 필드 전체가 한 장이라 2048² 3MB. 모바일 메모리가 걱정이면 1024판(`map_field_1024.png`)을 쓰고 확대 때만 큰 판.
 - Unity에서 보인 모습은 미확인. 틀의 구멍(투명)·9칸 늘이기 값이 기대와 다르면 알려 주세요.
+- 아직 없음: 버프 아이콘(디버프 종류가 정해지면), 무기별 스킬 아이콘(무기 5계열 도술은 15종 그대로 쓰는지 기획 확인 필요).

@@ -435,9 +435,7 @@ public class GameMain : MonoBehaviour
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (judge.InDay || CharacterPanel.Open || SettingsPanel.Open || judge.NightOver) return;   // 낮 화면·캐릭터 창에서는 밤의 안내·버튼을 그리지 않는다
-        var hint = new GUIStyle(GUI.skin.label) { fontSize = 14 };
-        hint.normal.textColor = new Color(1, 1, 1, 0.55f);
-        if (!Ko.TouchUI) GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 피하기" + ((Demo.Panel || FieldRules.On) ? "   C: 명부(품계·도술)" : ""), hint);   // 폰(터치)에는 마우스 안내를 숨긴다
+        // 상시 조작 안내 줄은 지웠다(기획 표준). 안내는 처음 해당 행동이 필요할 때 하나씩 띄운다(TutorialHints)
         if (!Ko.TouchUI) return;
         DrawJoystick();
         var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };
