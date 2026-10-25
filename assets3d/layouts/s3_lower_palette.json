@@ -1,0 +1,107 @@
+{
+ "_설명": "시즌3 아래층 조명·색(위층 지형을 다시 쓰고 조명·색만 바꾼다, SCENARIO-MASTER §S-1). key=해 대신 위에서 새는 빛, ambient=그림자 쪽 밝기, fog=안개색·밀도, ground_tint=위층 땅 색에 곱할 색. 값은 아트 제안이고 코드가 한 곳에서 읽도록 표로만 둔다.",
+ "water_cycle": {
+  "evening_drain_s": 120,
+  "dawn_warning_s": 30,
+  "dawn_flood_s": 120,
+  "note": "기획 확정(10-25): 저녁 2분 물이 빠지고 밤에 아래층이 열림. 새벽 30초 전 물소리+화면 가장자리 물빛 경고, 새벽 2분 동안 물이 참. 낮엔 위층만."
+ },
+ "regions": {
+  "1": {
+   "name": "솔고개의 아래 (둑 밑·소 밑)",
+   "key_color": "#7F9AA4",
+   "key_intensity": 0.55,
+   "ambient": "#1A262C",
+   "fog_density": 0.03,
+   "ground_tint": "#6E8892",
+   "note": "물 빠진 흙탕. 서늘한 회청, 소 밑은 더 짙다(B-31 쪽으로 갈수록 어둡고 횃불만 따뜻)"
+  },
+  "5": {
+   "name": "갯마을의 아래 (난파 여울·바다굴)",
+   "key_color": "#8CA8AE",
+   "key_intensity": 0.5,
+   "ambient": "#1C2A2E",
+   "fog_density": 0.028,
+   "ground_tint": "#7A9AA0",
+   "note": "썰물 모래와 젖은 바위. 밀물 신호 때 가장자리 물빛"
+  },
+  "7": {
+   "name": "삼도천의 아래 (줄 밑·닻 여울)",
+   "key_color": "#9AB0B8",
+   "key_intensity": 0.45,
+   "ambient": "#1E2C34",
+   "fog_density": 0.034,
+   "ground_tint": "#8AA6B0",
+   "note": "강바닥. 올려다보면 줄 선 혼의 발목 실이 희게 내려온다. 가장 밝은 아래층(실이 보여야 함)"
+  },
+  "3": {
+   "name": "붉은재의 아래 (큰 무덤 속·화살골 뿌리)",
+   "key_color": "#8A7A68",
+   "key_intensity": 0.4,
+   "ambient": "#241C16",
+   "fog_density": 0.04,
+   "ground_tint": "#5A4A3A",
+   "note": "흙과 뼈의 단면. 갈색이 짙고 빛은 위에서 가늘게(봉분 틈)"
+  },
+  "4": {
+   "name": "쇳골의 아래 (물 찬 갱도·막장)",
+   "key_color": "#7A7A70",
+   "key_intensity": 0.38,
+   "ambient": "#1E1E1C",
+   "fog_density": 0.042,
+   "ground_tint": "#4E4E48",
+   "note": "물 찬 갱. 막장 쪽 쌓인 돌 틈으로 바깥 등불이 가늘게 샌다(작은 따뜻한 점광 하나)"
+  },
+  "2": {
+   "name": "검은여울의 아래 (석회 구덩이·역병막 마루 밑)",
+   "key_color": "#A8A89C",
+   "key_intensity": 0.48,
+   "ambient": "#24241E",
+   "fog_density": 0.036,
+   "ground_tint": "#8A8A7C",
+   "note": "석회의 흰 띠가 가장 밝은 곳. 숨(안개)은 잿빛"
+  },
+  "6": {
+   "name": "도성의 아래 (성문 밖 구덩이·다리 밑)",
+   "key_color": "#8E96A0",
+   "key_intensity": 0.42,
+   "ambient": "#1C1E24",
+   "fog_density": 0.04,
+   "ground_tint": "#5E6670",
+   "note": "언 땅(추위 말은 연출 글에서 '언 땅·언 그림자'). 푸른 회색, 서리 반짝임 없음"
+  },
+  "8": {
+   "name": "명부전 담장 밖의 아래 (먹 앙금·숙사 밑)",
+   "key_color": "#6E6A7A",
+   "key_intensity": 0.32,
+   "ambient": "#14121A",
+   "fog_density": 0.046,
+   "ground_tint": "#2A2832",
+   "note": "먹 앙금. 가장 어두운 쪽. 이동 −15%를 색으로도 알린다(짙은 보라 회색)"
+  },
+  "9": {
+   "name": "빈 관할의 아래 (아랫목·인장 굴 바닥)",
+   "key_color": "#9A7A5E",
+   "key_intensity": 0.36,
+   "ambient": "#241A14",
+   "fog_density": 0.044,
+   "ground_tint": "#6A4E3A",
+   "note": "구들 밑 따뜻한 갈색. region9_light 규칙(새벽이 오면/안 오면)은 시즌 2와 같다 — 이 표는 그 위의 색만"
+  },
+  "10": {
+   "name": "열째 관할의 아래 (사슬 뿌리·첫 우물 밑)",
+   "key_color": "#7E94A2",
+   "key_intensity": 0.4,
+   "ambient": "#16222A",
+   "fog_density": 0.038,
+   "ground_tint": "#4A606E",
+   "note": "물길. 우물 밑은 벽 따라 물빛이 오르내린다. 끝(C-30)에서 물막이 골 소와 같은 물빛으로 이어짐"
+  }
+ },
+ "shared": {
+  "flood_edge_color": "#9ACCDA",
+  "bone_shadow_color": "#1E1A16",
+  "thread_color": "#B8C4C0",
+  "rule": "몸은 어두운 그림자 윤곽으로만(훼손·유해 묘사 금지)"
+ }
+}
