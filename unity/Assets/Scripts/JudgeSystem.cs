@@ -533,6 +533,13 @@ public class JudgeSystem : MonoBehaviour
                 var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
                 var arena = new GameObject("BossArena" + bid).AddComponent<BossArena>(); arena.Init(this, be, bd);
             }
+        if (FieldRules.On && Act2BossArena.Enabled)   // 2막 보스 넷(?act2=1 검사용): 2막 땅이 깔리면 기본으로 켠다
+            for (int bid = 5; bid <= 8; bid++)
+            {
+                var bd = Bosses.Get(bid);
+                var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
+                var arena = new GameObject("Act2BossArena" + bid).AddComponent<Act2BossArena>(); arena.Init(this, be, bd);
+            }
         cluePos.Clear();
         foreach (var v in clueViews) Destroy(v);
         clueViews.Clear();
