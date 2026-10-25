@@ -968,3 +968,13 @@
 - 박돌쇠: 첫 5분 10분 안전장치·대기 초과·동틀녘으로 처결 못 했을 때만 다음 낮 FUNERAL_NONE(그냥 못 만난 경우는 장면 없음). 저장 `pu:1`.
 - 누렁이(기획 kennel_S004): 처결 전 둑 어귀(250,100)·밤엔 (204,87.5) / 칠복 장례 중 (205,86)→(236,98) / 다음 새벽부터 개집(191,75) / 파혼·처결 못 함이면 둑 어귀. 저장 `dh:1`.
 - 2막 구역 환경음(ZoneAmbient, 3초 교차). 사운드 PR #24, 아트 PR #22 병합.
+## 2026-10-25 (KST 20:45) [기획·사운드] 신종 혼 예고음 5개 + 2막 보스 소리 10개
+- 넋두리(wail): `sfx.enemy.wail.telegraph`(0.7초 선딜에 맞춤, 0.66초에 번쩍), `sfx.enemy.wail.throw`
+- 잔넋(mote): `sfx.enemy.mote.telegraph`(0.3초, 동시 재생 최대 3개 권장)
+- 묻힌 혼(buried): `sfx.enemy.buried.telegraph`(0.73초 선딜), `sfx.enemy.buried.burst`(솟구침 적중)
+- 2막 보스:
+  - B-05 대돌: `sfx.boss.daedol.call`, `.number`
+  - B-06 장수: `sfx.boss.general.command`(호령 = 대형 바뀜 예고), `.formation`
+  - B-07 칠성: `sfx.boss.chilsung.count`(광부 하나 내보낼 때마다), `.rage`(셈 틀림)
+  - B-08 염씨: `sfx.boss.yeom.throw`, `.land`(지뢰 위치 예고), `.burst`(밟음), `.backpage`(뒷장 밟음, 이로움)
+- 예고음은 모두 bypass_cast(천도 중 먹먹함 무시). 총 111개.
