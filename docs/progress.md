@@ -1217,3 +1217,17 @@
 - `Core/Act3Boss.cs`(Act3Brain): B-09 파도 줄·바다 부르기·50% 옷 던지기(창 2초·낚아채기 −15%), B-10 줄 끊기(50% 뒤 두 줄 X자)·밧줄 휘감기, B-11 거적·지팡이, B-12 4단계(거울 견인·그의 파혼 / 명단 줄 / 큰물 / 사슬 내려놓음)·횃불 약점 3초 멈춤(1회). 수치는 balance.json B09~B12_* (부록 E, 임시). 테스트 5개 추가(185개 통과).
 - `Bosses.Get(9~12)`(기획 act3_map 좌표), 화면은 Act2BossArena 가 3막도 그린다(예고 장판 가로 띠·X자·부채꼴). 보스 소리 연결: 파도·부르기·옷 던지기·거적·견인·명단 줄·큰물.
 - 아직: 혼이 얽힌 약점(물 혼 파도·선원 혼·별명 혼), 낚아채기·횃불 건지기 입력 연결(2막 약점과 함께), 명단 줄 넋 감소, B-10 썰물 밤 한정 입장, 보스 간 숨은 연결. 3막 컷(B09~B12-INTRO 등)은 대본이 오면.
+## 2026-10-25 밤 — [사운드] 시즌2 저승 ⑦~⑩ 사운드 방향 + 환경음 16 + 장치음 9 + BGM 지시문 26~41 (기획·사운드)
+- 기준: 서사 memories_act4.json·npc_act4.json·season2_outline.json. 저승 소리 규칙 4개: 산 것(새·벌레·개) 소리 없음 / 말소리는 들리되 뜻은 안 들림 / 물은 고이거나 거꾸로 흐름 / 울림은 길고 어둡게. 상세 `docs/sound-direction.md` 시즌2 절.
+- ⑦ 삼도천: `amb.styx.reeds`·`.ferry`(줄 선 혼 웅성임)·`.inkrapids`·`.dam`, 장치 `sfx.styx.boat.arrive`·`.line.step`·`sfx.name.slip.float`·`.catch`·`sfx.dam.gauge.up`.
+- ⑧ 명부전: `amb.clerk.quarters`·`amb.inkroom`·`amb.archive`·`amb.numberyard`, `sfx.clerk.hush`.
+- ⑨ 빈 관할: `amb.blank.town`·`amb.blank.market`·`amb.sealcave`, `sfx.map.draw`·`sfx.keeper.note`.
+- ⑩ 열째 관할: `amb.first.village`·`amb.chain.graves`·`amb.wellyard`·`amb.bigdam`, `sfx.fragment.link`·`sfx.chain.unrust`.
+- 업(karma) 연동 제안: 업 30 이상 웅성임 ×0.4, 60 이상 0(혼들이 동이를 피함).
+- BGM 지시문 26~41(지역마다 탐색 낮·밤·전투·처결). 효과음 총 249개, 기존 파일 변화 없음. 미리듣기 v16, 지시문 페이지 v5.
+
+## 2026-10-25 밤 — [사운드] 임시 대역 BGM 21곡 (기획·사운드)
+- 아직 오너 곡이 없는 자리를 코드 합성 국악풍 곡으로 채웠다(`tools/bgm_temp_render.py`). 2막 붉은재·쇳골, 3막 갯마을·도성의 낮·밤·전투·처결 16곡과 시즌1 끝 5곡(흑월 결전·A판·B판·마지막 새벽·크레딧).
+- 장단 5종(중모리·중중모리·굿거리·자진모리·진양)과 피리·대금·단소·해금·아쟁·나각·거문고·가야금·양금·북·장구·징·꽹과리·박·요령 흉내. 빠르기와 음은 Gemini 지시문 5~25를 따랐다.
+- 음량은 1막 진짜 곡과 같게 맞췄다(탐색 -20, 전투·처결 -16 LUFS). 반복곡은 끝→처음 이음매가 끊기지 않게 필터를 원형으로 걸었다.
+- 이름 규칙: 진짜 곡은 `Audio/BGM/<id>`, 임시 곡은 `Audio/BGM/Temp/<id>`. 진짜 곡을 먼저 쓰도록 BgmPlayer.Load에 한 줄을 고쳐야 하고, 지역별로 곡을 부르는 코드도 필요하다(코드팀 제안: `docs/bgm-temp.md`). 이름 규칙은 data/bgm.json naming. 미리듣기 v17.

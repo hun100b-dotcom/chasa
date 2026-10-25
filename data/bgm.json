@@ -87,5 +87,25 @@
     8.45
    ]
   }
+ },
+ "naming": {
+  "_설명": "지역별 곡 이름 규칙(2026-10-25, 기획·사운드). bgm_<지역>_<층>. 층 = day_a·day_b(선택)·night·combat·finish. 진짜 곡은 Audio/BGM/<id>, 임시 대역은 Audio/BGM/Temp/<id>. 진짜 곡이 있으면 그것을 먼저 쓴다.",
+  "regions": {
+   "1": "solgogae",
+   "2": "solgogae",
+   "3": "bulgeunjae",
+   "4": "soegol",
+   "5": "gaetmaeul",
+   "6": "doseong"
+  },
+  "region_names": {
+   "solgogae": "솔고개(1막)",
+   "bulgeunjae": "붉은재 싸움터(2막 ③)",
+   "soegol": "쇳골 광산(2막 ④)",
+   "gaetmaeul": "갯마을 포구(3막 ⑤)",
+   "doseong": "도성 아랫마을(3막 ⑥)"
+  },
+  "region_crossfade_sec": 4.0,
+  "temp_list": "data/bgm_temp.json"
  }
 }
