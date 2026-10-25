@@ -181,6 +181,9 @@ public class JudgeSystem : MonoBehaviour
             if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
             if (night.TakeNamedSpawn()) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
         }
+        // 기억 한 줄: 천도해야만 보이는 이야기(파혼엔 없다). 이름혼의 기억은 추리판 사실도 켠다
+        string fact; var ml = memories.Collect(castTarget.soul, out fact);
+        if (ml != null) { memLine = ml; memLineT = 5f; if (fact != null) ui?.Hud.Toasts.Add("추리판 " + fact + " 켜짐"); }
         chainLeft = lo.stats.ChainWindow;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
         Sfx.Play("sfx.tendo.done");
@@ -582,6 +585,8 @@ public class JudgeSystem : MonoBehaviour
     // ===== 화면 ====================================================================
     /// <summary>화면에 보일 값을 모아(HudState) 새 화면(UI Toolkit)에 넘긴다</summary>
     public System.Action<Vector3> onTeleport;   // 넋길로 순간이동했을 때 카메라가 따라가게 GameMain 이 받는다
+    public readonly MemoryLines memories = new MemoryLines();   // 천도 기억 한 줄
+    public string memLine; public float memLineT;              // 지금 화면에 띄울 기억 줄(보랏빛 자막)
     public NpcWorld npcs;                       // 필드의 산 사람(엿듣기·지켜보기)
     public readonly ClueBook clueBook = new ClueBook();
     public WorldClock clock;   // 필드 모드의 흐르는 하루 (없으면 옛 '하룻밤 한 판')
@@ -730,6 +735,15 @@ public class JudgeSystem : MonoBehaviour
                 }
                 GUI.color = Color.white;
             }
+        }
+        // (2.4) 기억 한 줄: 천도 직후 화면 가운데 위, 기억 색(보랏빛)
+        if (memLineT > 0f)
+        {
+            memLineT -= Time.unscaledDeltaTime;
+            var ms = new GUIStyle(GUI.skin.label) { fontSize = Ko.TouchUI ? 26 : 22, alignment = TextAnchor.MiddleCenter, wordWrap = true, fontStyle = FontStyle.Italic };
+            float a = Mathf.Clamp01(memLineT / 0.8f);
+            ms.normal.textColor = new Color(0.79f, 0.69f, 1f, a);
+            GUI.Label(new Rect(Screen.width * 0.15f, Screen.height * 0.18f, Screen.width * 0.7f, 90), "“" + memLine + "”", ms);
         }
         // (2.5) 산 사람 대사 자막(엿듣기): 화면 아래 가운데
         if (npcs != null && npcs.SubtitleT > 0f)
