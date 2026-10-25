@@ -458,3 +458,13 @@
 - 무기 GLB 5종 교체. 128m 청크 GLB(고화질 선택지)는 아직 쓰지 않음: 1m 해상도로 먼저 확인하고 가까이서 밋밋하면 연결.
 - PC 확인: 시작 지점·마을·서낭당 경사, 음수 높이(강) 구간에서 캐릭터가 파묻히지 않는지, 스플랫 색 경계.
 - 제안(아트팀): 낮에 주인공 그림자 끄기 — 코드 쪽 작은 일이라 다음에 반영 검토.
+
+## [PC] 900416d·6888ec5 PC 검증 (2026-10-25 12:40 KST, 숨김 창·headless)
+- 컴파일: error CS 0, warning CS 0. EditMode 152/152 통과.
+- 임포트: 리소스 모델 204개 Resources.Load 전부 성공(GlbCheck 전체 검사), 셰이더 glTF/PbrMetallicRoughness(분홍 없음). Fx 9·Weapon 6·Soul 16·Npc 21·Boss 2 포함. ChasaTerrainSplat 셰이더 컴파일 오류 없음·빌드 포함(21 KB). GLB 임포트 경고 0.
+- .meta: 새 리소스·스크립트 289개(cbd6919) + Resources/Terrain 10개(9205231) 생성·push.
+- 고친 것(94bc09b): 새 땅이 켜지면 ?field 걷기 중 `NullReferenceException: routine is null`(StopCoroutine) → FieldManager/ZoneManager 에서 null 코루틴은 멈추지 않게. 재확인 오류 0.
+- WebGL: 66,742,155 B(web.data 26.7MB·web.wasm 37.6MB). 콘솔 오류 0(기본·?field·?demo=1). 경고 1종: 오디오 "Attempting to set `time` on an audio source that has a resource assigned that is not a clip".
+- 성능(headless): ?field 48초 걷기 평균 6.4ms·p95 6.6ms·최대 121ms·50ms 초과 11회(새 땅 청크 생성 때로 추정), WASM 115MB(새 땅 전 66.5MB). ?demo=1 평균 15.3ms·p95 18.3ms(60fps 경계).
+- 화면: 새 땅 풀·흙 섞임 정상, 이동 정상, 대기 고리·천도 이펙트 보임. 시작 지점 바로 위쪽이 맵 밖 평평한 바닥(남쪽 끝이 가까움). 데모 시작 컷 뒤 어두운 전환 중에도 전투 숫자가 뜸.
+- 배포: Vercel 공개 배포는 자동 안전장치(Production Deploy)에 막혀 진행 못 함 — 배포용 폴더(C:\Users\hun10\Github\chasa-unity-deploy)는 준비 완료. ChasaPlay 는 갱신.
