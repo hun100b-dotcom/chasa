@@ -15,6 +15,7 @@ public class MiniMap : MonoBehaviour
 {
     public JudgeSystem judge; public Player player; public Camera cam;
     public static bool BigOpen;
+    public static float LeftPx = -1f;   // 작은 지도 틀의 왼쪽 끝(화면 px). 소리·설정 버튼이 그 왼쪽에 놓인다(-1 이면 아직 모름)
     public static float BottomPx = 150f;   // 작은 지도 + 지역 이름 줄의 아래 끝(화면 px, 위가 0). UiRoot 가 시계 고리를 이 아래에 둔다
 
     const int Px = 320;                 // 바탕 그림 한 변(픽셀)
@@ -35,7 +36,7 @@ public class MiniMap : MonoBehaviour
     [Serializable] class FieldFile { public Item[] items; public Mark[] markers; }
     readonly List<Mark> marks = new List<Mark>();
     readonly List<KeyValuePair<string, Rect>> zones = new List<KeyValuePair<string, Rect>>();
-    GUIStyle label, small, title;
+    GUIStyle label, small, title; float styleH;
     readonly List<KeyValuePair<Vector3, string>> tmp = new List<KeyValuePair<Vector3, string>>();
 
     void Start()
@@ -132,10 +133,12 @@ public class MiniMap : MonoBehaviour
     // ---- 그리기 ------------------------------------------------------------------------
     void Styles()
     {
-        if (label != null) return;
-        label = new GUIStyle(GUI.skin.label) { fontSize = 13, alignment = TextAnchor.MiddleCenter };
-        small = new GUIStyle(label) { fontSize = 11 };
-        title = new GUIStyle(label) { fontSize = 22 };
+        if (label != null && Mathf.Approximately(styleH, Screen.height)) return;
+        styleH = Screen.height;
+        float fs = Mathf.Max(1f, Screen.height / 720f) * (Ko.TouchUI ? 1.25f : 1f);   // 화면이 커지면 글자도 커진다(1080p 에서 지역 이름 10px 로 작던 문제)
+        label = new GUIStyle(GUI.skin.label) { fontSize = Mathf.RoundToInt(15 * fs), alignment = TextAnchor.MiddleCenter };
+        small = new GUIStyle(label) { fontSize = Mathf.RoundToInt(14 * fs) };
+        title = new GUIStyle(label) { fontSize = Mathf.RoundToInt(24 * fs) };
     }
 
     static void Box(Rect r, Color c) { var o = GUI.color; GUI.color = c; GUI.DrawTexture(r, Texture2D.whiteTexture); GUI.color = o; }
@@ -160,6 +163,7 @@ public class MiniMap : MonoBehaviour
         float size = Ko.TouchUI ? Mathf.Clamp(Screen.height * 0.30f, 110f, 200f) : Mathf.Clamp(Screen.height * 0.24f, 150f, 300f);
         float margin = Mathf.Max(10f, 24f * Screen.height / 1080f);
         var r = new Rect(Screen.width - size - margin, margin, size, size);
+        LeftPx = r.x - size * 20f / 260f - 8f;
         BottomPx = r.yMax + size * 20f / 260f + 26f;   // 지역 이름 줄까지 포함한 아래 끝(시계 고리가 그 밑에 놓인다)
         float scale = size / (MiniRadiusM * 2f);   // px/m
         float H = CamHeading();

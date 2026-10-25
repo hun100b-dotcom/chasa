@@ -1190,7 +1190,7 @@ public class JudgeSystem : MonoBehaviour
                 (Demo.Gear ? "   능력치 점수 " + StatPoints.Earned(ledger.Neok) : ""), small);
         }
         // 시연판 기본 구성에서는 도술·장비 표시를 숨긴다 (기능은 DEMO_* 로 켜면 그대로 나온다)
-        if (SkillsOn)
+        if (SkillsOn && ui == null)   // 새 HUD 가 하단 스킬바에 그리면 중복·겹침이라 건너뜀
         {
             string sk = "";
             for (int i = 0; i < SkillTree.ActiveSlots; i++)

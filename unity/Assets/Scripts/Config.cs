@@ -35,7 +35,7 @@ public static class Config
     // (바닥 크기는 Core/MapLayout 의 MinX~MaxX, MinZ~MaxZ 가 원본 — 아트 배치표에서 나온다)
 
     // 3) 플레이어
-    public const float PLAYER_MOVE_SPEED = 9f;
+    public const float PLAYER_MOVE_SPEED = Balance.PLAYER_MOVE_SPEED;   // 원본은 balance.json (기획 표준 5.5 m/s). 예전엔 9 로 따로 박혀 있어 값이 안 먹었다
     public const float PLAYER_RADIUS = 0.5f;
     public const float PLAYER_TURN_SPEED = Balance.MOVE_TURN_RADPS;   // 원본은 balance.json (기획: 14 rad/s)
     public const float PLAYER_HAND_HEIGHT = 1.0f;

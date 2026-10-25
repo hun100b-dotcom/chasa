@@ -31,7 +31,7 @@ public class UiRoot : MonoBehaviour
     float ringSize = 84f;   // 시각 고리 지름(px, 1280×720 기준). 아트 틀이 있으면 키운다
     string lastLedger, lastVital, lastNight;
     float hpFullW = 304f;   // 체력 채움의 전체 폭(틀 안 홈 길이)
-    static float U(float specPx) { return specPx * (2f / 3f); }   // 명세 px(1080p) → 패널 단위(1280×720 기준)
+    static float U(float specPx) { return specPx * (Ko.TouchUI ? 0.5f : 2f / 3f); }   // 명세 px(1080p) → 패널 단위(1280×720 기준)
 
     static readonly Color PaperBg = new Color(0.05f, 0.05f, 0.09f, 0.62f);
     static readonly Color Ink = new Color(1f, 1f, 1f, 0.92f);
@@ -41,7 +41,7 @@ public class UiRoot : MonoBehaviour
         // 화면 설정(PanelSettings): 1280×720 기준으로 크기를 맞춘다. 파일 없이 코드로 만든다
         var ps = ScriptableObject.CreateInstance<PanelSettings>();
         ps.scaleMode = PanelScaleMode.ScaleWithScreenSize;
-        ps.referenceResolution = new Vector2Int(1280, 720);
+        ps.referenceResolution = Ko.TouchUI ? new Vector2Int(960, 540) : new Vector2Int(1280, 720);   // 폰은 기준을 작게 잡아 HUD 를 1.33배 크게(기획: 폰 글자 ×1.25 이상)
         ps.screenMatchMode = PanelScreenMatchMode.MatchWidthOrHeight;
         ps.match = 0.5f;
         ps.themeStyleSheet = ScriptableObject.CreateInstance<ThemeStyleSheet>();   // 빈 테마(기본 모양 없이 우리 스타일만 씀)
@@ -252,7 +252,7 @@ public class UiRoot : MonoBehaviour
         var b = Hud.VitalLine(); if (b != lastVital) { vital.text = lastVital = b; }
         var c = Hud.NightLine(); if (c != lastNight) { night.text = lastNight = c; }
         // 시계 고리는 미니맵 바로 아래(화면 px → 패널 단위로 환산: 패널은 1280×720 기준, 가로·세로 비율을 절반씩 섞는다)
-        float pscale = Mathf.Sqrt((Screen.width / 1280f) * (Screen.height / 720f));
+        float refW = Ko.TouchUI ? 960f : 1280f, refH = Ko.TouchUI ? 540f : 720f; float pscale = Mathf.Sqrt((Screen.width / refW) * (Screen.height / refH));
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
