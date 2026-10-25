@@ -16,7 +16,7 @@ using UnityEngine.Playables;
 
 public class ActorModel : MonoBehaviour
 {
-    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
+    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw, Hit2, Stagger, Tendo }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
 
     // 모양 설명서: 이름에서 골라 쓴다
     struct Spec
