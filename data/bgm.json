@@ -24,7 +24,7 @@
     "bgm_solgogae_night"
    ],
    "loop": true,
-   "when": "월드 시계 해 진 뒤"
+   "when": "월드 시계 해 진 뒤(어두운 저음 곡)"
   },
   "combat": {
    "clips": [
@@ -35,11 +35,10 @@
   },
   "finish": {
    "clips": [
-    "bgm_solgogae_finish_temp"
+    "bgm_solgogae_finish"
    ],
    "loop": false,
-   "when": "적이 무릎 꿇는 순간 1회. 천도·파혼 끝날 때까지 BGM 쉼(이 소리 끝난 뒤 무음)",
-   "temp": true
+   "when": "적이 무릎 꿇는 순간 1회(종 한 번 울리고 길게 사라짐). 천도·파혼 끝날 때까지 BGM 쉼"
   }
  },
  "clips": {
@@ -63,11 +62,11 @@
   },
   "bgm_solgogae_night": {
    "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_night.ogg",
-   "length_sec": 31.55,
-   "source": "Mountain_Ridge_at_Noontide",
+   "length_sec": 147.5,
+   "source": "Sleepless_Mountain",
    "source_range_sec": [
-    56.5,
-    88.05
+    13.2,
+    160.7
    ]
   },
   "bgm_solgogae_combat": {
@@ -79,13 +78,13 @@
     133.2
    ]
   },
-  "bgm_solgogae_finish_temp": {
-   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_finish_temp.ogg",
-   "length_sec": 6.9,
-   "source": "Storm_on_the_High_Ridge",
+  "bgm_solgogae_finish": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_finish.ogg",
+   "length_sec": 8.45,
+   "source": "Bells_of_the_Crossing",
    "source_range_sec": [
-    135.6,
-    142.5
+    0.0,
+    8.45
    ]
   }
  }

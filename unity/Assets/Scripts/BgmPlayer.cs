@@ -32,7 +32,7 @@ public class BgmPlayer : MonoBehaviour
     void Start()
     {
         dayA = Load("bgm_solgogae_day_a"); dayBclip = Load("bgm_solgogae_day_b");
-        night = Load("bgm_solgogae_night"); combat = Load("bgm_solgogae_combat"); finish = Load("bgm_solgogae_finish_temp");
+        night = Load("bgm_solgogae_night"); combat = Load("bgm_solgogae_combat"); finish = Load("bgm_solgogae_finish");   // 처결 전용 곡(오너 Gemini 「Bells of the Crossing」 첫 종소리 8.45초)
         loadedAny = dayA != null || night != null;
         cur = NewSource(); prev = NewSource();
         if (loadedAny) Sfx.StopAmbient();   // 진짜 BGM 이 있으면 임시 배경음은 끈다
