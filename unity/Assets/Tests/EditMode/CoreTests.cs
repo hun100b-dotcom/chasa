@@ -1710,4 +1710,48 @@ public class CoreTests
         Assert.AreEqual(0, g.StainPointsFree);
         Assert.AreEqual(0, g.SkillPointsSpent, "일반 점수는 쓰지 않았다");
     }
+
+    [Test]
+    public void Save_RoundTrip_KeepsGrowthLedgerGearAndClues()
+    {
+        var g = new GrowthState(); var l = new Ledger { Neok = 120, Memory = 7, Coin = 333, Ore = 4, Karma = 9, TendoTotal = 12, Hp = 77 };
+        g.AddNeok(400); g.AddPahon(); g.Learn("휘감기");
+        var eq = new Equipment(); var it = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Rare, Name = "시험 사슬", Plus = 3, Sockets = 1, Rerolls = 2 };
+        it.Options.Add(new OptionRoll(Opt.DamagePct, 0.0625f)); it.Options.Add(new OptionRoll(Opt.HpFlat, 11f)); eq.Put(Slot.Weapon, it);
+        var cb = new ClueBook(); cb.Add("B01-D1"); cb.Add("B02-D3");
+        var snap = SaveGame.Capture(g, l, eq, cb); snap.X = 12.5f; snap.Z = -3.25f; snap.ClockDay = 4; snap.ClockMinutes = 123.5f; snap.BossOutcome = 2;
+        var back = SaveGame.Deserialize(SaveGame.Serialize(snap));
+        Assert.NotNull(back);
+        Assert.AreEqual(12.5f, back.X); Assert.AreEqual(-3.25f, back.Z); Assert.AreEqual(4, back.ClockDay); Assert.AreEqual(123.5f, back.ClockMinutes); Assert.AreEqual(2, back.BossOutcome);
+        var g2 = new GrowthState(); var l2 = new Ledger(); var eq2 = new Equipment(); var cb2 = new ClueBook();
+        SaveGame.Apply(back, g2, l2, eq2, cb2);
+        Assert.AreEqual(g.Rank, g2.Rank); Assert.AreEqual(g.TotalNeok, g2.TotalNeok); Assert.AreEqual(1, g2.LevelOf("휘감기"));
+        Assert.AreEqual(g.PahonCount, g2.PahonCount); Assert.AreEqual(g.SkillPointsFree, g2.SkillPointsFree);
+        Assert.AreEqual(333, l2.Coin); Assert.AreEqual(9, l2.Karma); Assert.AreEqual(12, l2.TendoTotal);
+        var it2 = eq2.Get(Slot.Weapon);
+        Assert.AreEqual("시험 사슬", it2.Name); Assert.AreEqual(3, it2.Plus); Assert.AreEqual(2, it2.Options.Count); Assert.AreEqual(0.0625f, it2.Options[0].Value);
+        Assert.IsTrue(cb2.Has("B01-D1") && cb2.Has("B02-D3"));
+    }
+
+    [Test]
+    public void Save_BadOrNewerText_ReturnsNull_NotCrash()
+    {
+        Assert.IsNull(SaveGame.Deserialize(null)); Assert.IsNull(SaveGame.Deserialize("쓰레기")); Assert.IsNull(SaveGame.Deserialize("v=99\nx=1\nz=1\nmin=1\n"));
+        Assert.IsNull(SaveGame.Deserialize("v=1\nx=abc\nz=1\nmin=1\n"));
+    }
+
+    [Test]
+    public void Settings_ParseClampsAndFallsBack()
+    {
+        var s = GameSettings.Parse("5,-1,0.5,9"); Assert.AreEqual(1f, s.Master); Assert.AreEqual(0f, s.Bgm); Assert.AreEqual(0.5f, s.Sfx); Assert.AreEqual(1.5f, s.Shake);
+        var d = GameSettings.Parse("깨짐"); Assert.AreEqual(1f, d.Master); Assert.AreEqual(1f, d.Shake);
+        var r = GameSettings.Parse(new GameSettings { Master = 0.3f, Bgm = 0.4f, Sfx = 0.5f, Shake = 0.6f }.Serialize()); Assert.AreEqual(0.6f, r.Shake, 0.0001f);
+    }
+
+    [Test]
+    public void WorldClock_Set_MovesPhaseWithoutAlert()
+    {
+        var c = new WorldClock(); c.Set(3, WorldClock.DayLength - 1f);
+        Assert.AreEqual(3, c.Day); Assert.AreEqual(ClockPhase.Night, c.Phase); Assert.IsNull(c.Changed);
+    }
 }

@@ -582,7 +582,7 @@ public class JudgeSystem : MonoBehaviour
     public void Tick(float dt, float realDt)
     {
         toastT -= realDt;   // 안내 글자는 창이 열려 있어도 사라진다(QA B3)
-        if (CharacterPanel.Open) return;   // 캐릭터 창이 열려 있으면 세계가 멈춘다
+        if (CharacterPanel.Open || SettingsPanel.Open) return;   // 캐릭터 창·설정이 열려 있으면 세계가 멈춘다
         if (inDay)
         {
             dayScreen.Tick(realDt);
@@ -609,6 +609,7 @@ public class JudgeSystem : MonoBehaviour
         if (clock == null) night.Tick(dt);     // 옛 방식: 밤 타이머. 필드에선 시한이 없다(시계가 흐를 뿐)
         else TickClock(dt);
         TickClues();
+        TickAutoSave(realDt);
         if (camps != null) camps.Tick(dt, player.Pos);   // 필드: 가까운 군집만 세운다
         enemySpawnPause = Mathf.Max(0f, enemySpawnPause - dt);
         TickActives(dt);   // 도술이 남기는 짧은 상태(버프·느림·타이머)
@@ -645,8 +646,60 @@ public class JudgeSystem : MonoBehaviour
     int pahonOrTendo;            // 박돌쇠 처결 결과: 0 안 함 · 1 천도 · 2 파혼
     bool funeralShown;
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
+    // ===== 저장·불러오기 (규칙은 Core/SaveGame.cs, 저장소는 SaveStore) ==================
+    bool loadChecked; float autoSaveT = 30f;
+    public string SaveNote = "";   // 설정 화면에 보일 마지막 저장·불러오기 결과 글자
+
+    /// <summary>지금 상태를 저장한다. 필드에서만(옛 한 판 모드엔 저장할 세계가 없다). 성공하면 true</summary>
+    public bool SaveGameNow()
+    {
+        if (clock == null || ledger.Dead) return false;
+        var s = SaveGame.Capture(growth, ledger, lo.gear, clueBook);
+        s.X = player.Pos.x; s.Z = player.Pos.z; s.ClockDay = clock.Day; s.ClockMinutes = clock.Minutes;
+        s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon;
+        return SaveStore.Write(SaveGame.Serialize(s));
+    }
+
+    /// <summary>저장된 것을 불러온다. 없거나 깨졌으면 false(게임은 그대로 계속). 적·얼룩은 새로 시작</summary>
+    public bool LoadGameNow()
+    {
+        if (clock == null) return false;
+        var s = SaveGame.Deserialize(SaveStore.Read());
+        if (s == null) return false;
+        if (Casting) EndCast();
+        SaveGame.Apply(s, growth, ledger, lo.gear, clueBook);
+        lo.weapon = s.Weapon; lo.other = s.Weapon == WeaponId.Chain ? WeaponId.Mace : WeaponId.Chain;
+        RefreshGrowth();
+        ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
+        clock.Set(s.ClockDay, s.ClockMinutes);
+        bossOutcome = s.BossOutcome; pahonOrTendo = s.NamedOutcome; openingStarted = true; funeralShown = s.FuneralShown; sceneryAdded = false;
+        player.CommandStop(); player.Pos = new Vector3(s.X, 0f, s.Z);
+        if (onTeleport != null) onTeleport(player.Pos);   // 카메라가 날아오지 않고 곧바로 따라가게
+        sinceHit = 99f;
+        return true;
+    }
+
+    /// <summary>처음 한 번: 저장이 있으면 이어서 시작(주소에 new 가 있으면 무시). 오프닝 컷보다 먼저</summary>
+    void TryAutoLoad()
+    {
+        string u = (Application.absoluteURL ?? "").ToLowerInvariant();
+        if (u.Contains("new=1") || u.Contains("?new") || u.Contains("&new")) return;
+        if (SaveStore.Exists && LoadGameNow()) Say("이어서 시작했다");
+    }
+
+    /// <summary>45초마다 안전할 때(적·시전·컷 없음) 자동 저장</summary>
+    void TickAutoSave(float realDt)
+    {
+        autoSaveT -= realDt;
+        if (autoSaveT > 0f) return;
+        autoSaveT = 45f;
+        if (clock == null || !played || Casting || cuts.Active || ledger.Dead || AnyEnemyNear(20f)) return;
+        SaveGameNow();
+    }
+
     void TickCutscenes(float dt)
     {
+        if (!loadChecked && FieldRules.On && clock != null) { loadChecked = true; TryAutoLoad(); }
         // 오프닝(검은 화면 → 서낭당 고개에서 깨어남): 게임을 처음 켠 필드에서 한 번
         if (!openingStarted && FieldRules.On && clock != null)
         {
@@ -898,7 +951,7 @@ public class JudgeSystem : MonoBehaviour
         }
         pNeok = ledger.Neok; pMemory = ledger.Memory; pCoin = ledger.Coin; pKarma = ledger.Karma; pDrop = lo.lastDrop; toastReady = true;
         h.Toasts.Tick(Time.unscaledDeltaTime);
-        ui.Refresh(!inDay && !night.Over && !CharacterPanel.Open);
+        ui.Refresh(!inDay && !night.Over && !CharacterPanel.Open && !SettingsPanel.Open);
     }
     int pNeok, pMemory, pCoin, pKarma; string pDrop; bool toastReady;
 
@@ -962,7 +1015,7 @@ public class JudgeSystem : MonoBehaviour
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (white == null) return;
-        if (CharacterPanel.Open) return;   // 캐릭터 창이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
+        if (CharacterPanel.Open || SettingsPanel.Open) return;   // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
         if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }

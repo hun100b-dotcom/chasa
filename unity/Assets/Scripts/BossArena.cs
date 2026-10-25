@@ -81,7 +81,7 @@ public class BossArena : MonoBehaviour
         if (!built && dist < 60f) Build();
         if (!built) return;
         SetCupsActive(dist < 60f);
-        bool fight = dist < 16f && boss.alive && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open;
+        bool fight = dist < 16f && boss.alive && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
         if (!fight) { ClearTeles(); boss.damageTakenMult = 1f; if (weakMark != null) weakMark.SetActive(false); return; }
 
         float dt = Time.deltaTime;

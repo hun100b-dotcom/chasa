@@ -85,6 +85,7 @@ public class GameMain : MonoBehaviour
         if (FieldRules.On) { var fm = gameObject.AddComponent<FieldManager>(); fm.player = player; }   // 걸어가면 둘레 청크를 켜고 끈다
         if (World.Enabled) { var zm = gameObject.AddComponent<ZoneManager>(); zm.player = player; }   // 걸어가면 둘레 구역을 켜고 끈다
         if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)
+        var settingsPanel = gameObject.AddComponent<SettingsPanel>(); settingsPanel.judge = judge; settingsPanel.white = Texture2D.whiteTexture;   // 설정 화면(O)
         Sfx.Create(judge);   // 효과음 재생기
         BgmPlayer.Create(judge);   // BGM 재생기(층 교차). 필드에서만 소리를 낸다
         if (DemoScript.Wanted()) { var ds = gameObject.AddComponent<DemoScript>(); ds.player = player; ds.enemies = enemies; ds.judge = judge; }   // ?demo=1 자동 연출
@@ -97,7 +98,7 @@ public class GameMain : MonoBehaviour
     void Update()
     {
         if (Input.touchCount > 0) Ko.TouchUI = true;   // 실제로 터치가 들어오면 화면 버튼을 띄운다
-        if (CharacterPanel.Open) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
+        if (CharacterPanel.Open || SettingsPanel.Open) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
         if (judge.InDay) { judge.Tick(0f, Mathf.Min(0.05f, Time.unscaledDeltaTime)); return; }   // 낮 화면: 세계는 멈추고 낮 화면만 흐른다
         if (!judge.NightOver) HandleInput();   // 결과 화면에서는 조작이 먹지 않는다(QA B4)
         float realDt = Mathf.Min(0.05f, Time.unscaledDeltaTime);
@@ -412,7 +413,7 @@ public class GameMain : MonoBehaviour
     void OnGUI()
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
-        if (judge.InDay || CharacterPanel.Open || judge.NightOver) return;   // 낮 화면·캐릭터 창에서는 밤의 안내·버튼을 그리지 않는다
+        if (judge.InDay || CharacterPanel.Open || SettingsPanel.Open || judge.NightOver) return;   // 낮 화면·캐릭터 창에서는 밤의 안내·버튼을 그리지 않는다
         var hint = new GUIStyle(GUI.skin.label) { fontSize = 14 };
         hint.normal.textColor = new Color(1, 1, 1, 0.55f);
         GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 피하기" + ((Demo.Panel || FieldRules.On) ? "   C: 명부(품계·도술)" : ""), hint);

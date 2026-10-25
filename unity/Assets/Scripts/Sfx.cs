@@ -56,8 +56,9 @@ public class Sfx : MonoBehaviour
         ambLoop = gameObject.AddComponent<AudioSource>(); ambLoop.loop = true; ambLoop.playOnAwake = false;
         // 소리 만들기는 시작할 때 한 번만 (몇십 ms). 이후엔 재생만 한다
         foreach (var id in SfxSynth.Ids) Clip(id);
-        var amb = Clip("amb.field"); if (amb != null) { ambLoop.clip = amb; ambLoop.volume = 1f; }
+        var amb = Clip("amb.field"); if (amb != null) { ambLoop.clip = amb; ambLoop.volume = SaveStore.Settings.Sfx; }
         ApplyMute();
+        AudioListener.volume = SaveStore.Settings.Master;   // 설정의 전체 소리 크기
     }
 
     AudioClip Clip(string id)
@@ -94,7 +95,7 @@ public class Sfx : MonoBehaviour
         v.clip = c;
         bool hit = id.StartsWith("sfx.hit") || id == "sfx.player.hurt";
         v.pitch = hit ? 1f + Random.Range(-0.06f, 0.06f) : 1f;
-        v.volume = hit ? Mathf.Pow(10f, Random.Range(-1.5f, 1.5f) / 20f) : 1f;
+        v.volume = (hit ? Mathf.Pow(10f, Random.Range(-1.5f, 1.5f) / 20f) : 1f) * SaveStore.Settings.Sfx;   // 설정의 효과음 크기
         v.bypassListenerEffects = id == "sfx.enemy.telegraph";   // 예고음은 먹먹 필터를 건너뛴다
         v.Play();
         list.Add(v);
@@ -116,7 +117,7 @@ public class Sfx : MonoBehaviour
                 if (castLoop.clip == null) castLoop.clip = Clip("sfx.tendo.cast");
                 if (!castLoop.isPlaying) castLoop.Play();
                 castLoop.pitch = 1f + 0.12f * cast;   // 점점 올라간다
-                castLoop.volume = Mathf.Min(1f, castLoop.volume + Time.unscaledDeltaTime * 6f);
+                castLoop.volume = Mathf.Min(SaveStore.Settings.Sfx, castLoop.volume + Time.unscaledDeltaTime * 6f);
             }
             else if (castLoop.isPlaying)
             {

@@ -70,7 +70,7 @@ public class Atmosphere : MonoBehaviour
     {
         if (!on || cam == null || mask == null) return;
         if (Event.current.type != EventType.Repaint) return;
-        if (judge != null && (judge.InDay || CharacterPanel.Open)) return;
+        if (judge != null && (judge.InDay || CharacterPanel.Open || SettingsPanel.Open)) return;
         GUI.depth = 50;   // 숫자·HUD(작은 depth)보다 뒤, 월드보다 앞
 
         float cast = judge != null ? judge.CastZoom : 0f;   // 천도 캐스팅 중 0→1 (시야가 좁아지는 정도)

@@ -49,7 +49,7 @@ public class HitFeel
     }
 
     /// <summary>실제 흔들림 세기 = 충격값². 폰은 작은 화면이라 줄인다</summary>
-    float Amount() => shake * shake * (Ko.TouchUI ? Balance.SHAKE_MOBILE_MULT : 1f);
+    float Amount() => shake * shake * (Ko.TouchUI ? Balance.SHAKE_MOBILE_MULT : 1f) * SaveStore.Settings.Shake;   // 설정의 화면 흔들림 세기(0이면 안 흔들림)
 
     /// <summary>
     /// 이번 프레임 카메라 흔들림 (화면 기준 좌우 x, 상하 y).

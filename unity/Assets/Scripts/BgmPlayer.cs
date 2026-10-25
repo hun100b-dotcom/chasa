@@ -80,7 +80,7 @@ public class BgmPlayer : MonoBehaviour
         // 교차 진행
         fadeT = Mathf.Min(fadeLen, fadeT + dt);
         float k = fadeLen <= 0.001f ? 1f : fadeT / fadeLen;
-        float mute = Sfx.Muted ? 0f : 1f;
+        float mute = Sfx.Muted ? 0f : SaveStore.Settings.Bgm;   // 설정의 배경음 크기(음소거면 0)
         cur.volume = (cur.clip != null ? k : 0f) * mute;
         prev.volume = (1f - k) * mute;
         if (k >= 1f && prev.isPlaying) prev.Stop();

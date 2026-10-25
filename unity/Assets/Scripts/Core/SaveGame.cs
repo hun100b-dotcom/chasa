@@ -25,7 +25,8 @@ namespace Chasa.Core
         public List<string> ActiveBar = new List<string>();
         public ItemDef[] Gear = new ItemDef[3];
         public List<string> Clues = new List<string>();
-        public int BossOutcome;
+        public int BossOutcome, NamedOutcome;     // 보스 결과(1 천도·2 파혼) / 이름혼 박돌쇠 결과
+        public bool OpeningSeen, FuneralShown;    // 오프닝·장례 컷을 이미 봤나(불러오면 다시 틀지 않는다)
         public WeaponId Weapon = WeaponId.Chain;
     }
 
@@ -71,7 +72,7 @@ namespace Chasa.Core
             var a = new List<string>(); foreach (var n in s.ActiveBar) a.Add(Clean(n)); w("bar", string.Join(",", a));
             for (int i = 0; i < s.Gear.Length; i++) w("gear" + i, ItemText(s.Gear[i]));
             var c = new List<string>(); foreach (var n in s.Clues) c.Add(Clean(n)); w("clues", string.Join(",", c));
-            w("boss", s.BossOutcome); w("weapon", (int)s.Weapon);
+            w("boss", s.BossOutcome); w("named", s.NamedOutcome); w("opening", s.OpeningSeen ? 1 : 0); w("funeral", s.FuneralShown ? 1 : 0); w("weapon", (int)s.Weapon);
             return b.ToString();
         }
 
@@ -88,7 +89,7 @@ namespace Chasa.Core
                 var s = new SaveSnapshot { X = PF(d["x"]), Z = PF(d["z"]), ClockDay = I("day"), ClockMinutes = PF(d["min"]),
                     Neok = I("neok"), Memory = I("memory"), Coin = I("coin"), Ore = I("ore"), Karma = I("karma"), TendoTotal = I("tendo"), Hp = I("hp"),
                     TotalNeok = I("totalneok"), SkillPointsEarned = I("skE"), SkillPointsSpent = I("skS"), StatPointsEarned = I("stE"),
-                    PahonCount = I("pahon"), StainPointsEarned = I("stainE"), StainPointsSpent = I("stainS"), BossOutcome = I("boss"), Weapon = (WeaponId)I("weapon") };
+                    PahonCount = I("pahon"), StainPointsEarned = I("stainE"), StainPointsSpent = I("stainS"), BossOutcome = I("boss"), NamedOutcome = I("named"), OpeningSeen = I("opening") == 1, FuneralShown = I("funeral") == 1, Weapon = (WeaponId)I("weapon") };
                 var st = d.ContainsKey("stats") ? d["stats"].Split(',') : new string[0];
                 for (int i = 0; i < s.Stats.Length; i++) s.Stats[i] = i < st.Length ? int.Parse(st[i]) : GrowthState.StatBase;
                 if (d.ContainsKey("learned") && d["learned"].Length > 0)
