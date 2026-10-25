@@ -1207,3 +1207,11 @@
 - 금줄이 닫힌 땅은 안 읽으므로 금줄 너머는 빈 땅(안개)으로 보인다.
 - 주석 속 금지 이름(디아블로) 2곳(OccluderFade.cs, View3D.cs) 삭제.
 - 미확인: 읽는 순간 끊김(동기 읽기), 메모리 실측 → PC 측정 필요.
+## 2026-10-25 밤 — [사운드] 시즌2 저승 ⑦~⑩ 사운드 방향 + 환경음 16 + 장치음 9 + BGM 지시문 26~41 (기획·사운드)
+- 기준: 서사 memories_act4.json·npc_act4.json·season2_outline.json. 저승 소리 규칙 4개: 산 것(새·벌레·개) 소리 없음 / 말소리는 들리되 뜻은 안 들림 / 물은 고이거나 거꾸로 흐름 / 울림은 길고 어둡게. 상세 `docs/sound-direction.md` 시즌2 절.
+- ⑦ 삼도천: `amb.styx.reeds`·`.ferry`(줄 선 혼 웅성임)·`.inkrapids`·`.dam`, 장치 `sfx.styx.boat.arrive`·`.line.step`·`sfx.name.slip.float`·`.catch`·`sfx.dam.gauge.up`.
+- ⑧ 명부전: `amb.clerk.quarters`·`amb.inkroom`·`amb.archive`·`amb.numberyard`, `sfx.clerk.hush`.
+- ⑨ 빈 관할: `amb.blank.town`·`amb.blank.market`·`amb.sealcave`, `sfx.map.draw`·`sfx.keeper.note`.
+- ⑩ 열째 관할: `amb.first.village`·`amb.chain.graves`·`amb.wellyard`·`amb.bigdam`, `sfx.fragment.link`·`sfx.chain.unrust`.
+- 업(karma) 연동 제안: 업 30 이상 웅성임 ×0.4, 60 이상 0(혼들이 동이를 피함).
+- BGM 지시문 26~41(지역마다 탐색 낮·밤·전투·처결). 효과음 총 249개, 기존 파일 변화 없음. 미리듣기 v16, 지시문 페이지 v5.
