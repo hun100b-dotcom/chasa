@@ -182,11 +182,11 @@ public class JudgeSystem : MonoBehaviour
         e.PlayFinishAnim(false);   // 파혼 동작(터짐)
         e.Finish();
         int coinBefore = ledger.Coin;
-        ledger.DoPahon(e.soul.Boss);
+        ledger.DoPahon(e.soul.Boss, e.soul.BossId);
         TieProgress(e, 2);
         if (growth.AddPahon()) ui?.Hud.Toasts.Add("얼룩 도술 점수 +1");   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
-        float baseCoin = e.soul.Boss ? Balance.BOSS_PAHON_COIN : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3
+        float baseCoin = e.soul.Boss ? Bosses.CoinFor(e.soul.BossId) : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3
         float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;   // 낚아챈 보스는 파혼 엽전 x1.2
         float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult * snatchMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
         int coinAdd = Mathf.FloorToInt(coinX); coinFrac = coinX - coinAdd; ledger.Coin += coinAdd;
@@ -419,7 +419,7 @@ public class JudgeSystem : MonoBehaviour
         if (castTarget.soul.Boss)
         {
             if (castTarget.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
-            int g = ledger.CompleteBossTendo();
+            int g = ledger.CompleteBossTendo(castTarget.soul.BossId);
             growth.AddBossPoint();                  // 보스 천도 = 도술 점수 1
             ui?.Hud.Toasts.Add("도술 점수 +1");
             CreditSoulColor(castTarget.Pos, g); night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다

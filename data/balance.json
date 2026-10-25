@@ -887,6 +887,9 @@
   "value": 3,
   "note": "(시연판 임시) S1 보스 천도 기억 조각"
  },
+ "BOSS_ACT_NEOK_BASE": {"value": 50, "note": "(기획 act2-3-boss-reward-check 10-26) 2·3막 보스 천도 넋 = 50 × 고리 ÷ BOSS_RING_REF"},
+ "BOSS_ACT_COIN_BASE": {"value": 30, "note": "2·3막 보스 파혼 엽전 = 30 × 고리 ÷ BOSS_RING_REF"},
+ "BOSS_RING_REF": {"value": 1.25, "note": "기준 고리 배율(1막 보스)"},
  "BOSS_PAHON_COIN": {
   "value": 30,
   "note": "(시연판 임시) 보스 파혼 엽전(일반 5의 6배. 천도 쏠림 방지: BALANCE-NARRATIVE-CHECK 엽전×30 권고)"

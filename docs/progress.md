@@ -1458,3 +1458,7 @@
 ## 파혼 넉백·연쇄 소리 (코드·QA, 10-26)
 - 사운드 PR #36 둘째 묶음 합침. `Sfx.PlayLater(id, 지연, 음높이, 좌우)` 추가. 파혼 폭발: 밀린 적마다 `sfx.pahon.knock`(최대 4·0.03초 간격·+4%·화면 x로 좌우), 잔넋 연쇄 `sfx.pahon.chain.2~4`(0.16초 간격), 셋 이상이면 `sfx.pahon.cascade`. 상수 4개를 balance.json에.
 - 아직(사운드 문서): 천도 중 위험 경고음·심장 박동·bypass_cast_filter, 업 환경층 amb.karma.1~3, 원념 얼룩 소리 5종.
+
+## 2·3막 보스 보상 고정값 고침 (코드·QA, 10-26)
+- 기획 `act2-3-boss-reward-check` 1절 반영: 보스 천도 넋 = 50×고리÷1.25, 파혼 엽전 = 30×고리÷1.25 (B-05·08 60/36, B-06·07 70/42, B-09·11 80/48, B-10·12 90/54). 1막 보스는 60/30 그대로. `Bosses.NeokFor/CoinFor`, `Ledger.CompleteBossTendo(id)`·`DoPahon(boss,id)`, balance 키 3개. 테스트 203개.
+- 3절의 오래 남는 효과(이름 불린 병사·노리개 등)는 서사 확인 대기라 아직.

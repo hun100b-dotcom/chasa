@@ -86,9 +86,9 @@ namespace Chasa.Core
         }
 
         /// <summary>보스 천도: 큰 넋과 기억을 얻는다. 업 감쇠 횟수에는 일반 천도와 똑같이 센다</summary>
-        public int CompleteBossTendo()
+        public int CompleteBossTendo(int bossId = 1)
         {
-            int gain = (int)System.Math.Round(Balance.BOSS_S1_NEOK * CoreRules.RewardMult(Karma));
+            int gain = (int)System.Math.Round(Bosses.NeokFor(bossId) * CoreRules.RewardMult(Karma));
             Neok += gain;
             Memory += Balance.BOSS_S1_MEMORY;
             TendoStreak++;
@@ -100,9 +100,9 @@ namespace Chasa.Core
         float karmaFrac;   // 업의 소수 부분(잔넋 연쇄 파혼 +0.5 를 모았다가 1이 되면 반영)
         public void AddKarma(float v) { karmaFrac += v; int w = (int)karmaFrac; if (w > 0) { Karma += w; karmaFrac -= w; } }
 
-        public void DoPahon(bool boss = false)
+        public void DoPahon(bool boss = false, int bossId = 1)
         {
-            Coin += boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN;
+            Coin += boss ? Bosses.CoinFor(bossId) : Balance.PAHON_COIN;
             Karma += boss ? Balance.BOSS_PAHON_KARMA : Balance.PAHON_KARMA;
             TendoStreak = 0;
         }

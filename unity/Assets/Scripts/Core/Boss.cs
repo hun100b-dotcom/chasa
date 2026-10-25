@@ -22,6 +22,23 @@ namespace Chasa.Core
 
     public static class Bosses
     {
+        /// <summary>2·3막 보스(B-05~B-12)의 고리 배율(기획 act2-3-boss-reward-check). 1막 보스와 그 밖은 1.25(기준)라 보상이 그대로다</summary>
+        public static float Ring(int id)
+        {
+            switch (id)
+            {
+                case 5: case 8: return 1.5f;
+                case 6: case 7: return 1.75f;
+                case 9: case 11: return 2f;
+                case 10: case 12: return 2.25f;
+                default: return Balance.BOSS_RING_REF;
+            }
+        }
+        /// <summary>보스 천도 넋: 1막은 BOSS_S1_NEOK(60) 그대로, 2·3막은 50 × 고리 ÷ 1.25 (60·70·80·90)</summary>
+        public static int NeokFor(int id) { return id >= 5 && id <= 12 ? (int)System.Math.Round(Balance.BOSS_ACT_NEOK_BASE * Ring(id) / Balance.BOSS_RING_REF) : Balance.BOSS_S1_NEOK; }
+        /// <summary>보스 파혼 엽전: 1막은 BOSS_PAHON_COIN(30) 그대로, 2·3막은 30 × 고리 ÷ 1.25 (36·42·48·54)</summary>
+        public static int CoinFor(int id) { return id >= 5 && id <= 12 ? (int)System.Math.Round(Balance.BOSS_ACT_COIN_BASE * Ring(id) / Balance.BOSS_RING_REF) : Balance.BOSS_PAHON_COIN; }
+
         public static BossDef Get(int id)
         {
             switch (id)
