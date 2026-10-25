@@ -339,7 +339,7 @@ public class MiniMap : MonoBehaviour
         // 켜진 단서 자리
         if (judge.npcs != null) { tmp.Clear(); judge.npcs.PendingClues(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(1f, 0.85f, 0.2f), s + 2f, "quest"); }
         // 이름혼
-        if (judge.named != null) { tmp.Clear(); judge.named.PendingPositions(tmp); foreach (var c in tmp) { if (judge.NamedMarkerHidden(c.Value)) continue; D(c.Key.x, c.Key.z, new Color(0.4f, 1f, 0.85f), s + 1f, "soul_named"); } }
+        if (judge.named != null) { tmp.Clear(); judge.named.PendingPositions(tmp); foreach (var c in tmp) { if (judge.NamedMarkerHidden(c.Value, c.Key.x, c.Key.z)) continue; D(c.Key.x, c.Key.z, new Color(0.4f, 1f, 0.85f), s + 1f, "soul_named"); } }
         // 혼
         foreach (var e in judge.enemies.list)
         {

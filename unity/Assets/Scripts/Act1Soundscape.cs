@@ -13,10 +13,11 @@ public class Act1Soundscape : MonoBehaviour
 {
     [System.Serializable] class Bed { public string zone, id; }
     [System.Serializable] class Pt { public string id, when, note; public float x, z, min, max; }
-    [System.Serializable] class Prop { public string prop, id; public float min, max, every_m; public int nearest; }
+    [System.Serializable] class Prop { public string prop, id, when, group; public float min, max, every_m, day_gain, inside_lowpass_hz; public int nearest; }
     [System.Serializable] class LonerRow { public string loop, notice; public float min, max, notice_m; }
-    [System.Serializable] class Spr { public string zone, id; public float lo, hi; }
-    [System.Serializable] class FileData { public Bed[] beds; public Pt[] points; public Prop[] props; public LonerRow loner; public Spr[] sprinkles; }
+    [System.Serializable] class Spr { public string zone, id; public float lo, hi; public bool night; }
+    [System.Serializable] class Line { public string id; public float x1, z1, x2, z2, min, max; public bool night_only; }
+    [System.Serializable] class FileData { public Bed[] beds; public Pt[] points; public Prop[] props; public LonerRow loner; public Spr[] sprinkles; public Bed[] beds_day; public Line[] lines; }
 
     class Loop { public AudioSource s; public bool want; public float gain = 1f; }
 
@@ -45,7 +46,18 @@ public class Act1Soundscape : MonoBehaviour
         var p = playerPos();
         foreach (var l in loops.Values) l.want = false;
         // 바탕: 밤에만. 구역 이름이 표에 있을 때
-        if (Night) foreach (var b in d.beds) if (b.zone == FieldZones.CurrentName) Want("bed:" + b.id, b.id, false, Vector3.zero, 0f, 0f, 0.6f);
+        if (Night) foreach (var b in d.beds) { if (b.zone == FieldZones.CurrentName) Want("bed:" + b.id, b.id, false, Vector3.zero, 0f, 0f, 0.6f); }
+        else if (d.beds_day != null) foreach (var b in d.beds_day) if (b.zone == FieldZones.CurrentName) Want("bed:" + b.id, b.id, false, Vector3.zero, 0f, 0f, 0.6f);   // 낮 바탕은 표에 있는 구역만(없으면 옛 amb.field)
+        // 물줄기 같은 긴 소리: 선분 위에서 나와 가장 가까운 점 하나를 소리 자리로 삼는다(매 프레임 옮겨 끊김이 없다)
+        if (d.lines != null) foreach (var ln in d.lines)
+        {
+            if (ln.night_only && !Night) continue;
+            var a = new Vector2(ln.x1, ln.z1); var ab = new Vector2(ln.x2, ln.z2) - a;
+            float t = Mathf.Clamp01(Vector2.Dot(new Vector2(p.x, p.z) - a, ab) / Mathf.Max(0.01f, ab.sqrMagnitude));
+            var q = a + ab * t;
+            if (Vector2.Distance(new Vector2(p.x, p.z), q) > ln.max + 12f) continue;
+            Want("line:" + ln.id, ln.id, true, new Vector3(q.x, 0f, q.y), ln.min, ln.max, 1f);
+        }
         // 자리 + 소품 + 외톨이: 반 초마다 후보를 다시 고른다(소품 수천 개를 매 프레임 돌지 않으려고)
         scanT -= Time.unscaledDeltaTime;
         if (scanT <= 0f) { scanT = 0.5f; Rescan(p); }
@@ -70,10 +82,19 @@ public class Act1Soundscape : MonoBehaviour
             wantCache["pt" + i] = new W { id = q.id, pos = new Vector3(q.x, 0f, q.z), min = q.min, max = q.max, gain = 1f };
         }
         // 소품 점 소리: 소품마다 가까운 N개만(개울은 12 m 간격으로 솎는다)
+        var doneGroups = new HashSet<string>();
         foreach (var pr in d.props)
         {
+            if (pr.when == "night" && !Night) continue;                                       // 병자 등 같은 밤 전용 소품
+            string gkey = string.IsNullOrEmpty(pr.group) ? pr.prop : "g:" + pr.group;
+            if (!string.IsNullOrEmpty(pr.group) && !doneGroups.Add(pr.group)) continue;      // 같은 묶음(버드나무 a·b 등)은 합쳐서 한 번만 고른다
             List<Vector2> all;
-            if (!propPos.TryGetValue(pr.prop, out all)) { all = FieldManager.PositionsOf(pr.prop); propPos[pr.prop] = all; }
+            if (!propPos.TryGetValue(gkey, out all))
+            {
+                all = new List<Vector2>();
+                foreach (var o2 in d.props) if (o2 == pr || (!string.IsNullOrEmpty(pr.group) && o2.group == pr.group)) all.AddRange(FieldManager.PositionsOf(o2.prop));
+                propPos[gkey] = all;
+            }
             var near = new List<KeyValuePair<float, Vector2>>();
             foreach (var v in all) { float dd = Vector2.Distance(pp, v); if (dd <= pr.max + 12f) near.Add(new KeyValuePair<float, Vector2>(dd, v)); }
             near.Sort((a, b) => a.Key.CompareTo(b.Key));
@@ -85,7 +106,7 @@ public class Act1Soundscape : MonoBehaviour
                 if (pr.every_m > 0f) foreach (var o in picked) if (Vector2.Distance(o, kv.Value) < pr.every_m) { tooClose = true; break; }
                 if (!tooClose) picked.Add(kv.Value);
             }
-            for (int i = 0; i < picked.Count; i++) wantCache["pr:" + pr.prop + i] = new W { id = pr.id, pos = new Vector3(picked[i].x, 0f, picked[i].y), min = pr.min, max = pr.max, gain = 1f };
+            for (int i = 0; i < picked.Count; i++) wantCache["pr:" + gkey + i] = new W { id = pr.id, pos = new Vector3(picked[i].x, 0f, picked[i].y), min = pr.min, max = pr.max, gain = !Night && pr.day_gain > 0f ? pr.day_gain : 1f };
         }
         // 외톨이 혼: 무릎 꿇고 있는 동안 곁에서 들린다. 근처에서 싸우는 중이면 0.5배, 8 m 안에 처음 들어오면 고개 드는 소리 한 번
         if (judge != null && judge.enemies != null && d.loner != null && !string.IsNullOrEmpty(d.loner.loop))
@@ -137,22 +158,25 @@ public class Act1Soundscape : MonoBehaviour
 
     void FadeAll(float v) { foreach (var l in loops.Values) l.want = false; ApplyVolumes(); }
 
+    /// <summary>여울이 앓는 소리는 업 30 이상이면 간격이 절반(원념 고인 물이라는 암시)</summary>
+    float Gap(string id) { return id == "sfx.geomeun.groan" && judge != null && judge.ledger != null && judge.ledger.Karma >= 30 ? 0.5f : 1f; }
+
     // ---- 흩뿌림 ----
     readonly Dictionary<string, float> sprT = new Dictionary<string, float>();
     string lastSpr;
     void TickSprinkles()
     {
-        if (!Night || judge == null || judge.Casting) return;   // 천도 시전 중엔 멈춘다
+        if (judge == null || judge.Casting) return;   // 천도 시전 중엔 멈춘다
         foreach (var s in d.sprinkles)
         {
-            if (s.zone != FieldZones.CurrentName) continue;
+            if (s.zone != FieldZones.CurrentName || (s.night && !Night)) continue;
             string key = s.zone + s.id;
             float t;
-            if (!sprT.TryGetValue(key, out t)) t = Time.unscaledTime + Random.Range(s.lo, s.hi);
+            if (!sprT.TryGetValue(key, out t)) t = Time.unscaledTime + Random.Range(s.lo, s.hi) * Gap(s.id);
             if (Time.unscaledTime >= t)
             {
                 if (s.id != lastSpr) { Sfx.PlayLater(s.id, 0f, 1f, Random.Range(-0.8f, 0.8f)); lastSpr = s.id; }   // 같은 소리가 연달아 두 번 나오지 않게
-                t = Time.unscaledTime + Random.Range(s.lo, s.hi);
+                t = Time.unscaledTime + Random.Range(s.lo, s.hi) * Gap(s.id);
             }
             sprT[key] = t;
         }

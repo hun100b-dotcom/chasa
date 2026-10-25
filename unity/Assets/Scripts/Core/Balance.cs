@@ -229,6 +229,15 @@ public static class Balance
     public const int BOSS_S1_MEMORY = 3;  // (시연판 임시) S1 보스 천도 기억 조각
     public const int BOSS_ACT_NEOK_BASE = 50;  // (기획 act2-3-boss-reward-check 10-26) 2·3막 보스 천도 넋 = 50 × 고리 ÷ BOSS_RING_REF
     public const int BOSS_ACT_COIN_BASE = 30;  // 2·3막 보스 파혼 엽전 = 30 × 고리 ÷ BOSS_RING_REF
+    public const float BAETSAK_PAHON_COIN_MULT = 1.13f;  // (기획 act2-3-boss-reward-check 8절) 도한수의 뱃삯: 파혼 엽전 배수
+    public const float BAETSAK_WATER_PAHON_RADIUS = 0.5f;  // 뱃삯: 물가·얼룩 위 파혼 반경 +m
+    public const float BAETSAK_TENDO_CAST_ADD = 0.1f;  // 뱃삯: 천도 시전 +초(기울기)
+    public const float JANGBU_NUM_PAHON_COIN_MULT = 1.2f;  // 남은 장부: ④(2막) 숫자 혼 파혼 엽전 배수(④ 밖 효과 없음)
+    public const int DEUNGJAN_DURATION = 60;  // 아낙의 등잔: 켜 두는 시간(초)
+    public const int DEUNGJAN_RADIUS = 6;  // 등잔 둘레(m)
+    public const float DEUNGJAN_PAHON_COIN_MULT = 1.5f;  // 등잔 둘레 안 파혼 엽전 배수
+    public const int DEUNGJAN_PER_NIGHT = 1;  // 밤마다 켤 수 있는 횟수
+    public const int GOT_LIGHT_SWEEP_SEC = 20;  // 곶 불빛 한 바퀴(초): ⑤ 바닷가에서 불빛 띠가 지나간 이름혼만 미니맵에 뜬다
     public const float BOSS_RING_REF = 1.25f;  // 기준 고리 배율(1막 보스)
     public const int BOSS_PAHON_COIN = 30;  // (시연판 임시) 보스 파혼 엽전(일반 5의 6배. 천도 쏠림 방지: BALANCE-NARRATIVE-CHECK 엽전×30 권고)
     public const int NAMED_MAEDHIM = 150;  // (시연판 임시) 이름혼(박돌쇠) 맺힘

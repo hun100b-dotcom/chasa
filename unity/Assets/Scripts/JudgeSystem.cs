@@ -141,6 +141,7 @@ public class JudgeSystem : MonoBehaviour
         castTarget = e;
         castT = 0f;
         castTotal = e.soul.Boss ? Mathf.Max(0.5f, Balance.BOSS_TENDO_CAST_TIME - (snatched.Contains(e.soul.BossId) ? 0.5f : 0f)) : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;
+        if (HasKeepsake("도한수의 뱃삯")) castTotal += Balance.BAETSAK_TENDO_CAST_ADD;   // 뱃삯: 천도 시전 +0.1초(기울기)
         if (e.soul.Name != null && HasKeepsake("흑월의 붓")) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - 0.2f);   // 흑월의 붓: 이름혼 천도 시전 −0.2초   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
         if (!e.soul.Boss)
         {
@@ -189,7 +190,12 @@ public class JudgeSystem : MonoBehaviour
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Bosses.CoinFor(e.soul.BossId) : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3
         float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;   // 낚아챈 보스는 파혼 엽전 x1.2
-        float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult * snatchMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
+        // 이름 있는 노리개의 파혼 엽전 배수: 뱃삯 ×1.13 · 남은 장부 ×1.2(2막 숫자 혼만) · 아낙의 등잔 ×1.5(켠 둘레 안)
+        float keepMult = 1f;
+        if (HasKeepsake("도한수의 뱃삯")) keepMult *= Balance.BAETSAK_PAHON_COIN_MULT;
+        if (HasKeepsake("남은 장부") && !e.soul.Boss && e.soul.Name == null && at.z >= 640f && at.x < 768f) keepMult *= Balance.JANGBU_NUM_PAHON_COIN_MULT;
+        if (LampCovers(at) && !e.soul.Boss) keepMult *= Balance.DEUNGJAN_PAHON_COIN_MULT;
+        float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult * snatchMult * keepMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
         int coinAdd = Mathf.FloorToInt(coinX); coinFrac = coinX - coinAdd; ledger.Coin += coinAdd;
         if (e.soul.Name == "박돌쇠") { ledger.Coin += Balance.NAMED_FIRST_PAHON_COIN; }   // 첫 이름혼 파혼: 엽전이 커서 첫 손보기가 바로 열린다(처음 10분 M6)
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
@@ -237,6 +243,7 @@ public class JudgeSystem : MonoBehaviour
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
         float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult * lo.stats.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
         float radius = e.elite ? Balance.ELITE_PAHON_RADIUS : lo.stats.PahonRadius(Balance.PAHON_RADIUS);   // 거센 혼 파혼: 반경 4.5m   // 업 쪽 장비: 파혼 반경 (상한 안)
+        if (HasKeepsake("도한수의 뱃삯") && stains.CountWithin(at.x, at.z, 1.5f) > 0) radius += Balance.BAETSAK_WATER_PAHON_RADIUS;   // 뱃삯: 얼룩 위 파혼 반경 +0.5m
         if (e.elite) Sfx.Play("cut.jing.crack");
         if (e.elite)   // 거센 혼 파혼 폭발은 부른 잔넋까지 터뜨린다(마리당 엽전 +2)
             foreach (var o in new List<Enemy>(enemies.list))
@@ -538,9 +545,29 @@ public class JudgeSystem : MonoBehaviour
         else if (now) dangerLeaveT = 0f;
     }
 
-    /// <summary>곶 불빛(B-09 망부석 아낙 천도 효과): ⑤ 갯마을 밤에 시야(천도 시전 중 좁아지는 정도)가 10% 덜 줄어든다</summary>
-    float CapeLight { get { bool on = bossTendoIds.Contains(9) && Sfx.NightNow && player.Pos.x > 764f; if (on && !capeSaid) { capeSaid = true; Say("곶 불빛이 길을 비춘다"); } return on ? 1.1f : 1f; } }
-    bool capeSaid;
+    /// <summary>곶 불빛(B-09 천도 효과, 기획 8절): ⑤ 바닷가에서는 불빛 띠(GOT_LIGHT_SWEEP_SEC 초에 한 바퀴)가 지나간 이름혼만 미니맵에 뜬다.
+    /// 왜 이렇게? 불빛이 닿은 자리만 알려 주는 대신, 천도로 보낸 사람만 이 도움을 받는다(파혼 쪽 짝은 등잔)</summary>
+    bool CapeSeen(float x, float z)
+    {
+        if (!bossTendoIds.Contains(9)) return false;
+        float bearing = Mathf.Atan2(z - player.Pos.z, x - player.Pos.x) * Mathf.Rad2Deg; if (bearing < 0f) bearing += 360f;   // 나에게서 본 이름혼의 방위
+        float beam = (Time.time % Balance.GOT_LIGHT_SWEEP_SEC) / Balance.GOT_LIGHT_SWEEP_SEC * 360f;                          // 지금 불빛이 가리키는 방위
+        float back = beam - bearing; if (back < 0f) back += 360f;
+        return back < 90f;   // 띠가 지나간 지 1/4 바퀴(5초) 안이면 보인다
+    }
+
+    // ---- 아낙의 등잔(B-09 파혼 노리개): 밤마다 한 번 F 로 켜면 60초, 둘레 6 m 에서 파혼 엽전 ×1.5·천도 시야가 안 줄어든다 ----
+    Vector3 lampAt; float lampT; int lampNight = -1;
+    bool LampOn { get { return lampT > 0f && player != null && new Vector2(player.Pos.x - lampAt.x, player.Pos.z - lampAt.z).magnitude <= Balance.DEUNGJAN_RADIUS; } }
+    bool LampCovers(Vector3 p) { return lampT > 0f && new Vector2(p.x - lampAt.x, p.z - lampAt.z).magnitude <= Balance.DEUNGJAN_RADIUS; }
+    void LampLight()
+    {
+        if (!HasKeepsake("아낙의 등잔") || clock == null) return;
+        if (lampT > 0f) { Say("등잔이 이미 타고 있다"); return; }
+        if (lampNight == clock.Day) { Say("등잔은 밤마다 한 번만 켠다"); return; }
+        lampNight = clock.Day; lampAt = player.Pos; lampT = Balance.DEUNGJAN_DURATION;
+        Say("등잔을 켰다 — 둘레 " + Balance.DEUNGJAN_RADIUS + "m 에서 파혼 엽전이 늘고 시야가 지켜진다");
+    }
     bool tideEbb, tideKnown;   // 물때가 바뀌는 순간을 알아채려고 직전 값을 기억
 
     /// <summary>이름 있는 노리개를 차고 있나(이름으로 찾는다)</summary>
@@ -648,6 +675,7 @@ public class JudgeSystem : MonoBehaviour
 
     void TickActives(float dt)
     {
+        if (lampT > 0f) lampT -= dt;   // 등잔 불이 타 들어간다
         if (clock != null && clock.Phase == ClockPhase.Dawn && lastPhase != ClockPhase.Dawn) tendoToday = 0;   // 새 하루
         if (clock != null) lastPhase = clock.Phase;
         bool dirty = false;
@@ -1244,6 +1272,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>장례 컷의 조건 글자(서사 condition). 지금은 1호 결과만 안다(3호 결과는 아직 따로 세지 않아 false)</summary>
     bool FuneralCond(string c) { return c == "B-01 천도함" ? bossOutcome == 1 : false; }
     /// <summary>제사를 지켜보기 전에는 장례 대상 이름혼의 지도 표식을 숨긴다(기획: 지켜보면 그 혼의 오늘 밤 자리가 명부에 표시된다). 윤 소사·연이는 첫 세션 흐름이라 처음부터 보인다</summary>
+    public bool NamedMarkerHidden(string name, float x, float z) { if (x > 764f && !CapeSeen(x, z)) return true; return NamedMarkerHidden(name); }
     public bool NamedMarkerHidden(string name) { return name != null && name != "윤 소사" && name != "연이" && funeralCut.ContainsKey(name) && (npcs == null || !npcs.JesaSeen.Contains(name)) && (npcs == null || npcs.HasHome(name)); }   // 제사 자리 데이터가 없는 이름혼(2막)은 숨기지 않는다
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
     // ===== 저장·불러오기 (규칙은 Core/SaveGame.cs, 저장소는 SaveStore) ==================
@@ -1504,6 +1533,7 @@ public class JudgeSystem : MonoBehaviour
                 break;
             case InteractKind.None:
                 if (down && npcs != null) npcs.DismissSubtitle();
+                if (down && FieldRules.On) LampLight();   // 다른 상호작용 대상이 없을 때 F = 등잔 켜기(차고 있을 때만)
                 break;
         }
     }
@@ -1571,7 +1601,13 @@ public class JudgeSystem : MonoBehaviour
         if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { if (pahonOrTendo == 0) parkUnjudged = true; introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
         if (!cuts.PauseClock && !introFrozen) clock.Tick(dt);   // 오프닝 컷 동안·첫 5분엔 시계가 멈춘다
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
-        { var hat = lo.gear.GetAt(EquipPos.Hat); ActorModel.HeroHatTier = hat == null ? 0 : hat.Named ? 4 : hat.Rarity == Rarity.Rare ? 3 : hat.Rarity == Rarity.Crafted ? 2 : 1; }   // 갓 등급 → 외형 조각(1 흔한 2 손본 3 귀한 4 이름 있는)
+        {
+            // 장비 등급 → 외형 조각(1 흔한 2 손본 3 귀한 4 이름 있는 5 한 벌). 한 벌 = 갓·도포·띠·신 넷이 모두 이름 있는 물건일 때
+            System.Func<EquipPos, int> tierOf = pos => { var g = lo.gear.GetAt(pos); return g == null ? 0 : g.Named ? 4 : g.Rarity == Rarity.Rare ? 3 : g.Rarity == Rarity.Crafted ? 2 : 1; };
+            int th = tierOf(EquipPos.Hat), tr = tierOf(EquipPos.Robe), tb = tierOf(EquipPos.Belt), ts = tierOf(EquipPos.Shoes);
+            if (th == 4 && tr == 4 && tb == 4 && ts == 4) { th = tr = tb = 5; }
+            ActorModel.HeroHatTier = th; ActorModel.HeroRobeTier = tr; ActorModel.HeroBeltTier = tb;
+        }
         ActorModel.HeroShadowOn = clock.Phase != ClockPhase.Day;   // 낮엔 주인공 그림자 없음(산 사람에게 안 보이는 차사)
         if (interactables != null) DogTick();
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
@@ -1915,7 +1951,7 @@ public class JudgeSystem : MonoBehaviour
         var cam = Camera.main; if (cam == null || inDay || night.Over) return;
         float w = Screen.width, hh = Screen.height;
         float diag = Mathf.Sqrt(w * w + hh * hh);
-        float vr = EdgeWarn.VisionRadius(diag, Mathf.Min(1f, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO) * CapeLight), visionP);
+        float vr = EdgeWarn.VisionRadius(diag, (LampOn ? 1f : Mathf.Min(1f, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO))), visionP);
         foreach (var e in enemies.list)
         {
             if (!e.alive || !e.atk.Winding) continue;      // 예비동작 중인 적만 (평소 모든 적에 띄우면 어지럽다)
@@ -1981,7 +2017,7 @@ public class JudgeSystem : MonoBehaviour
         {
             var tint = ChasaPalette.MemoryRim;
             float diag = Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
-            float size = Mathf.Lerp(diag * 1.25f, diag * 1.25f * Mathf.Min(1f, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO) * CapeLight), visionP);   // 반경 60%로
+            float size = Mathf.Lerp(diag * 1.25f, diag * 1.25f * (LampOn ? 1f : Mathf.Min(1f, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO))), visionP);   // 반경 60%로
             var r = new Rect((Screen.width - size) / 2f, (Screen.height - size) / 2f, size, size);
             GUI.color = new Color(tint.r * 0.35f, tint.g * 0.25f, tint.b * 0.5f, 0.95f * visionP);
             GUI.DrawTexture(r, vignette);

@@ -10,6 +10,7 @@ using Chasa.Core;
 
 public class DayScreen
 {
+    static bool firstRepaired;   // 처음 손본 뒤엔 등급별 손보기 소리로 넘어간다
     readonly Ledger ledger;
     readonly Loadout lo;
 
@@ -187,7 +188,7 @@ public class DayScreen
             // 장비 손보기: 칸마다 +1~+5, 단계마다 주옵션 +6% (엽전만 쓴다)
             GUI.enabled = Shrine.CanEnhance(cur);
             if (UiSfx.Btn(new Rect(x, y, w, 40), "장비 손보기 +" + cur.Plus + (cur.Plus < Balance.ENHANCE_MAX ? " → +" + (cur.Plus + 1) + "  엽전 " + Shrine.EnhanceCost(cur.Plus) : " (최대)"), btn))
-            { bool fixedUp = Shrine.Enhance(cur, ledger); msg = fixedUp ? "장비를 손봤다" : "엽전이 모자라다"; if (fixedUp) Sfx.Play("sfx.repair.first"); /* 손보기 성공 소리 */ lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
+            { bool fixedUp = Shrine.Enhance(cur, ledger); msg = fixedUp ? "장비를 손봤다" : "엽전이 모자라다"; if (fixedUp) GearSfx.Enhance(cur, !firstRepaired); else GearSfx.EnhanceFail(); firstRepaired = true; /* 손보기 소리: 처음 한 번만 first, 그 뒤 등급별 */ lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
             y += 44;
             GUI.enabled = Shrine.CanUpgrade(cur);
             if (UiSfx.Btn(new Rect(x + w / 2f, y, w / 2f, 40), "매듭 올리기  " + UpgradeCost(cur), btn))

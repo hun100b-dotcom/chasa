@@ -46,6 +46,7 @@ public class Loadout
     {
         if (!gear.TryEquip(it)) return false;
         Refresh();
+        GearSfx.Equip(it);   // 장착 소리: 몸(쇠·천·노리개) + 머리(등급)를 0.06초 어긋나게
         return true;
     }
 
