@@ -1,0 +1,72 @@
+[
+ {
+  "name": "fx_drop_common",
+  "tier": "흔한",
+  "color": "#F3E7D3",
+  "beam_height_m": 1.5,
+  "top_shape": "동그라미",
+  "tris": 220,
+  "size_m": [
+   0.62,
+   0.64,
+   1.97
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_drop_refined",
+  "tier": "손본",
+  "color": "#4FA8A0",
+  "beam_height_m": 1.5,
+  "top_shape": "마름모",
+  "tris": 112,
+  "size_m": [
+   0.62,
+   0.64,
+   1.98
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_drop_rare",
+  "tier": "귀한",
+  "color": "#D4A94E",
+  "beam_height_m": 2.5,
+  "top_shape": "네 갈래 별",
+  "tris": 136,
+  "size_m": [
+   0.62,
+   0.64,
+   3.03
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_drop_antique",
+  "tier": "옛 차사",
+  "color": "#4A66C4",
+  "beam_height_m": 4.0,
+  "top_shape": "속 빈 도장 네모",
+  "tris": 148,
+  "size_m": [
+   0.62,
+   0.64,
+   4.47
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_drop_named",
+  "tier": "이름 있는",
+  "color": "#E85C41",
+  "beam_height_m": 4.0,
+  "top_shape": "세 뿔 관",
+  "tris": 130,
+  "size_m": [
+   0.62,
+   0.64,
+   4.56
+  ],
+  "min_z": 0.0
+ }
+]
