@@ -773,6 +773,7 @@ public class JudgeSystem : MonoBehaviour
     {
         if (!cuts.PauseClock) clock.Tick(dt);   // 오프닝 컷 동안만 시계가 멈춘다
         MoonEffects.Set(clock.FullMoon, clock.NewMoon);
+        ActorModel.HeroShadowOn = clock.Phase != ClockPhase.Day;   // 낮엔 주인공 그림자 없음(산 사람에게 안 보이는 차사)
         if (npcs != null) npcs.Tick(dt, player.Pos, clock.Phase);
         if (named != null) named.Tick(player.Pos, clock.Daylight);
         night.Clues = Mathf.Min(Balance.BOSS_CLUES_REQUIRED, clueBook.Count("B01-"));   // 1막 첫 보스(나루 영감)의 낮 단서 수 = 보스 천도 조건

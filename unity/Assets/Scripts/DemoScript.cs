@@ -40,6 +40,7 @@ public class DemoScript : MonoBehaviour
         float dt = Time.unscaledDeltaTime;
         t += dt; stageT += dt;
         judge.godMode = true;
+        if (judge.cuts.Active) { t = Mathf.Min(t, 1.5f); return; }   // 오프닝 컷(어두운 화면) 동안은 조작하지 않는다 → 컷이 끝나야 연출 시작
         if (t < 1.5f) return;             // 처음 1.5초는 화면만 보여 준다(밤 분위기)
         judge.StartPlaying();             // 첫 입력으로 친다(적이 움직이기 시작)
         switch (stage)

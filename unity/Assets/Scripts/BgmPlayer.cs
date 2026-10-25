@@ -90,8 +90,8 @@ public class BgmPlayer : MonoBehaviour
     {
         var t = prev; prev = cur; cur = t;       // 지금 곡은 사라져 가는 쪽으로, 새 곡이 지금 쪽으로
         curId = id; fadeLen = nearEndFade; fadeT = 0f;
-        cur.Stop(); cur.clip = clip; cur.loop = loop; cur.time = 0f;
-        if (clip != null) cur.Play();
+        cur.Stop(); cur.clip = clip; cur.loop = loop;
+        if (clip != null) { cur.time = 0f; cur.Play(); }   // 클립이 없을 때 time 을 건드리면 유니티가 경고를 낸다
     }
 
     void Silence()

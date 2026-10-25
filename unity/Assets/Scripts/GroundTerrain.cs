@@ -90,19 +90,22 @@ public static class GroundTerrain
     }
 
     /// <summary>청크(cx,cz) 한 칸(128m)의 땅 메쉬를 만들어 parent 아래에 붙인다. 높이는 하이트맵에서</summary>
-    public static void BuildChunk(Transform parent, int cx, int cz)
+    public static System.Collections.IEnumerator BuildChunk(Transform parent, int cx, int cz)
     {
-        if (!Active) return;
+        if (!Active) yield break;
         float cs = FieldRules.ChunkSize; int n = Mathf.RoundToInt(cs / Step), vn = n + 1;
         float x0 = cx * cs, z0 = cz * cs;
         var verts = new Vector3[vn * vn]; var uvs = new Vector2[vn * vn]; var tris = new int[n * n * 6];
         for (int j = 0; j < vn; j++)
+        {
             for (int i = 0; i < vn; i++)
             {
                 float x = x0 + i * Step, z = z0 + j * Step;
                 verts[j * vn + i] = new Vector3(x, height.At(x, z), z);
                 uvs[j * vn + i] = new Vector2(x / meta.size, z / meta.size);
             }
+            if (j % 24 == 23) yield return null;   // 한 프레임에 몰아 만들면 걸음이 뚝 끊긴다 → 여러 프레임에 나눠 만든다
+        }
         int t = 0;
         for (int j = 0; j < n; j++)
             for (int i = 0; i < n; i++)
@@ -111,6 +114,8 @@ public static class GroundTerrain
                 tris[t++] = a; tris[t++] = c; tris[t++] = b;   // 위(+y)가 앞면이 되는 순서
                 tris[t++] = b; tris[t++] = c; tris[t++] = d;
             }
+        yield return null;   // 정점 계산과 메시 조립(법선 계산 포함)을 서로 다른 프레임에
+        if (parent == null) yield break;   // 그 사이 청크가 꺼졌으면 만들지 않는다
         var mesh = new Mesh { name = "Ground_" + cx + "_" + cz };
         mesh.vertices = verts; mesh.uv = uvs; mesh.triangles = tris;
         mesh.RecalculateNormals(); mesh.RecalculateBounds();

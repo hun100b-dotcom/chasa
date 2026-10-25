@@ -54,7 +54,7 @@ public class FieldManager : MonoBehaviour
         FieldRules.ShrineNames = stops.ConvertAll(m => m.name).ToArray();
         foreach (var m in f.markers)
         {
-            if (m.kind == "spawn") { FieldRules.StartX = m.x; FieldRules.StartZ = m.z; }
+            if (m.kind == "spawn") { FieldRules.StartX = m.x; FieldRules.StartZ = Mathf.Max(m.z, 56f); }   // 카메라가 -x,-z 쪽을 비스듬히 내려다봐서, 남쪽 끝(z<30)에 서면 화면 위쪽 절반이 맵 밖 맨바닥이다 → 마을 안쪽으로 물린다
             else if (m.kind == "village") { FieldRules.VillageX = m.x; FieldRules.VillageZ = m.z; }
             else if (m.kind == "boss") { FieldRules.BossX = m.x; FieldRules.BossZ = m.z; }
         }
@@ -141,7 +141,7 @@ public class FieldManager : MonoBehaviour
     IEnumerator Build(int cx, int cz, int key, GameObject root, List<Item> items)
     {
         int n = 0;
-        GroundTerrain.BuildChunk(root.transform, cx, cz);   // 새 땅(하이트맵·스플랫맵)이 있으면 이 청크의 땅 메쉬를 깐다. 없으면 아무것도 안 함
+        yield return GroundTerrain.BuildChunk(root.transform, cx, cz);   // 새 땅(하이트맵·스플랫맵)이 있으면 이 청크의 땅 메쉬를 깐다. 없으면 아무것도 안 함
         // 1) 풀밭: 표에 없는 8m 칸을 채운다 (이 청크 16×16 칸)
         float tile = data.tile > 0 ? data.tile : 8f;
         int per = Mathf.RoundToInt(FieldRules.ChunkSize / tile);

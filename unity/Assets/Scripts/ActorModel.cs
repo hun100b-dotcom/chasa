@@ -340,9 +340,20 @@ public class ActorModel : MonoBehaviour
     }
 
     // ---- 움직임 ------------------------------------------------------------------
+    /// <summary>낮의 차사는 산 사람에게 보이지 않는다 → 낮엔 주인공 그림자를 끈다(글 없이 전해지는 연출). JudgeSystem 이 매 프레임 정한다</summary>
+    public static bool HeroShadowOn = true;
+    bool shadowApplied = true;
+
     void LateUpdate()
     {
         if (modelRoot == null) return;
+        if (hero != null && key == "dongi" && shadowApplied != HeroShadowOn)
+        {
+            shadowApplied = HeroShadowOn;
+            var mode = HeroShadowOn ? UnityEngine.Rendering.ShadowCastingMode.On : UnityEngine.Rendering.ShadowCastingMode.Off;
+            foreach (var r in hero.GetComponentsInChildren<Renderer>()) r.shadowCastingMode = mode;
+            if (weaponGo != null) foreach (var r in weaponGo.GetComponentsInChildren<Renderer>()) r.shadowCastingMode = mode;
+        }
         float dt = Time.deltaTime;
         poseT += dt;
         // 이동 속도 = 위치 변화 (걷기 판정). 슬로모·히트스톱 중엔 dt 가 달라 값이 흔들릴 수 있어 부드럽게
