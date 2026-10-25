@@ -439,6 +439,8 @@ public class JudgeSystem : MonoBehaviour
         {
             Sfx.Play("sfx.bell");
             string n = WorldClock.PhaseName(ph.Value);
+            if (ph.Value == ClockPhase.Dawn)
+                foreach (var e in enemies.list) if (e.kneeling) { e.soul.Finish(); Say("동이 터 처결 못 한 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
             Say(ph.Value == ClockPhase.Dusk ? "인정 — 해가 진다" : ph.Value == ClockPhase.Dawn ? "파루 — 동이 튼다" : n + "이 되었다");
         }
         // 검사용: ] 로 배속 순환(1→10→60→1)
