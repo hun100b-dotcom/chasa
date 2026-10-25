@@ -20,13 +20,13 @@ def chain_v1():
 
 from look_v2 import chain2 as chain   # 2차 다듬기(look_v2.py). 옛 모양은 chain_v1
 
-def bangmang():
+def bangmang_v1():
     """육모방망이: 여섯 모 나무 몽둥이, 끝이 굵고 쇠테 두 줄, 손잡이 끈."""
     return [cyl("grip", 0.03, 0.03, 0.2, (0, 0, -0.1), "wood_dark", 6), cyl("body", 0.04, 0.075, 0.5, (0, 0, 0.1), "wood", 6), cyl("head", 0.075, 0.07, 0.1, (0, 0, 0.6), "wood", 6),
             cyl("band1", 0.08, 0.08, 0.025, (0, 0, 0.53), "iron", 6), cyl("band2", 0.08, 0.08, 0.025, (0, 0, 0.64), "iron", 6), cyl("cap", 0.04, 0.0, 0.04, (0, 0, 0.7), "wood_dark", 6),
             box("strap", (0.025, 0.02, 0.2), (0.035, 0, -0.05), "red", rot=(0, 0.1, 0))]
 
-def yoryeong():
+def yoryeong_v1():
     """요령방울: 손잡이 위 십자 가지에 놋쇠 방울 셋과 붉은 끈."""
     p = [cyl("grip", 0.025, 0.03, 0.26, (0, 0, -0.13), "wood", 6), cyl("hub", 0.045, 0.045, 0.04, (0, 0, 0.13), "gold", 6)]
     for i, a in enumerate((0, 2.1, 4.2)):
@@ -36,7 +36,7 @@ def yoryeong():
     p.append(sphere("top", 0.05, (0, 0, 0.2), "gold", 6, 4))
     return p
 
-def samjichang():
+def samjichang_v1():
     """삼지창: 긴 자루와 세 갈래 쇠날, 붉은 술. 키 1.7m."""
     p = [cyl("shaft", 0.025, 0.025, 1.6, (0, 0, -0.5), "wood", 6), cyl("butt", 0.035, 0.015, 0.06, (0, 0, -0.56), "iron", 6), cyl("socket", 0.04, 0.04, 0.12, (0, 0, 1.05), "iron", 6)]
     p += [box("cross", (0.3, 0.04, 0.04), (0, 0, 1.17), "iron")]
@@ -46,12 +46,14 @@ def samjichang():
     p += [cyl("tassel", 0.03, 0.06, 0.2, (0, 0, 0.82), "red", 6)]
     return p
 
-def myeongbu():
+def myeongbu_v1():
     """명부 붓: 굵은 대와 먹 머금은 큰 붓털, 끝은 붉은 먹. 뒤에 매단 두루마리 쪽지."""
     p = [cyl("shaft", 0.02, 0.03, 0.9, (0, 0, -0.3), "wood", 6), cyl("ferrule", 0.045, 0.05, 0.1, (0, 0, 0.6), "gold", 6),
          cyl("bristle", 0.06, 0.0, 0.34, (0, 0, 0.7), "ink", 7), cyl("tip", 0.012, 0.0, 0.1, (0, 0, 0.98), "red", 5), sphere("knob", 0.035, (0, 0, -0.32), "gold", 6, 4)]
     p += [box("tag", (0.1, 0.01, 0.16), (0.05, 0, 0.3), "hanji", rot=(0, 0.2, 0)), L("tagstr", (0, 0, 0.42), (0.05, 0, 0.36), 0.006, 0.006, "red", 3), box("tagline", (0.06, 0.012, 0.02), (0.05, 0, 0.32), "ink", rot=(0, 0.2, 0))]
     return p
+
+from look_v2 import bangmang2 as bangmang, yoryeong2 as yoryeong, samjichang2 as samjichang, myeongbu2 as myeongbu   # 2차 다듬기(옛 모양은 *_v1)
 
 W = [("weapon_chain", "철삭", chain, "Hand.R", "기준 무기. 사슬 길이는 1.2m까지만, 늘어나는 연출은 코드 이펙트"), ("weapon_bangmang", "육모방망이", bangmang, "Hand.R", "짧은 한 손 둔기"),
      ("weapon_yoryeong", "요령방울", yoryeong, "Hand.R", "도술형. 방울이 흔들리는 연출은 코드에서 회전"), ("weapon_samjichang", "삼지창", samjichang, "Hand.R", "긴 무기. 쥐는 곳은 자루 가운데에서 약간 아래"),

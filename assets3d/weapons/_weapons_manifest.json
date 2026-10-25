@@ -4,11 +4,11 @@
   {
    "name": "weapon_chain",
    "label": "철삭",
-   "tris": 1314,
-   "length_m": 1.81,
+   "tris": 1098,
+   "length_m": 1.53,
    "z_range_m": [
-    -0.46,
-    1.35
+    -0.38,
+    1.15
    ],
    "width_m": 0.22,
    "socket": {
@@ -32,13 +32,13 @@
   {
    "name": "weapon_bangmang",
    "label": "육모방망이",
-   "tris": 122,
-   "length_m": 0.89,
+   "tris": 756,
+   "length_m": 1.21,
    "z_range_m": [
-    -0.15,
+    -0.47,
     0.74
    ],
-   "width_m": 0.16,
+   "width_m": 0.21,
    "socket": {
     "bone": "Hand.R",
     "position_in_bone_m": [
@@ -60,13 +60,13 @@
   {
    "name": "weapon_yoryeong",
    "label": "요령방울",
-   "tris": 436,
-   "length_m": 0.68,
+   "tris": 1154,
+   "length_m": 0.84,
    "z_range_m": [
-    -0.32,
-    0.36
+    -0.4,
+    0.44
    ],
-   "width_m": 0.41,
+   "width_m": 0.42,
    "socket": {
     "bone": "Hand.R",
     "position_in_bone_m": [
@@ -88,13 +88,13 @@
   {
    "name": "weapon_samjichang",
    "label": "삼지창",
-   "tris": 110,
-   "length_m": 2.23,
+   "tris": 744,
+   "length_m": 2.44,
    "z_range_m": [
-    -0.56,
-    1.67
+    -0.7,
+    1.74
    ],
-   "width_m": 0.34,
+   "width_m": 0.37,
    "socket": {
     "bone": "Hand.R",
     "position_in_bone_m": [
@@ -116,13 +116,13 @@
   {
    "name": "weapon_myeongbu",
    "label": "명부 붓",
-   "tris": 128,
-   "length_m": 1.44,
+   "tris": 572,
+   "length_m": 1.56,
    "z_range_m": [
-    -0.35,
-    1.08
+    -0.42,
+    1.14
    ],
-   "width_m": 0.17,
+   "width_m": 0.2,
    "socket": {
     "bone": "Hand.R",
     "position_in_bone_m": [

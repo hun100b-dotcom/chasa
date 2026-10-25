@@ -1,0 +1,280 @@
+{
+ "note": "땅 지형(타일 조각 대신). 청크 5×5(128m), 각 파일 원점=청크 남서 모서리. 소품 높이는 terrain_height_2m.png로 읽는다.",
+ "height_png": {
+  "file": "terrain_height_2m.png",
+  "size_px": [
+   321,
+   321
+  ],
+  "step_m": 2,
+  "origin": "남서 모서리(x=0,y=0), 행 0=남쪽",
+  "decode": "height_m = value/65535*8 - 1",
+  "bilinear": true
+ },
+ "chunk_m": 128,
+ "grid_m": 2,
+ "texture": {
+  "px_per_m": 8,
+  "pad_px": 6,
+  "size_px": 1036,
+  "albedo": "JPEG sRGB",
+  "normal": "JPEG 접선공간(OpenGL, 초록=북쪽 위)"
+ },
+ "water": {
+  "surface_z_m": 0.18,
+  "material": "water(알파 블렌드)"
+ },
+ "holes": "br_* 칸(검은여울 강 조각)은 구멍. 그 칸은 layouts tiles의 br_ 조각이 놓인다.",
+ "chunks": [
+  {
+   "file": "assets3d/terrain/chunk_0_0.glb",
+   "origin_m": [
+    0,
+    0
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 738
+  },
+  {
+   "file": "assets3d/terrain/chunk_1_0.glb",
+   "origin_m": [
+    128,
+    0
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 750
+  },
+  {
+   "file": "assets3d/terrain/chunk_2_0.glb",
+   "origin_m": [
+    256,
+    0
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 778
+  },
+  {
+   "file": "assets3d/terrain/chunk_3_0.glb",
+   "origin_m": [
+    384,
+    0
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 759
+  },
+  {
+   "file": "assets3d/terrain/chunk_4_0.glb",
+   "origin_m": [
+    512,
+    0
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 740
+  },
+  {
+   "file": "assets3d/terrain/chunk_0_1.glb",
+   "origin_m": [
+    0,
+    128
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 739
+  },
+  {
+   "file": "assets3d/terrain/chunk_1_1.glb",
+   "origin_m": [
+    128,
+    128
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 744
+  },
+  {
+   "file": "assets3d/terrain/chunk_2_1.glb",
+   "origin_m": [
+    256,
+    128
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 772
+  },
+  {
+   "file": "assets3d/terrain/chunk_3_1.glb",
+   "origin_m": [
+    384,
+    128
+   ],
+   "tris": 8192,
+   "water_cells": 55,
+   "size_kb": 772
+  },
+  {
+   "file": "assets3d/terrain/chunk_4_1.glb",
+   "origin_m": [
+    512,
+    128
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 743
+  },
+  {
+   "file": "assets3d/terrain/chunk_0_2.glb",
+   "origin_m": [
+    0,
+    256
+   ],
+   "tris": 6848,
+   "water_cells": 0,
+   "size_kb": 676
+  },
+  {
+   "file": "assets3d/terrain/chunk_1_2.glb",
+   "origin_m": [
+    128,
+    256
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 711
+  },
+  {
+   "file": "assets3d/terrain/chunk_2_2.glb",
+   "origin_m": [
+    256,
+    256
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 726
+  },
+  {
+   "file": "assets3d/terrain/chunk_3_2.glb",
+   "origin_m": [
+    384,
+    256
+   ],
+   "tris": 8192,
+   "water_cells": 446,
+   "size_kb": 821
+  },
+  {
+   "file": "assets3d/terrain/chunk_4_2.glb",
+   "origin_m": [
+    512,
+    256
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 752
+  },
+  {
+   "file": "assets3d/terrain/chunk_0_3.glb",
+   "origin_m": [
+    0,
+    384
+   ],
+   "tris": 6656,
+   "water_cells": 0,
+   "size_kb": 664
+  },
+  {
+   "file": "assets3d/terrain/chunk_1_3.glb",
+   "origin_m": [
+    128,
+    384
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 693
+  },
+  {
+   "file": "assets3d/terrain/chunk_2_3.glb",
+   "origin_m": [
+    256,
+    384
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 724
+  },
+  {
+   "file": "assets3d/terrain/chunk_3_3.glb",
+   "origin_m": [
+    384,
+    384
+   ],
+   "tris": 8192,
+   "water_cells": 356,
+   "size_kb": 813
+  },
+  {
+   "file": "assets3d/terrain/chunk_4_3.glb",
+   "origin_m": [
+    512,
+    384
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 728
+  },
+  {
+   "file": "assets3d/terrain/chunk_0_4.glb",
+   "origin_m": [
+    0,
+    512
+   ],
+   "tris": 6656,
+   "water_cells": 0,
+   "size_kb": 660
+  },
+  {
+   "file": "assets3d/terrain/chunk_1_4.glb",
+   "origin_m": [
+    128,
+    512
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 704
+  },
+  {
+   "file": "assets3d/terrain/chunk_2_4.glb",
+   "origin_m": [
+    256,
+    512
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 742
+  },
+  {
+   "file": "assets3d/terrain/chunk_3_4.glb",
+   "origin_m": [
+    384,
+    512
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 739
+  },
+  {
+   "file": "assets3d/terrain/chunk_4_4.glb",
+   "origin_m": [
+    512,
+    512
+   ],
+   "tris": 8192,
+   "water_cells": 0,
+   "size_kb": 683
+  }
+ ]
+}

@@ -9,7 +9,7 @@ import bpy
 from mathutils import Vector, Euler
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 A3 = os.path.join(REPO, "assets3d")
-DIRS = [("terrain_", "terrain"), ("nature_", "nature"), ("br_", "blackrapids"), ("prop_", "props"), ("hanok_", "hanok"), ("night_", "night"), ("fx_", "fx"), ("weapon_", "weapons"), ("boss_", "boss"), ("soul_", "souls"), ("hero_", "characters")]
+DIRS = [("terrain_", "terrain"), ("chunk_", "terrain"), ("nature_", "nature"), ("br_", "blackrapids"), ("prop_", "props"), ("hanok_", "hanok"), ("night_", "night"), ("fx_", "fx"), ("weapon_", "weapons"), ("boss_", "boss"), ("soul_", "souls"), ("hero_", "characters")]
 FIELD = json.load(open(os.path.join(A3, "layouts", "field_5x5.json"), encoding="utf-8"))
 VIL = json.load(open(os.path.join(A3, "layouts", "solgogae_village.json"), encoding="utf-8"))
 VX, VY = FIELD["village_offset_m"]
@@ -63,14 +63,14 @@ def inwin(x, y, win, m=0.0): return win[0] - m <= x <= win[2] + m and win[1] - m
 def build(win):
     """win=(x0,y0,x1,y1) m. 창 안 타일·장식·구조물·마을·밤 소품을 조립한다."""
     x0, y0, x1, y1 = win
-    box("ground", (x1 - x0 + 40, y1 - y0 + 40, 0.05), ((x0 + x1) / 2, (y0 + y1) / 2, 0.025), "ground")   # 맨 밑 받침(물 칸 아래가 비어 하늘이 비치지 않게). 풀 윗면(0.3)과 겹치면 깨져서 일부러 낮춤
-    have = {(t["ix"], t["iy"]) for t in FIELD["tiles"]}   # 표에 없는 칸 = 풀밭. 풀 타일을 실제로 깔아야 물(0.18)이 풀 바닥에 묻히지 않는다
-    for ix in range(int((x0 - 6) // 8), int((x1 + 6) // 8) + 1):
-        for iy in range(int((y0 - 6) // 8), int((y1 + 6) // 8) + 1):
-            if 0 <= ix < 80 and 0 <= iy < 80 and (ix, iy) not in have: put("terrain_tile_grass", ix * 8 + 4, iy * 8 + 4, -0.006 + 0.003 * ((ix + iy) % 2), 0, scale=(1.03, 1.03, 1.0))   # 이웃 풀 타일끼리 높이를 3mm 엇갈려 같은 면 겹침(깜빡임)을 피한다
+    # 땅: 이어진 지형 청크(128m)를 불러 깐다(타일 조각 대신). 강 조각 br_* 칸만 옛 타일 모델을 그대로 놓는다
+    for cx in range(max(0, int((x0 - 6) // 128)), min(4, int((x1 + 6) // 128)) + 1):
+        for cy in range(max(0, int((y0 - 6) // 128)), min(4, int((y1 + 6) // 128)) + 1):
+            put(f"chunk_{cx}_{cy}", cx * 128, cy * 128, 0, 0)
     for t in FIELD["tiles"]:
+        if not t["tile"].startswith("br_"): continue
         cx, cy = t["ix"] * 8 + 4, t["iy"] * 8 + 4
-        if inwin(cx, cy, win, 6): put(t["tile"], cx, cy, t["z"], t["rot"])   # 틈은 아래 깔린 풀 타일(1.03배, 3~6mm 낮음)이 덮는다
+        if inwin(cx, cy, win, 6): put(t["tile"], cx, cy, t["z"], t["rot"])
     for p in FIELD["props"]:
         if inwin(p["x"], p["y"], win, 4): put(p["prop"], p["x"], p["y"], p.get("gz", p.get("z", 0) + 0.3), p["rot"])
     for s in FIELD.get("structures", []):
