@@ -1,0 +1,148 @@
+// =============================================================================
+// Growth.cs — 성장 뼈대 (순수 C#, 테스트 가능). 기획 6절: 품계(레벨)·능력치 4종·도술 세 갈래.
+//
+// 품계: 쌓인 넋으로 오르고 잃지 않는다(1~50). 품계가 오를 때 도술 점수 1점 + 능력치 5점, 보스를 천도하면 도술 점수 1점.
+// 능력치: 힘·날램·몸·마음, 시작은 각 10. 점수는 자유롭게 나눠 쓴다.
+// 도술: 부름(천도)·줄(싸움)·얼룩(파혼) 세 갈래. 갈래를 섞어도 되고, '깊은 도술'은 그 갈래에 10점 이상 넣어야 열린다.
+//       패시브는 두 단계(+1/+2), 액티브는 한 번 배운다. 액티브 칸은 넷.
+// 수치는 모두 임시값(기획서: 모든 숫자는 임시값). 효과를 게임에 연결하는 것은 다음 일 — 여기서는 '쓰는 규칙'만 지킨다.
+// =============================================================================
+using System;
+using System.Collections.Generic;
+
+namespace Chasa.Core
+{
+    public enum Branch { Call, Chain, Stain }   // 부름 / 줄 / 얼룩
+
+    public class SkillNode
+    {
+        public string Name; public Branch Branch; public bool Active, Deep; public string Desc;
+        public int MaxLevel { get { return Active ? 1 : 2; } }
+        public SkillNode(string name, Branch b, bool active, string desc, bool deep = false) { Name = name; Branch = b; Active = active; Desc = desc; Deep = deep; }
+    }
+
+    public static class SkillTree
+    {
+        public const int DeepNeeds = 10;     // 깊은 도술을 열려면 그 갈래에 넣어야 하는 점수
+        public const int ActiveSlots = 4;    // 액티브 칸(PC 1~4)
+
+        public static readonly SkillNode[] All =
+        {
+            // 부름 갈래 (천도 쪽)
+            new SkillNode("초혼", Branch.Call, true, "반경 6m 무릎 꿇은 혼의 대기 +3초, 일반 적 0.8초 멈칫 (12초)"),
+            new SkillNode("혼불 날리기", Branch.Call, true, "혼불을 던져 맺힘 피해. 그날 천도한 혼 수만큼 혼불 +1 (최대 5)"),
+            new SkillNode("이름 비추기", Branch.Call, true, "다음 천도 캐스팅 -0.4초 (8초)"),
+            new SkillNode("배웅길", Branch.Call, true, "천도 직후 3초 동안 적 이동 -30%"),
+            new SkillNode("오래 부르기", Branch.Call, false, "연속 천도 창 +1/+2초"),
+            new SkillNode("고마운 넋", Branch.Call, false, "천도 넋 +10/+20%"),
+            new SkillNode("곁을 지킴", Branch.Call, false, "천도 중 받는 피해 -10/-20%"),
+            new SkillNode("몫을 채움", Branch.Call, false, "그날 명부 몫을 채우면 이동 속도 +8%"),
+            new SkillNode("일곱 이름", Branch.Call, true, "연속 천도 7회째 다음 천도는 하한 0.5초로 끝난다", true),
+            // 줄 갈래 (싸움·제어)
+            new SkillNode("휘감기", Branch.Chain, true, "반경 4m 적 1.5초 묶기 (10초)"),
+            new SkillNode("여럿 끌기", Branch.Chain, true, "적 셋을 한꺼번에 끌어온다 (8초)"),
+            new SkillNode("매듭 걸음", Branch.Chain, true, "사슬을 걸어 8m 돌진, 지나는 동안 피격 없음 (7초)"),
+            new SkillNode("한 줄 꿰기", Branch.Chain, true, "무릎 꿇은 혼 둘을 한 줄로 묶어 함께 천도 또는 함께 파혼"),
+            new SkillNode("단단한 손", Branch.Chain, false, "공격 속도 +5/+10%"),
+            new SkillNode("긴 사슬", Branch.Chain, false, "무기 사거리 +0.4/+0.8m"),
+            new SkillNode("묶인 자", Branch.Chain, false, "묶인 적이 받는 맺힘 피해 +15%"),
+            new SkillNode("손에 익음", Branch.Chain, false, "지금 든 무기 계열의 특성 하나 강화"),
+            new SkillNode("쇠사슬 울", Branch.Chain, true, "반경 5m 원 안의 적 3초 고정 (40초)", true),
+            // 얼룩 갈래 (파혼 쪽)
+            new SkillNode("터뜨리기", Branch.Stain, true, "가까운 얼룩 하나를 터뜨려 없앤다. 반경 2.5m 맺힘 40, 업은 그대로 (9초)"),
+            new SkillNode("원념 두르기", Branch.Stain, true, "5초간 업 단계에 따라 공격력 +5/10/15/20%"),
+            new SkillNode("얼룩 타기", Branch.Stain, true, "6초간 얼룩 위에서 둔화 대신 이동 +15%"),
+            new SkillNode("깨진 이름 던지기", Branch.Stain, true, "방금 파혼한 혼의 파편을 던져 원거리 피해 (그 파혼의 엽전은 0)"),
+            new SkillNode("큰 폭발", Branch.Stain, false, "파혼 반경 +0.2/+0.4m (합계 상한 안)"),
+            new SkillNode("세찬 넉백", Branch.Stain, false, "파혼 넉백 +20/+40%"),
+            new SkillNode("노잣돈", Branch.Stain, false, "파혼 엽전 +20/+40%"),
+            new SkillNode("마른 얼룩", Branch.Stain, false, "얼룩 지속 -15/-30%"),
+            new SkillNode("검은 갓의 그림자", Branch.Stain, true, "10초간 파혼 폭발이 주변 무릎 꿇은 혼까지 깨뜨린다. 깨진 혼마다 업 +1", true),
+        };
+
+        public static SkillNode Find(string name) { foreach (var s in All) if (s.Name == name) return s; return null; }
+        public static string BranchName(Branch b) { return b == Branch.Call ? "부름" : b == Branch.Chain ? "줄" : "얼룩"; }
+    }
+
+    public class GrowthState
+    {
+        public const int MaxRank = 50;
+        public const int StatPerRank = 5;      // 품계 한 번 오를 때 능력치 점수
+        public const int StatBase = 10;        // 능력치 시작값
+        public static readonly string[] StatNames = { "힘", "날램", "몸", "마음" };
+
+        public int Rank = 1;
+        public int TotalNeok;                              // 지금까지 쌓은 넋(잃지 않는다)
+        public int SkillPointsEarned, SkillPointsSpent;
+        public int StatPointsEarned;
+        public readonly int[] Stats = { StatBase, StatBase, StatBase, StatBase };
+        public readonly Dictionary<string, int> Learned = new Dictionary<string, int>();
+        public readonly List<string> ActiveBar = new List<string>();   // 배운 액티브 중 칸에 올린 것(최대 4)
+
+        /// <summary>그 품계에 닿기까지 필요한 누적 넋(임시 곡선). 2품계 40, 10품계 약 1080, 40품계 약 9740, 50품계 약 13700</summary>
+        public static int NeokForRank(int rank)
+        {
+            if (rank <= 1) return 0;
+            return (int)Math.Round(40.0 * Math.Pow(rank - 1, 1.5));
+        }
+
+        public static int RankFor(int totalNeok)
+        {
+            int r = 1;
+            while (r < MaxRank && totalNeok >= NeokForRank(r + 1)) r++;
+            return r;
+        }
+
+        /// <summary>넋을 얻었다. 품계가 오른 만큼(여러 단계도 가능)을 돌려준다. 오를 때마다 도술 점수 1·능력치 5점</summary>
+        public int AddNeok(int amount)
+        {
+            if (amount <= 0) return 0;
+            TotalNeok += amount;
+            int newRank = RankFor(TotalNeok), ups = newRank - Rank;
+            if (ups > 0) { Rank = newRank; SkillPointsEarned += ups; StatPointsEarned += ups * StatPerRank; }
+            return Math.Max(0, ups);
+        }
+
+        /// <summary>보스를 천도하면 도술 점수 1</summary>
+        public void AddBossPoint() { SkillPointsEarned++; }
+
+        public int SkillPointsFree { get { return SkillPointsEarned - SkillPointsSpent; } }
+        public int StatPointsFree { get { return StatPointsEarned - SpentStatPoints(); } }
+        int SpentStatPoints() { int s = 0; foreach (var v in Stats) s += v - StatBase; return s; }
+
+        /// <summary>능력치 한 점 올리기. 남은 점수가 없으면 false</summary>
+        public bool AddStat(int index)
+        {
+            if (index < 0 || index >= Stats.Length || StatPointsFree <= 0) return false;
+            Stats[index]++; return true;
+        }
+
+        /// <summary>그 갈래에 넣은 도술 점수(배운 단계의 합)</summary>
+        public int BranchPoints(Branch b)
+        {
+            int n = 0;
+            foreach (var kv in Learned) { var s = SkillTree.Find(kv.Key); if (s != null && s.Branch == b) n += kv.Value; }
+            return n;
+        }
+
+        public int LevelOf(string name) { int l; return Learned.TryGetValue(name, out l) ? l : 0; }
+
+        /// <summary>배울 수 있나 (점수·최고 단계·깊은 도술 조건)</summary>
+        public bool CanLearn(string name)
+        {
+            var s = SkillTree.Find(name);
+            if (s == null || SkillPointsFree <= 0 || LevelOf(name) >= s.MaxLevel) return false;
+            if (s.Deep && BranchPoints(s.Branch) < SkillTree.DeepNeeds) return false;
+            return true;
+        }
+
+        public bool Learn(string name)
+        {
+            if (!CanLearn(name)) return false;
+            Learned[name] = LevelOf(name) + 1; SkillPointsSpent++;
+            var s = SkillTree.Find(name);
+            if (s.Active && ActiveBar.Count < SkillTree.ActiveSlots) ActiveBar.Add(name);   // 칸이 비어 있으면 바로 올린다
+            return true;
+        }
+    }
+}

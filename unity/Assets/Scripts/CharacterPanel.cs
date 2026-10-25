@@ -11,10 +11,12 @@ public class CharacterPanel : MonoBehaviour
     public static bool Open;                 // 열려 있으면 GameMain 이 세계 갱신을 멈춘다
     public JudgeSystem judge;
     public Texture2D white;
-    int tab;                                 // 0 장비 1 도술 2 능력치
-    static readonly string[] TabNames = { "장비", "도술", "능력치" };
+    int tab = 3;                             // 0 장비 1 도술 2 능력치 3 명부(책). 기본은 명부
+    static readonly string[] TabNames = { "장비", "도술", "능력치", "명부" };
+    string hoverDesc = "";                   // 명부에서 마우스를 올린 도술의 설명
 
-    public void Toggle() { if (Demo.Panel) Open = !Open; }
+    // 명부 탭은 시연판 설정과 무관하게 항상 열린다. 옛 세 탭(장비·도술·능력치)은 DEMO_PANEL 이 켜졌을 때만 보인다
+    public void Toggle() { Open = !Open; if (Open && !Demo.Panel) tab = 3; }
 
     void Update()
     {
@@ -28,7 +30,8 @@ public class CharacterPanel : MonoBehaviour
         if (!Open || judge == null || judge.player == null) return;
         GUI.depth = -100;   // 가장 위에 그린다(낮을수록 위) — 밤 화면 글자와 겹치지 않게(QA B2)
         var lo = judge.player.loadout;
-        float w = Mathf.Min(Screen.width - 24f, 640f), h = Mathf.Min(Screen.height - 24f, 440f);
+        // 명부는 도술 27칸을 세 줄로 늘어놓아야 해서 더 크게 쓴다
+        float w = Mathf.Min(Screen.width - 24f, tab == 3 ? 940f : 640f), h = Mathf.Min(Screen.height - 24f, tab == 3 ? 600f : 440f);
         var box = new Rect((Screen.width - w) / 2f, (Screen.height - h) / 2f, w, h);
         GUI.color = new Color(0.05f, 0.06f, 0.1f, 0.94f); GUI.DrawTexture(box, white); GUI.color = Color.white;
 
@@ -37,16 +40,19 @@ public class CharacterPanel : MonoBehaviour
         title.normal.textColor = ChasaPalette.Hanji; body.normal.textColor = ChasaPalette.Hanji;
 
         // 탭 막대
-        for (int i = 0; i < 3; i++)
+        int slot0 = 0;   // 보이는 탭 칸 번호(옛 탭이 숨겨져도 간격이 벌어지지 않게)
+        for (int i = 0; i < 4; i++)
         {
-            var r = new Rect(box.x + 12 + i * 120, box.y + 10, 112, 36);
+            if (i < 3 && !Demo.Panel) continue;
+            var r = new Rect(box.x + 12 + slot0++ * 120, box.y + 10, 112, 36);
             if (GUI.Button(r, TabNames[i] + (tab == i ? " *" : ""))) tab = i;
         }
         if (GUI.Button(new Rect(box.xMax - 100, box.y + 10, 88, 36), "닫기")) Open = false;
 
         float y = box.y + 60;
         var st = lo.stats;
-        if (tab == 0) DrawEquip(box, y, lo, body, title);
+        if (tab == 3) DrawBook(box, y, body, title);
+        else if (tab == 0) DrawEquip(box, y, lo, body, title);
         else if (tab == 1) DrawSkills(box, y, lo, body, title);
         else DrawStats(box, y, lo, st, body, title);
     }
@@ -155,5 +161,73 @@ public class CharacterPanel : MonoBehaviour
                     "   반경 " + st.PahonRadius(Balance.PAHON_RADIUS).ToString("0.0") + "m   엽전 x" + st.CoinMult.ToString("0.00");
         GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), d1, body);
         GUI.Label(new Rect(box.x + 16, y + 26, box.width - 32, 24), d2, body);
+    }
+
+    // ===== 명부(책) 탭: 품계·능력치 점수 나누기·도술 세 갈래·장비 칸 ====================
+    // 규칙은 Core/Growth.cs 가 쥐고 있고, 여기서는 보여 주고 버튼을 누르게만 한다(효과를 게임에 잇는 것은 다음 일).
+    static readonly string[] SlotLabels = { "무기", "도포", "노리개", "갓", "신", "띠", "부적" };   // 7칸(임시 이름 — 기획서 확정 전)
+    static readonly bool[] SlotLive = { true, true, true, false, false, false, false };           // 지금 실제로 쓰는 칸
+
+    void DrawBook(Rect box, float y, GUIStyle body, GUIStyle title)
+    {
+        var g = judge.growth;
+        var small = new GUIStyle(body) { fontSize = 14 };
+        // 1) 품계 줄: 다음 품계까지 얼마나 남았는지 막대로
+        int next = g.Rank >= GrowthState.MaxRank ? g.TotalNeok : GrowthState.NeokForRank(g.Rank + 1);
+        int cur = GrowthState.NeokForRank(g.Rank);
+        float frac = g.Rank >= GrowthState.MaxRank ? 1f : Mathf.Clamp01((g.TotalNeok - cur) / (float)Mathf.Max(1, next - cur));
+        GUI.Label(new Rect(box.x + 16, y, 420, 28), "품계 " + g.Rank + "품   넋 " + g.TotalNeok + (g.Rank >= GrowthState.MaxRank ? "" : " / " + next), title);
+        GUI.Label(new Rect(box.x + 460, y + 2, box.width - 480, 24), "도술 점수 " + g.SkillPointsFree + "   능력치 점수 " + g.StatPointsFree, body);
+        var bar = new Rect(box.x + 16, y + 30, box.width - 32, 8);
+        GUI.color = new Color(0, 0, 0, 0.6f); GUI.DrawTexture(bar, white);
+        GUI.color = ChasaPalette.CheondoGlow; GUI.DrawTexture(new Rect(bar.x, bar.y, bar.width * frac, bar.height), white);
+        GUI.color = Color.white;
+        y += 50;
+
+        // 2) 능력치 4종: 점수가 남아 있으면 + 버튼
+        for (int i = 0; i < GrowthState.StatNames.Length; i++)
+        {
+            float x = box.x + 16 + i * 220;
+            GUI.Label(new Rect(x, y, 150, 26), GrowthState.StatNames[i] + " " + g.Stats[i], body);
+            if (g.StatPointsFree > 0 && GUI.Button(new Rect(x + 120, y, 36, 28), "+")) g.AddStat(i);
+        }
+        y += 40;
+
+        // 3) 도술 세 갈래(세 줄). 눌러서 배운다. 깊은 도술은 그 갈래 10점 전까지 잠김
+        float colW = (box.width - 32 - 24) / 3f;
+        hoverDesc = "";
+        for (int b = 0; b < 3; b++)
+        {
+            var br = (Branch)b;
+            float x = box.x + 16 + b * (colW + 12), yy = y;
+            GUI.Label(new Rect(x, yy, colW, 24), SkillTree.BranchName(br) + " 갈래  (" + g.BranchPoints(br) + "점)", title);
+            yy += 28;
+            foreach (var n in SkillTree.All)
+            {
+                if (n.Branch != br) continue;
+                int lv = g.LevelOf(n.Name);
+                bool can = g.CanLearn(n.Name);
+                bool locked = n.Deep && g.BranchPoints(br) < SkillTree.DeepNeeds;
+                string label = (n.Active ? "[기] " : "[패] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
+                var r = new Rect(x, yy, colW, 26);
+                GUI.color = lv > 0 ? Color.white : (can ? new Color(1f, 1f, 1f, 0.9f) : new Color(1f, 1f, 1f, 0.45f));
+                if (GUI.Button(r, label)) g.Learn(n.Name);
+                GUI.color = Color.white;
+                if (r.Contains(Event.current.mousePosition)) hoverDesc = n.Name + ": " + n.Desc;
+                yy += 28;
+            }
+        }
+        y += 28 + 9 * 28 + 6;
+
+        // 4) 설명 한 줄 + 액티브 칸 + 장비 칸
+        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), hoverDesc.Length > 0 ? hoverDesc : "도술 이름을 누르면 점수 1을 써서 배운다. [기]=액티브(한 번) [패]=패시브(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)", small);
+        y += 26;
+        string bar4 = "";
+        for (int i = 0; i < SkillTree.ActiveSlots; i++) bar4 += "[" + (i + 1) + ": " + (i < g.ActiveBar.Count ? g.ActiveBar[i] : "빈 칸") + "]  ";
+        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "액티브 칸  " + bar4, small);
+        y += 26;
+        string eq = "";
+        for (int i = 0; i < SlotLabels.Length; i++) eq += SlotLabels[i] + (SlotLive[i] ? "" : "(준비 중)") + "   ";
+        GUI.Label(new Rect(box.x + 16, y, box.width - 32, 24), "장비 칸 7 · 등급 5   " + eq, small);
     }
 }
