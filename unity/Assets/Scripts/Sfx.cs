@@ -112,6 +112,7 @@ public class Sfx : MonoBehaviour
     public static bool NightNow;   // 지금이 밤인가(JudgeSystem 이 시계를 보고 매 프레임 알려 준다 — 날씨 소리 고르기용)
     public static void SetWeatherAmbient(Weather w) { if (I != null) I.SetWeatherInternal(w); }
 
+    bool rainWas;
     void SetWeatherInternal(Weather w)
     {
         if (wxLoop == null) { wxLoop = gameObject.AddComponent<AudioSource>(); wxLoop.loop = true; wxLoop.playOnAwake = false; wxLoop.volume = 0f; }
@@ -121,6 +122,8 @@ public class Sfx : MonoBehaviour
             : w == Weather.Fog ? (NightNow ? "amb.weather.fog_night" : "amb.weather.fog")
             : w == Weather.Plague ? "amb.weather.plague" : null;
         float target = id == null || muted ? 0f : 0.6f * SaveStore.Settings.Sfx * Duck;   // 믹스 기준표: 날씨 0.6
+        bool rainNow = id == "amb.weather.rain";
+        if (rainNow != rainWas) { rainWas = rainNow; PlayInternal("amb.weather.rain_light"); }   // 비가 오기 시작하거나 그칠 때 가는 빗소리 한 번
         if (id != null && id != wxId) { var c = Clip(id); if (c != null) { wxLoop.clip = c; wxId = id; if (!wxLoop.isPlaying) wxLoop.Play(); } }
         wxLoop.volume = Mathf.MoveTowards(wxLoop.volume, target, Time.unscaledDeltaTime * 2f);
         if (id == null && wxLoop.volume <= 0f && wxLoop.isPlaying) { wxLoop.Stop(); wxId = null; }

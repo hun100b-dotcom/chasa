@@ -140,6 +140,14 @@ public class NpcWorld
         builtPhase = -1;
     }
 
+    /// <summary>첫 밤 솔고개 엿듣기(서사 seonang_texts first_night_overhear). 두 사람의 두 줄이 차례로 뜬다. 단서 아님(들은 말 기록만, 업 10 반쪽·60 닫힘)</summary>
+    public void AddFirstNight(SeonangTexts.Overhear o, System.Func<bool> gate)
+    {
+        string text = o.lines.Length > 1 ? o.lines[0] + "\n" + o.speakers[1] + ": " + o.lines[1] : o.lines[0];
+        all.Add(new Spot { row = new Row { npc = "fn", name = o.speakers[0], zone = "Village", place = "첫 밤 " + o.id, time = 3, unlock = 1, region = 1, verb = "엿듣기" }, clue = "", line = text, half = o.half, verb = "엿듣기", label = o.speakers[0], pos = new Vector3(o.x, 0f, o.z), gate = gate });
+        builtPhase = -1;
+    }
+
     /// <summary>처결 결과로 바뀐 풍경 한 곳을 더한다(예: 보스를 천도하면 나루에 배가 묶여 있다). 다가서면 글이 뜬다. timeSlot: 0 동틀녘 1 낮 2 해질녘 3 밤</summary>
     public void AddScenery(Vector3 pos, string text, int timeSlot)
     {

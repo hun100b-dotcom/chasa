@@ -270,6 +270,7 @@ public class JudgeSystem : MonoBehaviour
         if (stains.Add(at.x, at.z, out cx, out cz, e.elite ? Balance.ELITE_STAIN_SCALE : 1f))   // 거센 혼 파혼: 큰 얼룩(1.5배)
         {
             enemies.SpawnFierce(new Vector3(cx, 0, cz));
+            if (naruBig) PatternEvent("B-01.stain_merge", null, false);   // 나루 큰물 중 얼룩 셋이 모여 거센 혼이 일어선다
             Say("사나운 혼이 깨어났다!");
         }
     }
@@ -467,6 +468,58 @@ public class JudgeSystem : MonoBehaviour
         flashColor = new Color(0.85f, 0.8f, 1f); flashA = 0.5f;        // 흰 보랏빛 번쩍임(보냄)
         StripFx.Billboard("tendo_motes", 8, 0.8f, tp + Vector3.up * 1.2f, Vector3.zero, 2.4f);   // 천도 알갱이(아트): 위로 오르며 사라진다. 흔들림·번쩍은 더하지 않는다
         EndCast();
+    }
+
+    // ---- B-01 나루 영감 ① 무방비 · ② 큰물(맺힘 50%: 바닥 18 m → 11 m, 얼룩이 영감 쪽으로 흘러감) ----
+    bool naruBig, naruWeakSeen; float naruShrink, naruPushCool;
+    void TickNaru(float dt)
+    {
+        if (!FieldRules.On) return;
+        Enemy b = null; foreach (var e in enemies.list) if (e != null && e.alive && !e.gone && e.soul.Boss && e.soul.BossId == 1) { b = e; break; }
+        if (b == null) { naruBig = false; naruShrink = 0f; return; }
+        float dist = new Vector2(player.Pos.x - b.Pos.x, player.Pos.z - b.Pos.z).magnitude;
+        if (dist > 40f) return;   // 마당 근처에서만
+        // 무방비: 휩쓸기 직후 1.5초 동안 맺힘 피해 ×1.5(약점)
+        if (b.tiltWeak > 0f) { b.tiltWeak -= dt; if (!naruWeakSeen) { naruWeakSeen = true; PatternEvent("B-01.weak_tilt", b, true); } }
+        b.damageTakenMult = b.tiltWeak > 0f ? 1.5f : 1f;
+        // 큰물: 맺힘 50%에서 한 번 시작
+        if (!naruBig && b.soul.MaedhimMax > 0 && b.soul.Maedhim <= b.soul.MaedhimMax * 0.5f && b.soul.Maedhim > 0)
+        { naruBig = true; PatternEvent("B-01.bigwater", b, false); }
+        if (!naruBig) return;
+        naruShrink = Mathf.MoveTowards(naruShrink, 1f, dt / 3f);   // 3초에 걸쳐 좁아진다
+        float R = Mathf.Lerp(18f, 11f, naruShrink);
+        stains.DriftToward(b.Pos.x, b.Pos.z, 0.8f, dt, 25f);       // 파혼 얼룩이 영감 쪽으로 흘러간다
+        naruPushCool -= dt;
+        if (dist > R && dist < R + 8f && !Casting)   // 바닥 밖이면 물살이 안쪽으로 민다
+        {
+            var inward = new Vector3(b.Pos.x - player.Pos.x, 0f, b.Pos.z - player.Pos.z).normalized;
+            float px = player.Pos.x + inward.x * 3f * dt, pz = player.Pos.z + inward.z * 3f * dt;
+            MapLayout.PushOut(ref px, ref pz, 0.5f);
+            player.Pos = new Vector3(px, player.Pos.y, pz);
+            if (naruPushCool <= 0f) { naruPushCool = 4f; PatternEvent("B-01.flood", b, true); }
+        }
+    }
+
+    // ---- 원념 짙은 구역: 얼룩 둘 이상이 8 m 안에 있는 자리. 들어설 때 경고(처음 세 번은 둘째 줄), 나갈 때 글만 ----
+    bool inDanger; float dangerLeaveT = 99f; int dangerEnters;
+    void TickDanger(float dt)
+    {
+        if (!FieldRules.On || clock == null) return;
+        bool now = stains.CountWithin(player.Pos.x, player.Pos.z, 8f) >= 2;
+        dangerLeaveT += dt;
+        if (now && !inDanger)
+        {
+            inDanger = true;
+            if (dangerLeaveT > 30f)   // 나갔다 30초 안에 다시 들어오면 생략
+            {
+                string line = ledger.Karma >= 30 ? PatternTexts.KarmaHigh : PatternTexts.Enter;
+                if (dangerEnters < 3 && ledger.Karma < 30) line += "\n" + PatternTexts.EnterSub;
+                dangerEnters++;
+                Say(line, 2f); Sfx.Play("sfx.danger.enter");
+            }
+        }
+        else if (!now && inDanger) { inDanger = false; dangerLeaveT = 0f; Say(PatternTexts.Leave, 2f); }
+        else if (now) dangerLeaveT = 0f;
     }
 
     bool tideEbb, tideKnown;   // 물때가 바뀌는 순간을 알아채려고 직전 값을 기억
@@ -989,6 +1042,21 @@ public class JudgeSystem : MonoBehaviour
     }
 
     public void Say(string s) { toast = s; toastT = 1.5f; }
+    // ---- 보스 말풍선·패턴 경고(서사 boss_pattern_texts) ----
+    string bubbleText; float bubbleT; Enemy bubbleBoss;
+    /// <summary>보스 머리 위 말풍선 1.5초</summary>
+    public void BossBubble(Enemy boss, string text) { if (boss == null || string.IsNullOrEmpty(text)) return; bubbleText = text; bubbleT = 1.5f; bubbleBoss = boss; }
+    /// <summary>패턴 이벤트: 경고 글(화면 위 2초)·말풍선·소리를 한꺼번에. once 면 글자는 세션에서 한 번만, 소리는 매번. sfxTimes 2 면 소리를 살짝 겹쳐 두 번</summary>
+    public void PatternEvent(string key, Enemy boss, bool once, int sfxTimes = 1)
+    {
+        string warn, bubble, sfx;
+        if (!PatternTexts.Get(key, once, out warn, out bubble, out sfx)) return;
+        if (warn != null) Say(warn, 2f);
+        if (bubble != null) BossBubble(boss, bubble);
+        if (sfx != null) { Sfx.Play(sfx); for (int i = 1; i < sfxTimes; i++) Sfx.PlayLater(sfx, 0.15f * i); }
+    }
+
+    public void Say(string s, float sec) { toast = s; toastT = sec; }   // 오래 보여 줄 줄(서낭당 첫 만짐 두 줄 3초)
 
     // ===== 매 프레임 ===============================================================
     public void Tick(float dt, float realDt)
@@ -1168,7 +1236,7 @@ public class JudgeSystem : MonoBehaviour
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
         s.Picked.Add("cp:" + cardPicks);   // 도술 카드 몇 번 골랐나
         if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
-        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); foreach (var bi in bossDoneIds) s.Picked.Add("bd:" + bi); foreach (var bt in bossTendoIds) s.Picked.Add("bt:" + bt); if (act2DoneDay >= 0) s.Picked.Add("a2d:" + act2DoneDay); if (allDoneDay >= 0) s.Picked.Add("ad:" + allDoneDay + ":" + (allDoneAtNight ? 1 : 0)); if (enterDay >= 0) s.Picked.Add("ed:" + enterDay); if (heukwolSpawned) s.Picked.Add("hks:1"); if (gateAnnounced) s.Picked.Add("ga:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
+        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); foreach (var bi in bossDoneIds) s.Picked.Add("bd:" + bi); foreach (var bt in bossTendoIds) s.Picked.Add("bt:" + bt); foreach (var st in seonangTouched) s.Picked.Add("st:" + st); foreach (var sb in shrineBossUsed) s.Picked.Add("sb:" + sb); if (act2DoneDay >= 0) s.Picked.Add("a2d:" + act2DoneDay); if (allDoneDay >= 0) s.Picked.Add("ad:" + allDoneDay + ":" + (allDoneAtNight ? 1 : 0)); if (enterDay >= 0) s.Picked.Add("ed:" + enterDay); if (heukwolSpawned) s.Picked.Add("hks:1"); if (gateAnnounced) s.Picked.Add("ga:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
         if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
         return SaveStore.Write(SaveGame.Serialize(s));
     }
@@ -1189,7 +1257,7 @@ public class JudgeSystem : MonoBehaviour
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
         funeralPending.Clear(); funeralDone.Clear(); funeralNoneShown.Clear(); funeralBorn.Clear(); parkUnjudged = false; dogHome = false; funeralDay = -1;
-        bossDoneIds.Clear(); bossTendoIds.Clear(); allDoneDay = -1; allDoneAtNight = false; enterDay = -1; act2DoneDay = -1; gate3Announced = false; heukwolSpawned = false; heukwolRetreated = false; gateAnnounced = false; heukwolWarned = false; heukwol = null;
+        bossDoneIds.Clear(); bossTendoIds.Clear(); seonangTouched.Clear(); shrineBossUsed.Clear(); allDoneDay = -1; allDoneAtNight = false; enterDay = -1; act2DoneDay = -1; gate3Announced = false; heukwolSpawned = false; heukwolRetreated = false; gateAnnounced = false; heukwolWarned = false; heukwol = null;
         cardPicks = 0; cardPicksLoaded = false;
         foreach (var pk in s.Picked)
         {
@@ -1197,6 +1265,8 @@ public class JudgeSystem : MonoBehaviour
             else if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
             else if (pk == "pu:1") parkUnjudged = true;
             else if (pk == "dh:1") dogHome = true;
+            else if (pk.StartsWith("st:")) { int sti; if (int.TryParse(pk.Substring(3), out sti)) seonangTouched.Add(sti); }
+            else if (pk.StartsWith("sb:")) { int sbi; if (int.TryParse(pk.Substring(3), out sbi)) shrineBossUsed.Add(sbi); }
             else if (pk.StartsWith("bt:")) { int bt; if (int.TryParse(pk.Substring(3), out bt)) bossTendoIds.Add(bt); }
             else if (pk.StartsWith("bd:")) { int bi; if (int.TryParse(pk.Substring(3), out bi)) bossDoneIds.Add(bi); }
             else if (pk.StartsWith("ad:")) { var q = pk.Split(':'); int d0; if (q.Length == 3 && int.TryParse(q[1], out d0)) { allDoneDay = d0; allDoneAtNight = q[2] == "1"; } }
@@ -1382,6 +1452,12 @@ public class JudgeSystem : MonoBehaviour
         if (fHeld && !heldConsumed) holdT += dt; else { if (up) lastHold = holdT; holdT = 0f; }
         if (sinceHit < 0.1f) holdT = 0f;   // 맞으면 앉기·만지기가 끊긴다
         HoldRatio = 0f;
+        // 서낭당에서 F 를 처음 누르면(쉬기·넋길·만져 보기 무엇이든) 그 서낭당의 두 줄이 한 번 뜬다(서사 seonang_texts)
+        if ((down || (fHeld && holdT > 0.35f)) && (Target == InteractKind.Rest || Target == InteractKind.SoulPath))
+        {
+            int si = SeonangTexts.IndexAt(player.Pos);
+            if (si >= 0 && seonangTouched.Add(si)) { var ft = SeonangTexts.FirstTouch(si); if (ft != null) Say(ft, 3f); }
+        }
         switch (Target)
         {
             case InteractKind.Pickup:
@@ -1420,9 +1496,18 @@ public class JudgeSystem : MonoBehaviour
         }
         CharacterPanel.Open = true;   // 성장 창(도술·능력치 점수 찍기)
         SaveGameNow();
-        Say(made > 0 ? "서낭당에 이름을 걸어 두었다 — 쑥을 달여 회복약 " + made + "개" : "서낭당에 이름을 걸어 두었다");
+        string restLine = null; int rsi = SeonangTexts.IndexAt(player.Pos);
+        if (rsi >= 0)
+        {
+            var sh = SeonangTexts.Get(rsi); string after = null;
+            if (sh != null && sh.boss > 0 && clock != null && clock.Phase != ClockPhase.Night && bossDoneIds.Contains(sh.boss) && shrineBossUsed.Add(rsi))   // 그 관할 보스 처결 뒤 첫 낮 쉬기 한 번만
+                after = bossTendoIds.Contains(sh.boss) ? "tendo" : "pahon";
+            restLine = SeonangTexts.RestLine(rsi, clock != null && clock.Phase == ClockPhase.Night, after);
+        }
+        Say((made > 0 ? "서낭당에 이름을 걸어 두었다 — 쑥을 달여 회복약 " + made + "개" : "서낭당에 이름을 걸어 두었다") + (restLine != null ? "\n" + restLine : ""), restLine != null ? 3.5f : 1.5f);
         if (weather != null) { forecastNote = weather.PeekNext(clock); forecastT = 12f; }   // 다음 시간대 날씨 예보
     }
+    readonly HashSet<int> seonangTouched = new HashSet<int>(), shrineBossUsed = new HashSet<int>();   // 처음 만진 서낭당 / 보스 뒤 줄을 이미 쓴 서낭당(저장: st: · sb:)
     const int Shop_Max = Balance.SHOP_HEAL_MAX;
     string forecastNote; float forecastT;   // 쉬고 난 뒤 시간 고리 곁에 잠시 띄우는 예보
 
@@ -1474,6 +1559,8 @@ public class JudgeSystem : MonoBehaviour
         TickEliteSpawn(dt);
         TickCards(dt);
         TickHeukwol();
+        TickNaru(dt);
+        TickDanger(dt);
         var ph = clock.Consume();
         if (ph.HasValue)
         {
@@ -1882,6 +1969,14 @@ public class JudgeSystem : MonoBehaviour
         // (1-2) 이름표: 이름혼·보스 머리 위 (기본 글꼴에 한글이 없어 영문 표기: 나루 영감=Old Ferryman)
         if (cam != null)
         {
+            if (bubbleT > 0f && bubbleBoss != null && !bubbleBoss.gone)   // 보스 말풍선
+            {
+                bubbleT -= Time.unscaledDeltaTime;
+                var bs = new GUIStyle(GUI.skin.label) { fontSize = 20, alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Italic };
+                bs.normal.textColor = new Color(1f, 0.95f, 0.8f);
+                var bp = cam.WorldToScreenPoint(bubbleBoss.HeadPosition + Vector3.up * 1.6f);
+                if (bp.z > 0f) GUI.Label(new Rect(bp.x - 160, Screen.height - bp.y - 14, 320, 28), "“" + bubbleText + "”", bs);
+            }
             var nameStyle = new GUIStyle(GUI.skin.label) { fontSize = 16, alignment = TextAnchor.MiddleCenter };
             nameStyle.normal.textColor = Color.white;
             foreach (var e in enemies.list)

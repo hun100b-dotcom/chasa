@@ -73,7 +73,12 @@ public class GameMain : MonoBehaviour
             judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
-            if (judge.camps != null) judge.camps.LonerOverhears(judge.npcs.AddOverhear);   // 외톨이 야영지 엿듣기
+            if (judge.camps != null) judge.camps.LonerOverhears(judge.npcs.AddOverhear);
+            foreach (var o in SeonangTexts.Overhears)   // 첫 밤 솔고개 엿듣기 15자리: 깨어남부터 그 밤 새벽까지, 박돌쇠 처결 전/후에 맞는 줄만
+            {
+                var oc = o;
+                judge.npcs.AddFirstNight(oc, () => judge.clock.Day == 0 && (oc.cond == "any" || (oc.cond == "before:S-001" && judge.PahonOrTendo == 0) || (oc.cond == "tendo:S-001" && judge.PahonOrTendo == 1) || (oc.cond == "pahon:S-001" && judge.PahonOrTendo == 2) || (oc.cond == "first_judge" && (judge.ledger.Neok > 0 || judge.ledger.Coin > 0))));
+            }   // 외톨이 야영지 엿듣기
             // 제사 지켜보기(기획 jesa_watch_act1): 처결하면 닫히고, 박돌쇠는 천도했을 때만 열린다. 끝까지 본 혼은 천도할 때 기억 끝에 한 줄이 붙는다
             judge.npcs.dayFrac = () => Mathf.Clamp01((judge.clock.Minutes - Balance.CLOCK_DAWN_MIN) / Balance.CLOCK_DAY_MIN);
             judge.npcs.soulDone = n => judge.named != null && judge.named.IsDone(n);

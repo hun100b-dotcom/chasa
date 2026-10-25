@@ -45,6 +45,25 @@ namespace Chasa.Core
             return true;
         }
 
+        /// <summary>(x,z) 둘레 r 안의 얼룩 수 — '원념 짙은 구역' 판정용</summary>
+        public int CountWithin(float x, float z, float r)
+        {
+            int n = 0;
+            foreach (var it in _items) { float dx = x - it.X, dz = z - it.Z; if (dx * dx + dz * dz <= r * r) n++; }
+            return n;
+        }
+
+        /// <summary>얼룩이 물에 떠서 (cx,cz) 쪽으로 흘러간다(나루 영감 ② 큰물). maxDist 안의 얼룩만, 도착하면 멈춘다</summary>
+        public void DriftToward(float cx, float cz, float speed, float dt, float maxDist)
+        {
+            foreach (var it in _items)
+            {
+                float dx = cx - it.X, dz = cz - it.Z, d = (float)System.Math.Sqrt(dx * dx + dz * dz);
+                if (d > maxDist || d < 1.5f) continue;
+                it.X += dx / d * speed * dt; it.Z += dz / d * speed * dt;
+            }
+        }
+
         /// <summary>얼룩 위에 서 있는가 (이동속도 -20%)</summary>
         public bool IsOnStain(float x, float z)
         {

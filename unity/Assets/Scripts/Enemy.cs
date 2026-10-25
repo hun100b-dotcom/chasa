@@ -9,6 +9,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int damage = Balance.ENEMY_ATTACK_DAMAGE;   // 공격력 (보스는 더 아프다)
+    public float tiltWeak;                              // 나루 영감: 휩쓸기 뒤 배가 기울어 무방비인 남은 시간(초)
     public bool loner;                                 // 외톨이 야영지의 혼(소리: amb.loner)
     public string label;                               // 이름혼·보스 이름표 (없으면 null)
     public float radius = Config.ENEMY_RADIUS;
@@ -337,7 +338,7 @@ public class Enemy : MonoBehaviour
                 else Chase(dt, playerPos);
             }
             bool wasWind = atk.Winding;
-            if (atk.Tick(dt, dist, canAct)) { if (soul.Boss && soul.BossId == 1) Sfx.Play("sfx.boss.naru.sweep"); onHitPlayer?.Invoke(); }   // 나루 영감: 휩쓸기 판정 순간
+            if (atk.Tick(dt, dist, canAct)) { if (soul.Boss && soul.BossId == 1) { Sfx.Play("sfx.boss.naru.sweep"); tiltWeak = 1.5f; } onHitPlayer?.Invoke(); }   // 나루 영감: 휩쓸기 판정 순간
             if (gated) { if (atk.Winding) tokenHolders.Add(this); else tokenHolders.Remove(this); }
             if (atk.Winding && !wasWind) Sfx.Play(type == SoulType.Mote ? "sfx.enemy.mote.telegraph" : soul.Boss && soul.BossId == 1 ? "sfx.boss.naru.sweep.telegraph" : "sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
             // 신호: 예비동작이 진행될수록 붉게 달아오른다

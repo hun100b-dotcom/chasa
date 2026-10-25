@@ -449,7 +449,7 @@ public class CoreTests
         // 기획 표: 고리 1.5/1.75/2.0/2.25 → 넋 60/70/80/90, 엽전 36/42/48/54. 1막 보스는 60/30 그대로
         Assert.AreEqual(60, Bosses.NeokFor(5)); Assert.AreEqual(70, Bosses.NeokFor(6)); Assert.AreEqual(80, Bosses.NeokFor(9)); Assert.AreEqual(90, Bosses.NeokFor(12));
         Assert.AreEqual(36, Bosses.CoinFor(8)); Assert.AreEqual(42, Bosses.CoinFor(7)); Assert.AreEqual(48, Bosses.CoinFor(11)); Assert.AreEqual(54, Bosses.CoinFor(10));
-        Assert.AreEqual(Balance.BOSS_S1_NEOK, Bosses.NeokFor(2)); Assert.AreEqual(Balance.BOSS_PAHON_COIN, Bosses.CoinFor(3));
+        Assert.AreEqual(50, Bosses.NeokFor(2)); Assert.AreEqual(Balance.BOSS_PAHON_COIN, Bosses.CoinFor(3));
         var l = new Ledger(); l.DoPahon(true, 12); Assert.AreEqual(54, l.Coin);
     }
 
@@ -652,7 +652,7 @@ public class CoreTests
         night.Tick(Balance.NIGHT_DURATION + 1f);
         Assert.AreEqual(NightPhase.Dawn, night.Phase);
         Assert.AreEqual(night.KeptNeok, night.FinalNeok, "몫은 보존");
-        Assert.AreEqual(Balance.BOSS_S1_NEOK, night.LostNeok, "보스 보상은 흩어진다");
+        Assert.AreEqual(Bosses.NeokFor(1), night.LostNeok, "보스 보상은 흩어진다");
         Assert.Greater(ledger.Neok, night.FinalNeok, "장부엔 쌓였지만 확정 수확은 줄어든다(결과 화면 표시 기준)");
     }
 

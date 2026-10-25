@@ -54,7 +54,33 @@ public class Act2BossArena : MonoBehaviour
         // B-06 약점: 일자진의 빈칸(안전 자리)에 서서 때리면 피해가 커진다(Balance.B06_GAP_DMG_MULT). 대형이 떠 있는 동안만
         if (brain != null && def.Id == 7) TickMiners(dt);
         if (brain3 != null) TickHelpers(dt);
+        if (brain3 != null && def.Id == 10) TickTilt(dt);
         if (brain != null && def.Id == 6) boss.damageTakenMult = brain.DamageMultAt(PlayerInFormGap());
+    }
+
+    // ---- B-10 기운 갑판: 6초마다(맺힘 50% 뒤 4초) 갑판이 좌우로 기울어 1.5초 동안 1.5 m/s 로 미끄러진다 ----
+    float tiltT = 3f, tiltSlide, tiltSide = 1f; bool stormSaid;
+    void TickTilt(float dt)
+    {
+        if (boss == null || !boss.alive) return;
+        float dist = new Vector2(judge.player.Pos.x - def.X, judge.player.Pos.z - def.Z).magnitude;
+        if (dist > fightArea + 6f) return;   // 싸움터 근처에서만
+        bool storm = brain3.Phase2;
+        if (storm && !stormSaid) { stormSaid = true; judge.Say("폭풍 — 갑판이 더 자주 기운다!", 2f); judge.BossBubble(boss, "붙들어라… 다 붙들어."); }   // 전용 소리 없음 → 기울기 소리를 두 번 겹쳐 쓴다(서사)
+        tiltT -= dt;
+        if (tiltT <= 0f)
+        {
+            tiltT = storm ? 4f : 6f; tiltSlide = 1.5f; tiltSide = -tiltSide;
+            judge.PatternEvent("B-10.tilt", boss, true, storm ? 2 : 1);
+        }
+        if (tiltSlide > 0f)
+        {
+            tiltSlide -= dt;
+            var push = new Vector3(tiltSide, 0f, 0f) * 1.5f * dt;
+            float px = judge.player.Pos.x + push.x, pz = judge.player.Pos.z + push.z;
+            MapLayout.PushOut(ref px, ref pz, 0.5f);
+            judge.player.Pos = new Vector3(px, judge.player.Pos.y, pz);
+        }
     }
 
     // ---- 3막 보스 곁의 혼(약점): 1 물 혼(B-09) · 2 선원(B-10) · 3 별명 혼(B-11) · 4 물 혼(B-12) ----

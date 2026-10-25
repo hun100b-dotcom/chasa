@@ -1556,3 +1556,10 @@
 ## 2026-10-26 서사 — 보스 패턴 말풍선 · 원념 짙은 구역 경고 · 2막 엿듣기 보강
 - `tools/boss_pattern_texts.py` → `docs/narrative/boss_pattern_texts.json`: B-01 큰물 단계(bigwater) · 물살(flood) · 얼룩 합쳐짐 · 배 기울어 무방비, B-10 기울기(tilt) · 폭풍 · 밧줄 끝. B-01은 컷 말풍선이 이미 3줄이라 새 줄 없이 "…한 사람만 더."를 다시 씀, B-10은 새 말풍선 3줄. 원념 짙은 구역 들어섬 · 나감 · 업 30 이상 문구.
 - `tools/overhear_act2.py` → `docs/narrative/overhear_act2.json`: 2막 마을 소문 15자리(③ 8 · ④ 7), 이름 있는 혼의 삶을 미리 비춤. 보스 단서 낱말 자체 검사.
+
+## 1막 주변 소리·서사 PR #41·보스 패턴·원념 경고 (코드·QA, 10-26)
+- 사운드 PR #39: `Act1Soundscape`(Data/act1_soundscape.json ← `tools/build_soundscape_data.py`): 밤 구역 바탕 3초 교차, 서낭당·넋길 입구·대장간·소품(모닥불·고목·허수아비·개울, 가까운 N개) 3D 반복, 외톨이 혼 곁 `amb.loner` + 8 m 안 `sfx.loner.notice`(싸우는 중 0.5배), 구역 흩뿌림(부엉이·개·개구리 등, 천도 중 멈춤).
+- 서사 PR #41: 서낭당 문구(`SeonangTexts`, ← `tools/build_seonang_data.py`) — 처음 F 두 줄 3초, 쉬고 난 뒤 낮/밤 한 줄, 그 관할 보스 처결 뒤 첫 낮 쉬기엔 천도/파혼 줄(저장 `st:`·`sb:`). 첫 밤 솔고개 엿듣기 15자리(박돌쇠 처결 전/후 조건). 보스 천도 넋 = 50×고리÷1.25로 1막 셋도 50. 새 이름 있는 물건 5개를 `data/growth.json named_season1`에 추가(효과 코드는 아직). `cut.cough`는 컷 대본 변환기가 `sfx_request` 중 있는 소리를 튼다.
+- 보스 패턴(서사 boss_pattern_texts ← `tools/build_pattern_texts.py`): B-01 나루 — 휩쓸기 뒤 1.5초 무방비(맺힘 피해 ×1.5), 맺힘 50%에서 큰물: 바닥 18→11 m(3초), 바깥에 서면 물살이 안쪽으로 밂, 파혼 얼룩이 영감 쪽으로 흐름, 얼룩 셋이 모이면 경고. B-10 선장 — 6초(맺힘 50% 뒤 4초)마다 갑판이 기울어 1.5초 동안 1.5 m/s로 미끄러짐, 폭풍 때 기울기 소리 두 겹. 보스 말풍선(`BossBubble`)·경고 글(`PatternEvent`).
+- 원념 짙은 구역 = 얼룩 둘 이상이 8 m 안: 들어서면 경고(처음 세 번 둘째 줄, 업 30 이상은 다른 줄)+`sfx.danger.enter`, 나가면 글만, 30초 안 재진입은 생략.
+- `rain_light`(비 시작·끝 한 번), `card.hover`(도술 카드에 올림). 아직: B-10 `weak_rope` 말풍선(줄 끌기 약점 코드 없음), 거센 혼 문구(파혼 다음 날 흔적), "곶 불빛"(B-09 천도 효과 자체가 미구현).

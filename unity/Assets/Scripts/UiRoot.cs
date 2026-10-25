@@ -203,6 +203,7 @@ public class UiRoot : MonoBehaviour
         {
             int idx = i;
             var c = new VisualElement { pickingMode = PickingMode.Position };
+            c.RegisterCallback<PointerEnterEvent>(e => Sfx.Play("sfx.card.hover"));   // 카드에 올리면 종이 스치는 소리
             float k = Ko.TouchUI ? 0.6f : 0.78f;   // 명세 320x440 카드를 패널 단위로 줄인다
             float w = 320f * k, h = 440f * k;
             c.style.width = w; c.style.height = h; c.style.marginLeft = 10; c.style.marginRight = 10;

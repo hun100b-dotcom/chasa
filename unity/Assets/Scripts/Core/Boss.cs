@@ -34,8 +34,8 @@ namespace Chasa.Core
                 default: return Balance.BOSS_RING_REF;
             }
         }
-        /// <summary>보스 천도 넋: 1막은 BOSS_S1_NEOK(60) 그대로, 2·3막은 50 × 고리 ÷ 1.25 (60·70·80·90)</summary>
-        public static int NeokFor(int id) { return id >= 5 && id <= 12 ? (int)System.Math.Round(Balance.BOSS_ACT_NEOK_BASE * Ring(id) / Balance.BOSS_RING_REF) : Balance.BOSS_S1_NEOK; }
+        /// <summary>보스 천도 넋 = 50 × 고리 ÷ 1.25. 1막 셋은 50, 2·3막은 60·70·80·90 (서사 확정 10-26: B-01 넋 50)</summary>
+        public static int NeokFor(int id) { return id >= 1 && id <= 12 && id != 4 ? (int)System.Math.Round(Balance.BOSS_ACT_NEOK_BASE * Ring(id) / Balance.BOSS_RING_REF) : Balance.BOSS_S1_NEOK; }
         /// <summary>보스 파혼 엽전: 1막은 BOSS_PAHON_COIN(30) 그대로, 2·3막은 30 × 고리 ÷ 1.25 (36·42·48·54)</summary>
         public static int CoinFor(int id) { return id >= 5 && id <= 12 ? (int)System.Math.Round(Balance.BOSS_ACT_COIN_BASE * Ring(id) / Balance.BOSS_RING_REF) : Balance.BOSS_PAHON_COIN; }
 
