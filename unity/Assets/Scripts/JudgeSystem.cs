@@ -1242,7 +1242,7 @@ public class JudgeSystem : MonoBehaviour
                 if (!e.alive) continue;
                 var so = e.soul;
                 bool named = so.Boss || e.label != null;
-                if (!named && so.Maedhim >= so.MaedhimMax) continue;
+                if (!so.Boss && e.barT <= 0f) continue;   // 명세: 보스는 늘, 나머지는 맞았을 때 3초만(머리 위 막대 숲 방지)
                 var sp = cam.WorldToScreenPoint(e.HeadPosition - Vector3.up * 0.15f);
                 if (sp.z < 0f) continue;
                 float ratio = Mathf.Clamp01((float)so.Maedhim / Mathf.Max(1, so.MaedhimMax));

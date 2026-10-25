@@ -145,8 +145,10 @@ public class Enemy : MonoBehaviour
     public Vector3 HeadPosition => new Vector3(Pos.x, Pos.y + height + 0.3f, Pos.z);   // 땅 높이(Pos.y)를 더해야 언덕에서도 숫자·막대가 머리 위에 붙는다
 
     /// <summary>한 대 맞음. 맺힘이 깎이고, 0이 되면 죽는 게 아니라 무릎을 꿇는다(true)</summary>
+    public float barT;   // 맺힘 막대를 보이는 남은 시간(맞았을 때 3초). 보스는 늘 보인다
     public bool TakeHit(int damage, Vector3 dir, float knockback, float stunTime)
     {
+        barT = 3f;
         if (!alive || !Targetable) return false;
         if (boundT > 0f && BoundBonus > 0f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * (1f + BoundBonus)));
         if (damageTakenMult != 1f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * damageTakenMult));   // 보스 전용: 약점 창 규칙
@@ -246,6 +248,7 @@ public class Enemy : MonoBehaviour
     {
         if (gone || !alive) tokenHolders.Remove(this);
         lastPlayerPos = playerPos; LastPlayer = playerPos;
+        if (barT > 0f) barT -= dt;
         if (boundT > 0f) boundT -= dt;
         if (gone) { TickDead(dt); return; }
         if (freezeT > 0f && alive) { freezeT -= dt; flash = 1f; ApplyVisual(); return; }

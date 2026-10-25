@@ -213,7 +213,7 @@ public class UiRoot : MonoBehaviour
         guideBox.style.alignItems = Align.Center; guideBox.style.display = DisplayStyle.None;
         var band = new VisualElement { pickingMode = PickingMode.Ignore };
         band.style.flexDirection = FlexDirection.Row; band.style.alignItems = Align.Center; band.style.height = U(56);
-        band.style.paddingLeft = U(20); band.style.paddingRight = U(24); band.style.backgroundColor = new Color(0f, 0f, 0f, 0.6f);
+        band.style.paddingLeft = U(20); band.style.paddingRight = U(24); band.style.backgroundColor = new Color(0.04f, 0.035f, 0.03f, 0.85f);   // 낮에도 묻히지 않게 먹판을 진하게(아트 hint_plate 9칸 슬라이스는 UI Toolkit 슬라이스 속성이 필요해 다음에)
         band.style.borderTopLeftRadius = 6; band.style.borderTopRightRadius = 6; band.style.borderBottomLeftRadius = 6; band.style.borderBottomRightRadius = 6;
         guideKeyBox = new VisualElement { pickingMode = PickingMode.Ignore };   // 키 그림: 둥근 밝은 판 + 글자
         guideKeyBox.style.height = U(40); guideKeyBox.style.minWidth = U(40); guideKeyBox.style.marginRight = U(14); guideKeyBox.style.paddingLeft = U(10); guideKeyBox.style.paddingRight = U(10);

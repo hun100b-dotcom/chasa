@@ -283,7 +283,7 @@ public class ActorModel : MonoBehaviour
             string ty = name.Contains("soul_wail") ? "wail" : name.Contains("soul_mote") ? "mote" : "buried";
             string gr = name.Contains("_lump") ? "lump" : name.Contains("_old") ? "old" : name.Contains("_day") ? "day" : "fresh";
             s.key = ty + "_" + gr; s.height = ty == "mote" ? 0.5f : ty == "buried" ? 1.6f : 1.8f; s.legs = false; s.glow = 0.5f;
-            s.body = gr == "lump" ? new Color(0.30f, 0.14f, 0.30f) : gr == "old" ? new Color(0.45f, 0.40f, 0.52f) : gr == "day" ? new Color(0.80f, 0.70f, 0.35f) : new Color(0.65f, 0.82f, 1f);
+            s.body = gr == "lump" ? new Color(0.30f, 0.14f, 0.30f) : gr == "old" ? new Color(0.43f, 0.33f, 0.27f) : gr == "day" ? new Color(0.80f, 0.70f, 0.35f) : new Color(0.65f, 0.82f, 1f);
             s.accent = ty == "wail" ? new Color(0.69f, 0.31f, 0.82f) : new Color(0.9f, 0.97f, 1f);
         }
         else if (name.Contains("lump"))  // 덩어리: 뭉친 한 덩이
@@ -291,7 +291,7 @@ public class ActorModel : MonoBehaviour
         else if (name.Contains("fierce")) // 사나운 적: 붉고 뿔 달림
         { s.key = "fierce"; s.height = 2.0f; s.body = new Color(0.65f, 0.12f, 0.12f); s.accent = new Color(1f, 0.55f, 0.3f); s.horns = true; s.legs = false; s.glow = 0.6f; }
         else if (name.Contains("soul_old"))   // 오래된 혼: 잿빛 보라, 구부정, 작다
-        { s.key = "old"; s.height = 1.5f; s.body = new Color(0.45f, 0.40f, 0.52f); s.accent = new Color(0.7f, 0.65f, 0.8f); s.legs = false; s.glow = 0.35f; }
+        { s.key = "old"; s.height = 1.5f; s.body = new Color(0.43f, 0.33f, 0.27f); s.accent = new Color(0.7f, 0.65f, 0.8f); s.legs = false; s.glow = 0.35f; }
         else if (name.Contains("soul_day"))   // 해 넘긴 혼: 누런빛, 보통
         { s.key = "year"; s.height = 1.75f; s.body = new Color(0.80f, 0.70f, 0.35f); s.accent = new Color(1f, 0.92f, 0.6f); s.legs = false; s.glow = 0.5f; }
         else                                   // 갓 죽은 혼: 맑은 청백, 크다
