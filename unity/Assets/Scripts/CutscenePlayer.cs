@@ -64,6 +64,8 @@ public class CutscenePlayer
         // 서사 첫 세션 대본(오프닝·장례): 있으면 코드 속 임시 장면보다 우선(Add 는 이미 있는 id 를 건드리지 않는다)
         var fs = Resources.Load<TextAsset>("Data/cutscenes_first_session");
         if (fs != null) { var f2 = JsonUtility.FromJson<FileData>(fs.text); if (f2 != null && f2.cuts != null) foreach (var c in f2.cuts) byId[c.id] = c; }
+        var fn = Resources.Load<TextAsset>("Data/cutscenes_funerals");   // 1막 장례 대본 8개(박돌쇠 제외)
+        if (fn != null) { var f3 = JsonUtility.FromJson<FileData>(fn.text); if (f3 != null && f3.cuts != null) foreach (var c in f3.cuts) byId[c.id] = c; }
         AddBuiltIn();
     }
 

@@ -19,6 +19,7 @@ namespace Chasa.Core
         public float lineDur;                    // 대사가 떠 있는 시간
         public string[] sfx;                     // 이 시각에 틀 효과음 id 들(서사 대본 sfx 칸)
         public string weather;                   // 장면 날씨: clear·cloudy·rain·fog·plague 로 고정(서사가 정하면 무작위보다 우선), auto 면 풀림
+        public string cond;                      // 이 조건일 때만 적용(예: "B-01 천도함"). 비면 늘 적용 — 서사 장례 대본의 condition 칸
         public string ctl;                       // 조작 허용: none(잠금) / walk(걷기만) / restore(복귀). 비면 그대로 — 서사 대본의 control 칸
     }
 
@@ -47,6 +48,7 @@ namespace Chasa.Core
         float lineUntil;
         int next;                                 // 다음에 적용할 단계 번호
 
+        public static System.Func<string, bool> Cond;   // 조건 글자를 판정하는 쪽(JudgeSystem 이 정한다). 없으면 조건 붙은 단계는 건너뜀
         public CutPlayback(CutData d) { Data = d; Apply(0f); }
 
         public bool LineVisible { get { return !string.IsNullOrEmpty(LineText) && Time < lineUntil; } }
@@ -63,6 +65,7 @@ namespace Chasa.Core
             while (next < Data.steps.Length && Data.steps[next].t <= now)
             {
                 var s = Data.steps[next++];
+                if (!string.IsNullOrEmpty(s.cond) && (Cond == null || !Cond(s.cond))) continue;   // 조건이 아니면 시간은 비워 둔 채 다음 박자로
                 if (s.sfx != null) foreach (var id in s.sfx) if (!string.IsNullOrEmpty(id)) SfxPending.Enqueue(id);
                 if (!string.IsNullOrEmpty(s.weather)) SceneWeather = s.weather == "auto" ? null : s.weather;
                 if (s.ctl == "walk" || s.ctl == "restore") Walk = true; else if (s.ctl == "none") Walk = false;

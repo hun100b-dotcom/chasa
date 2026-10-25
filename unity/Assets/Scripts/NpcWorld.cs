@@ -50,6 +50,7 @@ public class NpcWorld
     public System.Func<string, bool> soulDone;          // 이 이름의 혼을 처결했나(제사 지켜보기는 처결하면 닫힌다)
     public System.Func<bool> parkTendoed;               // 박돌쇠를 천도했나(그 집 제사 지켜보기는 천도했을 때만 열린다)
     public readonly HashSet<string> JesaSeen = new HashSet<string>();   // 제사를 끝까지 지켜본 혼(천도하면 기억 끝에 한 줄이 붙는다)
+    readonly Dictionary<string, Vector3> soulHome = new Dictionary<string, Vector3>();   // 장례 대상 혼의 집 마당(제사 지켜보기 자리)
     readonly Dictionary<string, string> jesaPlaceSoul = new Dictionary<string, string>();   // 자리 이름 → 혼 이름
     public System.Func<bool> inCombat;                   // 10m 안에 깨어 있는 혼이 있으면 true: 듣는 진행이 멈춘다(기획 §2-3)
     public readonly HeardLog Log = new HeardLog();       // 들은 말 기록(명부 '들은 말' 탭용)
@@ -82,6 +83,9 @@ public class NpcWorld
         LoadJesa();
     }
 
+    /// <summary>장례 대상 혼의 집 마당 좌표(없으면 false)</summary>
+    public bool HomeOf(string soul, out Vector3 pos) { return soulHome.TryGetValue(soul, out pos); }
+
     /// <summary>기획 jesa_watch_act1.json: 장례 대상 9명의 제사 지켜보기 자리. 이미 있는 자리(윤 소사)는 혼과의 연결만 잇고, 나머지는 애도하는 사람을 새로 세운다</summary>
     void LoadJesa()
     {
@@ -92,6 +96,7 @@ public class NpcWorld
         foreach (var j in f.spots)
         {
             jesaPlaceSoul[j.place] = j.soul_name;
+            { float hx = j.x, hz = j.z; MapLayout.PushOut(ref hx, ref hz, 0.6f); soulHome[j.soul_name] = new Vector3(hx, 0f, hz); }
             if (j.existing) continue;
             string name = j.mourner ?? "애도하는 사람"; int cut = name.IndexOf('('); if (cut > 0) name = name.Substring(0, cut).Trim();
             string soul = j.soul_name; bool park = j.open == "after_tendo_only";

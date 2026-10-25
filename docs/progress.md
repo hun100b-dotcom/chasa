@@ -774,3 +774,9 @@
 - 끝까지 보면 `NpcWorld.JesaSeen`(저장됨, Picked의 "jesa:혼") → 천도할 때 기억 끝에 jesa_extra 한 줄. 윤 소사 하드코딩 제거.
 - named_souls에 칠복·허 훈장·장터 넷 추가(좌표는 기획 제안, 아트 걷기 확인 전). 봇은 120m 밖 이름혼을 찾아가지 않음.
 - 미구현: 명부에 '오늘 밤 그 혼의 자리' 표시, 칠복네 개 소품, 박돌쇠 기억 다시 보기 덧붙임, 섭섭이 낮 시간 이동(부엌↔뒤뜰).
+
+### 1막 장례 8곳 (코드·QA, 서사 funerals_act1)
+- `tools/build_funeral_cuts.py` → `cutscenes_funerals.json`(천도 48초·처결 못 함 12초 ×8, condition은 cond로) + `funerals_index.json`. 파혼은 조등만이라 컷 없음.
+- 트리거: 천도한 혼의 집(제사 지켜보기 자리) 14m 안에 다음 낮 처음 다가갈 때, 하루 한 번(`funeralDay`), 박돌쇠 기본형과 같은 하루 한 번에 묶임. 진행은 저장됨(Picked의 fp·fd·fday).
+- 카메라는 모두 그 집 마당(`funeral` 대상)을 본다(서사의 stopped_thing·jesa_table·gate 같은 세부 대상 좌표는 아직 없음). cond: "B-01 천도함"은 1호 결과, "B-03 천도함"은 아직 세지 않아 false.
+- 미구현: '처결 못 함' 갈래 트리거(혼을 만났지만 처결 안 한 경우의 정의 대기), 위패·등불 소품.

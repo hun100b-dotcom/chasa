@@ -53,6 +53,7 @@ public class JudgeSystem : MonoBehaviour
 
     void Start()
     {
+        LoadFuneralIndex(); CutPlayback.Cond = FuneralCond;   // 1막 장례 색인과 장례 컷의 조건 판정
         // 서낭당: 출발점이자 귀환점. 납작한 노란 원으로 '돌아갈 곳'을 보여 준다
         shrineView = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         Destroy(shrineView.GetComponent<Collider>());
@@ -164,6 +165,7 @@ public class JudgeSystem : MonoBehaviour
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
         if (interactables != null) interactables.OnPahon(e.soul.Name);   // 이름혼의 유품은 재가 된다
+        if (e.soul.Name != null && funeralCut.ContainsKey(e.soul.Name)) funeralPending[e.soul.Name] = 2;   // 파혼: 조등만(장면 없음)
         if (!e.soul.Boss && e.soul.Name == null) introPlainDone++;
         e.PlayFinishAnim(false);   // 파혼 동작(터짐)
         e.Finish();
@@ -240,6 +242,7 @@ public class JudgeSystem : MonoBehaviour
         FxMesh.Burst("fx_tendo_pillar", tp, 0.8f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f, 0.7f));   // 크기 −20%·알파 −30%(아트 검수: 화면 1/3을 흰 덩어리로 덮음)
         FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 0.85f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f, 0.7f));
         TendoSuccessAt = Time.time;
+        if (castTarget.soul.Name != null && funeralCut.ContainsKey(castTarget.soul.Name)) funeralPending[castTarget.soul.Name] = 1;   // 천도: 다음 낮 그 집 장례
         weather.ClearPlague(tp);   // 역병 안개: 천도한 자리 반경 4m 가 15초 걷힌다
         castTarget.PlayFinishAnim(true);   // 천도 동작(일어남→빛 알갱이→숨김)
         castTarget.Finish();
@@ -701,6 +704,22 @@ public class JudgeSystem : MonoBehaviour
     int pahonOrTendo;            // 박돌쇠 처결 결과: 0 안 함 · 1 천도 · 2 파혼
     bool funeralShown;
     public int PahonOrTendo { get { return pahonOrTendo; } }   // 박돌쇠 결과: 1 천도 · 2 파혼 · 0 아직
+    // 1막 장례(서사 funerals_act1): 처결한 혼의 집 앞에 다음 낮 처음 다가갈 때 하루 한 번. 혼 이름 → 컷 이름 색인
+    [System.Serializable] class FunIdx { public string soul, id; }
+    [System.Serializable] class FunFile { public FunIdx[] funerals; }
+    readonly Dictionary<string, string> funeralCut = new Dictionary<string, string>();
+    readonly Dictionary<string, int> funeralPending = new Dictionary<string, int>();   // 혼 → 결과(1 천도 · 2 파혼)
+    readonly HashSet<string> funeralDone = new HashSet<string>();
+    int funeralDay = -1;                                  // 장례를 본 날(하루 한 번)
+    public Vector3 FuneralPos = new Vector3(214f, 0f, 62f);   // 지금 장례가 열린 마당(카메라 'funeral' 대상)
+    void LoadFuneralIndex()
+    {
+        var ta = Resources.Load<TextAsset>("Data/funerals_index"); if (ta == null) return;
+        var f = JsonUtility.FromJson<FunFile>(ta.text); if (f == null || f.funerals == null) return;
+        foreach (var x in f.funerals) funeralCut[x.soul] = x.id;
+    }
+    /// <summary>장례 컷의 조건 글자(서사 condition). 지금은 1호 결과만 안다(3호 결과는 아직 따로 세지 않아 false)</summary>
+    bool FuneralCond(string c) { return c == "B-01 천도함" ? bossOutcome == 1 : false; }
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
     // ===== 저장·불러오기 (규칙은 Core/SaveGame.cs, 저장소는 SaveStore) ==================
     bool loadChecked; float autoSaveT = 30f;
@@ -715,6 +734,7 @@ public class JudgeSystem : MonoBehaviour
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
         if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
+        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay);   // 장례 진행
         if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
         return SaveStore.Write(SaveGame.Serialize(s));
     }
@@ -731,6 +751,13 @@ public class JudgeSystem : MonoBehaviour
         RefreshGrowth();
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
+        funeralPending.Clear(); funeralDone.Clear(); funeralDay = -1;
+        foreach (var pk in s.Picked)
+        {
+            if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
+            else if (pk.StartsWith("fday:")) int.TryParse(pk.Substring(5), out funeralDay);
+            else if (pk.StartsWith("fp:")) { int c = pk.LastIndexOf(':'); int o; if (c > 3 && int.TryParse(pk.Substring(c + 1), out o)) funeralPending[pk.Substring(3, c - 3)] = o; }
+        }
         if (npcs != null) { npcs.JesaSeen.Clear(); foreach (var pk in s.Picked) if (pk.StartsWith("jesa:")) npcs.JesaSeen.Add(pk.Substring(5)); }
         if (interactables != null) { interactables.Restore(s.Picked, s.HerbTaken, s.Herbs); foreach (var sp in interactSpots) sp.Done = false; }   // 주운 것은 Active 가 id 로 걸러 준다
         weather.Restore(s.WeatherNow, s.PlagueEased, clock);   // 날씨도 그대로(불러오자마자 다시 굴리지 않는다)
@@ -782,8 +809,24 @@ public class JudgeSystem : MonoBehaviour
             if (pahonOrTendo == 2) funeralShown = true;   // 파혼: 일어나는 일이 없다
             else if (new Vector2(player.Pos.x - FuneralX, player.Pos.z - FuneralZ).magnitude < 14f)
             {
-                funeralShown = true;
+                funeralShown = true; funeralDay = clock.Day; FuneralPos = new Vector3(FuneralX, 0f, FuneralZ);
                 cuts.Play(pahonOrTendo == 1 ? "FUNERAL_TENDO" : "FUNERAL_NONE");
+            }
+        }
+        // 1막 장례 8곳: 천도한 혼의 집 앞에 다음 낮 처음 다가갈 때(하루 한 번). 파혼은 조등만이라 장면 없이 정리
+        if (clock != null && clock.Phase == ClockPhase.Day && openingStarted && !cuts.Active && funeralPending.Count > 0 && funeralDay != clock.Day && npcs != null)
+        {
+            string fire = null;
+            foreach (var kv in funeralPending)
+            {
+                Vector3 home;
+                if (kv.Value == 2 || funeralDone.Contains(kv.Key)) { fire = fire ?? ("!" + kv.Key); continue; }
+                if (npcs.HomeOf(kv.Key, out home) && new Vector2(player.Pos.x - home.x, player.Pos.z - home.z).magnitude < 14f) { FuneralPos = home; fire = kv.Key; break; }
+            }
+            if (fire != null)
+            {
+                if (fire[0] == '!') funeralPending.Remove(fire.Substring(1));
+                else { funeralDay = clock.Day; funeralDone.Add(fire); funeralPending.Remove(fire); cuts.Play(funeralCut[fire] + "_TENDO"); }
             }
         }
         if (FieldRules.On)
