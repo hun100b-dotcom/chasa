@@ -21,9 +21,11 @@ def top_row():
     west = dec(os.path.join(ROOT, "assets3d", "terrain_act3_west", "heightmap.png"), -7.0, 9.0)[0]       # x −640..0
     act1 = dec(os.path.join(ROOT, "assets3d", "terrain", "heightmap.png"), -1.0, 8.0)[0]               # x 0..640
     east = dec(os.path.join(ROOT, "assets3d", "terrain_act3_east", "heightmap.png"), -7.0, 10.0)[0]    # x 768..1280
+    gap = dec(os.path.join(ROOT, "assets3d", "terrain_gap", "heightmap.png"), -7.0, 10.0)[0]            # x 640..768 (틈 땅)
     for i, x in enumerate(xs):
         if x <= 0: top[i] = west[min(int(x + 640), len(west) - 1)]
         elif x <= 640: top[i] = act1[min(int(x), len(act1) - 1)]
+        elif 640 < x < 768: top[i] = gap[min(int(x - 640), len(gap) - 1)]
         elif x >= 768: top[i] = east[min(int(x - 768), len(east) - 1)]
     return top
 def build():

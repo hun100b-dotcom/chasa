@@ -1,0 +1,24 @@
+{
+ "origin_m": [
+  640,
+  0
+ ],
+ "size_x_m": 128,
+ "size_z_m": 640,
+ "size": 128,
+ "height_res_x": 129,
+ "height_res_z": 641,
+ "splat_res_x": 128,
+ "splat_res_z": 640,
+ "height_min_m": -7.0,
+ "height_max_m": 10.0,
+ "layer_tile_m": [
+  6,
+  6,
+  6,
+  6,
+  6
+ ],
+ "layers": "⑤ 갯마을과 같은 층 뜻(dirt 마른 흙, grass 갯풀, gravel 바위, splat_b G 거품·B 젖은 갯벌)",
+ "note": "1막 동쪽 열과 ⑤ 서쪽 열을 이어 주는 128 m 틈. 행 0=남쪽(월드 y 0)."
+}
