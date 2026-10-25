@@ -1540,3 +1540,7 @@
 ## 2026-10-26 서사 — 보스 패턴 말풍선 · 원념 짙은 구역 경고 · 2막 엿듣기 보강
 - `tools/boss_pattern_texts.py` → `docs/narrative/boss_pattern_texts.json`: B-01 큰물 단계(bigwater) · 물살(flood) · 얼룩 합쳐짐 · 배 기울어 무방비, B-10 기울기(tilt) · 폭풍 · 밧줄 끝. B-01은 컷 말풍선이 이미 3줄이라 새 줄 없이 "…한 사람만 더."를 다시 씀, B-10은 새 말풍선 3줄. 원념 짙은 구역 들어섬 · 나감 · 업 30 이상 문구.
 - `tools/overhear_act2.py` → `docs/narrative/overhear_act2.json`: 2막 마을 소문 15자리(③ 8 · ④ 7), 이름 있는 혼의 삶을 미리 비춤. 보스 단서 낱말 자체 검사.
+
+## 2026-10-26 서사 — 3막 엿듣기 보강 · 로딩 팁 점검
+- `tools/overhear_act3.py` → `docs/narrative/overhear_act3.json`: 3막 마을 소문 15자리(⑤ 8 · ⑥ 7). 무적 혼 별명(천도 열쇠)과 결말 비밀 · 흑월 쪽 혼은 소문에서 빼도록 자체 검사.
+- 로딩 팁(assets3d/title/loading_tips.json · tools/art3d/loading_tips.py) 점검: 33줄 모두 22자 · 글꼴 · 마침표 통과. 두 줄 고침 — 검은여울 "돌다리에선…" → "얕은 여울에선 물살에 밀리지 말자"(산 사람이 놓은 다리는 그가 디디지 못한다, 세계 이치), "강한 혼 앞에선 먼저 숨을 고르자" → "사람 곁에 머물면 말이 들린다"(엿듣기를 가르치는 팁이 없었다). 미리보기 그림(loading_tips_sheet.jpg)은 아트가 다시 뽑을 때 반영.
