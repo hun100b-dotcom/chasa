@@ -1,0 +1,501 @@
+{
+ "fps": 60,
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 97,
+   "length_sec": 1.6,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "Walk",
+   "frames": 37,
+   "length_sec": 0.6,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "Attack",
+   "frames": 23,
+   "length_sec": 0.367,
+   "loop": false,
+   "events": {
+    "hit": 10,
+    "windup_end": 5,
+    "swing_end": 14
+   }
+  },
+  {
+   "name": "Attack2",
+   "frames": 23,
+   "length_sec": 0.367,
+   "loop": false,
+   "events": {
+    "hit": 10,
+    "windup_end": 5,
+    "swing_end": 14
+   }
+  },
+  {
+   "name": "Attack3",
+   "frames": 51,
+   "length_sec": 0.833,
+   "loop": false,
+   "events": {
+    "hit_start": 14,
+    "hit_end": 28,
+    "windup_end": 10,
+    "swing_end": 15
+   }
+  },
+  {
+   "name": "Dodge",
+   "frames": 20,
+   "length_sec": 0.317,
+   "loop": false,
+   "events": {
+    "iframe_start": 2,
+    "iframe_end": 15
+   }
+  },
+  {
+   "name": "Hit",
+   "frames": 19,
+   "length_sec": 0.3,
+   "loop": false,
+   "events": {
+    "impact": 3
+   }
+  },
+  {
+   "name": "Cast",
+   "frames": 61,
+   "length_sec": 1.0,
+   "loop": false,
+   "events": {
+    "hold_start": 14,
+    "hold_end": 46
+   }
+  },
+  {
+   "name": "Pahon",
+   "frames": 26,
+   "length_sec": 0.417,
+   "loop": false,
+   "events": {
+    "hit": 8,
+    "recover_dodge_from": 10
+   }
+  },
+  {
+   "name": "Mace_Attack1",
+   "frames": 35,
+   "length_sec": 0.567,
+   "loop": false,
+   "events": {
+    "hit": 15,
+    "windup_end": 10,
+    "swing_end": 21,
+    "windup_sec": 0.16,
+    "swing_sec": 0.18,
+    "recover_sec": 0.22
+   },
+   "weapon": "Mace",
+   "socket_rotate_deg_x": 40
+  },
+  {
+   "name": "Mace_Attack2",
+   "frames": 35,
+   "length_sec": 0.567,
+   "loop": false,
+   "events": {
+    "hit": 15,
+    "windup_end": 10,
+    "swing_end": 21,
+    "windup_sec": 0.16,
+    "swing_sec": 0.18,
+    "recover_sec": 0.22
+   },
+   "weapon": "Mace",
+   "socket_rotate_deg_x": 40
+  },
+  {
+   "name": "Mace_Attack3",
+   "frames": 58,
+   "length_sec": 0.95,
+   "loop": false,
+   "events": {
+    "hit_start": 27,
+    "hit_end": 44,
+    "impact": 30,
+    "windup_end": 17,
+    "swing_end": 30,
+    "windup_sec": 0.28,
+    "swing_sec": 0.22,
+    "recover_sec": 0.45
+   },
+   "weapon": "Mace",
+   "socket_rotate_deg_x": 40
+  },
+  {
+   "name": "Bell_Attack1",
+   "frames": 32,
+   "length_sec": 0.517,
+   "loop": false,
+   "events": {
+    "hit": 13,
+    "windup_end": 7,
+    "swing_end": 19,
+    "windup_sec": 0.12,
+    "swing_sec": 0.2,
+    "recover_sec": 0.2
+   },
+   "weapon": "Bell",
+   "socket_rotate_deg_x": 20
+  },
+  {
+   "name": "Bell_Attack2",
+   "frames": 32,
+   "length_sec": 0.517,
+   "loop": false,
+   "events": {
+    "hit": 13,
+    "windup_end": 7,
+    "swing_end": 19,
+    "windup_sec": 0.12,
+    "swing_sec": 0.2,
+    "recover_sec": 0.2
+   },
+   "weapon": "Bell",
+   "socket_rotate_deg_x": 20
+  },
+  {
+   "name": "Bell_Attack3",
+   "frames": 52,
+   "length_sec": 0.85,
+   "loop": false,
+   "events": {
+    "hit_start": 20,
+    "hit_end": 33,
+    "impact": 27,
+    "windup_end": 13,
+    "swing_end": 27,
+    "windup_sec": 0.22,
+    "swing_sec": 0.24,
+    "recover_sec": 0.4
+   },
+   "weapon": "Bell",
+   "socket_rotate_deg_x": 20
+  },
+  {
+   "name": "Trident_Attack1",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "hit": 13,
+    "windup_end": 10,
+    "swing_end": 17,
+    "windup_sec": 0.16,
+    "swing_sec": 0.12,
+    "recover_sec": 0.22
+   },
+   "weapon": "Trident",
+   "socket_rotate_deg_x": 30
+  },
+  {
+   "name": "Trident_Attack2",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "hit": 13,
+    "windup_end": 10,
+    "swing_end": 17,
+    "windup_sec": 0.16,
+    "swing_sec": 0.12,
+    "recover_sec": 0.22
+   },
+   "weapon": "Trident",
+   "socket_rotate_deg_x": 30
+  },
+  {
+   "name": "Trident_Attack3",
+   "frames": 50,
+   "length_sec": 0.817,
+   "loop": false,
+   "events": {
+    "hit": 20,
+    "hit_start": 20,
+    "hit_end": 28,
+    "windup_end": 16,
+    "swing_end": 24,
+    "windup_sec": 0.26,
+    "swing_sec": 0.14,
+    "recover_sec": 0.42
+   },
+   "weapon": "Trident",
+   "socket_rotate_deg_x": 30
+  },
+  {
+   "name": "Brush_Attack1",
+   "frames": 27,
+   "length_sec": 0.433,
+   "loop": false,
+   "events": {
+    "hit": 11,
+    "windup_end": 8,
+    "swing_end": 14,
+    "windup_sec": 0.14,
+    "swing_sec": 0.1,
+    "recover_sec": 0.2
+   },
+   "weapon": "Brush",
+   "socket_rotate_deg_x": 55
+  },
+  {
+   "name": "Brush_Attack2",
+   "frames": 27,
+   "length_sec": 0.433,
+   "loop": false,
+   "events": {
+    "hit": 11,
+    "windup_end": 8,
+    "swing_end": 14,
+    "windup_sec": 0.14,
+    "swing_sec": 0.1,
+    "recover_sec": 0.2
+   },
+   "weapon": "Brush",
+   "socket_rotate_deg_x": 55
+  },
+  {
+   "name": "Brush_Attack3",
+   "frames": 45,
+   "length_sec": 0.733,
+   "loop": false,
+   "events": {
+    "hit": 21,
+    "windup_end": 14,
+    "swing_end": 21,
+    "windup_sec": 0.24,
+    "swing_sec": 0.12,
+    "recover_sec": 0.38
+   },
+   "weapon": "Brush",
+   "socket_rotate_deg_x": 55
+  },
+  {
+   "name": "Chain_Draw",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "swap_hide": 9,
+    "swap_show": 13,
+    "swap_sec": 0.5
+   },
+   "weapon": "Chain",
+   "socket_rotate_deg_x": 90
+  },
+  {
+   "name": "Mace_Draw",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "swap_hide": 9,
+    "swap_show": 13,
+    "swap_sec": 0.5
+   },
+   "weapon": "Mace",
+   "socket_rotate_deg_x": 40
+  },
+  {
+   "name": "Bell_Draw",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "swap_hide": 9,
+    "swap_show": 13,
+    "swap_sec": 0.5
+   },
+   "weapon": "Bell",
+   "socket_rotate_deg_x": 20
+  },
+  {
+   "name": "Trident_Draw",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "swap_hide": 9,
+    "swap_show": 13,
+    "swap_sec": 0.5
+   },
+   "weapon": "Trident",
+   "socket_rotate_deg_x": 30
+  },
+  {
+   "name": "Brush_Draw",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "swap_hide": 9,
+    "swap_show": 13,
+    "swap_sec": 0.5
+   },
+   "weapon": "Brush",
+   "socket_rotate_deg_x": 55
+  },
+  {
+   "name": "Mace_Tendo",
+   "frames": 61,
+   "length_sec": 1.0,
+   "loop": false,
+   "events": {
+    "hold_start": 14,
+    "hold_end": 46,
+    "finish_start": 46,
+    "finish_peak": 52
+   },
+   "weapon": "Mace",
+   "socket_rotate_deg_x": 40
+  },
+  {
+   "name": "Bell_Tendo",
+   "frames": 61,
+   "length_sec": 1.0,
+   "loop": false,
+   "events": {
+    "hold_start": 14,
+    "hold_end": 46,
+    "finish_start": 46,
+    "finish_peak": 52
+   },
+   "weapon": "Bell",
+   "socket_rotate_deg_x": 20
+  },
+  {
+   "name": "Trident_Tendo",
+   "frames": 61,
+   "length_sec": 1.0,
+   "loop": false,
+   "events": {
+    "hold_start": 14,
+    "hold_end": 46,
+    "finish_start": 46,
+    "finish_peak": 52
+   },
+   "weapon": "Trident",
+   "socket_rotate_deg_x": 30
+  },
+  {
+   "name": "Brush_Tendo",
+   "frames": 61,
+   "length_sec": 1.0,
+   "loop": false,
+   "events": {
+    "hold_start": 14,
+    "hold_end": 46,
+    "finish_start": 46,
+    "finish_peak": 52
+   },
+   "weapon": "Brush",
+   "socket_rotate_deg_x": 55
+  },
+  {
+   "name": "Mace_Pahon",
+   "frames": 26,
+   "length_sec": 0.417,
+   "loop": false,
+   "events": {
+    "hit": 8,
+    "recover_dodge_from": 10
+   },
+   "weapon": "Mace",
+   "socket_rotate_deg_x": 40
+  },
+  {
+   "name": "Bell_Pahon",
+   "frames": 26,
+   "length_sec": 0.417,
+   "loop": false,
+   "events": {
+    "hit": 8,
+    "recover_dodge_from": 10
+   },
+   "weapon": "Bell",
+   "socket_rotate_deg_x": 20
+  },
+  {
+   "name": "Trident_Pahon",
+   "frames": 26,
+   "length_sec": 0.417,
+   "loop": false,
+   "events": {
+    "hit": 8,
+    "recover_dodge_from": 10
+   },
+   "weapon": "Trident",
+   "socket_rotate_deg_x": 30
+  },
+  {
+   "name": "Brush_Pahon",
+   "frames": 26,
+   "length_sec": 0.417,
+   "loop": false,
+   "events": {
+    "hit": 8,
+    "recover_dodge_from": 10
+   },
+   "weapon": "Brush",
+   "socket_rotate_deg_x": 55
+  }
+ ],
+ "verify": {
+  "file": "hero_chasa.glb",
+  "skins": 1,
+  "joints": 16,
+  "animations": [
+   "Idle",
+   "Walk",
+   "Attack",
+   "Attack2",
+   "Attack3",
+   "Dodge",
+   "Hit",
+   "Cast",
+   "Pahon",
+   "Mace_Attack1",
+   "Mace_Attack2",
+   "Mace_Attack3",
+   "Bell_Attack1",
+   "Bell_Attack2",
+   "Bell_Attack3",
+   "Trident_Attack1",
+   "Trident_Attack2",
+   "Trident_Attack3",
+   "Brush_Attack1",
+   "Brush_Attack2",
+   "Brush_Attack3",
+   "Chain_Draw",
+   "Mace_Draw",
+   "Bell_Draw",
+   "Trident_Draw",
+   "Brush_Draw",
+   "Mace_Tendo",
+   "Bell_Tendo",
+   "Trident_Tendo",
+   "Brush_Tendo",
+   "Mace_Pahon",
+   "Bell_Pahon",
+   "Trident_Pahon",
+   "Brush_Pahon"
+  ],
+  "size_kb": 604
+ }
+}

@@ -87,6 +87,7 @@ public class ActorModel : MonoBehaviour
         var all = Resources.LoadAll<AnimationClip>(heroRow.path);
         var byName = new Dictionary<string, AnimationClip>();
         foreach (var c in all) if (!c.name.StartsWith("__")) byName[c.name] = c;
+        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3 };
         graph = PlayableGraph.Create("Hero");
         graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);   // 우리가 직접 시간을 흘린다(히트스톱과 무관하게 부드럽게)
         var output = AnimationPlayableOutput.Create(graph, "out", anim);
@@ -108,6 +109,36 @@ public class ActorModel : MonoBehaviour
         graph.Play();
         heroCur = 0;
         return true;
+    }
+
+    Dictionary<string, AnimationClip> clipsByName; Pose[] heroOrder;
+
+    static string WeaponClipPrefix(WeaponId w)
+    {
+        switch (w) { case WeaponId.Mace: return "Mace"; case WeaponId.Bell: return "Bell"; case WeaponId.Trident: return "Trident"; case WeaponId.Brush: return "Brush"; default: return null; }
+    }
+
+    /// <summary>무기별 소매동작 규칙: 아트가 무기마다 만든 1·2·3타(Mace_Attack1…)와 천도(Mace_Tendo)가 있으면 그것으로 갈아 끼운다. 철삭은 기본 동작</summary>
+    void RetargetWeaponClips()
+    {
+        if (hero == null || heroPlayables == null || clipsByName == null) return;
+        string pre = WeaponClipPrefix(wantWeapon);
+        for (int i = 0; i < heroOrder.Length; i++)
+        {
+            var po = heroOrder[i]; string want = null;
+            if (po == Pose.Attack) want = pre != null ? pre + "_Attack1" : ClipName(heroRow, Pose.Attack);
+            else if (po == Pose.Attack2) want = pre != null ? pre + "_Attack2" : (ClipName(heroRow, Pose.Attack2) ?? ClipName(heroRow, Pose.Attack));
+            else if (po == Pose.Attack3) want = pre != null ? pre + "_Attack3" : (ClipName(heroRow, Pose.Attack3) ?? ClipName(heroRow, Pose.Attack));
+            else if (po == Pose.Cast) want = pre != null ? pre + "_Tendo" : ClipName(heroRow, Pose.Cast);
+            else continue;
+            AnimationClip clip;
+            if (want == null || !clipsByName.TryGetValue(want, out clip)) continue;   // 전용 동작이 없으면 지금 것을 그대로
+            if (!heroPlayables[i].IsValid() || heroPlayables[i].GetAnimationClip() == clip) continue;
+            graph.Disconnect(mixer, i); heroPlayables[i].Destroy();
+            heroPlayables[i] = AnimationClipPlayable.Create(graph, clip);
+            graph.Connect(heroPlayables[i], 0, mixer, i);
+            mixer.SetInputWeight(i, i == heroCur ? 1f : 0f);
+        }
     }
 
     void HeroUpdate(float dt, bool moving)
@@ -152,6 +183,8 @@ public class ActorModel : MonoBehaviour
     // ---- 손에 든 무기(주인공 모델의 Hand.R 뼈에 붙인다). 아트 약속: 원점=쥐는 곳, 길이 방향 glTF +Y, 뼈 기준 X축 +90° 로 눕혀 앞을 향하게
     WeaponId wantWeapon = WeaponId.Chain; GameObject weaponGo; WeaponId shownWeapon = (WeaponId)(-1);
 
+    static float SocketRotX(WeaponId w) { switch (w) { case WeaponId.Mace: return 40f; case WeaponId.Bell: return 20f; case WeaponId.Trident: return 30f; case WeaponId.Brush: return 55f; default: return 90f; } }
+
     static string WeaponFile(WeaponId w)
     {
         switch (w) { case WeaponId.Mace: return "weapon_bangmang"; case WeaponId.Bell: return "weapon_yoryeong"; case WeaponId.Trident: return "weapon_samjichang"; case WeaponId.Brush: return "weapon_myeongbu"; default: return "weapon_chain"; }
@@ -172,7 +205,8 @@ public class ActorModel : MonoBehaviour
         if (prefab == null) return;
         weaponGo = Instantiate(prefab, hand);
         weaponGo.transform.localPosition = Vector3.zero;
-        weaponGo.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        weaponGo.transform.localRotation = Quaternion.Euler(SocketRotX(wantWeapon), 0f, 0f);   // 무기마다 쥐는 각도가 다르다(아트 매니페스트 socket_rotate_deg_x)
+        RetargetWeaponClips();
         weaponGo.transform.localScale = Vector3.one / Mathf.Max(0.01f, heroRow != null ? heroRow.scale : 1f);   // 몸 크기 배율이 무기까지 줄이지 않게
         foreach (var r in weaponGo.GetComponentsInChildren<Renderer>())
         {

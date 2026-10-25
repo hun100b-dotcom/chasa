@@ -1,0 +1,58 @@
+[
+ {
+  "name": "hero_chasa",
+  "tris": 616,
+  "size_m": [
+   1.46,
+   0.88,
+   1.94
+  ],
+  "min_z": 0.0,
+  "bones": 16,
+  "materials": 8
+ },
+ {
+  "name": "soul_fresh",
+  "tris": 138,
+  "size_m": [
+   0.48,
+   0.48,
+   1.23
+  ],
+  "min_z": -0.007,
+  "materials": 2
+ },
+ {
+  "name": "soul_day",
+  "tris": 170,
+  "size_m": [
+   0.88,
+   0.54,
+   1.35
+  ],
+  "min_z": 0.0,
+  "materials": 2
+ },
+ {
+  "name": "soul_old",
+  "tris": 164,
+  "size_m": [
+   0.79,
+   0.91,
+   1.29
+  ],
+  "min_z": 0.0,
+  "materials": 2
+ },
+ {
+  "name": "soul_lump",
+  "tris": 304,
+  "size_m": [
+   1.45,
+   0.96,
+   1.41
+  ],
+  "min_z": 0.0,
+  "materials": 1
+ }
+]
