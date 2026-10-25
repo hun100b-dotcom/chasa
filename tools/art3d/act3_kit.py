@@ -10,11 +10,11 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets3d")
 SEA_WOOD = "#8A8478"; SEA_WOOD_D = "#6A645A"; SALT = "#E6E2D6"; MUD = "#5E5A50"; TAR = "#3A3632"; THATCH = "#B4A66A"; ROCK = "#6E6A62"; ROCK_D = "#58554F"; WARM = "#FFB066"
 
 def harbor_pier():
-    """나무 선창 한 칸 4×3m: 바닷바람에 바랜 널판을 깔고 아래 말뚝 여섯. 가장자리는 닳아 들쭉날쭉."""
+    """나무 선창 한 칸 4×3m: 바닷바람에 바랜 널판을 깔고 아래 말뚝 여섯(바다 속 3m까지 박혀 있어 바다 위에 놓아도 떠 보이지 않는다, 널판 높이 +0.55m). 가장자리는 닳아 들쭉날쭉."""
     r = random.Random(31); p = []
     for i in range(10): p.append(box(f"plank{i}", (3.0 + r.uniform(-.05, .05), 0.38, 0.07), (0, -1.5 + i * 0.32 + 0.16, 0.55 + r.uniform(0, .015)), SEA_WOOD if i % 3 else SEA_WOOD_D))
     p += [box(f"bear{i}", (4.0, 0.14, 0.12), (0, -1.2 + i * 1.2, 0.46), SEA_WOOD_D) for i in range(3)]
-    p += [cyl(f"pile{i}", 0.1, 0.12, 1.2, (-1.7 + (i % 2) * 3.4, -1.3 + (i // 2) * 1.3, 0.0), SEA_WOOD_D, 6) for i in range(6)]
+    p += [cyl(f"pile{i}", 0.1, 0.12, 3.5, (-1.7 + (i % 2) * 3.4, -1.3 + (i // 2) * 1.3, -3.0), SEA_WOOD_D, 6) for i in range(6)]
     return p
 
 def harbor_gauge_post():

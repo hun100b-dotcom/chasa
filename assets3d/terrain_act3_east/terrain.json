@@ -1,0 +1,40 @@
+{
+ "origin_m": [
+  768,
+  0
+ ],
+ "size_x_m": 512,
+ "size_z_m": 1024,
+ "size": 512,
+ "height_res_x": 513,
+ "height_res_z": 1025,
+ "splat_res_x": 512,
+ "splat_res_z": 1024,
+ "height_min_m": -3.0,
+ "height_max_m": 10.0,
+ "layer_tile_m": [
+  6,
+  6,
+  6,
+  6,
+  6
+ ],
+ "tide_low_m": -0.5,
+ "tide_high_m": 0.6,
+ "sea_floor_m": -2.5,
+ "layers": {
+  "dirt": "마른 흙·갯벌 흙",
+  "grass": "갯풀",
+  "gravel": "자갈·바위",
+  "paddy": "소금(splat_a A)",
+  "leaf": "눈(⑥용, splat_b R, ⑤는 0)",
+  "splat_b.G": "물거품",
+  "splat_b.B": "젖은 갯벌"
+ },
+ "note": "아트 terrain_act3.py가 만든다. 행 0=남쪽(월드 y 0). 썰물 물높이 -0.5, 밀물 +0.6.",
+ "slope_at_shrines_and_arenas": {
+  "SH3-1": 0.0,
+  "B-09": 0.0,
+  "B-10": 0.0
+ }
+}
