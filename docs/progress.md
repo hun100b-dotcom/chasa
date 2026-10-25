@@ -1042,3 +1042,9 @@
   - `sfx.wait.expire`: 놓쳐서 다시 일어섬
   - 코드 제안: 무릎 꿇은 동안 남은 비율에 맞춰 똑딱 간격을 1.0초에서 0.15초로 줄인다. 천도 캐스팅을 시작하면 멈춘다. 첫 혼(대기 멈춤)에는 틀지 않는다.
 - 총 147개.
+
+## 2026-10-25 밤 — [사운드] UI 소리 한지·먹 정비 (기획·사운드)
+- UI 소리 12개: `sfx.ui.click`·`sfx.ui.confirm`은 같은 이름 그대로 한지·먹 결로 바꿈(나무 딱 → 한지 바른 나무 톡 / 붓끝 톡 + 도장 꾹), 새 10개 `sfx.ui.back`·`.tab`·`.deny`·`.ledger.open`·`.ledger.close`·`.heard.open`·`.heard.clue`·`.rank.up`·`.save`·`.save.auto`.
+- 왜: 지금 코드는 UI 소리를 하나도 부르지 않는다. 자주 나는 소리일수록 작고 짧게(버튼 -21, 자동 저장 -31), 큰일(품계 오름)만 크고 길게.
+- 확인: 원래 76개 파일 중 의도한 2개만 바뀜(md5), 그 밖의 파일은 그대로. 미리듣기 v12.
+- 코드팀 연결 위치(제안): CharacterPanel.Toggle(열기/닫기), CharacterView 탭 버튼, NpcWorld.Say(들은 말 창, 단서면 heard.clue), JudgeSystem 품계 오름 토스트 두 곳(258·283), SaveGameNow(설정 버튼은 save, TickAutoSave 는 save.auto), Shrine.Buy 등 실패(false) 때 deny.

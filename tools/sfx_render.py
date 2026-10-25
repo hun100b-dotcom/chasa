@@ -294,15 +294,133 @@ def _(r):
     return thump * .8 + grit * .5
 
 
-@sfx("sfx.ui.click", -18, "UI", "버튼 누름: 나무 딱", use="버튼·탭")
-def _(r):
-    return modal(.08, [(1850, .012, 1), (3100, .008, .5), (720, .02, .4)], r)
+# ===== UI 소리: 한지·먹 분위기(2026-10-25 정비) =====
+# 왜 이렇게: UI 소리는 한 판에 수백 번 듣는다. 그래서 (1) 짧고(대부분 0.1~0.5초) (2) 귀를 찌르는 높은 쇳소리 없이
+# 종이·붓·나무·도장처럼 '손에 닿는 재질'로 만들고 (3) 자주 나는 것일수록 작게 둔다(버튼 -21, 들은 말 -21(부드러운 결이라 실제로는 더 작게 들림), 자동 저장 -31).
+# 큰일(품계 오름)만 크고 길다 → 귀가 '이건 중요하다'를 바로 안다.
+def _paper(r, sec, lo=1500, hi=6500, a=.004, hold=0.0):
+    """한지 스침: 높은 쪽만 남긴 잡음(종이의 사각거림). lo~hi 사이만 통과"""
+    m = int(sec * SR)
+    return filt(filt(noise(m, r), "high", lo), "low", hi) * env(m, a, sec * .35, 4, hold=hold)
 
 
-@sfx("sfx.ui.confirm", -16, "UI", "확인: 나무 딱 + 작은 방울", use="선택 확정·창 닫기")
+def _crinkle(r, sec, count, f=(2000, 6000), amp=(.2, 1)):
+    """종이 구김: 아주 짧은 '틱' 알갱이를 흩뿌림(cut.paper.tear 와 같은 원리, 더 적게)"""
+    tick = lambda r, k: filt(noise(int(.004 * SR), r), "band", r.uniform(*f), 2.5) * env(int(.004 * SR), .0002, .0012) * r.uniform(*amp)
+    return grains(sec, r, count, tick)
+
+
+def _thump(r, sec=.12, f=180, body=600):
+    """한지 덮인 나무를 손끝으로 누름: 낮은 둥 + 짧은 몸통 울림(딱딱한 '딱' 대신 먹먹한 '톡')"""
+    m = int(sec * SR)
+    return tone(sec, f * 1.4, f) * env(m, .002, sec * .3, 3) + filt(noise(m, r), "band", body, 1.2) * env(m, .001, .015) * .6
+
+
+@sfx("sfx.ui.click", -21, "UI", "버튼 누름: 한지 바른 나무를 손끝으로 톡(먹먹하게, 0.1초)", use="버튼·탭·목록 고르기(가장 자주 남 → 가장 작게)")
 def _(r):
-    x = modal(.6, [(1850, .012, 1), (720, .02, .4)], r)
-    return reverb(x + np.roll(modal(.6, [(2640, .18, .5), (3960, .1, .25)], r), int(.05 * SR)) * .6, .8, .2)
+    buf = np.zeros(int(.14 * SR))
+    place(buf, _thump(r, .1, 210, 900), 0)
+    place(buf, _crinkle(r, .03, 4, (2500, 5000), (.1, .3)), .002)   # 종이 결이 살짝 바스락
+    return reverb(buf, .25, .06)
+
+
+@sfx("sfx.ui.confirm", -17, "UI", "확인: 붓끝 톡 + 도장 꾹(낮고 짧게 맺힘, 0.35초)", use="선택 확정·사기·배우기")
+def _(r):
+    buf = np.zeros(int(.5 * SR))
+    place(buf, filt(noise(int(.012 * SR), r), "band", 1600, 1) * env(int(.012 * SR), .0005, .004) * .5, 0)   # 붓끝 닿음
+    place(buf, _thump(r, .2, 150, 520) * 1.1, .07)                                                         # 인주 묻은 도장이 꾹
+    place(buf, modal(.35, [(880, .09, .35), (1320, .05, .15)], r), .07)                                      # 도장 손잡이(나무) 짧은 울림
+    return reverb(buf, .4, .1)
+
+
+@sfx("sfx.ui.back", -21, "UI", "뒤로·취소: 종이를 옆으로 스윽 밀어 둠(위로 올라가지 않고 내려앉는 결, 0.22초)", use="취소·창 하나 뒤로·설정 닫기")
+def _(r):
+    m = int(.22 * SR)
+    x = sweep_filt(noise(m, r), "band", 3200, 1400, 1.2) * env(m, .02, .08, 4, hold=.06)   # 높→낮으로 쓸림 = '물러남'
+    return reverb(x * .8 + np.pad(_thump(r, .08, 170, 700), (int(.15 * SR), 0))[:m] * .35, .25, .06)
+
+
+@sfx("sfx.ui.tab", -17, "UI", "탭 넘김: 얇은 한지 한 장 끝을 손톱으로 넘김(팔락, 0.15초)", use="명부 안 탭(명부/들은 말/장비…) 바꿀 때")
+def _(r):
+    buf = np.zeros(int(.2 * SR))
+    place(buf, _paper(r, .1, 1800, 7000, .006) * .7, 0)
+    place(buf, filt(noise(int(.05 * SR), r), "low", 900) * env(int(.05 * SR), .003, .015) * .5, .07)   # 종이가 내려앉는 바람
+    return reverb(buf, .2, .05)
+
+
+@sfx("sfx.ui.deny", -21, "UI", "안 됨: 먹먹한 나무 두 번 툭툭(낮게, 꾸짖지 않게, 0.3초)", use="엽전 모자람·못 누르는 버튼·칸이 꽉 참")
+def _(r):
+    buf = np.zeros(int(.34 * SR))
+    place(buf, _thump(r, .1, 140, 380), 0); place(buf, _thump(r, .1, 125, 340), .12, .8)
+    return reverb(buf, .2, .05)
+
+
+@sfx("sfx.ui.ledger.open", -16, "UI", "명부 펼침: 두꺼운 표지 들림 + 한지 장이 촤라락 + 마지막 장이 툭 내려앉음(0.8초)", use="C로 명부(캐릭터 창) 열 때")
+def _(r):
+    sec = .85; buf = np.zeros(int(sec * SR))
+    place(buf, _thump(r, .14, 120, 350) * .7, 0)                                   # 표지가 들리며 책등이 눌림
+    dens = lambda k, r: .06 + .38 * (k / 26) ** 1.4 + r.uniform(0, .008)            # 처음엔 촘촘하다가 점점 느려짐(장이 덜 넘어감)
+    flip = lambda r, k: _paper(r, .045, 1500, 6500, .003) * r.uniform(.3, .7) * (1 - k / 40)
+    place(buf, grains(.6, r, 26, flip, spread=dens), 0)
+    place(buf, filt(noise(int(.09 * SR), r), "low", 700) * env(int(.09 * SR), .004, .03) * .6, .58)   # 펼친 장이 바람을 밀며 툭
+    return reverb(buf, .5, .12)
+
+
+@sfx("sfx.ui.ledger.close", -17, "UI", "명부 덮음: 장이 한데 모이는 사락 + 표지 탁(낮고 포근하게, 0.5초)", use="C·Esc·닫기로 명부 닫을 때")
+def _(r):
+    sec = .55; buf = np.zeros(int(sec * SR))
+    m = int(.22 * SR); place(buf, sweep_filt(noise(m, r), "band", 2500, 1200, 1) * env(m, .05, .06, 3, hold=.08) * .55, 0)   # 장들이 미끄러져 모임
+    place(buf, _thump(r, .18, 110, 300), .2)                                          # 표지가 닫힘
+    place(buf, filt(noise(int(.1 * SR), r), "low", 500) * env(int(.1 * SR), .002, .03) * .5, .2)   # 닫히며 밀려난 공기
+    return reverb(buf, .4, .1)
+
+
+@sfx("sfx.ui.heard.open", -21, "UI", "들은 말 창 뜸: 접힌 쪽지를 펴는 사락 + 아주 옅은 숨결(0.45초, 싸움 소리에 묻혀도 됨)", use="들은 말 창이 새로 뜰 때(엿듣기·지켜보기 완료)")
+def _(r):
+    sec = .5; buf = np.zeros(int(sec * SR))
+    place(buf, _paper(r, .2, 1300, 5500, .03) * .6, 0)
+    place(buf, _crinkle(r, .2, 6, (2000, 4500), (.1, .35)), .02)
+    place(buf, filt(noise(int(.4 * SR), r), "band", 700, .7) * env(int(.4 * SR), .12, .15, 3) * .25, .05)   # 혼이 엿듣는 숨결(낮은 바람)
+    return reverb(buf, .7, .2)
+
+
+@sfx("sfx.ui.heard.clue", -19, "UI", "단서를 들음: 붓 한 획 스윽 + 맑은 방울 두 번 띵—딩(낮은 쪽→높은 쪽, 0.9초)", use="들은 말에 단서(금빛)가 붙어 명부에 새로 적힐 때")
+def _(r):
+    sec = 1.0; buf = np.zeros(int(sec * SR))
+    m = int(.28 * SR)
+    place(buf, filt(filt(noise(m, r), "high", 1800), "low", 6500) * env(m, .02, .08, 4, hold=.12) * .35, 0)   # 붓이 이름 옆에 한 줄 긋다
+    place(buf, modal(.8, [(1174.7, .35, 1), (2349, .18, .35), (3524, .08, .12)], r) * .45, .2)   # D6
+    place(buf, modal(.7, [(1568, .32, 1), (3136, .15, .3)], r) * .4, .36)                        # G6 (4도 위 = 맺힘)
+    return reverb(buf, 1.0, .25)
+
+
+@sfx("sfx.ui.rank.up", -12, "UI", "품계 오름: 먹물 한 방울 똑 → 물에 번지는 쏴아(부풂) → 편경 세 음 차례로 + 작은 북 둥(2.4초)", use="넋이 차서 품계가 오를 때(한 번에 여러 품이 올라도 한 번만)")
+def _(r):
+    sec = 2.6; n = int(sec * SR); buf = np.zeros(n)
+    place(buf, bubble(.08, 900, 1.9, .018) * .6, 0)                                  # 먹물이 물에 똑
+    m = int(.9 * SR)
+    bloom = sweep_filt(noise(m, r), "band", 400, 2600, .9) * env(m, .55, .3, 2.5)        # 먹이 번지며 부푼다(낮→높)
+    place(buf, bloom * .35, .05)
+    stone = lambda f: modal(1.6, [(f, .9, 1), (f * 2.76, .35, .35), (f * 5.4, .12, .12)], r, strike=.003)   # 편경(돌 악기): 정수배 아닌 배음 = 돌의 맑음
+    for k, f in enumerate([587.3, 784.0, 1174.7]):                                  # D5–G5–D6: 평조 계열, 위로 오르는 세 음
+        place(buf, stone(f) * (.5 + .1 * k), .55 + k * .2)
+    drum = tone(1.0, 110, 72) * env(int(1.0 * SR), .003, .28, 3)
+    place(buf, drum * .55, .55)                                                       # 첫 음과 함께 작은 북
+    return reverb(buf, 1.6, .3, tone_hz=4500)
+
+
+@sfx("sfx.ui.save", -17, "UI", "저장(직접 누름): 도장을 꾹 눌렀다가 종이에서 떼는 '똑'(0.5초)", use="설정의 저장하기 버튼")
+def _(r):
+    sec = .55; buf = np.zeros(int(sec * SR))
+    place(buf, _thump(r, .22, 120, 420) * 1.1, 0)                                     # 꾹 누름
+    m = int(.12 * SR); place(buf, filt(noise(m, r), "band", 900, 2) * env(m, .03, .03, 3) * .3, .06)   # 인주가 눌리는 미세한 질척임
+    place(buf, bubble(.05, 1400, 1.4, .01) * .35, .32)                                # 종이에서 떼는 똑
+    return reverb(buf, .4, .1)
+
+
+@sfx("sfx.ui.save.auto", -31, "UI", "자동 저장: 붓끝이 종이를 스치는 아주 작은 사각(0.15초, 거의 안 들림)", use="45초마다 자동 저장될 때(들리면 귀찮으니 아주 작게, 원하면 꺼도 됨)")
+def _(r):
+    return reverb(_paper(r, .12, 2000, 6000, .01) * .6, .2, .05)
 
 
 @sfx("sfx.danger.enter", -11, "세계", "위험 지역 진입: 먼 징 한 번(낮게 우는 맥놀이)", use="원념 짙은 구역 들어설 때")
