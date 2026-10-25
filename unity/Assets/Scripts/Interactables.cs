@@ -144,6 +144,9 @@ public class Interactables
         if (FieldRules.Shrines == null || FieldRules.Shrines.Length == 0 || root == null) return;
         var prefab = Resources.Load<GameObject>("Models/Interact/prop_seonang_rest");
         if (prefab == null) return;
+        // 칠복네 문 앞의 빈 개집(지켜보기 J-004 자리 곁, 아트 좌표 근사 — 기획이 좌표를 확정하면 교체)
+        var dog = Resources.Load<GameObject>("Models/Interact/prop_gaejip_empty");
+        if (dog != null) { float dx = 200.5f, dz = 61.0f; MapLayout.PushOut(ref dx, ref dz, 0.8f); var dg = Object.Instantiate(dog, new Vector3(dx, 0f, dz), Quaternion.identity, root); foreach (var c in dg.GetComponentsInChildren<Collider>()) Object.Destroy(c); }
         foreach (var s in FieldRules.Shrines)
         {
             var g = Object.Instantiate(prefab, new Vector3(s[0], 0f, s[1]), Quaternion.identity, root);
