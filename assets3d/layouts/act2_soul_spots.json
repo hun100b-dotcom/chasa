@@ -1,0 +1,140 @@
+{
+ "note": "act2_soul_spots.py가 만든다. kneel_xy=이름혼 무릎 자리(필드 절대), faces_gate=대문을 향해 앉음. 마을 집·담은 아직 act2_layout에 없어 코드팀이 집 충돌과 맞춰 확인",
+ "spots": [
+  {
+   "soul": "S-049",
+   "name": "술도가 노인 최씨",
+   "gate": [
+    97,
+    869
+   ],
+   "kneel_xy": [
+    97.0,
+    866.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.82,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-050",
+   "name": "약초 아낙 분녀",
+   "gate": [
+    85,
+    846
+   ],
+   "kneel_xy": [
+    85.0,
+    843.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.83,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-051",
+   "name": "석수 판돌",
+   "gate": [
+    146,
+    912
+   ],
+   "kneel_xy": [
+    146.0,
+    909.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.82,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-052",
+   "name": "벌초꾼 만석",
+   "gate": [
+    123,
+    843
+   ],
+   "kneel_xy": [
+    123.0,
+    840.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.82,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-067",
+   "name": "광부 순돌",
+   "gate": [
+    447,
+    888
+   ],
+   "kneel_xy": [
+    447.0,
+    885.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 3.95,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-068",
+   "name": "선탄장 아낙 복례",
+   "gate": [
+    598,
+    852
+   ],
+   "kneel_xy": [
+    598.0,
+    849.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 2.19,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-069",
+   "name": "국밥집 주인 장씨",
+   "gate": [
+    464,
+    873
+   ],
+   "kneel_xy": [
+    464.0,
+    870.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 3.5,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-070",
+   "name": "노새 몰이 갑돌",
+   "gate": [
+    490,
+    844
+   ],
+   "kneel_xy": [
+    490.0,
+    841.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 2.93,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-071",
+   "name": "광부의 아버지",
+   "gate": [
+    434,
+    860
+   ],
+   "kneel_xy": [
+    434.0,
+    857.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 3.05,
+   "faces_gate": true
+  }
+ ]
+}
