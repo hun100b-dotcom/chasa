@@ -27,7 +27,7 @@ def _apply(pb, spec):
         col = m.col[i]; ax = max(range(3), key=lambda k: abs(col[k])); loc[i] = s[ax]
     pb.scale = tuple(loc)
 
-def clip(arm, name, keys, interp="LINEAR"):
+def clip(arm, name, keys, interp="LINEAR", post=None):
     """keys=[(프레임, {뼈이름: spec})]. 안 적은 뼈는 기본 자세로 둔다. 끝나면 NLA 트랙에 넣어 따로 내보내지게 한다."""
     ad = arm.animation_data or arm.animation_data_create()
     act = bpy.data.actions.new(name); ad.action = act
@@ -38,6 +38,8 @@ def clip(arm, name, keys, interp="LINEAR"):
             pb.keyframe_insert("rotation_quaternion", frame=f); pb.keyframe_insert("location", frame=f); pb.keyframe_insert("scale", frame=f)
     for pb in arm.pose.bones: _apply(pb, {})
     f0, f1 = keys[0][0], keys[-1][0]
+    if post:   # 보조 뼈 흔들림처럼 '완성된 동작을 읽어서' 덧붙여야 하는 작업 — 다른 NLA 줄이 섞이지 않게 잠시 끈다
+        ad.use_nla = False; bpy.context.scene.frame_set(int(f0)); post(arm, act); ad.use_nla = True
     ad.action = None
     tr = ad.nla_tracks.new(); tr.name = name
     st = tr.strips.new(name, int(f0), act); st.name = name

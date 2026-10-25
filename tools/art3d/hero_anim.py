@@ -73,25 +73,53 @@ def clips():
     return C
 
 def build():
+    """보조 뼈 12개를 덧붙인 몸(hero_sec)으로 만든다. 옛 16개 뼈의 이름·위치는 그대로."""
+    import hero_sec
     reset(); anim.setup_scene()
-    o = join("hero_chasa", hero()); arm = rig(o)
+    o = join("hero_chasa", hero_sec.hero_sec()); arm = rig(o, BONES + hero_sec.SEC_BONES)
     return o, arm
 
 if __name__ == "__main__":
     o, arm = build(); man = []
-    import hero_weapon_anim as hwa
+    import hero_weapon_anim as hwa, hero_locomotion as hl
     NEW = hwa.clips()
-    for name, (keys, interp, loop, ev) in {**clips(), **NEW}.items():
-        info = anim.clip(arm, name, keys, interp); info.update({"loop": loop, "events": ev or {}, **({"weapon": name.split("_")[0], "socket_rotate_deg_x": hwa.SOCKET_ROT_X[name.split("_")[0]]} if name in NEW else {})}); man.append(info)
+    LOC = hl.clips(idle_keys()[0][1], o, arm)      # 구르기가 몸 높이를 재므로, 다른 동작을 넣기 전에 먼저 만든다
+    ALL = {**clips(), **NEW, **LOC}
+    for name, c in ALL.items():
+        keys, interp, loop, ev = c[:4]; meta = c[4] if len(c) > 4 else {}
+        f0, f1 = keys[0][0], keys[-1][0]; rep = {}
+        def post(arm_, act, meta=meta, f0=f0, f1=f1, rep=rep):
+            rep["secondary"] = hl.bake_secondary(arm_, act, meta, f0, f1)       # 자락·갓끈 흔들림을 매 프레임 구워 넣는다
+            if meta.get("contact"): rep["foot_slide"] = hl.measure_slide(arm_, act, meta, f0, f1)
+            elif name in ("Walk",): rep["implied_speed_mps"] = hl.implied_speed(arm_, act, f0, f1)
+        info = anim.clip(arm, name, keys, interp, post); info.update({"loop": loop, "events": ev or {}})
+        if name in NEW: info.update({"weapon": name.split("_")[0], "socket_rotate_deg_x": hwa.SOCKET_ROT_X[name.split("_")[0]]})
+        if meta:
+            info["travel"] = {"speed_mps_per_frame": [round(x, 3) for x in meta["v"]], "distance_m": round(meta["S"][-1], 3)}
+            if "yaw" in meta: info["travel"]["yaw_deg_per_sec"] = [round(x) for x in meta["yaw"]][:1] + ["..."]
+            for k in ("roll_lift_max_m", "roll_v_mid"):
+                if k in meta: info[k] = meta[k]
+        if "foot_slide" in rep: info["foot_slide"] = rep["foot_slide"]
+        if "implied_speed_mps" in rep: info["implied_speed_mps"] = rep["implied_speed_mps"]
+        info["secondary_peak_deg"] = rep.get("secondary", {})
+        man.append(info)
     if "--sheets" in sys.argv:
-        setup_render(3.0, (0, 0, 1.0), size=(220, 280), ground_size=10)
+        only = [a.split("=")[1].split(",") for a in sys.argv if a.startswith("--only=")]
+        side = "--side" in sys.argv; cell = (240, 260) if side else (220, 280)
+        setup_render(2.5 if side else 3.0, (0, 0, 0.95 if side else 1.0), size=cell, ground_size=10)
+        if side:   # 옆에서 본다: 캐릭터 오른쪽(-X)에서 +X를 향해, 앞(-Y)이 화면 오른쪽으로 가게 → 발 미끄러짐·보폭·기울기를 눈으로 보기 좋다
+            cam = bpy.context.scene.camera; cam.location = (-60, 0, 0.95); cam.rotation_euler = (math.radians(90), 0, math.radians(-90))
         wobj = {}
         for c in man:
-            wk = c["name"].split("_")[0] if "_" in c["name"] else "Chain"
+            if only and c["name"] not in only[0]: continue
+            wk = c["name"].split("_")[0] if c["name"] in NEW else "Chain"
             if wk not in wobj: wobj[wk] = hwa.attach(arm, wk)
             for k2, ob in wobj.items(): ob.hide_render = k2 != wk
             n = c["frames"]; fr = sorted({0, *[round(n * t) for t in (0.2, 0.4, 0.6, 0.8)], n - 1}) if c["name"] not in ("Attack", "Attack2") else [0, 5, 8, 10, 12, 14, 21]
-            anim.sheet(arm, c["name"], fr, os.path.join(OUT, "previews", f"anim_hero_{c['name']}"))
+            if c["name"] in ("Run", "Run_TurnL", "Run_TurnR"): fr = [0, 4, 8, 11, 15, 19, 23, 27]
+            if c["name"] in ("Run_Start", "Run_Stop"): fr = [0, 2, 4, 6, 8, 10, n - 1] if c["name"] == "Run_Start" else [0, 2, 4, 6, 8, 11, n - 1]
+            if c["name"] == "Roll": fr = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+            anim.sheet(arm, c["name"], sorted(set(fr)), os.path.join(OUT, "previews", f"anim_hero_{c['name']}" + ("_side" if side else "")), cell=cell)
         for ob in wobj.values(): bpy.data.objects.remove(ob, do_unlink=True)   # 내보내는 GLB에는 무기를 넣지 않는다
     path = os.path.join(OUT, "characters", "hero_chasa.glb")
     anim.export_rig(arm, path)

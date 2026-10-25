@@ -6,14 +6,115 @@
    "frames": 97,
    "length_sec": 1.6,
    "loop": true,
-   "events": {}
+   "events": {},
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 0.3,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 0.3,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 0.4,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 0.4,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Walk",
    "frames": 37,
    "length_sec": 0.6,
    "loop": true,
-   "events": {}
+   "events": {},
+   "implied_speed_mps": 3.57,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 17.6,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 11.7,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 11.1,
+     "ry_max": 0.2
+    },
+    "Skirt_R": {
+     "rx_max": 11.0,
+     "ry_max": 0.2
+    },
+    "Strap.L1": {
+     "rx_max": 1.6,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 1.6,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 2.2,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 2.2,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Attack",
@@ -24,6 +125,56 @@
     "hit": 10,
     "windup_end": 5,
     "swing_end": 14
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 37.9,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 26.4,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 32.6,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 23.1,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 15.6,
+     "ry_max": 10.6
+    },
+    "Strap.R1": {
+     "rx_max": 15.6,
+     "ry_max": 10.6
+    },
+    "Strap.L2": {
+     "rx_max": 25.7,
+     "ry_max": 25.4
+    },
+    "Strap.R2": {
+     "rx_max": 25.7,
+     "ry_max": 25.4
+    },
+    "SashA1": {
+     "rx_max": 11.5,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 16.9,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 13.8,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 22.2,
+     "ry_max": 0.0
+    }
    }
   },
   {
@@ -35,6 +186,56 @@
     "hit": 10,
     "windup_end": 5,
     "swing_end": 14
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 37.8,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 26.4,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 23.1,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 32.4,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 15.6,
+     "ry_max": 10.5
+    },
+    "Strap.R1": {
+     "rx_max": 15.6,
+     "ry_max": 10.5
+    },
+    "Strap.L2": {
+     "rx_max": 25.8,
+     "ry_max": 25.2
+    },
+    "Strap.R2": {
+     "rx_max": 25.8,
+     "ry_max": 25.2
+    },
+    "SashA1": {
+     "rx_max": 11.5,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 16.9,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 13.8,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 22.2,
+     "ry_max": 0.0
+    }
    }
   },
   {
@@ -47,6 +248,56 @@
     "hit_end": 28,
     "windup_end": 10,
     "swing_end": 15
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 37.9,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 20.8,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 31.2,
+     "ry_max": 0.3
+    },
+    "Skirt_R": {
+     "rx_max": 16.6,
+     "ry_max": 0.3
+    },
+    "Strap.L1": {
+     "rx_max": 35.0,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 35.0,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 46.9,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 46.9,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 16.2,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 23.7,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 19.4,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 23.8,
+     "ry_max": 0.0
+    }
    }
   },
   {
@@ -57,6 +308,56 @@
    "events": {
     "iframe_start": 2,
     "iframe_end": 15
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 33.9,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 20.5,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 29.4,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 20.4,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 33.7,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 33.7,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 45.6,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 45.6,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 14.2,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 20.4,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 16.9,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 22.0,
+     "ry_max": 0.0
+    }
    }
   },
   {
@@ -66,6 +367,56 @@
    "loop": false,
    "events": {
     "impact": 3
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 22.0,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 15.6,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 22.0,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 22.0,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 35.0,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 35.0,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 45.0,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 45.0,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 12.6,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 17.6,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 15.1,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 17.6,
+     "ry_max": 0.0
+    }
    }
   },
   {
@@ -76,6 +427,56 @@
    "events": {
     "hold_start": 14,
     "hold_end": 46
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 8.2,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 8.2,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 10.5,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 10.5,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 0.0,
+     "ry_max": 0.0
+    }
    }
   },
   {
@@ -86,6 +487,56 @@
    "events": {
     "hit": 8,
     "recover_dodge_from": 10
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 11.4,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 7.5,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 9.1,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 9.1,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 23.1,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 23.1,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 36.2,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 36.2,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 7.2,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 10.5,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 8.8,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 13.5,
+     "ry_max": 0.0
+    }
    }
   },
   {
@@ -102,7 +553,57 @@
     "recover_sec": 0.22
    },
    "weapon": "Mace",
-   "socket_rotate_deg_x": 40
+   "socket_rotate_deg_x": 40,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 35.1,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 14.2,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 25.2,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 12.8,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 12.2,
+     "ry_max": 4.7
+    },
+    "Strap.R1": {
+     "rx_max": 12.2,
+     "ry_max": 4.7
+    },
+    "Strap.L2": {
+     "rx_max": 18.1,
+     "ry_max": 8.4
+    },
+    "Strap.R2": {
+     "rx_max": 18.1,
+     "ry_max": 8.4
+    },
+    "SashA1": {
+     "rx_max": 6.5,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 9.5,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 8.1,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 12.9,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Mace_Attack2",
@@ -118,7 +619,57 @@
     "recover_sec": 0.22
    },
    "weapon": "Mace",
-   "socket_rotate_deg_x": 40
+   "socket_rotate_deg_x": 40,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 35.1,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 14.1,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 12.8,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 25.2,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 12.5,
+     "ry_max": 4.8
+    },
+    "Strap.R1": {
+     "rx_max": 12.5,
+     "ry_max": 4.8
+    },
+    "Strap.L2": {
+     "rx_max": 18.7,
+     "ry_max": 8.9
+    },
+    "Strap.R2": {
+     "rx_max": 18.7,
+     "ry_max": 8.9
+    },
+    "SashA1": {
+     "rx_max": 6.5,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 9.5,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 8.1,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 12.9,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Mace_Attack3",
@@ -136,7 +687,57 @@
     "recover_sec": 0.45
    },
    "weapon": "Mace",
-   "socket_rotate_deg_x": 40
+   "socket_rotate_deg_x": 40,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 32.7,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 15.7,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 29.6,
+     "ry_max": 0.3
+    },
+    "Skirt_R": {
+     "rx_max": 15.7,
+     "ry_max": 0.3
+    },
+    "Strap.L1": {
+     "rx_max": 40.3,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 40.3,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 54.7,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 54.7,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 17.4,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 25.2,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 20.7,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 19.0,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Bell_Attack1",
@@ -152,7 +753,57 @@
     "recover_sec": 0.2
    },
    "weapon": "Bell",
-   "socket_rotate_deg_x": 20
+   "socket_rotate_deg_x": 20,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 6.9,
+     "ry_max": 1.4
+    },
+    "Strap.R1": {
+     "rx_max": 6.9,
+     "ry_max": 1.4
+    },
+    "Strap.L2": {
+     "rx_max": 8.9,
+     "ry_max": 2.2
+    },
+    "Strap.R2": {
+     "rx_max": 8.9,
+     "ry_max": 2.2
+    },
+    "SashA1": {
+     "rx_max": 1.9,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 2.8,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 2.2,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 2.9,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Bell_Attack2",
@@ -168,7 +819,57 @@
     "recover_sec": 0.2
    },
    "weapon": "Bell",
-   "socket_rotate_deg_x": 20
+   "socket_rotate_deg_x": 20,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 6.9,
+     "ry_max": 1.5
+    },
+    "Strap.R1": {
+     "rx_max": 6.9,
+     "ry_max": 1.5
+    },
+    "Strap.L2": {
+     "rx_max": 8.8,
+     "ry_max": 2.2
+    },
+    "Strap.R2": {
+     "rx_max": 8.8,
+     "ry_max": 2.2
+    },
+    "SashA1": {
+     "rx_max": 1.9,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 2.8,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 2.2,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 2.9,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Bell_Attack3",
@@ -186,7 +887,57 @@
     "recover_sec": 0.4
    },
    "weapon": "Bell",
-   "socket_rotate_deg_x": 20
+   "socket_rotate_deg_x": 20,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 15.2,
+     "ry_max": 6.5
+    },
+    "Skirt_B": {
+     "rx_max": 9.6,
+     "ry_max": 6.5
+    },
+    "Skirt_L": {
+     "rx_max": 12.2,
+     "ry_max": 6.4
+    },
+    "Skirt_R": {
+     "rx_max": 7.6,
+     "ry_max": 6.6
+    },
+    "Strap.L1": {
+     "rx_max": 13.0,
+     "ry_max": 14.5
+    },
+    "Strap.R1": {
+     "rx_max": 13.0,
+     "ry_max": 14.5
+    },
+    "Strap.L2": {
+     "rx_max": 18.9,
+     "ry_max": 35.9
+    },
+    "Strap.R2": {
+     "rx_max": 18.9,
+     "ry_max": 35.9
+    },
+    "SashA1": {
+     "rx_max": 6.9,
+     "ry_max": 4.3
+    },
+    "SashA2": {
+     "rx_max": 10.1,
+     "ry_max": 5.6
+    },
+    "SashB1": {
+     "rx_max": 8.2,
+     "ry_max": 5.1
+    },
+    "Orn": {
+     "rx_max": 8.4,
+     "ry_max": 5.2
+    }
+   }
   },
   {
    "name": "Trident_Attack1",
@@ -202,7 +953,57 @@
     "recover_sec": 0.22
    },
    "weapon": "Trident",
-   "socket_rotate_deg_x": 30
+   "socket_rotate_deg_x": 30,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 29.8,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 19.7,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 25.0,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 14.1,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 21.5,
+     "ry_max": 2.5
+    },
+    "Strap.R1": {
+     "rx_max": 21.5,
+     "ry_max": 2.5
+    },
+    "Strap.L2": {
+     "rx_max": 31.3,
+     "ry_max": 5.7
+    },
+    "Strap.R2": {
+     "rx_max": 31.3,
+     "ry_max": 5.7
+    },
+    "SashA1": {
+     "rx_max": 9.9,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 14.4,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 12.2,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 20.4,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Trident_Attack2",
@@ -218,7 +1019,57 @@
     "recover_sec": 0.22
    },
    "weapon": "Trident",
-   "socket_rotate_deg_x": 30
+   "socket_rotate_deg_x": 30,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 29.7,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 19.8,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 14.1,
+     "ry_max": 0.3
+    },
+    "Skirt_R": {
+     "rx_max": 25.0,
+     "ry_max": 0.3
+    },
+    "Strap.L1": {
+     "rx_max": 26.9,
+     "ry_max": 3.4
+    },
+    "Strap.R1": {
+     "rx_max": 26.9,
+     "ry_max": 3.4
+    },
+    "Strap.L2": {
+     "rx_max": 37.5,
+     "ry_max": 7.8
+    },
+    "Strap.R2": {
+     "rx_max": 37.5,
+     "ry_max": 7.8
+    },
+    "SashA1": {
+     "rx_max": 9.9,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 14.4,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 12.2,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 20.4,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Trident_Attack3",
@@ -236,7 +1087,57 @@
     "recover_sec": 0.42
    },
    "weapon": "Trident",
-   "socket_rotate_deg_x": 30
+   "socket_rotate_deg_x": 30,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 25.4,
+     "ry_max": 1.1
+    },
+    "Skirt_B": {
+     "rx_max": 11.3,
+     "ry_max": 1.1
+    },
+    "Skirt_L": {
+     "rx_max": 21.3,
+     "ry_max": 0.7
+    },
+    "Skirt_R": {
+     "rx_max": 20.0,
+     "ry_max": 1.6
+    },
+    "Strap.L1": {
+     "rx_max": 27.9,
+     "ry_max": 5.9
+    },
+    "Strap.R1": {
+     "rx_max": 27.9,
+     "ry_max": 5.9
+    },
+    "Strap.L2": {
+     "rx_max": 37.9,
+     "ry_max": 10.0
+    },
+    "Strap.R2": {
+     "rx_max": 37.9,
+     "ry_max": 10.0
+    },
+    "SashA1": {
+     "rx_max": 11.3,
+     "ry_max": 0.8
+    },
+    "SashA2": {
+     "rx_max": 16.2,
+     "ry_max": 1.1
+    },
+    "SashB1": {
+     "rx_max": 13.4,
+     "ry_max": 0.9
+    },
+    "Orn": {
+     "rx_max": 18.4,
+     "ry_max": 1.0
+    }
+   }
   },
   {
    "name": "Brush_Attack1",
@@ -252,7 +1153,57 @@
     "recover_sec": 0.2
    },
    "weapon": "Brush",
-   "socket_rotate_deg_x": 55
+   "socket_rotate_deg_x": 55,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 32.8,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 10.5,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 21.5,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 8.0,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 11.0,
+     "ry_max": 2.4
+    },
+    "Strap.R1": {
+     "rx_max": 11.0,
+     "ry_max": 2.4
+    },
+    "Strap.L2": {
+     "rx_max": 16.0,
+     "ry_max": 6.0
+    },
+    "Strap.R2": {
+     "rx_max": 16.0,
+     "ry_max": 6.0
+    },
+    "SashA1": {
+     "rx_max": 4.5,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 6.6,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 5.8,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 9.2,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Brush_Attack2",
@@ -268,7 +1219,57 @@
     "recover_sec": 0.2
    },
    "weapon": "Brush",
-   "socket_rotate_deg_x": 55
+   "socket_rotate_deg_x": 55,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 32.8,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 10.5,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 8.0,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 21.5,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 11.0,
+     "ry_max": 2.4
+    },
+    "Strap.R1": {
+     "rx_max": 11.0,
+     "ry_max": 2.4
+    },
+    "Strap.L2": {
+     "rx_max": 16.0,
+     "ry_max": 6.0
+    },
+    "Strap.R2": {
+     "rx_max": 16.0,
+     "ry_max": 6.0
+    },
+    "SashA1": {
+     "rx_max": 4.5,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 6.6,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 5.8,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 9.2,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Brush_Attack3",
@@ -284,7 +1285,57 @@
     "recover_sec": 0.38
    },
    "weapon": "Brush",
-   "socket_rotate_deg_x": 55
+   "socket_rotate_deg_x": 55,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 34.2,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 15.6,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 28.4,
+     "ry_max": 0.3
+    },
+    "Skirt_R": {
+     "rx_max": 14.3,
+     "ry_max": 0.3
+    },
+    "Strap.L1": {
+     "rx_max": 40.7,
+     "ry_max": 2.4
+    },
+    "Strap.R1": {
+     "rx_max": 40.7,
+     "ry_max": 2.4
+    },
+    "Strap.L2": {
+     "rx_max": 55.5,
+     "ry_max": 5.0
+    },
+    "Strap.R2": {
+     "rx_max": 55.5,
+     "ry_max": 5.0
+    },
+    "SashA1": {
+     "rx_max": 15.8,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 23.0,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 19.0,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 25.4,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Chain_Draw",
@@ -297,7 +1348,57 @@
     "swap_sec": 0.5
    },
    "weapon": "Chain",
-   "socket_rotate_deg_x": 90
+   "socket_rotate_deg_x": 90,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 7.3,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 6.1,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 7.3,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 7.3,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 5.4,
+     "ry_max": 1.7
+    },
+    "Strap.R1": {
+     "rx_max": 5.4,
+     "ry_max": 1.7
+    },
+    "Strap.L2": {
+     "rx_max": 7.3,
+     "ry_max": 4.6
+    },
+    "Strap.R2": {
+     "rx_max": 7.3,
+     "ry_max": 4.6
+    },
+    "SashA1": {
+     "rx_max": 4.2,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 6.1,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 5.2,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 8.1,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Mace_Draw",
@@ -310,7 +1411,57 @@
     "swap_sec": 0.5
    },
    "weapon": "Mace",
-   "socket_rotate_deg_x": 40
+   "socket_rotate_deg_x": 40,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 5.7,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 5.3,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 5.7,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 5.7,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 7.8,
+     "ry_max": 1.6
+    },
+    "Strap.R1": {
+     "rx_max": 7.8,
+     "ry_max": 1.6
+    },
+    "Strap.L2": {
+     "rx_max": 11.7,
+     "ry_max": 3.5
+    },
+    "Strap.R2": {
+     "rx_max": 11.7,
+     "ry_max": 3.5
+    },
+    "SashA1": {
+     "rx_max": 3.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 4.4,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 3.8,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 5.4,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Bell_Draw",
@@ -323,7 +1474,57 @@
     "swap_sec": 0.5
    },
    "weapon": "Bell",
-   "socket_rotate_deg_x": 20
+   "socket_rotate_deg_x": 20,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 2.8,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 2.8,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 2.8,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 2.8,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 9.2,
+     "ry_max": 2.8
+    },
+    "Strap.R1": {
+     "rx_max": 9.2,
+     "ry_max": 2.8
+    },
+    "Strap.L2": {
+     "rx_max": 11.7,
+     "ry_max": 10.0
+    },
+    "Strap.R2": {
+     "rx_max": 11.7,
+     "ry_max": 10.0
+    },
+    "SashA1": {
+     "rx_max": 1.5,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 2.3,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 1.9,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 3.0,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Trident_Draw",
@@ -336,7 +1537,57 @@
     "swap_sec": 0.5
    },
    "weapon": "Trident",
-   "socket_rotate_deg_x": 30
+   "socket_rotate_deg_x": 30,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 31.6,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 9.9,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 18.6,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 6.0,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 6.4,
+     "ry_max": 2.7
+    },
+    "Strap.R1": {
+     "rx_max": 6.4,
+     "ry_max": 2.7
+    },
+    "Strap.L2": {
+     "rx_max": 10.5,
+     "ry_max": 5.9
+    },
+    "Strap.R2": {
+     "rx_max": 10.5,
+     "ry_max": 5.9
+    },
+    "SashA1": {
+     "rx_max": 2.9,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 4.3,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 3.7,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 6.2,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Brush_Draw",
@@ -349,7 +1600,57 @@
     "swap_sec": 0.5
    },
    "weapon": "Brush",
-   "socket_rotate_deg_x": 55
+   "socket_rotate_deg_x": 55,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 5.5,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 5.5,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 5.5,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 5.5,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 6.1,
+     "ry_max": 1.6
+    },
+    "Strap.R1": {
+     "rx_max": 6.1,
+     "ry_max": 1.6
+    },
+    "Strap.L2": {
+     "rx_max": 8.5,
+     "ry_max": 4.6
+    },
+    "Strap.R2": {
+     "rx_max": 8.5,
+     "ry_max": 4.6
+    },
+    "SashA1": {
+     "rx_max": 2.9,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 4.2,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 3.5,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 4.7,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Mace_Tendo",
@@ -363,7 +1664,57 @@
     "finish_peak": 52
    },
    "weapon": "Mace",
-   "socket_rotate_deg_x": 40
+   "socket_rotate_deg_x": 40,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 7.5,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 8.8,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 8.1,
+     "ry_max": 0.1
+    },
+    "Skirt_R": {
+     "rx_max": 8.1,
+     "ry_max": 0.1
+    },
+    "Strap.L1": {
+     "rx_max": 27.9,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 27.9,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 36.3,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 36.3,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 6.6,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 9.8,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 8.3,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 10.8,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Bell_Tendo",
@@ -377,7 +1728,57 @@
     "finish_peak": 52
    },
    "weapon": "Bell",
-   "socket_rotate_deg_x": 20
+   "socket_rotate_deg_x": 20,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 7.5,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 5.5,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 6.1,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 6.1,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 23.9,
+     "ry_max": 0.8
+    },
+    "Strap.R1": {
+     "rx_max": 23.9,
+     "ry_max": 0.8
+    },
+    "Strap.L2": {
+     "rx_max": 35.9,
+     "ry_max": 2.4
+    },
+    "Strap.R2": {
+     "rx_max": 35.9,
+     "ry_max": 2.4
+    },
+    "SashA1": {
+     "rx_max": 5.8,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 8.5,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 7.5,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 10.7,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Trident_Tendo",
@@ -391,7 +1792,57 @@
     "finish_peak": 52
    },
    "weapon": "Trident",
-   "socket_rotate_deg_x": 30
+   "socket_rotate_deg_x": 30,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 3.2,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 5.7,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 4.4,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 4.4,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 9.6,
+     "ry_max": 0.4
+    },
+    "Strap.R1": {
+     "rx_max": 9.6,
+     "ry_max": 0.4
+    },
+    "Strap.L2": {
+     "rx_max": 12.8,
+     "ry_max": 1.4
+    },
+    "Strap.R2": {
+     "rx_max": 12.8,
+     "ry_max": 1.4
+    },
+    "SashA1": {
+     "rx_max": 4.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 5.8,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 5.0,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 6.0,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Brush_Tendo",
@@ -405,7 +1856,57 @@
     "finish_peak": 52
    },
    "weapon": "Brush",
-   "socket_rotate_deg_x": 55
+   "socket_rotate_deg_x": 55,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 12.4,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 6.2,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 9.5,
+     "ry_max": 0.3
+    },
+    "Skirt_R": {
+     "rx_max": 9.5,
+     "ry_max": 0.3
+    },
+    "Strap.L1": {
+     "rx_max": 31.6,
+     "ry_max": 1.4
+    },
+    "Strap.R1": {
+     "rx_max": 31.6,
+     "ry_max": 1.4
+    },
+    "Strap.L2": {
+     "rx_max": 46.7,
+     "ry_max": 2.6
+    },
+    "Strap.R2": {
+     "rx_max": 46.7,
+     "ry_max": 2.6
+    },
+    "SashA1": {
+     "rx_max": 9.1,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 13.2,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 11.4,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 13.2,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Mace_Pahon",
@@ -417,7 +1918,57 @@
     "recover_dodge_from": 10
    },
    "weapon": "Mace",
-   "socket_rotate_deg_x": 40
+   "socket_rotate_deg_x": 40,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 34.1,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 14.6,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 29.9,
+     "ry_max": 0.7
+    },
+    "Skirt_R": {
+     "rx_max": 10.5,
+     "ry_max": 0.7
+    },
+    "Strap.L1": {
+     "rx_max": 35.3,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 35.3,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 45.2,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 45.2,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 17.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 24.6,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 19.9,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 18.6,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Bell_Pahon",
@@ -429,7 +1980,57 @@
     "recover_dodge_from": 10
    },
    "weapon": "Bell",
-   "socket_rotate_deg_x": 20
+   "socket_rotate_deg_x": 20,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 8.9,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 4.7,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 6.2,
+     "ry_max": 0.0
+    },
+    "Skirt_R": {
+     "rx_max": 6.2,
+     "ry_max": 0.0
+    },
+    "Strap.L1": {
+     "rx_max": 18.4,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 18.4,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 29.4,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 29.4,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 5.9,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 8.6,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 7.2,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 12.0,
+     "ry_max": 0.0
+    }
+   }
   },
   {
    "name": "Trident_Pahon",
@@ -441,7 +2042,57 @@
     "recover_dodge_from": 10
    },
    "weapon": "Trident",
-   "socket_rotate_deg_x": 30
+   "socket_rotate_deg_x": 30,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 27.1,
+     "ry_max": 0.4
+    },
+    "Skirt_B": {
+     "rx_max": 13.0,
+     "ry_max": 0.4
+    },
+    "Skirt_L": {
+     "rx_max": 19.6,
+     "ry_max": 0.6
+    },
+    "Skirt_R": {
+     "rx_max": 14.2,
+     "ry_max": 0.9
+    },
+    "Strap.L1": {
+     "rx_max": 16.2,
+     "ry_max": 3.8
+    },
+    "Strap.R1": {
+     "rx_max": 16.2,
+     "ry_max": 3.8
+    },
+    "Strap.L2": {
+     "rx_max": 26.5,
+     "ry_max": 9.1
+    },
+    "Strap.R2": {
+     "rx_max": 26.5,
+     "ry_max": 9.1
+    },
+    "SashA1": {
+     "rx_max": 7.2,
+     "ry_max": 0.3
+    },
+    "SashA2": {
+     "rx_max": 10.6,
+     "ry_max": 0.4
+    },
+    "SashB1": {
+     "rx_max": 9.0,
+     "ry_max": 0.3
+    },
+    "Orn": {
+     "rx_max": 14.0,
+     "ry_max": 0.4
+    }
+   }
   },
   {
    "name": "Brush_Pahon",
@@ -453,13 +2104,818 @@
     "recover_dodge_from": 10
    },
    "weapon": "Brush",
-   "socket_rotate_deg_x": 55
+   "socket_rotate_deg_x": 55,
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 32.7,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 14.0,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 22.4,
+     "ry_max": 0.3
+    },
+    "Skirt_R": {
+     "rx_max": 10.8,
+     "ry_max": 0.3
+    },
+    "Strap.L1": {
+     "rx_max": 10.2,
+     "ry_max": 4.7
+    },
+    "Strap.R1": {
+     "rx_max": 10.2,
+     "ry_max": 4.7
+    },
+    "Strap.L2": {
+     "rx_max": 16.1,
+     "ry_max": 8.2
+    },
+    "Strap.R2": {
+     "rx_max": 16.1,
+     "ry_max": 8.2
+    },
+    "SashA1": {
+     "rx_max": 6.4,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 9.4,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 8.0,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 14.3,
+     "ry_max": 0.0
+    }
+   }
+  },
+  {
+   "name": "Run",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": true,
+   "events": {
+    "cycle_frames": 30,
+    "contact_L": [
+     0,
+     7
+    ],
+    "contact_R": [
+     15,
+     22
+    ]
+   },
+   "travel": {
+    "speed_mps_per_frame": [
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5
+    ],
+    "distance_m": 2.75
+   },
+   "foot_slide": {
+    "max_mm_per_frame": 0.0,
+    "mean_mm_per_frame": 0.0,
+    "contact_pairs": 14
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 26.1,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 12.9,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 23.7,
+     "ry_max": 1.0
+    },
+    "Skirt_R": {
+     "rx_max": 21.1,
+     "ry_max": 1.0
+    },
+    "Strap.L1": {
+     "rx_max": 0.6,
+     "ry_max": 0.7
+    },
+    "Strap.R1": {
+     "rx_max": 0.6,
+     "ry_max": 0.7
+    },
+    "Strap.L2": {
+     "rx_max": 0.8,
+     "ry_max": 1.0
+    },
+    "Strap.R2": {
+     "rx_max": 0.8,
+     "ry_max": 1.0
+    },
+    "SashA1": {
+     "rx_max": 2.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 2.8,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 2.4,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 4.0,
+     "ry_max": 0.0
+    }
+   }
+  },
+  {
+   "name": "Run_TurnL",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": true,
+   "events": {
+    "cycle_frames": 30,
+    "bank_deg": 12
+   },
+   "travel": {
+    "speed_mps_per_frame": [
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5
+    ],
+    "distance_m": 2.75,
+    "yaw_deg_per_sec": [
+     150,
+     "..."
+    ]
+   },
+   "foot_slide": {
+    "max_mm_per_frame": 0.07,
+    "mean_mm_per_frame": 0.032,
+    "contact_pairs": 14
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 26.1,
+     "ry_max": 0.7
+    },
+    "Skirt_B": {
+     "rx_max": 12.7,
+     "ry_max": 0.7
+    },
+    "Skirt_L": {
+     "rx_max": 23.9,
+     "ry_max": 1.7
+    },
+    "Skirt_R": {
+     "rx_max": 21.2,
+     "ry_max": 1.4
+    },
+    "Strap.L1": {
+     "rx_max": 1.2,
+     "ry_max": 1.7
+    },
+    "Strap.R1": {
+     "rx_max": 1.2,
+     "ry_max": 1.7
+    },
+    "Strap.L2": {
+     "rx_max": 1.6,
+     "ry_max": 2.1
+    },
+    "Strap.R2": {
+     "rx_max": 1.6,
+     "ry_max": 2.1
+    },
+    "SashA1": {
+     "rx_max": 2.1,
+     "ry_max": 0.5
+    },
+    "SashA2": {
+     "rx_max": 2.9,
+     "ry_max": 0.6
+    },
+    "SashB1": {
+     "rx_max": 2.5,
+     "ry_max": 0.6
+    },
+    "Orn": {
+     "rx_max": 4.1,
+     "ry_max": 1.2
+    }
+   }
+  },
+  {
+   "name": "Run_TurnR",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": true,
+   "events": {
+    "cycle_frames": 30,
+    "bank_deg": -12
+   },
+   "travel": {
+    "speed_mps_per_frame": [
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5
+    ],
+    "distance_m": 2.75,
+    "yaw_deg_per_sec": [
+     -150,
+     "..."
+    ]
+   },
+   "foot_slide": {
+    "max_mm_per_frame": 0.07,
+    "mean_mm_per_frame": 0.032,
+    "contact_pairs": 14
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 26.1,
+     "ry_max": 0.7
+    },
+    "Skirt_B": {
+     "rx_max": 12.7,
+     "ry_max": 0.7
+    },
+    "Skirt_L": {
+     "rx_max": 23.9,
+     "ry_max": 1.4
+    },
+    "Skirt_R": {
+     "rx_max": 21.2,
+     "ry_max": 1.7
+    },
+    "Strap.L1": {
+     "rx_max": 1.1,
+     "ry_max": 1.5
+    },
+    "Strap.R1": {
+     "rx_max": 1.1,
+     "ry_max": 1.5
+    },
+    "Strap.L2": {
+     "rx_max": 1.5,
+     "ry_max": 2.3
+    },
+    "Strap.R2": {
+     "rx_max": 1.5,
+     "ry_max": 2.3
+    },
+    "SashA1": {
+     "rx_max": 2.1,
+     "ry_max": 0.5
+    },
+    "SashA2": {
+     "rx_max": 2.9,
+     "ry_max": 0.6
+    },
+    "SashB1": {
+     "rx_max": 2.5,
+     "ry_max": 0.6
+    },
+    "Orn": {
+     "rx_max": 4.1,
+     "ry_max": 1.2
+    }
+   }
+  },
+  {
+   "name": "Run_Start",
+   "frames": 11,
+   "length_sec": 0.167,
+   "loop": false,
+   "events": {
+    "ends_as_run_frame": 0,
+    "play_frames": 10,
+    "full_speed_frame": 5
+   },
+   "travel": {
+    "speed_mps_per_frame": [
+     0.0,
+     1.1,
+     2.2,
+     3.3,
+     4.4,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5,
+     5.5
+    ],
+    "distance_m": 0.688
+   },
+   "foot_slide": {
+    "max_mm_per_frame": 0.0,
+    "mean_mm_per_frame": 0.0,
+    "contact_pairs": 6
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 35.1,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 23.0,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 21.8,
+     "ry_max": 0.8
+    },
+    "Skirt_R": {
+     "rx_max": 21.2,
+     "ry_max": 0.8
+    },
+    "Strap.L1": {
+     "rx_max": 6.0,
+     "ry_max": 0.2
+    },
+    "Strap.R1": {
+     "rx_max": 6.0,
+     "ry_max": 0.2
+    },
+    "Strap.L2": {
+     "rx_max": 8.0,
+     "ry_max": 0.7
+    },
+    "Strap.R2": {
+     "rx_max": 8.0,
+     "ry_max": 0.7
+    },
+    "SashA1": {
+     "rx_max": 7.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 9.0,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 8.0,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 11.2,
+     "ry_max": 0.0
+    }
+   }
+  },
+  {
+   "name": "Run_Stop",
+   "frames": 16,
+   "length_sec": 0.25,
+   "loop": false,
+   "events": {
+    "starts_from_run_frame": 11,
+    "stopped_frame": 4,
+    "plant_frame": 2
+   },
+   "travel": {
+    "speed_mps_per_frame": [
+     5.5,
+     4.125,
+     2.75,
+     1.375,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "distance_m": 0.183
+   },
+   "foot_slide": {
+    "max_mm_per_frame": 0.0,
+    "mean_mm_per_frame": 0.0,
+    "contact_pairs": 20
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 26.0,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 6.0,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 18.5,
+     "ry_max": 1.6
+    },
+    "Skirt_R": {
+     "rx_max": 22.0,
+     "ry_max": 1.6
+    },
+    "Strap.L1": {
+     "rx_max": 28.5,
+     "ry_max": 0.3
+    },
+    "Strap.R1": {
+     "rx_max": 28.5,
+     "ry_max": 0.3
+    },
+    "Strap.L2": {
+     "rx_max": 38.4,
+     "ry_max": 0.5
+    },
+    "Strap.R2": {
+     "rx_max": 38.4,
+     "ry_max": 0.5
+    },
+    "SashA1": {
+     "rx_max": 14.0,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 19.6,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 16.0,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 21.6,
+     "ry_max": 0.0
+    }
+   }
+  },
+  {
+   "name": "Turn180_L",
+   "frames": 13,
+   "length_sec": 0.2,
+   "loop": false,
+   "events": {
+    "root_turn_frames": 6,
+    "settle_frame": 10
+   },
+   "travel": {
+    "speed_mps_per_frame": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "distance_m": 0.0,
+    "yaw_deg_per_sec": [
+     1800,
+     "..."
+    ]
+   },
+   "foot_slide": {
+    "max_mm_per_frame": 0.0,
+    "mean_mm_per_frame": 0.0,
+    "contact_pairs": 24
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 15.4,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 4.2,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 9.9,
+     "ry_max": 1.7
+    },
+    "Skirt_R": {
+     "rx_max": 9.9,
+     "ry_max": 1.7
+    },
+    "Strap.L1": {
+     "rx_max": 7.7,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 7.7,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 10.3,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 10.3,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 2.4,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 3.5,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 2.9,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 2.6,
+     "ry_max": 0.0
+    }
+   }
+  },
+  {
+   "name": "Turn180_R",
+   "frames": 13,
+   "length_sec": 0.2,
+   "loop": false,
+   "events": {
+    "root_turn_frames": 6,
+    "settle_frame": 10
+   },
+   "travel": {
+    "speed_mps_per_frame": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "distance_m": 0.0,
+    "yaw_deg_per_sec": [
+     -1800,
+     "..."
+    ]
+   },
+   "foot_slide": {
+    "max_mm_per_frame": 0.0,
+    "mean_mm_per_frame": 0.0,
+    "contact_pairs": 24
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 15.4,
+     "ry_max": 0.0
+    },
+    "Skirt_B": {
+     "rx_max": 4.2,
+     "ry_max": 0.0
+    },
+    "Skirt_L": {
+     "rx_max": 9.9,
+     "ry_max": 1.7
+    },
+    "Skirt_R": {
+     "rx_max": 9.9,
+     "ry_max": 1.7
+    },
+    "Strap.L1": {
+     "rx_max": 7.7,
+     "ry_max": 0.0
+    },
+    "Strap.R1": {
+     "rx_max": 7.7,
+     "ry_max": 0.0
+    },
+    "Strap.L2": {
+     "rx_max": 10.3,
+     "ry_max": 0.0
+    },
+    "Strap.R2": {
+     "rx_max": 10.3,
+     "ry_max": 0.0
+    },
+    "SashA1": {
+     "rx_max": 2.4,
+     "ry_max": 0.0
+    },
+    "SashA2": {
+     "rx_max": 3.5,
+     "ry_max": 0.0
+    },
+    "SashB1": {
+     "rx_max": 2.9,
+     "ry_max": 0.0
+    },
+    "Orn": {
+     "rx_max": 2.6,
+     "ry_max": 0.0
+    }
+   }
+  },
+  {
+   "name": "Roll",
+   "frames": 19,
+   "length_sec": 0.3,
+   "loop": false,
+   "events": {
+    "iframe_start": 2,
+    "iframe_end": 14,
+    "travel_m": 4.0,
+    "roll_start": 3,
+    "roll_end": 14
+   },
+   "travel": {
+    "speed_mps_per_frame": [
+     5.5,
+     8.021,
+     12.703,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     15.224,
+     13.705,
+     10.362,
+     7.019,
+     5.5
+    ],
+    "distance_m": 4.0
+   },
+   "roll_lift_max_m": 0.384,
+   "roll_v_mid": 15.22,
+   "foot_slide": {
+    "max_mm_per_frame": 0.0,
+    "mean_mm_per_frame": 0.0,
+    "contact_pairs": 0
+   },
+   "secondary_peak_deg": {
+    "Skirt_F": {
+     "rx_max": 22.4,
+     "ry_max": 10.3
+    },
+    "Skirt_B": {
+     "rx_max": 21.2,
+     "ry_max": 10.3
+    },
+    "Skirt_L": {
+     "rx_max": 17.6,
+     "ry_max": 10.5
+    },
+    "Skirt_R": {
+     "rx_max": 15.7,
+     "ry_max": 7.9
+    },
+    "Strap.L1": {
+     "rx_max": 24.0,
+     "ry_max": 8.2
+    },
+    "Strap.R1": {
+     "rx_max": 24.0,
+     "ry_max": 8.2
+    },
+    "Strap.L2": {
+     "rx_max": 40.3,
+     "ry_max": 15.6
+    },
+    "Strap.R2": {
+     "rx_max": 40.3,
+     "ry_max": 15.6
+    },
+    "SashA1": {
+     "rx_max": 11.6,
+     "ry_max": 7.6
+    },
+    "SashA2": {
+     "rx_max": 17.0,
+     "ry_max": 12.1
+    },
+    "SashB1": {
+     "rx_max": 14.4,
+     "ry_max": 9.4
+    },
+    "Orn": {
+     "rx_max": 28.1,
+     "ry_max": 12.7
+    }
+   }
   }
  ],
  "verify": {
   "file": "hero_chasa.glb",
   "skins": 1,
-  "joints": 16,
+  "joints": 28,
   "animations": [
    "Idle",
    "Walk",
@@ -494,8 +2950,16 @@
    "Mace_Pahon",
    "Bell_Pahon",
    "Trident_Pahon",
-   "Brush_Pahon"
+   "Brush_Pahon",
+   "Run",
+   "Run_TurnL",
+   "Run_TurnR",
+   "Run_Start",
+   "Run_Stop",
+   "Turn180_L",
+   "Turn180_R",
+   "Roll"
   ],
-  "size_kb": 604
+  "size_kb": 1230
  }
 }
