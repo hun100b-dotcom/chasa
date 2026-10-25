@@ -307,7 +307,7 @@ public class UiRoot : MonoBehaviour
     public void Refresh(bool visible)
     {
         if (root == null) return;
-        root.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+        root.style.display = visible && !MiniMap.BigOpen ? DisplayStyle.Flex : DisplayStyle.None;   // 큰 지도가 열리면 HUD 는 숨긴다(비쳐 보임 방지)
         if (!visible) return;
         var a = Hud.LedgerLine(); if (a != lastLedger) { ledger.text = lastLedger = a; }
         var b = Hud.VitalLine(); if (b != lastVital) { vital.text = lastVital = b; }

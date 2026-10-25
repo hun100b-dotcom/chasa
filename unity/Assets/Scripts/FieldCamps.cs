@@ -22,6 +22,7 @@ public class FieldCamps
     readonly EnemyManager enemies;
 
     public int Count => camps.Count;
+    public static int EarlyMaxAlive = int.MaxValue;   // 처음 5분(시계 정지 중)엔 살아 있는 혼을 이 수까지만(시작 지점에 28마리가 줄 맞춰 서던 것 방지: 아트 검수)
     public float GhostMult = 1f;   // 흐린 밤 +15%: 군집이 설 때 혼 수에 곱한다
 
     // 서낭당 자리(아트 배치표의 prop_seonangdang 5곳, x·z 쌍)
@@ -64,6 +65,8 @@ public class FieldCamps
 
     void Spawn(Camp c)
     {
+        int alive = 0; foreach (var e0 in enemies.list) if (e0 != null && e0.alive) alive++;
+        if (alive >= EarlyMaxAlive) { c.cooldown = 3f; return; }   // 지금은 더 못 세운다(조금 뒤 다시 시도)
         c.spawned = true;
         int count = CampRules.CountFor(c.row.n, SkyState.Daylight);   // 낮엔 적게
         if (Balance.CAMP_DENSITY_MULT < 0.999f) count = Mathf.Max(1, Mathf.RoundToInt(count * Balance.CAMP_DENSITY_MULT));   // 전체 밀도 배율(난이도 조정)
@@ -72,6 +75,7 @@ public class FieldCamps
             float exact = count * GhostMult; int whole = Mathf.FloorToInt(exact);
             count = whole + (Random.value < exact - whole ? 1 : 0);
         }
+        if (EarlyMaxAlive != int.MaxValue) count = Mathf.Min(count, Mathf.Max(1, EarlyMaxAlive - alive));
         for (int i = 0; i < count; i++)
         {
             // 군집 반지름 안 무작위 자리. 집·소품 안이면 밀려난다

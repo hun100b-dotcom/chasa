@@ -142,7 +142,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public Vector3 HeadPosition => new Vector3(Pos.x, height + 0.3f, Pos.z);
+    public Vector3 HeadPosition => new Vector3(Pos.x, Pos.y + height + 0.3f, Pos.z);   // 땅 높이(Pos.y)를 더해야 언덕에서도 숫자·막대가 머리 위에 붙는다
 
     /// <summary>한 대 맞음. 맺힘이 깎이고, 0이 되면 죽는 게 아니라 무릎을 꿇는다(true)</summary>
     public bool TakeHit(int damage, Vector3 dir, float knockback, float stunTime)

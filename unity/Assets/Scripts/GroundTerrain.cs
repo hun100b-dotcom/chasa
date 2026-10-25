@@ -94,7 +94,7 @@ public static class GroundTerrain
             var t = SpriteLib.Texture("sky/cloud_shadow");
             if (t != null) { t.wrapMode = TextureWrapMode.Repeat; mat.SetTexture("_CloudTex", t); cloudOk = true; }
         }
-        mat.SetFloat("_CloudAmount", cloudOk ? amount : 0f);
+        mat.SetFloat("_CloudAmount", cloudOk ? amount * Balance.CLOUD_SHADOW_MULT : 0f);
     }
     static bool cloudTried, cloudOk;
 

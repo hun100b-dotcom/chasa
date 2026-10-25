@@ -799,6 +799,7 @@ public class JudgeSystem : MonoBehaviour
     void TickClock(float dt)
     {
         // 처음 5분: 박돌쇠를 처결할 때까지(최대 10분) 시계를 멈춘다 — 시간 압박 없이 배우게(기획 first-5-minutes)
+        FieldCamps.EarlyMaxAlive = introFrozen ? 9 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
         if (introFrozen && !cuts.Active && !inDay) introT += dt;
         if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
         if (!cuts.PauseClock && !introFrozen) clock.Tick(dt);   // 오프닝 컷 동안·첫 5분엔 시계가 멈춘다
@@ -1179,7 +1180,7 @@ public class JudgeSystem : MonoBehaviour
                 var so = e.soul;
                 bool named = so.Boss || e.label != null;
                 if (!named && so.Maedhim >= so.MaedhimMax) continue;
-                var sp = cam.WorldToScreenPoint(e.HeadPosition + Vector3.up * 0.3f);
+                var sp = cam.WorldToScreenPoint(e.HeadPosition - Vector3.up * 0.15f);
                 if (sp.z < 0f) continue;
                 float ratio = Mathf.Clamp01((float)so.Maedhim / Mathf.Max(1, so.MaedhimMax));
                 int rows = so.Kind == SoulKind.Lump ? 2 : 1;

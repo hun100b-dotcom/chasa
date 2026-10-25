@@ -16,6 +16,8 @@ public class DamageNumbers : MonoBehaviour
     public void Spawn(Vector3 worldPos, int value, string kind)
     {
         Vector3 sp = cam.WorldToScreenPoint(worldPos);
+        sp.x += Random.Range(-Balance.DMG_NUM_SCATTER_PX, Balance.DMG_NUM_SCATTER_PX);   // 같은 자리 숫자가 좌우로 흩어져 겹쳐 읽기 어렵던 것 방지
+        while (items.Count >= Balance.DMG_NUM_MAX) items.RemoveAt(0);   // 한 화면 최대 개수: 가장 오래된 것부터 지운다
         items.Add(new Item
         {
             text = value.ToString(),

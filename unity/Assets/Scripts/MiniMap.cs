@@ -164,16 +164,15 @@ public class MiniMap : MonoBehaviour
         float margin = Mathf.Max(10f, 24f * Screen.height / 1080f);
         var r = new Rect(Screen.width - size - margin, margin, size, size);
         LeftPx = r.x - size * 20f / 260f - 8f;
-        BottomPx = r.yMax + size * 20f / 260f + 26f;   // 지역 이름 줄까지 포함한 아래 끝(시계 고리가 그 밑에 놓인다)
+        BottomPx = r.yMax + size * 20f / 260f + 14f;   // 시계 고리와 12px 이상 띄운다   // 지역 이름 줄까지 포함한 아래 끝(시계 고리가 그 밑에 놓인다)
         float scale = size / (MiniRadiusM * 2f);   // px/m
-        float H = CamHeading();
+        float H = 0f;   // 북쪽 고정(기획·아트 명세). 카메라 방향 회전은 마름모가 틀 밖으로 삐져나와 폐지
         if (frameTex == null) Box(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), new Color(0.05f, 0.06f, 0.09f, 0.92f));
         if (ready)
         {
             GUI.BeginClip(r);
             var cen = new Vector2(size * 0.5f, size * 0.5f);
             var old = GUI.matrix;
-            GUIUtility.RotateAroundPivot(-H * Mathf.Rad2Deg, cen);   // 카메라 앞이 위로 오게 지도를 반시계로 돌린다
             float full = WorldM * scale;
             // 텍스처 좌표(0=남서) → 지도 위 위치: 내 자리가 중앙. IMGUI 의 위쪽은 북(+z)
             float ox = cen.x - player.Pos.x * scale, oy = cen.y - (WorldM - player.Pos.z) * scale;
@@ -189,7 +188,9 @@ public class MiniMap : MonoBehaviour
         if (frameTex != null) { float e = size * 20f / 260f; GUI.DrawTexture(new Rect(r.x - e, r.y - e, size + e * 2f, size + e * 2f), frameTex); }   // 아트 틀(구멍 260, 캔버스 300)
         else { Frame(r, 2f, new Color(0.83f, 0.66f, 0.31f, 1f)); Frame(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), 1.5f, new Color(0.45f, 0.1f, 0.1f, 1f)); }
         string zn = FieldZones.CurrentName; if (string.IsNullOrEmpty(zn)) zn = "들길";
-        GUI.Label(new Rect(r.x, r.yMax + (frameTex != null ? size * 20f / 260f - 2f : 6f), r.width, 20f), zn + "   (M 큰 지도)", small);
+        var band = new Rect(r.x, r.yMax - size * 0.11f, r.width, size * 0.11f);   // 지도 아래 안쪽 띠: 시각 고리에 가려지지 않는다
+        Box(band, new Color(0.04f, 0.04f, 0.07f, 0.72f));
+        GUI.color = new Color(1f, 0.93f, 0.75f, 1f); GUI.Label(band, zn, small); GUI.color = Color.white;
     }
 
     void DrawBig()
@@ -203,7 +204,7 @@ public class MiniMap : MonoBehaviour
         var win = new Rect(fr.x + 64f * k, fr.y + 96f * k, 1104f * k, 700f * k);
         float size = 700f * k;
         var r = new Rect(win.x + (win.width - size) * 0.5f, win.y, size, size);   // 지도는 정사각이라 창 가운데에 맞춘다
-        Box(win, new Color(0.10f, 0.09f, 0.08f, 1f));
+        Box(win, new Color(0.953f, 0.906f, 0.827f, 1f));   // 정사각 지도 좌우 빈자리는 한지 색(검은 막대 금지: 아트 검수)
         float scale = size / WorldM;
         if (ready) GUI.DrawTexture(r, baseTex);
         foreach (var z in zones)
@@ -216,9 +217,9 @@ public class MiniMap : MonoBehaviour
         DrawMarkers(r, Vector2.zero, scale, 0f, 0f, true);
         GUI.DrawTexture(fr, bf);
         var lg = SpriteLib.Texture("ui/map_bigmap_legend"); if (lg != null) GUI.DrawTexture(new Rect(fr.x + 1196f * k, fr.y + 96f * k, 300f * k, 700f * k), lg);
-        var tt = SpriteLib.Texture("ui/map_bigmap_title"); if (tt != null) GUI.DrawTexture(new Rect(fr.x + 618f * k - 150f * k, fr.y + 36f * k, 300f * k, 54f * k), tt);
-        GUI.color = new Color(0.95f, 0.82f, 0.45f, 1f); GUI.Label(new Rect(fr.x + 618f * k - 150f * k, fr.y + 36f * k, 300f * k, 54f * k), "필드 지도", title); GUI.color = Color.white;   // 현판 그림에서 글자가 안 보여 글자로 보강
-        GUI.Label(new Rect(fr.x, fr.yMax + 6f, fr.width, 22f), "M · Esc 닫기", label);
+        var tt = SpriteLib.Texture("ui/map_bigmap_title"); if (tt != null) GUI.DrawTexture(new Rect(fr.x + 618f * k, fr.y + 36f * k, 300f * k, 54f * k), tt);   // 현판(왼쪽 위 618,36 — 가운데에 오게 놓인다)
+        else { GUI.color = new Color(0.95f, 0.82f, 0.45f, 1f); GUI.Label(new Rect(fr.x + 618f * k, fr.y + 36f * k, 300f * k, 54f * k), "필드 지도", title); GUI.color = Color.white; }
+        GUI.Label(new Rect(fr.x, fr.y + 806f * k, fr.width, 40f * k), "M · Esc 닫기", label);   // 두루마리 안쪽 아래(도술 칸과 안 겹침)
     }
 
     void DrawBigPlain()
@@ -266,7 +267,7 @@ public class MiniMap : MonoBehaviour
             var v = p.Value; if (!big && (Mathf.Abs(v.x - cen.x) > half - 4f || Mathf.Abs(v.y - cen.y) > half - 4f)) continue;
             string mi = m.kind == "seonang" ? "seonang" : m.kind == "bridge" ? "bridge" : m.kind == "ferry" ? "ferry" : (m.kind == "village" || m.kind == "doctor") ? "npc" : null;
             if (mi == null || !Icon(mi, v, 17f)) { Box(new Rect(v.x - 5, v.y - 5, 10, 10), new Color(0.05f, 0.06f, 0.08f, 0.9f)); Box(new Rect(v.x - 3.5f, v.y - 3.5f, 7, 7), col); }
-            if (big) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(1, 1, 1, 0.85f); GUI.Label(new Rect(v.x - 79, v.y + 7, 160, 20), nm, small); GUI.color = new Color(0.12f, 0.06f, 0.02f, 1f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white; /* 밝은 지도 위에서도 읽히게 짙은 글자 + 연한 그림자 */ }
+            if (big && !ZoneHasName(m.name)) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(0.12f, 0.06f, 0.02f, 1f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white; /* 밝은 지도 위에서도 읽히게 짙은 글자 + 연한 그림자 */ }
         }
         // 보스(붉은 마름모) — 아직 안 나타났어도 자리를 표시한다
         for (int id = 1; id <= Bosses.Count; id++) { var bd = Bosses.Get(id); D(bd.X, bd.Z, new Color(0.95f, 0.15f, 0.12f), s + 6f, "boss"); }
@@ -291,6 +292,14 @@ public class MiniMap : MonoBehaviour
         var old = GUI.matrix; GUIUtility.RotateAroundPivot(ang, me);
         if (!Icon("me", me, 24f)) { GUI.color = Color.black; GUI.DrawTexture(new Rect(me.x - 7, me.y - 9, 14, 18), dot); GUI.color = Color.white; DrawArrow(me); }
         GUI.matrix = old;
+    }
+
+    bool ZoneHasName(string n)
+    {
+        if (string.IsNullOrEmpty(n)) return false;
+        int i = n.IndexOf('('); if (i > 0) n = n.Substring(0, i).Trim();
+        foreach (var z in zones) if (z.Key == n) return true;
+        return false;
     }
 
     // 삼각형 화살표(위쪽이 앞): 작은 네모 여러 줄로 그린다(텍스처 없이)
