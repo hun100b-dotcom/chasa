@@ -64,24 +64,39 @@ public class NpcWorld
     {
         this.book = book; this.karma = karma; this.nightNo = nightNo;
         root = new GameObject("NpcWorld").transform;
-        var ta = Resources.Load<TextAsset>("Data/npc_flat");
+        placeOffset.Clear(); placeAbs.Clear();
+        LoadFlat("Data/npc_flat", false);
+        if (FieldRules.Act2) LoadFlat("Data/npc_flat_act2", true);   // 2막 땅이 열렸을 때만 2막 산 사람·단서를 세운다(tools/build_npc_act2.py)
+        LoadJesa();
+    }
+
+    /// <summary>납작한 일정표 한 파일을 읽어 자리(Spot)로 만든다. abs2=true 면 2막 표: 구역 이름표(Anchors) 없이 절대 좌표만으로 선다</summary>
+    void LoadFlat(string res, bool abs2)
+    {
+        var ta = Resources.Load<TextAsset>(res);
         if (ta == null) return;
         var f = JsonUtility.FromJson<FileData>(ta.text);
-        placeOffset.Clear(); placeAbs.Clear();
         if (f.places != null) foreach (var pl in f.places) { placeOffset[pl.place] = new Vector2(pl.ox, pl.oz); if (pl.abs == 1) placeAbs[pl.place] = new Vector2(pl.ax, pl.az); }
         var npcClueIds = new HashSet<string>();
         foreach (var r in f.entries)
         {
-            if (!Anchors.ContainsKey(r.zone)) continue;                       // 아직 땅이 없는 구역(장터거리 등)은 건너뜀
+            if (!abs2 && !Anchors.ContainsKey(r.zone)) continue;               // 아직 땅이 없는 구역(장터거리 등)은 건너뜀
             if (string.IsNullOrEmpty(r.line) && string.IsNullOrEmpty(r.clue)) continue;   // 말도 단서도 없는 줄(집 안 등)
-            all.Add(new Spot { row = r, clue = r.clue, line = r.line, half = r.half, verb = r.verb, label = r.name, pos = PosFor(r.zone, r.place) });
+            all.Add(new Spot { row = r, clue = r.clue, line = r.line, half = r.half, verb = r.verb, label = r.name, pos = abs2 ? AbsPos(r.place) : PosFor(r.zone, r.place) });
             if (!string.IsNullOrEmpty(r.clue)) npcClueIds.Add(r.clue);
         }
         // 사람 없이 사물에만 달린 단서(부러진 삿대 등): 낮에 만져 본다
         foreach (var c in f.clues)
-            if (string.IsNullOrEmpty(c.npc) && c.verb != "밤 대체" && Anchors.ContainsKey(c.zone) && !npcClueIds.Contains(c.id))
-                all.Add(new Spot { row = new Row { npc = "obj", name = c.place, zone = c.zone, place = c.place, time = c.time, unlock = 1, region = 1 }, clue = c.id, line = c.what, half = c.what, verb = c.verb, label = c.place, pos = PosFor(c.zone, c.place), isObject = true });
-        LoadJesa();
+            if (string.IsNullOrEmpty(c.npc) && c.verb != "밤 대체" && (abs2 || Anchors.ContainsKey(c.zone)) && !npcClueIds.Contains(c.id))
+                all.Add(new Spot { row = new Row { npc = "obj", name = c.place, zone = c.zone, place = c.place, time = c.time, unlock = 1, region = 1 }, clue = c.id, line = c.what, half = c.what, verb = c.verb, label = c.place, pos = abs2 ? AbsPos(c.place) : PosFor(c.zone, c.place), isObject = true });
+    }
+
+    /// <summary>절대 좌표 자리(2막)의 월드 위치. 막힌 곳이면 살짝 밀어낸다</summary>
+    static Vector3 AbsPos(string place)
+    {
+        Vector2 a; if (!placeAbs.TryGetValue(place, out a)) return Vector3.zero;
+        float ax = a.x, az = a.y; MapLayout.PushOut(ref ax, ref az, 0.6f);
+        return new Vector3(ax, 0f, az);
     }
 
     /// <summary>장례 대상 혼의 집 마당 좌표(없으면 false)</summary>
