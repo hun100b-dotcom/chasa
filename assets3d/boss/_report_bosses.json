@@ -1,0 +1,68 @@
+[
+ {
+  "name": "boss_b02_wolhwa",
+  "tris": 608,
+  "size_m": [
+   2.14,
+   2.2,
+   2.04
+  ],
+  "min_z": 0.0,
+  "bones": 7
+ },
+ {
+  "name": "boss_b03_seo",
+  "tris": 372,
+  "size_m": [
+   1.7,
+   1.37,
+   2.0
+  ],
+  "min_z": 0.0,
+  "bones": 7
+ },
+ {
+  "name": "boss_b05_daedol",
+  "tris": 620,
+  "size_m": [
+   2.55,
+   2.68,
+   3.4
+  ],
+  "min_z": 0.0,
+  "bones": 7
+ },
+ {
+  "name": "boss_b09_mangbu",
+  "tris": 256,
+  "size_m": [
+   1.15,
+   1.1,
+   1.95
+  ],
+  "min_z": 0.0,
+  "bones": 7
+ },
+ {
+  "name": "boss_b04_heugwol",
+  "tris": 440,
+  "size_m": [
+   1.6,
+   1.5,
+   1.94
+  ],
+  "min_z": 0.0,
+  "bones": 7
+ },
+ {
+  "name": "boss_b14_lump",
+  "tris": 744,
+  "size_m": [
+   2.09,
+   2.2,
+   2.62
+  ],
+  "min_z": 0.0,
+  "bones": 7
+ }
+]

@@ -30,14 +30,16 @@ def write_height(h):
 
 def write_splats():
     m = tg.chunk_maps(0, 0, s_=1, pad_=0, size_=tg.NM, masks=True)
-    a = np.stack([m["dirt"], m["grass"], m["gravel"], m["paddy"]], -1); b = m["leaf"]
+    a = np.stack([m["dirt"], m["grass"], m["gravel"], m["paddy"]], -1); b = m["leaf"]; fo = tg.blur(m["foam"], 0.5); wt = tg.blur(m["wet"], 0.8)
     # 칸 경계를 부드럽게: 논·흙 가장자리가 1m 격자에서 들쭉날쭉하지 않도록 아주 약하게 번지게 한다
     for k in range(4): a[..., k] = tg.blur(a[..., k], 0.6)
     b = tg.blur(b, 0.8)
     # 위쪽 줄 = 남쪽(y=0)이 되도록 뒤집는다(chunk_maps는 영상 위=북쪽)
     A = (np.clip(a, 0, 1)[::-1] * 255).astype(np.uint8); B = (np.clip(b, 0, 1)[::-1] * 255).astype(np.uint8)
     Image.fromarray(A, "RGBA").save(os.path.join(OUT, "splat_a.png"))
-    Image.fromarray(np.stack([B, np.zeros_like(B), np.zeros_like(B), np.full_like(B, 255)], -1), "RGBA").save(os.path.join(OUT, "splat_b.png"))
+    FO = (np.clip(fo, 0, 1)[::-1] * 255).astype(np.uint8); WT = (np.clip(wt, 0, 1)[::-1] * 255).astype(np.uint8)
+    # splat_b: R=낙엽(약속), G=물가 거품, B=젖은 땅(약속 밖 덤. 유니티 셰이더가 원하면 읽고 아니면 무시)
+    Image.fromarray(np.stack([B, FO, WT, np.full_like(B, 255)], -1), "RGBA").save(os.path.join(OUT, "splat_b.png"))
     return m
 
 def tileable(fn, n=512, cell_m=6.0):
@@ -84,11 +86,23 @@ def make_layers():
     for name, fn in (("grass", grass), ("dirt", dirt), ("gravel", gravel), ("paddy", paddy), ("leaf", leaf)):
         save(name, tileable(fn))
 
+def write_details():
+    """가까이 볼 때 곱해 쓰는 디테일(1.5m 반복, 512²): detail_{층}.png(색)·detail_{층}_n.png(노멀). 물: water_albedo.png(RGBA, 4m 반복)·water_normal.png."""
+    import terrain_detail as TD
+    for name, (c, nm) in TD.detail_tiles(tg.C, 512).items():
+        Image.fromarray(c).save(os.path.join(OUT, f"detail_{name}.png"), optimize=True); Image.fromarray(nm).save(os.path.join(OUT, f"detail_{name}_n.png"), optimize=True)
+    rgba, nrm = TD.water_tiles(256)
+    Image.fromarray(TD.water_tiles(256, True)[0], "RGBA").save(os.path.join(OUT, "water_albedo_deep.png"), optimize=True)   # 큰 강(검은여울)용: 더 어둡고 덜 비침
+    Image.fromarray(rgba, "RGBA").save(os.path.join(OUT, "water_albedo.png"), optimize=True); Image.fromarray(nrm).save(os.path.join(OUT, "water_normal.png"), optimize=True)
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     h = height_grid(); write_height(h); print("heightmap", h.shape, h.min(), h.max())
     m = write_splats(); print("splat 완료")
-    make_layers(); print("layer 5장 완료")
+    make_layers(); print("layer 5장 완료"); write_details(); print("디테일·물 그림 완료")
     json.dump({"size": tg.NM, "height_res": RES + 1, "splat_res": RES, "height_min_m": HMIN, "height_max_m": HMAX, "layer_tile_m": [6, 6, 6, 6, 6],
+               "detail": {"tile_m": 1.5, "files": ["detail_dirt.png", "detail_grass.png", "detail_gravel.png", "detail_paddy.png", "detail_leaf.png"], "normals": "detail_<층>_n.png (OpenGL, 초록=위)", "use": "층 색에 곱하거나 가까울 때(~25m 안) 섞고, 노멀은 층 노멀로 쓴다. 층 평균 명도는 layer_*와 비슷하다"},
+               "water": {"surface_z_m": 0.18, "flow_dir_xy": [0, -1], "flow_speed_mps": 0.7, "tile_m": 4, "albedo": "water_albedo.png (RGBA, 알파=투명도)", "normal": "water_normal.png", "scroll_uv_per_s": "flow_dir 방향으로 flow_speed/tile_m 만큼 uv 이동. 노멀은 반대 방향으로 한 겹 더 느리게 겹치면 흐름이 살아난다", "roughness": 0.06,
+                         "foam": "splat_b.png G채널 = 물가 거품(물높이와 땅이 만나는 선), B채널 = 젖은 땅. 알베도에도 구워져 있다"},
                "note": "아트(Blender) 쪽 같은 규칙에서 뽑은 자료. 행 0 = y 0(남쪽). 강 조각(br_*) 칸 안쪽은 -0.1로 낮춰 물길을 파 둠(물·조각 모델은 따로)."},
               open(os.path.join(OUT, "terrain.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)

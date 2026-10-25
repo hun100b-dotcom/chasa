@@ -1,0 +1,64 @@
+<title>3D 에셋 후보 승인</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 레이아웃: 한 줄 카드 목록(폰 한 열, 넓은 화면 두 열). 위에 진행 요약이 붙어 있어 승인 현황이 늘 보인다. */
+:root{--bg:#F3E7D3;--fg:#2A2A38;--mute:#6B5C45;--card:#FBF5E8;--line:#CDBB98;--accent:#C4402A;--ok:#2F7D68;--hold:#A8781F;--drop:#7A7A86;--gold:#D4A94E;
+--serif:'Noto Serif KR','Nanum Myeongjo',serif;--sans:'Noto Sans KR','Apple SD Gothic Neo',sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1729;--fg:#EFE6D3;--mute:#A9A08C;--card:#16213E;--line:#2E3B63;--accent:#E85C41;--ok:#5FE3C0;--hold:#D4A94E;--drop:#8B93A8;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1729;--fg:#EFE6D3;--mute:#A9A08C;--card:#16213E;--line:#2E3B63;--accent:#E85C41;--ok:#5FE3C0;--hold:#D4A94E;--drop:#8B93A8;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 60px}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font-family:var(--serif);font-size:1.7rem;line-height:1.25;text-wrap:balance;margin:6px 0 4px}
+h2{font-family:var(--serif);font-size:1.2rem;margin:30px 0 10px;padding-bottom:6px;border-bottom:3px solid var(--accent)}
+h3{font-size:1rem;margin:0 0 2px;line-height:1.35}
+.lead{color:var(--mute);margin:0 0 12px;max-width:62ch}
+.gap{border:1px solid var(--line);background:var(--card);padding:10px 14px;margin:12px 0;font-size:.92rem;max-width:68ch}
+.gap b{color:var(--accent)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 0;display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:.9rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.bar span b{font-variant-numeric:tabular-nums;font-size:1.05rem}
+.bar .a b{color:var(--ok)}.bar .h b{color:var(--hold)}.bar .d b{color:var(--drop)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:12px}
+.card{display:grid;grid-template-columns:132px minmax(0,1fr);gap:12px;background:var(--card);border:1px solid var(--line);padding:10px;border-left-width:5px}
+.card[data-v="approve"]{border-left-color:var(--ok)}.card[data-v="hold"]{border-left-color:var(--hold)}.card[data-v="drop"]{border-left-color:var(--drop);opacity:.7}
+.pic{width:132px;height:132px;background:#0F1729;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.noimg{color:#A9A08C;font-size:.78rem;text-align:center;padding:6px}
+.use{margin:0 0 6px;font-size:.9rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.tag{font-size:.74rem;padding:1px 8px;border:1px solid var(--line);border-radius:99px}
+.tag.cc0{border-color:var(--ok);color:var(--ok)}.tag.other{border-color:var(--hold);color:var(--hold)}
+.fit{margin:0 0 4px;font-size:.82rem;color:var(--mute);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.dots{display:inline-flex;gap:3px}.dots i{width:10px;height:10px;border:1.5px solid var(--gold);display:block;transform:rotate(45deg)}.dots i.on{background:var(--gold)}
+.cont,.warn{margin:0 0 4px;font-size:.84rem}.warn{color:var(--mute)}.warn b{color:var(--accent)}
+.lnk{margin:2px 0 8px;font-size:.84rem}a{color:var(--accent)}
+.vote{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.vote button{min-height:44px;font:700 .92rem var(--sans);border:1.5px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.vote button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.card[data-v="approve"] [data-v="approve"]{background:var(--ok);border-color:var(--ok);color:#06241D}
+.card[data-v="hold"] [data-v="hold"]{background:var(--hold);border-color:var(--hold);color:#1E1500}
+.card[data-v="drop"] [data-v="drop"]{background:var(--drop);border-color:var(--drop);color:#0F1729}
+#st{font-size:.8rem;color:var(--mute);width:100%}
+@media (max-width:420px){.card{grid-template-columns:96px minmax(0,1fr)}.pic{width:96px;height:96px}}
+</style>
+<div class="wrap">
+<h1>3D 에셋 후보 승인</h1>
+<p class="lead">차사의 맵·캐릭터·혼·보스·소품을 3D로 바꾸기 위해 찾은 무료 후보 {{N}}개입니다. 여기 있는 무료 에셋은 차사의 최종 모양이 아니라 임시 대역입니다. 동작, 뼈대 규격, 자연물, 테스트용 자리 채우기에만 쓰고, 동이·혼·보스·한옥의 실제 모양은 Higgsfield로 만든 그림으로 교체합니다. 항목마다 승인, 보류, 제외 중 하나를 눌러 주세요. 승인 전에는 프로젝트에 아무것도 넣지 않습니다.</p>
+<div class="gap"><b>먼저 알아둘 점</b> 한국 한옥과 저승 분위기를 직접 겨냥한 무료 상업 이용 3D 모음은 찾지 못했습니다. 무료 후보는 서양 판타지 모양이 대부분입니다. 그래서 서양풍 마을·소품 팩은 후보에서 뺐고, 동작·자연물·임시 대역만 남겼습니다. 한국 전통 마을 팩은 Unity 에셋 스토어의 유료 1건만 확인했습니다. 승인한 에셋의 원본은 저장소를 비공개로 바꾼 뒤에 넣겠습니다.</div>
+<div class="bar" id="bar"><span class="a">승인 <b id="na">0</b></span><span class="h">보류 <b id="nh">0</b></span><span class="d">제외 <b id="nd">0</b></span><span>미선택 <b id="nn">{{N}}</b></span><div id="st"></div></div>
+{{SECTIONS}}
+</div>
+<script>
+const IDS={{IDS}};let state={},db=null,coll=null;
+function paint(){let c={approve:0,hold:0,drop:0};
+ document.querySelectorAll('.card').forEach(el=>{const v=state[el.dataset.id];if(v){el.dataset.v=v;c[v]++}else el.removeAttribute('data-v')});
+ na.textContent=c.approve;nh.textContent=c.hold;nd.textContent=c.drop;nn.textContent=IDS.length-c.approve-c.hold-c.drop}
+document.addEventListener('click',async e=>{const b=e.target.closest('.vote button');if(!b)return;
+ const id=b.closest('.card').dataset.id,v=b.dataset.v;state[id]=state[id]===v?null:v;if(!state[id])delete state[id];paint();
+ if(coll){try{state[id]?await coll.doc(id).set({choice:state[id]}):await coll.doc(id).delete()}catch(err){st.textContent='저장에 실패했습니다. 이 화면에서만 표시됩니다.'}}});
+(async()=>{try{db=await claude.use('db')}catch(e){}
+ if(!db){st.textContent='이 화면에서는 선택이 저장되지 않습니다. 로그인된 상태에서 열어 주세요.';return}
+ coll=db.collection('votes');st.textContent='선택은 자동 저장됩니다.';
+ try{coll.onSnapshot(s=>{state={};(s.docs||[]).forEach(d=>{const x=d.data();if(x&&x.choice)state[d.id]=x.choice});paint()})}catch(e){st.textContent='저장된 선택을 불러오지 못했습니다.'}})();
+</script>

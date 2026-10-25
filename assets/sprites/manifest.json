@@ -1,0 +1,2678 @@
+{
+ "ppu": 128,
+ "filter": "Bilinear",
+ "mipmaps": false,
+ "compression": "None",
+ "sprites": [
+  {
+   "file": "characters/chasa_idle.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_swing.png",
+   "w": 448,
+   "h": 256,
+   "pivotX": 0.2857142857142857,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_cast.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_walk_a.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_walk_b.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_hit.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bang1.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bang2.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bang3.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bell1.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bell2.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_bell3.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_tri1.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_tri2.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_tri3.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_brush1.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_brush2.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "characters/chasa_brush3.png",
+   "w": 320,
+   "h": 300,
+   "pivotX": 0.4,
+   "pivotY": 0.92,
+   "ppu": 128,
+   "tint": false,
+   "note": "주인공 · 정면, 좌우는 flipX"
+  },
+  {
+   "file": "fx/fx_call_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 붙잡아 부르기 · 6m 반경"
+  },
+  {
+   "file": "fx/fx_bind_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 휘감기 · 4m 반경 · 1.5초 묶기"
+  },
+  {
+   "file": "fx/fx_burst_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 터뜨리기 · 얼룩 폭파 2.5m"
+  },
+  {
+   "file": "fx/fx_call_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 붙잡아 부르기 · 6m 반경"
+  },
+  {
+   "file": "fx/fx_bind_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 휘감기 · 4m 반경 · 1.5초 묶기"
+  },
+  {
+   "file": "fx/fx_burst_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 터뜨리기 · 얼룩 폭파 2.5m"
+  },
+  {
+   "file": "fx/fx_call_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 붙잡아 부르기 · 6m 반경"
+  },
+  {
+   "file": "fx/fx_bind_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 휘감기 · 4m 반경 · 1.5초 묶기"
+  },
+  {
+   "file": "fx/fx_burst_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 터뜨리기 · 얼룩 폭파 2.5m"
+  },
+  {
+   "file": "icons/icon_weapon_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기(육모방망이) · 등급 common"
+  },
+  {
+   "file": "icons/icon_dopo_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도포 · 등급 common"
+  },
+  {
+   "file": "icons/icon_noriga_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "노리개 · 등급 common"
+  },
+  {
+   "file": "icons/icon_weapon_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기(육모방망이) · 등급 crafted"
+  },
+  {
+   "file": "icons/icon_dopo_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도포 · 등급 crafted"
+  },
+  {
+   "file": "icons/icon_noriga_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "노리개 · 등급 crafted"
+  },
+  {
+   "file": "icons/icon_weapon_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기(육모방망이) · 등급 rare"
+  },
+  {
+   "file": "icons/icon_dopo_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도포 · 등급 rare"
+  },
+  {
+   "file": "icons/icon_noriga_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "노리개 · 등급 rare"
+  },
+  {
+   "file": "icons/icon_named_wolhwa_bell.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "월화의 방울(이름 있는 물건, 노리개 칸)"
+  },
+  {
+   "file": "icons/frame_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · common · 색 #F3E7D3"
+  },
+  {
+   "file": "icons/frame_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · crafted · 색 #4FA8A0"
+  },
+  {
+   "file": "icons/frame_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · rare · 색 #D4A94E"
+  },
+  {
+   "file": "icons/frame_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · named · 색 #E85C41"
+  },
+  {
+   "file": "fx/stain_0.png",
+   "w": 256,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "원념 얼룩 · 겹침 1단계(반경 2m = 128px 폭 기준 타원)"
+  },
+  {
+   "file": "fx/stain_1.png",
+   "w": 256,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "원념 얼룩 · 겹침 2단계(반경 2m = 128px 폭 기준 타원)"
+  },
+  {
+   "file": "fx/stain_2.png",
+   "w": 256,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "원념 얼룩 · 겹침 3단계(반경 2m = 128px 폭 기준 타원)"
+  },
+  {
+   "file": "enemies/soul_fierce.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "사나운 적(얼룩 3겹 소환 / 맺힘·공격 +50%)"
+  },
+  {
+   "file": "props/prop_seonangdang.png",
+   "w": 304,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7333333333333333,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×2"
+  },
+  {
+   "file": "fx/loot_common.png",
+   "w": 128,
+   "h": 192,
+   "pivotX": 0.5,
+   "pivotY": 0.875,
+   "ppu": 128,
+   "tint": false,
+   "note": "드롭 · 등급 common"
+  },
+  {
+   "file": "fx/loot_crafted.png",
+   "w": 128,
+   "h": 192,
+   "pivotX": 0.5,
+   "pivotY": 0.875,
+   "ppu": 128,
+   "tint": false,
+   "note": "드롭 · 등급 crafted"
+  },
+  {
+   "file": "fx/loot_rare.png",
+   "w": 128,
+   "h": 192,
+   "pivotX": 0.5,
+   "pivotY": 0.875,
+   "ppu": 128,
+   "tint": false,
+   "note": "드롭 · 등급 rare"
+  },
+  {
+   "file": "fx/loot_named.png",
+   "w": 128,
+   "h": 192,
+   "pivotX": 0.5,
+   "pivotY": 0.875,
+   "ppu": 128,
+   "tint": false,
+   "note": "드롭 · 등급 named"
+  },
+  {
+   "file": "hud/tilt_bar.png",
+   "w": 256,
+   "h": 28,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "기울기 막대(왼쪽 천도 ~ 오른쪽 파혼)"
+  },
+  {
+   "file": "hud/tilt_marker.png",
+   "w": 20,
+   "h": 28,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "기울기 마커"
+  },
+  {
+   "file": "hud/joystick_base.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "모바일 가상 조이스틱 바닥"
+  },
+  {
+   "file": "hud/joystick_knob.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "모바일 조이스틱 손잡이"
+  },
+  {
+   "file": "hud/btn_skill_call.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 1 붙잡아 부르기"
+  },
+  {
+   "file": "hud/btn_skill_bind.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 2 휘감기"
+  },
+  {
+   "file": "hud/btn_skill_burst.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 3 터뜨리기"
+  },
+  {
+   "file": "hud/btn_weapon_swap.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 바꿔 들기(Tab·버튼)"
+  },
+  {
+   "file": "hud/btn_plus.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "능력치 +1 배분"
+  },
+  {
+   "file": "hud/banner_result.png",
+   "w": 640,
+   "h": 160,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "결과 화면 배너(9-slice 테두리 40px)"
+  },
+  {
+   "file": "enemies/soul_fresh.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "갓 죽은 혼 10초 · 서 있음"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "갓 죽은 혼 10초 · 무릎 꿇음(처결 대기)"
+  },
+  {
+   "file": "enemies/soul_day.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "해 넘긴 혼 7초 · 서 있음"
+  },
+  {
+   "file": "enemies/soul_day_kneel.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "해 넘긴 혼 7초 · 무릎 꿇음(처결 대기)"
+  },
+  {
+   "file": "enemies/soul_old.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "오래된 혼 4초 · 서 있음"
+  },
+  {
+   "file": "enemies/soul_old_kneel.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "오래된 혼 4초 · 무릎 꿇음(처결 대기)"
+  },
+  {
+   "file": "enemies/soul_lump.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "덩어리(천도 불가) · 서 있음"
+  },
+  {
+   "file": "tiles/tile_dirt_road_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_dirt_road_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_yard_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_yard_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_grass_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_grass_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_paddy_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_paddy_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_stone_path_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_stone_path_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_stepping_stones_a.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "tiles/tile_stepping_stones_b.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "바닥 타일 · 마름모 128×64"
+  },
+  {
+   "file": "props/prop_choga.png",
+   "w": 304,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7333333333333333,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×2"
+  },
+  {
+   "file": "props/prop_giwa.png",
+   "w": 368,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.68,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 3×2"
+  },
+  {
+   "file": "props/prop_stone_wall.png",
+   "w": 240,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7866666666666666,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×1"
+  },
+  {
+   "file": "props/prop_jars.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_well.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_seonang_tree.png",
+   "w": 304,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7333333333333333,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×2"
+  },
+  {
+   "file": "props/prop_cairn.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_jangseung.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_sangyeo.png",
+   "w": 240,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7866666666666666,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×1"
+  },
+  {
+   "file": "props/prop_pyeongsang.png",
+   "w": 240,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.7866666666666666,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 2×1"
+  },
+  {
+   "file": "props/prop_jigae.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "props/prop_sotdae.png",
+   "w": 176,
+   "h": 300,
+   "pivotX": 0.5,
+   "pivotY": 0.84,
+   "ppu": 128,
+   "tint": false,
+   "note": "소품 · 차지하는 칸 1×1"
+  },
+  {
+   "file": "boss/boss_naru_idle.png",
+   "w": 384,
+   "h": 320,
+   "pivotX": 0.5,
+   "pivotY": 0.84375,
+   "ppu": 128,
+   "tint": false,
+   "note": "1호 보스 나루 영감"
+  },
+  {
+   "file": "boss/boss_naru_attack.png",
+   "w": 384,
+   "h": 320,
+   "pivotX": 0.5,
+   "pivotY": 0.84375,
+   "ppu": 128,
+   "tint": false,
+   "note": "1호 보스 나루 영감 · 삿대 휩쓸기 예비동작"
+  },
+  {
+   "file": "hud/gauge_frame.png",
+   "w": 192,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "게이지 틀 · 9-slice 권장(좌우 12px)"
+  },
+  {
+   "file": "hud/gauge_fill.png",
+   "w": 182,
+   "h": 14,
+   "pivotX": 0,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": true,
+   "note": "게이지 채움(흰색 → Tint로 맺힘=붉은색, 체력=청록 등)"
+  },
+  {
+   "file": "hud/timer_ring_bg.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "처결 대기 타이머 링 배경"
+  },
+  {
+   "file": "hud/timer_ring_fill.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": true,
+   "note": "처결 대기 타이머 링 채움(Image Filled Radial360, 시간 따라 색: 하늘→노랑→주황)"
+  },
+  {
+   "file": "hud/btn_cheondo.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "천도 버튼 아이콘(혼불)"
+  },
+  {
+   "file": "hud/btn_pahon.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "파혼 버튼 아이콘(균열)"
+  },
+  {
+   "file": "hud/icon_neok.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "넋(힘) 아이콘"
+  },
+  {
+   "file": "hud/icon_memory.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "기억 조각 아이콘(한지 쪽지)"
+  },
+  {
+   "file": "hud/icon_yeopjeon.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "엽전(파혼 보상) 아이콘"
+  },
+  {
+   "file": "hud/icon_karma.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "업 아이콘(검붉은 매듭)"
+  },
+  {
+   "file": "hud/vision_vignette.png",
+   "w": 1024,
+   "h": 1024,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "시야 축소 가장자리 먹 번짐(Unity에서 크기 조절로 반경 100%→60%)"
+  },
+  {
+   "file": "hud/memory_rim.png",
+   "w": 1024,
+   "h": 1024,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": true,
+   "note": "기억색 테두리(천도 성공 0.3초 번쩍, 기억색으로 Tint)"
+  },
+  {
+   "file": "hud/night_bar.png",
+   "w": 480,
+   "h": 32,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "하룻밤 시간 바(해 질 녘→동트기)"
+  },
+  {
+   "file": "hud/night_marker.png",
+   "w": 32,
+   "h": 32,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "시간 바 마커(달)"
+  },
+  {
+   "file": "hud/panel_hanji.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "패널 · 9-slice(테두리 24px)"
+  },
+  {
+   "file": "enemies/soul_fresh_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 갓 죽은 혼 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 갓 죽은 혼 · 무릎 꿇음 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_day_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 해 넘긴 혼 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_day_kneel_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 해 넘긴 혼 · 무릎 꿇음 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_old_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 오래된 혼 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "enemies/soul_old_kneel_plague.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 검은여울 역병 사망자 · 오래된 혼 · 무릎 꿇음 (석회 반점 + 지워진 이름 먹줄)"
+  },
+  {
+   "file": "fx/fx_bell_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 요령 타격 · 소리 고리 반경 약 3m(제안)"
+  },
+  {
+   "file": "fx/fx_trident_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 삼지창 타격 · 직선 관통(제안 폭 3칸)"
+  },
+  {
+   "file": "fx/fx_brush_0.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)"
+  },
+  {
+   "file": "fx/fx_bell_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 요령 타격 · 소리 고리 반경 약 3m(제안)"
+  },
+  {
+   "file": "fx/fx_trident_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 삼지창 타격 · 직선 관통(제안 폭 3칸)"
+  },
+  {
+   "file": "fx/fx_brush_1.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)"
+  },
+  {
+   "file": "fx/fx_bell_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 요령 타격 · 소리 고리 반경 약 3m(제안)"
+  },
+  {
+   "file": "fx/fx_trident_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 삼지창 타격 · 직선 관통(제안 폭 3칸)"
+  },
+  {
+   "file": "fx/fx_brush_2.png",
+   "w": 512,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "무기 명부 붓 타격 · 먹 한 획 호(제안 부채꼴)"
+  },
+  {
+   "file": "ui/ui_hanji_panel.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "한지 창 · 9조각(모서리 48px) · 가장자리 살짝 찢김"
+  },
+  {
+   "file": "ui/ui_ink_border_thin.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "먹 붓선 테두리 · 가는 한 겹 · 9조각(모서리 28px)"
+  },
+  {
+   "file": "ui/ui_ink_border_double.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "먹 붓선 테두리 · 겹선 · 9조각(모서리 28px)"
+  },
+  {
+   "file": "ui/ui_seal_select.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "붉은 인 · 선택/확정 (누르면 0.15초 도장 찍힘 움직임)"
+  },
+  {
+   "file": "ui/ui_seal_new.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "붉은 인 · 새것 (누르면 0.15초 도장 찍힘 움직임)"
+  },
+  {
+   "file": "ui/ui_seal_cheondo.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "붉은 인 · 천도함 (누르면 0.15초 도장 찍힘 움직임)"
+  },
+  {
+   "file": "ui/ui_strike_pahon.png",
+   "w": 128,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "파혼 기록 = 먹으로 그은 줄"
+  },
+  {
+   "file": "ui/ui_time_ring.png",
+   "w": 512,
+   "h": 512,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "시각 고리 · 12지시 눈금 · 붉은 호=동틀녘 · 미니맵 둘레"
+  },
+  {
+   "file": "ui/ui_marker_sun.png",
+   "w": 48,
+   "h": 48,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "해 표시"
+  },
+  {
+   "file": "ui/ui_marker_moon.png",
+   "w": 48,
+   "h": 48,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 표시"
+  },
+  {
+   "file": "ui/ui_moon_0.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 0/8 (그믐)"
+  },
+  {
+   "file": "ui/ui_moon_1.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 1/8 (초승)"
+  },
+  {
+   "file": "ui/ui_moon_2.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 2/8 (상현)"
+  },
+  {
+   "file": "ui/ui_moon_3.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 3/8 (차오름)"
+  },
+  {
+   "file": "ui/ui_moon_4.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 4/8 (보름)"
+  },
+  {
+   "file": "ui/ui_moon_5.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 5/8 (기움)"
+  },
+  {
+   "file": "ui/ui_moon_6.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 6/8 (하현)"
+  },
+  {
+   "file": "ui/ui_moon_7.png",
+   "w": 64,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "달 모양 7/8 (그믐 직전)"
+  },
+  {
+   "file": "ui/ui_nameplate_v.png",
+   "w": 96,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "세로쓰기 이름표 받침(대화창)"
+  },
+  {
+   "file": "ui/ui_grade_1.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 1 · 흔한: 가는 먹선 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_grade_2.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 2 · 손본: 겹선 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_grade_3.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 3 · 귀한: 금 겹선 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_grade_4.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 4 · 이름 있는: 붉은 인 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_grade_5.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 5 · 한 벌: 매듭 (색 없이도 모양으로 구별)"
+  },
+  {
+   "file": "ui/ui_judge_ring_fresh.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "처결 대기 고리 · 혼 나이 색(fresh) · 코드가 호 길이로 시간 표시"
+  },
+  {
+   "file": "ui/ui_judge_ring_day.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "처결 대기 고리 · 혼 나이 색(day) · 코드가 호 길이로 시간 표시"
+  },
+  {
+   "file": "ui/ui_judge_ring_old.png",
+   "w": 128,
+   "h": 64,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "처결 대기 고리 · 혼 나이 색(old) · 코드가 호 길이로 시간 표시"
+  },
+  {
+   "file": "ui/ui_time_ring_frame.png",
+   "w": 512,
+   "h": 512,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "시각 고리 테두리(미니맵 둘레, 가운데 투명) · 위=자시 · 구간 호: 동틀녘 붉음 가운데=동(90°, 폭 18°)·낮 한지(126°)·해질녘 금(18°)·밤 남청(198°), 시계방향 · 12지 글씨(낮 구간 먹색) · 해·달 표시는 ui_marker_sun/moon을 반지름 228px 위에 돌린다"
+  },
+  {
+   "file": "ui/ui_bar_vital_frame.png",
+   "w": 320,
+   "h": 32,
+   "pivotX": 0,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "생명 막대 틀 · 9조각(좌우 16px) · 안쪽 홈 x7~313,y7~25에 채움이 들어간다"
+  },
+  {
+   "file": "ui/ui_bar_vital_fill.png",
+   "w": 304,
+   "h": 16,
+   "pivotX": 0,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "생명 채움(붉은 인 색) · 코드가 가로로 잘라 쓴다"
+  },
+  {
+   "file": "ui/ui_bar_vital_ghost.png",
+   "w": 304,
+   "h": 16,
+   "pivotX": 0,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "생명 잔상(맞은 만큼 한지색이 잠깐 남았다 줄어듦)"
+  },
+  {
+   "file": "ui/ui_bar_gyeol_frame.png",
+   "w": 96,
+   "h": 14,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "맺힘 막대 틀(한 줄) · 안쪽 홈 x4~92"
+  },
+  {
+   "file": "ui/ui_bar_gyeol_frame_gold.png",
+   "w": 96,
+   "h": 14,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "맺힘 막대 틀(보스·귀한 적: 금 테두리)"
+  },
+  {
+   "file": "ui/ui_bar_gyeol_frame_x2.png",
+   "w": 96,
+   "h": 28,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "맺힘 막대 틀(덩어리: 두 줄). 위 줄 홈 y4~12, 아래 줄 홈 y16~24"
+  },
+  {
+   "file": "ui/ui_bar_gyeol_fill.png",
+   "w": 88,
+   "h": 8,
+   "pivotX": 0,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "맺힘 채움(사슬 청백)"
+  },
+  {
+   "file": "ui/ui_bar_gyeol_ghost.png",
+   "w": 88,
+   "h": 8,
+   "pivotX": 0,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "맺힘 잔상"
+  },
+  {
+   "file": "ui/ui_skill_slot.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 칸 틀(기본) · 안쪽 78×78에 아이콘을 맞춘다 · 4칸 + 무기 기술 칸에 같은 틀"
+  },
+  {
+   "file": "ui/ui_skill_slot_hot.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 칸 틀(누름/발동 중: 붉은 인 테두리와 붉은 번짐)"
+  },
+  {
+   "file": "ui/ui_skill_slot_ready.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 칸 틀(쓸 수 있게 된 순간 0.3초 번쩍: 기본 틀 위에 겹쳐 페이드)"
+  },
+  {
+   "file": "ui/ui_skill_slot_cool.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 칸 재사용 대기 덮개(먹 번짐). 코드가 Image.Radial360으로 시계 방향으로 걷어낸다"
+  },
+  {
+   "file": "ui/ui_skill_key_tab.png",
+   "w": 32,
+   "h": 22,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "단축키 쪽지(한지 작은 표). 글씨(1·2·3·4·Q)는 코드가 먹색으로 쓴다"
+  },
+  {
+   "file": "ui/ui_skill_bar_plate.png",
+   "w": 256,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 줄 바탕(9조각, 모서리 32px). 슬롯 틀 4칸 + 무기칸 아래에 깐다"
+  },
+  {
+   "file": "ui/ui_skill_pip_bureum.png",
+   "w": 16,
+   "h": 16,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 갈래 표식 점(부름) · 칸 모서리에 붙임"
+  },
+  {
+   "file": "ui/ui_skill_pip_jul.png",
+   "w": 16,
+   "h": 16,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 갈래 표식 점(줄) · 칸 모서리에 붙임"
+  },
+  {
+   "file": "ui/ui_skill_pip_eolluk.png",
+   "w": 16,
+   "h": 16,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 갈래 표식 점(얼룩) · 칸 모서리에 붙임"
+  },
+  {
+   "file": "ui/icon_skill_bureum_1.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 붙잡아 부르기 · 갈래색=청록(부름)"
+  },
+  {
+   "file": "ui/icon_skill_bureum_2.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 혼불 날리기 · 갈래색=청록(부름)"
+  },
+  {
+   "file": "ui/icon_skill_bureum_3.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 이름 비추기 · 갈래색=청록(부름)"
+  },
+  {
+   "file": "ui/icon_skill_bureum_4.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 배웅길 · 갈래색=청록(부름)"
+  },
+  {
+   "file": "ui/icon_skill_bureum_5.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 일곱 이름 (깊은 도술: 금 겹선) · 갈래색=청록(부름)"
+  },
+  {
+   "file": "ui/icon_skill_jul_1.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 휘감기 · 갈래색=사슬 청백(줄)"
+  },
+  {
+   "file": "ui/icon_skill_jul_2.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 여럿 끌기 · 갈래색=사슬 청백(줄)"
+  },
+  {
+   "file": "ui/icon_skill_jul_3.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 매듭 걸음 · 갈래색=사슬 청백(줄)"
+  },
+  {
+   "file": "ui/icon_skill_jul_4.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 한 줄 꿰기 · 갈래색=사슬 청백(줄)"
+  },
+  {
+   "file": "ui/icon_skill_jul_5.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 쇠사슬 울 (깊은 도술: 금 겹선) · 갈래색=사슬 청백(줄)"
+  },
+  {
+   "file": "ui/icon_skill_eolluk_1.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 터뜨리기 · 갈래색=보라(얼룩)"
+  },
+  {
+   "file": "ui/icon_skill_eolluk_2.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 원념 두르기 · 갈래색=보라(얼룩)"
+  },
+  {
+   "file": "ui/icon_skill_eolluk_3.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 얼룩 타기 · 갈래색=보라(얼룩)"
+  },
+  {
+   "file": "ui/icon_skill_eolluk_4.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 깨진 이름 던지기 · 갈래색=보라(얼룩)"
+  },
+  {
+   "file": "ui/icon_skill_eolluk_5.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "도술 아이콘 · 검은 갓의 그림자 (깊은 도술: 금 겹선) · 갈래색=보라(얼룩)"
+  },
+  {
+   "file": "ui/ui_btn_cheondo.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "천도 버튼(길게 누르기 · 청록) · 혼이 무릎 꿇었을 때만 공격 버튼 옆에 뜬다"
+  },
+  {
+   "file": "ui/ui_btn_cheondo_pressed.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "천도 버튼(길게 누르기 · 청록) · 눌림(안이 물들고 테두리가 두꺼워짐)"
+  },
+  {
+   "file": "ui/ui_btn_pahon.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "파혼 버튼(톡 · 주황) · 혼이 무릎 꿇었을 때만 공격 버튼 옆에 뜬다"
+  },
+  {
+   "file": "ui/ui_btn_pahon_pressed.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "파혼 버튼(톡 · 주황) · 눌림(안이 물들고 테두리가 두꺼워짐)"
+  },
+  {
+   "file": "ui/ui_btn_hold_ring.png",
+   "w": 144,
+   "h": 144,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "천도 버튼 둘레의 길게 누르기 홈 고리. 청록 채움은 코드가 Image.Radial360으로 그린다(흰색 호 스프라이트 따로 필요 없음)"
+  },
+  {
+   "file": "ui/ui_book_spread.png",
+   "w": 1024,
+   "h": 640,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "명부 책 펼침면(한지 두 쪽 + 가운데 오침 붉은 실 + 먹 표지 테두리). 장비·도술·능력·인·기록 화면의 바탕. 한지 안쪽 여백 약 40px 안에 내용을 놓는다"
+  },
+  {
+   "file": "ui/ui_book_tab.png",
+   "w": 64,
+   "h": 168,
+   "pivotX": 1,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "책 등 세로 탭(눌리지 않은 것: 먹 판). 오른쪽 끝이 책 왼쪽 표지에 닿는다 · 9조각(위아래 28px)"
+  },
+  {
+   "file": "ui/ui_book_tab_active.png",
+   "w": 64,
+   "h": 168,
+   "pivotX": 1,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "책 등 세로 탭(선택됨: 한지색이라 펼침면과 이어져 보임 + 붉은 인 표식)"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_cheolsak_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·철삭 · 등급 set"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_bangmangi_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·육모방망이 · 등급 set"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_yoryeong_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·요령 · 등급 set"
+  },
+  {
+   "file": "gear/gear_w_samjichang_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_samjichang_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_samjichang_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_samjichang_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_samjichang_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·삼지창 · 등급 set"
+  },
+  {
+   "file": "gear/gear_w_but_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 common"
+  },
+  {
+   "file": "gear/gear_w_but_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_w_but_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_w_but_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 named"
+  },
+  {
+   "file": "gear/gear_w_but_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 무기·명부 붓 · 등급 set"
+  },
+  {
+   "file": "gear/gear_gat_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 common"
+  },
+  {
+   "file": "gear/gear_gat_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_gat_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 rare"
+  },
+  {
+   "file": "gear/gear_gat_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 named"
+  },
+  {
+   "file": "gear/gear_gat_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 갓(흑립) · 등급 set"
+  },
+  {
+   "file": "gear/gear_dopo_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 common"
+  },
+  {
+   "file": "gear/gear_dopo_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_dopo_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_dopo_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 named"
+  },
+  {
+   "file": "gear/gear_dopo_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 도포 · 등급 set"
+  },
+  {
+   "file": "gear/gear_tti_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 common"
+  },
+  {
+   "file": "gear/gear_tti_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_tti_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_tti_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 named"
+  },
+  {
+   "file": "gear/gear_tti_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 띠 · 등급 set"
+  },
+  {
+   "file": "gear/gear_sin_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 common"
+  },
+  {
+   "file": "gear/gear_sin_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_sin_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 rare"
+  },
+  {
+   "file": "gear/gear_sin_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 named"
+  },
+  {
+   "file": "gear/gear_sin_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 신(미투리) · 등급 set"
+  },
+  {
+   "file": "gear/gear_norigae_common.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 common"
+  },
+  {
+   "file": "gear/gear_norigae_crafted.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 crafted"
+  },
+  {
+   "file": "gear/gear_norigae_rare.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 rare"
+  },
+  {
+   "file": "gear/gear_norigae_named.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 named"
+  },
+  {
+   "file": "gear/gear_norigae_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "장비 아이콘 · 노리개 · 등급 set"
+  },
+  {
+   "file": "icons/frame_set.png",
+   "w": 96,
+   "h": 96,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "등급 테두리 · set(한 벌) · 색 #C9B0FF"
+  },
+  {
+   "file": "characters/chasa_set_wolhwa.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "세트 외형 · 월화 세트(굿옷) (정면 idle 변형)"
+  },
+  {
+   "file": "characters/chasa_set_miner.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "세트 외형 · 광부 세트(쇳골) (정면 idle 변형)"
+  },
+  {
+   "file": "characters/chasa_set_heukwol.png",
+   "w": 256,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.90625,
+   "ppu": 128,
+   "tint": false,
+   "note": "세트 외형 · 흑월 세트 (정면 idle 변형)"
+  },
+  {
+   "file": "hud/gauge_frame_r2.png",
+   "w": 192,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 게이지 틀(석회 테두리 · 모서리 파임) · 9-slice 좌우 12px"
+  },
+  {
+   "file": "hud/panel_hanji_r2.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 패널 · 9-slice 24px"
+  },
+  {
+   "file": "hud/timer_ring_bg_r2.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 처결 타이머 링 배경(점선 안쪽 = 번호 칸 느낌)"
+  },
+  {
+   "file": "hud/night_bar_r2.png",
+   "w": 480,
+   "h": 32,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "② 하룻밤 시간 바(해 질 녘이 붉지 않고 흐린 회청 — 비·안개 읍성)"
+  },
+  {
+   "file": "enemies/soul_fresh_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 갓 죽은"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 갓 죽은 · 무릎"
+  },
+  {
+   "file": "enemies/soul_day_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 해 넘긴"
+  },
+  {
+   "file": "enemies/soul_day_kneel_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 해 넘긴 · 무릎"
+  },
+  {
+   "file": "enemies/soul_old_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 오래된"
+  },
+  {
+   "file": "enemies/soul_old_kneel_r3.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 붉은재 번호 병사 혼(번호 패 + 녹슨 화살) · 오래된 · 무릎"
+  },
+  {
+   "file": "enemies/soul_fresh_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 갓 죽은"
+  },
+  {
+   "file": "enemies/soul_fresh_kneel_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 갓 죽은 · 무릎"
+  },
+  {
+   "file": "enemies/soul_day_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 해 넘긴"
+  },
+  {
+   "file": "enemies/soul_day_kneel_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 해 넘긴 · 무릎"
+  },
+  {
+   "file": "enemies/soul_old_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 오래된"
+  },
+  {
+   "file": "enemies/soul_old_kneel_r4.png",
+   "w": 192,
+   "h": 256,
+   "pivotX": 0.5,
+   "pivotY": 0.921875,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 쇳골 광부 혼(석탄 가루 + 목패) · 오래된 · 무릎"
+  },
+  {
+   "file": "hud/gauge_frame_r3.png",
+   "w": 192,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 게이지 틀 · 9-slice 12px"
+  },
+  {
+   "file": "hud/panel_hanji_r3.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 패널 · 9-slice 24px"
+  },
+  {
+   "file": "hud/timer_ring_bg_r3.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "③ 처결 타이머 링 배경"
+  },
+  {
+   "file": "hud/gauge_frame_r4.png",
+   "w": 192,
+   "h": 24,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 게이지 틀 · 9-slice 12px"
+  },
+  {
+   "file": "hud/panel_hanji_r4.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 패널 · 9-slice 24px"
+  },
+  {
+   "file": "hud/timer_ring_bg_r4.png",
+   "w": 128,
+   "h": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.5,
+   "ppu": 128,
+   "tint": false,
+   "note": "④ 처결 타이머 링 배경"
+  }
+ ]
+}

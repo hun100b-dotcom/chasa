@@ -1,0 +1,24 @@
+[
+ {
+  "name": "boss_naru",
+  "tris": 558,
+  "size_m": [
+   6.2,
+   6.2,
+   2.72
+  ],
+  "min_z": -0.011,
+  "bones": 8
+ },
+ {
+  "name": "boss_naru_attack",
+  "tris": 558,
+  "size_m": [
+   6.2,
+   6.2,
+   2.53
+  ],
+  "min_z": 0.0,
+  "bones": 8
+ }
+]
