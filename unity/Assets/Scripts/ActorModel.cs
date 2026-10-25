@@ -150,7 +150,8 @@ public class ActorModel : MonoBehaviour
         if (want == Pose.Walk && !moving && pose == Pose.Walk) want = Pose.Idle;
         int idx; if (!heroInput.TryGetValue(want, out idx)) idx = 0;
         if (idx != heroCur) { heroCur = idx; heroT = 0f; heroSpeed = 1f; }   // 새 동작은 처음부터
-        heroT += dt;
+        // 달리기(Run)는 5.5 m/s 에서 1.0배로 재생하면 발이 안 미끄러진다(아트 HERO-MOTION). 다른 속도면 속도 비율만큼 빠르거나 느리게
+        heroT += dt * (want == Pose.Walk ? Mathf.Clamp(speed / Mathf.Max(0.1f, Balance.PLAYER_MOVE_SPEED), 0.4f, 1.5f) : 1f);
         // 가중치를 부드럽게 옮긴다 (0.12초 안팎 크로스페이드)
         for (int i = 0; i < mixer.GetInputCount(); i++)
         {

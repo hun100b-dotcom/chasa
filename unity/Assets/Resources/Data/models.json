@@ -14,7 +14,7 @@
     },
     {
      "pose": "Walk",
-     "clip": "Walk"
+     "clip": "Run"
     },
     {
      "pose": "Attack",
@@ -42,7 +42,7 @@
     },
     {
      "pose": "Dodge",
-     "clip": "Dodge"
+     "clip": "Roll"
     }
    ],
    "loop": [
