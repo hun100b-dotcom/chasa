@@ -2402,5 +2402,21 @@
  "ACT2_KNEEL_WAIT": {
   "value": 7.0,
   "note": "(2막 보스 임시·기획 act2-souls §4) 2막 보스 넷 처결 대기(초)"
+ },
+ "RING_COIN_SHARE_ACT3": {
+  "value": 0.7,
+  "note": "(3막 기획 act3_souls) 엽전 몫. 0.75면 파혼만이 5% 앞서고 0.65면 천도만이 앞선다"
+ },
+ "WATER_SOUL_CAST_REDUCE_S": {
+  "value": 0.5,
+  "note": "(3막 QA 채택) 물 혼 천도 캐스팅 단축(초). 하한 WATER_SOUL_CAST_FLOOR_S"
+ },
+ "WATER_SOUL_CAST_FLOOR_S": {
+  "value": 0.5,
+  "note": "물 혼 캐스팅 하한(초)"
+ },
+ "TIDE_SIGNAL_WINDOW_S": {
+  "value": 20.0,
+  "note": "(3막) 밀물 신호 뒤 물 혼 2~4마리가 떠밀려 가기까지(초). 안에 처결 못 하면 그 밤 사라진다"
  }
 }
