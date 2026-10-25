@@ -159,9 +159,13 @@ public class JudgeSystem : MonoBehaviour
         player.PlayPahonAnim();
     }
 
+    /// <summary>혼 하나를 처결했다(두 번째 값: true=천도, false=파혼). 보스 약점(B-05 불린 병사 천도 등)이 듣는다</summary>
+    public System.Action<Enemy, bool> OnJudged;
+
     void DoPahon(Enemy e)
     {
         var at = e.Pos;
+        if (OnJudged != null) OnJudged(e, false);
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
         if (interactables != null) interactables.OnPahon(e.soul.Name);   // 이름혼의 유품은 재가 된다
@@ -284,6 +288,7 @@ public class JudgeSystem : MonoBehaviour
             int gained = ledger.Neok - before;
             if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
+            if (OnJudged != null) OnJudged(castTarget, true);
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
             if (castTarget.soul.Name == null) introPlainDone++;
             if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
