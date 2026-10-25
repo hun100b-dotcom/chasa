@@ -6479,6 +6479,127 @@
    "bypass_cast_filter": false,
    "length_sec": 2.62,
    "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.trait.pin",
+   "file": "sfx_trait_pin",
+   "category": "전투",
+   "desc": "삼지창 고정: 쇠 갈래가 땅에 쿵 박히고 → 빗장이 잠기듯 딸깍·딸깍(0.45초). 쇠 떨림 없이 '바닥에 묶였다'",
+   "use": "삼지창 3타가 일반·정예 혼을 고정할 때(맞은 적 여럿이어도 한 번). 3타 타격음 0.04초 뒤. 보스·면역 중엔 안 냄",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.73,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.trait.pin.release",
+   "file": "sfx_trait_pin_release",
+   "category": "전투",
+   "desc": "고정이 풀림: 땅에서 갈래가 쑥 빠지는 작은 흙 부스럭 + 마른 틱(0.25초)",
+   "use": "고정 1.0초(정예 0.5초)가 끝날 때. 여럿이 같이 풀리면 한 번",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.24,
+   "peak_dbfs": -18
+  },
+  {
+   "id": "sfx.trait.slow",
+   "file": "sfx_trait_slow",
+   "category": "전투",
+   "desc": "요령 둔화: 공기가 무거워지듯 낮은 '우웅—' 이 울렁이며 아래로 처짐(0.7초). 방울 쇳소리 없음 — 요령 짤랑 뒤에 남는 물결",
+   "use": "요령 타격이 적을 둔화시킬 때 휘두름 한 번에 한 번(맞은 적 수와 무관). 타격음 0.06초 뒤. 이미 둔화된 적만 맞으면 0.5배",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.43,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.trait.mark.1",
+   "file": "sfx_trait_mark_1",
+   "category": "전투",
+   "desc": "붓 표식 1: 먹물 한 방울 똑(낮게) — 붓 '촥' 뒤에 따로 들리는 맑은 점",
+   "use": "표식이 1개가 될 때. 붓 타격음 0.05초 뒤. 개수가 올라갈수록 높은 방울(mark.2·mark.3)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.43,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.trait.mark.2",
+   "file": "sfx_trait_mark_2",
+   "category": "전투",
+   "desc": "붓 표식 2: 먹물 방울 두 번 똑똑(조금 높게)",
+   "use": "표식이 2개가 될 때",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.5,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.trait.mark.3",
+   "file": "sfx_trait_mark_3",
+   "category": "전투",
+   "desc": "붓 표식 3(가득): 방울 세 번 똑똑똑(가장 높게) + 종이에 먹이 스미는 짧은 사각 — '이름 쓸 수 있다'",
+   "use": "표식이 3개(최대)가 될 때. 이미 3개면 소리 없음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.76,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.trait.name",
+   "file": "sfx_trait_name",
+   "category": "전투",
+   "desc": "붓 Q 이름 쓰기: 붓이 길게 한 획 스으윽 → 먹이 낮게 번지는 둥 → 작은 인 꾹(1.1초). 표식 셋이 이름이 됨",
+   "use": "붓 무기 기술 「이름 쓰기」가 걸릴 때(표식 3개를 써 버림)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.79,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.trait.mark.splash",
+   "file": "sfx_trait_mark_splash",
+   "category": "처결",
+   "desc": "표식 있는 혼을 파혼: 먹물이 사방으로 파사삭 튀고 → 둘레에 방울이 톡톡 떨어짐(옮겨 붙은 표식, 0.7초)",
+   "use": "파혼 소리 0.12초 뒤. 옮긴 표식 수(1~3)와 상관없이 하나. 이름 있는 혼을 파혼하면 안 냄",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.07,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "sfx.tendo.vision.close",
+   "file": "sfx_tendo_vision_close",
+   "category": "처결",
+   "desc": "천도 시야가 좁아짐: 귀 둘레 공기가 안쪽으로 훕 빨려 들고 낮은 맥 한 번 둥(0.4초) — 바깥이 안 보이게 됐다",
+   "use": "천도 시전 시작(시야 0.2초에 걸쳐 60%로). 먹먹 필터를 건너뛴다. 같은 천도 연속(5초 안)엔 0.6배",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.95,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.tendo.vision.open",
+   "file": "sfx_tendo_vision_open",
+   "category": "처결",
+   "desc": "천도 시야가 돌아옴(끊기거나 피했을 때): 막혔던 귀가 트이듯 바깥 소리가 휙 돌아오는 짧은 숨(0.3초)",
+   "use": "천도가 피하기·맞음으로 끊겨 시야가 돌아올 때. 천도 성공은 sfx.tendo.done 이 대신함",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.35,
+   "peak_dbfs": -19
+  },
+  {
+   "id": "sfx.tendo.cast.danger",
+   "file": "sfx_tendo_cast_danger",
+   "category": "처결",
+   "desc": "천도 중 바깥 위험 맥박: 낮은 심장 '둥…둥…' 이 귀 안에서(반복 2초, 1초에 한 번). 크기는 시야 밖 적이 가까울수록 커짐",
+   "use": "천도 시전 중 반복. 볼륨 = 시야 밖 가장 가까운 적 거리 8 m→0, 3 m→1(없으면 0). 소리 높이·빠르기는 그대로, 크기만",
+   "loop": true,
+   "bypass_cast_filter": true,
+   "length_sec": 1.95,
+   "peak_dbfs": -16
   }
  ],
  "footsteps": {

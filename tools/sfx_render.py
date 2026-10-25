@@ -6235,6 +6235,106 @@ def _(r):
     return reverb(b, 1.1, .25)
 
 
+
+# ── 무기 기본 특성 세 가지(2026-10-26, planning/growth/weapon-traits-3.md) ──
+# 원칙: 무기 타격음(sfx.hit.*) 위에 "한 겹 더" 얹는 소리다. 같은 무기의 타격음과 겹쳐도 귀에 갈리게
+#   고정 = 땅(아래쪽 낮은 툭 + 잠기는 딸깍), 둔화 = 물결(쇳소리 없는 낮은 울렁임), 표식 = 물방울(높이로 개수를 셈)
+@sfx("sfx.trait.pin", -11, "전투", "삼지창 고정: 쇠 갈래가 땅에 쿵 박히고 → 빗장이 잠기듯 딸깍·딸깍(0.45초). 쇠 떨림 없이 '바닥에 묶였다'", use="삼지창 3타가 일반·정예 혼을 고정할 때(맞은 적 여럿이어도 한 번). 3타 타격음 0.04초 뒤. 보스·면역 중엔 안 냄")
+def _(r):
+    b = _buf(.6)
+    place(b, _thump(r, .18, 70, 300) * .9, 0.0)                          # 땅에 박힘(가장 낮게 — 삼지창 타격음보다 아래)
+    m = int(.12 * SR); place(b, filt(noise(m, r), "band", 900, 1.0) * env(m, .002, .05, 3) * .35, .005)   # 흙이 눌림
+    place(b, _wood_tap(r, 1650, .015, .55), .16)                         # 딸깍(잠김) 둘 — 쇠가 아니라 마른 빗장
+    place(b, _wood_tap(r, 1400, .015, .45), .23)
+    return reverb(b, .5, .12)
+
+
+@sfx("sfx.trait.pin.release", -18, "전투", "고정이 풀림: 땅에서 갈래가 쑥 빠지는 작은 흙 부스럭 + 마른 틱(0.25초)", use="고정 1.0초(정예 0.5초)가 끝날 때. 여럿이 같이 풀리면 한 번")
+def _(r):
+    b = _buf(.35)
+    m = int(.2 * SR); place(b, sweep_filt(noise(m, r), "band", 1600, 700, 1.2) * env(m, .03, .1, 3) * .5, 0)
+    place(b, _wood_tap(r, 1200, .01, .4), .12)
+    return b
+
+
+@sfx("sfx.trait.slow", -13, "전투", "요령 둔화: 공기가 무거워지듯 낮은 '우웅—' 이 울렁이며 아래로 처짐(0.7초). 방울 쇳소리 없음 — 요령 짤랑 뒤에 남는 물결", use="요령 타격이 적을 둔화시킬 때 휘두름 한 번에 한 번(맞은 적 수와 무관). 타격음 0.06초 뒤. 이미 둔화된 적만 맞으면 0.5배")
+def _(r):
+    sec = .75; n = int(sec * SR); t = T(sec)
+    wob = 1 + .45 * np.sin(2 * np.pi * 7 * t)                            # 울렁임(빠른 떨림)이 '느려짐'을 들려준다
+    body = (tone(sec, 240, 150) * .6 + tone(sec, 120, 75) * .5) * wob * env(n, .04, .4, 2.5, hold=.08)
+    air = sweep_filt(noise(n, r), "band", 900, 350, 1.5) * env(n, .03, .35, 3) * .2
+    return reverb(body + air, .9, .2)
+
+
+def _ink_drop(r, f, a=1.0):
+    """먹물 방울 '똑': 높이가 위로 휙 올라가는 짧은 물방울 + 종이 톡"""
+    m = int(.14 * SR)
+    d = tone(.14, f, f * 1.9) * env(m, .001, .04, 4) * a
+    p = filt(noise(m, r), "band", 3500, 2) * env(m, .001, .01, 4) * .25 * a
+    return d + p
+
+
+@sfx("sfx.trait.mark.1", -15, "전투", "붓 표식 1: 먹물 한 방울 똑(낮게) — 붓 '촥' 뒤에 따로 들리는 맑은 점", use="표식이 1개가 될 때. 붓 타격음 0.05초 뒤. 개수가 올라갈수록 높은 방울(mark.2·mark.3)")
+def _(r):
+    b = _buf(.3); place(b, _ink_drop(r, 620), 0); return reverb(b, .4, .15)
+
+
+@sfx("sfx.trait.mark.2", -15, "전투", "붓 표식 2: 먹물 방울 두 번 똑똑(조금 높게)", use="표식이 2개가 될 때")
+def _(r):
+    b = _buf(.4); place(b, _ink_drop(r, 780, .8), 0); place(b, _ink_drop(r, 780), .08); return reverb(b, .4, .15)
+
+
+@sfx("sfx.trait.mark.3", -14, "전투", "붓 표식 3(가득): 방울 세 번 똑똑똑(가장 높게) + 종이에 먹이 스미는 짧은 사각 — '이름 쓸 수 있다'", use="표식이 3개(최대)가 될 때. 이미 3개면 소리 없음")
+def _(r):
+    b = _buf(.6)
+    for k in range(3): place(b, _ink_drop(r, 980, .7 + .15 * k), k * .07)
+    place(b, _paper(r, .12, 1800, 6000) * .35, .24)
+    return reverb(b, .5, .18)
+
+
+@sfx("sfx.trait.name", -11, "전투", "붓 Q 이름 쓰기: 붓이 길게 한 획 스으윽 → 먹이 낮게 번지는 둥 → 작은 인 꾹(1.1초). 표식 셋이 이름이 됨", use="붓 무기 기술 「이름 쓰기」가 걸릴 때(표식 3개를 써 버림)")
+def _(r):
+    b = _buf(1.4)
+    m = int(.5 * SR)
+    stroke = sweep_filt(noise(m, r), "band", 1500, 4200, 1.8) * env(m, .08, .25, 2, hold=.15) * .55
+    place(b, stroke, 0)
+    place(b, tone(.6, 180, 140) * env(int(.6 * SR), .05, .35, 3) * .4, .42)   # 먹이 번짐
+    place(b, _thump(r, .12, 160, 700) * .6, .72); place(b, _wood_tap(r, 700, .03, .5), .73)   # 인 꾹
+    return reverb(b, 1.0, .25)
+
+
+@sfx("sfx.trait.mark.splash", -12, "처결", "표식 있는 혼을 파혼: 먹물이 사방으로 파사삭 튀고 → 둘레에 방울이 톡톡 떨어짐(옮겨 붙은 표식, 0.7초)", use="파혼 소리 0.12초 뒤. 옮긴 표식 수(1~3)와 상관없이 하나. 이름 있는 혼을 파혼하면 안 냄")
+def _(r):
+    b = _buf(.9)
+    m = int(.25 * SR); place(b, filt(noise(m, r), "band", 2800, 1.2) * env(m, .002, .09, 3) * .6, 0)
+    for k, f in enumerate((700, 880, 1040, 820)): place(b, _ink_drop(r, f, .5), .15 + k * .09 + r.uniform(0, .03))
+    return reverb(b, .6, .2)
+
+
+# ── 천도 시야 축소(2026-10-26 점검): 지금은 먹먹해지기만 해서 '안전한 방'처럼 들린다 → 닫히는 순간과 바깥 위험을 귀로 ──
+@sfx("sfx.tendo.vision.close", -15, "처결", "천도 시야가 좁아짐: 귀 둘레 공기가 안쪽으로 훕 빨려 들고 낮은 맥 한 번 둥(0.4초) — 바깥이 안 보이게 됐다", bypass_cast=True, use="천도 시전 시작(시야 0.2초에 걸쳐 60%로). 먹먹 필터를 건너뛴다. 같은 천도 연속(5초 안)엔 0.6배")
+def _(r):
+    sec = .45; n = int(sec * SR)
+    suck = sweep_filt(noise(n, r), "band", 2400, 500, 1.6) * env(n, .2, .12, 4) * .5     # 좁아지는 0.2초에 맞춰 커짐
+    b = _buf(.7); place(b, suck, 0)
+    place(b, _thump(r, .2, 55, 250) * .8, .2)                                           # 다 닫힌 순간 낮은 맥
+    return reverb(b, .7, .2)
+
+
+@sfx("sfx.tendo.vision.open", -19, "처결", "천도 시야가 돌아옴(끊기거나 피했을 때): 막혔던 귀가 트이듯 바깥 소리가 휙 돌아오는 짧은 숨(0.3초)", bypass_cast=True, use="천도가 피하기·맞음으로 끊겨 시야가 돌아올 때. 천도 성공은 sfx.tendo.done 이 대신함")
+def _(r):
+    sec = .35; n = int(sec * SR)
+    return sweep_filt(noise(n, r), "band", 500, 3000, 1.4) * env(n, .03, .15, 3) * .5
+
+
+@sfx("sfx.tendo.cast.danger", -16, "처결", "천도 중 바깥 위험 맥박: 낮은 심장 '둥…둥…' 이 귀 안에서(반복 2초, 1초에 한 번). 크기는 시야 밖 적이 가까울수록 커짐", loop=True, bypass_cast=True, use="천도 시전 중 반복. 볼륨 = 시야 밖 가장 가까운 적 거리 8 m→0, 3 m→1(없으면 0). 소리 높이·빠르기는 그대로, 크기만")
+def _(r):
+    sec = 2.0; b = _buf(sec)
+    for at in (0.0, 1.0):
+        place(b, _thump(r, .16, 52, 220) * 1.0, at); place(b, _thump(r, .12, 60, 260) * .55, at + .17)   # 두-근
+    return loopify(b, .05)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)
