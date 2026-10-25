@@ -47,6 +47,7 @@ public class GameMain : MonoBehaviour
         if (FieldRules.On) GroundTerrain.Init();   // 아트의 새 땅(Resources/Terrain)이 있으면 읽는다. 없으면 옛 타일 땅
         BuildStage();
         var startPos = FieldRules.On ? new Vector3(FieldRules.StartX, 0f, FieldRules.StartZ) : Vector3.zero;
+        if (FieldRules.On) startPos = CaptureStart(startPos);   // 검수용 주소 ?boss=naru|wolhwa|seo · ?pos=x,z 로 시작 자리를 옮긴다
         if (FieldRules.On) focus = startPos;   // 카메라가 원점에서 날아오지 않게 시작 위치에서 시작
         if (!FieldRules.On) enemies.SpawnAll(startPos);   // 필드에선 군집(FieldCamps)이 가까이 갈 때 세운다
         numbers = gameObject.AddComponent<DamageNumbers>();
@@ -354,6 +355,30 @@ public class GameMain : MonoBehaviour
         GUI.color = new Color(1, 1, 1, 0.18f); GUI.DrawTexture(new Rect(o.x - R, o.y - R, R * 2, R * 2), joyTex);
         GUI.color = new Color(1, 1, 1, 0.45f); GUI.DrawTexture(new Rect(p.x - 32, p.y - 32, 64, 64), joyTex);
         GUI.color = Color.white;
+    }
+
+    /// <summary>
+    /// 아트·PC 캡처용 시작 자리: ?boss=naru|wolhwa|seo 면 그 보스 마당 남쪽 10m(보스가 정면에 보이게)에서, ?pos=x,z 면 그 좌표에서 시작한다.
+    /// 마당 꾸밈은 120m 안에서 단계적으로 켜지므로 시작 직후엔 안 보일 수 있다 — 8초 뒤에 찍을 것.
+    /// </summary>
+    static Vector3 CaptureStart(Vector3 def)
+    {
+        var u = (Application.absoluteURL ?? "").ToLowerInvariant();
+        int bi = u.IndexOf("boss=");
+        if (bi >= 0)
+        {
+            string v = new string(u.Substring(bi + 5).TakeWhile(char.IsLetterOrDigit).ToArray());
+            int id = v == "naru" || v == "1" ? 1 : v == "wolhwa" || v == "2" ? 2 : v == "seo" || v == "3" ? 3 : 0;
+            if (id > 0) { var bd = Bosses.Get(id); return new Vector3(bd.X, 0f, bd.Z - 10f); }
+        }
+        int pi = u.IndexOf("pos=");
+        if (pi >= 0)
+        {
+            var parts = new string(u.Substring(pi + 4).TakeWhile(c => char.IsDigit(c) || c == ',' || c == '.' || c == '-').ToArray()).Split(',');
+            float x, z;
+            if (parts.Length == 2 && float.TryParse(parts[0], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out x) && float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out z)) return new Vector3(x, 0f, z);
+        }
+        return def;
     }
 
     void HandleKeyboardMove()

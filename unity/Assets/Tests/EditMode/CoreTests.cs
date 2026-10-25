@@ -1959,5 +1959,18 @@ public class CoreTests
         Assert.IsNull(new GridPath(c, 20, 20).Find(2, 2, 17, 2, 1f));
     }
 
+    [Test]
+    public void Dialogue_Lines_Repeat_AndClueOnce()
+    {
+        var d = new DialogueState();
+        d.Add(new TalkEntry { Npc = "연이", Lines = new[] { "첫 줄", "둘째 줄" }, Repeat = "또 왔네.", GiveClue = "B01-X" });
+        Assert.IsTrue(d.Has("연이")); Assert.IsFalse(d.Has("없는 사람")); Assert.IsFalse(d.Start("없는 사람"));
+        Assert.IsTrue(d.Start("연이")); Assert.AreEqual("첫 줄", d.Line); Assert.IsFalse(d.IsLast);
+        string clue; Assert.IsFalse(d.Advance(out clue)); Assert.AreEqual("둘째 줄", d.Line); Assert.IsTrue(d.IsLast);
+        Assert.IsTrue(d.Advance(out clue)); Assert.AreEqual("B01-X", clue); Assert.IsFalse(d.Active);
+        Assert.IsTrue(d.Start("연이")); Assert.AreEqual("또 왔네.", d.Line);   // 다시 걸면 되풀이 한 줄
+        Assert.IsTrue(d.Advance(out clue)); Assert.IsNull(clue, "단서는 처음 한 번만");
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }
