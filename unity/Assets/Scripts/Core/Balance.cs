@@ -343,7 +343,7 @@ public static class Balance
     public const float DODGE_IFRAME_START = 0.03f;  // (기획 타격감 분석 10-24, 임시) 무적 시작(초)
     public const float DODGE_IFRAME_END = 0.25f;  // (기획 타격감 분석 10-24, 임시) 무적 끝(초) → 무적 0.22초(60fps 13프레임)
     public const int DODGE_CHARGES = 2;  // (기획 타격감 분석 10-24, 임시) 연속으로 피할 수 있는 횟수
-    public const float DODGE_RECHARGE = 3.0f;  // (기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초) | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float DODGE_RECHARGE = 1.1f;  // (기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float DODGE_CANCEL_TO_ATTACK = 0.22f;  // (기획 타격감 분석 10-24, 임시) 피하기 시작 후 이 시점부터 공격·처결로 끊을 수 있음(초)
     public const bool DODGE_CANCELS_TENDO = true;  // (기획 타격감 분석 10-24, 임시) 천도 캐스팅 중 피하면 캐스팅만 취소, 혼은 계속 무릎 꿇고 대기(다시 천도 가능)
     public const float COMBO3_RECOVER_DODGE_LOCK = 0.5f;  // (기획 타격감 분석 10-24, 임시) 3타 후딜 앞쪽 이 비율은 피하기도 불가(마무리의 대가)
@@ -516,4 +516,5 @@ public static class Balance
     public const float CAMERA_PITCH_NEAR = 46.0f;  // 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_MID = 52.0f;  // 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
     public const float CAMERA_PITCH_FAR = 58.0f;  // 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))
+    public const float CAMP_DENSITY_MULT = 1.0f;  // 군집 인원 전체 배율(1.0=그대로). 첫 30분 난이도 조정용: 코디 지시로 봇이 첫 보스까지 2번 이하 쓰러지게 0.7~0.8 까지 낮춘다(10-25)
 }

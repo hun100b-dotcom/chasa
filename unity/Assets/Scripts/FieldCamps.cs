@@ -66,6 +66,7 @@ public class FieldCamps
     {
         c.spawned = true;
         int count = CampRules.CountFor(c.row.n, SkyState.Daylight);   // 낮엔 적게
+        if (Balance.CAMP_DENSITY_MULT < 0.999f) count = Mathf.Max(1, Mathf.RoundToInt(count * Balance.CAMP_DENSITY_MULT));   // 전체 밀도 배율(난이도 조정)
         if (GhostMult > 1.001f)   // 날씨로 늘어나는 몫은 확률로 올려서(기댓값이 맞게) 작은 군집도 평균 +15% 가 된다
         {
             float exact = count * GhostMult; int whole = Mathf.FloorToInt(exact);
