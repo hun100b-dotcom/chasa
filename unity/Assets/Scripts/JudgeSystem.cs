@@ -256,7 +256,7 @@ public class JudgeSystem : MonoBehaviour
         flashColor = new Color(0.55f, 0.05f, 0.08f); flashA = 0.55f;   // 붉은 번쩍임(깨뜨림)
         // 원념 얼룩: 3개가 겹치면 그 자리에서 사나운 적이 솟는다
         float cx, cz;
-        if (stains.Add(at.x, at.z, out cx, out cz))
+        if (stains.Add(at.x, at.z, out cx, out cz, e.elite ? Balance.ELITE_STAIN_SCALE : 1f))   // 거센 혼 파혼: 큰 얼룩(1.5배)
         {
             enemies.SpawnFierce(new Vector3(cx, 0, cz));
             Say("사나운 혼이 깨어났다!");
@@ -520,12 +520,15 @@ public class JudgeSystem : MonoBehaviour
     public void PickLoot(ItemDef it, Vector3 at)
     {
         string txt = Loadout.Describe(it);
+        // 비교(▲▼ 대신 글꼴에 있는 ↑ ↓): 같은 칸에서 가장 못한 것과 점수를 견준다. 빈 칸이면 '새 칸'
+        int cur = int.MaxValue; foreach (var p in Equipment.PositionsOf(it.Slot)) if (lo.gear.IsOpen(p)) cur = System.Math.Min(cur, Equipment.Score(lo.gear.GetAt(p)));
+        string cmp = cur == int.MaxValue || cur < 0 ? "새 칸 " : Equipment.Score(it) > cur ? "↑ 낫다 " : Equipment.Score(it) < cur ? "↓ 못하다 " : "= 같다 ";
         if (lo.Equip(it))
         {
             ledger.SetMaxHp(lo.stats.MaxHp);
-            lo.lastDrop = "주워서 찼다: " + txt;
+            lo.lastDrop = "주워서 찼다 " + cmp + txt;
         }
-        else lo.lastDrop = "주웠다(지금 것이 낫다): " + txt;
+        else lo.lastDrop = "주웠다 (지금 것이 낫다) " + cmp + txt;
         lo.lastDropT = 5f;
         Sfx.Play("sfx.ui.confirm");
         TimedSprite.Spawn("fx/loot_" + (it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common"), at, 1.5f);   // 줍는 순간의 빛
@@ -894,10 +897,28 @@ public class JudgeSystem : MonoBehaviour
             EndCast();
             Say("시전이 끊겼다!");
         }
-        if (ledger.Dead) { Say("쓰러졌다"); night.Tick(night.TimeLeft + 1f); }   // 쓰러짐 = 동트기와 같은 실패(추가 수확분 상실)
+        if (ledger.Dead) OnPlayerDown();
     }
 
     /// <summary>쓰러진 뒤 한 판을 처음부터. 체력·적·얼룩을 되돌리고 장부(수확)는 결과 화면(M5)에서 다룬다</summary>
+    int deaths;
+    /// <summary>쓰러졌다. 필드에선 가장 가까운 서낭당에서 깨어난다(처음 10분 M13): 결과 화면 없이 이어지고, 첫 쓰러짐은 잃는 것이 없다.
+    /// 옛 한 판 모드(시계 없음)는 예전처럼 동트기와 같은 실패</summary>
+    void OnPlayerDown()
+    {
+        if (clock == null || !FieldRules.On) { Say("쓰러졌다"); night.Tick(night.TimeLeft + 1f); return; }
+        deaths++;
+        float[] best = new[] { FieldRules.StartX, FieldRules.StartZ }; float bd = float.MaxValue;
+        foreach (var sh in FieldRules.Shrines) { if (ShrineLocked(sh)) continue; float d = new Vector2(sh[0] - player.Pos.x, sh[1] - player.Pos.z).magnitude; if (d < bd) { bd = d; best = sh; } }
+        if (Casting) { castTarget.soul.CancelSending(); EndCast(); }
+        player.CommandStop(); player.Pos = new Vector3(best[0] + 2f, 0f, best[1]); ledger.ResetHp();
+        enemies.graceT = Mathf.Max(enemies.graceT, 4f);   // 깨어난 직후 4초는 적이 덤비지 않는다
+        if (deaths > 1) { int lost = Mathf.Min(ledger.Coin, ledger.Coin / 10); ledger.Coin -= lost; }   // 둘째부터: 엽전 10% 를 잃는다(임시)
+        feel.AddShake(0.4f); flashColor = Color.black; flashA = 1f;
+        Say(deaths == 1 ? "아직 보낼 이름이 남았다" : "서낭당에서 눈을 떴다" + (deaths > 1 ? " — 엽전을 조금 잃었다" : ""));
+        if (onTeleport != null) onTeleport(player.Pos);
+    }
+
     void RestartNight()
     {
         night = new NightRun(); settled = false; ResetRound(); sinceHit = 99f;
@@ -979,7 +1000,7 @@ public class JudgeSystem : MonoBehaviour
         float wxSlow; int wxDrain;
         weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
         stains.Tick(dt * weather.Fx.StainMult);   // 비 오는 밤: 얼룩이 절반만 오래간다
-        if (wxDrain > 0 && !ledger.Dead) { ledger.TakeDamage(wxDrain); if (ledger.Dead) { Say("쓰러졌다"); night.Tick(night.TimeLeft + 1f); } }   // 역병 안개: 서 있으면 체력이 준다
+        if (wxDrain > 0 && !ledger.Dead) { ledger.TakeDamage(wxDrain); if (ledger.Dead) OnPlayerDown(); }   // 역병 안개: 서 있으면 체력이 준다
         flashA = Mathf.Max(0f, flashA - realDt * 2.2f);
         vignetteT = Mathf.Max(0f, vignetteT - realDt);
         sinceHit += dt;
@@ -1502,17 +1523,17 @@ public class JudgeSystem : MonoBehaviour
                 // 모델 얼룩(지름 약 2.2m)을 STAIN_RADIUS 에 맞추고, 마지막 2초에 줄어든다
                 float d = Balance.STAIN_RADIUS * 2f / 2.2f * fade;
                 stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f + GroundTerrain.HeightAt(snap[i][0], snap[i][1]), snap[i][1]);
-                stainViews[i].transform.localScale = new Vector3(d, d, d);
+                stainViews[i].transform.localScale = new Vector3(d, d, d) * snap[i][3];
             }
             else if (art)
             {
                 // 그림 얼룩은 같은 크기에서 점점 작아진다 (그림 쿼드의 기본 크기는 반경 STAIN_RADIUS 기준)
                 stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f + GroundTerrain.HeightAt(snap[i][0], snap[i][1]), snap[i][1]);
-                stainViews[i].transform.localScale = new Vector3(fade, 1f, fade);
+                stainViews[i].transform.localScale = new Vector3(fade, 1f, fade) * snap[i][3];
             }
             else
             {
-                float d = Balance.STAIN_RADIUS * 2f * fade;
+                float d = Balance.STAIN_RADIUS * 2f * fade * snap[i][3];
                 stainViews[i].transform.position = new Vector3(snap[i][0], 0.02f + i * 0.002f + GroundTerrain.HeightAt(snap[i][0], snap[i][1]), snap[i][1]);
                 stainViews[i].transform.localScale = new Vector3(d, 0.01f, d);
             }

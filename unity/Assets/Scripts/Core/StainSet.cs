@@ -8,7 +8,7 @@ namespace Chasa.Core
 {
     public class StainSet
     {
-        class Stain { public float X, Z, Age; }
+        class Stain { public float X, Z, Age, Scale = 1f; }
         readonly List<Stain> _items = new List<Stain>();
 
         public int Count { get { return _items.Count; } }
@@ -18,7 +18,7 @@ namespace Chasa.Core
         {
             var list = new List<float[]>();
             foreach (var it in _items)
-                list.Add(new[] { it.X, it.Z, 1f - it.Age / Balance.STAIN_DURATION });
+                list.Add(new[] { it.X, it.Z, 1f - it.Age / Balance.STAIN_DURATION, it.Scale });
             return list;
         }
 
@@ -26,9 +26,9 @@ namespace Chasa.Core
         /// 얼룩 하나 추가. 겹친 얼룩(중심 거리 < 반경×2)이 3개 이상이 되면 그것들을 지우고 가운데 지점을 돌려준다.
         /// 소환이 아니면 false.
         /// </summary>
-        public bool Add(float x, float z, out float centerX, out float centerZ)
+        public bool Add(float x, float z, out float centerX, out float centerZ, float scale = 1f)
         {
-            var s = new Stain { X = x, Z = z };
+            var s = new Stain { X = x, Z = z, Scale = scale };
             _items.Add(s);
             float limit = Balance.STAIN_RADIUS * 2f;
             var group = new List<Stain>();
@@ -51,7 +51,7 @@ namespace Chasa.Core
             foreach (var it in _items)
             {
                 float dx = x - it.X, dz = z - it.Z;
-                if (System.Math.Sqrt(dx * dx + dz * dz) <= Balance.STAIN_RADIUS) return true;
+                if (System.Math.Sqrt(dx * dx + dz * dz) <= Balance.STAIN_RADIUS * it.Scale) return true;
             }
             return false;
         }
