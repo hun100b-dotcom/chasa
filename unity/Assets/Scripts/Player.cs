@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     // ---- 피하기(구르기) ----
     float dodgeT; Vector3 dodgeDir;                 // 피하는 중 경과 시간, 방향
     float dodgeCharges = Balance.DODGE_CHARGES;     // 남은 충전(소수 가능: 충전되는 중)
+    public System.Action onHitLanded;               // 내 타격이 적에게 맞을 때마다(안내가 첫 타를 알아챈다)
     public System.Action onDodgeCancelCast;         // 천도 캐스팅 중 피하면 JudgeSystem 이 캐스팅만 취소한다
     public float DodgeCharges => dodgeCharges;
     public float PullCooldown => pullCooldown;
@@ -592,6 +593,7 @@ public class Player : MonoBehaviour
         var dir = new Vector3(rx - rz * mix, 0, rz + rx * mix).normalized;
         int dmg = Mathf.Max(1, Mathf.RoundToInt(cfg.damage * loadout.stats.DamageMult * (1f + Random.Range(-Config.DAMAGE_VARIANCE, Config.DAMAGE_VARIANCE))));
         bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun);
+        onHitLanded?.Invoke();
         // 손맛 5요소: 맞은 놈만 굳기(국소 히트스톱) · 처치/마지막 타격만 전체 정지 · 흔들림 · 줌 펀치 · 맞은 방향 카메라 밀림
         bool last = a.step == Steps.Length;
         Sfx.Play(killed || last ? "sfx.hit.heavy" : "sfx.hit.chain");   // 타격음은 히트스톱과 같은 순간에

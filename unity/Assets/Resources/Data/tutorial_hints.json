@@ -1,0 +1,49 @@
+{
+ "_설명": "처음 5분 안내 문구(기획 first-5-minutes.md). 기획이 여기서 문구만 고치면 된다. pc/touch=문구, key=키 그림 글자, timed=true 면 dur 초 뒤 자동 닫힘(아니면 행동하면 닫힘)",
+ "steps": [
+  {
+   "id": "walk",
+   "pc": "걷기",
+   "touch": "끌어서 걷기",
+   "key": "마우스 왼쪽 누르고 있기",
+   "timed": false
+  },
+  {
+   "id": "map",
+   "pc": "지도",
+   "touch": "미니맵을 눌러 지도 보기",
+   "key": "M",
+   "timed": true,
+   "dur": 3
+  },
+  {
+   "id": "hit",
+   "pc": "혼을 눌러 때리기",
+   "touch": "때리기 버튼",
+   "key": "왼쪽 클릭",
+   "timed": false
+  },
+  {
+   "id": "dodge",
+   "pc": "피하기",
+   "touch": "피하기 버튼",
+   "key": "Space",
+   "timed": false
+  },
+  {
+   "id": "pull",
+   "pc": "멀리 있는 혼 끌어오기",
+   "touch": "끌기 버튼",
+   "key": "Q",
+   "timed": false
+  },
+  {
+   "id": "zoom",
+   "pc": "가까이·멀리",
+   "touch": "두 손가락으로 확대",
+   "key": "휠",
+   "timed": true,
+   "dur": 3
+  }
+ ]
+}

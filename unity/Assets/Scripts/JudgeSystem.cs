@@ -548,6 +548,7 @@ public class JudgeSystem : MonoBehaviour
         int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult * weather.Fx.CastHit / Balance.WEATHER_CLEAR_CAST_HIT)) : by.damage;   // 안개: 천도 중 맞는 피해 ×(0.85/0.75)
         sinceHit = 0f;
         Hint(HintEvent.FirstHurt);
+        guide.Complete("dodge");   // 맞아도 피하기 안내는 닫힌다(기획)
         Sfx.Play("sfx.player.hurt");
         int dealt = godMode ? 0 : ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
@@ -935,6 +936,57 @@ public class JudgeSystem : MonoBehaviour
     public string memLine; public float memLineT;              // 지금 화면에 띄울 기억 줄(보랏빛 자막)
     public readonly TutorialHints hints = new TutorialHints();   // 처음 한 번만 뜨는 안내
     public void HintClue() { Hint(HintEvent.FirstClue); }
+
+    // ---- 처음 5분 안내 대기줄(기획 first-5-minutes.md): 행동을 하면 닫히고, 한 번에 하나만 뜬다 ----
+    public readonly GuideQueue guide = new GuideQueue();
+    [System.Serializable] class GuideFile { public GuideRow[] steps; }
+    [System.Serializable] class GuideRow { public string id, pc, touch, key; public bool timed; public float dur; }
+    bool guideLoaded; Vector3 walkFrom; bool walkFromSet; float guideClock;
+    void LoadGuide()
+    {
+        guideLoaded = true;
+        var ta = Resources.Load<TextAsset>("Data/tutorial_hints"); if (ta == null) return;
+        GuideFile f = null; try { f = JsonUtility.FromJson<GuideFile>(ta.text); } catch { }
+        if (f == null || f.steps == null) return;
+        foreach (var r in f.steps) guide.Define(new GuideStep { Id = r.id, Pc = r.pc, Touch = r.touch, Key = r.key, Timed = r.timed, Dur = r.dur > 0f ? r.dur : 3f });
+        var u = (Application.absoluteURL ?? "").ToLowerInvariant();
+        if (u.Contains("guide=off")) guide.Enabled = false;   // 숙련자: 안내 끄기
+    }
+
+    /// <summary>안내를 띄울 상황을 보고 요청하고, 화면 값(HudState)을 채운다. 컷신·낮 화면·창이 열려 있으면 쉰다</summary>
+    void GuideTick(HudState h)
+    {
+        if (!guideLoaded) LoadGuide();
+        bool quiet = inDay || night.Over || cuts.Active || CharacterPanel.Open || SettingsPanel.Open || MiniMap.BigOpen;
+        if (!quiet)
+        {
+            guideClock += Time.deltaTime;
+            if (!walkFromSet) { walkFrom = player.Pos; walkFromSet = true; guide.Request("walk"); }
+            if (!guide.IsDone("walk") && (player.Pos - walkFrom).magnitude >= 3f) guide.Complete("walk");
+            if (guide.IsDone("walk"))
+            {
+                guide.Request("map");
+                bool near = false, winding = false, far = false;
+                foreach (var e in enemies.list)
+                {
+                    if (e == null || !e.alive || e.gone || e.soul.Boss) continue;
+                    float d = Vector3.Distance(e.Pos, player.Pos);
+                    if (d < 12f) near = true;
+                    if (d < 10f && e.atk != null && e.atk.Winding) winding = true;
+                    if (d > 10f && d < 20f) far = true;
+                }
+                if (near) guide.Request("hit");
+                if (winding && guide.IsDone("hit")) guide.Request("dodge");
+                if (far && guide.IsDone("hit")) guide.Request("pull");
+                if (guideClock > 90f && guide.IsDone("hit")) guide.Request("zoom");
+            }
+            guide.Tick(Time.deltaTime);
+        }
+        var cur = guide.Current;
+        h.GuideText = quiet || cur == null ? null : guide.TextFor(Ko.TouchUI);
+        h.GuideKey = cur != null && !Ko.TouchUI ? cur.Key : null;
+        h.GuideCheck = guide.Checking; h.GuideRemind = guide.Reminding;
+    }
     void Hint(HintEvent e) { var t = hints.On(e, Ko.TouchUI); if (t != null) ui?.Hud.Toasts.Add(t); }
     public readonly CutscenePlayer cuts = new CutscenePlayer();   // 나루 영감 실시간 컷신
     readonly HashSet<int> bossIntroDone = new HashSet<int>();   // 등장 컷을 본 보스 번호
@@ -956,6 +1008,7 @@ public class JudgeSystem : MonoBehaviour
         if (ui == null) return;
         var h = ui.Hud;
         FillEdges(h);
+        GuideTick(h);
         if (clock != null)
         {
             h.Peaceful = clock.Daylight > 0.6f && !Casting && !AnyEnemyNear(25f);

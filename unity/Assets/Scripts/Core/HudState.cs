@@ -34,6 +34,8 @@ namespace Chasa.Core
         public sealed class SkillSlotView { public string Name; public float Cd, CdSec; }
         public readonly SkillSlotView[] Slots = { new SkillSlotView(), new SkillSlotView(), new SkillSlotView(), new SkillSlotView() };
         public readonly System.Collections.Generic.List<EdgeMark> Edges = new System.Collections.Generic.List<EdgeMark>();   // 화면 가장자리 경고(시야 밖 공격 예고)
+        // 처음 5분 안내(화면 하단 중앙 띠). GuideText 가 null 이면 안 보인다
+        public string GuideText, GuideKey; public bool GuideCheck, GuideRemind;
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 
         public float HpRatio { get { return MaxHp <= 0 ? 0f : System.Math.Max(0f, System.Math.Min(1f, (float)Hp / MaxHp)); } }

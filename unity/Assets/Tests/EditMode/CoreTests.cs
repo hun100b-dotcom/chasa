@@ -1922,5 +1922,25 @@ public class CoreTests
         Assert.IsTrue(BuriedAi.InStrike(1.5f)); Assert.IsFalse(BuriedAi.InStrike(3.5f));
     }
 
+    [Test]
+    public void GuideQueue_OneAtATime_ClosesOnAction_RemindsAfter20s()
+    {
+        var g = new GuideQueue();
+        g.Define(new GuideStep { Id = "walk", Pc = "걷기" }); g.Define(new GuideStep { Id = "hit", Pc = "때리기" });
+        g.Define(new GuideStep { Id = "map", Pc = "지도", Timed = true, Dur = 3f });
+        g.Request("walk"); g.Request("hit"); g.Request("walk");
+        g.Tick(0.1f); Assert.AreEqual("walk", g.Current.Id, "먼저 요청한 안내가 먼저 뜬다(한 번에 하나)");
+        g.Tick(5f); Assert.AreEqual("walk", g.Current.Id, "시간이 지나도 행동하기 전엔 안 닫힌다");
+        g.Tick(15.5f); Assert.IsTrue(g.Reminding, "20초 넘게 안 하면 다시 알린다");
+        g.Complete("walk"); Assert.IsTrue(g.Checking, "행동하면 체크");
+        g.Tick(0.5f); Assert.IsNull(g.Current, "체크 0.4초 뒤 닫힘");
+        g.Tick(0.5f); Assert.IsNull(g.Current, "닫힌 뒤 1초가 지나야 다음 안내");
+        g.Tick(0.6f); Assert.AreEqual("hit", g.Current.Id);
+        g.Complete("hit"); g.Tick(0.5f); g.Tick(1.1f);
+        g.Request("walk"); g.Tick(0.1f); Assert.IsNull(g.Current, "이미 한 행동은 다시 안 띄운다");
+        g.Request("map"); g.Tick(0.1f); Assert.AreEqual("map", g.Current.Id);
+        g.Tick(3.1f); Assert.IsNull(g.Current, "시간제 안내는 시간이 지나면 닫힌다");
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

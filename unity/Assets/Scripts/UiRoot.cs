@@ -97,7 +97,7 @@ public class UiRoot : MonoBehaviour
         // 장부·밤 글자: 배경 위에서도 읽히게 짙은 반투명 판 위에 둔다
         var texts = new VisualElement { pickingMode = PickingMode.Ignore }; texts.style.marginTop = 6; Panel(texts); note.Add(texts);
         ledger = Line(texts, 15); night = Line(texts, 15);
-        BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
+        BuildGuide(); BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
     }
 
     // ---- 아트팀 UI 그림(Resources/Sprites/ui). 없으면 null 이라 부르는 쪽이 옛 색 도형으로 대신 그린다(그림 없이도 돈다)
@@ -158,6 +158,42 @@ public class UiRoot : MonoBehaviour
         }
         skillBar.Add(d);
     }
+
+    // ---- 처음 5분 안내 띠: 하단 중앙, 스킬바 위. 키 그림 + 글자 22px, 행동하면 초록 체크 ----
+    VisualElement guideBox, guideKeyBox; Label guideKey, guideText, guideTick; string lastGuide;
+    void BuildGuide()
+    {
+        guideBox = new VisualElement { name = "guide", pickingMode = PickingMode.Ignore };
+        guideBox.style.position = Position.Absolute; guideBox.style.left = 0; guideBox.style.right = 0; guideBox.style.bottom = U(190);
+        guideBox.style.alignItems = Align.Center; guideBox.style.display = DisplayStyle.None;
+        var band = new VisualElement { pickingMode = PickingMode.Ignore };
+        band.style.flexDirection = FlexDirection.Row; band.style.alignItems = Align.Center; band.style.height = U(56);
+        band.style.paddingLeft = U(20); band.style.paddingRight = U(24); band.style.backgroundColor = new Color(0f, 0f, 0f, 0.6f);
+        band.style.borderTopLeftRadius = 6; band.style.borderTopRightRadius = 6; band.style.borderBottomLeftRadius = 6; band.style.borderBottomRightRadius = 6;
+        guideKeyBox = new VisualElement { pickingMode = PickingMode.Ignore };   // 키 그림: 둥근 밝은 판 + 글자
+        guideKeyBox.style.height = U(40); guideKeyBox.style.minWidth = U(40); guideKeyBox.style.marginRight = U(14); guideKeyBox.style.paddingLeft = U(10); guideKeyBox.style.paddingRight = U(10);
+        guideKeyBox.style.backgroundColor = new Color(0.92f, 0.9f, 0.82f, 1f); guideKeyBox.style.justifyContent = Justify.Center;
+        guideKeyBox.style.borderTopLeftRadius = 6; guideKeyBox.style.borderTopRightRadius = 6; guideKeyBox.style.borderBottomLeftRadius = 6; guideKeyBox.style.borderBottomRightRadius = 6;
+        guideKey = Line(guideKeyBox, 16); guideKey.style.color = new Color(0.1f, 0.09f, 0.08f); guideKey.style.unityTextAlign = TextAnchor.MiddleCenter;
+        guideText = Line(band, 22);
+        guideTick = Line(band, 22); guideTick.text = "  확인"; guideTick.style.color = new Color(0.45f, 0.95f, 0.55f); guideTick.style.display = DisplayStyle.None;
+        band.Insert(0, guideKeyBox); guideBox.Add(band); root.Add(guideBox);
+    }
+    void RefreshGuide()
+    {
+        if (guideBox == null) return;
+        bool show = Hud.GuideText != null;
+        guideBox.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+        if (!show) { lastGuide = null; return; }
+        if (lastGuide != Hud.GuideText) { lastGuide = Hud.GuideText; guideText.text = Hud.GuideText; guideBox.style.opacity = 0f; guideFade = 0f; }   // 새 안내는 0.25초 페이드 인
+        guideFade = Mathf.MoveTowards(guideFade, 1f, Time.unscaledDeltaTime / 0.25f);
+        bool hasKey = !string.IsNullOrEmpty(Hud.GuideKey);
+        guideKeyBox.style.display = hasKey ? DisplayStyle.Flex : DisplayStyle.None; if (hasKey) guideKey.text = Hud.GuideKey;
+        guideTick.style.display = Hud.GuideCheck ? DisplayStyle.Flex : DisplayStyle.None;
+        float blink = Hud.GuideRemind ? 0.5f + 0.5f * Mathf.Abs(Mathf.Sin(Time.unscaledTime * 8f)) : 1f;   // 20초 안 하면 깜빡
+        guideBox.style.opacity = guideFade * blink;
+    }
+    float guideFade;
 
     // ---- 스킬바 8칸(기획 표준 v1.1): [Q 견인][1][2][3][4][E 천도][R 파혼][H 회복약], 칸 64px·간격 8px·아래 40px ------------
     const int BarN = 8;
@@ -255,6 +291,7 @@ public class UiRoot : MonoBehaviour
         float refW = Ko.TouchUI ? 960f : 1280f, refH = Ko.TouchUI ? 540f : 720f; float pscale = Mathf.Sqrt((Screen.width / refW) * (Screen.height / refH));
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
+        RefreshGuide();
         RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         if (hpFill != null)
         {

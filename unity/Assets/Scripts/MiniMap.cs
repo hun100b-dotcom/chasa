@@ -125,7 +125,7 @@ public class MiniMap : MonoBehaviour
     void Update()
     {
         if (judge == null || judge.InDay || judge.NightOver) return;
-        if (Input.GetKeyDown(KeyCode.M) && !CharacterPanel.Open && !SettingsPanel.Open) BigOpen = !BigOpen;
+        if (Input.GetKeyDown(KeyCode.M) && !CharacterPanel.Open && !SettingsPanel.Open) { BigOpen = !BigOpen; judge.guide.Complete("map"); }
         if (BigOpen && Input.GetKeyDown(KeyCode.Escape)) BigOpen = false;
         if (BigOpen && judge.cuts.Active) BigOpen = false;
     }
