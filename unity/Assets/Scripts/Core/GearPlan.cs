@@ -72,8 +72,8 @@ namespace Chasa.Core
         /// 2막 ③④는 x 360 을 경계로 가른다(BgmPlayer.RegionKeyAt 과 같은 선). blackRiver: 지금 있는 구역이 검은여울인가.
         /// </summary>
         /// <summary>필드 혼 고리 배율(기획 act1-enemy-check, 시뮬 Sim.cs 와 같은 표). 고리 1~6</summary>
-        static readonly float[] RingMaedhim = { 1f, 1.2f, 1.4f, 1.7f, 2.0f, 2.3f }, RingDamage = { 1f, 1.15f, 1.3f, 1.5f, 1.7f, 1.9f }, RingReward = { 1f, 1.25f, 1.5f, 1.75f, 2.0f, 2.3f };
-        static int Ix(int ring) { return System.Math.Max(0, System.Math.Min(5, ring - 1)); }
+        static readonly float[] RingMaedhim = { 1f, 1.2f, 1.4f, 1.7f, 2.0f, 2.3f, 2.6f, 2.9f }, RingDamage = { 1f, 1.15f, 1.3f, 1.5f, 1.7f, 1.9f, 2.1f, 2.3f }, RingReward = { 1f, 1.25f, 1.5f, 1.75f, 2.0f, 2.3f, 2.6f, 2.9f };
+        static int Ix(int ring) { return System.Math.Max(0, System.Math.Min(7, ring - 1)); }
         public static float MaedhimMult(int ring) { return RingMaedhim[Ix(ring)]; }
         public static float DamageMult(int ring) { return RingDamage[Ix(ring)]; }
         /// <summary>넋 보상 배율</summary>

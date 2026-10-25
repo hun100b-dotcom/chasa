@@ -43,8 +43,8 @@ namespace Chasa.Core
         {
             switch (id)
             {
-                case 2: return new BossDef { Id = 2, Name = "월화", Cut = "B02", CluePrefix = "B02-", X = 580f, Z = 521f, Maedhim = Balance.BOSS_S2_MAEDHIM, Speed = 0.5f, Damage = 22, Model = "boss_b02" };
-                case 3: return new BossDef { Id = 3, Name = "서 의원", Cut = "B03", CluePrefix = "B03-", X = 46f, Z = 453f, Maedhim = Balance.B03_BOSS_MAEDHIM, Speed = 0.15f, Damage = 24, Model = "boss_b03" };
+                case 2: return new BossDef { Id = 2, Name = "월화", Cut = "B02", CluePrefix = "B02-", X = 580f, Z = 521f, Maedhim = Balance.BOSS_S2_MAEDHIM, Speed = 0.5f, Damage = 20, Model = "boss_b02" };
+                case 3: return new BossDef { Id = 3, Name = "서 의원", Cut = "B03", CluePrefix = "B03-", X = 46f, Z = 453f, Maedhim = Balance.B03_BOSS_MAEDHIM, Speed = 0.15f, Damage = 23, Model = "boss_b03" };
                 // 2막 보스(기획 act2_map boss_arenas 좌표 · 맺힘 임시값은 balance B05~B08). 전투 규칙은 Core/Act2Boss.cs
                 // 4호 흑월 차사 1차(1막 끝, 기획 확정 자리 (140,500) = 시즌 3 B-26 자리): 처결이 없다. 맺힘 50%에서 사슬을 거두고 물러난다(JudgeSystem.TickHeukwol)
                 case 4: return new BossDef { Id = 4, Name = "흑월", Cut = "B04", CluePrefix = "B04-", X = 140f, Z = 500f, Maedhim = Balance.B04_MAEDHIM, Speed = 0.5f, Damage = (int)Balance.B04_DAMAGE, Model = "boss_b12_heugwol_b04" };

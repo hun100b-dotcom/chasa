@@ -2198,7 +2198,7 @@
   "note": "(2막 보스 임시·기획 act2-souls §4) B-05 맺힘"
  },
  "B05_DAMAGE": {
-  "value": 22,
+  "value": 26,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-05 공격"
  },
  "B05_CALL_INTERVAL": {
@@ -2270,7 +2270,7 @@
   "note": "(2막 보스 임시·기획 act2-souls §4) B-06 맺힘"
  },
  "B06_DAMAGE": {
-  "value": 24,
+  "value": 26,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-06 공격"
  },
  "B06_LINE_WIDTH": {
@@ -2314,7 +2314,7 @@
   "note": "(2막 보스 임시·기획 act2-souls §4) B-07 맺힘"
  },
  "B07_DAMAGE": {
-  "value": 24,
+  "value": 30,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-07 공격"
  },
  "B07_ARENA_START": {
@@ -2374,11 +2374,11 @@
   "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 간격(초, 임시)"
  },
  "B08_MAEDHIM": {
-  "value": 960,
+  "value": 1120,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-08 맺힘"
  },
  "B08_DAMAGE": {
-  "value": 22,
+  "value": 30,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-08 공격"
  },
  "B08_MINES": {
@@ -2462,7 +2462,7 @@
   "note": "(3막 보스 임시·기획 부록 E) B-09 맺힘"
  },
  "B09_DAMAGE": {
-  "value": 16,
+  "value": 28,
   "note": "(3막 보스 임시·기획 부록 E) B-09 공격(파도 줄 16, 바다 부르기 18은 같은 값으로 단순화)"
  },
  "B09_WAVE_ROWS": {
@@ -2514,7 +2514,7 @@
   "note": "(3막 보스 임시·기획 부록 E) B-10 맺힘"
  },
  "B10_DAMAGE": {
-  "value": 20,
+  "value": 34,
   "note": "(3막 보스 임시·기획 부록 E) B-10 공격"
  },
  "B10_ROPE_WARN": {
@@ -2550,11 +2550,11 @@
   "note": "(3막 보스 임시·기획 부록 E) 줄 끊기 두 줄(50% 뒤) 예고(초)"
  },
  "B11_MAEDHIM": {
-  "value": 1280,
+  "value": 1480,
   "note": "(3막 보스 임시·기획 부록 E) B-11 맺힘"
  },
  "B11_DAMAGE": {
-  "value": 16,
+  "value": 38,
   "note": "(3막 보스 임시·기획 부록 E) B-11 공격"
  },
  "B11_MAT_WARN": {
@@ -2590,7 +2590,7 @@
   "note": "(3막 보스 임시·기획 부록 E) B-12 맺힘"
  },
  "B12_DAMAGE": {
-  "value": 22,
+  "value": 38,
   "note": "(3막 보스 임시·기획 부록 E) B-12 공격"
  },
  "B12_PULL_WARN": {
