@@ -122,3 +122,9 @@ hero_chasa.glb 동작 34개(60fps). 기존 9개(Idle·Walk·Attack/2/3=철삭·D
   배치표 layouts/boss_arenas.json: 싸움터별 중심·땅 높이·바닥 무늬 규격·소품 위치·조명·예고 장판 규격(패턴별 그림·크기·예고 시간).
   싸움터 둘레는 field_layout.py의 ARENA_CLEAR로 나무·바위를 비웠다(필드 JSON 재생성, 33개 제거).
   확인 그림: previews/scene_arena{1,2,3}_final.jpg(밤), scene_arena{1,2,3}t_final.jpg(패턴 예고 켠 장면).
+
+== 큰 강 높이맵 이어 파기 (terrain_unity.py river) ==
+원인: 옛 높이맵은 br_* 칸(8m)마다 '안쪽'만 −0.1로 낮추고 칸 둘레 2m는 그대로 둬서, 강이 칸마다 둑이 남은 3×46개 웅덩이 격자가 됐다(전/후 그림: previews/river_beforeafter.jpg).
+고침: 칸과 무관한 연속 물길로 판다(river_field). 단면 = 한가운데 −0.30 → 물가로 얕아져 −0.10 → 물가선(물면 0.18보다 살짝 아래) → 둑 0.30. 물가선은 길이 방향 ±0.5m 구불거리고 남쪽 끝(y=272)은 둥글게 닫힘, 북쪽은 지도 끝까지.
+  heightmap.png·splat_a/b.png(강바닥·둑=자갈, 물가선=거품·젖은 땅)·terrain.json(river 항목: 축·물 범위·바닥 깊이)을 새로 냈고, 연속 물판 terrain/river_water.glb(x 76~92, y 272~640, z 0.18, 4m 반복 uv)를 추가했다.
+  br_* 조각 모델은 물판·바닥 상자가 칸마다 나뉘어 있어 격자처럼 보이니, 지형 + river_water.glb만 쓰길 권장(돌다리·나루터 같은 구조물은 그대로).
