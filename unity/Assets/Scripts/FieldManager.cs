@@ -133,7 +133,7 @@ public class FieldManager : MonoBehaviour
 
     void Close(int key)
     {
-        Coroutine c; if (loading.TryGetValue(key, out c)) { StopCoroutine(c); loading.Remove(key); }
+        Coroutine c; if (loading.TryGetValue(key, out c)) { if (c != null) StopCoroutine(c); loading.Remove(key); }   // 바로 끝난 코루틴은 null 로 남을 수 있다(새 땅: 세울 것이 없는 청크) → null 이면 멈추지 않는다(PC 확인: NullReferenceException)
         GameObject root; if (roots.TryGetValue(key, out root)) { if (root != null) Destroy(root); roots.Remove(key); }
         List<Blocker> bl; if (blockers.TryGetValue(key, out bl)) { foreach (var b in bl) MapLayout.ZoneBlockers.Remove(b); blockers.Remove(key); }
     }

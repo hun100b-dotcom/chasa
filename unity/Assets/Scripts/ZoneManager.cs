@@ -71,7 +71,7 @@ public class ZoneManager : MonoBehaviour
     {
         if (z.Village) return;
         Coroutine c;
-        if (loading.TryGetValue(z, out c)) { StopCoroutine(c); loading.Remove(z); }
+        if (loading.TryGetValue(z, out c)) { if (c != null) StopCoroutine(c); loading.Remove(z); }   // 바로 끝난 코루틴은 null 일 수 있다
         GameObject root;
         if (roots.TryGetValue(z, out root))
         {
