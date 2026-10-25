@@ -1636,7 +1636,7 @@ public class JudgeSystem : MonoBehaviour
             // 장비 등급 → 외형 조각(1 흔한 2 손본 3 귀한 4 이름 있는 5 한 벌). 한 벌 = 갓·도포·띠·신 넷이 모두 이름 있는 물건일 때
             System.Func<EquipPos, int> tierOf = pos => { var g = lo.gear.GetAt(pos); return g == null ? 0 : g.Named ? 4 : g.Rarity == Rarity.Rare ? 3 : g.Rarity == Rarity.Crafted ? 2 : 1; };
             int th = tierOf(EquipPos.Hat), tr = tierOf(EquipPos.Robe), tb = tierOf(EquipPos.Belt), ts = tierOf(EquipPos.Shoes);
-            if (th == 4 && tr == 4 && tb == 4 && ts == 4) { th = tr = tb = 5; }
+            if (lo.FullSet()) { th = tr = tb = 5; }   // 한 벌 판정은 Loadout.FullSet 하나로
             int tc = System.Math.Max(tierOf(EquipPos.Charm1), tierOf(EquipPos.Charm2)); if (th == 5) tc = 5;   // 노리개는 둘 중 높은 등급(한 벌이면 한 벌)
             ActorModel.HeroHatTier = th; ActorModel.HeroRobeTier = tr; ActorModel.HeroBeltTier = tb; ActorModel.HeroCharmTier = tc;
         }

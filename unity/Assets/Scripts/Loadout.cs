@@ -44,9 +44,19 @@ public class Loadout
     /// <summary>새 물건을 비교해 장착. 장착했으면 합계를 다시 계산하고 true</summary>
     public bool Equip(ItemDef it)
     {
+        bool wasSet = FullSet();
         if (!gear.TryEquip(it)) return false;
         Refresh();
-        GearSfx.Equip(it);   // 장착 소리: 몸(쇠·천·노리개) + 머리(등급)를 0.06초 어긋나게
+        GearSfx.Equip(it);
+        if (!wasSet && FullSet()) Sfx.PlayLater("sfx.equip.set.complete", 0.25f);   // 한 벌이 막 갖춰졌다(등급 소리가 끝난 뒤)   // 장착 소리: 몸(쇠·천·노리개) + 머리(등급)를 0.06초 어긋나게
+        return true;
+    }
+
+    /// <summary>한 벌 = 갓·도포·띠·신 넷이 모두 이름 있는 물건(외형 5단계와 같은 규칙)</summary>
+    public bool FullSet()
+    {
+        foreach (var p in new[] { EquipPos.Hat, EquipPos.Robe, EquipPos.Belt, EquipPos.Shoes })
+        { var g = gear.GetAt(p); if (g == null || !g.Named) return false; }
         return true;
     }
 

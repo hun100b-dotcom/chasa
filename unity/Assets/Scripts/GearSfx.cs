@@ -27,5 +27,7 @@ public static class GearSfx
         Sfx.PlayLater("sfx.enhance." + Tier(it), 0f, 1f + 0.03f * (it.Plus - 1), 0f);
     }
 
+    public static void Remove() { Sfx.Play("sfx.equip.remove"); }   // 매듭 풂 + 내려놓는 툭(등급 무관)
+
     public static void EnhanceFail() { Sfx.Play("sfx.enhance.fail"); }
 }

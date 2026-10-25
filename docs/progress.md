@@ -1610,3 +1610,8 @@
 - 새 소리 35개: 구역 바탕 6(포구 밤·망부석 곶·소금밭 밤·저잣거리 밤·움막촌·성문 밖 낮), 서낭당 3(SH3-1~3), 자리·생활 15(그물 마당·주막 둘·등대 등잔·소금 긁기·소금 창고·그물 깁기·장롱·갯바위·배 손보기·떡메·좌판·돌다리·빗장·새벽 줄), 가끔 11.
 - 배치표 `data/act3_soundscape.json`(R3-01~15 → 생활 소리), 연결법 `docs/act3-soundscape.md`. 미리듣기 2(v3)에 시연 2개.
 - 아직 안 붙은 한 벌 완성음·장비 풀기음·물안개 저역 통과의 붙이는 법을 코드 그대로 `docs/sound-hookup-pending.md`에 적어 코드팀에 넘김(Loadout.FullSet·GearSfx.Remove·Act1Soundscape 음원별 저역 통과).
+
+### 장비 소리 연결 + 2막 군집표 갱신 (클라우드, PC 미확인)
+- 세트 완성음(`sfx.equip.set.complete`)은 `Loadout.Equip`에서, 풀기 소리는 `DayScreen`에서 `GearSfx.Remove()`로 연결.
+- `act2_field_camps.json`을 기획 최신본(외톨이 두 줄 수정)으로 교체.
+- 아직 안 함: 물안개 저역 필터, 2·3막 주변 소리(PR #44) 연결 — 다음 작업.
