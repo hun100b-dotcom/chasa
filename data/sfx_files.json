@@ -6281,6 +6281,149 @@
    "bypass_cast_filter": false,
    "length_sec": 1.31,
    "peak_dbfs": -24
+  },
+  {
+   "id": "sfx.boss.naru.current",
+   "file": "sfx_boss_naru_current",
+   "category": "보스",
+   "desc": "큰물 물살이 밀어냄: 발목을 휘감는 물살이 쏴— 하고 안쪽으로 밀어붙임(1초)",
+   "use": "B-01 ② 큰물: 바닥 밖에서 물살이 안쪽으로 밀 때(4초에 한 번, pattern_texts B-01.flood). 지금 flood 3초짜리 대신",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.64,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "amb.boss.naru.highwater",
+   "file": "amb_boss_naru_highwater",
+   "category": "보스",
+   "desc": "큰물 동안: 불어난 강물이 좁아진 바닥 가장자리를 쉴 새 없이 찰박이며 핥고, 낮은 물살이 웅— (반복용 10초)",
+   "use": "B-01 ② 큰물이 시작되고(맺힘 50%) 싸움이 끝날 때까지 2D 반복. 시작 3초 페이드인(바닥이 좁아지는 3초와 같게)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 9.8,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "sfx.boss.naru.weak",
+   "file": "sfx_boss_naru_weak",
+   "category": "보스",
+   "desc": "나루 영감 무방비: 휩쓸기 뒤 배가 크게 기울며 나무가 끄응 — 그 틈에 맑은 '팅'(지금 때려라, 0.8초)",
+   "use": "B-01 무방비 1.5초 창이 열릴 때마다(pattern_texts B-01.weak_tilt. 지금은 처음 한 번 글만 나오고 소리 없음 → 매번 소리, 글은 처음만)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.9,
+   "peak_dbfs": -11
+  },
+  {
+   "id": "sfx.boss.weak.hit",
+   "file": "sfx_boss_weak_hit",
+   "category": "보스",
+   "desc": "약점 창에 때림: 평소 타격음 위에 얹는 짧고 맑은 '쨍' — 더 깊이 들어간다(0.25초)",
+   "use": "보스 damageTakenMult > 1 인 동안(B-01 무방비·B-03 서랍·B-10 넘어짐) 맞힐 때마다 타격음과 함께. 높이 ±3%",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.5,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.boss.seonjang.storm",
+   "file": "sfx_boss_seonjang_storm",
+   "category": "보스",
+   "desc": "폭풍이 몰려옴(선장 2단계): 먼 천둥 우르릉 — 돌풍이 돛을 쾅 부풀리고, 굵은 빗줄기가 갑판을 촤아(3초)",
+   "use": "B-10 2단계(폭풍) 시작 한 번(pattern_texts B-10.storm, 지금 소리 없음). 뒤이어 amb.boss.seonjang.storm",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 4.3,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "amb.boss.seonjang.storm",
+   "file": "amb_boss_seonjang_storm",
+   "category": "보스",
+   "desc": "폭풍 속 갑판: 비가 갑판을 두드리고, 돛줄 사이로 바람이 휘이— 울고, 배가 파도에 꿍— 오르내림(반복용 12초)",
+   "use": "B-10 2단계 동안 2D 반복(싸움 끝까지). 지금 '기울기 소리 두 번 겹침' 대신 이 바탕을 깔면 기울기는 한 번만 내도 된다",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 11.7,
+   "peak_dbfs": -18
+  },
+  {
+   "id": "sfx.boss.seonjang.rope.slack",
+   "file": "sfx_boss_seonjang_rope_slack",
+   "category": "보스",
+   "desc": "끊긴 밧줄 끝이 갑판에 철썩 떨어져 꿈틀(0.6초) — 지금 사슬로 끌어라",
+   "use": "B-10 줄 끊기 직후 밧줄 끝 점이 생길 때(SpawnRopeEnd). '밧줄 끝 — 끌어당겨라' 글과 같은 순간",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.14,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.boss.seonjang.rope.pull",
+   "file": "sfx_boss_seonjang_rope_pull",
+   "category": "보스",
+   "desc": "사슬이 밧줄 끝을 낚아 끌어당김: 철삭이 차르륵 감기고 젖은 밧줄이 끼이익 팽팽 — 묵직하게 버팀(0.8초)",
+   "use": "B-10 밧줄 끝을 끌어당기는 데 성공한 순간(넘어짐 직전). sfx.boss.seonjang.fall 0.35초 앞",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.28,
+   "peak_dbfs": -10
+  },
+  {
+   "id": "sfx.boss.seonjang.fall",
+   "file": "sfx_boss_seonjang_fall",
+   "category": "보스",
+   "desc": "선장이 넘어짐: 젖은 갑판에 커다란 몸이 쿵 — 물이 촤악 튀고 배 나무가 깊게 끄응(1.4초)",
+   "use": "B-10 약점 성공: 선장이 넘어져 멈칫 1.5초가 시작될 때(pattern_texts B-10.weak_rope 와 같은 순간, 소리는 매번)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.81,
+   "peak_dbfs": -8
+  },
+  {
+   "id": "sfx.soul.numbered.mark",
+   "file": "sfx_soul_numbered_mark",
+   "category": "처결",
+   "desc": "숫자 혼 표시: 목에 건 나무 번호패가 딸깍 — 붓으로 숫자를 긋는 짧은 쓱(0.5초)",
+   "use": "숫자 혼이 무릎 꿇는 순간(처결 대기 시작) 한 번. 일반 혼의 대기 시작 소리 위에 얹음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.59,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.wait.tick.numbered",
+   "file": "sfx_wait_tick_numbered",
+   "category": "처결",
+   "desc": "대기 똑딱(숫자 혼): 주판알을 하나씩 튕기는 딱 — 세고 또 센다(가장 메마른 소리)",
+   "use": "숫자 혼의 처결 대기 똑딱(fresh·year·old 대신). 대기가 0.5초 길어서 한 번 더 울린다",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.12,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.soul.numbered.release",
+   "file": "sfx_soul_numbered_release",
+   "category": "처결",
+   "desc": "숫자 혼 천도: 번호패 끈이 툭 끊어지고 패가 땅에 탁 떨어짐 — 그 뒤로 낮고 따뜻한 한 음(이름이 돌아온 듯, 1.4초)",
+   "use": "숫자 혼 천도가 끝날 때 sfx.tendo.done.* 위에 얹음(0.15초 뒤)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.06,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.pahon.ledger",
+   "file": "sfx_pahon_ledger",
+   "category": "처결",
+   "desc": "남은 장부가 셈을 더함: 주판알 세 번 차르륵 + 엽전 하나 더 짤랑(0.6초)",
+   "use": "이름 있는 노리개 '남은 장부'로 ④ 숫자 혼 파혼 엽전이 늘어날 때. 엽전 소리 0.1초 뒤",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.91,
+   "peak_dbfs": -15
   }
  ],
  "footsteps": {

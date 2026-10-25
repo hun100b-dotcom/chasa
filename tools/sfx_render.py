@@ -6056,6 +6056,117 @@ def _(r):
     return reverb(b, .9, .25)
 
 
+# ═══════════════════════════════════════════════════════════════════════════
+# 새 보스 패턴·숫자 혼 소리 점검에서 빠진 것 (10-26)
+#   B-01 나루: 큰물 중 물살이 안쪽으로 미는 소리 · 큰물 동안 깔리는 물 · 무방비(약점) 열림
+#   B-10 선장: 폭풍(2단계) 시작·깔림 · 밧줄 끝 떨어짐(끌어라 신호) · 끌어당김 · 넘어짐
+#   공통: 약점 창 동안 때릴 때 얹는 '잘 들어간다' 소리
+#   숫자 혼(2막): 번호패 딸깍 표시 · 대기 똑딱(주판알) · 천도 때 번호패가 끊겨 떨어짐 · 남은 장부 파혼 엽전
+# ═══════════════════════════════════════════════════════════════════════════
+@sfx("sfx.boss.naru.current", -12, "보스", "큰물 물살이 밀어냄: 발목을 휘감는 물살이 쏴— 하고 안쪽으로 밀어붙임(1초)", bypass_cast=True, use="B-01 ② 큰물: 바닥 밖에서 물살이 안쪽으로 밀 때(4초에 한 번, pattern_texts B-01.flood). 지금 flood 3초짜리 대신")
+def _(r):
+    m = int(1.0 * SR)
+    rush = sweep_filt(noise(m, r), "band", 400, 1400, .8) * env(m, .15, .35, 3, hold=.2)
+    return reverb(_sum(rush * .7, _lap(1.0, r, 12, .4)), .8, .2)
+
+
+@sfx("amb.boss.naru.highwater", -20, "보스", "큰물 동안: 불어난 강물이 좁아진 바닥 가장자리를 쉴 새 없이 찰박이며 핥고, 낮은 물살이 웅— (반복용 10초)", loop=True, use="B-01 ② 큰물이 시작되고(맺힘 50%) 싸움이 끝날 때까지 2D 반복. 시작 3초 페이드인(바닥이 좁아지는 3초와 같게)")
+def _(r):
+    sec = 10.3; n = int(sec * SR)
+    x = filt(noise(n, r), "band", 350, .8) * (.7 + .3 * np.sin(2 * np.pi * .3 * T(sec)[:n])) * .35 + _lap(sec, r, 70, .35)[:n]
+    return loopify(reverb(x, 1.0, .25)[:n], .5)
+
+
+@sfx("sfx.boss.naru.weak", -11, "보스", "나루 영감 무방비: 휩쓸기 뒤 배가 크게 기울며 나무가 끄응 — 그 틈에 맑은 '팅'(지금 때려라, 0.8초)", bypass_cast=True, use="B-01 무방비 1.5초 창이 열릴 때마다(pattern_texts B-01.weak_tilt. 지금은 처음 한 번 글만 나오고 소리 없음 → 매번 소리, 글은 처음만)")
+def _(r):
+    b = _buf(1.2)
+    place(b, _creak(r, .5, 110, 16, 450) * .6, 0)
+    place(b, _chime(r, 1760, .3, .7), .32)
+    return reverb(b, .9, .25)
+
+
+@sfx("sfx.boss.weak.hit", -13, "보스", "약점 창에 때림: 평소 타격음 위에 얹는 짧고 맑은 '쨍' — 더 깊이 들어간다(0.25초)", use="보스 damageTakenMult > 1 인 동안(B-01 무방비·B-03 서랍·B-10 넘어짐) 맞힐 때마다 타격음과 함께. 높이 ±3%")
+def _(r):
+    b = _buf(.4)
+    place(b, modal(.35, [(r.uniform(2900, 3100), .06, 1), (r.uniform(6200, 6600), .025, .4), (r.uniform(1450, 1550), .05, .4)], r), 0)
+    return reverb(b, .35, .12)
+
+
+@sfx("sfx.boss.seonjang.storm", -9, "보스", "폭풍이 몰려옴(선장 2단계): 먼 천둥 우르릉 — 돌풍이 돛을 쾅 부풀리고, 굵은 빗줄기가 갑판을 촤아(3초)", bypass_cast=True, use="B-10 2단계(폭풍) 시작 한 번(pattern_texts B-10.storm, 지금 소리 없음). 뒤이어 amb.boss.seonjang.storm")
+def _(r):
+    b = _buf(3.6)
+    m = int(2.2 * SR); place(b, filt(noise(m, r), "low", 250) * env(m, .3, .9, 3) * .8, 0)                 # 천둥
+    place(b, _thump(r, .3, 60, 200) * .5, .9)                                                            # 돛이 쾅
+    m2 = int(2.4 * SR); place(b, filt(noise(m2, r), "band", 3000, .6) * env(m2, .6, .8, 3, hold=.6) * .5, 1.0)   # 빗줄기
+    return reverb(b, 1.6, .35)
+
+
+@sfx("amb.boss.seonjang.storm", -18, "보스", "폭풍 속 갑판: 비가 갑판을 두드리고, 돛줄 사이로 바람이 휘이— 울고, 배가 파도에 꿍— 오르내림(반복용 12초)", loop=True, use="B-10 2단계 동안 2D 반복(싸움 끝까지). 지금 '기울기 소리 두 번 겹침' 대신 이 바탕을 깔면 기울기는 한 번만 내도 된다")
+def _(r):
+    sec = 12.3; n = int(sec * SR)
+    rain = filt(filt(noise(n, r), "high", 1200), "low", 9000) * .35
+    w, gg = _bed_wind(sec, r, 1800, 5, .25, 4)
+    swell = _buf(sec)
+    for at in (1.0, 5.5, 9.5): place(swell, _thump(r, .5, 50, 180) * .4, at)
+    return loopify(reverb(rain + w + swell[:n], 1.0, .25)[:n], .6)
+
+
+@sfx("sfx.boss.seonjang.rope.slack", -10, "보스", "끊긴 밧줄 끝이 갑판에 철썩 떨어져 꿈틀(0.6초) — 지금 사슬로 끌어라", bypass_cast=True, use="B-10 줄 끊기 직후 밧줄 끝 점이 생길 때(SpawnRopeEnd). '밧줄 끝 — 끌어당겨라' 글과 같은 순간")
+def _(r):
+    b = _buf(.9)
+    place(b, _sum(filt(noise(int(.12 * SR), r), "band", 900, 1.2) * env(int(.12 * SR), .002, .04, 3), _thump(r, .1, 150, 500) * .6), 0)
+    place(b, _paper(r, .3, 600, 2500) * .3, .1)
+    place(b, _chime(r, 1320, .2, .3), .12)
+    return reverb(b, .6, .2)
+
+
+@sfx("sfx.boss.seonjang.rope.pull", -10, "보스", "사슬이 밧줄 끝을 낚아 끌어당김: 철삭이 차르륵 감기고 젖은 밧줄이 끼이익 팽팽 — 묵직하게 버팀(0.8초)", use="B-10 밧줄 끝을 끌어당기는 데 성공한 순간(넘어짐 직전). sfx.boss.seonjang.fall 0.35초 앞")
+def _(r):
+    b = _buf(1.1)
+    place(b, _chain_links(r, .3, 6) * .5, 0)
+    place(b, _rope_taut(r, .6, 90) * .7, .15)
+    return reverb(b, .7, .2)
+
+
+@sfx("sfx.boss.seonjang.fall", -8, "보스", "선장이 넘어짐: 젖은 갑판에 커다란 몸이 쿵 — 물이 촤악 튀고 배 나무가 깊게 끄응(1.4초)", bypass_cast=True, use="B-10 약점 성공: 선장이 넘어져 멈칫 1.5초가 시작될 때(pattern_texts B-10.weak_rope 와 같은 순간, 소리는 매번)")
+def _(r):
+    b = _buf(2.0)
+    place(b, _thump(r, .4, 55, 220) * 1.0, 0); place(b, _splash(r, .7, 1.0) * .5, .04)
+    place(b, _creak(r, .9, 85, 12, 380) * .4, .2)
+    return reverb(b, 1.2, .3)
+
+
+# ── 숫자 혼(2막 ③④, 인 대신 번호로 불리는 혼) ──
+@sfx("sfx.soul.numbered.mark", -16, "처결", "숫자 혼 표시: 목에 건 나무 번호패가 딸깍 — 붓으로 숫자를 긋는 짧은 쓱(0.5초)", use="숫자 혼이 무릎 꿇는 순간(처결 대기 시작) 한 번. 일반 혼의 대기 시작 소리 위에 얹음")
+def _(r):
+    b = _buf(.7)
+    place(b, _wood_tap(r, 1500, .02, .7), 0); place(b, _wood_tap(r, 1380, .018, .4), .05)
+    m = int(.18 * SR); place(b, filt(noise(m, r), "band", 2600, 2) * env(m, .03, .06, 3) * .3, .16)
+    return reverb(b, .4, .12)
+
+
+@sfx("sfx.wait.tick.numbered", -16, "처결", "대기 똑딱(숫자 혼): 주판알을 하나씩 튕기는 딱 — 세고 또 센다(가장 메마른 소리)", bypass_cast=True, use="숫자 혼의 처결 대기 똑딱(fresh·year·old 대신). 대기가 0.5초 길어서 한 번 더 울린다")
+def _(r):
+    return _wood_tap(r, 2100, .012, .8)[:int(.12 * SR)]
+
+
+@sfx("sfx.soul.numbered.release", -13, "처결", "숫자 혼 천도: 번호패 끈이 툭 끊어지고 패가 땅에 탁 떨어짐 — 그 뒤로 낮고 따뜻한 한 음(이름이 돌아온 듯, 1.4초)", use="숫자 혼 천도가 끝날 때 sfx.tendo.done.* 위에 얹음(0.15초 뒤)")
+def _(r):
+    b = _buf(2.0)
+    m = int(.06 * SR); place(b, filt(noise(m, r), "band", 1800, 2) * env(m, .001, .015, 3) * .5, 0)    # 끈 툭
+    place(b, _wood_tap(r, 900, .04, .7), .2); place(b, _wood_tap(r, 950, .03, .3), .34)                 # 패가 떨어져 한 번 튐
+    place(b, _chime(r, 523, .8, .45), .5)
+    return reverb(b, 1.2, .3)
+
+
+@sfx("sfx.pahon.ledger", -15, "처결", "남은 장부가 셈을 더함: 주판알 세 번 차르륵 + 엽전 하나 더 짤랑(0.6초)", use="이름 있는 노리개 '남은 장부'로 ④ 숫자 혼 파혼 엽전이 늘어날 때. 엽전 소리 0.1초 뒤")
+def _(r):
+    b = _buf(.9)
+    for k in range(3): place(b, _wood_tap(r, 2000 + 80 * k, .01, .5), k * .06)
+    place(b, modal(.4, [(r.uniform(3300, 3600), .08, 1), (r.uniform(5600, 6100), .04, .4)], r) * .4, .25)
+    return reverb(b, .5, .15)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)

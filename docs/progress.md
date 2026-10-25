@@ -1628,3 +1628,9 @@
 - 다리 밑 서낭 소리는 B-11 천도 뒤에만. `Sfx.PhaseNow`(0새벽 1낮 2저녁 3밤) 새로 생김.
 - `Act1Soundscape`: 음원마다 `AudioLowPassFilter`, 물안개(4 m) 안에서 2.5 kHz 로 1초에 걸쳐 먹먹, 안개 소리 자신은 제외.
 - PC 확인: 아랫마을 낮 소리가 솔고개보다 바쁜가, 광부촌 사람 소리가 멀게 들리나, 물안개 덩이(96,470) 안팎 먹먹함, 소리 개수 부담.
+## 2026-10-26 KST — [기획·사운드] 보스 새 패턴·숫자 혼 소리 + 1막 보스 BGM 길이
+- 나루 큰물·선장 폭풍·줄 끌기 약점·숫자 혼 소리 점검: 빠진 자리 6곳, 엇갈린 자리 3곳(bigwater↔flood↔stain_merge).
+- 새 소리 13개(tools/sfx_render.py, 총 584개). 연결 표·서사 sfx 칸 고침 제안은 docs/boss-pattern-sound.md.
+- 보스 맺힘 800 → 싸움 약 3.3~4분인데 전투 곡 41.85초가 4~6번 되풀이됨 → 오너 곡 「Storm on the High Ridge」 전체로
+  1막 보스 곡 bgm_solgogae_boss(142.65초, -16 LUFS) 만듦. 2단계(맺힘 50%↓)는 지금 전투 곡(절정)으로 3초 교차. data/bgm.json layers.boss.
+- 미리듣기 2쪽 v4에 14개 추가.

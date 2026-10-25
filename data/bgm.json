@@ -33,6 +33,17 @@
    "loop": true,
    "when": "적이 8m 안. 마지막 적이 멀어지거나 처치되고 combat_exit_delay_sec 지나면 탐색으로"
   },
+  "boss": {
+   "clips": [
+    "bgm_solgogae_boss"
+   ],
+   "loop": true,
+   "when": "1막 보스(맺힘 800)와 싸우는 동안. 보스 맺힘이 50% 이하로 떨어지면(나루 큰물·선장 폭풍 같은 2단계) combat 곡(같은 노래의 절정 부분)으로 3초 교차. 보스 곡이 없으면 combat 를 그대로 쓴다",
+   "phase2_clip": "bgm_solgogae_combat",
+   "phase2_at_maedhim_frac": 0.5,
+   "phase2_crossfade_sec": 3.0,
+   "_왜": "보스 맺힘 1200→800(10-25)으로 싸움이 약 3.3~4분. 41.85초 전투 곡만 쓰면 4~6번 되풀이돼 귀에 걸림. 142.65초 보스 곡 1바퀴 + 2단계 절정 곡으로 바꾸면 되풀이가 1~2번으로 줄어든다(docs/boss-pattern-sound.md)"
+  },
   "finish": {
    "clips": [
     "bgm_solgogae_finish"
@@ -76,6 +87,15 @@
    "source_range_sec": [
     91.35,
     133.2
+   ]
+  },
+  "bgm_solgogae_boss": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_boss.ogg",
+   "length_sec": 142.65,
+   "source": "Storm_on_the_High_Ridge",
+   "source_range_sec": [
+    23.45,
+    166.1
    ]
   },
   "bgm_solgogae_finish": {
