@@ -637,7 +637,7 @@ public class JudgeSystem : MonoBehaviour
     void RemoveEnemy(Enemy e) { if (e == null) return; enemies.list.Remove(e); Destroy(e.gameObject); }
 
     // ---- 처결 대기 긴장음: 남은 시간 비율에 맞춰 똑딱 간격이 1.0초 → 0.15초로 줄어든다(사운드팀 표) ----
-    float waitTickT; Enemy waitFor; bool waitFinalDone;
+    float waitTickT, waitPulseT; Enemy waitFor; bool waitFinalDone;
     void TickWaitTick(float dt)
     {
         Enemy e = enemies.NearestKneeling(player.Pos, 14f);
@@ -645,6 +645,17 @@ public class JudgeSystem : MonoBehaviour
         if (e == null || Casting || introFrozen) return;   // 천도 시전 중엔 멈춤, 첫 혼(튜토리얼)엔 틀지 않는다
         var s = e.soul;
         if (s.WaitTotal <= 0f) return;
+        // 처결 대기 맥박(아트 wait_pulse_*): 남은 2초부터 0.5초마다 발밑 고리가 한 번씩 뛴다. 소리 예고와 같이 보이게
+        if (s.WaitLeft <= 2f)
+        {
+            waitPulseT -= dt;
+            if (waitPulseT <= 0f)
+            {
+                waitPulseT = 0.5f;
+                StripFx.Flat(s.Kind == SoulKind.Fresh ? "wait_pulse_fresh" : s.Kind == SoulKind.Year ? "wait_pulse_day" : "wait_pulse_old", 4, 0.5f, e.Pos, 2.2f);
+            }
+        }
+        else waitPulseT = 0f;
         if (!waitFinalDone && s.WaitLeft <= 1.5f) { waitFinalDone = true; Sfx.Play("sfx.wait.final"); }   // 마지막 1.5초 경고
         waitTickT -= dt;
         if (waitTickT > 0f) return;

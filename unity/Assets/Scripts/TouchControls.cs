@@ -49,16 +49,19 @@ public class TouchControls : MonoBehaviour
     {
         btns.Clear();
         float s = Screen.height / 1080f;
-        Vector2 ac = new Vector2(Screen.width - (64f + 80f) * s, Screen.height - (64f + 80f) * s);   // 공격 버튼 중심
+        // 노치·제스처 줄을 피한다(명세 §9-4): 버튼은 Screen.safeArea 안쪽 기준으로 둔다. safeArea 는 아래가 0 이라 GUI 좌표(위가 0)로 바꾼다
+        var sa = Screen.safeArea;
+        float rightEdge = sa.width > 0f ? sa.xMax : Screen.width, bottomEdge = sa.width > 0f ? Screen.height - sa.yMin : Screen.height;
+        Vector2 ac = new Vector2(rightEdge - (64f + 80f) * s, bottomEdge - (64f + 80f) * s);   // 공격 버튼 중심
         Add("atk", ac, 160f * s, "공격", new Color(0.62f, 0.22f, 0.18f), s);
         for (int i = 0; i < 4; i++)
         {
             float ang = (180f - 30f * i) * Mathf.Deg2Rad;   // 9시 → 12시
-            Add("sk" + i, ac + new Vector2(Mathf.Cos(ang), -Mathf.Sin(ang)) * 230f * s, 104f * s, "", new Color(0.12f, 0.45f, 0.45f), s);
+            Add("sk" + i, ac + new Vector2(Mathf.Cos(ang), -Mathf.Sin(ang)) * 245f * s, 104f * s, "", new Color(0.12f, 0.45f, 0.45f), s);   // 간격 16px 이상(부채꼴 반지름 230→245)
         }
         Add("dodge", ac + new Vector2(-136f * s, 63f * s), 104f * s, "피하기", new Color(0.30f, 0.34f, 0.46f), s);
-        if (hasPull != null && hasPull()) { float a = 135f * Mathf.Deg2Rad; Add("pull", ac + new Vector2(Mathf.Cos(a), -Mathf.Sin(a)) * 130f * s, 104f * s, "끌기", new Color(0.55f, 0.42f, 0.16f), s); }
-        if (canInteract != null && canInteract()) Add("use", ac + new Vector2(0f, -140f * s), 104f * s, interactLabel != null ? interactLabel() : "상호작용", new Color(0.85f, 0.78f, 0.62f), s);
+        if (hasPull != null && hasPull()) { float a = 135f * Mathf.Deg2Rad; Add("pull", ac + new Vector2(Mathf.Cos(a), -Mathf.Sin(a)) * 150f * s, 104f * s, "끌기", new Color(0.55f, 0.42f, 0.16f), s); }
+        if (canInteract != null && canInteract()) Add("use", ac + new Vector2(0f, -150f * s), 104f * s, interactLabel != null ? interactLabel() : "상호작용", new Color(0.85f, 0.78f, 0.62f), s);
     }
 
     void Add(string id, Vector2 c, float diameter, string text, Color col, float s)
@@ -78,12 +81,15 @@ public class TouchControls : MonoBehaviour
             var tc = Input.GetTouch(t);
             if (tc.phase == TouchPhase.Ended || tc.phase == TouchPhase.Canceled) continue;
             var p = new Vector2(tc.position.x, Screen.height - tc.position.y);
+            // 판정끼리 겹치면 중심이 더 가까운 버튼이 이긴다(명세 §9-4)
+            int best = -1; float bestD = float.MaxValue;
             for (int i = 0; i < btns.Count; i++)
             {
-                if ((p - btns[i].center).magnitude > btns[i].r) continue;
-                down[i] = true; if (btns[i].id == "atk") atk = true; if (btns[i].id == "use") UseHeld = true;
-                break;
+                float d = (p - btns[i].center).magnitude;
+                if (d > btns[i].r || d >= bestD) continue;
+                best = i; bestD = d;
             }
+            if (best >= 0) { down[best] = true; if (btns[best].id == "atk") atk = true; if (btns[best].id == "use") UseHeld = true; }
         }
         attackHeld = atk;
         if (atk && onAttackHold != null) onAttackHold();   // 누르고 있는 동안 계속(콤보 예약이 알아서 이어 준다)

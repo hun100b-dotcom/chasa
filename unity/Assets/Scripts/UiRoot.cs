@@ -305,20 +305,21 @@ public class UiRoot : MonoBehaviour
         cardRow = new VisualElement { name = "judge-cards", pickingMode = PickingMode.Ignore };
         cardRow.style.position = Position.Absolute; cardRow.style.left = 0; cardRow.style.right = 0; cardRow.style.bottom = U(150);
         cardRow.style.flexDirection = FlexDirection.Row; cardRow.style.justifyContent = Justify.Center; cardRow.style.display = DisplayStyle.None;
-        cardRow.Add(Card("E", "천도", "보내기", new Color(0.12f, 0.45f, 0.45f, 0.92f)));
-        cardRow.Add(Card("R", "파혼", "깨뜨리기", new Color(0.62f, 0.25f, 0.12f, 0.92f)));
+        cardRow.Add(Card("E", "천도", "보내기", new Color(0.12f, 0.45f, 0.45f, 0.92f), "↑", false));
+        cardRow.Add(Card("R", "파혼", "깨뜨리기", new Color(0.62f, 0.25f, 0.12f, 0.92f), "×", true));
         root.Add(cardRow);
     }
-    VisualElement Card(string key, string name, string sub, Color bg)
+    /// <summary>mark: 색 말고 모양으로도 구분(↑ 천도 = 오르는 불꽃·실선·둥근 모서리 / × 파혼 = 깨진 조각·두꺼운 각진 테두리). 색약 대응(명세 §9-2)</summary>
+    VisualElement Card(string key, string name, string sub, Color bg, string mark, bool jagged)
     {
         var c = new VisualElement { pickingMode = PickingMode.Ignore };
         c.style.width = U(280); c.style.height = U(96); c.style.marginLeft = U(10); c.style.marginRight = U(10);
         c.style.backgroundColor = bg; c.style.justifyContent = Justify.Center; c.style.alignItems = Align.Center;
         var edge = new Color(0.95f, 0.85f, 0.55f, 0.9f);
-        c.style.borderTopWidth = 2; c.style.borderBottomWidth = 2; c.style.borderLeftWidth = 2; c.style.borderRightWidth = 2;
+        float bw = jagged ? 5f : 2f; c.style.borderTopWidth = bw; c.style.borderBottomWidth = bw; c.style.borderLeftWidth = bw; c.style.borderRightWidth = bw;
         c.style.borderTopColor = edge; c.style.borderBottomColor = edge; c.style.borderLeftColor = edge; c.style.borderRightColor = edge;
-        c.style.borderTopLeftRadius = 8; c.style.borderTopRightRadius = 8; c.style.borderBottomLeftRadius = 8; c.style.borderBottomRightRadius = 8;
-        var t = Line(c, 24); t.text = "[" + key + "] " + name; t.style.unityTextAlign = TextAnchor.MiddleCenter;
+        float rad = jagged ? 0f : 14f; c.style.borderTopLeftRadius = rad; c.style.borderTopRightRadius = rad; c.style.borderBottomLeftRadius = rad; c.style.borderBottomRightRadius = rad;
+        var t = Line(c, 24); t.text = mark + " [" + key + "] " + name; t.style.unityTextAlign = TextAnchor.MiddleCenter;
         var s2 = Line(c, 18); s2.text = sub; s2.style.unityTextAlign = TextAnchor.MiddleCenter;
         return c;
     }
@@ -328,7 +329,7 @@ public class UiRoot : MonoBehaviour
     VisualElement[] bSlot = new VisualElement[BarN], bIcon = new VisualElement[BarN], bShade = new VisualElement[BarN]; Label[] bKey = new Label[BarN], bTxt = new Label[BarN], bSec = new Label[BarN];
     VisualElement[] bPips = new VisualElement[0]; float pullMax = 1f; VisualElement bPipRow; Label bWeapon;
     static readonly string[] BarKeys = { "Q", "1", "2", "3", "4", "E", "R", "H" };
-    static readonly string[] BarNames = { "끌기", "", "", "", "", "천도", "파혼", "약" };
+    static readonly string[] BarNames = { "끌기", "", "", "", "", "↑천도", "×파혼", "약" };
 
     void BuildSlots()
     {
