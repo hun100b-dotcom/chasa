@@ -41,8 +41,35 @@ def choga8():
     P += [("choga_roof_straight", 0, 2, ZR, 0), ("choga_roof_hip_end", 2, 2, ZR, 0), ("choga_roof_hip_end", -2, 2, ZR, 180), ("chimney", 5.6, 4.3, 0, 0)]
     return _shift(P)
 
-RECIPES = {"uiwon": giwa8, "giwa8": giwa8, "choga4": choga4, "choga8": choga8}
-FOOTPRINT = {"uiwon": (9, 5), "giwa8": (9, 5), "choga4": (5, 5), "choga8": (9, 5)}   # 겹침 검사용(가로, 세로, 기단 포함)
+def jeongja():
+    """정자 4×4m: 기단 위 둥근 기둥 넷, 우진각 기와지붕, 벽 없음(앞에 댓돌). 사방이 트인 쉼터."""
+    P = [("gidan_straight", 0, 0, 0, 0), ("gidan_straight", 0, 4, 0, 0)] + [("gidan_straight", s * 2, 2, 0, 90) for s in (-1, 1)]
+    for sx in (-2, 2):
+        for y in (0, 4): P.append(("pillar_round", sx, y, ZW, 0))
+    P += [("giwa_roof_hip_end", 0, 2, ZR, 0), ("giwa_roof_hip_end", 0, 2, ZR, 180), ("daetdol_step", 0, -1.3, 0, 0)]
+    return _shift(P)
+
+def daejanggan():
+    """대장간 4×4m: 초가 틀에서 앞(−Y)과 한쪽 옆을 터서 화덕 연기와 불빛이 바깥으로 나오게. 뒤·한쪽 벽만 흙벽, 굴뚝 하나."""
+    P = [("gidan_straight", 0, 0, 0, 0), ("gidan_straight", 0, 4, 0, 0)] + [("gidan_straight", s * 2, 2, 0, 90) for s in (-1, 1)]
+    P += [("wall_mud", 0, 4, ZW, 180), ("wall_mud", -2, 2, ZW, -90)]
+    for sx in (-2, 2):
+        for y in (0, 4): P.append(("pillar_square", sx, y, ZW, 0))
+    P += [("choga_roof_hip_end", 0, 2, ZR, 0), ("choga_roof_hip_end", 0, 2, ZR, 180), ("chimney", -2.9, 4.3, 0, 0)]
+    return _shift(P)
+
+def donghun_burnt():
+    """불탄 동헌 터 8×4m: 기단과 토막 난 벽 둘만 남고 지붕·기둥은 없다(기둥은 소품 '탄 기둥'을 따로 세운다). 앞 댓돌."""
+    P = []
+    for x in (-2, 2): P += [("gidan_straight", x, 0, 0, 0), ("gidan_straight", x, 4, 0, 0)]
+    for s in (-1, 1): P.append(("gidan_straight", s * 4, 2, 0, 90))
+    for x in (-4, 4):
+        for y in (0, 4): P.append(("gidan_corner", x, y, 0, 0))
+    P += [("wall_plaster", -2, 4, ZW, 180), ("wall_plank", 4, 2, ZW, 90), ("daetdol_step", 0, -1.3, 0, 0)]
+    return _shift(P)
+
+RECIPES = {"uiwon": giwa8, "giwa8": giwa8, "choga4": choga4, "choga8": choga8, "jeongja": jeongja, "daejanggan": daejanggan, "donghun_burnt": donghun_burnt}
+FOOTPRINT = {"uiwon": (9, 5), "giwa8": (9, 5), "choga4": (5, 5), "choga8": (9, 5), "jeongja": (5, 5), "daejanggan": (5, 5), "donghun_burnt": (9, 5)}   # 겹침 검사용(가로, 세로, 기단 포함)
 
 def place_building(kind, x, y, rot=0, gate=True):
     """집을 세계 좌표 (x,y), 방향 rot(반시계 도)로 옮긴 조각 목록을 돌려준다. 초가는 앞마당에 사립문을 단다."""

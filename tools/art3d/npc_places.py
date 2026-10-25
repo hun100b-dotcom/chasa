@@ -24,7 +24,7 @@ OV = {
  "보릿들 둑": (290, 113.2, (290, 120), "보릿들 남쪽 큰 길(y 116) 북쪽 풀둑"),
  "물막이 골 나루 계단": (399.0, 291.5, (404, 288), "보스1 자리(404,288) 서쪽 옛 나루 계단"),
  "물막이 골 줄배": (397.0, 286.0, (410.5, 288), "나룻배(410.5,288) 서쪽 줄 매는 말뚝 곁"),
- "물막이 골 주막 터": (414.0, 322.0, (404, 296), "골 위쪽(북쪽) 방앗간(399,340) 남동쪽 빈 터. 주막 건물 없음(터만)"),
+ "물막이 골 주막 터": (417.4, 321.0, (404, 296), "주막 앞마당(주막 건물 (419.8,330), 문 남쪽). 개울 동쪽 둑 위"),
  "물막이 골 갈대 속 부러진 삿대": (393.0, 289.0, (404, 288), "나루 서쪽 갈대밭"),
  "객사 앞 방": (31.0, 326.0, (36, 330), "탄 동헌 서쪽 객사 터. 소나무 곁이라 피해 옮김"),
  "역병막 어귀": (42.0, 452.0, (34, 469), "격리 움막 줄 동쪽 길목(약탕 화로 곁). 제안(0,-8)은 움막과 겹쳐 옮김"),
@@ -61,7 +61,7 @@ def build():
 if __name__ == "__main__":
     o = build()
     json.dump({"units": "m", "axes": "x=동, y=북(필드 절대). 유니티는 (x, 높이, y)", "face_deg": "0=동쪽, 90=북쪽(반시계). 그 자리 NPC가 바라볼 방향", "anchors": {k: list(v) for k, v in ANCHOR.items()},
-               "note": "서사 제안(구역 중심 기준)을 필드 지도에 맞춰 확정한 값. needs_new는 아직 모델이 없는 건물·소품. 시장·동헌·역병막은 2막 구역이라 건물이 없고 터 좌표만 잡았다(필드 서쪽 둑, x 0~72).",
-               "needs_new": ["정자(마을 어귀)", "대장간 건물(초가+모루+풀무)", "주막 건물(터만 있음)", "장터 약방·주막·엿판 자리 건물/좌판", "동헌 터(탄 서안·숯 기둥)·옥 돌담·옥문·객사"], "named_souls_first_session": souls([(p["x"], p["y"], p["prop"]) for p in L["props"]] + [(q["x"], q["y"], q.get("piece") or q.get("id")) for q in L["structures"]]), "places": o}, open(os.path.join(A3, "layouts", "npc_places_act1.json"), "w"), ensure_ascii=False, indent=1)
+               "note": "서사 제안(구역 중심 기준)을 필드 지도에 맞춰 확정한 값. needs_new는 아직 모델이 없는 건물·소품. 시장·동헌 터에는 이후 건물을 지었다(역병막은 터 좌표만)(필드 서쪽 둑, x 0~72).",
+               "needs_new": [], "built_buildings": "정자·대장간·물막이 골 주막·장터 약방·장터 주막·동헌 터·옥·객사 7곳은 지음(README 참고)", "named_souls_first_session": souls([(p["x"], p["y"], p["prop"]) for p in L["props"]] + [(q["x"], q["y"], q.get("piece") or q.get("id")) for q in L["structures"]]), "places": o}, open(os.path.join(A3, "layouts", "npc_places_act1.json"), "w"), ensure_ascii=False, indent=1)
     for k, v in json.load(open(os.path.join(A3, "layouts", "npc_places_act1.json")))["named_souls_first_session"].items(): print("혼", k, v["x"], v["y"], v["nearest_prop"])
     for k, v in o.items(): print(f"{k:16s} {v['zone']:8s} ({v['x']:6},{v['y']:6}) 가까운 {v['nearest_prop']['name']} {v['nearest_prop']['dist_m']}m {'*' if v['moved_from_proposal'] else ''}")

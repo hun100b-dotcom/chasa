@@ -27,11 +27,18 @@ class Lib:
             before = set(bpy.data.objects)
             bpy.ops.import_scene.gltf(filepath=gpath(name))
             new = [o for o in bpy.data.objects if o not in before]
-            m = [o for o in new if o.type == "MESH" and o.parent is None][0]
+            empties = [e for e in new if e.type == "EMPTY"]; lights_found = [(Vector(e.location), dict(e)) for e in empties if e.name.startswith("Light_")]   # 합치기 전에 먼저 챙긴다(합치면 옛 오브젝트가 사라짐)
+            top = [o for o in new if o.type == "MESH" and o.parent is None]
+            if top: m = top[0]
+            else:   # 노드 이름으로 나뉜 여러 조각 소품(약장·등롱 등): 부모를 풀어 한 메시로 합친다(보기용)
+                ms = [o for o in new if o.type == "MESH"]
+                for o in bpy.context.view_layer.objects: o.select_set(False)
+                for o in ms: o.select_set(True)
+                bpy.context.view_layer.objects.active = ms[0]
+                bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM"); bpy.ops.object.join(); m = bpy.context.view_layer.objects.active
             m.rotation_mode = "XYZ"; m.location = (0, 0, -500); m.hide_render = True
-            self.lights[name] = [(Vector(e.location), dict(e)) for e in new if e.type == "EMPTY" and e.name.startswith("Light_")]
-            for e in new:
-                if e.type == "EMPTY": e.hide_render = True
+            self.lights[name] = lights_found
+            for e in empties: e.hide_render = True
             self.t[name] = m
         return self.t[name]
 
@@ -123,6 +130,11 @@ def pose(name, x, y, z, rot, action, frame, scale=1.0):
     return top
 
 SHOTS = {
+  "market":  dict(win=(0, 360, 80, 420), center=(36, 390, 0), ortho=46, title="읍터 장터(밤)"),
+  "donghun": dict(win=(0, 300, 80, 370), center=(34, 336, 0), ortho=52, title="동헌 터·옥·객사(밤)"),
+  "smithy":  dict(win=(200, 38, 250, 84), center=(221, 59, 0), ortho=26, title="대장간(밤)"),
+  "jeongja": dict(win=(170, 28, 215, 62), center=(192, 44, 0), ortho=26, title="마을 어귀 정자(밤)"),
+  "jumak":   dict(win=(385, 295, 445, 350), center=(414, 322, 0), ortho=40, title="물막이 골 주막(밤)"),
   "gate":   dict(win=(150, 0, 245, 80), center=(196, 42, 0), ortho=50, title="솔고개 어귀(밤)"),
   "village": dict(win=(150, 20, 245, 110), center=(196, 62, 0), ortho=60, title="마을 안(밤)"),
   "barley": dict(win=(250, 70, 470, 220), center=(352, 134, 0), ortho=150, title="보릿들(밤)"),

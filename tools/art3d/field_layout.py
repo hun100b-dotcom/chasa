@@ -43,6 +43,9 @@ def line(a, b):
         for x in range(min(x0, x1), max(x0, x1) + 1): road.add((x0 + 0 if False else x, y0))
 for path in [ROUTE] + list(BRANCH.values()):
     for a, b in zip(path, path[1:]): line(a, b)
+EXTRA_ROADS = [[(5, 56), (5, 48), (4, 48)], [(5, 48), (7, 48), (7, 41), (4, 41)]]   # 서쪽 둑 읍터(장터·동헌 터) 가는 길. BRANCH에 안 넣어 랜드마크 배치가 안 밀리게 따로 둔다
+for path in EXTRA_ROADS:
+    for a, b in zip(path, path[1:]): line(a, b)
 road.add((72, 63)); road.add((72, 64)) ; road.discard((72, 64))
 virtual = {(x, BRIDGE_ROW) for x in BRIDGE_COLS}; road -= virtual   # 다리 자리는 길 타일을 깔지 않고, 이웃 계산에서만 길로 친다   # 폐당집 계단 앞까지만
 
@@ -249,6 +252,31 @@ for x, y in ((103.0, 437.0), (72.0, 440.0), (72.5, 466.0), (47.0, 478.0), (108.0
     life("prop_mist_pillar", x + 1.2, y + 1.0, 0, zone="독기 기둥")             # 웅덩이·약탕 곁에서 피어오르는 기운
 for x, y in ((98.0, 440.0), (98.0, 466.0), (112.0, 440.0), (112.0, 462.0), (84.0, 452.0), (66.0, 456.0), (52.0, 466.0), (34.0, 466.0), (42.0, 442.0), (116.0, 360.0), (116.0, 400.0), (104.0, 520.0), (104.0, 560.0), (90.0, 330.0)):
     life("prop_sick_lantern", x, y, _pr.choice((0, 180)), zone="초록 등불")       # 길·다리목·의원 앞에 병든 초록 불빛
+# ── 읍터(2막 서쪽 둑): 장터·동헌 터·옥·객사와 1막 마을의 정자·대장간·골 주막을 한옥 키트로 짓는다(서사 npc_places 확정 좌표) ─────────
+def build_site(bid, kind, x, y, rot, note, gate=False):
+    structures.append({"id": bid, "kind": kind, "x": x, "y": y, "rot": rot, "note": note, "pieces": place_building(kind, x, y, rot, gate=gate)})
+build_site("jeongja", "jeongja", 192.0, 43.6, 0, "마을 어귀 정자(서낭당 쪽). NPC '정자' 자리 안쪽")
+build_site("daejanggan", "daejanggan", 224.0, 62.0, -90, "박돌쇠네 대장간(동쪽 돌담 밖 외딴 터, 문이 서쪽)")
+build_site("jumak_gol", "choga8", 419.8, 330.0, 0, "물막이 골 주막 터의 주막(문 남쪽)")
+build_site("yakbang_market", "choga8", 25.0, 391.0, 90, "장터 약방(은실, 문이 동쪽 장마당 쪽)")
+build_site("jumak_market", "choga8", 47.0, 391.0, -90, "장터 주막(섭섭이, 문이 서쪽 장마당 쪽)")
+build_site("donghun_ruin", "donghun_burnt", 36.0, 330.0, 0, "불탄 동헌 터(탄 문서함 자리)")
+build_site("gaeksa", "giwa8", 25.5, 326.0, 90, "객사(동헌이 탄 뒤 관아 일을 보는 곳, 문 동쪽)")
+structures += [{"piece": "br_herb_rack", "file": "assets3d/blackrapids/br_herb_rack.glb", "x": 29.5, "y": 395.5, "z": 0, "rot": 0, "note": "장터 약방 약초 건조대"},
+               {"piece": "br_med_sign", "file": "assets3d/blackrapids/br_med_sign.glb", "x": 29.0, "y": 387.5, "z": 0, "rot": 0, "note": "장터 약방 깃대"},
+               {"piece": "br_jars", "file": "assets3d/blackrapids/br_jars.glb", "x": 23.0, "y": 397.5, "z": 0, "rot": 0, "note": "장터 약 항아리"},
+               {"piece": "prop_prison_wall", "file": "assets3d/props/prop_prison_wall.glb", "x": 36.0, "y": 345.0, "z": 0, "rot": 0, "note": "옥 돌담(둥근, 남쪽 문 자리가 비어 있음)"},
+               {"piece": "prop_prison_gate", "file": "assets3d/props/prop_prison_gate.glb", "x": 36.0, "y": 339.5, "z": 0, "rot": 0, "note": "옥문(횃대 Light_prison_gate 포함)"},
+               {"piece": "prop_forge", "file": "assets3d/props/prop_forge.glb", "x": 222.9, "y": 62.2, "z": 0, "rot": -90, "note": "대장간 화덕(처마 밑 바깥쪽)(Light_forge)"}]
+SITE_PROPS = [("prop_anvil", 219.8, 62.8, 0), ("prop_quench_trough", 219.6, 59.2, 90), ("prop_tool_rack", 221.5, 66.6, 0), ("prop_haystack", 228.5, 58.5, 0),
+              ("prop_pyeongsang", 418.0, 323.0, 0), ("prop_pyeongsang", 422.2, 323.0, 0), ("prop_jangdok", 416.2, 324.4, 0), ("prop_post_lamp", 416.0, 321.8, 0),
+              ("prop_pyeongsang", 41.0, 395.0, 0), ("prop_pyeongsang", 41.5, 387.0, 0), ("prop_post_lamp", 44.0, 396.5, 0), ("prop_jangdok", 50.5, 396.5, 0),
+              ("prop_market_stall", 33.0, 384.0, 0), ("prop_market_stall", 30.0, 380.0, 20), ("prop_market_stall", 40.5, 379.0, -15), ("prop_candy_stand", 39.8, 383.6, 0), ("prop_cart", 35.0, 392.0, 80),
+              ("prop_burnt_desk", 36.8, 330.6, 10), ("prop_burnt_cabinet", 33.8, 330.4, 0), ("prop_ash_heap", 30.0, 336.0, 0), ("prop_ash_heap", 42.0, 327.0, 40), ("prop_ash_heap", 40.5, 334.5, 80)]
+for pc in [(32, 328), (36, 328), (40, 328), (32, 332), (36, 332), (40, 332)]: SITE_PROPS.append(("prop_charred_pillar", pc[0] + 0.0, pc[1] + 0.0, 0))
+for pr_, x_, y_, rt_ in SITE_PROPS: props.append({"zone": "읍터 소품", "prop": pr_, "x": x_, "y": y_, "rot": rt_, "z": 0.0})
+SITE_CLEAR = [(192, 43.6, 6.5), (224, 62, 11), (420, 326, 10), (36, 388, 23), (36, 336, 24)]
+props[:] = [p for p in props if p["zone"] == "읍터 소품" or not any((p["x"] - cx) ** 2 + (p["y"] - cy) ** 2 < cr ** 2 for cx, cy, cr in SITE_CLEAR)]
 # 길목 랜드마크: 큰 길과 샛길을 따라 72m마다 길에서 7m 떨어진 곳에 큰 바위·고목·사당·고갯마루 돌무더기를 돌려 가며
 LM_KINDS = ("prop_big_rock", "prop_old_tree", "prop_small_shrine", "prop_pass_cairn")
 _n = 0; _acc = 0.0

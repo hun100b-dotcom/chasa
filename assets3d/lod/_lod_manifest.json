@@ -260,6 +260,36 @@
    "tris1": 35,
    "tris2": 12
   },
+  "prop_anvil": {
+   "tris0": 74,
+   "size_m": [
+    0.85,
+    0.54,
+    0.78
+   ],
+   "tris1": 29,
+   "tris2": 12
+  },
+  "prop_ash_heap": {
+   "tris0": 136,
+   "size_m": [
+    3.0,
+    3.0,
+    0.98
+   ],
+   "tris1": 54,
+   "tris2": 12
+  },
+  "prop_bangul": {
+   "tris0": 528,
+   "size_m": [
+    0.27,
+    0.28,
+    0.3
+   ],
+   "tris1": 211,
+   "tris2": 12
+  },
   "prop_big_rock": {
    "tris0": 314,
    "size_m": [
@@ -268,6 +298,35 @@
     3.91
    ],
    "tris1": 125,
+   "tris2": 12
+  },
+  "prop_brush_dry": {
+   "tris0": 50,
+   "size_m": [
+    0.02,
+    0.03,
+    0.3
+   ],
+   "tris2": 12
+  },
+  "prop_burnt_cabinet": {
+   "tris0": 120,
+   "size_m": [
+    1.66,
+    1.62,
+    0.87
+   ],
+   "tris1": 48,
+   "tris2": 12
+  },
+  "prop_burnt_desk": {
+   "tris0": 108,
+   "size_m": [
+    1.56,
+    1.52,
+    0.44
+   ],
+   "tris1": 43,
    "tris2": 12
   },
   "prop_cairn": {
@@ -290,6 +349,16 @@
    "tris1": 107,
    "tris2": 12
   },
+  "prop_candy_stand": {
+   "tris0": 180,
+   "size_m": [
+    1.14,
+    0.64,
+    0.96
+   ],
+   "tris1": 72,
+   "tris2": 12
+  },
   "prop_cart": {
    "tris0": 192,
    "size_m": [
@@ -298,6 +367,16 @@
     1.07
    ],
    "tris1": 76,
+   "tris2": 12
+  },
+  "prop_charred_pillar": {
+   "tris0": 88,
+   "size_m": [
+    1.17,
+    1.14,
+    2.58
+   ],
+   "tris1": 35,
    "tris2": 12
   },
   "prop_choga": {
@@ -330,6 +409,16 @@
    "tris1": 91,
    "tris2": 12
   },
+  "prop_eave_lamp": {
+   "tris0": 120,
+   "size_m": [
+    0.31,
+    0.78,
+    1.07
+   ],
+   "tris1": 48,
+   "tris2": 12
+  },
   "prop_fence": {
    "tris0": 268,
    "size_m": [
@@ -350,6 +439,16 @@
    "tris1": 129,
    "tris2": 12
   },
+  "prop_forge": {
+   "tris0": 120,
+   "size_m": [
+    2.1,
+    1.32,
+    2.3
+   ],
+   "tris1": 48,
+   "tris2": 12
+  },
   "prop_foul_pool": {
    "tris0": 182,
    "size_m": [
@@ -358,6 +457,16 @@
     0.18
    ],
    "tris1": 72,
+   "tris2": 12
+  },
+  "prop_gamcho_pile": {
+   "tris0": 216,
+   "size_m": [
+    0.37,
+    0.4,
+    0.17
+   ],
+   "tris1": 86,
    "tris2": 12
   },
   "prop_geumjul": {
@@ -388,6 +497,56 @@
     1.08
    ],
    "tris1": 40,
+   "tris2": 12
+  },
+  "prop_gut_cup": {
+   "tris0": 100,
+   "size_m": [
+    0.32,
+    0.34,
+    0.2
+   ],
+   "tris1": 40,
+   "tris2": 12
+  },
+  "prop_gut_cup_flipped": {
+   "tris0": 100,
+   "size_m": [
+    0.32,
+    0.34,
+    0.22
+   ],
+   "tris1": 40,
+   "tris2": 12
+  },
+  "prop_gut_floor": {
+   "tris0": 1976,
+   "size_m": [
+    12.75,
+    12.75,
+    0.47
+   ],
+   "tris1": 790,
+   "tris2": 12
+  },
+  "prop_gut_slots": {
+   "tris0": 528,
+   "size_m": [
+    9.7,
+    9.7,
+    0.02
+   ],
+   "tris1": 211,
+   "tris2": 12
+  },
+  "prop_gutsang": {
+   "tris0": 512,
+   "size_m": [
+    1.6,
+    0.92,
+    1.04
+   ],
+   "tris1": 204,
    "tris2": 12
   },
   "prop_haystack": {
@@ -430,6 +589,16 @@
    "tris1": 65,
    "tris2": 12
   },
+  "prop_ledger_open": {
+   "tris0": 192,
+   "size_m": [
+    1.14,
+    0.84,
+    0.08
+   ],
+   "tris1": 76,
+   "tris2": 12
+  },
   "prop_log_pile": {
    "tris0": 88,
    "size_m": [
@@ -448,6 +617,16 @@
     3.6
    ],
    "tris1": 52,
+   "tris2": 12
+  },
+  "prop_market_stall": {
+   "tris0": 286,
+   "size_m": [
+    2.2,
+    1.49,
+    2.01
+   ],
+   "tris1": 114,
    "tris2": 12
   },
   "prop_mill": {
@@ -490,6 +669,26 @@
    "tris1": 72,
    "tris2": 12
   },
+  "prop_number_grid": {
+   "tris0": 444,
+   "size_m": [
+    9.56,
+    9.56,
+    0.02
+   ],
+   "tris1": 177,
+   "tris2": 12
+  },
+  "prop_obang_scraps": {
+   "tris0": 144,
+   "size_m": [
+    2.06,
+    2.32,
+    0.15
+   ],
+   "tris1": 57,
+   "tris2": 12
+  },
   "prop_old_tree": {
    "tris0": 374,
    "size_m": [
@@ -530,6 +729,56 @@
    "tris1": 65,
    "tris2": 12
   },
+  "prop_post_lamp": {
+   "tris0": 136,
+   "size_m": [
+    0.5,
+    0.9,
+    2.8
+   ],
+   "tris1": 54,
+   "tris2": 12
+  },
+  "prop_potion_bottle": {
+   "tris0": 146,
+   "size_m": [
+    0.13,
+    0.13,
+    0.24
+   ],
+   "tris1": 58,
+   "tris2": 12
+  },
+  "prop_prison_gate": {
+   "tris0": 234,
+   "size_m": [
+    4.04,
+    0.6,
+    2.8
+   ],
+   "tris1": 93,
+   "tris2": 12
+  },
+  "prop_prison_wall": {
+   "tris0": 596,
+   "size_m": [
+    11.72,
+    11.32,
+    2.56
+   ],
+   "tris1": 238,
+   "tris2": 12
+  },
+  "prop_pyeongsang": {
+   "tris0": 144,
+   "size_m": [
+    1.9,
+    1.2,
+    0.7
+   ],
+   "tris1": 57,
+   "tris2": 12
+  },
   "prop_quarantine_hut": {
    "tris0": 116,
    "size_m": [
@@ -538,6 +787,15 @@
     1.98
    ],
    "tris1": 46,
+   "tris2": 12
+  },
+  "prop_quench_trough": {
+   "tris0": 48,
+   "size_m": [
+    1.3,
+    0.5,
+    0.41
+   ],
    "tris2": 12
   },
   "prop_ruined_shrine": {
@@ -560,6 +818,16 @@
    "tris1": 48,
    "tris2": 12
   },
+  "prop_salpuchae_broken": {
+   "tris0": 116,
+   "size_m": [
+    0.68,
+    0.04,
+    0.52
+   ],
+   "tris1": 46,
+   "tris2": 12
+  },
   "prop_sangyeo": {
    "tris0": 144,
    "size_m": [
@@ -578,6 +846,25 @@
     1.94
    ],
    "tris1": 59,
+   "tris2": 12
+  },
+  "prop_seal_empty": {
+   "tris0": 48,
+   "size_m": [
+    0.9,
+    0.9,
+    0.01
+   ],
+   "tris2": 12
+  },
+  "prop_seal_red": {
+   "tris0": 60,
+   "size_m": [
+    0.9,
+    0.9,
+    0.04
+   ],
+   "tris1": 24,
    "tris2": 12
   },
   "prop_seonangdang": {
@@ -660,6 +947,16 @@
    "tris1": 57,
    "tris2": 12
   },
+  "prop_tanggeon": {
+   "tris0": 136,
+   "size_m": [
+    0.24,
+    0.25,
+    0.22
+   ],
+   "tris1": 54,
+   "tris2": 12
+  },
   "prop_tomb_old": {
    "tris0": 156,
    "size_m": [
@@ -668,6 +965,16 @@
     1.35
    ],
    "tris1": 62,
+   "tris2": 12
+  },
+  "prop_tool_rack": {
+   "tris0": 140,
+   "size_m": [
+    1.6,
+    0.14,
+    1.5
+   ],
+   "tris1": 56,
    "tris2": 12
   },
   "prop_umul": {
@@ -688,6 +995,26 @@
     3.8
    ],
    "tris1": 89,
+   "tris2": 12
+  },
+  "prop_yakbongji": {
+   "tris0": 60,
+   "size_m": [
+    0.15,
+    0.13,
+    0.14
+   ],
+   "tris1": 24,
+   "tris2": 12
+  },
+  "prop_yakjang": {
+   "tris0": 276,
+   "size_m": [
+    0.66,
+    0.77,
+    0.86
+   ],
+   "tris1": 110,
    "tris2": 12
   },
   "terrain_bush_flower": {

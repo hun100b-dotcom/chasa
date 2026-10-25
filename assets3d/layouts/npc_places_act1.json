@@ -36,14 +36,9 @@
    469
   ]
  },
- "note": "서사 제안(구역 중심 기준)을 필드 지도에 맞춰 확정한 값. needs_new는 아직 모델이 없는 건물·소품. 시장·동헌·역병막은 2막 구역이라 건물이 없고 터 좌표만 잡았다(필드 서쪽 둑, x 0~72).",
- "needs_new": [
-  "정자(마을 어귀)",
-  "대장간 건물(초가+모루+풀무)",
-  "주막 건물(터만 있음)",
-  "장터 약방·주막·엿판 자리 건물/좌판",
-  "동헌 터(탄 서안·숯 기둥)·옥 돌담·옥문·객사"
- ],
+ "note": "서사 제안(구역 중심 기준)을 필드 지도에 맞춰 확정한 값. needs_new는 아직 모델이 없는 건물·소품. 시장·동헌 터에는 이후 건물을 지었다(역병막은 터 좌표만)(필드 서쪽 둑, x 0~72).",
+ "needs_new": [],
+ "built_buildings": "정자·대장간·물막이 골 주막·장터 약방·장터 주막·동헌 터·옥·객사 7곳은 지음(README 참고)",
  "named_souls_first_session": {
   "S-001 박돌쇠": {
    "x": 215.6,
@@ -64,7 +59,7 @@
    "memo": "마을 안(명부 밖). 윤 소사네 마당 제사상(191.2,58) 곁. 방금 천도했다면 제사상 앞에 잠깐 서 있다 흩어짐",
    "nearest_prop": {
     "name": "prop_haystack",
-    "dist_m": 6.0
+    "dist_m": 6.3
    }
   },
   "S-003 연이": {
@@ -85,8 +80,8 @@
    "age": "year",
    "memo": "보릿들 둑 갈림 둘 자리(290,113)에서 동쪽 12m, 길 북쪽 풀둑. 해 넘긴 혼",
    "nearest_prop": {
-    "name": "nature_bush_a",
-    "dist_m": 11.0
+    "name": "prop_small_shrine",
+    "dist_m": 11.4
    }
   },
   "S-010 곽 뱃꾼": {
@@ -254,7 +249,7 @@
    "memo": "제사상 곁",
    "nearest_prop": {
     "name": "prop_haystack",
-    "dist_m": 7.4
+    "dist_m": 6.9
    }
   },
   "우물가": {
@@ -285,8 +280,8 @@
    "moved_from_proposal": true,
    "memo": "마을에 정자가 없어 새 소품 필요. 제안(6,-6)은 동쪽 초가와 겹쳐 서낭당 쪽 어귀로 옮김",
    "nearest_prop": {
-    "name": "prop_cairn",
-    "dist_m": 6.9
+    "name": "jeongja",
+    "dist_m": 1.2
    }
   },
   "정자": {
@@ -301,8 +296,8 @@
    "moved_from_proposal": true,
    "memo": "위와 같은 자리",
    "nearest_prop": {
-    "name": "prop_cairn",
-    "dist_m": 6.9
+    "name": "jeongja",
+    "dist_m": 1.2
    }
   },
   "박돌쇠네 대장간": {
@@ -317,8 +312,8 @@
    "moved_from_proposal": true,
    "memo": "제안(10,6)은 동쪽 초가와 겹침. 동쪽 돌담 밖 외딴 터로. 대장간 건물 필요(초가+모루+풀무)",
    "nearest_prop": {
-    "name": "prop_fence",
-    "dist_m": 4.0
+    "name": "prop_anvil",
+    "dist_m": 1.1
    }
   },
   "대장간": {
@@ -333,8 +328,8 @@
    "moved_from_proposal": true,
    "memo": "위와 같은 자리",
    "nearest_prop": {
-    "name": "prop_fence",
-    "dist_m": 4.0
+    "name": "prop_anvil",
+    "dist_m": 1.1
    }
   },
   "당할미 집": {
@@ -349,8 +344,8 @@
    "moved_from_proposal": true,
    "memo": "남서쪽 끝 초가(house_00, 187.5,47) 문 앞. 서낭당 쪽",
    "nearest_prop": {
-    "name": "prop_stepstones",
-    "dist_m": 4.8
+    "name": "jeongja",
+    "dist_m": 3.6
    }
   },
   "도씨네 집": {
@@ -419,18 +414,18 @@
   },
   "물막이 골 주막 터": {
    "zone": "Ravine",
-   "x": 414.0,
-   "y": 322.0,
-   "face_deg": 249,
+   "x": 417.4,
+   "y": 321.0,
+   "face_deg": 242,
    "from_narrative_offset_m": [
     6,
     2
    ],
    "moved_from_proposal": true,
-   "memo": "골 위쪽(북쪽) 방앗간(399,340) 남동쪽 빈 터. 주막 건물 없음(터만)",
+   "memo": "주막 앞마당(주막 건물 (419.8,330), 문 남쪽). 개울 동쪽 둑 위",
    "nearest_prop": {
-    "name": "nature_pine_b",
-    "dist_m": 5.0
+    "name": "prop_post_lamp",
+    "dist_m": 1.6
    }
   },
   "물막이 골 갈대 속 부러진 삿대": {
@@ -461,8 +456,8 @@
    "moved_from_proposal": true,
    "memo": "당집(580,535) 앞마루 남쪽. 폐당집 입구가 남쪽",
    "nearest_prop": {
-    "name": "prop_ruined_shrine",
-    "dist_m": 3.5
+    "name": "nature_dead_b",
+    "dist_m": 3.3
    }
   },
   "장터거리 장마당": {
@@ -477,8 +472,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "terrain_rock_cluster",
-    "dist_m": 11.5
+    "name": "prop_cart",
+    "dist_m": 4.1
    }
   },
   "장마당": {
@@ -493,8 +488,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "terrain_rock_cluster",
-    "dist_m": 11.5
+    "name": "prop_cart",
+    "dist_m": 4.1
    }
   },
   "장터 약방": {
@@ -509,8 +504,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "nature_pine_b",
-    "dist_m": 13.6
+    "name": "br_med_sign",
+    "dist_m": 3.5
    }
   },
   "약방": {
@@ -525,8 +520,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "nature_pine_b",
-    "dist_m": 13.6
+    "name": "br_med_sign",
+    "dist_m": 3.5
    }
   },
   "장터 주막 부엌": {
@@ -541,8 +536,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "terrain_rock_cluster",
-    "dist_m": 3.5
+    "name": "prop_pyeongsang",
+    "dist_m": 3.6
    }
   },
   "주막": {
@@ -557,8 +552,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "terrain_rock_cluster",
-    "dist_m": 3.9
+    "name": "jumak_market",
+    "dist_m": 4.0
    }
   },
   "장터 엿판 자리": {
@@ -573,8 +568,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "terrain_rock_cluster",
-    "dist_m": 12.4
+    "name": "prop_candy_stand",
+    "dist_m": 1.0
    }
   },
   "동헌 터 탄 문서함": {
@@ -589,8 +584,8 @@
    "moved_from_proposal": false,
    "memo": "숯 기둥 사이, 다리 하나 탄 서안 곁",
    "nearest_prop": {
-    "name": "nature_pine_b",
-    "dist_m": 7.3
+    "name": "donghun_ruin",
+    "dist_m": 0.0
    }
   },
   "동헌 터 탄 문서함 곁": {
@@ -605,8 +600,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "nature_pine_a",
-    "dist_m": 7.7
+    "name": "prop_burnt_desk",
+    "dist_m": 0.6
    }
   },
   "동헌 뒤 둥근 돌담 옥": {
@@ -621,8 +616,8 @@
    "moved_from_proposal": false,
    "memo": "동헌 터 뒤 골목",
    "nearest_prop": {
-    "name": "nature_pine_a",
-    "dist_m": 6.2
+    "name": "prop_prison_gate",
+    "dist_m": 0.5
    }
   },
   "동헌 뒤 옥": {
@@ -637,8 +632,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "nature_pine_a",
-    "dist_m": 6.2
+    "name": "prop_prison_gate",
+    "dist_m": 0.5
    }
   },
   "옥문 앞": {
@@ -653,8 +648,8 @@
    "moved_from_proposal": false,
    "memo": "",
    "nearest_prop": {
-    "name": "nature_pine_a",
-    "dist_m": 5.3
+    "name": "prop_prison_gate",
+    "dist_m": 1.5
    }
   },
   "객사 앞 방": {
@@ -669,8 +664,8 @@
    "moved_from_proposal": true,
    "memo": "탄 동헌 서쪽 객사 터. 소나무 곁이라 피해 옮김",
    "nearest_prop": {
-    "name": "nature_pine_a",
-    "dist_m": 3.8
+    "name": "prop_charred_pillar",
+    "dist_m": 2.2
    }
   },
   "역병막 빈 움막 섬돌": {
