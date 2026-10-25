@@ -79,13 +79,20 @@ def build():
 
 if __name__ == "__main__":
     o, arm = build(); man = []
-    for name, (keys, interp, loop, ev) in clips().items():
-        info = anim.clip(arm, name, keys, interp); info.update({"loop": loop, "events": ev or {}}); man.append(info)
+    import hero_weapon_anim as hwa
+    NEW = hwa.clips()
+    for name, (keys, interp, loop, ev) in {**clips(), **NEW}.items():
+        info = anim.clip(arm, name, keys, interp); info.update({"loop": loop, "events": ev or {}, **({"weapon": name.split("_")[0], "socket_rotate_deg_x": hwa.SOCKET_ROT_X[name.split("_")[0]]} if name in NEW else {})}); man.append(info)
     if "--sheets" in sys.argv:
         setup_render(3.0, (0, 0, 1.0), size=(220, 280), ground_size=10)
+        wobj = {}
         for c in man:
+            wk = c["name"].split("_")[0] if "_" in c["name"] else "Chain"
+            if wk not in wobj: wobj[wk] = hwa.attach(arm, wk)
+            for k2, ob in wobj.items(): ob.hide_render = k2 != wk
             n = c["frames"]; fr = sorted({0, *[round(n * t) for t in (0.2, 0.4, 0.6, 0.8)], n - 1}) if c["name"] not in ("Attack", "Attack2") else [0, 5, 8, 10, 12, 14, 21]
             anim.sheet(arm, c["name"], fr, os.path.join(OUT, "previews", f"anim_hero_{c['name']}"))
+        for ob in wobj.values(): bpy.data.objects.remove(ob, do_unlink=True)   # 내보내는 GLB에는 무기를 넣지 않는다
     path = os.path.join(OUT, "characters", "hero_chasa.glb")
     anim.export_rig(arm, path)
     # 사슬 감김은 몸통에서 떼어 따로 내보낸다(원점=오른손 위치)
