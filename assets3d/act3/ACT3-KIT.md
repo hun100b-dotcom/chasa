@@ -17,3 +17,13 @@
 | `bridge_deck` | 큰 다리 상판·난간(8×6 m, 바닥에서 3.6 m). 재질은 **`M_bridge_deck` 하나뿐** → 플레이어가 다리 밑에 들면 이 재질 알파만 낮추면 된다 |
 | `bridge_pier` | 다릿발·보·둔치 바닥. 불투명 유지. `bridge_deck`과 원점이 같다(다리 중앙 바닥) |
 | `tide_water` | 썰물·밀물 물판 64×64 m(큰 강과 같은 물 재질). 코드가 높이를 25분 주기로 움직임 |
+
+## ⑥ 도성 아랫마을 키트 (17종, 2차)
+| 묶음 | 모델 |
+|---|---|
+| 성벽·성문 | city_wall(8×2 m, 높이 8 m), city_gate(닫힌 성문+문루, 높이 14 m), city_skyline(기와지붕 실루엣 띠 20×28 m, 성벽 너머 약 30 m 깊이, 낮은 디테일) |
+| 저잣거리 | market_stall, market_ricecake_stall(떡시루 K-003), market_jige(짐꾼 지게), market_lantern_string(등불 줄), market_tile_house(반 2층 기와집) |
+| 움막촌 | shack_a, shack_b, shack_well |
+| 성문 밖 | city_gatekeeper_hut(문지기 막), city_gate_inn(성문 밖 주막), city_pit_grave(팻말 없는 구덩이 무덤), snow_patch(눈 얼룩 판) |
+| 큰 다리 둘레 | river_hut_mat(거적 움막), river_bank(큰내 둑 4 m) |
+기획 답 반영: 도성 안은 못 들어가고 성벽 8 m + 닫힌 성문·문루만 또렷, 벽 너머는 지붕 띠와 안개.

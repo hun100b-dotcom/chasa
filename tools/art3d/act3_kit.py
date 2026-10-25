@@ -161,9 +161,119 @@ def tide_water():
     """썰물·밀물 물판 64×64m: 갯골·난파 여울용 물. 코드가 높이를 25분 주기로 오르내린다. 이름 규칙 tide_water*. 큰 강 물(river_water)과 같은 물 재질."""
     return [water_plane("tide_water", -32, -32, 64, 64, 0.0, deep=False)]
 
+# ───────────────────────── ⑥ 도성 아랫마을 ─────────────────────────
+CITY = "#8E8A80"; CITY_D = "#6E6A62"; SNOW = "#E8EAEE"; MAT = "#9A8A64"; CLOTH = "#B8AE96"
+
+def city_wall():
+    """도성 성벽 한 칸 8×2m, 높이 8m: 큰 반듯한 돌을 줄맞춰 쌓고 위에 여장(낮은 담) 열. 안쪽 도성은 못 들어가므로 벽만 높게. 눈이 위에 얇게 쌓였다."""
+    r = random.Random(61); p = []; z = 0.0; row = 0
+    while z < 7.2:
+        rh = 0.9; x = -4.0 + (0.0 if row % 2 else 0.5)
+        while x < 4.0 - 0.05:
+            bw = min(1.4, 4.0 - x); p.append(box(f"b{row}_{len(p)}", (bw * 0.97, 2.0, rh * 0.96), (x + bw / 2, r.uniform(-0.03, 0.03), z + rh / 2), CITY if (row + len(p)) % 3 else CITY_D)); x += bw
+        z += rh; row += 1
+    p += [box(f"merlon{i}", (0.6, 0.8, 0.7), (-3.6 + i * 0.8, -0.5, 7.55), CITY_D) for i in range(10)] + [box("walk", (8.0, 1.0, 0.2), (0, 0.5, 7.3), CITY), box("snow", (8.0, 1.2, 0.08), (0, 0.4, 7.45), SNOW)]
+    return p
+
+def city_gate():
+    """도성 닫힌 성문 + 문루 한 채 12×4m, 높이 13m: 큰 돌 문틀에 굳게 닫힌 두 짝 문(쇠 못), 위에 기와 문루. 못 들어가는 문이라 문짝을 또렷하게."""
+    p = [box("pierL", (3.2, 4.0, 8.0), (-4.4, 0, 4.0), CITY), box("pierR", (3.2, 4.0, 8.0), (4.4, 0, 4.0), CITY), box("lintel", (12.0, 4.0, 1.4), (0, 0, 8.7), CITY_D)]
+    p += [box("doorL", (2.7, 0.5, 6.2), (-1.4, -1.4, 3.2), "wood_dark"), box("doorR", (2.7, 0.5, 6.2), (1.4, -1.4, 3.2), "wood_dark"), box("bar", (5.8, 0.3, 0.25), (0, -1.75, 3.2), "iron")]
+    p += [sphere(f"stud{i}", 0.09, (-2.3 + (i % 4) * 1.55, -1.7, 1.4 + (i // 4) * 1.4), "iron", 4, 3) for i in range(12)]
+    p += [box("tower_floor", (11.0, 3.6, 0.3), (0, 0, 9.5), "wood"), box("tower_wall", (9.6, 3.0, 2.2), (0, 0, 10.7), "#C8BFA8")] + [cyl(f"pil{i}", 0.2, 0.2, 2.4, (-4.6 + i * 1.84, -1.7, 9.6), "pillar", 6) for i in range(6)]
+    p += [prism("roof", 12.6, 5.0, 2.6, (0, 0, 11.8), "tile"), box("snow", (11.0, 1.0, 0.1), (0, 0, 14.35), SNOW)]
+    return p
+
+def city_skyline():
+    """도성 안 기와지붕 실루엣 띠 16×30m(깊이 30m): 낮은 디테일의 지붕 선만. 성벽 너머로 살짝 보이게 낮은 지붕 열 줄. 벽과 안개 사이를 채운다."""
+    r = random.Random(62); p = []
+    for row in range(5):
+        for i in range(7):
+            w = r.uniform(3.0, 5.0); d = r.uniform(3.0, 5.0)
+            cx = -7.5 + i * 2.5 + r.uniform(-.5, .5); cy = row * 6.0 + 2.0; zr = 9.0 + r.uniform(0, 1.2) + row * 0.3
+            p.append(box(f"body{row}_{i}", (w * 0.9, d * 0.9, zr), (cx, cy, zr / 2), "#5A5650"))      # 아래는 어두운 몸통(보이지 않는 안쪽이라 낮은 디테일)
+            p.append(prism(f"ro{row}_{i}", w, d, r.uniform(1.0, 1.8), (cx, cy, zr), "tile"))
+    return p
+
+def market_stall():
+    """저잣 좌판 3×2m, 높이 2.6m: 평상 위에 천 차양. 위에 곡식·짚신 몇 점."""
+    r = random.Random(63); p = [box("table", (3.0, 1.6, 0.9), (0, 0, 0.45), "wood")] + [cyl(f"pole{i}", 0.05, 0.05, 2.6, (x, y, 0), "wood_dark", 5) for i, (x, y) in enumerate(((-1.4, -0.9), (1.4, -0.9), (-1.4, 0.9), (1.4, 0.9)))]
+    p += [box("awning", (3.4, 2.2, 0.06), (0, 0, 2.6), CLOTH, rot=(0.2, 0, 0))] + [sphere(f"goods{i}", 0.17, (-1.1 + i * 0.37, r.uniform(-0.4, 0.4), 1.0), "#B09468" if i % 2 else "#8A6A44", 5, 3) for i in range(7)]
+    return p
+
+def market_ricecake_stall():
+    """떡장수 좌판 2.4m(떡시루 K-003 장면): 김 오르는 큰 시루 하나와 접시 둘, 낮은 평상."""
+    p = [box("table", (2.4, 1.3, 0.8), (0, 0, 0.4), "wood"), cyl("sirut", 0.55, 0.6, 0.6, (-0.5, 0, 0.8), "#6A4A36", 9), cyl("sirut_lid", 0.6, 0.55, 0.08, (-0.5, 0, 1.4), "#4A3A2E", 9)]
+    p += [cyl("plate1", 0.25, 0.25, 0.04, (0.6, -0.2, 0.8), "#D8D0BC", 8), cyl("plate2", 0.22, 0.22, 0.04, (0.8, 0.3, 0.8), "#D8D0BC", 8), sphere("cake1", 0.1, (0.6, -0.2, 0.9), "#F2EEE0", 5, 3), sphere("cake2", 0.1, (0.8, 0.3, 0.9), "#F2EEE0", 5, 3)]
+    return p
+
+def market_jige():
+    """짐꾼 지게 한 벌 1.2m(B-12 곰 행렬 소품 S-104): 세워 둔 지게와 묶은 짐 보따리."""
+    p = [cyl("legL", 0.04, 0.04, 1.4, (-0.25, 0, 0), "wood_dark", 5, rot=(0, 0.12, 0)), cyl("legR", 0.04, 0.04, 1.4, (0.25, 0, 0), "wood_dark", 5, rot=(0, -0.12, 0)), box("bar1", (0.6, 0.05, 0.05), (0, 0, 0.5), "wood_dark"), box("bar2", (0.55, 0.05, 0.05), (0, 0, 1.0), "wood_dark"), box("pack", (0.5, 0.35, 0.45), (0, -0.2, 0.8), "#9A8A64")]
+    return p
+
+def market_lantern_string():
+    """저잣 등불 줄 6m: 장대 둘 사이 줄에 매단 등 일곱. 밤에 등불이 많다(혼불과 겹치지 않게 주황 끝 따뜻한 노랑)."""
+    p = [cyl("poleL", 0.06, 0.06, 4.0, (-3.0, 0, 0), "wood_dark", 5), cyl("poleR", 0.06, 0.06, 4.0, (3.0, 0, 0), "wood_dark", 5)]
+    p += [box(f"lamp{i}", (0.22, 0.22, 0.3), (-2.4 + i * 0.8, 0, 3.6 - 0.35 * math.sin(i / 6 * math.pi)), WARM) for i in range(7)] + [limb("rope", (-3.0, 0, 3.9), (3.0, 0, 3.9), 0.012, 0.012, "#4A3A2E", 4)]
+    return p
+
+def market_tile_house():
+    """저잣 기와집(반 2층) 7×5m, 높이 6.4m: 아래층 가게 문이 열려 있고 위에 작은 누마루."""
+    p = [box("floor", (7.0, 5.0, 0.4), (0, 0, 0.2), CITY_D), box("wall1", (6.4, 4.4, 2.4), (0, 0, 1.6), "#CFC7B0"), box("wall2", (5.0, 3.6, 1.8), (0, 0.4, 3.7), "#CFC7B0"), prism("roof1", 7.6, 5.6, 1.1, (0, 0, 2.8), "tile"), prism("roof2", 6.0, 4.4, 1.4, (0, 0.4, 4.6), "tile")]
+    p += [box("shopdoor", (3.0, 0.1, 1.8), (0, -2.25, 1.3), "wood_dark"), box("lamp", (0.2, 0.2, 0.3), (-2.4, -2.5, 2.3), WARM)]
+    return p
+
+def shack_a():
+    """움막촌 판잣집 A 3×3m, 높이 2.4m: 얇은 널과 천 지붕, 기운 벽. 검은여울 역병 피해 올라온 사람들의 집."""
+    r = random.Random(64); p = [box(f"pl{i}", (0.34, 0.06, 1.7), (-1.3 + i * 0.35, -1.4, 1.0 + r.uniform(-.05, .05)), "#8A7A5E" if i % 2 else "#74664E", rot=(0, 0, r.uniform(-.05, .05))) for i in range(8)]
+    p += [box("back", (3.0, 0.1, 1.7), (0, 1.4, 1.0), "#74664E"), box("sideL", (0.1, 2.8, 1.7), (-1.4, 0, 1.0), "#8A7A5E"), box("sideR", (0.1, 2.8, 1.7), (1.4, 0, 1.0), "#74664E"), box("roof", (3.6, 3.4, 0.08), (0, 0, 1.95), CLOTH, rot=(0.12, 0, 0)), box("door", (0.8, 0.06, 1.3), (0.5, -1.45, 0.7), "wood_dark")]
+    return p
+
+def shack_b():
+    """움막촌 판잣집 B 4×3m, 높이 2.6m: 기둥 넷 위에 짚 지붕을 얹고 앞이 트인 뒤 움막. 거적 문."""
+    p = [cyl(f"pole{i}", 0.07, 0.07, 2.2, (x, y, 0), "wood_dark", 5) for i, (x, y) in enumerate(((-1.8, -1.3), (1.8, -1.3), (-1.8, 1.3), (1.8, 1.3)))]
+    p += [prism("roof", 4.6, 3.6, 1.0, (0, 0, 2.2), THATCH), box("back", (3.6, 0.08, 2.0), (0, 1.3, 1.1), MAT), box("matdoor", (1.0, 0.05, 1.5), (-0.6, -1.3, 0.85), MAT)]
+    return p
+
+def shack_well():
+    """움막촌 우물 1.6m: 돌 우물에 두레박과 낮은 지붕 틀."""
+    p = [cyl("ring", 0.8, 0.8, 0.7, (0, 0, 0), CITY, 9), cyl("water", 0.55, 0.55, 0.02, (0, 0, 0.55), "#2A3038", 9), cyl("postL", 0.05, 0.05, 1.6, (-0.8, 0, 0), "wood_dark", 5), cyl("postR", 0.05, 0.05, 1.6, (0.8, 0, 0), "wood_dark", 5), cyl("beam", 0.04, 0.04, 1.8, (-0.9, 0, 1.6), "wood_dark", 5, rot=(0, 1.5708, 0)), box("bucket", (0.2, 0.2, 0.22), (0.1, 0, 1.2), "wood")]
+    return p
+
+def city_gatekeeper_hut():
+    """문지기 막 3.5×3m, 높이 3.2m(N-602 아들 문지기): 성벽 곁 작은 막, 앞에 방 붙이는 판."""
+    p = [box("hut", (3.5, 3.0, 2.0), (0, 0, 1.0), "#B4A98A"), prism("roof", 4.1, 3.6, 1.2, (0, 0, 2.0), "tile"), box("door", (0.9, 0.08, 1.4), (0, -1.55, 0.75), "wood_dark"), box("board", (1.2, 0.08, 1.6), (2.2, -1.2, 1.4), "wood"), box("notice", (0.9, 0.02, 1.1), (2.2, -1.25, 1.4), "#E6DFC8")]
+    return p
+
+def city_gate_inn():
+    """성문 밖 주막 6×4.5m, 높이 3.8m(N-603 노파): 이엉 지붕 낮은 집, 밤엔 등 하나만. 앞 평상."""
+    p = [box("floor", (6.0, 4.5, 0.4), (0, 0, 0.2), CITY_D), box("wall", (5.4, 3.9, 1.9), (0, 0.2, 1.35), "#BDB293"), prism("roof", 6.6, 5.2, 1.6, (0, 0, 2.3), THATCH), box("bench", (2.2, 0.7, 0.1), (-1.2, -2.7, 0.55), "wood"), box("door", (1.0, 0.1, 1.5), (1.4, -1.75, 1.15), "wood_dark"), box("snow", (6.4, 4.8, 0.06), (0, 0, 3.55), SNOW), box("lamp", (0.2, 0.2, 0.3), (2.3, -2.2, 2.2), WARM)]
+    return p
+
+def city_pit_grave():
+    """팻말 없는 구덩이 무덤(B-12 마당) 3×2m: 얕게 파인 흙 구덩이와 눈 덮인 가장자리, 팻말은 없다. 한쪽에 흩어진 흙."""
+    p = [box("rim", (3.2, 2.4, 0.12), (0, 0, 0.06), "#6A5E4A"), box("pit", (2.6, 1.8, 0.05), (0, 0, 0.02), "#2E2822"), box("spoil", (1.0, 0.7, 0.3), (1.8, 0.2, 0.15), "#5E5240"), box("snow1", (1.2, 0.7, 0.06), (-1.9, 0.9, 0.12), SNOW), box("snow2", (0.9, 0.6, 0.06), (-1.6, -1.0, 0.12), SNOW)]
+    return p
+
+def snow_patch():
+    """눈 쌓인 얼룩 바닥 판 6×6m: 성문 밖 눈밭. 눈 녹은 자리(주막 앞)는 이 판을 빼서 표현한다."""
+    r = random.Random(65); p = [box(f"sn{i}", (r.uniform(1.5, 3.0), r.uniform(1.5, 3.0), 0.05), (r.uniform(-2, 2), r.uniform(-2, 2), 0.025 + i * 0.002), SNOW) for i in range(6)]
+    return p
+
+def river_hut_mat():
+    """다리 밑 거적 움막 2.5m(N-601 쥐똥이 거적): 다리 기둥에 기댄 거적 지붕 낮은 움막."""
+    p = [box("back", (2.5, 0.1, 1.2), (0, 0.9, 0.7), MAT, rot=(0.2, 0, 0)), box("roof", (2.7, 2.2, 0.06), (0, 0, 1.25), MAT, rot=(-0.15, 0, 0)), box("floor", (2.3, 1.8, 0.04), (0, 0, 0.03), "#6A5E48"), cyl("pole", 0.05, 0.05, 1.3, (-1.2, -0.9, 0), "wood_dark", 5), cyl("pole2", 0.05, 0.05, 1.3, (1.2, -0.9, 0), "wood_dark", 5)]
+    return p
+
+def river_bank():
+    """큰내 둑 4m: 돌과 흙을 쌓은 둑 한 칸. 위에 마른 풀."""
+    r = random.Random(66); p = [box("bank", (4.0, 1.4, 0.7), (0, 0, 0.35), "#7A6E58"), box("top", (3.8, 1.0, 0.1), (0, 0, 0.75), "#8A7E66")] + [sphere(f"st{i}", r.uniform(0.15, 0.3), (r.uniform(-1.8, 1.8), -0.7, 0.2), ROCK, 5, 3) for i in range(5)]
+    return p
+
 KIT = [(f.__name__, f) for f in (harbor_pier, harbor_gauge_post, harbor_boat, harbor_net_frame, harbor_net_pile, harbor_jar, harbor_gaekju_house, harbor_inn, harbor_lamp_hut,
-       salt_pan, salt_pile, salt_warehouse, salt_dike, cape_waiting_rock, cape_hutmyo, cape_new_grave, shoal_wreck, shoal_rock, shoal_plank, bridge_deck, bridge_pier, tide_water)]
-LIGHTS = {"harbor_gaekju_house": ("Light_gaekju", (0, -3.5, 2.5), WARM, 1.0, 7.0, True), "harbor_inn": ("Light_inn", (2.0, -2.2, 2.2), WARM, 1.0, 6.0, True), "harbor_lamp_hut": ("Light_lamp_hut", (2.2, 0, 4.7), WARM, 1.4, 14.0, True)}
+       salt_pan, salt_pile, salt_warehouse, salt_dike, cape_waiting_rock, cape_hutmyo, cape_new_grave, shoal_wreck, shoal_rock, shoal_plank, bridge_deck, bridge_pier, tide_water, city_wall, city_gate, city_skyline, market_stall, market_ricecake_stall, market_jige, market_lantern_string, market_tile_house, shack_a, shack_b, shack_well, city_gatekeeper_hut, city_gate_inn, city_pit_grave, snow_patch, river_hut_mat, river_bank)]
+LIGHTS = {"market_lantern_string": ("Light_market_lamps", (0, 0, 3.4), WARM, 1.4, 9.0, True), "market_tile_house": ("Light_market_house", (-2.4, -2.5, 2.3), WARM, 0.9, 6.0, True), "city_gate_inn": ("Light_gate_inn", (2.3, -2.2, 2.2), WARM, 0.8, 5.0, True), "harbor_gaekju_house": ("Light_gaekju", (0, -3.5, 2.5), WARM, 1.0, 7.0, True), "harbor_inn": ("Light_inn", (2.0, -2.2, 2.2), WARM, 1.0, 6.0, True), "harbor_lamp_hut": ("Light_lamp_hut", (2.2, 0, 4.7), WARM, 1.4, 14.0, True)}
 
 def build(name, fn):
     reset(); o = join(name, fn()); lo, hi = bounds(o)
@@ -178,6 +288,6 @@ if __name__ == "__main__":
     if not want:
         json.dump(res, open(os.path.join(OUT, "act3", "_report_act3.json"), "w"), ensure_ascii=False, indent=1)
         reset()
-        for i, (k, f) in enumerate(KIT): o = join(k, f()); o.location = ((i % 5 - 2) * 10.0, -(i // 5) * 9.0, 0)
-        setup_render(62, (0, -13.5, 2.0), elev=50, size=(1500, 900), ground_size=110); bpy.context.scene.cycles.samples = 24
+        for i, (k, f) in enumerate(KIT): o = join(k, f()); o.location = ((i % 6 - 2.5) * 17.0, -(i // 6) * 14.0, 0)
+        setup_render(100, (0, -35.0, 2.0), elev=50, size=(1500, 900), ground_size=160); bpy.context.scene.cycles.samples = 24
         render(os.path.join(OUT, "previews", "act3_harbor_50deg.png"))
