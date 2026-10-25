@@ -31,16 +31,17 @@ SEAL = {
  '찬 인': ['쇠가 물에 잠겼다', '깨진 것이 멀리 튄다'],
 }
 # 시즌 2 세 빛깔 인(기획 season2-growth-draft §2-3). 이름은 기획안, 괄호는 서사 제안(겹침 피하기)
-SEAL3 = {
- '새벽 인': {'suggest': '첫빛 인', 'why': '⑨의 새벽은 B-18 천도 보상이라 누구나 여는 인과 겹친다',
-            'text': ['나무와 불과 흙이 차례로 이어진다', '인 없는 땅에서 배운 찍는 법']},
+SEAL3 = {  # 이름은 기획 확정(10-26, 서사 제안 반영). was = 옛 기획안 이름
+ '첫빛 인': {'was': '새벽 인', 'text': ['나무와 불과 흙이 차례로 이어진다', '인 없는 땅에서 배운 찍는 법']},
  '쇠불 인': {'text': ['쇳골 풀무의 불을 옮겨 찍었다', '깨뜨림이 단단해진다']},
  '무덤돌 인': {'text': ['흙과 쇠와 물이 겹쳤다', '무덤 앞 돌처럼 오래 기다린다']},
- '찬 물길 인': {'suggest': '여울 인', 'why': '찬 기운 말은 쓰지 않는다. 깊은 인 · 물길 인과도 겹치지 않게(앞서 낸 "깊은 물길 인" 제안을 이것으로 고침)',
-              'text': ['쇠와 물과 나무가 번갈아 흐른다', '보내고 깨뜨리는 손이 번갈아 빠르다']},
+ '여울 인': {'was': '찬 물길 인', 'text': ['쇠와 물과 나무가 번갈아 흐른다', '보내고 깨뜨리는 손이 번갈아 빠르다']},
  '먹불 인': {'text': ['명부 먹을 태운 불로 찍었다', '먹 냄새가 오래 남는다']},
 }
 SPECIAL_SEAL = {'인의 조각': ['아홉째 인에서 떨어져 나온 조각', '무엇에 찍든 너무 깊게 찍힌다']}
+# 시즌 2 숨은 자리 노리개(기획 확정 이름)
+HIDDEN_S2 = {'빈 인주 그릇': ['인장 굴 바위틈에서 나왔다', '붉은 물이 말라 금이 갔다'],
+             '처음 마을 솟대 조각': ['처음 마을 어귀에 서 있던 것', '꼭대기 새는 떨어지고 없다']}
 COLORLESS = {'빛 없는 넋': ['인 없는 땅의 혼이 남긴 넋', '어느 빛깔 자리에도 들어간다']}
 
 # ───────── 장비 — 흔한 · 손본 · 귀한은 칸(무기는 계열)마다 이름 + 한두 줄. 이름 있는 것은 named_season1이 정본 ─────────
@@ -146,8 +147,7 @@ SKILL = {
 }
 LINK_SKILL = {  # 시즌 2 이음 도술(기획 §2-1). 괄호 이름은 서사 제안
  '명부 사슬': {'text': ['명부의 줄처럼 쉽게 끊기지 않는다']},
- '끊긴 줄': {'suggest': '끊어진 고리', 'why': '"줄"은 ⑦ 혼의 줄, "끊기"는 B-23 끊기판과 겹친다',
-           'text': ['끊어진 고리가 튀어 곁의 것을 친다']},
+ '끊어진 고리': {'was': '끊긴 줄', 'text': ['끊어진 고리가 튀어 곁의 것을 친다']},
  '상두 소리': {'text': ['앞소리와 뒷소리가 번갈아 간다']},
 }
 
@@ -192,6 +192,8 @@ for x in seals + seals3 + skills + gear + sets + old_set:
     check(x['name'], x['text'])
 for k, v in list(SPECIAL_SEAL.items()) + list(COLORLESS.items()) + [(k, v['text']) for k, v in LINK_SKILL.items()]:
     check(k, v)
+for k, v in HIDDEN_S2.items():
+    check(k, v)
 for ln in OLD_POOL:
     check('옛 차사 풀', [ln])
 names = [x['name'] for x in gear + sets + old_set]
@@ -203,9 +205,9 @@ data = {
         'screen': '한 줄 22자 안, 두 줄까지, 마침표 없음(hud-controls-spec §9-1). 글꼴 KS X 1001 글자만(자체 검사)',
         'order': '아이템 창: 이름 → 기능 문구(기획) → 빈 줄 → 세계관 문장(흐린 글씨)',
         'named': '이름 있는 물건(보스 파혼 보상)은 growth.json named_season1의 기억 한 줄이 정본 — 여기서 다시 쓰지 않는다',
-        'suggest': 'suggest가 붙은 것은 기획 이름에 대한 서사 제안(기획 확정 전엔 기획 이름을 쓴다)',
+        'was': '시즌 2 이름은 기획 확정(10-26). was = 옛 이름',
     },
-    'seals': seals, 'seals_triple_s2': seals3, 'seal_special': SPECIAL_SEAL, 'neok_colorless_s2': COLORLESS,
+    'seals': seals, 'seals_triple_s2': seals3, 'seal_special': SPECIAL_SEAL, 'hidden_norigae_s2': HIDDEN_S2, 'neok_colorless_s2': COLORLESS,
     'gear': gear, 'sets': sets,
     'old_chasa_s2': {'names': OLD, 'weapon_rule': OLD_RULE, 'memory_pool': OLD_POOL,
                      'pool_rule': '드롭마다 풀에서 한 줄을 고정 배정. 같은 줄이 연달아 나오지 않게', 'set': old_set,
