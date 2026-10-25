@@ -617,7 +617,7 @@ public class JudgeSystem : MonoBehaviour
             heukwolSpawned = true;
             var bd = Bosses.Get(4);
             heukwol = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), 4);
-            Say("무덤골에 갓끈 검은 차사가 서 있다");
+            Say("고개 위에 갓끈 검은 차사가 서 있다");
             if ((Application.absoluteURL ?? "").Contains("hk=2")) heukwol.soul.Maedhim = (int)(heukwol.soul.MaedhimMax * 0.52f);   // 검사용 ?hk=2: 맺힘 52% 로 시작 → 몇 대만 쳐도 절반을 넘어 물러나는 장면(너는 아직 모른다·새벽 금줄 해제)이 나온다
         }
         if (heukwol != null)
