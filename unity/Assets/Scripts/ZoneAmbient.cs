@@ -69,7 +69,7 @@ public class ZoneAmbient : MonoBehaviour
         {
             bool on = System.Array.IndexOf(want, kv.Key) >= 0 && !Sfx.Muted;
             var s = kv.Value; if (s == null) { dead.Add(kv.Key); continue; }
-            float target = on ? SaveStore.Settings.Sfx : 0f;
+            float target = on ? 0.7f * SaveStore.Settings.Sfx * Sfx.Duck : 0f;   // 믹스 기준표: 구역 환경음 0.7 + 더킹
             s.volume = Mathf.MoveTowards(s.volume, target, Time.unscaledDeltaTime / FADE_SEC * Mathf.Max(0.01f, SaveStore.Settings.Sfx));
             if (!on && s.volume <= 0f) { Destroy(s); dead.Add(kv.Key); }
         }

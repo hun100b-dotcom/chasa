@@ -99,6 +99,9 @@ public class Sfx : MonoBehaviour
 
     AudioSource wxLoop; Weather wxNow = Weather.Clear; string wxId;
     /// <summary>날씨 소리: 비=amb.weather.rain, 흐림=바람, 안개·역병 안개=fog_night. 맑음은 끈다. 바뀌면 서서히(0.5초) 갈아 끼운다</summary>
+    /// <summary>더킹(ducking, 중요한 소리 때 배경을 잠깐 줄이기): 1=그대로, 0.5=절반. 컷신·천도 시전·명부 열림 때 BGM·환경음에 곱한다. 예고음·타격음은 줄이지 않는다</summary>
+    public static float Duck = 1f;
+    public static void TickDuck(bool on, float dt) { Duck = Mathf.MoveTowards(Duck, on ? 0.5f : 1f, dt / (on ? 0.4f : 1.2f) * 0.5f); }   // 줄일 땐 0.4초, 돌아올 땐 1.2초(갑자기 커지지 않게)
     public static bool NightNow;   // 지금이 밤인가(JudgeSystem 이 시계를 보고 매 프레임 알려 준다 — 날씨 소리 고르기용)
     public static void SetWeatherAmbient(Weather w) { if (I != null) I.SetWeatherInternal(w); }
 
@@ -110,7 +113,7 @@ public class Sfx : MonoBehaviour
             : w == Weather.Cloudy ? (NightNow ? "amb.weather.cloudy.night" : "amb.weather.wind")
             : w == Weather.Fog ? (NightNow ? "amb.weather.fog_night" : "amb.weather.fog")
             : w == Weather.Plague ? "amb.weather.plague" : null;
-        float target = id == null || muted ? 0f : 0.5f * SaveStore.Settings.Sfx;
+        float target = id == null || muted ? 0f : 0.6f * SaveStore.Settings.Sfx * Duck;   // 믹스 기준표: 날씨 0.6
         if (id != null && id != wxId) { var c = Clip(id); if (c != null) { wxLoop.clip = c; wxId = id; if (!wxLoop.isPlaying) wxLoop.Play(); } }
         wxLoop.volume = Mathf.MoveTowards(wxLoop.volume, target, Time.unscaledDeltaTime * 2f);
         if (id == null && wxLoop.volume <= 0f && wxLoop.isPlaying) { wxLoop.Stop(); wxId = null; }

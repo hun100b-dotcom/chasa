@@ -50,6 +50,7 @@ public class BgmPlayer : MonoBehaviour
     {
         if (!loadedAny || judge == null || !judge.FieldMode || judge.InDay) { Silence(); return; }
         float dt = Time.unscaledDeltaTime;   // 슬로모션 중에도 음악은 같은 속도로
+        Sfx.TickDuck(judge.cuts.Active || judge.Casting || CharacterPanel.Open, dt);   // 컷신·천도 시전·명부 열림 때 배경을 줄인다
         int kneeling; float near = judge.NearestEnemyDist(out kneeling);
         bool started = judge.KneelEvents != lastKneel; lastKneel = judge.KneelEvents;
         dir.Update(dt, judge.clock.Daylight, near, started, kneeling > 0 || judge.Casting);
@@ -81,6 +82,9 @@ public class BgmPlayer : MonoBehaviour
         fadeT = Mathf.Min(fadeLen, fadeT + dt);
         float k = fadeLen <= 0.001f ? 1f : fadeT / fadeLen;
         float mute = Sfx.Muted ? 0f : SaveStore.Settings.Bgm;   // 설정의 배경음 크기(음소거면 0)
+        // 믹스 기준표: 탐험 0.5 / 전투·처결 0.45 를 곱해 타격음을 덮지 않게 한다(1막 BGM 이 -16~-20 LUFS 로 큼)
+        float layerMix = dir.Layer == BgmLayer.Combat || dir.Layer == BgmLayer.Finish ? 0.45f : 0.5f;
+        mute *= layerMix * Sfx.Duck;
         cur.volume = (cur.clip != null ? k : 0f) * mute;
         prev.volume = (1f - k) * mute;
         if (k >= 1f && prev.isPlaying) prev.Stop();
