@@ -57,8 +57,11 @@ namespace Chasa.Core
         }
 
         /// <summary>시간이 흐른다. 지속 시간(15초)이 지난 얼룩은 사라진다</summary>
+        public float DurationMult = 1f;   // 얼룩 지속 배율(마른 얼룩: 0.85/0.7). 작을수록 빨리 사라진다
+
         public void Tick(float dt)
         {
+            dt /= System.Math.Max(0.1f, DurationMult);   // 지속이 짧아지는 것 = 나이가 더 빨리 든다
             for (int i = _items.Count - 1; i >= 0; i--)
             {
                 _items[i].Age += dt;

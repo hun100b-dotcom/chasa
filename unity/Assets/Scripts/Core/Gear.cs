@@ -192,6 +192,7 @@ namespace Chasa.Core
     {
         public float DamagePct, AttackSpeedPct, CastReducePct, PahonAreaPct, PahonDamagePct, MoveSpeedPct, CoinPct, PahonRadiusM;
         public float TendoNeokPct, PahonCoinPct, WaitAddS, ChainWindowAddS, PahonKnockbackPct, VisionShift, CastDamageReducePct;
+        public float ReachAdd, BoundBonus, StainShorten;   // 도술 패시브: 무기 사거리 +m / 묶인 적 받는 피해 +% / 얼룩 지속 단축 비율
         public int HpFlat;
 
         public float DamageMult { get { return 1f + Math.Min(DamagePct, Balance.CAP_DAMAGE_PCT); } }

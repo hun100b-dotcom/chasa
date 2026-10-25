@@ -62,6 +62,7 @@ public class JudgeSystem : MonoBehaviour
         panel = gameObject.AddComponent<CharacterPanel>();   // C 키 캐릭터 창(장비·도술·능력치)
         panel.judge = this;
         lo.growth = growth;   // 성장(능력치·패시브)이 전투 수치 합계에 얹히도록 연결
+        RefreshGrowth();
         enemies.onPlayerHit = OnPlayerHit;
         player.onDodgeCancelCast = () => { if (Casting) { castTarget.soul.CancelSending(); EndCast(); Say("천도를 거두고 피했다"); } };   // 천도 중 피하기: 캐스팅만 취소, 혼은 무릎 꿇은 채 대기
         enemies.onEnemyKneel = OnEnemyKneel;
@@ -269,7 +270,12 @@ public class JudgeSystem : MonoBehaviour
     // ===== M4.5: 장비 드롭·도술 ========================================================
     /// <summary>맺힘 0 → 장비 드롭 판정 1회(처결 방식과 무관). 사나운 적은 귀한 확정</summary>
     /// <summary>명부에서 점수를 쓴 뒤: 전투 수치 합계를 다시 계산하고 최대 체력도 맞춘다</summary>
-    public void RefreshGrowth() { lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
+    public void RefreshGrowth()
+    {
+        lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp);
+        Enemy.BoundBonus = lo.stats.BoundBonus;                          // 묶인 자
+        stains.DurationMult = 1f - lo.stats.StainShorten;                // 마른 얼룩
+    }
 
     void OnEnemyKneel(Enemy e)
     {
@@ -310,6 +316,7 @@ public class JudgeSystem : MonoBehaviour
     float lastPahonAt = -99f;                               // 마지막 파혼 시각(깨진 이름 던지기)
     int tendoToday;                                         // 오늘 천도한 혼 수(혼불 발 수)
     ClockPhase lastPhase;
+    float lastQuotaMove;
 
     void TickActives(float dt)
     {
@@ -319,6 +326,10 @@ public class JudgeSystem : MonoBehaviour
         if (wrathT > 0f) { wrathT -= dt; if (wrathT <= 0f) { lo.buffDamage = 0f; dirty = true; } }
         if (rideT > 0f) { rideT -= dt; if (rideT <= 0f) { lo.buffMove = 0f; dirty = true; } }
         if (shadowT > 0f) shadowT -= dt;
+        // 몫을 채움: 그날 명부 몫(천도 NIGHT_QUOTA)을 채우면 이동 속도 +8%/+16% (필드에는 밤 장부가 없어 몫 채움을 night 로 본다)
+        float quotaMove = growth.LevelOf("몫을 채움") > 0 && night.QuotaDone ? 0.08f * growth.LevelOf("몫을 채움") : 0f;
+        if (!Mathf.Approximately(quotaMove, lastQuotaMove)) { lastQuotaMove = quotaMove; dirty = true; }
+        lo.buffMovePassive = quotaMove;
         if (dirty) lo.Refresh();
         float slow = escortT > 0f ? 1f - Balance.AC_ESCORT_SLOW : 1f;
         if (escortT > 0f) escortT -= dt;
@@ -366,7 +377,7 @@ public class JudgeSystem : MonoBehaviour
                 foreach (var e in enemies.list)
                 {
                     if (!e.alive || new Vector2(e.Pos.x - player.Pos.x, e.Pos.z - player.Pos.z).magnitude > Balance.SKILL_BIND_RADIUS + e.radius) continue;
-                    e.stun = Mathf.Max(e.stun, Balance.SKILL_BIND_STUN); e.atk.Interrupt(); e.vel = Vector3.zero; n++;
+                    e.stun = Mathf.Max(e.stun, Balance.SKILL_BIND_STUN); e.boundT = Balance.SKILL_BIND_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; n++;
                 }
                 if (n == 0) { Say("범위 안에 아무도 없다"); return false; }
                 GroundFx.Play(player.Pos, Balance.SKILL_BIND_RADIUS, "fx/fx_bind_", 3, 0.6f);
@@ -429,7 +440,7 @@ public class JudgeSystem : MonoBehaviour
             {
                 var near = AliveNear(player.Pos, Balance.AC_CAGE_RADIUS, false);
                 if (near.Count == 0) { Say("범위 안에 아무도 없다"); return false; }
-                foreach (var e in near) { e.stun = Mathf.Max(e.stun, Balance.AC_CAGE_STUN); e.atk.Interrupt(); e.vel = Vector3.zero; }
+                foreach (var e in near) { e.stun = Mathf.Max(e.stun, Balance.AC_CAGE_STUN); e.boundT = Balance.AC_CAGE_STUN; e.atk.Interrupt(); e.vel = Vector3.zero; }
                 GroundFx.Play(player.Pos, Balance.AC_CAGE_RADIUS, "fx/fx_bind_", 3, 0.8f);
                 Say(name); return true;
             }

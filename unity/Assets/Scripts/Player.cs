@@ -352,7 +352,7 @@ public class Player : MonoBehaviour
         go.transform.localScale = Vector3.one * BOLT_RADIUS * 2f;
         go.transform.position = Hand + U.Dir(facing) * 0.6f;
         go.GetComponent<Renderer>().sharedMaterial = U.Unlit(Config.Hex(0x1a1a2e));   // 먹색
-        bolts.Add(new InkBolt { go = go, dir = U.Dir(facing), left = a.cfg.reach, cfg = a.cfg, step = a.step });
+        bolts.Add(new InkBolt { go = go, dir = U.Dir(facing), left = (a.cfg.reach + loadout.stats.ReachAdd), cfg = a.cfg, step = a.step });
     }
 
     void TickBolts(float dt)
@@ -465,7 +465,7 @@ public class Player : MonoBehaviour
             float p = Mathf.Clamp01(a.t / cfg.windup);
             float angle = a.startAngle + cfg.dir * 0.4f * (1f - U.EaseOutQuad(p));
             chainLag *= Mathf.Exp(-14f * dt);
-            chain.SetShape(hand, angle, Mathf.Lerp(0.3f, 0.55f, p) * cfg.reach, hand.y + 0.25f * p, chainLag, 0.25f);
+            chain.SetShape(hand, angle, Mathf.Lerp(0.3f, 0.55f, p) * (cfg.reach + loadout.stats.ReachAdd), hand.y + 0.25f * p, chainLag, 0.25f);
             a.prevAngle = a.startAngle;
             if (a.t >= cfg.windup) { a.phase = "swing"; a.t = 0f; }
             return;
@@ -474,7 +474,7 @@ public class Player : MonoBehaviour
         {
             float p = Mathf.Clamp01(a.t / cfg.swing);
             float angle = a.startAngle + a.totalSweep * U.EaseOutQuad(p);           // 확 휘두르고 끝에서 감속
-            float radius = cfg.reach * (0.55f + 0.45f * U.EaseOutQuad(Mathf.Min(1f, p / 0.3f))); // 쭉 펴짐
+            float radius = (cfg.reach + loadout.stats.ReachAdd) * (0.55f + 0.45f * U.EaseOutQuad(Mathf.Min(1f, p / 0.3f))); // 쭉 펴짐
             float headY = hand.y + 0.25f - 0.3f * p;
             if (dt > 0f)
             {
@@ -489,7 +489,7 @@ public class Player : MonoBehaviour
                     // (원래는 휘두름이 끝나는 0.3초 뒤까지 천천히 자라 숫자보다 늦게 보였다 — PC 영상 의견)
                     if (cfg.swing >= 0.2f && a.hit.Count > 0)
                     {
-                        RecordTrail(a, hand, angle, a.startAngle + a.totalSweep, cfg.reach, headY);
+                        RecordTrail(a, hand, angle, a.startAngle + a.totalSweep, (cfg.reach + loadout.stats.ReachAdd), headY);
                         a.trailDone = true;
                     }
                 }
@@ -509,7 +509,7 @@ public class Player : MonoBehaviour
         float pr = Mathf.Clamp01(a.t / cfg.recover);
         float ang = a.startAngle + a.totalSweep + cfg.dir * 0.2f * U.EaseOutQuad(pr);
         chainLag *= Mathf.Exp(-10f * dt);
-        chain.SetShape(hand, ang, cfg.reach * (1f - 0.85f * U.EaseInQuad(pr)), hand.y - 0.05f, chainLag, 0.4f * pr);
+        chain.SetShape(hand, ang, (cfg.reach + loadout.stats.ReachAdd) * (1f - 0.85f * U.EaseInQuad(pr)), hand.y - 0.05f, chainLag, 0.4f * pr);
         if (a.t >= cfg.recover) FinishAttack();
     }
 
@@ -548,7 +548,7 @@ public class Player : MonoBehaviour
             if (!e.alive || a.hit.Contains(e)) continue;
             var d = new Vector2(e.Pos.x - Pos.x, e.Pos.z - Pos.z);
             float dist = d.magnitude;
-            if (dist - e.radius > a.cfg.reach + Config.HIT_PADDING) continue; // 사슬이 안 닿음
+            if (dist - e.radius > (a.cfg.reach + loadout.stats.ReachAdd) + Config.HIT_PADDING) continue; // 사슬이 안 닿음
             float half = Mathf.Asin(Mathf.Clamp01((e.radius + Config.HIT_PADDING) / Mathf.Max(dist, 0.01f)));
             if (!U.SweptThrough(prev, cur, Mathf.Atan2(d.y, d.x), half)) continue;
             a.hit.Add(e);

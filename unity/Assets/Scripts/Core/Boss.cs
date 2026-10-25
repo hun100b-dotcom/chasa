@@ -26,8 +26,8 @@ namespace Chasa.Core
         {
             switch (id)
             {
-                case 2: return new BossDef { Id = 2, Name = "월화", Cut = "B02", CluePrefix = "B02-", X = 580f, Z = 527f, Maedhim = Balance.BOSS_S2_MAEDHIM, Speed = 0.5f, Damage = 22, Model = "boss_b02" };
-                case 3: return new BossDef { Id = 3, Name = "서 의원", Cut = "B03", CluePrefix = "B03-", X = 36f, Z = 459f, Maedhim = Balance.B03_BOSS_MAEDHIM, Speed = 0.15f, Damage = 24, Model = "boss_b03" };
+                case 2: return new BossDef { Id = 2, Name = "월화", Cut = "B02", CluePrefix = "B02-", X = 580f, Z = 521f, Maedhim = Balance.BOSS_S2_MAEDHIM, Speed = 0.5f, Damage = 22, Model = "boss_b02" };
+                case 3: return new BossDef { Id = 3, Name = "서 의원", Cut = "B03", CluePrefix = "B03-", X = 46f, Z = 453f, Maedhim = Balance.B03_BOSS_MAEDHIM, Speed = 0.15f, Damage = 24, Model = "boss_b03" };
                 default: return new BossDef { Id = 1, Name = "나루 영감", Cut = "B01", CluePrefix = "B01-", X = FieldRules.BossX, Z = FieldRules.BossZ, Maedhim = Balance.BOSS_S1_MAEDHIM, Speed = Balance.BOSS_S1_SPEED_MULT, Damage = Balance.BOSS_S1_DAMAGE, Model = "boss_naru" };
             }
         }

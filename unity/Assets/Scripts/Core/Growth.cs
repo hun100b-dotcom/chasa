@@ -164,7 +164,7 @@ namespace Chasa.Core
 
     /// <summary>
     /// 성장(능력치 점수 + 배운 패시브)을 장비 합계(GearStats)에 얹는다. 상한(CAP_*)은 GearStats 가 그대로 지킨다.
-    /// 이어진 것: 힘·날램·몸·마음, 패시브 7종. 아직 안 이은 것: 몫을 채움(명부 조건)·긴 사슬(사거리)·묶인 자·손에 익음·마른 얼룩, 액티브 전부.
+    /// 이어진 것: 힘·날램·몸·마음, 패시브 12종(몫을 채움만 JudgeSystem 이 명부 조건으로 따로 처리). 아직 안 이은 것: 몫을 채움(명부 조건)·긴 사슬(사거리)·묶인 자·손에 익음·마른 얼룩, 액티브 전부.
     /// </summary>
     public static class GrowthEffects
     {
@@ -187,6 +187,10 @@ namespace Chasa.Core
             s.PahonRadiusM += 0.2f * g.LevelOf("큰 폭발");
             s.PahonKnockbackPct += 0.2f * g.LevelOf("세찬 넉백");
             s.PahonCoinPct += 0.2f * g.LevelOf("노잣돈");
+            s.ReachAdd += 0.4f * g.LevelOf("긴 사슬");
+            s.BoundBonus += 0.15f * g.LevelOf("묶인 자");
+            s.StainShorten += 0.15f * g.LevelOf("마른 얼룩");
+            s.DamagePct += 0.05f * g.LevelOf("손에 익음");   // 근사: '무기 계열 특성 하나 강화'가 정해지기 전까지 피해 +5%/+10%
         }
     }
 }

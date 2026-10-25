@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour
     public bool respawnReady;
 
     float speed, flash, deathT, spawnT, pulledT;
+    public static float BoundBonus;   // 묶인 자 패시브: 묶인 적이 받는 피해 +%
+    public float boundT;               // 묶임 남은 시간(휘감기·쇠사슬 울)
     public float slowMult = 1f;        // 이동 감소 배율(배웅길: 천도 직후 적이 느려진다)
     Material mat;
     ActorSprite spr;               // 아트팀 그림(없으면 색 도형으로 대신)
@@ -95,6 +97,7 @@ public class Enemy : MonoBehaviour
     public bool TakeHit(int damage, Vector3 dir, float knockback, float stunTime)
     {
         if (!alive) return false;
+        if (boundT > 0f && BoundBonus > 0f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * (1f + BoundBonus)));
         if (damageTakenMult != 1f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * damageTakenMult));   // 보스 전용: 약점 창 규칙
         flash = 1f;
         stun = Mathf.Max(stun, stunTime);
@@ -184,6 +187,7 @@ public class Enemy : MonoBehaviour
     public void Tick(float dt, Vector3 playerPos)
     {
         lastPlayerPos = playerPos;
+        if (boundT > 0f) boundT -= dt;
         if (gone) { TickDead(dt); return; }
         if (freezeT > 0f && alive) { freezeT -= dt; flash = 1f; ApplyVisual(); return; }
         if (!alive)

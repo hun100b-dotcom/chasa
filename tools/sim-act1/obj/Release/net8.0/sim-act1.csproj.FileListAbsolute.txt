@@ -1,0 +1,15 @@
+/home/claude/chasa/tools/sim-act1/bin/Release/net8.0/sim-act1
+/home/claude/chasa/tools/sim-act1/bin/Release/net8.0/sim-act1.deps.json
+/home/claude/chasa/tools/sim-act1/bin/Release/net8.0/sim-act1.runtimeconfig.json
+/home/claude/chasa/tools/sim-act1/bin/Release/net8.0/sim-act1.dll
+/home/claude/chasa/tools/sim-act1/bin/Release/net8.0/sim-act1.pdb
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/sim-act1.GeneratedMSBuildEditorConfig.editorconfig
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/sim-act1.AssemblyInfoInputs.cache
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/sim-act1.AssemblyInfo.cs
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/sim-act1.csproj.CoreCompileInputs.cache
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/sim-act1.sourcelink.json
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/sim-act1.dll
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/refint/sim-act1.dll
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/sim-act1.pdb
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/sim-act1.genruntimeconfig.cache
+/home/claude/chasa/tools/sim-act1/obj/Release/net8.0/ref/sim-act1.dll
