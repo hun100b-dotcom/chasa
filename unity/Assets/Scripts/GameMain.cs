@@ -84,6 +84,7 @@ public class GameMain : MonoBehaviour
             var atmo = gameObject.AddComponent<Atmosphere>();
             atmo.cam = cam; atmo.judge = judge; atmo.player = player; atmo.enemies = enemies;
         }
+        { var gfx = cam.gameObject.AddComponent<GradingFx>(); gfx.judge = judge; }   // 화면 분위기 후처리(색보정·블룸·비네트·천도 시야 축소). 카메라에 붙어야 OnRenderImage 가 불린다
         if (FieldRules.On) { var fm = gameObject.AddComponent<FieldManager>(); fm.player = player; }   // 걸어가면 둘레 청크를 켜고 끈다
         if (World.Enabled) { var zm = gameObject.AddComponent<ZoneManager>(); zm.player = player; }   // 걸어가면 둘레 구역을 켜고 끈다
         if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)

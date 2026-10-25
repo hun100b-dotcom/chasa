@@ -85,6 +85,8 @@ public class JudgeSystem : MonoBehaviour
     }
 
     public bool Casting => castTarget != null;
+    public Enemy CastTarget => castTarget;          // 화면 후처리(천도 시야 축소)가 대상 자리·보스 여부를 본다
+    public float TendoSuccessAt = -99f;             // 마지막 천도 성공 시각(Time.time). 파혼에는 안 찍는다 — 성공 테두리용
     public int BossOutcomeNow => bossOutcome;   // 자동 플레이 테스트(BotScript)가 보는 값: 0 아직 · 1 천도 · 2 파혼
     public int KneelEvents;   // 무릎 꿇은 횟수 누계(BGM 용)
     public bool FieldMode { get { return clock != null; } }   // 필드(흐르는 하루)에서만 BGM 을 쓴다
@@ -219,6 +221,7 @@ public class JudgeSystem : MonoBehaviour
         var tp = castTarget.Pos;   // Finish 뒤엔 혼이 사라질 수 있어 자리를 미리 적어 둔다
         FxMesh.Burst("fx_tendo_pillar", tp, 1f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f));
         FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 1f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f));
+        TendoSuccessAt = Time.time;
         weather.ClearPlague(tp);   // 역병 안개: 천도한 자리 반경 4m 가 15초 걷힌다
         castTarget.Finish();
         tendoToday++;                                                    // 혼불 발 수
