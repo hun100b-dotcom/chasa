@@ -402,3 +402,6 @@
 - 처결: 「Bells of the Crossing」 첫 종소리 0~8.45초(한 번 재생, 끝 2초 페이드) → `bgm_solgogae_finish.ogg`. 임시 처결(Storm 6.9초) 파일 삭제, `BgmPlayer.cs` 불러오는 이름 한 줄 변경.
 - 밤: 「잠들지 않는 산」 13.2~160.7초(147.5초 반복, 저음 비중 높음) → `bgm_solgogae_night.ogg` 교체(옛 Noontide 32초 구간 대신).
 - `bgm.json` 두 벌·`audio_credits.json` 갱신(AI 생성 표기).
+
+## 2026-10-25 [코드·QA] 아트 마을 건물 7곳 반영 (17a0485)
+- build_field_data.py/build_npc_data.py 재실행: 구조물(정자·대장간·주막·약방·동헌 터·옥·객사)·소품 GLB 14종·불빛 70개 반영. 유니티 재생은 미확인(PC 복귀 후 건물 위치·겹침 확인).
