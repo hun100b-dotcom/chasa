@@ -288,5 +288,135 @@
    0.34
   ],
   "min_z": -0.093
+ },
+ {
+  "name": "sanseong_shrine",
+  "tris": 220,
+  "size_m": [
+   4.2,
+   3.8,
+   3.8
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "sanseong_wipae",
+  "tris": 68,
+  "size_m": [
+   0.26,
+   0.34,
+   0.5
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "sanseong_wall_unfinished",
+  "tris": 516,
+  "size_m": [
+   3.89,
+   2.32,
+   2.71
+  ],
+  "min_z": -0.11
+ },
+ {
+  "name": "sanseong_jinbeop_map",
+  "tris": 728,
+  "size_m": [
+   1.88,
+   0.14,
+   1.7
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "sanseong_flag_shard",
+  "tris": 160,
+  "size_m": [
+   0.14,
+   1.25,
+   0.72
+  ],
+  "min_z": -0.039
+ },
+ {
+  "name": "sanseong_geumjul_jangseung_pair",
+  "tris": 388,
+  "size_m": [
+   3.78,
+   0.57,
+   2.96
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_mokpae_board",
+  "tris": 560,
+  "size_m": [
+   2.7,
+   0.7,
+   2.11
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_sorting_bench",
+  "tris": 532,
+  "size_m": [
+   2.8,
+   1.4,
+   0.95
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_chalk_rock",
+  "tris": 388,
+  "size_m": [
+   3.41,
+   2.2,
+   2.2
+  ],
+  "min_z": -0.4
+ },
+ {
+  "name": "prop_dry_inkstone",
+  "tris": 76,
+  "size_m": [
+   0.45,
+   0.38,
+   0.07
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_market_drum_frame",
+  "tris": 260,
+  "size_m": [
+   1.33,
+   0.54,
+   1.25
+  ],
+  "min_z": -0.017
+ },
+ {
+  "name": "soegol_canyon_wall",
+  "tris": 240,
+  "size_m": [
+   6.12,
+   2.25,
+   5.07
+  ],
+  "min_z": -0.121
+ },
+ {
+  "name": "soegol_gol_module",
+  "tris": 380,
+  "size_m": [
+   3.1,
+   7.0,
+   2.54
+  ],
+  "min_z": 0.0
  }
 ]

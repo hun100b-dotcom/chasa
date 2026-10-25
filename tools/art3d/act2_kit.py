@@ -259,15 +259,121 @@ def soegol_scree():
     r = random.Random(46)
     return [box(f"s{i}", (s := r.uniform(.12, .4), s * r.uniform(.6, 1.2), s * .5), (r.uniform(-1.4, 1.4), r.uniform(-1.4, 1.4), s * .2), r.choice([RUST, SLAG, LOAM, "#6E6250"]), rot=(r.uniform(-.3, .3), r.uniform(-.3, .3), r.uniform(0, 3))) for i in range(34)]
 
+
+# ───────────────────────── 기획 요청 추가분 (act2-map) ─────────────────────────
+def sanseong_shrine():
+    """산성 아랫마을 사당 3.4×3m, 높이 3.2m: 작은 기와 맞배집, 앞이 트인 마루에 위패 상. 서까래 끝에 낡은 등. Light_shrine."""
+    p = [box("base", (3.4, 3.0, 0.3), (0, 0, 0.15), STONE_D), box("floor", (3.0, 2.6, 0.08), (0, 0, 0.34), "wood")]
+    p += [cyl(f"pillar{i}", 0.11, 0.11, 2.4, (x, y, 0.38), "pillar", 6) for i, (x, y) in enumerate(((-1.4, -1.2), (1.4, -1.2), (-1.4, 1.2), (1.4, 1.2)))]
+    p += [box("back", (3.0, 0.1, 2.3), (0, 1.25, 1.5), "wood_dark"), box("sideL", (0.1, 2.4, 2.3), (-1.4, 0, 1.5), "wood_dark"), box("sideR", (0.1, 2.4, 2.3), (1.4, 0, 1.5), "wood_dark"), prism("roof", 4.2, 3.8, 1.1, (0, 0, 2.7), "tile"), box("eave", (4.2, 0.2, 0.12), (0, -1.8, 2.7), "#1A1A24")]
+    p += [box("altar", (1.1, 0.5, 0.45), (0, 0.7, 0.6), "wood"), box("tablet", (0.14, 0.04, 0.5), (0, 0.7, 1.1), "#E8DDA8"), box("tablet_foot", (0.26, 0.12, 0.05), (0, 0.7, 0.86), "wood_dark"), box("lamp", (0.14, 0.14, 0.2), (1.1, -1.4, 2.35), mat(WARM, 1.6)), box("incense", (0.2, 0.2, 0.1), (0.4, 0.6, 0.88), STONE_D)]
+    return p
+
+def sanseong_wipae():
+    """위패 상(들고 다니거나 바닥에 놓는 것) 0.5m: 이름 칸이 비어 있는 나무 위패(장군지위 — 전승 표기만 있고 이름이 없다)와 받침, 앞에 빈 술잔."""
+    return [box("tablet", (0.14, 0.035, 0.42), (0, 0, 0.25), "#E8DDA8"), box("cap", (0.18, 0.04, 0.05), (0, 0, 0.48), "wood_dark"), box("foot", (0.26, 0.14, 0.06), (0, 0, 0.03), "wood_dark"), box("name_slot", (0.07, 0.04, 0.12), (0, -0.002, 0.3), "#CFC4A6"), cyl("cup", 0.05, 0.035, 0.05, (0.0, -0.22, 0.03), "hanji", 6)]
+
+def sanseong_wall_unfinished():
+    """쌓다 만 성벽 4m: 한쪽은 1.8m까지 올랐고 다른 쪽은 기초 돌만. 나무 비계와 돌 무더기, 밧줄 도르래가 그대로 서 있다(공사가 멈춘 채)."""
+    r = random.Random(61)
+    p = blocks(r, 2.2, 1.8, x0=-0.9, depth=1.0, tag="up") + blocks(r, 1.6, 0.5, x0=1.1, depth=1.0, tag="low")
+    p += [cyl(f"scaf{i}", 0.05, 0.05, 2.6, (-0.4 + i * 0.9, -0.8, 0), "wood", 5, rot=(0.05, 0, 0)) for i in range(3)] + [box("scaf_bar1", (2.0, 0.06, 0.06), (0.4, -0.8, 1.1), "wood"), box("scaf_bar2", (2.0, 0.06, 0.06), (0.4, -0.8, 1.9), "wood"), limb("hoist", (0.5, -0.8, 2.6), (0.5, -0.4, 1.0), 0.015, 0.015, "reed", 4)]
+    p += rubble(r, 18, (1.8, 1.0), mats=(STONE, STONE_D), size=(0.2, 0.5), tag="pile")
+    return p
+
+def sanseong_jinbeop_map():
+    """진법도: 말뚝 둘 사이에 걸어 둔 찢어진 베 천(1.6×1.1m). 먹으로 그린 동그라미 열둘만 있고 이름 칸은 비었다(동그라미 안은 숫자 자리뿐)."""
+    p = [cyl("stakeL", 0.04, 0.04, 1.7, (-0.9, 0, 0), "wood_dark", 5), cyl("stakeR", 0.04, 0.04, 1.7, (0.9, 0, 0), "wood_dark", 5), box("cloth", (1.7, 0.02, 1.15), (0, 0, 1.0), "#CFC4A6", rot=(0.05, 0, 0.0)), box("tear", (0.3, 0.025, 0.4), (0.55, -0.005, 0.7), "#8E8468", rot=(0, 0, 0.4))]
+    p += [cyl(f"circ{i}", 0.09, 0.09, 0.004, (-0.65 + (i % 4) * 0.43, -0.014, 1.4 - (i // 4) * 0.33), "ink", 8, rot=(math.pi / 2, 0, 0)) for i in range(12)]
+    p += [cyl(f"circ_in{i}", 0.065, 0.065, 0.005, (-0.65 + (i % 4) * 0.43, -0.016, 1.4 - (i // 4) * 0.33), "#CFC4A6", 8, rot=(math.pi / 2, 0, 0)) for i in range(12)]
+    return p
+
+def sanseong_flag_shard():
+    """부러진 깃대 조각(화살골 단서 물건 B05-D3): 칼금으로 이름을 새긴 나무 토막 0.9m. 여섯 줄만 또렷하고 나머지는 닳았다. 바위틈에 끼워 둔다."""
+    r = random.Random(63)
+    p = [cyl("shard", 0.05, 0.04, 0.9, (0, 0, 0.0), "wood", 6, rot=(0.9, 0, 0)), cyl("snap_tip", 0.04, 0.0, 0.14, (0, 0.5, 0.45), "wood", 5, rot=(0.9, 0, 0))]
+    p += [box(f"name{i}", (0.07, 0.01, 0.008 if i > 5 else 0.014), (0, -0.045 - 0.0, 0.04 + i * 0.07), "ink" if i < 6 else "#6B4A2E", rot=(0.9, 0, r.uniform(-0.2, 0.2))) for i in range(10)]
+    p += [box("rag", (0.12, 0.01, 0.3), (0.0, -0.1, 0.35), FLAG, rot=(0.9, 0, 0.1))]
+    return p
+
+def sanseong_geumjul_jangseung_pair():
+    """금줄 장승 한 쌍 3.6m 폭(2막 금줄 R2-1·R2-2 자리): 장승 둘이 마주 서고 사이에 금줄(새끼줄+한지 띠)이 가로로 걸림. 장승 얼굴은 부릅눈에 이빨."""
+    p = []
+    for sx, nm in ((-1.6, "L"), (1.6, "R")):
+        p += [cyl(f"post{nm}", 0.2, 0.18, 2.8, (sx, 0, 0), "wood", 7), sphere(f"head{nm}", 0.28, (sx, -0.02, 2.5), "wood", 7, 5, (1, 0.8, 1.1)), box(f"eyeL{nm}", (0.1, 0.05, 0.07), (sx + 0.1, -0.2, 2.62), "ink"), box(f"eyeR{nm}", (0.1, 0.05, 0.07), (sx - 0.1, -0.2, 2.62), "ink"),
+              box(f"mouth{nm}", (0.22, 0.04, 0.05), (sx, -0.2, 2.35), "hanji"), cyl(f"hat{nm}", 0.3, 0.1, 0.18, (sx, 0, 2.78), "wood_dark", 7), box(f"name{nm}", (0.18, 0.04, 0.8), (sx, -0.18, 1.6), "wood_dark")]
+    p += [limb("rope", (-1.45, -0.18, 2.0), (1.45, -0.18, 1.8), 0.03, 0.03, "reed", 4)] + [box(f"paper{i}", (0.08, 0.015, 0.22), (-1.1 + i * 0.5, -0.19, 1.82 - 0.04 * math.sin(i * 0.6)), "hanji") for i in range(6)]
+    return p
+
+def soegol_mokpae_board():
+    """목패 걸이 판 2.4×1.4m(광부촌): 큰 널판에 고리 열넷, 목패가 걸림. 일곱째 하나만 테두리가 닳아 밝다(칠성의 목패). 위에 지붕 처마."""
+    r = random.Random(64)
+    p = [box("board", (2.4, 0.1, 1.2), (0, 0, 1.2), "wood_dark"), box("roof", (2.7, 0.7, 0.08), (0, -0.2, 2.0), "wood", rot=(0.2, 0, 0)), cyl("postL", 0.07, 0.07, 1.9, (-1.1, 0.0, 0), "wood", 5), cyl("postR", 0.07, 0.07, 1.9, (1.1, 0.0, 0), "wood", 5)]
+    for i in range(14):
+        x = -1.0 + (i % 7) * 0.33; z = 1.5 if i < 7 else 1.0
+        p += [box(f"hook{i}", (0.03, 0.04, 0.03), (x, -0.07, z + 0.14), "iron"), box(f"tag{i}", (0.15, 0.03, 0.22), (x, -0.09, z - 0.0), "#D8C898" if i == 6 else "#6B4A2E", rot=(0, 0, r.uniform(-0.05, 0.05))), box(f"mark{i}", (0.05, 0.01, 0.1), (x, -0.11, z), "ink")]
+    return p
+
+def soegol_sorting_bench():
+    """선탄 평상 2.8×1.4m: 석탄을 가려내는 낮은 널마루. 위에 검은 덩이 무더기와 가려낸 것을 담는 바구니 둘, 옆에 작은 쇠망치."""
+    r = random.Random(65)
+    p = [box("deck", (2.8, 1.4, 0.1), (0, 0, 0.5), "wood")] + [box(f"leg{i}", (0.12, 0.12, 0.5), (x, y, 0.25), "wood_dark") for i, (x, y) in enumerate(((-1.3, -0.6), (1.3, -0.6), (-1.3, 0.6), (1.3, 0.6)))]
+    p += [sphere(f"coal{i}", r.uniform(0.08, 0.16), (r.uniform(-1.1, 0.2), r.uniform(-0.4, 0.4), 0.62 + r.uniform(0, 0.1)), SLAG if i % 3 else "#3A363A", 5, 3) for i in range(18)]
+    p += [cyl("basket1", 0.22, 0.18, 0.26, (0.7, -0.25, 0.55), "#B09468", 7), cyl("basket2", 0.22, 0.18, 0.26, (1.05, 0.2, 0.55), "#B09468", 7), sphere("sorted1", 0.15, (0.7, -0.25, 0.8), ORE, 5, 3), sphere("sorted2", 0.15, (1.05, 0.2, 0.8), SLAG, 5, 3)]
+    p += [cyl("hammer_h", 0.02, 0.02, 0.4, (0.3, 0.45, 0.6), "wood", 4, rot=(0, 1.4, 0)), box("hammer_head", (0.1, 0.07, 0.07), (0.13, 0.45, 0.62), "iron")]
+    return p
+
+def soegol_chalk_rock():
+    """분필 바위(무너진 막장 입구, 단서 B07-D3): 사람 키 반 높이 바위 면에 흰 분필 줄. 막대 열셋을 묶어 센 표시와 옆의 화살표 하나. 글자 대신 막대로 만들어 숫자를 글로 세지 않는다."""
+    r = random.Random(66)
+    p = [sphere("rock", 1.1, (0, 0.3, 0.7), "#6E6250", 8, 5, (1.2, 0.8, 1.0)), sphere("rock2", 0.6, (1.1, 0.0, 0.3), "#5E5242", 6, 4)]
+    for i in range(13):   # 막대 열셋(다섯씩 묶음)
+        g, k = divmod(i, 5); x = -0.65 + g * 0.55 + k * 0.08
+        p.append(box(f"tick{i}", (0.03, 0.02, 0.28), (x, -0.62 + abs(x) * 0.1, 0.95), "#F3E7D3", rot=(0, 0, 0.0 if k < 4 else 1.0)))
+    p += [box("arrow", (0.5, 0.02, 0.05), (0.3, -0.6, 0.55), "#F3E7D3"), box("arrow_h1", (0.15, 0.02, 0.04), (0.6, -0.6, 0.6), "#F3E7D3", rot=(0, 0, 0.6)), box("arrow_h2", (0.15, 0.02, 0.04), (0.6, -0.6, 0.5), "#F3E7D3", rot=(0, 0, -0.6))]
+    p += rubble(r, 8, (1.6, 1.0), mats=("#6E6250", SLAG), size=(0.15, 0.3))
+    return p
+
+def prop_dry_inkstone():
+    """마른 벼루(서당, 1막 허 훈장): 먹물이 말라붙은 돌 벼루 0.3×0.2m, 곁에 닳은 먹 토막과 붓 하나."""
+    return [box("stone", (0.3, 0.2, 0.05), (0, 0, 0.025), "#2E2E34"), box("well", (0.18, 0.1, 0.02), (0, 0, 0.055), "#17171C"), box("crust", (0.12, 0.06, 0.005), (0, 0, 0.07), "#3A3436"), box("ink_stick", (0.1, 0.03, 0.025), (0.22, 0.03, 0.013), "ink"), cyl("brush", 0.01, 0.01, 0.24, (-0.05, 0.2, 0.01), "wood", 4, rot=(0, 1.5, 0.3)), sphere("brush_tip", 0.015, (-0.17, 0.17, 0.02), "ink", 4, 3)]
+
+def prop_market_drum_frame():
+    """장터 북틀(1막): 나무 틀(X자 받침)에 매단 큰 북 한 개와 북채 둘. 장이 열렸음을 알리는 것. 폭 1.2m 높이 1.4m."""
+    p = [limb("legA", (-0.5, 0, 0), (0.1, 0, 1.2), 0.04, 0.04, "wood_dark", 5), limb("legB", (0.5, 0, 0), (-0.1, 0, 1.2), 0.04, 0.04, "wood_dark", 5), box("bar", (1.0, 0.06, 0.06), (0, 0, 1.2), "wood_dark"), cyl("drum", 0.4, 0.4, 0.35, (0, 0, 0.55), "pillar", 10, rot=(math.pi / 2, 0, 0)), cyl("skinF", 0.36, 0.36, 0.01, (0, -0.18, 0.55), "#D8C898", 10, rot=(math.pi / 2, 0, 0)), cyl("skinB", 0.36, 0.36, 0.01, (0, 0.18, 0.55), "#D8C898", 10, rot=(math.pi / 2, 0, 0))]
+    p += [cyl(f"rope{i}", 0.012, 0.012, 0.34, (math.cos(i * 0.9) * 0.39, 0, 0.55 + math.sin(i * 0.9) * 0.39), "reed", 4, rot=(math.pi / 2, 0, 0)) for i in range(7)] + [limb("stickA", (0.55, -0.3, 0.1), (0.7, -0.35, 0.5), 0.015, 0.015, "wood", 4), limb("stickB", (0.62, -0.28, 0.1), (0.78, -0.3, 0.55), 0.015, 0.015, "wood", 4)]
+    return p
+
+
+def soegol_canyon_wall():
+    """갱도 골 벼랑 벽 6m: 깎아 낸 협곡의 한쪽 벽. 층층이 갈라진 누런 바위 결과 검은 광맥 줄, 위쪽은 거칠게 허물어짐. 높이 5m. 길 양옆에 마주 세워 지붕 없는 골을 만든다(기획 요청)."""
+    r = random.Random(71); p = []
+    for i in range(6):
+        x = -2.5 + i; h = r.uniform(3.8, 5.2)
+        p.append(box(f"col{i}", (1.05, 1.6 + r.uniform(0, .5), h), (x, r.uniform(-.1, .1), h / 2), ["#85775F", "#7A6C58", "#6E6250"][i % 3], rot=(0, 0, r.uniform(-.05, .05))))
+    for k in range(4):
+        p.append(box(f"strata{k}", (6.1, 0.06, 0.1 + 0.05 * (k % 2)), (0, -0.82, 1.0 + k * 1.0), SLAG if k % 2 else "#5E5242"))
+    p += rubble(r, 10, (2.8, 1.1), base_z=0.0, mats=("#6E6250", SLAG, ORE), size=(0.2, 0.5), tag="foot")
+    return p
+
+def soegol_gol_module():
+    """갱도 골 한 마디 7m(지붕 없음): 레일 한 줄과 버팀목 아치 둘이 열린 하늘 아래 길 위에 서 있다. 양옆 벼랑(soegol_canyon_wall)을 세워 쿼터뷰 카메라가 위에서 볼 수 있게 한다. 길 폭 2.6m."""
+    p = []
+    for k in (-2.3, 2.3):
+        p += [cyl(f"arch_postL{k}", 0.16, 0.16, 2.4, (-1.15, k, 0), "wood", 6), cyl(f"arch_postR{k}", 0.16, 0.16, 2.4, (1.15, k, 0), "wood", 6), box(f"arch_beam{k}", (2.7, 0.3, 0.28), (0, k, 2.4), "wood_dark"), box(f"arch_braceL{k}", (0.1, 0.1, 0.8), (-0.85, k, 2.0), "wood", rot=(0, -0.8, 0)), box(f"arch_braceR{k}", (0.1, 0.1, 0.8), (0.85, k, 2.0), "wood", rot=(0, 0.8, 0))]
+    p += [box("railL", (0.06, 7.0, 0.07), (-0.35, 0, 0.1), "iron"), box("railR", (0.06, 7.0, 0.07), (0.35, 0, 0.1), "iron")] + [box(f"tie{i}", (0.95, 0.14, 0.07), (0, -3.25 + i * 0.5, 0.035), "wood_dark") for i in range(14)]
+    p += [box("floor", (2.6, 7.0, 0.04), (0, 0, 0.02), "#6A5A44"), box("lamp_arm", (0.5, 0.05, 0.05), (-1.4, 0, 2.2), "iron"), box("lamp", (0.2, 0.2, 0.28), (-1.65, 0, 1.95), mat(WARM, 2.0))]
+    return p
+
 KIT = [(f.__name__, f) for f in (sanseong_wall_straight, sanseong_wall_ruin, sanseong_gate, sanseong_tower, sanseong_palisade, sanseong_banner_torn, sanseong_big_mound, sanseong_arrow_field, sanseong_arrow_rock, sanseong_spear_rack, sanseong_tent, sanseong_sul_vat, sanseong_stairs, sanseong_beacon,
-       soegol_mine_entrance, soegol_timber_frame, soegol_rail, soegol_cart, soegol_ore_pile, soegol_slag_heap, soegol_windlass, soegol_miner_hut, soegol_lantern_post, soegol_ore_basket, soegol_wash_flume, soegol_smelter, soegol_ingot_stack, soegol_rope_fence, soegol_scree)]
+       soegol_mine_entrance, soegol_timber_frame, soegol_rail, soegol_cart, soegol_ore_pile, soegol_slag_heap, soegol_windlass, soegol_miner_hut, soegol_lantern_post, soegol_ore_basket, soegol_wash_flume, soegol_smelter, soegol_ingot_stack, soegol_rope_fence, soegol_scree, sanseong_shrine, sanseong_wipae, sanseong_wall_unfinished, sanseong_jinbeop_map, sanseong_flag_shard, sanseong_geumjul_jangseung_pair, soegol_mokpae_board, soegol_sorting_bench, soegol_chalk_rock, prop_dry_inkstone, prop_market_drum_frame, soegol_canyon_wall, soegol_gol_module)]
 LIGHTS = {"sanseong_beacon": ("Light_beacon", (0, 0, 2.7), WARM, 1.6, 12.0, True), "soegol_mine_entrance": ("Light_mine_lamp", (1.6, -1.7, 1.6), WARM, 1.2, 8.0, True), "soegol_lantern_post": ("Light_soegol_post", (0.5, 0, 2.2), WARM, 1.0, 7.0, True),
-          "soegol_smelter": ("Light_smelter", (0, -1.4, 0.7), "#FF9A4A", 1.8, 11.0, True), "soegol_miner_hut": ("Light_miner_hut", (-1.5, -1.5, 1.45), WARM, 0.8, 5.0, True)}
+          "soegol_smelter": ("Light_smelter", (0, -1.4, 0.7), "#FF9A4A", 1.8, 11.0, True), "sanseong_shrine": ("Light_shrine", (1.1, -1.4, 2.35), WARM, 0.9, 6.0, True), "soegol_gol_module": ("Light_gol_lamp", (-1.65, 0, 1.95), WARM, 1.0, 7.0, True), "soegol_miner_hut": ("Light_miner_hut", (-1.5, -1.5, 1.45), WARM, 0.8, 5.0, True)}
 
 def build(name, fn):
     reset(); o = join(name, fn()); lo, hi = bounds(o)
     if name in LIGHTS: n, pos, col, it, rg, fl = LIGHTS[name]; light_empty(o, n, pos, col, intensity=it, range_m=rg, flicker=fl)
-    export(o, os.path.join(OUT, "act2", f"{name}.glb"))
+    export(o, os.path.join(OUT, "props" if name.startswith("prop_") else "act2", f"{name}.glb"))
     return {"name": name, "tris": tris(o), "size_m": [round(hi.x - lo.x, 2), round(hi.y - lo.y, 2), round(hi.z - lo.z, 2)], "min_z": round(lo.z, 3)}
 
 if __name__ == "__main__":
@@ -278,6 +384,7 @@ if __name__ == "__main__":
         json.dump(res, open(os.path.join(OUT, "act2", "_report_act2.json"), "w"), ensure_ascii=False, indent=1)
         for grp, pre in (("sanseong", "sanseong_"), ("soegol", "soegol_")):
             reset(); items = [(k, f) for k, f in KIT if k.startswith(pre)]
-            for i, (k, f) in enumerate(items): o = join(k, f()); o.location = ((i % 5 - 2) * 7.5, -(i // 5) * 7.5, 0)
-            setup_render(40, (0, -7.5, 1.5), elev=50, size=(1500, 800), ground_size=80); bpy.context.scene.cycles.samples = 24
+            if grp == 'sanseong': items = [(k, f) for k, f in KIT if k.startswith(pre) or k.startswith('prop_')]
+            for i, (k, f) in enumerate(items): o = join(k, f()); o.location = ((i % 6 - 2.5) * 7.0, -(i // 6) * 7.0, 0)
+            setup_render(46, (0, -7.0, 1.5), elev=50, size=(1500, 800), ground_size=80); bpy.context.scene.cycles.samples = 24
             render(os.path.join(OUT, "previews", f"act2_{grp}_50deg.png"))
