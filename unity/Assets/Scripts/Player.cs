@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
     float dodgeCharges = Balance.DODGE_CHARGES;     // 남은 충전(소수 가능: 충전되는 중)
     public System.Action onHitLanded;               // 내 타격이 적에게 맞을 때마다(안내가 첫 타를 알아챈다)
     public System.Action onDodgeCancelCast;         // 천도 캐스팅 중 피하면 JudgeSystem 이 캐스팅만 취소한다
+    public bool judgeStance;                        // 무릎 꿇은 혼 앞에서 고르는 중: 서 있으면 Idle→Judge 자세(JudgeSystem 이 매 프레임 정한다)
     public float DodgeCharges => dodgeCharges;
     public void RefillDodge() { dodgeCharges = Balance.DODGE_CHARGES; }   // 서낭당 쉬기: 피하기 충전 가득
     public float PullCooldown => pullCooldown;
@@ -108,6 +109,7 @@ public class Player : MonoBehaviour
         else if (invulnT > 0.35f) n = "characters/chasa_hit";                 // 막 맞음
         else if (locked) n = "characters/chasa_cast";                    // 천도 시전
         else if (state == State.Attack && atk != null) n = mace ? "characters/chasa_bang" + Mathf.Clamp(atk.step, 1, 3) : "characters/chasa_swing";
+        else if (judgeStance && View3D.On && moved <= 0.001f) n = "characters/chasa_judge";   // 처결 고르는 자세(모델 동작 Judge)
         else if (moved > 0.001f) n = ((int)(walkT * 6f) % 2 == 0) ? "characters/chasa_walk_a" : "characters/chasa_walk_b";
         bool shown = spr.Show(n, U.Dir(facing));
         spr.SetWeapon(loadout.weapon);   // 손에 든 무기 모델(바꿔 들면 다른 모델로)

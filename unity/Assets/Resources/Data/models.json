@@ -51,12 +51,17 @@
     {
      "pose": "RunStop",
      "clip": "Run_Stop"
+    },
+    {
+     "pose": "Judge",
+     "clip": "Judge"
     }
    ],
    "loop": [
     "Idle",
     "Walk",
-    "Kneel"
+    "Kneel",
+    "Judge"
    ],
    "yaw": 180
   },

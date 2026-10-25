@@ -16,7 +16,7 @@ using UnityEngine.Playables;
 
 public class ActorModel : MonoBehaviour
 {
-    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw, Hit2, Stagger, Tendo, RunStart, RunStop }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
+    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw, Hit2, Stagger, Tendo, RunStart, RunStop, Judge }   // Judge: 무릎 꿇은 혼 앞에서 천도·파혼을 고르는 자세(갓 숙임·왼손 혼불)   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
 
     // 모양 설명서: 이름에서 골라 쓴다
     struct Spec
@@ -87,7 +87,7 @@ public class ActorModel : MonoBehaviour
         var all = Resources.LoadAll<AnimationClip>(heroRow.path);
         var byName = new Dictionary<string, AnimationClip>();
         foreach (var c in all) if (!c.name.StartsWith("__")) byName[c.name] = c;
-        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw, Pose.Hit2, Pose.Stagger, Pose.Tendo, Pose.RunStart, Pose.RunStop };
+        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw, Pose.Hit2, Pose.Stagger, Pose.Tendo, Pose.RunStart, Pose.RunStop, Pose.Judge };
         graph = PlayableGraph.Create("Hero");
         graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);   // 우리가 직접 시간을 흘린다(히트스톱과 무관하게 부드럽게)
         var output = AnimationPlayableOutput.Create(graph, "out", anim);
@@ -301,6 +301,7 @@ public class ActorModel : MonoBehaviour
 
     static Pose PoseFor(string name)
     {
+        if (name.Contains("judge")) return Pose.Judge;
         if (name.Contains("kneel")) return Pose.Kneel;
         if (name.Contains("dodge")) return Pose.Dodge;
         if (name.Contains("cast")) return Pose.Cast;

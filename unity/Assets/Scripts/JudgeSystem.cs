@@ -641,6 +641,7 @@ public class JudgeSystem : MonoBehaviour
         if (!played && (Input.anyKeyDown || Input.GetMouseButtonDown(0) || Input.touchCount > 0)) { played = true; enemies.graceT = Balance.NIGHT_GRACE; }
         enemies.holdFire = !played;
         UpdateInteract(dt);
+        player.judgeStance = !Casting && enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE) != null;   // 무릎 꿇은 혼 앞: 주인공 Judge 자세
         if (!night.Over) HandleKeys();   // 결과 화면에서는 무기 교체·공격 키가 먹지 않는다(QA B4)
         if (!night.Over) overT = 0f;
         if (night.Over)
