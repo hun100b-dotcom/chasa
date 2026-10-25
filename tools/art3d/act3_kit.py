@@ -271,8 +271,15 @@ def river_bank():
     r = random.Random(66); p = [box("bank", (4.0, 1.4, 0.7), (0, 0, 0.35), "#7A6E58"), box("top", (3.8, 1.0, 0.1), (0, 0, 0.75), "#8A7E66")] + [sphere(f"st{i}", r.uniform(0.15, 0.3), (r.uniform(-1.8, 1.8), -0.7, 0.2), ROCK, 5, 3) for i in range(5)]
     return p
 
+def cliff_edge_wall():
+    """벼랑 가장자리 낮은 돌담 4m, 높이 0.8m: 1막·⑥ 남쪽 끝에서 걸어 내려가지 못하게 하는 보이는 막(기획 요청). 이끼와 풀이 낀 거친 돌."""
+    r = random.Random(71); p = []
+    for i in range(7): p.append(box(f"st{i}", (r.uniform(0.5, 0.65), 0.55, r.uniform(0.5, 0.8)), (-1.8 + i * 0.6 + r.uniform(-.03, .03), r.uniform(-.04, .04), 0.35), ROCK if i % 2 else ROCK_D, rot=(0, 0, r.uniform(-.06, .06))))
+    p += [sphere(f"moss{i}", 0.12, (r.uniform(-1.7, 1.7), -0.2, 0.7), "#58704A", 5, 3, (1, 1, 0.5)) for i in range(4)]
+    return p
+
 KIT = [(f.__name__, f) for f in (harbor_pier, harbor_gauge_post, harbor_boat, harbor_net_frame, harbor_net_pile, harbor_jar, harbor_gaekju_house, harbor_inn, harbor_lamp_hut,
-       salt_pan, salt_pile, salt_warehouse, salt_dike, cape_waiting_rock, cape_hutmyo, cape_new_grave, shoal_wreck, shoal_rock, shoal_plank, bridge_deck, bridge_pier, tide_water, city_wall, city_gate, city_skyline, market_stall, market_ricecake_stall, market_jige, market_lantern_string, market_tile_house, shack_a, shack_b, shack_well, city_gatekeeper_hut, city_gate_inn, city_pit_grave, snow_patch, river_hut_mat, river_bank)]
+       salt_pan, salt_pile, salt_warehouse, salt_dike, cape_waiting_rock, cape_hutmyo, cape_new_grave, shoal_wreck, shoal_rock, shoal_plank, bridge_deck, bridge_pier, tide_water, city_wall, city_gate, city_skyline, market_stall, market_ricecake_stall, market_jige, market_lantern_string, market_tile_house, shack_a, shack_b, shack_well, city_gatekeeper_hut, city_gate_inn, city_pit_grave, snow_patch, river_hut_mat, river_bank, cliff_edge_wall)]
 LIGHTS = {"market_lantern_string": ("Light_market_lamps", (0, 0, 3.4), WARM, 1.4, 9.0, True), "market_tile_house": ("Light_market_house", (-2.4, -2.5, 2.3), WARM, 0.9, 6.0, True), "city_gate_inn": ("Light_gate_inn", (2.3, -2.2, 2.2), WARM, 0.8, 5.0, True), "harbor_gaekju_house": ("Light_gaekju", (0, -3.5, 2.5), WARM, 1.0, 7.0, True), "harbor_inn": ("Light_inn", (2.0, -2.2, 2.2), WARM, 1.0, 6.0, True), "harbor_lamp_hut": ("Light_lamp_hut", (2.2, 0, 4.7), WARM, 1.4, 14.0, True)}
 
 def build(name, fn):
