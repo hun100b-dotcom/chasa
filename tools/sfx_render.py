@@ -4536,6 +4536,71 @@ def _(r):
     return reverb(b, 2.6, .4)
 
 
+# ===== 천도 시전 중 위험을 귀로 (코디 요청 10-26, 연결법 docs/cast-danger-sound.md) =====
+# 천도 중엔 세상이 먹먹해진다(Sfx.cs 저역 통과 1.2kHz). 이 소리들은 모두 bypass_cast — 먹먹함을 뚫고 또렷이 들린다.
+# 혼 종류마다 '결'이 다르고, 모두 짧은 소리(0.2~0.4초)라 코드가 거리에 따라 반복 간격·좌우·밝기를 바꿔 방향을 알린다.
+# 높이는 일부러 500~3000Hz 쪽 — 사람 귀가 좌우를 가장 잘 가리는 대역.
+@sfx("sfx.warn.plain", -14, "전투", "시야 밖 보통 혼이 다가옴: 맨발이 흙을 끄는 '스윽' + 짧게 끊긴 숨 '흐'(0.3초) — 거리마다 반복", bypass_cast=True, use="천도 중 좁아진 시야 밖에서 다가오는 보통 혼(Plain). 반복 간격·좌우는 코드가 정함")
+def _(r):
+    b = _buf(.4); m = int(.22 * SR)
+    place(b, filt(noise(m, r), "band", 1300, 1.5) * env(m, .04, .12, 3) * .7, 0)
+    d = .14; k = int(d * SR)
+    place(b, voice(curve(d, [(0, 160), (d, 140)]), [(700, 3, 1), (1200, 4, .5)], 1.2, r, nh=10) * env(k, .01, .08, 3) * .5, .12)
+    return b
+
+
+@sfx("sfx.warn.wail", -14, "전투", "시야 밖 넋두리가 노림: 흐느끼는 높은 숨이 '히이—' 짧게 떨림(0.35초) — 멀리서 던지는 혼", bypass_cast=True, use="천도 중 시야 밖 넋두리(Wail). 던지기 예비동작이면 간격을 가장 짧게")
+def _(r):
+    d = .34; m = int(d * SR)
+    f0 = curve(d, [(0, 520), (.1, 640), (d, 560)]) * (1 + .04 * np.sin(2 * np.pi * 9 * T(d)))
+    return voice(f0, [(1800, 4, 1), (2600, 6, .5)], .8, r, nh=10) * env(m, .03, .15, 3, hold=.1) * .8
+
+
+@sfx("sfx.warn.mote", -16, "전투", "시야 밖 잔넋 무리: 작은 혼 여럿이 찍·찍·찍 잘게(0.25초) — 하나가 아니라 떼", bypass_cast=True, use="천도 중 시야 밖 잔넋(Mote). 여럿이어도 이 소리 하나로(무리 중심 방향)")
+def _(r):
+    one = lambda r, k: tone(.035, r.uniform(2400, 3000), r.uniform(1900, 2300)) * env(int(.035 * SR), .002, .02, 3) * r.uniform(.5, 1)
+    return grains(.28, r, 4, one, spread=lambda k, r: k * .06 + r.uniform(0, .015))
+
+
+@sfx("sfx.warn.buried", -12, "전투", "발밑 가까이 묻힌 혼: 땅속에서 낮게 우르릉 + 흙이 금 가는 짧은 바스락(0.4초) — 보이지 않는 곳 아래", bypass_cast=True, use="천도 중 묻힌 혼(Buried)이 가까이 숨어 있거나 솟기 직전")
+def _(r):
+    d = .42; m = int(d * SR)
+    rum = filt(noise(m, r), "low", 160) * env(m, .08, .2, 3, hold=.1) * 1.6
+    crk = grains(d, r, 8, lambda r, k: filt(noise(int(.006 * SR), r), "band", r.uniform(900, 2200), 2) * env(int(.006 * SR), .0005, .003) * r.uniform(.2, .6), t0=.12)
+    return rum + crk
+
+
+@sfx("sfx.warn.fierce", -11, "전투", "시야 밖 거센 혼·덩어리: 무거운 발 '쿵' + 아주 짧은 징 울림(0.4초) — 큰 놈이 온다", bypass_cast=True, use="천도 중 시야 밖 거센 혼(Fierce/엘리트)·덩어리(Lump)·보스의 졸개")
+def _(r):
+    b = _buf(.6)
+    place(b, _drum(r, 60, .12, 1.0), 0)
+    j = _jing(r, 196, .5, .02) * env(int(.5 * SR), .005, .15, 3)
+    place(b, filt(j, "band", 900, .8) * .5, .01)
+    return b
+
+
+@sfx("sfx.warn.wind", -12, "전투", "시야 밖에서 공격 준비: 바람이 '휙' 빨려 드는 짧은 소리(0.25초) — 종류와 상관없이 '지금 친다'", bypass_cast=True, use="천도 중 시야 밖 적이 예비동작(Winding)에 들어간 그 순간 한 번. 종류별 경고음 위에 얹음")
+def _(r):
+    m = int(.26 * SR)
+    return sweep_filt(noise(m, r), "band", 700, 2600, 3) * env(m, .2, .04, 2)
+
+
+@sfx("amb.cast.heart", -18, "처결", "천도 중 심장 박동: 쿵·쿵 낮은 두 박이 한 번(반복용 1초 = 1분에 60박). 코드가 위험할수록 빠르게(최대 1.8배)", loop=True, bypass_cast=True, use="천도 시전 중 내내. 위험도(가까운 시야 밖 혼)에 따라 pitch 1.0~1.8, 음량 0.3~1.0. 마지막 30%에 한 단계 더")
+def _(r):
+    sec = 1.0; b = _buf(sec)
+    place(b, _drum(r, 52, .09, 1.0), .02)
+    place(b, _drum(r, 48, .08, .65), .27)
+    return loopify(filt(b, "low", 400), .02)
+
+
+@sfx("sfx.cast.peak", -14, "처결", "천도 마무리 직전: 먹먹하던 소리가 숨을 멈춘 듯 '훅' 끊기고 높은 실 같은 음이 가늘게 떨림(0.5초)", bypass_cast=True, use="천도 시전 끝 0.5초 전(마무리 순간이 가장 위험). 이 0.5초 동안 경고음만 남기고 다른 소리는 0.4배")
+def _(r):
+    d = .55; m = int(d * SR)
+    thread = tone(d, 1760, 1800) * (1 + .3 * np.sin(2 * np.pi * 13 * T(d))) * env(m, .15, .1, 2, hold=.25) * .3
+    inhale = sweep_filt(noise(m, r), "band", 500, 1600, 2) * env(m, .4, .05, 2) * .5
+    return thread + inhale
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)

@@ -1336,3 +1336,8 @@
 - 타이틀 곡 `bgm_title` 임시 대역(반복 64초)을 `bgm_temp_render.py`에 추가했고, Gemini 지시문 63번을 썼다. `data/bgm.json`의 naming에 title 항목을 넣었다.
 - 코드팀용 연결표 `docs/first-10min-sound-hookup.md`: 어느 순간에 어떤 id를 부르는지 정리했다. Sfx.cs는 손대지 않았다.
 - 용량 다시 잼: 새 소리는 모두 공통 묶음(첫 화면)에 들어간다. 결과는 `docs/audio-budget.md`.
+
+## 2026-10-26 새벽 — [기획·사운드] 천도 시전 중 위험을 귀로
+- 시야 밖 혼 경고음 6개를 만들었다: 보통 혼 `sfx.warn.plain` · 넋두리 `sfx.warn.wail` · 잔넋 `sfx.warn.mote` · 묻힌 혼 `sfx.warn.buried` · 거센 혼·덩어리 `sfx.warn.fierce` · 예비동작 `sfx.warn.wind`. 여기에 천도 중 심장 박동 `amb.cast.heart`와 마무리 직전 `sfx.cast.peak`을 더했다. 모두 먹먹함을 건너뛴다(bypass). 효과음은 모두 427개.
+- 코드팀용 설계·연결법 `docs/cast-danger-sound.md`: 누구에게 울리나(시야 밖·12m 안·다가옴, 최대 3), 거리→간격·크기, 방향→좌우·밝기, 마지막 30%에 심장이 빨라지고 peak, Balance 상수 제안. Sfx.cs·JudgeSystem.cs는 손대지 않았다.
+- 미리 듣기에 7초 시연(스테레오)을 올렸다.
