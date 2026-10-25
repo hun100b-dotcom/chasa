@@ -47,12 +47,12 @@
   },
   {
    "id": "amb.seonang.pyedang",
-   "x": null,
-   "z": null,
+   "x": 574,
+   "z": 552,
    "min": 2,
    "max": 14,
    "when": "always",
-   "note": "서낭당 ⑤ — 아트: 레이아웃 자리 미정. 정해지면 같은 좌표로"
+   "note": "서낭당 ⑤ — field.json prop_seonangdang_pyedang 자리(폐당집 입구 서쪽 6m)"
   },
   {
    "id": "amb.soulpath.gate",
