@@ -441,3 +441,8 @@
 - 코드: Core/TerrainField.cs(HeightField·SplatField, 테스트 3개 = 152 통과), GroundTerrain.cs(파일 읽기·청크 메쉬·재질·높이 묻기), Resources/Shaders/ChasaTerrainSplat.shader(5층 섞기, 월드 좌표 타일), GroundSnap(주인공·적·NPC), FieldManager(새 땅이면 옛 타일 생략·소품 높이 더함), 카메라 초점 높이.
 - 안전장치: Resources/Terrain 파일이 없으면 Active=false 라 지금 화면은 그대로. 셰이더가 안 되는 기기는 한 색 땅.
 - 아직: 불빛 높이, 얼룩·그림자 원판, 보스 구역 붉은 타일 높이, 가파른 곳 이동 제한, 재질별 발소리. PC 확인: --demo 땅을 넣어 셰이더 컴파일·이음매·성능(청크당 4225 꼭짓점).
+
+## 2026-10-25 [코드·QA] 혼 GLB·무기 GLB 연결 (아트 e36e7cd) — 클라우드, 화면 확인 전
+- 혼 4종(갓 죽은·해 넘긴·오래된·덩어리)을 models.json 배우 줄(fresh/year/old/lump)로 연결: Float=서기·걷기, Windup=공격 예비동작, Kneel=무릎 꿇음·천도 중. Resources/Models/Soul 에 16종 복사(지역 변형 12종은 아직 안 씀 — 검은여울 역병/붉은재 병사/쇳골 광부 구역에서 고르는 일은 다음).
+- 무기 GLB 5종: 주인공 Hand.R 뼈에 붙임(ActorModel.SetWeapon, 든 무기가 바뀌면 교체, 아트 약속대로 X축 +90°). 뼈 이름을 못 찾으면 맨손.
+- PC 확인: 무기가 손에서 앞을 향하는지(방향·크기), 혼 크기/방향(yaw 180)과 예비동작, 새 hero_chasa 에 사슬 주먹이 없어졌는데 철삭 무기 모델이 대신 보이는지.

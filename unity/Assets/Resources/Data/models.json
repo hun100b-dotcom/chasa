@@ -191,6 +191,202 @@
     "Walk",
     "Kneel"
    ]
+  },
+  {
+   "key": "fresh",
+   "path": "Models/Soul/soul_fresh",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "year",
+   "path": "Models/Soul/soul_day",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "old",
+   "path": "Models/Soul/soul_old",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
+  },
+  {
+   "key": "lump",
+   "path": "Models/Soul/soul_lump",
+   "scale": 1.0,
+   "texture": "",
+   "clips": [
+    {
+     "pose": "Idle",
+     "clip": "Float"
+    },
+    {
+     "pose": "Walk",
+     "clip": "Float"
+    },
+    {
+     "pose": "Attack",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack2",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Attack3",
+     "clip": "Windup"
+    },
+    {
+     "pose": "Hit",
+     "clip": "Float"
+    },
+    {
+     "pose": "Cast",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Kneel",
+     "clip": "Kneel"
+    },
+    {
+     "pose": "Dodge",
+     "clip": "Float"
+    }
+   ],
+   "loop": [
+    "Idle",
+    "Walk"
+   ],
+   "yaw": 180
   }
  ],
  "props": [

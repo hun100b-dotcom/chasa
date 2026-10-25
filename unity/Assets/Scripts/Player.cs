@@ -108,6 +108,7 @@ public class Player : MonoBehaviour
         else if (state == State.Attack && atk != null) n = mace ? "characters/chasa_bang" + Mathf.Clamp(atk.step, 1, 3) : "characters/chasa_swing";
         else if (moved > 0.001f) n = ((int)(walkT * 6f) % 2 == 0) ? "characters/chasa_walk_a" : "characters/chasa_walk_b";
         bool shown = spr.Show(n, U.Dir(facing));
+        spr.SetWeapon(loadout.weapon);   // 손에 든 무기 모델(바꿔 들면 다른 모델로)
         foreach (var r in bodyShapes) r.enabled = !shown;
     }
 

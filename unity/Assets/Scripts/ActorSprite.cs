@@ -24,6 +24,9 @@ public class ActorSprite : MonoBehaviour
         return a;
     }
 
+    /// <summary>손에 든 무기 모델을 바꾼다(주인공 3D 모델에서만 보임)</summary>
+    public void SetWeapon(Chasa.Core.WeaponId w) { if (model != null) model.SetWeapon(w); }
+
     /// <summary>공격 시작을 3D 인형에 알린다(동작을 처음부터, 판정 시각에 맞춰 재생). 2D 그림 쪽은 할 일 없음</summary>
     public void PlayAttack(float windup, float swing, int step = 1) { if (model != null) model.PlayAttack(windup, swing, step); }
 

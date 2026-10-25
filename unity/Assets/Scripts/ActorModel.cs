@@ -149,6 +149,39 @@ public class ActorModel : MonoBehaviour
         heroSpeed = Mathf.Clamp(0.45f * len / Mathf.Max(0.05f, windup + swing * 0.5f), 0.5f, 6f);
     }
 
+    // ---- 손에 든 무기(주인공 모델의 Hand.R 뼈에 붙인다). 아트 약속: 원점=쥐는 곳, 길이 방향 glTF +Y, 뼈 기준 X축 +90° 로 눕혀 앞을 향하게
+    WeaponId wantWeapon = WeaponId.Chain; GameObject weaponGo; WeaponId shownWeapon = (WeaponId)(-1);
+
+    static string WeaponFile(WeaponId w)
+    {
+        switch (w) { case WeaponId.Mace: return "weapon_bangmang"; case WeaponId.Bell: return "weapon_yoryeong"; case WeaponId.Trident: return "weapon_samjichang"; case WeaponId.Brush: return "weapon_myeongbu"; default: return "weapon_chain"; }
+    }
+
+    /// <summary>든 무기를 알린다. 주인공 3D 모델이 아닐 땐 아무 일도 없다(도형 대역은 무기 그림이 없다)</summary>
+    public void SetWeapon(WeaponId w) { wantWeapon = w; ApplyWeapon(); }
+
+    void ApplyWeapon()
+    {
+        if (hero == null || key != "dongi" || shownWeapon == wantWeapon) return;
+        Transform hand = null;
+        foreach (var t in hero.GetComponentsInChildren<Transform>()) if (t.name == "Hand.R") { hand = t; break; }
+        if (hand == null) return;   // 뼈 이름이 다르면 붙이지 않는다(맨손)
+        if (weaponGo != null) Destroy(weaponGo);
+        shownWeapon = wantWeapon;
+        var prefab = Resources.Load<GameObject>("Models/Weapon/" + WeaponFile(wantWeapon));
+        if (prefab == null) return;
+        weaponGo = Instantiate(prefab, hand);
+        weaponGo.transform.localPosition = Vector3.zero;
+        weaponGo.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        weaponGo.transform.localScale = Vector3.one / Mathf.Max(0.01f, heroRow != null ? heroRow.scale : 1f);   // 몸 크기 배율이 무기까지 줄이지 않게
+        foreach (var r in weaponGo.GetComponentsInChildren<Renderer>())
+        {
+            var src = r.sharedMaterials; var dst = new Material[src.Length];
+            for (int i = 0; i < src.Length; i++) dst[i] = U.Matte(Props3D.MatColor(src[i]));
+            r.sharedMaterials = dst; r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+    }
+
     void OnDestroy() { if (graph.IsValid()) graph.Destroy(); }
 
     public static ActorModel Create(Transform parent)
@@ -218,7 +251,7 @@ public class ActorModel : MonoBehaviour
         if (modelRoot != null) Destroy(modelRoot);
         modelRoot = new GameObject("Model_" + sp.key);
         modelRoot.transform.SetParent(transform, false);
-        if (TryBuildHero(sp.key)) { modelRoot.transform.localRotation = Quaternion.Euler(0, yaw, 0); return; }   // 슬롯에 진짜 모델이 있으면 그걸 쓴다
+        if (TryBuildHero(sp.key)) { modelRoot.transform.localRotation = Quaternion.Euler(0, yaw, 0); shownWeapon = (WeaponId)(-1); ApplyWeapon(); return; }   // 슬롯에 진짜 모델이 있으면 그걸 쓴다
         var rl = new System.Collections.Generic.List<Renderer>();
         var ml = new System.Collections.Generic.List<Material>();
         var cl = new System.Collections.Generic.List<Color>();
