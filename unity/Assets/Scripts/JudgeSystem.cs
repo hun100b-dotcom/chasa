@@ -39,6 +39,7 @@ public class JudgeSystem : MonoBehaviour
     string toast = ""; float toastT;     // 화면 안내 글자(영문: 기본 글꼴에 한글이 없다)
     Texture2D white, vignette;
     public bool godMode;                        // ?debug 검증용: 체력이 줄지 않는다
+    float vignetteT;                       // 차사가 맞았을 때 화면 가장자리 붉은 번쩍 남은 시간(0.15초, 아트 hit_player_vignette)
     Color flashColor; float flashA;        // 화면 전체 번쩍임(파혼=붉음, 천도=흰 보라). 점점 사라진다
     float sinceHit = 99f;                // 마지막으로 맞은 뒤 지난 시간(초) — 체력 회복 시작 판단
     bool played;                         // 첫 입력이 있었나 (그 전엔 적이 공격하지 않는다: 로딩 중 죽는 것 방지)
@@ -53,6 +54,7 @@ public class JudgeSystem : MonoBehaviour
 
     void Start()
     {
+        StripFx.HoldWhen = () => feel != null && feel.InHitStop;   // 히트스톱 동안 타격 그림도 첫 프레임에 붙든다
         LoadFuneralIndex(); CutPlayback.Cond = FuneralCond;   // 1막 장례 색인과 장례 컷의 조건 판정
         // 서낭당: 출발점이자 귀환점. 납작한 노란 원으로 '돌아갈 곳'을 보여 준다
         shrineView = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
@@ -227,6 +229,7 @@ public class JudgeSystem : MonoBehaviour
         // 파편 모델: 3종 중 하나를 무작위 방향으로 터뜨린다 (반경에 맞춰 크기)
         FxMesh.Burst("fx_pahon_shards_" + "abc"[Random.Range(0, 3)], new Vector3(at.x, at.y + 0.05f, at.z), radius / 1.25f, 0.55f, 0.5f, 1.15f, 0.4f, null, Random.Range(0f, 360f));
         feel.HitStop(Balance.PAHON_HITSTOP_FRAMES);
+        StripFx.Flat("pahon_ring", 8, 0.4f, at, radius * 2f, new Color(1f, 1f, 1f, 0.9f));   // 파혼 고리(아트): 반경 끝까지 퍼진다
         Sfx.Play("sfx.pahon.burst." + Sfx.WeaponTag(lo.weapon));
         feel.AddShake(Balance.PAHON_SHAKE);
         feel.AddZoom(1f);                       // 파혼: 확 다가가는 쿵
@@ -313,6 +316,7 @@ public class JudgeSystem : MonoBehaviour
         feel.SlowMo(Balance.TENDO_COMPLETE_SLOWMO, Balance.TENDO_COMPLETE_SLOWMO_SCALE);   // 멈춤이 아니라 느림 = 보냄
         feel.AddZoom(-0.7f);                    // 천도 완료: 숨을 내쉬듯 화면이 살짝 멀어졌다 돌아온다
         flashColor = new Color(0.85f, 0.8f, 1f); flashA = 0.5f;        // 흰 보랏빛 번쩍임(보냄)
+        StripFx.Billboard("tendo_motes", 8, 0.8f, tp + Vector3.up * 1.2f, Vector3.zero, 2.4f);   // 천도 알갱이(아트): 위로 오르며 사라진다. 흔들림·번쩍은 더하지 않는다
         EndCast();
     }
 
@@ -687,6 +691,7 @@ public class JudgeSystem : MonoBehaviour
         int dealt = godMode ? 0 : ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
         feel.AddShake(Balance.TRAUMA_PLAYER_HIT);
+        vignetteT = 0.15f;
         feel.HitStop(3);
         if (Casting)
         {
@@ -781,6 +786,7 @@ public class JudgeSystem : MonoBehaviour
         stains.Tick(dt * weather.Fx.StainMult);   // 비 오는 밤: 얼룩이 절반만 오래간다
         if (wxDrain > 0 && !ledger.Dead) { ledger.TakeDamage(wxDrain); if (ledger.Dead) { Say("쓰러졌다"); night.Tick(night.TimeLeft + 1f); } }   // 역병 안개: 서 있으면 체력이 준다
         flashA = Mathf.Max(0f, flashA - realDt * 2.2f);
+        vignetteT = Mathf.Max(0f, vignetteT - realDt);
         sinceHit += dt;
         ledger.Regen(dt, toShrine <= Balance.SHRINE_RADIUS, sinceHit);   // 서낭당 안: 빠른 회복 / 밖: 맞지 않으면 천천히
         player.speedMult = 1f - WeatherRules.CombineSlow(wxSlow, stains.IsOnStain(player.Pos.x, player.Pos.z) ? Balance.STAIN_SLOW : 0f);   // 얼룩 위 -20%, 역병 안개 -20%, 겹쳐도 최대 -30%
@@ -1577,6 +1583,7 @@ public class JudgeSystem : MonoBehaviour
         if (npcs != null) npcs.DrawWorld(Camera.main, player.Pos, white);
         if (interactables != null) interactables.DrawWorld(Camera.main, player.Pos, white);   // 귀·눈 아이콘, 진행, 지나가는 혼잣말
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
+        if (vignetteT > 0f) { var vg = SpriteLib.Texture("fx/hit/hit_player_vignette"); if (vg != null) { GUI.color = new Color(1f, 1f, 1f, vignetteT / 0.15f); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), vg, ScaleMode.StretchToFill); GUI.color = Color.white; } }
         if (flashA > 0.001f) { GUI.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashA); GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), white); GUI.color = Color.white; }
         // (1) 시야 축소 + 기억의 색 (천도 캐스팅 중)
         if (visionP > 0.001f)

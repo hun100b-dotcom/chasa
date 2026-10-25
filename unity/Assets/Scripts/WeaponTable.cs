@@ -22,11 +22,11 @@ public static class WeaponTable
     public static readonly ComboStep[] Bell =
     {
         new ComboStep { name = "1 ring", damage = 12, reach = 2.6f, sweepDeg = 360f, startOffsetDeg = 30f, dir = 1,
-            windup = 0.12f, swing = 0.2f, recover = 0.2f, hitStopFrames = 2, shake = 0.35f, knockback = 9f, stun = 0.3f, lunge = 0f },
+            windup = 0.12f, swing = 0.2f, recover = 0.2f, hitStopFrames = 3, shake = 0.35f, knockback = 9f, stun = 0.3f, lunge = 0f },
         new ComboStep { name = "2 ring", damage = 12, reach = 2.6f, sweepDeg = 360f, startOffsetDeg = 30f, dir = -1,
-            windup = 0.12f, swing = 0.2f, recover = 0.2f, hitStopFrames = 2, shake = 0.35f, knockback = 9f, stun = 0.3f, lunge = 0f },
+            windup = 0.12f, swing = 0.2f, recover = 0.2f, hitStopFrames = 3, shake = 0.35f, knockback = 9f, stun = 0.3f, lunge = 0f },
         new ComboStep { name = "3 toll", damage = 24, reach = 3.0f, sweepDeg = 360f, startOffsetDeg = 30f, dir = 1,
-            windup = 0.22f, swing = 0.24f, recover = 0.4f, hitStopFrames = 5, shake = 0.8f, knockback = 14f, stun = 0.9f, lunge = 0f },
+            windup = 0.22f, swing = 0.24f, recover = 0.4f, hitStopFrames = 6, shake = 0.8f, knockback = 14f, stun = 0.9f, lunge = 0f },
     };
 
     // 삼지창: 기획 13/14/24, 관통 3 (WeaponDef.MaxHits). 좁고 긴 찌르기

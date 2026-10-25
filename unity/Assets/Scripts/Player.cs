@@ -611,6 +611,11 @@ public class Player : MonoBehaviour
         feel.AddZoom(killed ? 0.9f : last ? 0.6f : 0.25f + 0.35f * cfg.shake);
         feel.AddKick(dir, killed ? 0.35f : 0.12f + 0.12f * cfg.shake);
         numbers.Spawn(e.HeadPosition, dmg, a.step == Steps.Length ? "heavy" : "normal");
+        // 맞은 자리 타격 그림(아트 hit_<무기>): 3타·마지막 타는 _big, 모든 명중 위에 흰 점광. 앞쪽(+X)을 때린 방향으로 돌린다
+        var hitAt = e.Pos + Vector3.up * 1.0f;
+        string wn = loadout.weapon.ToString().ToLowerInvariant();
+        StripFx.Billboard("hit_" + wn + (killed || last ? "_big" : ""), 6, killed || last ? 0.3f : 0.2f, hitAt, dir, killed || last ? 3.4f : 2.2f);
+        StripFx.Billboard("hit_flash", 4, 0.12f, hitAt, Vector3.zero, 1.6f);
     }
 
     void RecordTrail(AttackRun a, Vector3 hand, float prev, float cur, float radius, float y)

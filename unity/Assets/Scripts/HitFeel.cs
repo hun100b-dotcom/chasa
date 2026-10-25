@@ -27,6 +27,8 @@ public class HitFeel
     public Vector3 Kick => kick;
 
     /// <summary>여러 마리를 동시에 때려도 정지가 합쳐지지 않게, 가장 긴 것 하나만</summary>
+    /// <summary>지금 히트스톱(전체 정지) 중인가 — 타격 그림이 멈춘 화면에서 첫 프레임을 붙들게 한다</summary>
+    public bool InHitStop => hitStopTimer > 1e-4f;
     public void HitStop(int frames) => hitStopTimer = Mathf.Max(hitStopTimer, Mathf.Min(frames, Balance.HITSTOP_CAP_FRAMES) * Config.FEEL_FRAME_TIME);   // 상한: 연속 정지로 게임이 끊겨 보이는 것 방지
 
     public void AddShake(float strength) => shake = Mathf.Clamp01(Mathf.Max(shake, strength));
