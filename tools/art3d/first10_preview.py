@@ -47,7 +47,7 @@ def sheet_a():
     for k in range(6): put(im, frame(cb, k, 128), (820 + k * 130, 570))
     # 등급 이름표
     txt(im, (20, 720), "③ 등급 이름표·꼭대기 모양", 20)
-    names = [("common", "흔한 노리개"), ("refined", "손본 갓"), ("rare", "귀한 도포"), ("antique", "옛 차사의 띠"), ("named", "이름 있는 사슬")]
+    names = [("common", "흔한 노리개"), ("refined", "손본 갓"), ("rare", "귀한 도포"), ("antique", "옛 차사의 띠"), ("named", "이름 있는 사슬"), ("set", "상두 한 벌 갓")]
     for k, (n, label) in enumerate(names):
         y = 760 + k * 54; put(im, nine(L("drop_tag_" + n), 260, 40, 16), (60, y)); put(im, L("tier_mark_" + n), (22, y + 4)); txt(im, (110, y + 20), label, 16, anchor="lm")
     # 카드 3장

@@ -17,13 +17,13 @@
   "name": "fx_drop_refined",
   "tier": "손본",
   "color": "#4FA8A0",
-  "beam_height_m": 1.5,
+  "beam_height_m": 2.5,
   "top_shape": "마름모",
   "tris": 112,
   "size_m": [
    0.62,
    0.64,
-   1.98
+   2.98
   ],
   "min_z": 0.0
  },
@@ -31,20 +31,20 @@
   "name": "fx_drop_rare",
   "tier": "귀한",
   "color": "#D4A94E",
-  "beam_height_m": 2.5,
+  "beam_height_m": 4.0,
   "top_shape": "네 갈래 별",
   "tris": 136,
   "size_m": [
    0.62,
    0.64,
-   3.03
+   4.53
   ],
   "min_z": 0.0
  },
  {
   "name": "fx_drop_antique",
   "tier": "옛 차사",
-  "color": "#4A66C4",
+  "color": "#3B4A7A",
   "beam_height_m": 4.0,
   "top_shape": "속 빈 도장 네모",
   "tris": 148,
@@ -66,6 +66,20 @@
    0.62,
    0.64,
    4.56
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "fx_drop_set",
+  "tier": "한 벌",
+  "color": "#5FE3C0",
+  "beam_height_m": 4.0,
+  "top_shape": "겹 고리",
+  "tris": 772,
+  "size_m": [
+   0.62,
+   0.64,
+   4.61
   ],
   "min_z": 0.0
  }

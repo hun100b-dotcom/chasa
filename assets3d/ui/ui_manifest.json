@@ -1377,5 +1377,27 @@
    24
   ],
   "note": "로딩 팁 판 960×64(9칸 24), 글 22자"
+ },
+ "first10/tier_mark_set": {
+  "size_px": [
+   32,
+   32
+  ],
+  "x2": "tier_mark_set@2x.png",
+  "note": "한 벌 등급 꼭대기·이름표 모양 32² (모양 겹 고리)"
+ },
+ "first10/drop_tag_set": {
+  "size_px": [
+   220,
+   40
+  ],
+  "x2": "drop_tag_set@2x.png",
+  "nine_slice_px": [
+   16,
+   16,
+   16,
+   16
+  ],
+  "note": "한 벌 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리"
  }
 }
