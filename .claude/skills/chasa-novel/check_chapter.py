@@ -10,6 +10,7 @@
   2026-10-25 중간 점검 뒤로는 'AI 티'로 읽히던 문장 버릇(부정-정정, 명사 끝맺음, 셋 맞춤,
   풀어 말하기, 장마다 되풀이되던 구절)과 긴 문장 비율·대화 문단 수도 센다.
   1~20장은 아직 이 기준 이전에 쓴 원고라 버릇 오류가 나온다 — 퇴고 때 고칠 목록으로 쓴다.
+  2026-10-25 오너 지적 두 번으로 '문장 끝'(~다 ~다 ~다)과 '문장 흐름'(뚝뚝 끊김)도 센다.
 
 쓰는 법:
   python3 check_chapter.py 장파일.md [장파일2.md ...]
@@ -108,14 +109,34 @@ LONG_SHARE_MIN = 0.25     # 긴 문장이 이 비율보다 적으면 리듬이 �
 # 고치는 법(SKILL.md §3-1): 어미 앞부분 바꾸기(었다/ㄴ다/있었다/것이었다/터였다),
 #     체언·부사로 끊기, 도치, 문장 길이 크게 바꾸기, 쉼표·연결 어미로 잇기, 대화 넣기.
 #     '~했지.' '~인가.' 같은 어색한 어미를 숫자 맞추려고 넣지 않는다(목표는 리듬).
-FORM_RUN_MAX = 2          # 같은 꼴은 두 번까지만 연달아. 셋째부터 오류
-DA_RUN_MAX = 4            # '~다'(꼴 무관)는 네 문장까지만 연달아. 다섯째부터 오류
-DA_SHARE_WARN = 0.80      # 서술 문장 가운데 '~다' 끝이 이 비율을 넘으면 경고
-                          # (75%로 시작했다가 80%로 내림: '~다' 5연속 금지만으로도 다섯에 하나는
-                          #  '~다'가 아닌 끝이 생긴다. 그보다 더 밀면 조각 문장이 새 버릇이 된다)
-FRAG_SHARE_WARN = 0.30    # 거꾸로 '~다'가 아닌 끝(조각 문장·물음·도치)이 이 비율을 넘어도 경고.
-                          # 왜: '~다'를 피하려고 "챙 넓은 검은 갓." 같은 조각을 남발하면
-                          #     그것도 기계가 쓴 티(시처럼 뚝뚝 끊기는 문장)가 난다
+FORM_RUN_MAX = 2          # 같은 꼴은 두 번까지만 연달아. 셋째부터 오류 —
+FORM_RUN_LONG_AVG = 40    # 단, 그 세 문장이 평균 40자 이상으로 길면 봐준다(긴 문장의 끝은 귀에 덜 걸린다)
+FORM_RUN_HARD = 3         # 넷째부터는 길이와 상관없이 오류
+                          # 왜(2026-10-25 10:32): 짧은 문장에서는 끝이 바로 귀에 박혀 '~었다. ~었다.'로 들리지만,
+                          #     마흔 자 넘게 흐르는 문장 셋은 끝보다 내용이 먼저 들린다. 짧은 셋만 막아야
+                          #     끝을 바꾸려고 문장을 끊는 일(뚝뚝 끊김)이 생기지 않는다.
+DA_RUN_MAX = 4            # '~다'(꼴 무관)가 다섯 문장 이상 연달아 서는데
+DA_RUN_SHORT_AVG = 30     # 그 다섯 문장의 평균 길이가 이보다 짧으면 오류('짧은 ~다'가 줄 선 것)
+                          # 왜(2026-10-25 10:32 고침): 처음에는 '~다' 다섯 문장 연속을 길이와 상관없이 막았다.
+                          #     그랬더니 연속을 끊으려고 조각 문장을 끼워 넣어 글이 뚝뚝 끊겼다(오너 두 번째 지적).
+                          #     40자 넘는 문장 다섯이 '~다'로 끝나는 것은 보통 소설의 숨이다. 귀에 걸리는 것은
+                          #     짧은 '~다'가 줄지어 서는 것이므로, 연속은 길이와 함께 본다.
+DA_PER_1000_WARN = 30     # 서술 1천 자에 '~다' 끝이 이보다 많으면 경고(귀에 '~다'가 들리는 잦기)
+                          # 왜(2026-10-25 10:32 바꿈): 전에는 '~다' 비율(%)로 봤는데, 비율을 낮추려면 조각 문장을
+                          #     늘려야 해서 글이 끊겼다. 귀에 걸리는 것은 비율이 아니라 '얼마나 자주' 들리느냐다.
+                          #     옛 1장 48번(문장이 짧아서), 새 1장 20번대. 문장을 이으면 자연히 준다.
+
+# ── 문장 흐름(2026-10-25 10:32 KST 오너 지적: "문장이 뚝뚝 끊기는 느낌") ───────────────
+# 왜: '~다'를 피하려고 조각 문장("챙 넓은 검은 갓.")과 짧은 문장을 늘렸더니 이번에는 글이 끊겼다.
+#     새로 쓴 1장: 서술 문장의 26%가 조각, 23%가 15자 이하, 한 문장짜리 문단 30개.
+#     해법은 끝을 바꾸는 것이 아니라 문장을 잇는 것이다(이음말·긴 문장·대화. SKILL §3-2).
+SHORT_SENT = 15           # 이 길이 이하(띄어쓰기 포함)를 '짧은 문장'으로 센다
+SHORT_RUN_MAX = 2         # 짧은 문장은 두 개까지만 연달아. 셋째부터 오류
+SHORT_SHARE_MAX = 0.15    # 짧은 문장이 서술 문장의 15%를 넘으면 오류
+FRAG_SHARE_WARN = 0.12    # 조각 문장('~다'로 안 끝나는 서술: 체언·부사구·도치·물음)이 12%를 넘으면 경고
+FRAG_SHARE_MAX = 0.18     # 18%를 넘으면 오류(이음말로 앞뒤 문장에 붙인다)
+AVG_SENT_MIN = 30         # 서술 문장 평균 길이가 이보다 짧으면 오류(1~20장 평균 17자, 새 1장 첫 판 32자)
+ONE_LINE_PARA_WARN = 12   # 한 문장짜리 서술 문단이 이보다 많으면 경고(장면을 끊는 한 줄은 아껴 쓴다)
 
 
 def ending_form(sentence: str) -> str:
@@ -175,28 +196,120 @@ def narration_flow(text: str):
     return out
 
 
+def form_run_hit(form_seq) -> bool:
+    """같은 꼴로 이어진 문장들(form_seq, 마지막이 지금 문장)이 걸리는지.
+    셋째는 세 문장 평균이 FORM_RUN_LONG_AVG보다 짧을 때만, 넷째부터는 언제나 걸린다."""
+    n = len(form_seq)
+    if n <= FORM_RUN_MAX:
+        return False
+    if n > FORM_RUN_HARD:
+        return True
+    last = form_seq[-(FORM_RUN_MAX + 1):]
+    return sum(len(x) for x in last) / len(last) < FORM_RUN_LONG_AVG
+
+
 def ending_rhythm(text: str) -> dict:
     """같은 꼴 3연속 자리, '~다' 최장 연속, '~다' 비율을 센다."""
     flow = narration_flow(text)
     nar = [s for k, s in flow if k == "서술"]
     da = [s for s in nar if ending_form(s) != "다 아님"]
     form_hits, da_hits = [], []
-    prev_form, form_run, da_run, da_max = None, 0, 0, 0
+    prev_form, form_seq, da_max = None, [], 0
+    da_seq, da_hit_this_run = [], False   # 지금 이어지는 '~다' 문장들, 이 연속에서 이미 걸렸는지
     for kind, s in flow:
         if kind != "서술":
-            prev_form, form_run, da_run = None, 0, 0
+            prev_form, form_seq, da_seq, da_hit_this_run = None, [], [], False
             continue
         f = ending_form(s)
-        form_run = form_run + 1 if f == prev_form else 1
+        form_seq = form_seq + [s] if f == prev_form else [s]   # 지금 이어지는 같은 꼴 문장들
         prev_form = f
-        if f != "다 아님" and form_run > FORM_RUN_MAX:
+        if f != "다 아님" and form_run_hit(form_seq):
             form_hits.append(f"[{f}] …{s[-24:]}")
-        da_run = da_run + 1 if f != "다 아님" else 0
-        da_max = max(da_max, da_run)
-        if da_run == DA_RUN_MAX + 1:
-            da_hits.append(f"…{s[-24:]}")
+        if f != "다 아님":
+            da_seq.append(s)
+        else:
+            da_seq, da_hit_this_run = [], False
+        da_max = max(da_max, len(da_seq))
+        # 다섯 문장째부터: 마지막 다섯의 평균 길이가 짧으면 한 연속에 한 번만 오류로 센다
+        if len(da_seq) > DA_RUN_MAX and not da_hit_this_run:
+            last = da_seq[-(DA_RUN_MAX + 1):]
+            if sum(len(x) for x in last) / len(last) < DA_RUN_SHORT_AVG:
+                da_hits.append(f"…{s[-24:]}")
+                da_hit_this_run = True
+    nar_chars = sum(len(x) for x in nar)
     return {"서술 문장": len(nar), "~다 비율": len(da) / max(1, len(nar)), "~다 최장 연속": da_max,
+            "1천 자당 ~다": len(da) * 1000 / max(1, nar_chars),
             "같은 꼴 3연속": form_hits, "~다 5연속": da_hits}
+
+
+def sentence_flow(text: str) -> dict:
+    """문장 흐름(뚝뚝 끊김)을 잰다: 서술 문장 평균 길이, 짧은 문장 비율과 3연속, 조각 비율, 한 줄 문단.
+    짧은 문장 연속은 대화·쪽지·장면 구분에서 새로 센다(문단이 바뀌어도 서술이 이어지면 이어서 센다)."""
+    flow = narration_flow(text)
+    nar = [s for k, s in flow if k == "서술"]
+    if not nar:
+        return {"평균 길이": 0, "짧은 비율": 0.0, "짧은 3연속": [], "조각 비율": 0.0, "한 줄 문단": []}
+    short_hits, run = [], []
+    for kind, s in flow:
+        if kind == "서술" and len(s) <= SHORT_SENT:
+            run.append(s)
+            if len(run) == SHORT_RUN_MAX + 1:
+                short_hits.append(" / ".join(run))
+        else:
+            run = []
+    one_line = []
+    paras = [x.strip() for x in re.split(r"\n\s*\n", text) if x.strip() and not x.strip().startswith("#")]
+    is_dlg = [p[0] in "\"“'‘「" for p in paras]
+    for i, p in enumerate(paras):
+        if p.startswith(("---", ">")) or is_dlg[i]:
+            continue
+        # 대화 바로 앞뒤의 한 줄은 말하는 사람의 몸짓·말머리라 따로 서는 것이 자연스럽다 → 세지 않는다
+        if (i > 0 and is_dlg[i - 1]) or (i + 1 < len(paras) and is_dlg[i + 1]):
+            continue
+        ss = [x for x in re.split(r"(?<=[.?!…])\s+", p.replace("*", "")) if x.strip()]
+        if len(ss) == 1:
+            one_line.append(ss[0])
+    return {
+        "평균 길이": sum(len(s) for s in nar) / len(nar),
+        "짧은 비율": sum(1 for s in nar if len(s) <= SHORT_SENT) / len(nar),
+        "짧은 3연속": short_hits,
+        "조각 비율": sum(1 for s in nar if ending_form(s) == "다 아님") / len(nar),
+        "한 줄 문단": one_line,
+    }
+
+
+
+def sentence_marks(text: str):
+    """확인 페이지용: 서술 문장마다 {'form': 꼴, 'hit': 걸림}을 읽는 순서대로 돌려준다.
+    걸림 = 같은 꼴 연속(form_run_hit) · 짧은 '~다' 다섯 연속 · 짧은 문장 세 연속에 든 문장.
+    점검기와 같은 판정을 쓰려고 여기 둔다(페이지가 따로 세면 둘이 어긋난다)."""
+    texts, marks = [], []
+    prev_form, form_seq, da_idx, short_idx = None, [], [], []
+    for kind, s in narration_flow(text):
+        if kind != "서술":
+            prev_form, form_seq, da_idx, short_idx = None, [], [], []
+            continue
+        i = len(texts)
+        texts.append(s)
+        f = ending_form(s)
+        marks.append({"form": f, "hit": False})
+        form_seq = form_seq + [s] if f == prev_form else [s]
+        prev_form = f
+        if f != "다 아님" and form_run_hit(form_seq):
+            marks[i]["hit"] = True
+        da_idx = da_idx + [i] if f != "다 아님" else []
+        if len(da_idx) > DA_RUN_MAX:
+            last = da_idx[-(DA_RUN_MAX + 1):]
+            if sum(len(texts[j]) for j in last) / len(last) < DA_RUN_SHORT_AVG:
+                for j in last:
+                    marks[j]["hit"] = True
+        short_idx = short_idx + [i] if len(s) <= SHORT_SENT else []
+        if len(short_idx) > SHORT_RUN_MAX:
+            for j in short_idx[-(SHORT_RUN_MAX + 1):]:
+                marks[j]["hit"] = True
+    return marks
+
+
 DIALOGUE_MIN = 8          # 따옴표로 시작하는 문단(산 사람의 말) 최소. 혼자만 나오는 장이면 경고를 무시해도 된다
 
 
@@ -370,22 +483,43 @@ def check_file(path: str) -> dict:
         res["warnings"].append(f"대화 문단 {dlg}개 — 산 사람의 말이 {DIALOGUE_MIN}문단은 있어야 책이 숨을 쉰다(혼자만 나오는 장이면 무시)")
     res["counts"]["문장 버릇"] = style
 
-    # 9) 문장 끝 리듬(2026-10-25 오너 지적). 같은 꼴 3연속·'~다' 5연속은 오류, '~다' 비율은 경고.
+    # 9) 문장 끝 리듬(2026-10-25 오너 지적). 같은 꼴 연속·짧은 '~다' 5연속은 오류, 1천 자당 '~다'는 경고.
     rh = ending_rhythm(text)
     res["counts"]["문장 끝"] = {"서술 문장": rh["서술 문장"], "~다 비율": f"{rh['~다 비율']:.0%}",
-                             "~다 최장 연속": rh["~다 최장 연속"], "같은 꼴 3연속": len(rh["같은 꼴 3연속"]),
-                             "~다 5연속": len(rh["~다 5연속"])}
+                             "1천 자당 ~다": round(rh["1천 자당 ~다"], 1),
+                             "~다 최장 연속": rh["~다 최장 연속"], "같은 꼴 연속": len(rh["같은 꼴 3연속"]),
+                             "짧은 ~다 5연속": len(rh["~다 5연속"])}
     if rh["같은 꼴 3연속"]:
-        res["errors"].append(f"같은 꼴 문장 끝이 세 번 연달아 ×{len(rh['같은 꼴 3연속'])}"
-                             f"(셋째 문장 끝을 바꾼다): {rh['같은 꼴 3연속'][:4]}")
+        res["errors"].append(f"같은 꼴 문장 끝이 연달아 ×{len(rh['같은 꼴 3연속'])}"
+                             f"(짧은 셋은 평균 {FORM_RUN_LONG_AVG}자 미만, 넷은 길이와 상관없이 — 두 문장을 잇거나 끝을 바꾼다): "
+                             f"{rh['같은 꼴 3연속'][:4]}")
     if rh["~다 5연속"]:
-        res["errors"].append(f"'~다'로 끝나는 서술이 다섯 문장 이상 이어짐 ×{len(rh['~다 5연속'])}"
-                             f"(먼저 두 문장을 이음말로 잇고, 안 되면 대화·체언으로 끊는다): {rh['~다 5연속'][:4]}")
-    if rh["~다 비율"] > DA_SHARE_WARN:
-        res["warnings"].append(f"서술 문장의 {rh['~다 비율']:.0%}가 '~다'로 끝남 — {DA_SHARE_WARN:.0%} 아래로")
-    elif 1 - rh["~다 비율"] > FRAG_SHARE_WARN:
-        res["warnings"].append(f"'~다'가 아닌 끝(조각 문장·물음·도치)이 {1 - rh['~다 비율']:.0%} — "
-                               f"{FRAG_SHARE_WARN:.0%} 넘으면 조각 문장이 새 버릇이 된다. 몇 개는 앞 문장에 붙인다")
+        res["errors"].append(f"짧은 '~다' 문장이 다섯 이상 줄지어 섬(평균 {DA_RUN_SHORT_AVG}자 미만) ×{len(rh['~다 5연속'])}"
+                             f"(두 문장을 이음말로 잇거나 대화를 넣는다. 조각 문장으로 끊지 않는다): {rh['~다 5연속'][:4]}")
+    if rh["1천 자당 ~다"] > DA_PER_1000_WARN:
+        res["warnings"].append(f"서술 1천 자에 '~다' 끝이 {rh['1천 자당 ~다']:.0f}번 — {DA_PER_1000_WARN}번 아래로"
+                               "(끝을 바꾸려 끊지 말고 두 문장을 이어 문장 수를 줄인다)")
+
+    # 10) 문장 흐름(2026-10-25 10:32 오너 지적: "문장이 뚝뚝 끊기는 느낌"). SKILL §3-2.
+    fl = sentence_flow(text)
+    res["counts"]["문장 흐름"] = {"평균 길이": f"{fl['평균 길이']:.0f}자", "짧은 문장": f"{fl['짧은 비율']:.0%}",
+                               "짧은 3연속": len(fl["짧은 3연속"]), "조각": f"{fl['조각 비율']:.0%}",
+                               "한 줄 문단": len(fl["한 줄 문단"])}
+    if fl["평균 길이"] and fl["평균 길이"] < AVG_SENT_MIN:
+        res["errors"].append(f"서술 문장 평균 {fl['평균 길이']:.0f}자 — {AVG_SENT_MIN}자 이상이어야 글이 이어져 읽힌다")
+    if fl["짧은 3연속"]:
+        res["errors"].append(f"짧은 문장({SHORT_SENT}자 이하)이 세 번 연달아 ×{len(fl['짧은 3연속'])}"
+                             f"(둘을 한 문장으로 잇는다): {fl['짧은 3연속'][:3]}")
+    if fl["짧은 비율"] > SHORT_SHARE_MAX:
+        res["errors"].append(f"짧은 문장({SHORT_SENT}자 이하)이 서술의 {fl['짧은 비율']:.0%} — {SHORT_SHARE_MAX:.0%} 아래로")
+    if fl["조각 비율"] > FRAG_SHARE_MAX:
+        res["errors"].append(f"조각 문장('~다'로 안 끝나는 서술)이 {fl['조각 비율']:.0%} — {FRAG_SHARE_MAX:.0%} 아래로"
+                             "(앞뒤 문장에 이음말로 붙인다. 조각은 장면이 크게 멈출 때만)")
+    elif fl["조각 비율"] > FRAG_SHARE_WARN:
+        res["warnings"].append(f"조각 문장이 {fl['조각 비율']:.0%} — {FRAG_SHARE_WARN:.0%} 넘으면 끊겨 읽히기 시작한다")
+    if len(fl["한 줄 문단"]) > ONE_LINE_PARA_WARN:
+        res["warnings"].append(f"한 문장짜리 서술 문단 {len(fl['한 줄 문단'])}개 — {ONE_LINE_PARA_WARN}개 넘으면 끊겨 읽힌다"
+                               "(크게 멈추는 자리만 남기고 앞뒤 문단에 붙인다)")
     return res
 
 
@@ -399,6 +533,7 @@ def main(paths):
         print(f"  오감(소리·냄새·촉감): {r['counts']['오감']}")
         print(f"  문장 버릇: {r['counts']['문장 버릇']}")
         print(f"  문장 끝: {r['counts']['문장 끝']}")
+        print(f"  문장 흐름: {r['counts']['문장 흐름']}")
         if r["counts"]["반복"]:
             print(f"  반복 구문: {r['counts']['반복']}")
         bucket = total_repeat.setdefault(r["part"], {})
