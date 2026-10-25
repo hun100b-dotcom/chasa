@@ -25,7 +25,7 @@ def blocker_radius(name):
     if name == "terrain_rock_small": return 0.7
     if name == "terrain_rock_medium": return 1.3
     if name == "terrain_rock_cluster": return 2.0
-    return {"prop_seonangdang": 2.2, "prop_dolddam": 1.0, "prop_jangdok": 0.7, "prop_jangseung": 0.4, "prop_umul": 1.3, "prop_sangyeo": 1.5, "prop_sotdae": 0.3, "prop_choga": 2.5, "prop_giwa": 2.5, "night_torch_stand": 0.3}.get(name, 0.0)
+    return {"prop_gaejip_empty": 0.6, "prop_market_drum_frame": 0.5, "prop_seonangdang": 2.2, "prop_dolddam": 1.0, "prop_jangdok": 0.7, "prop_jangseung": 0.4, "prop_umul": 1.3, "prop_sangyeo": 1.5, "prop_sotdae": 0.3, "prop_choga": 2.5, "prop_giwa": 2.5, "night_torch_stand": 0.3}.get(name, 0.0)
 
 def load(extra_removed=()):
     """(x, y, 반지름, 이름) 목록 — 필드 배치표 + 마을 배치표(옮김 포함). build_field_data.py 와 같은 합치기."""
@@ -40,6 +40,9 @@ def load(extra_removed=()):
     for b in v["buildings"]:
         for q in b["pieces"]: add(q["piece"], q["x"] + ox, q["y"] + oy)
     for p in v["props"]: add(p["prop"], p["x"] + ox, p["y"] + oy)
+    ep = os.path.join(LAY, "act1_extra.json")   # 1막 추가 소품(개집·북틀 등, place_act1_extra.py)
+    if os.path.exists(ep):
+        for p in json.load(open(ep, encoding="utf-8"))["props"]: add(p["prop"], p["x"], p["y"])
     return out
 
 def points():
