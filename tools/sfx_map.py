@@ -69,3 +69,26 @@ def apply(cut):
         if have: s['sfx'] = have
         if need: s['sfx_request'] = need
     return cut
+
+
+# 사운드팀이 만들어 둔 소리(10-25, PR #23까지 — data/sfx_files.json 91개 중 대본이 요청했던 것).
+# 왜: 대본에 "요청(sfx_request)"으로 적었던 소리가 생겼으면, 코드가 바로 틀 수 있게 "있는 소리(sfx)"로 옮겨 적는다.
+MADE = {'amb.market', 'amb.mine', 'amb.rain', 'amb.rooster', 'cut.bellows', 'cut.brass.tap', 'cut.brush.write',
+        'cut.chain.wrap', 'cut.chisel.tap', 'cut.coal.sort', 'cut.hoe.dig', 'cut.ink.grind', 'cut.kids.clap',
+        'cut.mule.hoof', 'cut.paper.tear', 'cut.pour.liquor', 'cut.sickle.cut', 'cut.steam.rise', 'cut.tag.unhook',
+        'cut.torch.sink', 'mus.sangyeo.far', 'sfx.dog.whine', 'vo.wail'}
+
+def promote(cut):
+    """steps의 sfx_request 가운데 이제 있는 소리를 sfx로 옮긴다. 괄호 속 연출 메모는 sfx_note에 남긴다."""
+    for s in cut.get('steps', []):
+        left = []
+        for r in s.get('sfx_request', []):
+            sid = r.split('(')[0]
+            if sid in MADE:
+                if sid not in s.setdefault('sfx', []): s['sfx'].append(sid)
+                if '(' in r: s.setdefault('sfx_note', []).append(r)
+            else:
+                left.append(r)
+        if left: s['sfx_request'] = left
+        else: s.pop('sfx_request', None)
+    return cut

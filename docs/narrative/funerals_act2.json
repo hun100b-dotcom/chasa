@@ -34,12 +34,13 @@
        "caption": "[바람] [먼 닭울음] [요령 한 번]",
        "sfx": [
         "amb.field",
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.rooster"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.rooster(먼 닭울음)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -62,14 +63,16 @@
        },
        "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
        "sfx": [
-        "cut.yoryeong.ring"
-       ],
-       "sfx_request": [
-        "vo.wail(곡소리, 말 없음)",
-        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
        ],
        "control": "walk",
-       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
       },
       {
        "t": 25.0,
@@ -79,11 +82,14 @@
         "to": "big_tomb"
        },
        "caption": "[술 따르는 소리]",
-       "sfx_request": [
-        "cut.pour.liquor(잔에 술 따르는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(탁주 흰빛). 잔 수를 화면에 글로 세지 않는다"
+       "note": "깊은 박자 ②. 기억 색(탁주 흰빛). 잔 수를 화면에 글로 세지 않는다",
+       "sfx": [
+        "cut.pour.liquor"
+       ],
+       "sfx_note": [
+        "cut.pour.liquor(잔에 술 따르는 소리)"
+       ]
       },
       {
        "t": 38.0,
@@ -171,12 +177,13 @@
        "caption": "[바람] [먼 닭울음] [요령 한 번]",
        "sfx": [
         "amb.field",
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.rooster"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.rooster(먼 닭울음)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -199,14 +206,16 @@
        },
        "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
        "sfx": [
-        "cut.yoryeong.ring"
-       ],
-       "sfx_request": [
-        "vo.wail(곡소리, 말 없음)",
-        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
        ],
        "control": "walk",
-       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
       },
       {
        "t": 25.0,
@@ -216,11 +225,14 @@
         "to": "arrow_rock"
        },
        "caption": "[호미 소리]",
-       "sfx_request": [
-        "cut.hoe.dig(호미로 흙 파는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(약초 녹빛)"
+       "note": "깊은 박자 ②. 기억 색(약초 녹빛)",
+       "sfx": [
+        "cut.hoe.dig"
+       ],
+       "sfx_note": [
+        "cut.hoe.dig(호미로 흙 파는 소리)"
+       ]
       },
       {
        "t": 38.0,
@@ -308,12 +320,13 @@
        "caption": "[바람] [먼 닭울음] [요령 한 번]",
        "sfx": [
         "amb.field",
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.rooster"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.rooster(먼 닭울음)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -336,14 +349,16 @@
        },
        "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
        "sfx": [
-        "cut.yoryeong.ring"
-       ],
-       "sfx_request": [
-        "vo.wail(곡소리, 말 없음)",
-        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
        ],
        "control": "walk",
-       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
       },
       {
        "t": 25.0,
@@ -353,11 +368,14 @@
         "to": "wall_top"
        },
        "caption": "[정 소리]",
-       "sfx_request": [
-        "cut.chisel.tap(정으로 돌 새기는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(화강 회색)"
+       "note": "깊은 박자 ②. 기억 색(화강 회색)",
+       "sfx": [
+        "cut.chisel.tap"
+       ],
+       "sfx_note": [
+        "cut.chisel.tap(정으로 돌 새기는 소리)"
+       ]
       },
       {
        "t": 38.0,
@@ -445,12 +463,13 @@
        "caption": "[바람] [먼 닭울음] [요령 한 번]",
        "sfx": [
         "amb.field",
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.rooster"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.rooster(먼 닭울음)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -473,14 +492,16 @@
        },
        "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
        "sfx": [
-        "cut.yoryeong.ring"
-       ],
-       "sfx_request": [
-        "vo.wail(곡소리, 말 없음)",
-        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
        ],
        "control": "walk",
-       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
       },
       {
        "t": 25.0,
@@ -490,11 +511,14 @@
         "to": "big_tomb"
        },
        "caption": "[낫질 소리]",
-       "sfx_request": [
-        "cut.sickle.cut(풀 베는 낫질)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(풀 초록)"
+       "note": "깊은 박자 ②. 기억 색(풀 초록)",
+       "sfx": [
+        "cut.sickle.cut"
+       ],
+       "sfx_note": [
+        "cut.sickle.cut(풀 베는 낫질)"
+       ]
       },
       {
        "t": 31.0,
@@ -588,12 +612,13 @@
        },
        "caption": "[먼 곡괭이 소리] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.mine"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.mine(먼 곡괭이·수레 소리)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -616,13 +641,14 @@
        },
        "caption": "[요령] [낮은 곡소리]",
        "sfx": [
-        "cut.yoryeong.ring"
-       ],
-       "sfx_request": [
-        "vo.wail(낮게, 짧게)"
+        "cut.yoryeong.ring",
+        "vo.wail"
        ],
        "control": "walk",
-       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(낮게, 짧게)"
+       ]
       },
       {
        "t": 25.0,
@@ -632,11 +658,14 @@
         "to": "tag_board"
        },
        "caption": "[나무패 떼는 소리]",
-       "sfx_request": [
-        "cut.tag.unhook(고리에서 나무패 떼는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(석탄 검정). ACT2 표의 \"빈 고리\"는 목패를 뗀 뒤의 모습으로 읽는다(떼기 전엔 걸려 있어야 뗄 수 있다)"
+       "note": "깊은 박자 ②. 기억 색(석탄 검정). ACT2 표의 \"빈 고리\"는 목패를 뗀 뒤의 모습으로 읽는다(떼기 전엔 걸려 있어야 뗄 수 있다)",
+       "sfx": [
+        "cut.tag.unhook"
+       ],
+       "sfx_note": [
+        "cut.tag.unhook(고리에서 나무패 떼는 소리)"
+       ]
       },
       {
        "t": 38.0,
@@ -723,12 +752,13 @@
        },
        "caption": "[먼 곡괭이 소리] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.mine"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.mine(먼 곡괭이·수레 소리)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -751,13 +781,14 @@
        },
        "caption": "[요령] [낮은 곡소리]",
        "sfx": [
-        "cut.yoryeong.ring"
-       ],
-       "sfx_request": [
-        "vo.wail(낮게, 짧게)"
+        "cut.yoryeong.ring",
+        "vo.wail"
        ],
        "control": "walk",
-       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(낮게, 짧게)"
+       ]
       },
       {
        "t": 25.0,
@@ -767,11 +798,14 @@
         "to": "sorting_bench"
        },
        "caption": "[석탄 고르는 소리] [물소리]",
-       "sfx_request": [
-        "cut.coal.sort(평상에서 석탄 고르는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(석탄 검정)"
+       "note": "깊은 박자 ②. 기억 색(석탄 검정)",
+       "sfx": [
+        "cut.coal.sort"
+       ],
+       "sfx_note": [
+        "cut.coal.sort(평상에서 석탄 고르는 소리)"
+       ]
       },
       {
        "t": 38.0,
@@ -858,12 +892,13 @@
        },
        "caption": "[먼 곡괭이 소리] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.mine"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.mine(먼 곡괭이·수레 소리)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -886,13 +921,14 @@
        },
        "caption": "[요령] [낮은 곡소리]",
        "sfx": [
-        "cut.yoryeong.ring"
-       ],
-       "sfx_request": [
-        "vo.wail(낮게, 짧게)"
+        "cut.yoryeong.ring",
+        "vo.wail"
        ],
        "control": "walk",
-       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(낮게, 짧게)"
+       ]
       },
       {
        "t": 25.0,
@@ -902,11 +938,14 @@
         "to": "ledger_wall"
        },
        "caption": "[붓 소리]",
-       "sfx_request": [
-        "cut.brush.write(붓으로 종이에 쓰는 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(국물 주황). 부르는 말은 들리지 않는다(몸짓만). 장부 글씨는 읽히지 않게"
+       "note": "깊은 박자 ②. 기억 색(국물 주황). 부르는 말은 들리지 않는다(몸짓만). 장부 글씨는 읽히지 않게",
+       "sfx": [
+        "cut.brush.write"
+       ],
+       "sfx_note": [
+        "cut.brush.write(붓으로 종이에 쓰는 소리)"
+       ]
       },
       {
        "t": 38.0,
@@ -993,12 +1032,13 @@
        },
        "caption": "[먼 곡괭이 소리] [요령 한 번]",
        "sfx": [
-        "cut.yoryeong.ring"
+        "cut.yoryeong.ring",
+        "amb.mine"
        ],
-       "sfx_request": [
+       "control": "none",
+       "sfx_note": [
         "amb.mine(먼 곡괭이·수레 소리)"
-       ],
-       "control": "none"
+       ]
       },
       {
        "t": 5.0,
@@ -1021,13 +1061,14 @@
        },
        "caption": "[요령] [낮은 곡소리]",
        "sfx": [
-        "cut.yoryeong.ring"
-       ],
-       "sfx_request": [
-        "vo.wail(낮게, 짧게)"
+        "cut.yoryeong.ring",
+        "vo.wail"
        ],
        "control": "walk",
-       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(낮게, 짧게)"
+       ]
       },
       {
        "t": 25.0,
@@ -1037,11 +1078,14 @@
         "to": "mule"
        },
        "caption": "[노새 발굽 소리]",
-       "sfx_request": [
-        "cut.mule.hoof(노새 발굽 소리)"
-       ],
        "control": "walk",
-       "note": "깊은 박자 ②. 기억 색(노새 갈색). 노새는 차사를 보지 않는다"
+       "note": "깊은 박자 ②. 기억 색(노새 갈색). 노새는 차사를 보지 않는다",
+       "sfx": [
+        "cut.mule.hoof"
+       ],
+       "sfx_note": [
+        "cut.mule.hoof(노새 발굽 소리)"
+       ]
       },
       {
        "t": 38.0,

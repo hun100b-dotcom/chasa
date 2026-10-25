@@ -192,3 +192,4 @@
 ## 2026-10-25 21:15 KST — 서사: 보스 한(恨) 구조·단서 사슬
 - `tools/boss_clues_act2.py` → `boss_clues_act2.json`: 2막 보스 4(B-05~08). 1막 틀(단서 4 = 낮 3 동사 모두 다름 + 밤 대체 1, 3개면 천도)에 han·belief·truth·points_to를 더함. 엿듣기 대사·반쪽 문장, 만져 보기 한 줄, 밤 대체 기억(원본 그대로) 포함. 산 사람은 npc_act2 id.
 - 1막 B-01~03에도 같은 한 구조(han·belief·truth·decisive·points_to)를 더하고, zone_opens의 밤 번호를 "그 구역에 밤에 처음 들어간 다음 낮"으로 고침.
+- (21:25) 사운드 PR #23 반영: 대본 3개(first_session_scripts, funerals_act1·2)의 sfx_request를 모두 sfx로 옮김(sfx_map.promote). 남은 요청 0.

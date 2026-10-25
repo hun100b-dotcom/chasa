@@ -9,7 +9,9 @@
 # ② 장터: 행렬이 길고 구경꾼이 많다. 차사는 사람 사이를 지나가고, 사람들은 그를 피하지 않고 지나간다. 행렬은 읍성 문 밖으로.
 # 대사·자막·내레이션 0. 화면에 글로 뜻을 쓰지 않는다. 대괄호 글은 소리 자막(caption, 청각 보조 설정에서만 보임).
 # 실행: python3 tools/funerals_act1.py → docs/narrative/funerals_act1.json
-import json, os
+import json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sfx_map import promote  # 사운드팀이 만든 소리는 요청 → 있는 소리로 옮긴다
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', 'docs', 'narrative', 'funerals_act1.json')
@@ -165,7 +167,7 @@ def build(f):
         del tendo_steps[-2]['sfx']
     if f.get('away'):
         tendo_steps[-2]['action'] = tendo_steps[-2]['action'].replace(SCENE[r]['away'], f['away'])
-    return {
+    out = {
         'id': f['id'], 'soul': f['soul'], 'name': f['name'], 'region': r,
         'when': '그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때',
         'memory_link': f['memory'],
@@ -174,6 +176,9 @@ def build(f):
             dict(pahon(r, f['house']), id=f['id'] + '-PAHON'),
             dict(pending(r, f['house'], f['pending_act']), id=f['id'] + '-PENDING'),
         ]}
+    for b in out['branches']:
+        promote(b)
+    return out
 
 data = {
     '_설명': '1막 장례 8개(① 솔고개 4 + ② 검은여울 장터 4). tools/funerals_act1.py로 생성. 서사 2026-10-25. 기본형(박돌쇠)은 first_session_scripts.json',

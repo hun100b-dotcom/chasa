@@ -5,7 +5,7 @@
 #   sfx 자막은 소리가 들어오면 꺼지는 것이 기본이고, 접근성 설정(청각 보조)에서만 다시 켠다.
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sfx_map import apply as sfx_apply  # 효과음 이름표 붙이기
+from sfx_map import apply as sfx_apply, promote as sfx_promote  # 효과음 이름표 붙이기 / 생긴 소리로 옮기기
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', 'docs', 'narrative', 'first_session_scripts.json')
 
@@ -70,9 +70,11 @@ funeral = {
  ]}
 
 sfx_apply(opening)
+sfx_promote(opening)
 for b in funeral['branches']:
     b['id_backup'] = b['id']
     sfx_apply(b)
+    sfx_promote(b)
     del b['id_backup']
 
 data = {'_설명': '첫 세션 대본 — 오프닝 C-01(20초) + 박돌쇠 장례 3갈래. tools/first_session_scripts.py로 생성. 서사 확정 2026-10-25.',
