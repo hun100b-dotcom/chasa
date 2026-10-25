@@ -1544,6 +1544,143 @@ def _(r):
     return buf
 
 
+# ===== 무기별 천도·파혼 변형 (무기 특성표 Core/Gear.cs: 요령방울=천도 빠름·파혼 약함, 육모방망이=파혼 강함, 삼지창=파혼 날카로움, 붓=천도 넋 많음·파혼 약함, 철삭=연속 천도) =====
+# 바탕은 기존 sfx.tendo.done / sfx.pahon.burst 그대로(같은 고정 난수) + 무기 재료의 짧은 '꾸밈' 한 겹.
+# 강조하는 쪽은 꾸밈을 크게·길게(그리고 파일 크기를 1~2dB 높게), 약한 쪽은 바탕을 덜어 낸다.
+def _base(id):
+    """기존 소리를 같은 난수로 다시 만든다(바탕). 기존 파일과 똑같은 소리"""
+    return np.asarray(REG[id]["fn"](np.random.default_rng(zlib.crc32(id.encode()) & 0xffffffff)), dtype=np.float64)
+
+
+def _mix(base, accent, at=0.0, a=1.0):
+    n = max(len(base), int(at * SR) + len(accent))
+    out = np.zeros(n); out[:len(base)] += base / (np.abs(base).max() + 1e-9)
+    place(out, accent / (np.abs(accent).max() + 1e-9) * a, at)
+    return out
+
+
+@sfx("sfx.tendo.done.chain", -7, "처결", "천도 완료(철삭): 기본 천도음 + 풀린 사슬이 차르르 내려앉음", use="철삭으로 천도 성공")
+def _(r):
+    links = grains(.6, r, 10, lambda r, k: modal(.08, [(r.uniform(2800, 4500), .02, 1)], r) * (1 - k / 12), spread=lambda k, r: k * .05 + r.uniform(0, .01))
+    return _mix(_base("sfx.tendo.done"), links, .35, .25)
+
+
+@sfx("sfx.tendo.done.mace", -9, "처결", "천도 완료(육모방망이): 기본 천도음을 조금 낮고 작게 + 나무 '톡' 한 번(천도는 이 무기의 강점이 아니다)", use="육모방망이로 천도 성공")
+def _(r):
+    b = filt(_base("sfx.tendo.done"), "low", 4000)
+    return _mix(b, modal(.3, [(240, .05, 1), (540, .03, .5)], r), .05, .3)
+
+
+@sfx("sfx.tendo.done.bell", -5, "처결", "천도 완료(요령방울) — 강조: 기본 천도음 위로 요령이 길게 짤랑짤랑 울려 퍼지며 한 음 더 높이 올라감", use="요령방울로 천도 성공(이 무기의 강점)")
+def _(r):
+    sec = 3.0; acc = np.zeros(int(sec * SR))
+    for k in range(9):                                            # 요령을 흔드는 짤랑 — 점점 잦아듦
+        f = r.uniform(2050, 2250)
+        place(acc, modal(1.0, [(f, .35, 1), (f * 1.006, .35, .7), (f * 2.32, .2, .4)], r) * (1 - k / 11), .05 + k * .16 + r.uniform(0, .02))
+    place(acc, modal(2.2, [(1568 * 2, 1.0, 1), (1568 * 2 * 1.004, 1.0, .7)], r) * .6, 1.5)   # 마지막에 한 음 더 높이(G7)
+    return reverb(_mix(_base("sfx.tendo.done"), acc, 0, .7), 1.2, .15)
+
+
+@sfx("sfx.tendo.done.trident", -7, "처결", "천도 완료(삼지창): 기본 천도음 + 세 갈래 날이 맑게 '팅' 세 번", use="삼지창으로 천도 성공")
+def _(r):
+    acc = np.zeros(int(.8 * SR))
+    for k, f in enumerate((2960, 3520, 4186)):
+        place(acc, modal(.5, [(f, .2, 1), (f * 1.003, .2, .6)], r) * .6, k * .09)
+    return _mix(_base("sfx.tendo.done"), acc, .3, .3)
+
+
+@sfx("sfx.tendo.done.brush", -6, "처결", "천도 완료(명부 붓) — 넋이 많다: 기본 천도음 + 붓이 이름을 한 획 긋고 먹빛 반짝임이 여러 번 피어오름", use="명부 붓으로 천도 성공(넋 보너스)")
+def _(r):
+    acc = np.zeros(int(2.0 * SR))
+    m = int(.5 * SR); place(acc, filt(filt(noise(m, r), "high", 1800), "low", 6500) * env(m, .03, .12, 4, hold=.25) * .5, 0)   # 이름 한 획
+    for k in range(7):                                            # 넋이 송골송골 피어오름(위로 올라가는 작은 방울들)
+        place(acc, bubble(.25, 900 + 220 * k, 1.6, .05) * .35, .5 + k * .14); place(acc, modal(.6, [(1760 + 200 * k, .25, 1)], r) * .25, .5 + k * .14)
+    return _mix(_base("sfx.tendo.done"), acc, .2, .5)
+
+
+@sfx("sfx.pahon.burst.chain", -4, "처결", "파혼(철삭): 기본 파혼음 + 사슬이 팽팽히 당겨졌다 '쩡' 끊기듯 튕김", use="철삭으로 파혼")
+def _(r):
+    snap = modal(.6, [(1240, .12, 1), (1873, .09, .8), (2631, .06, .6)], r)
+    place(snap, filt(noise(int(.02 * SR), r), "high", 2500) * env(int(.02 * SR), .0003, .005), 0)
+    return _mix(_base("sfx.pahon.burst"), snap, .0, .35)
+
+
+@sfx("sfx.pahon.burst.mace", -2, "처결", "파혼(육모방망이) — 강조: 기본 파혼음 + 나무 몸통이 땅을 내리치는 거대한 쿵 + 땅 울림 + 흙 튐(가장 크고 무겁다)", use="육모방망이로 파혼(이 무기의 강점: 넉백·피해 큼)")
+def _(r):
+    sec = 1.6; n = int(sec * SR); acc = np.zeros(n)
+    acc += tone(sec, 70, 28) * env(n, .002, .4, 3) * 1.2 + filt(noise(n, r), "low", 300) * env(n, .001, .25, 3)
+    place(acc, modal(.5, [(200, .08, 1), (450, .05, .6), (880, .03, .3)], r) * .8, 0)
+    place(acc, grains(1.2, r, 80, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(800, 3500), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.1, .5), spread=lambda k, r: .03 + r.exponential(.2)), 0)
+    return reverb(_mix(_base("sfx.pahon.burst"), acc, 0, 1.3), 1.0, .12)
+
+
+@sfx("sfx.pahon.burst.bell", -7, "처결", "파혼(요령방울) — 약함: 기본 파혼음을 덜어 내고, 방울이 금 간 소리로 '찌릉' 어긋나게 울림", use="요령방울로 파혼(이 무기의 약점: 파혼 피해 작음)")
+def _(r):
+    b = filt(_base("sfx.pahon.burst"), "high", 180) * .7
+    cracked = modal(1.0, [(2100, .3, 1), (2230, .3, .9), (3300, .15, .5)], r)   # 반음 가까이 어긋난 두 음 = 금 간 방울
+    place(cracked, filt(noise(int(.3 * SR), r), "band", 3000, 2) * env(int(.3 * SR), .002, .05, 4) * .4, 0)
+    return _mix(b, cracked, .05, .5)
+
+
+@sfx("sfx.pahon.burst.trident", -4, "처결", "파혼(삼지창) — 날카로움: 기본 파혼음 + 쇠가 찢기듯 높게 '끼익' 긁히며 꿰뚫음", use="삼지창으로 파혼(파혼 넉백·피해 보정)")
+def _(r):
+    m = int(.6 * SR)
+    scream = sweep_filt(noise(m, r), "band", 6000, 2500, 8) * env(m, .005, .15, 4, hold=.1)   # 쇠 긁힘
+    pierce = modal(.5, [(3100, .1, 1), (4650, .06, .6), (7200, .03, .3)], r)
+    return _mix(_base("sfx.pahon.burst"), scream * .7 + np.concatenate([pierce, np.zeros(m - len(pierce))])[:m], .0, .5)
+
+
+@sfx("sfx.pahon.burst.brush", -7, "처결", "파혼(명부 붓) — 약함: 기본 파혼음을 덜어 내고, 종이 이름이 '찌익' 찢기며 먹이 흩어짐", use="명부 붓으로 파혼(이 무기의 약점)")
+def _(r):
+    b = _base("sfx.pahon.burst") * .7
+    m = int(.7 * SR)
+    tear = sweep_filt(noise(m, r), "band", 1500, 4000, 1.5) * env(m, .02, .1, 4, hold=.3)
+    tear += grains(.7, r, 60, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(2000, 6000), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.2, 1))
+    return _mix(b, tear, .05, .5)
+
+
+# ===== 처결 대기 긴장음 (무릎 꿇은 혼의 남은 시간: 갓 죽은 10초 · 해 넘긴 7초 · 오래된 4초, balance WAIT_*) =====
+# 방식: 혼 나이별 '똑딱' 한 개를 코드가 남은 시간에 맞춰 점점 빨리 친다(간격 1.0초 → 0.15초).
+# 왜 긴 파일 하나가 아니라 똑딱인가? 대기 시간은 장비·도술(TILT_WAIT_ADD, SKILL_HOLD_WAIT_BONUS 등)로 늘거나 줄기 때문.
+@sfx("sfx.wait.tick.fresh", -16, "처결", "대기 똑딱(갓 죽은 혼): 아직 사람 같은 낮은 심장 소리 '두근'", bypass_cast=True, use="갓 죽은 혼이 무릎 꿇고 기다리는 동안 반복(남은 시간에 따라 간격을 줄임)")
+def _(r):
+    buf = np.zeros(int(.4 * SR))
+    for at, a in ((0, 1), (.14, .7)):                              # 두-근
+        place(buf, tone(.15, 62, 48) * env(int(.15 * SR), .004, .05, 4) * a + filt(noise(int(.15 * SR), r), "band", 450, 1.2) * env(int(.15 * SR), .002, .03, 4) * .6 * a, at)   # 폰 스피커에도 들리게 400Hz대 '툭'을 섞음
+    return buf
+
+
+@sfx("sfx.wait.tick.year", -16, "처결", "대기 똑딱(해 넘긴 혼): 마른 나무를 치는 '똑'(목탁 비슷하게 속이 빈 소리)", bypass_cast=True, use="해 넘긴 혼이 기다리는 동안 반복")
+def _(r):
+    return modal(.25, [(r.uniform(560, 600), .05, 1), (r.uniform(1450, 1550), .025, .4), (2900, .01, .15)], r)
+
+
+@sfx("sfx.wait.tick.old", -15, "처결", "대기 똑딱(오래된 혼): 녹슨 쇠를 긁듯 '칙' + 낮은 금 간 쇳소리 — 가장 거칠고 불안하다", bypass_cast=True, use="오래된 혼·덩어리가 기다리는 동안 반복")
+def _(r):
+    n = int(.3 * SR)
+    rust = modal(.3, [(410, .06, 1), (437, .06, .9), (1210, .03, .5)], r)   # 가까운 두 음이 부딪혀 거칠게 떪
+    grit = filt(noise(n, r), "band", 2500, 2) * env(n, .001, .02, 4)
+    return rust + grit * .6
+
+
+@sfx("sfx.wait.final", -14, "처결", "대기 마지막 1.5초: 숨을 들이켜듯 올라가는 소리 + 고리가 조여드는 떨림 — 지금 고르지 않으면 일어선다", bypass_cast=True, use="남은 시간 1.5초에 한 번(혼 나이 상관없이 같음)")
+def _(r):
+    sec = 1.5; n = int(sec * SR); t = T(sec)
+    breath = sweep_filt(noise(n, r), "band", 500, 2200, 2) * curve(sec, [(0, .1), (1.4, 1), (1.5, 0)])
+    trem = tone(sec, 220, 440) * (.5 + .5 * np.sin(2 * np.pi * curve(sec, [(0, 6), (1.5, 18)]).cumsum() / SR)) * curve(sec, [(0, 0), (1.4, .5), (1.5, 0)])
+    return breath * .6 + trem * .35
+
+
+@sfx("sfx.wait.expire", -14, "처결", "놓침: 혼이 다시 일어섬 — 무릎 꿇은 기운이 툭 끊기고 낮게 '우웅' 되살아나는 소리", bypass_cast=True, use="대기 시간이 다 돼 혼이 맺힘 50%로 일어설 때")
+def _(r):
+    sec = 1.2; n = int(sec * SR); buf = np.zeros(n)
+    place(buf, filt(noise(int(.05 * SR), r), "low", 1500) * env(int(.05 * SR), .001, .015, 4) * .8, 0)   # 툭 끊김
+    rise = tone(sec, 70, 140) * curve(sec, [(0, 0), (.15, .8), (.9, .6), (1.2, 0)])
+    moan = voice(curve(sec, [(0, 90), (.8, 150), (1.2, 140)]), [(500, 4, 1), (900, 5, .5)], .4, r, nh=20) * curve(sec, [(0, 0), (.2, .5), (1.0, .4), (1.2, 0)])
+    buf += rise * .6 + moan * .4
+    return reverb(buf, .8, .2)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)

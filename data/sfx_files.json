@@ -1452,6 +1452,171 @@
    "bypass_cast_filter": false,
    "length_sec": 0.25,
    "peak_dbfs": -18
+  },
+  {
+   "id": "sfx.tendo.done.chain",
+   "file": "sfx_tendo_done_chain",
+   "category": "처결",
+   "desc": "천도 완료(철삭): 기본 천도음 + 풀린 사슬이 차르르 내려앉음",
+   "use": "철삭으로 천도 성공",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.84,
+   "peak_dbfs": -7
+  },
+  {
+   "id": "sfx.tendo.done.mace",
+   "file": "sfx_tendo_done_mace",
+   "category": "처결",
+   "desc": "천도 완료(육모방망이): 기본 천도음을 조금 낮고 작게 + 나무 '톡' 한 번(천도는 이 무기의 강점이 아니다)",
+   "use": "육모방망이로 천도 성공",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.89,
+   "peak_dbfs": -9
+  },
+  {
+   "id": "sfx.tendo.done.bell",
+   "file": "sfx_tendo_done_bell",
+   "category": "처결",
+   "desc": "천도 완료(요령방울) — 강조: 기본 천도음 위로 요령이 길게 짤랑짤랑 울려 퍼지며 한 음 더 높이 올라감",
+   "use": "요령방울로 천도 성공(이 무기의 강점)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.93,
+   "peak_dbfs": -5
+  },
+  {
+   "id": "sfx.tendo.done.trident",
+   "file": "sfx_tendo_done_trident",
+   "category": "처결",
+   "desc": "천도 완료(삼지창): 기본 천도음 + 세 갈래 날이 맑게 '팅' 세 번",
+   "use": "삼지창으로 천도 성공",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.84,
+   "peak_dbfs": -7
+  },
+  {
+   "id": "sfx.tendo.done.brush",
+   "file": "sfx_tendo_done_brush",
+   "category": "처결",
+   "desc": "천도 완료(명부 붓) — 넋이 많다: 기본 천도음 + 붓이 이름을 한 획 긋고 먹빛 반짝임이 여러 번 피어오름",
+   "use": "명부 붓으로 천도 성공(넋 보너스)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.84,
+   "peak_dbfs": -6
+  },
+  {
+   "id": "sfx.pahon.burst.chain",
+   "file": "sfx_pahon_burst_chain",
+   "category": "처결",
+   "desc": "파혼(철삭): 기본 파혼음 + 사슬이 팽팽히 당겨졌다 '쩡' 끊기듯 튕김",
+   "use": "철삭으로 파혼",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.01,
+   "peak_dbfs": -4
+  },
+  {
+   "id": "sfx.pahon.burst.mace",
+   "file": "sfx_pahon_burst_mace",
+   "category": "처결",
+   "desc": "파혼(육모방망이) — 강조: 기본 파혼음 + 나무 몸통이 땅을 내리치는 거대한 쿵 + 땅 울림 + 흙 튐(가장 크고 무겁다)",
+   "use": "육모방망이로 파혼(이 무기의 강점: 넉백·피해 큼)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.95,
+   "peak_dbfs": -2
+  },
+  {
+   "id": "sfx.pahon.burst.bell",
+   "file": "sfx_pahon_burst_bell",
+   "category": "처결",
+   "desc": "파혼(요령방울) — 약함: 기본 파혼음을 덜어 내고, 방울이 금 간 소리로 '찌릉' 어긋나게 울림",
+   "use": "요령방울로 파혼(이 무기의 약점: 파혼 피해 작음)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.01,
+   "peak_dbfs": -7
+  },
+  {
+   "id": "sfx.pahon.burst.trident",
+   "file": "sfx_pahon_burst_trident",
+   "category": "처결",
+   "desc": "파혼(삼지창) — 날카로움: 기본 파혼음 + 쇠가 찢기듯 높게 '끼익' 긁히며 꿰뚫음",
+   "use": "삼지창으로 파혼(파혼 넉백·피해 보정)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.01,
+   "peak_dbfs": -4
+  },
+  {
+   "id": "sfx.pahon.burst.brush",
+   "file": "sfx_pahon_burst_brush",
+   "category": "처결",
+   "desc": "파혼(명부 붓) — 약함: 기본 파혼음을 덜어 내고, 종이 이름이 '찌익' 찢기며 먹이 흩어짐",
+   "use": "명부 붓으로 파혼(이 무기의 약점)",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.01,
+   "peak_dbfs": -7
+  },
+  {
+   "id": "sfx.wait.tick.fresh",
+   "file": "sfx_wait_tick_fresh",
+   "category": "처결",
+   "desc": "대기 똑딱(갓 죽은 혼): 아직 사람 같은 낮은 심장 소리 '두근'",
+   "use": "갓 죽은 혼이 무릎 꿇고 기다리는 동안 반복(남은 시간에 따라 간격을 줄임)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.25,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.wait.tick.year",
+   "file": "sfx_wait_tick_year",
+   "category": "처결",
+   "desc": "대기 똑딱(해 넘긴 혼): 마른 나무를 치는 '똑'(목탁 비슷하게 속이 빈 소리)",
+   "use": "해 넘긴 혼이 기다리는 동안 반복",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.25,
+   "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.wait.tick.old",
+   "file": "sfx_wait_tick_old",
+   "category": "처결",
+   "desc": "대기 똑딱(오래된 혼): 녹슨 쇠를 긁듯 '칙' + 낮은 금 간 쇳소리 — 가장 거칠고 불안하다",
+   "use": "오래된 혼·덩어리가 기다리는 동안 반복",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 0.3,
+   "peak_dbfs": -15
+  },
+  {
+   "id": "sfx.wait.final",
+   "file": "sfx_wait_final",
+   "category": "처결",
+   "desc": "대기 마지막 1.5초: 숨을 들이켜듯 올라가는 소리 + 고리가 조여드는 떨림 — 지금 고르지 않으면 일어선다",
+   "use": "남은 시간 1.5초에 한 번(혼 나이 상관없이 같음)",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.5,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "sfx.wait.expire",
+   "file": "sfx_wait_expire",
+   "category": "처결",
+   "desc": "놓침: 혼이 다시 일어섬 — 무릎 꿇은 기운이 툭 끊기고 낮게 '우웅' 되살아나는 소리",
+   "use": "대기 시간이 다 돼 혼이 맺힘 50%로 일어설 때",
+   "loop": false,
+   "bypass_cast_filter": true,
+   "length_sec": 1.82,
+   "peak_dbfs": -14
   }
  ],
  "footsteps": {
