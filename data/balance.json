@@ -2130,5 +2130,37 @@
  "FOG_DAY_MULT": {
   "value": 0.55,
   "note": "낮 안개 짙기 추가 배율. 보릿들 낮이 희뿌옇던 것 완화"
+ },
+ "KEEPSAKE_CAST_CUT": {
+  "value": 0.5,
+  "note": "유품을 만진 혼의 천도 시전 단축(초)"
+ },
+ "KEEPSAKE_SHOW_M": {
+  "value": 6.0,
+  "note": "유품이 보이는 거리(밤만, m)"
+ },
+ "PICKUP_RADIUS": {
+  "value": 2.0,
+  "note": "줍기 거리(m)"
+ },
+ "COIN_BUNDLE": {
+  "value": 20,
+  "note": "엽전 꾸러미 하나"
+ },
+ "HERB_PER_POTION": {
+  "value": 3,
+  "note": "쑥 몇 개에 회복약 하나"
+ },
+ "SHRINE_REST_TIME": {
+  "value": 2.0,
+  "note": "서낭당 쉬기 앉는 시간(초)"
+ },
+ "SHRINE_REST_BLOCK_M": {
+  "value": 10.0,
+  "note": "이 거리 안에 깨어 있는 혼이 있으면 못 쉼(m)"
+ },
+ "CLUE_TOUCH_KARMA_LOCK": {
+  "value": 30,
+  "note": "이 업 이상이면 단서 물건을 못 만짐"
  }
 }

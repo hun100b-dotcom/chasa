@@ -20,7 +20,7 @@ namespace Chasa.Core
         {
             switch (k)
             {
-                case InteractKind.Pickup: return PickupRange;
+                case InteractKind.Pickup: return Balance.PICKUP_RADIUS;
                 case InteractKind.Touch: return Balance.TOUCH_RADIUS;
                 case InteractKind.SoulPath: return SoulPathRange;
                 case InteractKind.Rest: return RestRange;

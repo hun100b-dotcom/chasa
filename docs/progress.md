@@ -747,3 +747,9 @@
 ### 색보정 후보 옵션 (코드·QA)
 - `?grade=b`(대비1.12·채도1.15·밝기-0.03) / `?grade=c`(대비1.22·채도1.28·밝기-0.05·따뜻한 색 곱). 기본은 변화 없음. 셰이더(ChasaGrade) 끝단에 한 단계 추가라 유니티 컴파일은 PC 빌드에서 확인 필요.
 - 보릿들 낮 비교 촬영: `?time=day` 기본 / `&fog=off` / `&grade=b` / `&grade=c`.
+
+### 1막 줍기·만져 보기·쉬기 (코드·QA, 기획 interactables-act1 v1)
+- balance 키 8개(KEEPSAKE_*, PICKUP_RADIUS, COIN_BUNDLE, HERB_PER_POTION, SHRINE_REST_*, CLUE_TOUCH_KARMA_LOCK) 반영. 배치 `Resources/Data/interactables_act1.json`(좌표는 PushOut으로 붙임).
+- `Interactables.cs`: 단서 물건 3(만지기 2초, 업10 반쪽·업30 "손이 미끄러진다"), 유품 6(밤 6m, 만지면 그 혼 천도 −0.5초), 엽전 6(한 번), 쑥 8(낮, 다음 날 재생). 저장 항목 추가(picked·herbs·herbTaken).
+- F: 톡/꾹 처리. 밤 서낭당은 톡=넋길·꾹 2초=쉬기, 낮은 꾹=쉬기. 쉬기=체력·피하기 가득, 쑥3→회복약1, 성장 창 열기, 저장. 10m 안 깨어 있는 혼이 있으면 막힘, 맞으면 끊김.
+- 남은 것: 날씨 예보(미니맵 고리), 파혼 시 유품 재, 단서 물건 "보스 구역 첫 밤 다음 낮" 정확한 조건(지금은 하루 지난 뒤), 유품 천도 연출 0.5초, 명부 유품 그림, 쑥·엽전 빛기둥은 임시 도형.

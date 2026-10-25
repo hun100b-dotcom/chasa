@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
     public System.Action onHitLanded;               // 내 타격이 적에게 맞을 때마다(안내가 첫 타를 알아챈다)
     public System.Action onDodgeCancelCast;         // 천도 캐스팅 중 피하면 JudgeSystem 이 캐스팅만 취소한다
     public float DodgeCharges => dodgeCharges;
+    public void RefillDodge() { dodgeCharges = Balance.DODGE_CHARGES; }   // 서낭당 쉬기: 피하기 충전 가득
     public float PullCooldown => pullCooldown;
     public bool Dodging => state == State.Dodge;
 

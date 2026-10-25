@@ -1,0 +1,31 @@
+{
+  "_설명": "1막 F 상호작용 물건 배치(기획 v1, 2026-10-25). 규칙은 planning/controls/npc-interaction-spec.md §2와 planning/data/interactables-act1.md. 좌표는 필드 x,z(m). 코드가 MapLayout.PushOut과 여유 폭 지도로 가장 가까운 걸을 수 있는 자리로 붙인다. name_ok=false는 서사 확인 대기(이름·모양만 바뀔 수 있고 규칙은 그대로).",
+  "_version": 1,
+  "clue_objects": [
+    {"id": "B01-D2", "kind": "touch", "x": 393.0, "z": 289.0, "place": "물막이 골 갈대 속 부러진 삿대", "model": "prop_broken_pole", "when": "언제나", "gives": {"clue": "B01-D2"}, "text": "칼금 열한 개. 열두 번째는 반만 그어져 있다.", "opens_after": "Ravine 첫 밤 진입 다음 낮"},
+    {"id": "B02-D3", "kind": "touch", "x": 580.0, "z": 531.5, "place": "폐당집 굿상", "model": "prop_gut_table", "when": "낮", "gives": {"clue": "B02-D3"}, "text": "엎어진 잔 하나. 열두째 자리다.", "opens_after": "Shrine 첫 밤 진입 다음 낮"},
+    {"id": "B03-D3", "kind": "touch", "x": 36.0, "z": 330.0, "place": "동헌 터 탄 문서함", "model": "prop_burnt_docbox", "when": "낮", "gives": {"clue": "B03-D3"}, "text": "그은 줄들 끝에 한 줄만 반듯하다. '의원 서○○ 순직'.", "opens_after": "Plague 첫 밤 진입 다음 낮"}
+  ],
+  "keepsakes": [
+    {"id": "K-001", "soul": "S-001", "soul_name": "박돌쇠", "x": 221.5, "z": 64.0, "model": "prop_keep_tongs", "name": "식은 집게", "name_ok": false, "from_memory": "M-001 풀무·쇳물"},
+    {"id": "K-002", "soul": "S-002", "soul_name": "윤 소사", "x": 190.5, "z": 57.0, "model": "prop_keep_bowl", "name": "덮은 밥그릇", "name_ok": false, "from_memory": "M-002 제삿밥"},
+    {"id": "K-003", "soul": "S-003", "soul_name": "연이", "x": 204.0, "z": 51.5, "model": "prop_keep_steamer", "name": "식은 떡시루", "name_ok": false, "from_memory": "M-003 떡"},
+    {"id": "K-006", "soul": "S-006", "soul_name": "장 둑지기", "x": 296.0, "z": 118.0, "model": "prop_keep_lamp", "name": "꺼진 둑 등잔", "name_ok": false, "from_memory": "M-006 나룻불"},
+    {"id": "K-010", "soul": "S-010", "soul_name": "곽 뱃꾼", "x": 386.0, "z": 296.0, "model": "prop_keep_oar", "name": "부러진 노 손잡이", "name_ok": false, "from_memory": "M-010 노"},
+    {"id": "K-011", "soul": "S-011", "soul_name": "방물장수 막례", "x": 401.0, "z": 308.0, "model": "prop_keep_bundle", "name": "젖은 비단 보따리", "name_ok": false, "from_memory": "M-011 비단 남색"}
+  ],
+  "coin_bundles": [
+    {"id": "C-01", "x": 205.0, "z": 72.0, "coin": 20, "hint": "솔고개 강가 빨래터 돌 밑"},
+    {"id": "C-02", "x": 246.0, "z": 96.0, "coin": 20, "hint": "솔고개→보릿들 길가 장승 뒤"},
+    {"id": "C-03", "x": 318.0, "z": 140.0, "coin": 20, "hint": "보릿들 허물어진 원두막"},
+    {"id": "C-04", "x": 372.0, "z": 250.0, "coin": 20, "hint": "물막이 골 내려가는 비탈 바위틈"},
+    {"id": "C-05", "x": 420.0, "z": 335.0, "coin": 20, "hint": "물막이 골 방앗간 뒤"},
+    {"id": "C-06", "x": 560.0, "z": 510.0, "coin": 20, "hint": "폐당집 아래 무너진 돌담"}
+  ],
+  "herbs": [
+    {"id": "H-01", "x": 176.0, "z": 30.0}, {"id": "H-02", "x": 210.0, "z": 80.0},
+    {"id": "H-03", "x": 236.0, "z": 58.0}, {"id": "H-04", "x": 270.0, "z": 104.0},
+    {"id": "H-05", "x": 284.0, "z": 128.0}, {"id": "H-06", "x": 312.0, "z": 100.0},
+    {"id": "H-07", "x": 352.0, "z": 230.0}, {"id": "H-08", "x": 388.0, "z": 318.0}
+  ]
+}

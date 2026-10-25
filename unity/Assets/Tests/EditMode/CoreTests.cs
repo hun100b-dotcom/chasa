@@ -1833,6 +1833,17 @@ public class CoreTests
     }
 
     [Test]
+    public void Save_PickedHerbs_RoundTrip()
+    {
+        var snap = new SaveSnapshot { Herbs = 4 };
+        snap.Picked.Add("C-01"); snap.Picked.Add("K-001"); snap.HerbTaken.Add("H-02:3");
+        var back = SaveGame.Deserialize(SaveGame.Serialize(snap));
+        CollectionAssert.AreEqual(new[] { "C-01", "K-001" }, back.Picked); CollectionAssert.AreEqual(new[] { "H-02:3" }, back.HerbTaken); Assert.AreEqual(4, back.Herbs);
+        var old = SaveGame.Deserialize(SaveGame.Serialize(new SaveSnapshot()));
+        Assert.AreEqual(0, old.Picked.Count); Assert.AreEqual(0, old.Herbs);
+    }
+
+    [Test]
     public void Weather_SaveRoundTrip_AndParse()
     {
         var snap = new SaveSnapshot { WeatherNow = new[] { 0, 2, 3, 4, 1 }, PlagueEased = true };

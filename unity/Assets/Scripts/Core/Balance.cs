@@ -535,4 +535,12 @@ public static class Balance
     public const int MOTE_GROUP_MAX_RING1 = 4;  // 고리1 잔넋 무리 크기 최대(3~4). 그 밖은 3~5
     public const float FOG_NIGHT_MULT = 0.75f;  // 밤 안개 짙기 추가 배율(FOG_DENSITY_MULT 위에). 밤 숲이 회색 판이 되던 것 완화(PC 10-25)
     public const float FOG_DAY_MULT = 0.55f;  // 낮 안개 짙기 추가 배율. 보릿들 낮이 희뿌옇던 것 완화
+    public const float KEEPSAKE_CAST_CUT = 0.5f;  // 유품을 만진 혼의 천도 시전 단축(초)
+    public const float KEEPSAKE_SHOW_M = 6.0f;  // 유품이 보이는 거리(밤만, m)
+    public const float PICKUP_RADIUS = 2.0f;  // 줍기 거리(m)
+    public const int COIN_BUNDLE = 20;  // 엽전 꾸러미 하나
+    public const int HERB_PER_POTION = 3;  // 쑥 몇 개에 회복약 하나
+    public const float SHRINE_REST_TIME = 2.0f;  // 서낭당 쉬기 앉는 시간(초)
+    public const float SHRINE_REST_BLOCK_M = 10.0f;  // 이 거리 안에 깨어 있는 혼이 있으면 못 쉼(m)
+    public const int CLUE_TOUCH_KARMA_LOCK = 30;  // 이 업 이상이면 단서 물건을 못 만짐
 }

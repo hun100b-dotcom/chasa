@@ -69,6 +69,7 @@ public class GameMain : MonoBehaviour
             judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
+            judge.interactables = new Interactables(judge);   // 1막 줍기·만져 보기 물건
             // 10m 안에 싸우는 혼이 있으면 엿듣기·지켜보기 진행이 멈춘다(기획 npc-interaction-spec §2-3)
             judge.npcs.enemyWithin = r =>
             {
@@ -500,13 +501,12 @@ public class GameMain : MonoBehaviour
         var tc = gameObject.AddComponent<TouchControls>();
         tc.hasPull = () => player.loadout.Def.HasPull;
         tc.canInteract = () => judge.CanInteractNow;
-        tc.interactLabel = () => Chasa.Core.Interact.Label(judge.Target);
+        tc.interactLabel = () => judge.TargetLabel;
         tc.skillLabel = i => judge.ActiveNameAt(i);
         tc.skillLeft = i => judge.SkillLeft(i);
         tc.onSkill = i => judge.UseSkill(i);
         tc.onDodge = () => { judge.guide.Complete("dodge"); player.CommandDodge(null); };   // 걷던 방향으로(가운데면 앞쪽)
         tc.onPull = () => { judge.guide.Complete("pull"); var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); };
-        tc.onInteract = () => judge.CommandInteract();
         tc.onAttackHold = () =>   // 누르고 있으면 6m 안 가장 가까운 적을 자동 조준해 연속 공격
         {
             Enemy best = null; float bd = 6f;
