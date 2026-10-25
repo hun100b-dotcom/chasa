@@ -296,7 +296,7 @@ public class Enemy : MonoBehaviour
             bool wasWind = atk.Winding;
             if (atk.Tick(dt, dist, canAct)) onHitPlayer?.Invoke();
             if (gated) { if (atk.Winding) tokenHolders.Add(this); else tokenHolders.Remove(this); }
-            if (atk.Winding && !wasWind) Sfx.Play("sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
+            if (atk.Winding && !wasWind) Sfx.Play(type == SoulType.Mote ? "sfx.enemy.mote.telegraph" : "sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
             mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)
                                     : baseColor;
@@ -318,7 +318,8 @@ public class Enemy : MonoBehaviour
         }
         bool wasWind = wail.Winding;
         bool fire = wail.Tick(dt, dist, canAct);
-        if (wail.Winding && !wasWind) Sfx.Play("sfx.enemy.telegraph");
+        if (wail.Winding && !wasWind) Sfx.Play("sfx.enemy.wail.telegraph");   // 사운드 PR #25: 신종 혼 예고음
+        if (fire) Sfx.Play("sfx.enemy.wail.throw");
         if (fire) WonnyeomOrb.Spawn(Pos + Vector3.up * 1.0f, dir, this);
         UpdateTeleLine(dir, Mathf.Min(dist, Balance.SOULTYPE_WAIL_ORB_RANGE_M));
         mat.color = wail.Winding ? Color.Lerp(baseColor, new Color(0.7f, 0.3f, 0.9f), wail.WindupRatio) : baseColor;
@@ -348,8 +349,8 @@ public class Enemy : MonoBehaviour
     {
         var ph = buried.Phase;
         if (!canAct && ph != BuriedPhase.Hidden) { /* 기절 중엔 단계가 멈춘다 */ }
-        else if (buried.Tick(dt, dist) && SoulTypeRules.Reachable(type, buried.Phase) && BuriedAi.InStrike(dist)) onHitPlayer?.Invoke();
-        if (buried.Phase == BuriedPhase.Windup && ph == BuriedPhase.Hidden) Sfx.Play("sfx.enemy.telegraph");
+        else if (buried.Tick(dt, dist) && SoulTypeRules.Reachable(type, buried.Phase) && BuriedAi.InStrike(dist)) { Sfx.Play("sfx.enemy.buried.burst"); onHitPlayer?.Invoke(); }
+        if (buried.Phase == BuriedPhase.Windup && ph == BuriedPhase.Hidden) Sfx.Play("sfx.enemy.buried.telegraph");
         mat.color = buried.Phase == BuriedPhase.Windup ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), buried.T / Balance.SOULTYPE_BURIED_WINDUP) : baseColor;
     }
 

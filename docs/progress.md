@@ -995,3 +995,8 @@
   - `amb.citygate`(성문 밖 밤)
 - 환경음은 모두 반복용이다(밀물 신호만 1회).
 - 3막 BGM 지시문(갯마을 70BPM·A, 도성 92BPM·F 평조)을 지시문 페이지 13~20번에 추가. 효과음 총 119개.
+
+## UI 이전·소리 연결 (코드·QA)
+- 설정 화면 UI Toolkit이 기본(?ui2=0 이면 옛 화면). 명부(C) 명부·들은 말 탭도 UI Toolkit(CharacterView). 옛 세 탭은 DEMO_PANEL 때만 IMGUI. 미니맵은 아직 IMGUI.
+- ATTACK_TOKENS 3→2(PC 봇 쓰러짐 3회 > 2).
+- 사운드 PR #25 신종 혼 예고음 연결, #26 병합·3막 구역 환경음 표(act3_map.json 반입). 보스 소리·밀물 신호는 해당 시스템이 생기면 연결.
