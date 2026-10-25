@@ -1401,22 +1401,6 @@
    "prop": "prop_dolddam",
    "file": "assets3d/props/prop_dolddam.glb",
    "x": -15.5,
-   "y": 2.0,
-   "rot": 90,
-   "note": "서쪽 돌담"
-  },
-  {
-   "prop": "prop_dolddam",
-   "file": "assets3d/props/prop_dolddam.glb",
-   "x": 15.5,
-   "y": 2.0,
-   "rot": 90,
-   "note": "동쪽 돌담"
-  },
-  {
-   "prop": "prop_dolddam",
-   "file": "assets3d/props/prop_dolddam.glb",
-   "x": -15.5,
    "y": 5.0,
    "rot": 90,
    "note": "서쪽 돌담"
@@ -1543,7 +1527,7 @@
   }
  ],
  "counts": {
-  "dolddam": 30,
+  "dolddam": 28,
   "geumjul": 1,
   "jangdok": 2,
   "jangseung": 2,
@@ -1551,5 +1535,6 @@
   "seonangdang": 1,
   "sotdae": 1,
   "umul": 1
- }
+ },
+ "gates": "동·서 돌담 가운데(y=2)에 폭 4m 문(돌 하나씩 뺌) — 마을 안팎 직선 통로(길찾기 점검 walkcheck.py)"
 }
