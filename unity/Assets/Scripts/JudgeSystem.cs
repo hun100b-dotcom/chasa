@@ -1008,6 +1008,9 @@ public class JudgeSystem : MonoBehaviour
     void FillBossArea(HudState h)
     {
         h.BossName = null;
+        // 경험치(품계) 막대: 처음 넋을 얻은 뒤에만(하나씩 열기)
+        h.ShowExp = revNeok && FieldRules.On; h.Rank = growth.Rank;
+        { int lo0 = GrowthState.NeokForRank(growth.Rank), hi0 = GrowthState.NeokForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.TotalNeok - lo0) / (hi0 - lo0); }
         // 첫 5분 퀘스트 추적(기획): 명부 — 이름 없는 혼 n/2, 박돌쇠 n/1. 시계가 풀리면(첫 처결 끝) 사라진다
         if (introFrozen && FieldRules.On) { h.QuestTitle = "명부"; h.QuestLines = new[] { "이름 없는 혼 " + Mathf.Min(2, introPlainDone) + "/2", "박돌쇠 " + (pahonOrTendo != 0 ? 1 : 0) + "/1" }; }
         else { h.QuestTitle = null; h.QuestLines = null; }
@@ -1057,6 +1060,12 @@ public class JudgeSystem : MonoBehaviour
                 if (winding) guide.Request("dodge");
                 if (far && guide.IsDone("hit")) guide.Request("pull");
                 if (guideClock > 90f && guide.IsDone("hit")) guide.Request("zoom");
+                // 첫 5분 보충 안내 넷(기획): 처음 한 번만, 한 번에 하나씩(대기줄이 순서를 지킨다)
+                if (introPlainDone >= 1) guide.Request("codex");                                          // 첫 처결 뒤: [C] 명부
+                if (player.speedMult < 0.95f && stains.IsOnStain(player.Pos.x, player.Pos.z)) guide.Request("stain");   // 얼룩에 처음 들어가 느려질 때
+                if (Casting) guide.Request("castdef");                                                    // 천도 시전 중: 무방비
+                foreach (var e2 in enemies.list)                                                          // 명부 밖 이름혼이 무릎 꿇었을 때
+                    if (e2 != null && e2.kneeling && e2.soul.Name != null && NamedSoulSpawns.OffLedger.Contains(e2.soul.Name) && Vector3.Distance(e2.Pos, player.Pos) < 12f) { guide.Request("offledger"); break; }
             }
             guide.Tick(Time.deltaTime);
             int nDone = 0; foreach (var _ in guide.DoneIds) nDone++;

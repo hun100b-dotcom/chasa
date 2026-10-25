@@ -162,7 +162,7 @@ public class UiRoot : MonoBehaviour
     // ---- 처음 5분 안내 띠: 하단 중앙, 스킬바 위. 키 그림 + 글자 22px, 행동하면 초록 체크 ----
     VisualElement guideBox, guideKeyBox; Label guideKey, guideText, guideTick; string lastGuide;
     // ---- 보스 체력바(위 가운데) · 지역 진입 알림 --------------------------------------
-    VisualElement bossBox, bossFill, areaBox, questBox; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
+    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill; Label expLabel; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
     void BuildBossArea()
     {
         bossBox = new VisualElement { name = "boss", pickingMode = PickingMode.Ignore };
@@ -172,6 +172,12 @@ public class UiRoot : MonoBehaviour
         questBox.style.position = Position.Absolute; questBox.style.left = U(24); questBox.style.top = U(235); questBox.style.display = DisplayStyle.None;
         Panel(questBox); questTitle = Line(questBox, 16); questTitle.style.color = new Color(0.9f, 0.78f, 0.45f); questBody = Line(questBox, 15); questBody.style.whiteSpace = WhiteSpace.Normal;
         root.Add(questBox);
+        expBox = new VisualElement { name = "exp", pickingMode = PickingMode.Ignore };   // 경험치(품계) 막대: 화면 맨 아래 가는 띠
+        expBox.style.position = Position.Absolute; expBox.style.left = 0; expBox.style.right = 0; expBox.style.bottom = 0; expBox.style.height = U(10); expBox.style.display = DisplayStyle.None;
+        expBox.style.backgroundColor = new Color(0f, 0f, 0f, 0.5f);
+        expFill = new VisualElement { pickingMode = PickingMode.Ignore }; expFill.style.height = Length.Percent(100); expFill.style.backgroundColor = new Color(0.45f, 0.78f, 0.82f);
+        expBox.Add(expFill); root.Add(expBox);
+        expLabel = Line(root, 13); expLabel.style.position = Position.Absolute; expLabel.style.left = U(24); expLabel.style.bottom = U(14); expLabel.style.color = new Color(0.8f, 0.9f, 0.9f); expLabel.style.display = DisplayStyle.None;
         bossName = Line(bossBox, 24); bossName.style.color = new Color(0.95f, 0.9f, 0.8f); bossName.style.marginBottom = U(6);
         var frame = new VisualElement { pickingMode = PickingMode.Ignore };   // 틀: 어두운 판에 붉은 채움
         frame.style.width = U(960); frame.style.height = U(20); frame.style.backgroundColor = new Color(0.05f, 0.04f, 0.05f, 0.85f);
@@ -190,6 +196,8 @@ public class UiRoot : MonoBehaviour
     void RefreshBossArea()
     {
         if (bossBox == null) return;
+        expBox.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None; expLabel.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None;
+        if (Hud.ShowExp) { expFill.style.width = Length.Percent(Mathf.Clamp01(Hud.ExpRatio) * 100f); expLabel.text = "품계 " + Hud.Rank; }
         bool quest = Hud.QuestTitle != null; questBox.style.display = quest ? DisplayStyle.Flex : DisplayStyle.None;
         if (quest) { string qk = Hud.QuestTitle + "|" + string.Join("|", Hud.QuestLines ?? new string[0]); if (qk != lastQuest) { lastQuest = qk; questTitle.text = Hud.QuestTitle; questBody.text = string.Join("\n", Hud.QuestLines ?? new string[0]); } }
         bool boss = Hud.BossName != null; bossBox.style.display = boss ? DisplayStyle.Flex : DisplayStyle.None;

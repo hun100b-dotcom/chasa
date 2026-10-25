@@ -39,6 +39,7 @@ namespace Chasa.Core
         public string GuideText, GuideKey; public bool GuideCheck, GuideRemind;
         public string BossName; public float BossRatio; public bool BossKneel;   // 보스 체력(맺힘) 막대: 이름이 null 이면 안 보인다
         public string QuestTitle; public string[] QuestLines;                      // 퀘스트 추적(왼쪽, 장부 아래). 제목이 null 이면 안 보인다
+        public bool ShowExp; public float ExpRatio; public int Rank;                // 경험치(품계) 막대: 처음 넋을 얻은 뒤에 열린다
         public string AreaText; public float AreaAlpha;                          // 지역 진입 알림(화면 위 가운데 큰 글씨, 알파 0~1)
         public bool JudgeCard;                                   // 첫 처결 카드(천도·파혼 두 장)를 하단에 띄운다
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
