@@ -6,6 +6,7 @@
 // 왜 .bytes? 유니티가 PNG 를 '읽을 수 있는 그림'으로 주지 않아서, 파일 그대로를 글자 덩어리(TextAsset)로 읽어 LoadImage 로 푼다.
 // =============================================================================
 using Chasa.Core;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class GroundTerrain
@@ -74,6 +75,51 @@ public static class GroundTerrain
         return t;
     }
 
+    static Material waterMat;
+    const float WaterY = 0.18f;   // 아트가 정한 물 높이(m)
+
+    /// <summary>물 재질. 물 그림이나 셰이더가 없으면 null(물을 그리지 않는다)</summary>
+    static Material WaterMaterial()
+    {
+        if (waterMat != null) return waterMat;
+        var ta = Resources.Load<TextAsset>("Terrain/water_albedo");
+        var sh = Resources.Load<Shader>("Shaders/ChasaWater");
+        if (ta == null || sh == null || !sh.isSupported) return null;
+        var t = Decode(ta); if (t == null) return null;
+        t.wrapMode = TextureWrapMode.Repeat;
+        waterMat = new Material(sh);
+        waterMat.SetTexture("_MainTex", t);
+        waterMat.SetFloat("_TileM", 4f);
+        waterMat.SetVector("_Flow", new Vector4(0f, -0.7f, 0f, 0f));   // 남쪽(-z)으로 0.7m/s
+        return waterMat;
+    }
+
+    /// <summary>땅이 물높이보다 낮은 2m 칸에만 물 판을 깐다(강·개울 자리). 물 판은 없으면 만들지 않는다</summary>
+    static void BuildWater(Transform parent, Vector3[] verts, int n, int vn)
+    {
+        var wm = WaterMaterial(); if (wm == null) return;
+        var wv = new List<Vector3>(); var wt = new List<int>();
+        for (int j = 0; j < n; j++)
+            for (int i = 0; i < n; i++)
+            {
+                int a = j * vn + i, b = a + 1, c = a + vn, d = c + 1;
+                if (verts[a].y >= WaterY && verts[b].y >= WaterY && verts[c].y >= WaterY && verts[d].y >= WaterY) continue;   // 네 꼭짓점이 다 물 위면 마른 땅
+                int k = wv.Count;
+                wv.Add(new Vector3(verts[a].x, WaterY, verts[a].z)); wv.Add(new Vector3(verts[b].x, WaterY, verts[b].z));
+                wv.Add(new Vector3(verts[c].x, WaterY, verts[c].z)); wv.Add(new Vector3(verts[d].x, WaterY, verts[d].z));
+                wt.Add(k); wt.Add(k + 2); wt.Add(k + 1); wt.Add(k + 1); wt.Add(k + 2); wt.Add(k + 3);
+            }
+        if (wv.Count == 0) return;
+        var m = new Mesh { name = "Water" };
+        m.SetVertices(wv); m.SetTriangles(wt, 0);
+        var nr = new Vector3[wv.Count]; for (int i = 0; i < nr.Length; i++) nr[i] = Vector3.up; m.normals = nr;
+        m.RecalculateBounds();
+        var go = new GameObject("Water"); go.transform.SetParent(parent, false);
+        go.AddComponent<MeshFilter>().sharedMesh = m;
+        var mr = go.AddComponent<MeshRenderer>(); mr.sharedMaterial = wm;
+        mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; mr.receiveShadows = false;
+    }
+
     static void BuildMaterial(Texture2D a, Texture2D b)
     {
         var sh = Resources.Load<Shader>("Shaders/ChasaTerrainSplat");
@@ -87,6 +133,16 @@ public static class GroundTerrain
         var tm = meta.layer_tile_m != null && meta.layer_tile_m.Length >= 5 ? meta.layer_tile_m : new[] { 6f, 6f, 6f, 6f, 6f };
         mat.SetVector("_TileM", new Vector4(tm[0], tm[1], tm[2], tm[3])); mat.SetFloat("_TileM4", tm[4]);
         mat.SetFloat("_WorldSize", meta.size);
+        // 잔무늬(가까이 볼 때 섞는 이랑·알갱이): 다섯 장이 다 있을 때만 켠다
+        string[] dn = { "dirt", "grass", "gravel", "paddy", "leaf" }; int found = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            var ta = Resources.Load<TextAsset>("Terrain/detail_" + dn[i]);
+            var t = ta != null ? Decode(ta) : null;
+            if (t == null) continue;
+            t.wrapMode = TextureWrapMode.Repeat; mat.SetTexture("_D" + i, t); found++;
+        }
+        mat.SetFloat("_DetailAmount", found == 5 ? 0.5f : 0f);   // 0.5 = 가까울 때 큰 타일과 반반
     }
 
     /// <summary>청크(cx,cz) 한 칸(128m)의 땅 메쉬를 만들어 parent 아래에 붙인다. 높이는 하이트맵에서</summary>
@@ -124,6 +180,7 @@ public static class GroundTerrain
         go.AddComponent<MeshFilter>().sharedMesh = mesh;
         var mr = go.AddComponent<MeshRenderer>(); mr.sharedMaterial = mat;
         mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;   // 땅이 자기 그림자를 만들 필요는 없다(가볍게)
+        BuildWater(parent, verts, n, vn);   // 강·개울 자리에 흐르는 물
     }
 }
 

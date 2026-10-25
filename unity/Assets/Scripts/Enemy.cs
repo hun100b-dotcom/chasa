@@ -82,6 +82,16 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>혼 종류별 색. 색은 아트팀 팔레트(ChasaPalette)에서만 가져온다: 갓 죽은=청백, 해 넘긴=금, 오래된=주황, 덩어리=보라</summary>
+    /// <summary>구역 이름 → 혼 모양 변형 꼬리표. 검은여울=역병, 붉은재=병사, 쇳골=광부. 2막 이후 구역이 field.json 에 생기면 이름만 맞으면 바로 쓰인다</summary>
+    static string VariantOf(string zone)
+    {
+        if (string.IsNullOrEmpty(zone)) return "";
+        if (zone.Contains("검은여울")) return "_yeoksa";
+        if (zone.Contains("붉은재")) return "_bungjae";
+        if (zone.Contains("쇳골")) return "_soegol";
+        return "";
+    }
+
     public static Color KindColor(SoulKind k)
     {
         switch (k)
@@ -295,7 +305,7 @@ public class Enemy : MonoBehaviour
         // 구역 변형(3D 모델이 있을 때만): 검은여울의 혼은 역병(푸른 멍울) 모양. 이름 뒤에 _yeoksa 를 붙이면 ActorModel 이 변형 모델을 고른다
         if (View3D.On && !soul.Boss && !soul.Fierce)
         {
-            if (variant == null) variant = FieldZones.NameAt(Pos.x, Pos.z) == "검은여울" ? "_yeoksa" : "";
+            if (variant == null) variant = VariantOf(FieldZones.NameAt(Pos.x, Pos.z));
             if (variant.Length > 0) n += variant;
         }
         var look = lastPlayerPos - Pos;

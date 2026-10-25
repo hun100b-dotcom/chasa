@@ -114,7 +114,7 @@
    ],
    "tris": 8192,
    "water_cells": 55,
-   "size_kb": 772
+   "size_kb": 949
   },
   {
    "file": "assets3d/terrain/chunk_4_1.glb",
@@ -164,7 +164,7 @@
    ],
    "tris": 8192,
    "water_cells": 446,
-   "size_kb": 821
+   "size_kb": 1002
   },
   {
    "file": "assets3d/terrain/chunk_4_2.glb",
@@ -214,7 +214,7 @@
    ],
    "tris": 8192,
    "water_cells": 356,
-   "size_kb": 813
+   "size_kb": 993
   },
   {
    "file": "assets3d/terrain/chunk_4_3.glb",

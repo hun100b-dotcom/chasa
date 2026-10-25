@@ -20,6 +20,15 @@ Shader "Chasa/TerrainSplat"
         _TileM ("타일 크기 m (흙,풀,자갈,논)", Vector) = (6, 6, 6, 6)
         _TileM4 ("낙엽 타일 크기 m", Float) = 6
         _WorldSize ("지도가 덮는 한 변 m", Float) = 640
+        _D0 ("잔무늬 흙", 2D) = "gray" {}
+        _D1 ("잔무늬 풀", 2D) = "gray" {}
+        _D2 ("잔무늬 자갈", 2D) = "gray" {}
+        _D3 ("잔무늬 논", 2D) = "gray" {}
+        _D4 ("잔무늬 낙엽", 2D) = "gray" {}
+        _DetailTileM ("잔무늬 타일 m", Float) = 1.5
+        _DetailAmount ("잔무늬 세기 (0=끔)", Float) = 0
+        _DetailNear ("잔무늬 완전히 보이는 거리 m", Float) = 18
+        _DetailFar ("잔무늬 사라지는 거리 m", Float) = 32
     }
     SubShader
     {
@@ -31,6 +40,8 @@ Shader "Chasa/TerrainSplat"
         sampler2D _SplatA, _SplatB, _T0, _T1, _T2, _T3, _T4;
         float4 _TileM;
         float _TileM4, _WorldSize;
+        sampler2D _D0, _D1, _D2, _D3, _D4;
+        float _DetailTileM, _DetailAmount, _DetailNear, _DetailFar;
 
         struct Input { float3 worldPos; };
 
@@ -49,6 +60,18 @@ Shader "Chasa/TerrainSplat"
                      + tex2D(_T2, wxz / _TileM.z).rgb * wa.z
                      + tex2D(_T3, wxz / _TileM.w).rgb * wa.w
                      + tex2D(_T4, wxz / _TileM4).rgb * wb;
+            // 가까울 때(약 18~32m)만 잔무늬(이랑·자갈 알갱이)를 섞는다. 멀리선 큰 타일만 보여 반복 무늬가 덜 티 난다
+            if (_DetailAmount > 0.001)
+            {
+                float k = _DetailAmount * (1.0 - smoothstep(_DetailNear, _DetailFar, distance(IN.worldPos, _WorldSpaceCameraPos)));
+                if (k > 0.001)
+                {
+                    float2 duv = wxz / _DetailTileM;
+                    fixed3 d = tex2D(_D0, duv).rgb * wa.x + tex2D(_D1, duv).rgb * wa.y + tex2D(_D2, duv).rgb * wa.z
+                             + tex2D(_D3, duv).rgb * wa.w + tex2D(_D4, duv).rgb * wb;
+                    c = lerp(c, d, k);   // 잔무늬 평균 명도가 층 그림과 비슷하다고 아트가 맞춰 줌 → 색을 섞어도 밝기가 안 튄다
+                }
+            }
             o.Albedo = c;
         }
         ENDCG

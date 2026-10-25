@@ -476,3 +476,9 @@
 - BGM 클립이 없을 때 AudioSource.time 을 건드리던 경고 제거.
 - 낮(ClockPhase.Day)엔 주인공 그림자를 끈다(`ActorModel.HeroShadowOn`). 밤엔 켠다.
 - 남은 PC 확인: 시작 화면 구도, 끊김 재측정, 낮 그림자 꺼짐, 무기 방향·크기.
+
+## [코드·QA] 땅 디테일 텍스처 + 개울물 + 구역 변형 이름 연결 (2026-10-25)
+- ChasaTerrainSplat 셰이더에 잔무늬(detail_*.png, 1.5m 반복)를 카메라 18~32m 안에서 섞는다(`_DetailAmount` 0.5, 5장 다 있을 때만 켜짐). 노멀은 아직 안 씀.
+- 개울물: `ChasaWater.shader`(알파 블렌드, 두 겹 uv 흐름 남쪽 0.7m/s). 청크 땅 메시에서 높이 < 0.18m 인 2m 칸에만 물 판을 깐다(`GroundTerrain.BuildWater`). 큰 강 조각(br_)의 옛 물 모델과 겹치는지는 PC 확인 필요.
+- 혼 변형은 구역 이름에 붉은재/쇳골이 들어가면 자동(`Enemy.VariantOf`). 해당 구역은 아직 field.json 에 없음(2막 이후).
+- PC 확인: 잔무늬 가까이 볼 때 밝기 튐, 물 보임·투명도·흐름 방향, 물 판 가장자리, 성능.
