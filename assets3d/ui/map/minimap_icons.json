@@ -1,0 +1,198 @@
+{
+ "cell_px": 64,
+ "cols": 5,
+ "atlas": "map/minimap_icons_atlas.png",
+ "icons": {
+  "me": {
+   "uv_px": [
+    0,
+    0,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "플레이어(차사). 화살표만 돌아간다"
+  },
+  "enemy": {
+   "uv_px": [
+    64,
+    0,
+    64,
+    64
+   ],
+   "spec_size_px": 6,
+   "desc": "일반 적(붉은 점)"
+  },
+  "elite": {
+   "uv_px": [
+    128,
+    0,
+    64,
+    64
+   ],
+   "spec_size_px": 8,
+   "desc": "정예 적(붉은 점 + 둘레 가시). 주황은 파혼 전용이라 쓰지 않음"
+  },
+  "boss": {
+   "uv_px": [
+    192,
+    0,
+    64,
+    64
+   ],
+   "spec_size_px": 16,
+   "desc": "보스(붉은 도장 魁). 해골 대신 도장"
+  },
+  "soul_fresh": {
+   "uv_px": [
+    256,
+    0,
+    64,
+    64
+   ],
+   "spec_size_px": 8,
+   "desc": "혼: 갓 죽은"
+  },
+  "soul_day": {
+   "uv_px": [
+    0,
+    64,
+    64,
+    64
+   ],
+   "spec_size_px": 8,
+   "desc": "혼: 해 넘긴"
+  },
+  "soul_old": {
+   "uv_px": [
+    64,
+    64,
+    64,
+    64
+   ],
+   "spec_size_px": 8,
+   "desc": "혼: 오래된(갈회색)"
+  },
+  "soul_lump": {
+   "uv_px": [
+    128,
+    64,
+    64,
+    64
+   ],
+   "spec_size_px": 8,
+   "desc": "혼: 덩어리"
+  },
+  "soul_named": {
+   "uv_px": [
+    192,
+    64,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "이름혼(금 고리·별)"
+  },
+  "npc": {
+   "uv_px": [
+    256,
+    64,
+    64,
+    64
+   ],
+   "spec_size_px": 8,
+   "desc": "NPC(갓 쓴 노란 점)"
+  },
+  "quest": {
+   "uv_px": [
+    0,
+    128,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "퀘스트 목표 !"
+  },
+  "quest_arrow": {
+   "uv_px": [
+    64,
+    128,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "범위 밖 퀘스트 방향(테두리에 붙임)"
+  },
+  "seonang": {
+   "uv_px": [
+    128,
+    128,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "서낭당·쉼터"
+  },
+  "exit": {
+   "uv_px": [
+    192,
+    128,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "지역 출입구 화살표"
+  },
+  "cave": {
+   "uv_px": [
+    256,
+    128,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "굴 입구"
+  },
+  "bridge": {
+   "uv_px": [
+    0,
+    192,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "다리"
+  },
+  "ferry": {
+   "uv_px": [
+    64,
+    192,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "나루터"
+  },
+  "herb": {
+   "uv_px": [
+    128,
+    192,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "의원·약방"
+  },
+  "soulpath": {
+   "uv_px": [
+    192,
+    192,
+    64,
+    64
+   ],
+   "spec_size_px": 14,
+   "desc": "넋길 표식"
+  }
+ },
+ "note": "표준 명세 §2 크기(spec_size_px)로 줄여 쓴다. 64px 원본이라 작게 줄여도 가장자리 먹 테두리로 읽힘. 정예는 주황이 아니라 붉은+가시(주황=파혼 전용)."
+}
