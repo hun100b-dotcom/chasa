@@ -149,6 +149,9 @@ BOSSES = {
     'note': '둘 중 하나만 있어도 채워진다. 둘 다 없으면 ①②③을 모두 모아야 천도'},
   ],
   'karma': '업 10: ② 반쪽 / 업 30: ② 닫힘 / 업 60: 소문까지 닫힘. ①(지켜보기)·③(만져 보기, 업 면제)·④(이어받기)는 업과 무관 → 업이 높아도 3개 가능. 업 60 이상이면 F9를 얻어도 시즌 3 결말은 C 쪽으로 기운다',
+  'force_hint': {'when': '강제 개방 전날 저녁(B-11 미처결일 때만)', 'act': '아들 문지기(N-602)가 성문을 닫으며 성문 밖 눈밭 쪽을 한 번 돌아본다',
+                 'npc': 'N-603', 'bark': '내일 밤엔 눈밭에 나가지들 마.',
+                 'note': '주막 노파가 손님들한테 하는 혼잣말. 흑월·서생은 말하지 않는다. 소문이 아니라 예고라 업과 상관없이 들린다'},
   'only_line': '이번엔 내가 기억하마. 불러 보아라.',
   'only_line_note': '이 게임에서 흑월의 마지막 대사. 맺힘 15%에서 사슬을 내려놓으며 1번. 1차(B-04) "너는 아직 모른다."와 짝',
   'tendo': '★F9 + 기억 M-B12 + 시즌 1 엔딩 A판(C-12A). 사슬 대신 눈밭에 붓 한 자루(도감 수집품 "흑월의 붓", 장비 아님)',
@@ -168,6 +171,29 @@ NPCS_NEEDED = [
  {'id': 'N-603', 'name': '성문 밖 주막 노파', 'region': 6, 'zone': 'CityGate', 'for': ['B12-D2']},
 ]
 
+# 기획 3막 지도(act3_map.json, 10-25)의 좌표를 붙인다. 자리 이름은 서사가 정했고 지도가 글자 그대로 썼다.
+# 왜 지도에서 읽나: 좌표는 아트가 지형을 깔며 옮길 수 있어서, 숫자를 여기 따로 적으면 어긋난다.
+MAP = '/mnt/project-files/planning/openworld/act3/act3_map.json'
+if os.path.exists(MAP):
+    amap = json.load(open(MAP, encoding='utf-8'))
+    xy = {c['id']: c['xy'] for c in amap['boss_clues']}
+    places = amap['places']
+    for b in BOSSES.values():
+        for c in b['clues']:
+            if c['id'] in xy:
+                c['xy'] = [{'place': q['place'], 'x': q['x'], 'y': q['y']} for q in xy[c['id']]]
+    for a in amap['boss_arenas']:
+        BOSSES[a['boss']]['arena_xy'] = {'x': a['x'], 'y': a['y'], 'radius_m': a.get('radius_m')}
+    # 물때·B-12 날수는 기획 확정값을 그대로 옮긴다(서사는 뜻만 붙인다)
+    t = amap['tide']
+    WORLD['tide'] = {'cycle_min': t['cycle_min'], 'low_min': t['low_min'], 'high_min': t['high_min'],
+                     'low_tide_night': t['low_tide_night'], 'signal': t['signal']}
+    f = amap['b12_force_open']
+    BOSSES['B-12']['fight_opens'] = f['rule']
+    MAP_NOTE = '좌표 xy·arena_xy·물때·B-12 날수는 기획 act3_map.json(x=동, y=북, m)에서 붙임. 아트가 옮기면 그 파일이 우선'
+else:
+    MAP_NOTE = '3막 지도 없음(좌표 미정)'
+
 data = {
  '_설명': '3막 세계관 요약 + 보스 한(恨) 구조와 단서 사슬(초안). tools/boss_clues_act3.py로 생성. 서사 2026-10-25. 틀은 boss_clues_act2.json과 같다. 3막 지도가 나오면 좌표(xy)를 붙인다',
  'rules': {
@@ -178,7 +204,7 @@ data = {
   'cold': '추위 말 금지. 지나가는 차사의 한기는 당할미만 느낀다(당할미는 ①에만 있다)',
   'f9': 'F9의 내용(나의 정체)은 이 파일·대사·barks 어디에도 글로 쓰지 않는다. M-B12 컷신에서만',
   'npc': 'npc는 아래 npcs_needed의 제안 id. 2막처럼 이름 없이 역할로 부른다',
-  'map': '3막 지도 없음(좌표 미정). 자리 이름(place)은 서사 제안 — 기획이 지도를 그릴 때 이 이름을 그대로 쓰면 2막처럼 좌표를 자동으로 붙인다',
+  'map': MAP_NOTE,
  },
  'world': WORLD,
  'boss_clues': BOSSES,

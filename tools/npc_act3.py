@@ -42,7 +42,8 @@ NPCS = [
   'barks': {'낮': ['통행패 보이시오.'], '저녁': ['문 닫소! 서두르시오!']}},
  {'id': 'N-603', 'name': '성문 밖 주막 노파', 'region': 6, 'zone': 'CityGate', 'link_soul': None,
   'role': '성문 밖에서 사십 년 넘게 주막을 해 온 노파. 서생 이야기는 보스 단서(B12-D2) 대사로만',
-  'barks': {'낮': ['국 데워 줄까.'], '저녁': ['문 닫혔어, 자고 가.']}},
+  'barks': {'낮': ['국 데워 줄까.'], '저녁': ['문 닫혔어, 자고 가.']},
+  'special': {'B12_force_hint': '내일 밤엔 눈밭에 나가지들 마.', 'note': 'B-12 강제 개방 전날 저녁 한 번만(boss_clues_act3 B-12 force_hint)'}},
  # 별명을 말할 사람이 더 필요해서 둘을 더했다(무적 혼 천도 조건 때문 — 서사 10-25)
  {'id': 'N-604', 'name': '저잣거리 상인들', 'region': 6, 'zone': 'Market', 'link_soul': None,
   'role': '좌판 상인들. 장터 무적 혼(곰·키다리·끗발)의 별명을 말한다',
@@ -76,8 +77,32 @@ for n in NPCS:
     n['clue_lines'] = [{'clue': c['id'], 'verb': c['verb'], 'place': c['place'], **({'line': c['line'], 'line_half': c['line_half']} if c.get('line') else {})}
                        for c in CLUES.values() if c.get('npc') == n['id']]
     n['nickname_lines'] = [x['soul'] for x in nick_lines if x['npc'] == n['id']]
-    n['schedule'] = None   # 3막 지도(act3_map.json)가 나오면 2막처럼 붙인다
-    n['unlock'] = '⑤는 2막 갱도 지름길(B-07 천도) 또는 큰길로 처음 들어간 뒤 / ⑥은 ⑤를 지나 처음 들어간 뒤(기획 지도에서 확정)'
+    n['unlock'] = '3막 금줄(강둑길·큰길·갱도 출구)이 풀린 뒤 = 2막 보스 넷을 모두 처결한 밤의 다음 새벽. ⑤⑥ 순서 자유'
+
+# ───── 시간표: 기획 3막 지도(act3_map.json의 npc_schedules)의 자리·시간대를 그대로 쓴다(10-25) ─────
+# 왜: 자리·좌표는 기획 몫, 말·단서는 서사 몫. 같은 내용을 두 번 적으면 어긋난다.
+# 지도에 없는 사람(N-604·605, 서사가 별명 때문에 더함)은 schedule이 비어 있고 기획에 요청해 둔다.
+import re
+MAP = '/mnt/project-files/planning/openworld/act3/act3_map.json'
+amap = json.load(open(MAP, encoding='utf-8')) if os.path.exists(MAP) else None
+for n in NPCS:
+    key = next((k for k in (amap or {}).get('npc_schedules', {}) if k.split(' ')[0] == n['id']), None)
+    if not key:
+        n['schedule'] = None
+        continue
+    sched = []
+    for t, rows in amap['npc_schedules'][key].items():
+        for r in rows:
+            e = {'time': t, 'place': r['place'], 'x': r.get('x'), 'y': r.get('y'), 'verb': r.get('verb'), 'clue': r.get('clue')}
+            c = CLUES.get(r.get('clue'))
+            if c and c.get('line'):
+                e['line'], e['line_half'] = c['line'], c['line_half']
+            if r.get('memo'):
+                e['note'] = r['memo']
+            sched.append(e)
+    n['schedule'] = sched
+    times = {e['time'] for e in sched}
+    n['barks'] = {t: v for t, v in n['barks'].items() if t in times}  # 서 있지 않는 시간대의 말은 뺀다
 
 no_nick = [k for k, v in MEMS.items() if v['mujeok'] and not v['nickname']]
 data = {
