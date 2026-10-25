@@ -21,7 +21,15 @@ public class MiniMap : MonoBehaviour
     const float WorldM = 640f;          // 필드 한 변(m)
     const float M2P = Px / WorldM;      // 1m 당 픽셀
     const float MiniRadiusM = 40f;      // 작은 지도가 보여 주는 반지름(m). 기획 표준 반경 40m(지름 80m)
-    Texture2D baseTex, white, dot; bool ready;
+    Texture2D baseTex, white, dot, frameTex; bool ready;
+    readonly Dictionary<string, Texture2D> icons = new Dictionary<string, Texture2D>();
+    void LoadIcons() { foreach (var n in new[] { "me", "boss", "enemy", "elite", "seonang", "bridge", "ferry", "quest", "soul_lump", "soul_fresh", "soul_named", "npc" }) icons[n] = SpriteLib.Texture("ui/map_icon_" + n); }
+    // 아트 아이콘(64px 그림)을 화면 크기 sz 로 줄여 그린다. 없으면 false
+    bool Icon(string n, Vector2 c, float sz)
+    {
+        Texture2D t; if (!icons.TryGetValue(n, out t) || t == null) return false;
+        GUI.DrawTexture(new Rect(c.x - sz * 0.5f, c.y - sz * 0.5f, sz, sz), t); return true;
+    }
     [Serializable] class Item { public string n; public float x, z; public int t; }
     [Serializable] class Mark { public string kind, name; public float x, z; }
     [Serializable] class FieldFile { public Item[] items; public Mark[] markers; }
@@ -42,6 +50,21 @@ public class MiniMap : MonoBehaviour
     // ---- 바탕 그림 굽기(여러 프레임에 나눠서) ------------------------------------------
     IEnumerator Bake()
     {
+        // 아트가 그린 필드 지도(2048², 북쪽 위, 3.2px/m)가 있으면 그것을 쓴다. 없으면 아래에서 직접 굽는다(대체 수단)
+        var art = Resources.Load<TextAsset>("Map/map_field");
+        if (art != null)
+        {
+            var t = new Texture2D(2, 2, TextureFormat.RGBA32, false) { filterMode = FilterMode.Bilinear, wrapMode = TextureWrapMode.Clamp };
+            if (t.LoadImage(art.bytes, true)) { baseTex = t; ready = true; frameTex = SpriteLib.Texture("ui/minimap_frame_square_pc"); LoadIcons(); }
+        }
+        var ta0 = Resources.Load<TextAsset>("Data/field");
+        if (ready)
+        {
+            FieldFile f0 = null; if (ta0 != null) { try { f0 = JsonUtility.FromJson<FieldFile>(ta0.text); } catch { } }
+            zones.AddRange(FieldZones.Labels());
+            if (f0 != null && f0.markers != null) marks.AddRange(f0.markers);
+            yield break;
+        }
         var ta = Resources.Load<TextAsset>("Data/field");
         FieldFile f = null; if (ta != null) { try { f = JsonUtility.FromJson<FieldFile>(ta.text); } catch { } }
         zones.AddRange(FieldZones.Labels());
@@ -137,10 +160,10 @@ public class MiniMap : MonoBehaviour
         float size = Ko.TouchUI ? Mathf.Clamp(Screen.height * 0.30f, 110f, 200f) : Mathf.Clamp(Screen.height * 0.24f, 150f, 300f);
         float margin = Mathf.Max(10f, 24f * Screen.height / 1080f);
         var r = new Rect(Screen.width - size - margin, margin, size, size);
-        BottomPx = r.yMax + 4f + 28f;   // 지역 이름 줄까지 포함한 아래 끝(시계 고리가 그 밑에 놓인다)
+        BottomPx = r.yMax + size * 20f / 260f + 26f;   // 지역 이름 줄까지 포함한 아래 끝(시계 고리가 그 밑에 놓인다)
         float scale = size / (MiniRadiusM * 2f);   // px/m
         float H = CamHeading();
-        Box(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), new Color(0.05f, 0.06f, 0.09f, 0.92f));
+        if (frameTex == null) Box(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), new Color(0.05f, 0.06f, 0.09f, 0.92f));
         if (ready)
         {
             GUI.BeginClip(r);
@@ -159,10 +182,10 @@ public class MiniMap : MonoBehaviour
             GUI.EndClip();
         }
         else GUI.Label(r, "지도를 그리는 중…", small);
-        Frame(r, 2f, new Color(0.83f, 0.66f, 0.31f, 1f));   // 단청 금빛 테두리
-        Frame(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), 1.5f, new Color(0.45f, 0.1f, 0.1f, 1f));
+        if (frameTex != null) { float e = size * 20f / 260f; GUI.DrawTexture(new Rect(r.x - e, r.y - e, size + e * 2f, size + e * 2f), frameTex); }   // 아트 틀(구멍 260, 캔버스 300)
+        else { Frame(r, 2f, new Color(0.83f, 0.66f, 0.31f, 1f)); Frame(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), 1.5f, new Color(0.45f, 0.1f, 0.1f, 1f)); }
         string zn = FieldZones.CurrentName; if (string.IsNullOrEmpty(zn)) zn = "들길";
-        GUI.Label(new Rect(r.x, r.yMax + 6f, r.width, 20f), zn + "   (M 큰 지도)", small);
+        GUI.Label(new Rect(r.x, r.yMax + (frameTex != null ? size * 20f / 260f - 2f : 6f), r.width, 20f), zn + "   (M 큰 지도)", small);
     }
 
     void DrawBig()
@@ -196,10 +219,11 @@ public class MiniMap : MonoBehaviour
             var o = Rot(wx - player.Pos.x, wz - player.Pos.z, H) * scale;
             return new Vector2(cen.x + o.x, cen.y - o.y);
         };
-        Action<float, float, Color, float> D = (wx, wz, col, sz) =>
+        Action<float, float, Color, float, string> D = (wx, wz, col, sz, ic) =>
         {
             var p = toScreen(wx, wz); if (!p.HasValue) return;
             var v = p.Value; if (!big) { if (Mathf.Abs(v.x - cen.x) > half - 3f || Mathf.Abs(v.y - cen.y) > half - 3f) return; }
+            if (ic != null && Icon(ic, v, sz * 1.6f)) return;   // 아트 아이콘은 먹 테두리 때문에 조금 키워야 같은 크기로 읽힌다
             var o = GUI.color; GUI.color = col; GUI.DrawTexture(new Rect(v.x - sz * 0.5f, v.y - sz * 0.5f, sz, sz), dot); GUI.color = o;
         };
         float s = big ? 7f : 6f;
@@ -209,23 +233,24 @@ public class MiniMap : MonoBehaviour
             Color col = m.kind == "seonang" ? new Color(0.45f, 0.95f, 0.85f) : m.kind == "village" ? new Color(1f, 0.85f, 0.4f) : m.kind == "doctor" ? new Color(0.5f, 0.9f, 0.5f) : new Color(0.85f, 0.85f, 0.95f);
             var p = toScreen(m.x, m.z); if (!p.HasValue) continue;
             var v = p.Value; if (!big && (Mathf.Abs(v.x - cen.x) > half - 4f || Mathf.Abs(v.y - cen.y) > half - 4f)) continue;
-            Box(new Rect(v.x - 5, v.y - 5, 10, 10), new Color(0.05f, 0.05f, 0.08f, 0.9f)); Box(new Rect(v.x - 3.5f, v.y - 3.5f, 7, 7), col);
+            string mi = m.kind == "seonang" ? "seonang" : m.kind == "bridge" ? "bridge" : m.kind == "ferry" ? "ferry" : (m.kind == "village" || m.kind == "doctor") ? "npc" : null;
+            if (mi == null || !Icon(mi, v, 17f)) { Box(new Rect(v.x - 5, v.y - 5, 10, 10), new Color(0.05f, 0.06f, 0.08f, 0.9f)); Box(new Rect(v.x - 3.5f, v.y - 3.5f, 7, 7), col); }
             if (big) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(1, 1, 1, 0.9f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white; }
         }
         // 보스(붉은 마름모) — 아직 안 나타났어도 자리를 표시한다
-        for (int id = 1; id <= Bosses.Count; id++) { var bd = Bosses.Get(id); D(bd.X, bd.Z, new Color(0.95f, 0.15f, 0.12f), s + 6f); }
+        for (int id = 1; id <= Bosses.Count; id++) { var bd = Bosses.Get(id); D(bd.X, bd.Z, new Color(0.95f, 0.15f, 0.12f), s + 6f, "boss"); }
         // 켜진 단서 자리
-        if (judge.npcs != null) { tmp.Clear(); judge.npcs.PendingClues(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(1f, 0.85f, 0.2f), s + 2f); }
+        if (judge.npcs != null) { tmp.Clear(); judge.npcs.PendingClues(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(1f, 0.85f, 0.2f), s + 2f, "quest"); }
         // 이름혼
-        if (judge.named != null) { tmp.Clear(); judge.named.PendingPositions(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(0.4f, 1f, 0.85f), s + 1f); }
+        if (judge.named != null) { tmp.Clear(); judge.named.PendingPositions(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(0.4f, 1f, 0.85f), s + 1f, "soul_named"); }
         // 혼
         foreach (var e in judge.enemies.list)
         {
             if (e == null || e.gone) continue;
-            if (e.soul.Boss) { D(e.Pos.x, e.Pos.z, new Color(1f, 0.3f, 0.25f), s + 6f); continue; }
+            if (e.soul.Boss) { D(e.Pos.x, e.Pos.z, new Color(1f, 0.3f, 0.25f), s + 6f, "boss"); continue; }
             Color col = e.kneeling ? new Color(1f, 0.85f, 0.35f) : e.soul.Kind == SoulKind.Lump ? new Color(0.7f, 0.4f, 0.95f) : new Color(0.95f, 0.3f, 0.3f);
             if (!e.Targetable) continue;   // 땅속 혼은 지도에도 안 보인다
-            D(e.Pos.x, e.Pos.z, col, s - 1f);
+            D(e.Pos.x, e.Pos.z, col, s - 1f, e.kneeling ? "soul_fresh" : e.soul.Kind == SoulKind.Lump ? "soul_lump" : "enemy");
         }
         // 나: 흰 화살표(카메라 기준 방향)
         var me = toScreen(player.Pos.x, player.Pos.z).Value;
@@ -233,8 +258,8 @@ public class MiniMap : MonoBehaviour
         float fh = Mathf.Atan2(Mathf.Cos(face), Mathf.Sin(face));   // 북(+z)에서 시계 방향 각도
         float ang = (big ? fh : fh - H) * Mathf.Rad2Deg;
         var old = GUI.matrix; GUIUtility.RotateAroundPivot(ang, me);
-        GUI.color = Color.black; GUI.DrawTexture(new Rect(me.x - 7, me.y - 9, 14, 18), dot); GUI.color = Color.white;
-        DrawArrow(me); GUI.matrix = old;
+        if (!Icon("me", me, 24f)) { GUI.color = Color.black; GUI.DrawTexture(new Rect(me.x - 7, me.y - 9, 14, 18), dot); GUI.color = Color.white; DrawArrow(me); }
+        GUI.matrix = old;
     }
 
     // 삼각형 화살표(위쪽이 앞): 작은 네모 여러 줄로 그린다(텍스처 없이)
