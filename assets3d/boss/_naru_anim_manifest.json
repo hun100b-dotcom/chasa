@@ -27,6 +27,77 @@
     "hit": 8,
     "swing_end": 14
    }
+  },
+  {
+   "name": "Hit1",
+   "frames": 11,
+   "length_sec": 0.167,
+   "loop": false,
+   "events": {
+    "peak": 2
+   }
+  },
+  {
+   "name": "Hit2",
+   "frames": 19,
+   "length_sec": 0.3,
+   "loop": false,
+   "events": {
+    "peak": 3,
+    "rebound": 8
+   }
+  },
+  {
+   "name": "Stagger",
+   "frames": 37,
+   "length_sec": 0.6,
+   "loop": false,
+   "events": {
+    "peak": 5,
+    "sway_peaks": [
+     12,
+     20,
+     28
+    ]
+   }
+  },
+  {
+   "name": "Kneel",
+   "frames": 61,
+   "length_sec": 1.0,
+   "loop": false,
+   "events": {
+    "thud": 26,
+    "end_pose_held": true
+   }
+  },
+  {
+   "name": "KneelHold",
+   "frames": 121,
+   "length_sec": 2.0,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "Tendo",
+   "frames": 211,
+   "length_sec": 3.5,
+   "loop": false,
+   "events": {
+    "stand_up": 60,
+    "pole_set": 110,
+    "bow": 170,
+    "dissolve": 210
+   }
+  },
+  {
+   "name": "Pahon",
+   "frames": 121,
+   "length_sec": 2.0,
+   "loop": false,
+   "events": {
+    "blast": 6
+   }
   }
  ],
  "verify": {
@@ -36,8 +107,15 @@
   "animations": [
    "Idle",
    "Windup",
-   "Swing"
+   "Swing",
+   "Hit1",
+   "Hit2",
+   "Stagger",
+   "Kneel",
+   "KneelHold",
+   "Tendo",
+   "Pahon"
   ],
-  "size_kb": 98
+  "size_kb": 186
  }
 }

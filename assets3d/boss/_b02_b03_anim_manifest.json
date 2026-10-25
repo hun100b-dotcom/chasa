@@ -109,6 +109,39 @@
      "length_sec": 0.333,
      "loop": false,
      "events": {}
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5,
+      "sway_peaks": [
+       12,
+       20,
+       28
+      ]
+     }
     }
    ],
    "verify": {
@@ -125,9 +158,12 @@
      "KneelHold",
      "Tendo",
      "Pahon",
-     "Hurt"
+     "Hurt",
+     "Hit1",
+     "Hit2",
+     "Stagger"
     ],
-    "size_kb": 296
+    "size_kb": 315
    }
   },
   {
@@ -251,6 +287,39 @@
      "length_sec": 0.333,
      "loop": false,
      "events": {}
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5,
+      "sway_peaks": [
+       12,
+       20,
+       28
+      ]
+     }
     }
    ],
    "verify": {
@@ -268,9 +337,12 @@
      "KneelHold",
      "Tendo",
      "Pahon",
-     "Hurt"
+     "Hurt",
+     "Hit1",
+     "Hit2",
+     "Stagger"
     ],
-    "size_kb": 302
+    "size_kb": 326
    }
   }
  ]

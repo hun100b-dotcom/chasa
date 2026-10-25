@@ -43,11 +43,78 @@
     },
     {
      "name": "Kneel",
-     "frames": 41,
-     "length_sec": 0.667,
+     "frames": 37,
+     "length_sec": 0.6,
      "loop": false,
      "events": {
+      "thud": 14,
+      "bounce": 19,
       "end_pose_held": true
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2,
+      "recover_start": 5,
+      "knockback_hint_m": 1.0
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 17,
+     "length_sec": 0.267,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 7,
+      "recover_start": 11,
+      "knockback_hint_m": 1.3
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "peak": 4,
+      "sway_peaks": [
+       9,
+       14,
+       19,
+       24
+      ],
+      "recover_start": 24,
+      "knockback_hint_m": 3.5
+     }
+    },
+    {
+     "name": "Tendo",
+     "frames": 48,
+     "length_sec": 0.783,
+     "loop": false,
+     "events": {
+      "lift": 10,
+      "glow": 24,
+      "burst": 36,
+      "gone": 47,
+      "hide_after": 47
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "crack": 5,
+      "shatter": 9,
+      "gone": 13,
+      "hide_after": 13
      }
     }
    ],
@@ -90,11 +157,78 @@
     },
     {
      "name": "Kneel",
-     "frames": 25,
-     "length_sec": 0.4,
+     "frames": 37,
+     "length_sec": 0.6,
      "loop": false,
      "events": {
+      "thud": 14,
+      "bounce": 19,
       "end_pose_held": true
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2,
+      "recover_start": 5,
+      "knockback_hint_m": 1.0
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 17,
+     "length_sec": 0.267,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 7,
+      "recover_start": 11,
+      "knockback_hint_m": 1.3
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "peak": 4,
+      "sway_peaks": [
+       9,
+       14,
+       19,
+       24
+      ],
+      "recover_start": 24,
+      "knockback_hint_m": 3.5
+     }
+    },
+    {
+     "name": "Tendo",
+     "frames": 48,
+     "length_sec": 0.783,
+     "loop": false,
+     "events": {
+      "lift": 10,
+      "glow": 24,
+      "burst": 36,
+      "gone": 47,
+      "hide_after": 47
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "crack": 5,
+      "shatter": 9,
+      "gone": 13,
+      "hide_after": 13
      }
     }
    ],
@@ -137,10 +271,12 @@
     },
     {
      "name": "Kneel",
-     "frames": 41,
-     "length_sec": 0.667,
+     "frames": 37,
+     "length_sec": 0.6,
      "loop": false,
      "events": {
+      "thud": 14,
+      "bounce": 19,
       "end_pose_held": true
      }
     },
@@ -151,6 +287,71 @@
      "loop": false,
      "events": {
       "ground_dust_at": 22
+     }
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2,
+      "recover_start": 5,
+      "knockback_hint_m": 1.0
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 17,
+     "length_sec": 0.267,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 7,
+      "recover_start": 11,
+      "knockback_hint_m": 1.3
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "peak": 4,
+      "sway_peaks": [
+       9,
+       14,
+       19,
+       24
+      ],
+      "recover_start": 24,
+      "knockback_hint_m": 3.5
+     }
+    },
+    {
+     "name": "Tendo",
+     "frames": 48,
+     "length_sec": 0.783,
+     "loop": false,
+     "events": {
+      "lift": 10,
+      "glow": 24,
+      "burst": 36,
+      "gone": 47,
+      "hide_after": 47
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "crack": 5,
+      "shatter": 9,
+      "gone": 13,
+      "hide_after": 13
      }
     }
    ],
@@ -180,9 +381,14 @@
     "Float",
     "Windup",
     "Attack",
-    "Kneel"
+    "Kneel",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 110
+   "size_kb": 132
   },
   {
    "file": "soul_wail_day.glb",
@@ -192,9 +398,14 @@
     "Float",
     "Windup",
     "Attack",
-    "Kneel"
+    "Kneel",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 110
+   "size_kb": 132
   },
   {
    "file": "soul_wail_old.glb",
@@ -204,9 +415,14 @@
     "Float",
     "Windup",
     "Attack",
-    "Kneel"
+    "Kneel",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 110
+   "size_kb": 132
   },
   {
    "file": "soul_wail_lump.glb",
@@ -216,9 +432,14 @@
     "Float",
     "Windup",
     "Attack",
-    "Kneel"
+    "Kneel",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 110
+   "size_kb": 132
   },
   {
    "file": "soul_mote_fresh.glb",
@@ -228,9 +449,14 @@
     "Float",
     "Windup",
     "Attack",
-    "Kneel"
+    "Kneel",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 44
+   "size_kb": 56
   },
   {
    "file": "soul_mote_day.glb",
@@ -240,9 +466,14 @@
     "Float",
     "Windup",
     "Attack",
-    "Kneel"
+    "Kneel",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 44
+   "size_kb": 56
   },
   {
    "file": "soul_mote_old.glb",
@@ -252,9 +483,14 @@
     "Float",
     "Windup",
     "Attack",
-    "Kneel"
+    "Kneel",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 44
+   "size_kb": 56
   },
   {
    "file": "soul_mote_lump.glb",
@@ -264,9 +500,14 @@
     "Float",
     "Windup",
     "Attack",
-    "Kneel"
+    "Kneel",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 44
+   "size_kb": 56
   },
   {
    "file": "soul_buried_fresh.glb",
@@ -277,9 +518,14 @@
     "Windup",
     "Attack",
     "Kneel",
-    "Sink"
+    "Sink",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 134
+   "size_kb": 157
   },
   {
    "file": "soul_buried_day.glb",
@@ -290,9 +536,14 @@
     "Windup",
     "Attack",
     "Kneel",
-    "Sink"
+    "Sink",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 134
+   "size_kb": 156
   },
   {
    "file": "soul_buried_old.glb",
@@ -303,9 +554,14 @@
     "Windup",
     "Attack",
     "Kneel",
-    "Sink"
+    "Sink",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 134
+   "size_kb": 156
   },
   {
    "file": "soul_buried_lump.glb",
@@ -316,9 +572,14 @@
     "Windup",
     "Attack",
     "Kneel",
-    "Sink"
+    "Sink",
+    "Hit1",
+    "Hit2",
+    "Stagger",
+    "Tendo",
+    "Pahon"
    ],
-   "size_kb": 134
+   "size_kb": 157
   }
  ]
 }

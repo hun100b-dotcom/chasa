@@ -122,6 +122,10 @@ def wol_clips():
     # 파혼 2.5초: 폭발에 젖혀져 팔이 흩어진 뒤 주저앉는다
     C["Pahon"] = ([(0, a), (6, pose(lup=70, rup=70, lean=-20, nod=-18, hz=0, lh=-60)), (30, pose(lup=60, rup=60, lean=-14, nod=-12, drop=-0.05)), (90, pose(lup=-20, rup=-20, lean=18, nod=20, drop=-0.45)), (150, pose(lup=-30, rup=-30, lean=20, nod=22, drop=-0.62))], "BEZIER", False, {"blast": 6})
     C["Hurt"] = ([(0, a), (5, pose(lean=-10, nod=-8, lup=8, rup=8)), (20, a)], "BEZIER", False, {})
+    # 맞는 쪽 손맛(10-25): Hit1 움찔 10f / Hit2 밀려남 18f / Stagger 크게 휘청 36f. 보스는 무거워서 위치는 안 움직이고(코드 넉백 0 권장) 몸통·머리만 반응한다. 0번 프레임은 히트스톱에 멈춰 보일 '맞은 직후' 자세.
+    C["Hit1"] = ([(0, pose(lean=-4, nod=-3)), (2, pose(lean=-6, nod=-5, lup=4, rup=4)), (10, a)], "BEZIER", False, {"peak": 2})
+    C["Hit2"] = ([(0, pose(lean=-7, nod=-6)), (3, pose(lean=-14, nod=-12, lup=12, rup=12, drop=-0.04)), (8, pose(lean=4, nod=3)), (18, a)], "BEZIER", False, {"peak": 3, "rebound": 8})
+    C["Stagger"] = ([(0, pose(lean=-11, nod=-9)), (5, pose(lean=-22, nod=-18, lup=30, rup=30, drop=-0.1, hturn=-8)), (12, pose(lean=8, nod=8, drop=-0.05, hturn=6, lup=10, rup=10)), (20, pose(lean=-8, nod=-6, hturn=-4)), (28, pose(lean=3, nod=2)), (36, a)], "BEZIER", False, {"peak": 5, "sway_peaks": [12, 20, 28]})
     return C
 
 def seo_clips():
@@ -160,6 +164,10 @@ def seo_clips():
     # 파혼: 약장이 터진다(몸은 젖혀지고 서랍이 튀어나옴)
     C["Pahon"] = ([(0, a), (6, pose(lean=-22, nod=-18, rup=60, lup=60, slide=0.3, case=14)), (30, pose(lean=-12, nod=-10, rup=40, lup=40, slide=0.3, case=10)), (90, pose(lean=18, nod=20, drop=-0.3, rup=10, lup=10, slide=0.3)), (150, pose(lean=22, nod=24, drop=-0.55, rup=15, lup=15, slide=0.3))], "BEZIER", False, {"burst": 6})
     C["Hurt"] = ([(0, a), (5, pose(lean=-9, nod=-7, case=6)), (20, a)], "BEZIER", False, {})
+    # 맞는 쪽 손맛(10-25): Hit1 움찔 10f / Hit2 밀려남 18f / Stagger 크게 휘청 36f. 보스는 무거워서 위치는 안 움직이고(코드 넉백 0 권장) 몸통·머리만 반응한다. 0번 프레임은 히트스톱에 멈춰 보일 '맞은 직후' 자세.
+    C["Hit1"] = ([(0, pose(lean=-4, nod=-3)), (2, pose(lean=-6, nod=-5, lup=4, rup=4, case=5)), (10, a)], "BEZIER", False, {"peak": 2})
+    C["Hit2"] = ([(0, pose(lean=-7, nod=-6)), (3, pose(lean=-14, nod=-12, lup=12, rup=12, drop=-0.04, case=5)), (8, pose(lean=4, nod=3)), (18, a)], "BEZIER", False, {"peak": 3, "rebound": 8})
+    C["Stagger"] = ([(0, pose(lean=-11, nod=-9)), (5, pose(lean=-22, nod=-18, lup=30, rup=30, drop=-0.1, hturn=-8, case=5)), (12, pose(lean=8, nod=8, drop=-0.05, hturn=6, lup=10, rup=10)), (20, pose(lean=-8, nod=-6, hturn=-4)), (28, pose(lean=3, nod=2)), (36, a)], "BEZIER", False, {"peak": 5, "sway_peaks": [12, 20, 28]})
     return C
 
 BOSS = [("boss_b02_wolhwa", wolhwa, bones_wolhwa, wol_clips, 2.1), ("boss_b03_seo", seo, bones_seo, seo_clips, 2.0)]

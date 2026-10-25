@@ -1,0 +1,21 @@
+{
+ "fps": 60,
+ "clip": {
+  "name": "Burst",
+  "frames": 41,
+  "length_sec": 0.667,
+  "loop": false,
+  "events": {
+   "gone": 40
+  }
+ },
+ "verify": {
+  "file": "fx_hon_shards.glb",
+  "skins": 1,
+  "joints": 15,
+  "animations": [
+   "Burst"
+  ],
+  "size_kb": 47
+ }
+}
