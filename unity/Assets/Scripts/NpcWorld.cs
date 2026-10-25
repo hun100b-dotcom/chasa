@@ -42,6 +42,7 @@ public class NpcWorld
     readonly System.Func<int> nightNo;                   // 지금이 몇 번째 밤인가(NPC 등장 조건)
     int builtPhase = -1, builtNight = -1;
     HashSet<string> heard = new HashSet<string>();       // 오늘(이 시간대) 이미 들은 자리
+    public System.Action onClue;                         // 단서를 처음 얻었을 때(안내용)
     public string Subtitle; public float SubtitleT;      // JudgeSystem 이 화면에 그린다
 
     public NpcWorld(ClueBook book, System.Func<int> karma, System.Func<int> nightNo)
@@ -144,6 +145,7 @@ public class NpcWorld
         if (!string.IsNullOrEmpty(s.clue) && book.Add(s.clue))
         {
             Sfx.Play("sfx.clue");
+            if (onClue != null) onClue();
             if (s.view != null) s.view.GetComponent<Renderer>().sharedMaterial = U.Matte(new Color(0.85f, 0.78f, 0.62f));   // 얻었으니 보랏빛이 꺼진다
         }
     }

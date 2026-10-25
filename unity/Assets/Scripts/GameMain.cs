@@ -61,6 +61,7 @@ public class GameMain : MonoBehaviour
             judge.camps = new FieldCamps(enemies);
             judge.clock = new WorldClock();
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
+            judge.npcs.onClue = () => judge.HintClue();
             judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)
             var cu = (Application.absoluteURL ?? "").ToLowerInvariant();
             int ci = cu.IndexOf("clock=");

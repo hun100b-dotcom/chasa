@@ -208,6 +208,7 @@ public class JudgeSystem : MonoBehaviour
     void OnEnemyKneel(Enemy e)
     {
         Sfx.Play("sfx.kneel");   // 무릎 꿇는 소리 = '지금 고를 때'
+        Hint(HintEvent.FirstKneel);
         if (e.soul.Boss) cuts.Play("B01-KNEEL");   // 영감: "아직… 못 건넸소."
         // 검은 술: 무릎 꿇은 혼의 대기 시간이 짧아진다 (덩어리는 제외, 최소 WAIT_FLOOR)
         if (!e.soul.Boss && e.soul.State == SoulState.Kneel)
@@ -334,6 +335,7 @@ public class JudgeSystem : MonoBehaviour
         // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
         int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult)) : by.damage;
         sinceHit = 0f;
+        Hint(HintEvent.FirstHurt);
         Sfx.Play("sfx.player.hurt");
         int dealt = godMode ? 0 : ledger.TakeDamage(incoming);
         numbers.Spawn(player.Pos + Vector3.up * 2f, dealt, "heavy");
@@ -492,6 +494,7 @@ public class JudgeSystem : MonoBehaviour
         if (ph.HasValue)
         {
             Sfx.Play("sfx.bell");
+            if (ph.Value == ClockPhase.Night) Hint(HintEvent.FirstNightfall);
             string n = WorldClock.PhaseName(ph.Value);
             if (ph.Value == ClockPhase.Dawn)
                 foreach (var e in enemies.list) if (e.kneeling) { e.soul.Finish(); Say("동이 터 처결 못 한 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
@@ -614,12 +617,16 @@ public class JudgeSystem : MonoBehaviour
     public System.Action<Vector3> onTeleport;   // 넋길로 순간이동했을 때 카메라가 따라가게 GameMain 이 받는다
     public readonly MemoryLines memories = new MemoryLines();   // 천도 기억 한 줄
     public string memLine; public float memLineT;              // 지금 화면에 띄울 기억 줄(보랏빛 자막)
+    public readonly TutorialHints hints = new TutorialHints();   // 처음 한 번만 뜨는 안내
+    public void HintClue() { Hint(HintEvent.FirstClue); }
+    void Hint(HintEvent e) { var t = hints.On(e, Ko.TouchUI); if (t != null) ui?.Hud.Toasts.Add(t); }
     public readonly CutscenePlayer cuts = new CutscenePlayer();   // 나루 영감 실시간 컷신
     bool bossIntroChecked;
     public NpcWorld npcs;                       // 필드의 산 사람(엿듣기·지켜보기)
     public readonly ClueBook clueBook = new ClueBook();
     public WorldClock clock;   // 필드 모드의 흐르는 하루 (없으면 옛 '하룻밤 한 판')
     public FieldCamps camps;   // 필드 모드에서만 있다
+    Vector3? moveRef;      // 처음 선 자리(걷기 안내 판단용)
     SoulMarkers soulMarkers;
     void LateUpdate()
     {
@@ -664,6 +671,7 @@ public class JudgeSystem : MonoBehaviour
     void FillEdges(HudState h)
     {
         h.Edges.Clear();
+        if (moveRef == null) { moveRef = player.Pos; Hint(HintEvent.FirstMove); }   // 시작하자마자 걷기·공격 안내 한 번
         var cam = Camera.main; if (cam == null || inDay || night.Over) return;
         float w = Screen.width, hh = Screen.height;
         float diag = Mathf.Sqrt(w * w + hh * hh);
@@ -675,7 +683,7 @@ public class JudgeSystem : MonoBehaviour
             if (sp.z < 0f) { sp.x = w - sp.x; sp.y = hh - sp.y; }   // 카메라 뒤쪽이면 반대편으로 뒤집어 방향만 맞춘다
             float ex, ey;
             if (EdgeWarn.Compute(sp.x, hh - sp.y, w, hh, 48f, vr, out ex, out ey))   // 화면 y 는 위로 갈수록 커서 UI 좌표로 뒤집는다
-                h.Edges.Add(new EdgeMark { Nx = ex / w, Ny = ey / hh });
+            { h.Edges.Add(new EdgeMark { Nx = ex / w, Ny = ey / hh }); Hint(HintEvent.FirstEdgeWarn); }
         }
     }
 

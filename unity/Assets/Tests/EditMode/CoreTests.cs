@@ -1492,4 +1492,23 @@ public class CoreTests
         p.Tick(0.3f); Assert.AreEqual(1f, p.ShakeRequest, 1e-4f);
         p.ShakeRequest = 0f; p.Tick(0.3f); Assert.AreEqual(0f, p.ShakeRequest);
     }
+
+    // ---------- 안내 문구 틀 (8단계) ----------
+    [Test]
+    public void Hints_ShowOnlyOnce_AndTouchDiffers()
+    {
+        var h = new TutorialHints();
+        var key = h.On(HintEvent.FirstKneel, false);
+        Assert.IsNotNull(key);
+        Assert.IsNull(h.On(HintEvent.FirstKneel, false));                      // 두 번째는 없음
+        var t2 = new TutorialHints().On(HintEvent.FirstKneel, true);
+        Assert.AreNotEqual(key, t2);                                           // 폰은 버튼 이름으로
+    }
+
+    [Test]
+    public void Hints_DisabledShowsNothing()
+    {
+        var h = new TutorialHints { Enabled = false };
+        Assert.IsNull(h.On(HintEvent.FirstMove, false));
+    }
 }
