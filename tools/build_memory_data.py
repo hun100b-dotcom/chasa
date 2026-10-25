@@ -10,7 +10,7 @@ s = json.load(open(os.path.join(root, "data", "memories_act1.json"), encoding="u
 out = {
     "fresh": s["generic"]["fresh"], "year": s["generic"]["year"], "old": s["generic"]["old"],
     "souls": [{"name": x["name"], "memory": x["memory"], "tint": x.get("tint", ""), "fact": x.get("fact", ""),
-               "mystery": bool(x.get("mystery")), "decisive": bool(x.get("decisive")), "boss": bool(x.get("boss"))}
+               "mystery": bool(x.get("mystery")), "decisive": bool(x.get("decisive")), "boss": bool(x.get("boss")), "jesa": x.get("jesa_extra") or ""}
               for x in s["souls"]],
 }
 path = os.path.join(root, "unity", "Assets", "Resources", "Data", "memory_flat.json")

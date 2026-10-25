@@ -11,6 +11,7 @@
    "background": "큰물 밤"
   },
   "generic": "이름 없는 무작위 혼은 generic 줄에서 뽑는다(미스터리 없음, 한 판에 한 줄 한 번)",
+  "jesa_extra": "낮에 그 집 제사를 지켜본 뒤 천도하면 기억 끝에 덧붙는 한 줄. 기억 조각 수에 세지 않는다. 장례 대상 이름혼만 있다",
   "pahon": "파혼하면 기억 조각 없음, 그 혼의 fact 출처 하나를 잃는다(추리판에 번진 먹 자국)"
  },
  "souls": [
@@ -33,7 +34,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "용득이 놈이 집게를 거꾸로 쥐더라. 한 번 더 가르쳐 줄걸."
   },
   {
    "id": "S-002",
@@ -54,7 +56,8 @@
    "mystery_axis": "background",
    "decisive": false,
    "weight": "main",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "그래도 메는 날마다 지었다. 식으면 내가 먹고, 이튿날 또 지었다."
   },
   {
    "id": "S-003",
@@ -75,7 +78,8 @@
    "mystery_axis": null,
    "decisive": false,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "떡은 상가에 두고 왔다. 누가 먹었는지 몰라도 시루는 비어 있었다."
   },
   {
    "id": "S-004",
@@ -96,7 +100,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "개 이름은 누렁이. 내가 지었다. 부르면 그놈은 꼭 돌아봤다."
   },
   {
    "id": "S-005",
@@ -117,7 +122,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "졸던 녀석 이름부터 불렀지. 그놈이 제일 크게 대답했다."
   },
   {
    "id": "S-006",
@@ -138,7 +144,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-007",
@@ -159,7 +166,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-008",
@@ -180,7 +188,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-009",
@@ -201,7 +210,8 @@
    "mystery_axis": "self",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-010",
@@ -222,7 +232,8 @@
    "mystery_axis": null,
    "decisive": false,
    "weight": "boss",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-011",
@@ -243,7 +254,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-012",
@@ -264,7 +276,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-013",
@@ -285,7 +298,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-014",
@@ -306,7 +320,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-015",
@@ -327,7 +342,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-016",
@@ -348,7 +364,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "side",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-017",
@@ -369,7 +386,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "B-01",
@@ -390,7 +408,8 @@
    "mystery_axis": "main",
    "decisive": true,
    "weight": "decisive",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "B-02",
@@ -411,7 +430,8 @@
    "mystery_axis": "main",
    "decisive": true,
    "weight": "decisive",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-019",
@@ -432,7 +452,8 @@
    "mystery_axis": null,
    "decisive": false,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "가위는 꼭지 놈 주려고 했다. 손이 작아 아직 못 쥐겠지만."
   },
   {
    "id": "S-020",
@@ -453,7 +474,8 @@
    "mystery_axis": null,
    "decisive": false,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "장부 태운 연기가 쪽빛이었다. 곱다고, 그 생각만 했다."
   },
   {
    "id": "S-021",
@@ -474,7 +496,8 @@
    "mystery_axis": "mirror",
    "decisive": false,
    "weight": "main",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "섭섭이한테 국 간은 짜게 하라 일렀다. 일하는 사람들 입이니까."
   },
   {
    "id": "S-022",
@@ -495,7 +518,8 @@
    "mystery_axis": "mirror",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-023",
@@ -516,7 +540,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-024",
@@ -537,7 +562,8 @@
    "mystery_axis": "mirror",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-025",
@@ -558,7 +584,8 @@
    "mystery_axis": "mirror",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-026",
@@ -579,7 +606,8 @@
    "mystery_axis": "mirror",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-027",
@@ -600,7 +628,8 @@
    "mystery_axis": "mirror",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-028",
@@ -621,7 +650,8 @@
    "mystery_axis": "mirror",
    "decisive": false,
    "weight": "side",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-029",
@@ -642,7 +672,8 @@
    "mystery_axis": null,
    "decisive": false,
    "weight": "side",
-   "funeral": true
+   "funeral": true,
+   "jesa_extra": "마지막 장날엔 북을 오래 쳤다. 팔이 저리도록. 그날은 그러고 싶었다."
   },
   {
    "id": "S-030",
@@ -663,7 +694,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-031",
@@ -684,7 +716,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-032",
@@ -705,7 +738,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-033",
@@ -726,7 +760,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-034",
@@ -747,7 +782,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-035",
@@ -768,7 +804,8 @@
    "mystery_axis": "main",
    "decisive": false,
    "weight": "main",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "S-036",
@@ -789,7 +826,8 @@
    "mystery_axis": null,
    "decisive": false,
    "weight": "boss",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   },
   {
    "id": "B-03",
@@ -810,7 +848,8 @@
    "mystery_axis": "mirror",
    "decisive": true,
    "weight": "decisive",
-   "funeral": false
+   "funeral": false,
+   "jesa_extra": null
   }
  ],
  "generic": {

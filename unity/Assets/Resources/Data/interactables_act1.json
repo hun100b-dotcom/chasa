@@ -1,31 +1,526 @@
 {
-  "_설명": "1막 F 상호작용 물건 배치(기획 v1, 2026-10-25). 규칙은 planning/controls/npc-interaction-spec.md §2와 planning/data/interactables-act1.md. 좌표는 필드 x,z(m). 코드가 MapLayout.PushOut과 여유 폭 지도로 가장 가까운 걸을 수 있는 자리로 붙인다. name_ok=false는 서사 확인 대기(이름·모양만 바뀔 수 있고 규칙은 그대로).",
-  "_version": 1,
-  "clue_objects": [
-    {"id": "B01-D2", "kind": "touch", "x": 393.0, "z": 289.0, "place": "물막이 골 갈대 속 부러진 삿대", "model": "prop_broken_pole", "when": "언제나", "gives": {"clue": "B01-D2"}, "text": "칼금 열한 개. 열두 번째는 반만 그어져 있다.", "opens_after": "Ravine 첫 밤 진입 다음 낮"},
-    {"id": "B02-D3", "kind": "touch", "x": 580.0, "z": 531.5, "place": "폐당집 굿상", "model": "prop_gut_table", "when": "낮", "gives": {"clue": "B02-D3"}, "text": "엎어진 잔 하나. 열두째 자리다.", "opens_after": "Shrine 첫 밤 진입 다음 낮"},
-    {"id": "B03-D3", "kind": "touch", "x": 36.0, "z": 330.0, "place": "동헌 터 탄 문서함", "model": "prop_burnt_docbox", "when": "낮", "gives": {"clue": "B03-D3"}, "text": "그은 줄들 끝에 한 줄만 반듯하다. '의원 서○○ 순직'.", "opens_after": "Plague 첫 밤 진입 다음 낮"}
-  ],
-  "keepsakes": [
-    {"id": "K-001", "soul": "S-001", "soul_name": "박돌쇠", "x": 221.5, "z": 64.0, "model": "prop_keep_tongs", "name": "식은 집게", "name_ok": false, "from_memory": "M-001 풀무·쇳물"},
-    {"id": "K-002", "soul": "S-002", "soul_name": "윤 소사", "x": 190.5, "z": 57.0, "model": "prop_keep_bowl", "name": "덮은 밥그릇", "name_ok": false, "from_memory": "M-002 제삿밥"},
-    {"id": "K-003", "soul": "S-003", "soul_name": "연이", "x": 204.0, "z": 51.5, "model": "prop_keep_steamer", "name": "식은 떡시루", "name_ok": false, "from_memory": "M-003 떡"},
-    {"id": "K-006", "soul": "S-006", "soul_name": "장 둑지기", "x": 296.0, "z": 118.0, "model": "prop_keep_lamp", "name": "꺼진 둑 등잔", "name_ok": false, "from_memory": "M-006 나룻불"},
-    {"id": "K-010", "soul": "S-010", "soul_name": "곽 뱃꾼", "x": 386.0, "z": 296.0, "model": "prop_keep_oar", "name": "부러진 노 손잡이", "name_ok": false, "from_memory": "M-010 노"},
-    {"id": "K-011", "soul": "S-011", "soul_name": "방물장수 막례", "x": 401.0, "z": 308.0, "model": "prop_keep_bundle", "name": "젖은 비단 보따리", "name_ok": false, "from_memory": "M-011 비단 남색"}
-  ],
-  "coin_bundles": [
-    {"id": "C-01", "x": 205.0, "z": 72.0, "coin": 20, "hint": "솔고개 강가 빨래터 돌 밑"},
-    {"id": "C-02", "x": 246.0, "z": 96.0, "coin": 20, "hint": "솔고개→보릿들 길가 장승 뒤"},
-    {"id": "C-03", "x": 318.0, "z": 140.0, "coin": 20, "hint": "보릿들 허물어진 원두막"},
-    {"id": "C-04", "x": 372.0, "z": 250.0, "coin": 20, "hint": "물막이 골 내려가는 비탈 바위틈"},
-    {"id": "C-05", "x": 420.0, "z": 335.0, "coin": 20, "hint": "물막이 골 방앗간 뒤"},
-    {"id": "C-06", "x": 560.0, "z": 510.0, "coin": 20, "hint": "폐당집 아래 무너진 돌담"}
-  ],
-  "herbs": [
-    {"id": "H-01", "x": 176.0, "z": 30.0}, {"id": "H-02", "x": 210.0, "z": 80.0},
-    {"id": "H-03", "x": 236.0, "z": 58.0}, {"id": "H-04", "x": 270.0, "z": 104.0},
-    {"id": "H-05", "x": 284.0, "z": 128.0}, {"id": "H-06", "x": 312.0, "z": 100.0},
-    {"id": "H-07", "x": 352.0, "z": 230.0}, {"id": "H-08", "x": 388.0, "z": 318.0}
-  ]
+ "_설명": "1막 F 상호작용 물건 배치(기획 v1, 2026-10-25). 규칙은 planning/controls/npc-interaction-spec.md §2와 planning/data/interactables-act1.md. 좌표는 필드 x,z(m). 코드가 MapLayout.PushOut과 여유 폭 지도로 가장 가까운 걸을 수 있는 자리로 붙인다. name_ok=false는 서사 확인 대기(이름·모양만 바뀔 수 있고 규칙은 그대로).",
+ "_version": 1,
+ "clue_objects": [
+  {
+   "id": "B01-D2",
+   "kind": "touch",
+   "x": 393.0,
+   "z": 289.0,
+   "place": "물막이 골 갈대 속 부러진 삿대",
+   "model": "prop_broken_pole",
+   "when": "언제나",
+   "gives": {
+    "clue": "B01-D2"
+   },
+   "text": "칼금 열한 개. 열두 번째는 반만 그어져 있다.",
+   "opens_after": "Ravine 첫 밤 진입 다음 낮"
+  },
+  {
+   "id": "B02-D3",
+   "kind": "touch",
+   "x": 580.0,
+   "z": 531.5,
+   "place": "폐당집 굿상",
+   "model": "prop_gut_table",
+   "when": "낮",
+   "gives": {
+    "clue": "B02-D3"
+   },
+   "text": "엎어진 잔 하나. 열두째 자리다.",
+   "opens_after": "Shrine 첫 밤 진입 다음 낮"
+  },
+  {
+   "id": "B03-D3",
+   "kind": "touch",
+   "x": 36.0,
+   "z": 330.0,
+   "place": "동헌 터 탄 문서함",
+   "model": "prop_burnt_docbox",
+   "when": "낮",
+   "gives": {
+    "clue": "B03-D3"
+   },
+   "text": "그은 줄들 끝에 한 줄만 반듯하다. '의원 서○○ 순직'.",
+   "opens_after": "Plague 첫 밤 진입 다음 낮"
+  }
+ ],
+ "keepsakes": [
+  {
+   "id": "K-001",
+   "soul": "S-001",
+   "soul_name": "박돌쇠",
+   "x": 221.5,
+   "z": 64.0,
+   "model": "prop_keep_tongs",
+   "name": "식은 집게",
+   "name_ok": true,
+   "from_memory": "M-001 풀무·쇳물",
+   "text": "손잡이에 손때가 반들하다. 쇠는 식었다."
+  },
+  {
+   "id": "K-002",
+   "soul": "S-002",
+   "soul_name": "윤 소사",
+   "x": 190.5,
+   "z": 57.0,
+   "model": "prop_keep_bowl",
+   "name": "뚜껑 덮인 주발",
+   "name_ok": true,
+   "from_memory": "M-002 제삿밥",
+   "text": "굳은 밥 위에 수저가 둘 꽂혀 있다.",
+   "note_narrative": "'밥그릇'보다 옛 말 '주발'. 제사상(B01-D1 위패·엽전)과 다른 물건이라 겹치지 않음"
+  },
+  {
+   "id": "K-003",
+   "soul": "S-003",
+   "soul_name": "연이",
+   "x": 204.0,
+   "z": 51.5,
+   "model": "prop_keep_steamer",
+   "name": "식은 떡시루",
+   "name_ok": true,
+   "from_memory": "M-003 떡",
+   "text": "시루 밑 떡이 덜 익은 채 식었다.",
+   "note_narrative": "소설 3장 「떡시루」와 같은 물건"
+  },
+  {
+   "id": "K-006",
+   "soul": "S-006",
+   "soul_name": "장 둑지기",
+   "x": 296.0,
+   "z": 118.0,
+   "model": "prop_keep_lamp",
+   "name": "꺼진 둑 등롱",
+   "name_ok": true,
+   "from_memory": "M-006 나룻불",
+   "text": "심지 끝이 젖었다. 기름은 남아 있다.",
+   "note_narrative": "둑 위 바깥에서 드는 불이라 등잔(방 안) 대신 등롱"
+  },
+  {
+   "id": "K-010",
+   "soul": "S-010",
+   "soul_name": "곽 뱃꾼",
+   "x": 378.0,
+   "z": 278.0,
+   "model": "prop_keep_oar",
+   "name": "끊어진 뱃줄",
+   "name_ok": true,
+   "from_memory": "M-010 노",
+   "text": "매듭은 그대로다. 줄이 중간에서 끊겼다.",
+   "note_narrative": "'부러진 노'는 8 m 옆 단서 B01-D2 부러진 삿대와 헷갈려 바꿈. 배를 묶어 두려던 줄(기억 '배 띄우지 말라고 했는데'). 삿대와 15 m 이상 떨어뜨려 주면 좋음"
+  },
+  {
+   "id": "K-011",
+   "soul": "S-011",
+   "soul_name": "방물장수 막례",
+   "x": 401.0,
+   "z": 308.0,
+   "model": "prop_keep_bundle",
+   "name": "젖은 방물 보따리",
+   "name_ok": true,
+   "from_memory": "M-011 비단 남색",
+   "text": "남색 보자기 속 참빗이 마르지 않았다.",
+   "note_narrative": "방물장수 물건이라 '비단' 대신 '방물'"
+  }
+ ],
+ "coin_bundles": [
+  {
+   "id": "C-01",
+   "x": 205.0,
+   "z": 72.0,
+   "coin": 20,
+   "hint": "솔고개 강가 빨래터 돌 밑"
+  },
+  {
+   "id": "C-02",
+   "x": 246.0,
+   "z": 96.0,
+   "coin": 20,
+   "hint": "솔고개→보릿들 길가 장승 뒤"
+  },
+  {
+   "id": "C-03",
+   "x": 318.0,
+   "z": 140.0,
+   "coin": 20,
+   "hint": "보릿들 허물어진 원두막"
+  },
+  {
+   "id": "C-04",
+   "x": 372.0,
+   "z": 250.0,
+   "coin": 20,
+   "hint": "물막이 골 내려가는 비탈 바위틈"
+  },
+  {
+   "id": "C-05",
+   "x": 420.0,
+   "z": 335.0,
+   "coin": 20,
+   "hint": "물막이 골 방앗간 뒤"
+  },
+  {
+   "id": "C-06",
+   "x": 560.0,
+   "z": 510.0,
+   "coin": 20,
+   "hint": "폐당집 아래 무너진 돌담"
+  }
+ ],
+ "herbs": [
+  {
+   "id": "H-01",
+   "x": 176.0,
+   "z": 30.0
+  },
+  {
+   "id": "H-02",
+   "x": 210.0,
+   "z": 80.0
+  },
+  {
+   "id": "H-03",
+   "x": 236.0,
+   "z": 58.0
+  },
+  {
+   "id": "H-04",
+   "x": 270.0,
+   "z": 104.0
+  },
+  {
+   "id": "H-05",
+   "x": 284.0,
+   "z": 128.0
+  },
+  {
+   "id": "H-06",
+   "x": 312.0,
+   "z": 100.0
+  },
+  {
+   "id": "H-07",
+   "x": 352.0,
+   "z": 230.0
+  },
+  {
+   "id": "H-08",
+   "x": 388.0,
+   "z": 318.0
+  }
+ ],
+ "keepsake_candidates": [
+  {
+   "id": "K-004",
+   "soul": "S-004",
+   "soul_name": "칠복",
+   "zone": "Village",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "빈 개집",
+   "name_ok": true,
+   "text": "짚을 촘촘히 엮었다. 개는 없다.",
+   "note_narrative": "소설 6장 칠복이 엮은 빈 개집"
+  },
+  {
+   "id": "K-005",
+   "soul": "S-005",
+   "soul_name": "허 훈장",
+   "zone": "Village",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "마른 벼루",
+   "name_ok": true,
+   "text": "먹물 자국만 남았다. 갈다 만 먹이 곁에 있다.",
+   "note_narrative": "소설 4장 「마른 벼루」"
+  },
+  {
+   "id": "K-007",
+   "soul": "S-007",
+   "soul_name": "분이",
+   "zone": "Field",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "흩어진 보릿단",
+   "name_ok": true,
+   "text": "이삭이 다 젖었다. 새끼 매듭은 단단하다."
+  },
+  {
+   "id": "K-008",
+   "soul": "S-008",
+   "soul_name": "홍 소장수",
+   "zone": "Field",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "닳은 소고삐",
+   "name_ok": true,
+   "text": "고삐 끝이 닳았다. 매인 소는 없다."
+  },
+  {
+   "id": "K-009",
+   "soul": "S-009",
+   "soul_name": "김 영감",
+   "zone": "Field",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "재 남은 곰방대",
+   "name_ok": true,
+   "text": "대통에 재가 그대로다.",
+   "note_narrative": "횃불은 F8 단서라 유품으로 쓰지 않음"
+  },
+  {
+   "id": "K-014",
+   "soul": "S-014",
+   "soul_name": "옥이",
+   "zone": "Shrine",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "바랜 무복 고름",
+   "name_ok": true,
+   "text": "붉은 고름이 물에 바랬다.",
+   "note_narrative": "신칼(B-02 처결 뒤 물건)·부채(B02-D1)·방울(장비)과 겹치지 않게"
+  },
+  {
+   "id": "K-015",
+   "soul": "S-015",
+   "soul_name": "목수 억쇠",
+   "zone": "Shrine",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "무뎌진 끌",
+   "name_ok": true,
+   "text": "날이 무뎠다. 나뭇진 냄새가 남았다."
+  },
+  {
+   "id": "K-016",
+   "soul": "S-016",
+   "soul_name": "순례 노파",
+   "zone": "Shrine",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "닳은 모시 버선",
+   "name_ok": true,
+   "text": "뒤꿈치가 다 닳았다. 오래 걸은 버선이다."
+  },
+  {
+   "id": "K-019",
+   "soul": "S-019",
+   "soul_name": "엿장수 판쇠",
+   "zone": "Market",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "엿가위",
+   "name_ok": true,
+   "text": "날이 맞물리지 않는다. 쳐도 소리가 없다."
+  },
+  {
+   "id": "K-020",
+   "soul": "S-020",
+   "soul_name": "포목전 최씨",
+   "zone": "Market",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "닳은 포목 자",
+   "name_ok": true,
+   "text": "눈금이 손때에 지워졌다.",
+   "note_narrative": "탄 장부는 단서 B03-D3 탄 문서와 헷갈려 쓰지 않음"
+  },
+  {
+   "id": "K-021",
+   "soul": "S-021",
+   "soul_name": "주모 끝순",
+   "zone": "Market",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "이 빠진 탁주 사발",
+   "name_ok": true,
+   "text": "바닥에 술 한 모금이 말라붙었다."
+  },
+  {
+   "id": "K-022",
+   "soul": "S-022",
+   "soul_name": "아전 노씨",
+   "zone": "Yamen",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "먹 묻은 토시",
+   "name_ok": true,
+   "text": "손목께가 먹으로 까맣다.",
+   "note_narrative": "붓은 B-03 처결 뒤 물건(씻은 붓)과 겹쳐 피함"
+  },
+  {
+   "id": "K-023",
+   "soul": "S-023",
+   "soul_name": "옥사장 강쇠",
+   "zone": "Yamen",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "녹슨 열쇠 꾸러미",
+   "name_ok": true,
+   "text": "열쇠들이 녹슬어 한 덩이가 됐다."
+  },
+  {
+   "id": "K-024",
+   "soul": "S-024",
+   "soul_name": "막동",
+   "zone": "Plague",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "눌어붙은 약탕관",
+   "name_ok": true,
+   "text": "바닥에 달인 약이 눌어붙었다."
+  },
+  {
+   "id": "K-025",
+   "soul": "S-025",
+   "soul_name": "간병 노인",
+   "zone": "Plague",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "글자 없는 강돌",
+   "name_ok": true,
+   "text": "손에 쥐기 알맞다. 아무 글자도 없다."
+  },
+  {
+   "id": "K-026",
+   "soul": "S-026",
+   "soul_name": "묘지기 홍 노인",
+   "zone": "Graves",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "손 자국 난 삽",
+   "name_ok": true,
+   "text": "자루가 손 모양으로 패었다."
+  },
+  {
+   "id": "K-028",
+   "soul": "S-028",
+   "soul_name": "서생의 정혼녀",
+   "zone": "Graves",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "열지 않은 연지곽",
+   "name_ok": true,
+   "text": "뚜껑을 한 번도 열지 않았다.",
+   "note_narrative": "붉은 갓끈은 B12 단서·F11이라 유품으로 쓰지 않음"
+  },
+  {
+   "id": "K-029",
+   "soul": "S-029",
+   "soul_name": "북잡이 덕수",
+   "zone": "Market",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "닳은 북채",
+   "name_ok": true,
+   "text": "끝이 닳아 둥글다."
+  },
+  {
+   "id": "K-030",
+   "soul": "S-030",
+   "soul_name": "형리 박씨",
+   "zone": "Yamen",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "부러진 곤장",
+   "name_ok": true,
+   "text": "결대로 쪼개졌다. 핏물은 씻겨 있다."
+  },
+  {
+   "id": "K-031",
+   "soul": "S-031",
+   "soul_name": "먹장수 황씨",
+   "zone": "Market",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "쓰지 않은 먹",
+   "name_ok": true,
+   "text": "솔 그을음 냄새가 짙다. 간 자국이 없다."
+  },
+  {
+   "id": "K-032",
+   "soul": "S-032",
+   "soul_name": "소금장수 우씨",
+   "zone": "Market",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "터진 소금 자루",
+   "name_ok": true,
+   "text": "자루 바닥에 소금 몇 알이 남았다."
+  },
+  {
+   "id": "K-033",
+   "soul": "S-033",
+   "soul_name": "사당지기",
+   "zone": "Graves",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "식은 향로",
+   "name_ok": true,
+   "text": "향재가 식어 굳었다."
+  },
+  {
+   "id": "K-035",
+   "soul": "S-035",
+   "soul_name": "상여꾼 만복",
+   "zone": "Graves",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "해진 상여 멜빵",
+   "name_ok": true,
+   "text": "어깨 닿던 자리가 해졌다.",
+   "note_narrative": "요령은 장비(노인의 요령)라 피함"
+  },
+  {
+   "id": "K-036",
+   "soul": "S-036",
+   "soul_name": "의원의 제자",
+   "zone": "Plague",
+   "x": null,
+   "z": null,
+   "model": null,
+   "name": "약 작두",
+   "name_ok": true,
+   "text": "날에 약재 즙이 말라붙었다.",
+   "note_narrative": "감초는 B03-D4 단서 말이라 쓰지 않음"
+  }
+ ],
+ "clue_objects_narrative": {
+  "B01-D2": "text 확인, 그대로",
+  "B02-D3": "text 확인, 그대로",
+  "B03-D3": "text 확인, 그대로(이름 두 자는 불에 먹힌 것으로 ○○)"
+ },
+ "keepsake_text_rules": {
+  "_설명": "서사 10-25. 유품 text는 만졌을 때 물건 위에 3초 뜨는 한 줄.",
+  "voice": "차사의 손이 느끼는 감각만 쓴다(3인칭 묘사). 혼의 목소리(1인칭)는 기억 문장 몫이라 쓰지 않는다",
+  "no_fact": "F 단서·보스 단서·다른 혼의 정보를 넣지 않는다. 기억 조각으로 세지 않는다",
+  "no_cold": "차갑다·춥다를 쓰지 않는다(업 30 '손이 미끄러진다'와 헷갈림)",
+  "gone_text": "이미 떠난 사람의 물건이다.",
+  "length": "최대 22자 안팎",
+  "candidates": "keepsake_candidates는 1막 나머지 이름혼(이름이 읽히지 않는 무리 혼 S-012·013·017·027·034 제외) 24개. 좌표·모형은 기획·아트가 정하면 keepsakes로 옮긴다"
+ }
 }

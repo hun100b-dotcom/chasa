@@ -69,6 +69,13 @@ public class GameMain : MonoBehaviour
             judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
+            // 낮에 제사를 지켜본 혼: 지금은 윤 소사네 마당 제사상(N-103)만 지켜보기 자리가 있다. 나머지 장례 대상은 지켜보기 자리 데이터를 기다린다
+            judge.memories.jesaSeen = soulName =>
+            {
+                if (soulName != "윤 소사") return false;
+                foreach (var h in judge.npcs.Log.Items) if (h.Place == "윤 소사네 마당 제사상" && h.Slot == 1) return true;
+                return false;
+            };
             judge.interactables = new Interactables(judge);   // 1막 줍기·만져 보기 물건
             // 10m 안에 싸우는 혼이 있으면 엿듣기·지켜보기 진행이 멈춘다(기획 npc-interaction-spec §2-3)
             judge.npcs.enemyWithin = r =>

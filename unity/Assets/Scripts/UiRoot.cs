@@ -170,8 +170,8 @@ public class UiRoot : MonoBehaviour
         bossBox = new VisualElement { name = "boss", pickingMode = PickingMode.Ignore };
         bossBox.style.position = Position.Absolute; bossBox.style.left = 0; bossBox.style.right = 0; bossBox.style.top = U(64);
         bossBox.style.alignItems = Align.Center; bossBox.style.display = DisplayStyle.None;
-        questBox = new VisualElement { name = "quest", pickingMode = PickingMode.Ignore };   // 퀘스트 추적: 왼쪽, 장부 아래의 작은 판
-        questBox.style.position = Position.Absolute; questBox.style.left = U(24); questBox.style.top = U(235); questBox.style.display = DisplayStyle.None;
+        questBox = new VisualElement { name = "quest", pickingMode = PickingMode.Ignore };   // 퀘스트 추적: 우상(명세 §1), 시계 고리 아래
+        questBox.style.position = Position.Absolute; questBox.style.width = U(300); questBox.style.right = U(24); questBox.style.top = U(330);   // 우상: 미니맵·시계 고리 아래(실제 높이는 매 프레임 맞춘다) questBox.style.display = DisplayStyle.None;
         Panel(questBox); questTitle = Line(questBox, 16); questTitle.style.color = new Color(0.9f, 0.78f, 0.45f); questBody = Line(questBox, 15); questBody.style.whiteSpace = WhiteSpace.Normal;
         root.Add(questBox);
         expBox = new VisualElement { name = "exp", pickingMode = PickingMode.Ignore };   // 경험치(품계) 막대: 화면 맨 아래 가는 띠
@@ -417,6 +417,7 @@ public class UiRoot : MonoBehaviour
         var c = Hud.NightLine(); if (c != lastNight) { night.text = lastNight = c; }
         // 시계 고리는 미니맵 바로 아래(화면 px → 패널 단위로 환산: 패널은 1280×720 기준, 가로·세로 비율을 절반씩 섞는다)
         float refW = Ko.TouchUI ? 960f : 1280f, refH = Ko.TouchUI ? 540f : 720f; float pscale = Mathf.Sqrt((Screen.width / refW) * (Screen.height / refH));
+        if (questBox != null) questBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + ringSize + U(16);   // 명세: 지역명(시계 고리) 아래 16px
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshGuide(); RefreshBossArea();

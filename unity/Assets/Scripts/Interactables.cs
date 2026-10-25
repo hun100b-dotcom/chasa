@@ -13,15 +13,16 @@ public class Interactables
 {
     [System.Serializable] class Gives { public string clue; }
     [System.Serializable] class ClueRow { public string id, place, when, text; public float x, z; public Gives gives; }
-    [System.Serializable] class KeepRow { public string id, soul, soul_name, name; public float x, z; }
+    [System.Serializable] class KeepRow { public string id, soul, soul_name, name, text; public float x, z; }
     [System.Serializable] class CoinRow { public string id; public float x, z; public int coin; }
     [System.Serializable] class HerbRow { public string id; public float x, z; }
-    [System.Serializable] class FileData { public ClueRow[] clue_objects; public KeepRow[] keepsakes; public CoinRow[] coin_bundles; public HerbRow[] herbs; }
+    [System.Serializable] class Rules { public string gone_text; }
+    [System.Serializable] class FileData { public Rules keepsake_text_rules; public ClueRow[] clue_objects; public KeepRow[] keepsakes; public CoinRow[] coin_bundles; public HerbRow[] herbs; }
 
     class Node { public JudgeSystem.InteractSpot spot; public GameObject view; public string kind, id, extra; }
     readonly List<Node> nodes = new List<Node>();
     readonly JudgeSystem j;
-    Transform root;
+    Transform root; string goneText = "이미 떠난 사람의 물건이다.";
 
     public readonly HashSet<string> Picked = new HashSet<string>();            // 주운 엽전·만진 유품(저장됨)
     public readonly Dictionary<string, int> HerbTaken = new Dictionary<string, int>();   // 쑥 id → 딴 날(저장됨)
@@ -36,6 +37,7 @@ public class Interactables
         var f = JsonUtility.FromJson<FileData>(ta.text);
         if (f == null) return;
         root = new GameObject("Interactables").transform;
+        if (f.keepsake_text_rules != null && !string.IsNullOrEmpty(f.keepsake_text_rules.gone_text)) goneText = f.keepsake_text_rules.gone_text;
         if (f.clue_objects != null) foreach (var c in f.clue_objects) AddClue(c);
         if (f.keepsakes != null) foreach (var k in f.keepsakes) AddKeep(k);
         if (f.coin_bundles != null) foreach (var c in f.coin_bundles) AddCoin(c);
@@ -88,9 +90,9 @@ public class Interactables
         n.spot.OnUse = () =>
         {
             Picked.Add(k.id);
-            if (j.named != null && j.named.IsDone(k.soul_name)) { j.Say("이미 떠난 사람의 물건"); return true; }   // 효과 없음
+            if (j.named != null && j.named.IsDone(k.soul_name)) { j.Say(goneText); return true; }   // 효과 없음
             KeepsakeSouls.Add(k.soul_name);
-            j.Say(k.name + " — " + k.soul_name + "의 물건. 이름을 알았다");
+            j.Say(string.IsNullOrEmpty(k.text) ? k.name + " — " + k.soul_name + "의 물건. 이름을 알았다" : k.name + " — " + k.text);
             return true;
         };
         // 밤에만, 6m 안에서만 보인다. 이미 처결된 혼의 물건은 사라진다(천도) — 파혼의 재는 아직 따로 그리지 않는다
