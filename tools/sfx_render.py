@@ -4725,6 +4725,235 @@ def _(r):
     return sweep_filt(noise(m, r), "band", 900, 300, 1.5) * env(m, .05, .5, 3) * .6
 
 
+# ===== 1막 솔고개 주변 소리: 서낭당 5곳 · 외톨이 야영지 · 처음 10분 길 (코디 요청 10-26, 배치표 data/act1_soundscape.json) =====
+# 서낭당은 구역마다 다른 모델(아트 PR #37 seonang_set)이라 소리도 '무엇이 매달려 있나'로 나눴다:
+#   ① 솔고개 마을=가꿔진 곳(오방색 천·금줄 종이·촛불)  ② 보릿들=농사(짚·보리 이삭·솟대)  ③ 물막이 골=물(이끼 돌탑 물방울·물동이)
+#   ④ 검은여울=역병(끊어진 금줄·재·고요)  ⑤ 폐당집=폐허(고사목·기와·혼불 하나)
+def _owl(r, f=420):
+    """부엉이 '부엉—부엉': 낮고 둥근 두 음(목소리 합성, 멀리)"""
+    b = _buf(1.4)
+    for k, at in enumerate((0, .55)):
+        d = .32; f0 = curve(d, [(0, f * (1 - .04 * k)), (.08, f * 1.05), (d, f * .9)])
+        place(b, voice(f0, [(f * 1.0, 3, 1), (f * 2.1, 4, .2)], .3, r, nh=6) * env(int(d * SR), .04, .14, 3, hold=.08), at)
+    return filt(b, "low", 1500)
+
+
+def _crickets(sec, r, rate=(18, 26), f=(3800, 4600), count=6, amp=.06):
+    """풀벌레: 몇 마리가 각자 빠르기로 찌르르 — 낮게 깔기"""
+    n = int(sec * SR); t = T(sec); y = np.zeros(n)
+    for k in range(count):
+        fr = r.uniform(*f); rt = r.uniform(*rate); ph = r.uniform(0, 6)
+        gate = (np.sin(2 * np.pi * rt * t + ph) > .3) * (np.sin(2 * np.pi * r.uniform(.15, .4) * t + ph) > -.2)
+        y += np.sin(2 * np.pi * fr * t) * filt(gate.astype(float), "low", 300) * r.uniform(.4, 1)
+    return y * amp
+
+
+def _paper_strips(sec, r, gust, count=60):
+    """금줄에 끼운 한지 조각이 바람에 사락사락"""
+    return grains(sec, r, count, lambda r, k: _paper(r, r.uniform(.04, .1), 2500, 7000) * r.uniform(.1, .4)) * (.4 + .6 * np.interp(np.arange(int(sec * SR)), np.arange(len(gust)), gust))[:int(sec * SR)]
+
+
+@sfx("amb.seonang.solgogae", -24, "세계", "서낭당 ① 솔고개 마을: 오방색 천 다섯이 펄럭이고 금줄 한지가 사락사락, 제물상 촛불이 아주 작게 타닥, 나무 위로 지나는 바람(반복용 16초)", loop=True, use="서낭당 ①(188,36) 3D 반복. 최소 2m·최대 14m. 첫 깨어남(0:20)의 첫 소리")
+def _(r):
+    sec = 16.4; n = int(sec * SR); g = _gust_curve(sec, r, 3, .3)
+    wind = filt(noise(n, r), "band", 420, .6) * (.4 + .6 * g) * .6
+    cloth = _flutter(sec, r, g * .8, rate=(6, 13), bright=2400) * .35
+    paper = _paper_strips(sec, r, g, 70) * .5
+    candle = grains(sec, r, 18, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(2000, 4000), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.05, .2))
+    return loopify(reverb(wind + cloth + paper + candle + _crickets(sec, r, count=3, amp=.03), 1.2, .25)[:n], .6)
+
+
+@sfx("amb.seonang.boritdeul", -24, "세계", "서낭당 ② 보릿들: 짚단과 보리 이삭이 바람에 서걱, 솟대 나무가 아주 낮게 삐걱, 노랑 헝겊 펄럭, 둘레 풀벌레(반복용 16초)", loop=True, use="서낭당 ②(160,180) 3D 반복. 최소 2m·최대 14m")
+def _(r):
+    sec = 16.4; n = int(sec * SR); g = _gust_curve(sec, r, 3, .35)
+    straw = filt(filt(noise(n, r), "high", 1800), "low", 7000) * (.3 + .7 * g) * .3        # 마른 짚·이삭 서걱
+    cloth = _flutter(sec, r, g * .6, rate=(6, 12), bright=2200) * .25
+    b = straw + cloth + filt(noise(n, r), "low", 300) * (.4 + .6 * g) * .4
+    for at in (4.0, 11.5): place(b, _creak(r, .9, 150, 18, 600) * .25, at)   # 솟대
+    return loopify(reverb(b + _crickets(sec, r, count=7, amp=.05), 1.0, .2)[:n], .6)
+
+
+@sfx("amb.seonang.mulmagi", -24, "세계", "서낭당 ③ 물막이 골 어귀: 이끼 돌탑에서 물방울이 똑… 똑… 물동이에 떨어지고, 젖은 마당, 가까운 개울 졸졸, 푸른 헝겊 느리게(반복용 16초)", loop=True, use="서낭당 ③(356,324) 3D 반복. 최소 2m·최대 14m")
+def _(r):
+    sec = 16.4; n = int(sec * SR); g = _gust_curve(sec, r, 2, .25)
+    brook = filt(noise(n, r), "band", 900, 1.0) * (.7 + .3 * np.sin(2 * np.pi * .21 * T(sec))) * .25
+    drips = _drips(r, sec, 26, 700, 1500, .05, (.2, .6))
+    pot = grains(sec, r, 8, lambda r, k: bubble(.05, r.uniform(380, 520)) * .4)              # 물동이 속으로 떨어지는 낮은 퐁
+    cloth = _flutter(sec, r, g * .5, rate=(5, 10), bright=1800) * .2
+    return loopify(reverb(brook + drips + pot + cloth + filt(noise(n, r), "low", 250) * .3, 1.6, .3)[:n], .6)
+
+
+@sfx("amb.seonang.geomeun", -26, "세계", "서낭당 ④ 검은여울 어귀(역병): 거의 고요 — 끊어진 금줄 끝이 가끔 장승에 톡, 재가 바람에 스스스, 성긴 잎 마른 바스락, 벌레 소리 없음(반복용 18초)", loop=True, use="서낭당 ④(108,452) 3D 반복. 최소 2m·최대 12m. 다른 서낭당보다 일부러 비어 있게")
+def _(r):
+    sec = 18.4; n = int(sec * SR); g = _gust_curve(sec, r, 2, .15)
+    air = filt(noise(n, r), "low", 260) * (.3 + .7 * g) * .5
+    ash = filt(noise(n, r), "band", 3000, 1.0) * g ** 2 * .08
+    b = air + ash
+    for at in (3.2, 9.8, 15.1): place(b, _wood_tap(r, 700, .02, .3), at)   # 끊긴 줄 끝이 톡
+    b += grains(sec, r, 10, lambda r, k: _crinkle(r, .2, 6, (1800, 5000), (.05, .2)))
+    return loopify(reverb(b, 2.2, .35, tone_hz=2500)[:n], .6)
+
+
+@sfx("amb.seonang.pyedang", -25, "세계", "서낭당 ⑤ 폐당집 어귀(폐허): 잎 없는 고사목 가지가 삐걱, 내려앉은 기와가 가끔 달각, 혼불 하나가 낮게 웅— 떨림(반복용 18초)", loop=True, use="서낭당 ⑤(폐당집 어귀, 자리 미정) 3D 반복. 최소 2m·최대 14m. 혼불 웅은 밤에만 크게(낮엔 0.4배)")
+def _(r):
+    sec = 18.4; n = int(sec * SR); t = T(sec); g = _gust_curve(sec, r, 3, .2)
+    wind = filt(noise(n, r), "band", 300, .7) * (.3 + .7 * g) * .5
+    hum = (np.sin(2 * np.pi * 196 * t) + .4 * np.sin(2 * np.pi * 197.3 * t)) * (.6 + .4 * np.sin(2 * np.pi * .7 * t)) * .08   # 혼불 떨림
+    b = wind + filt(hum, "low", 900)
+    for at in (2.5, 8.0, 14.2): place(b, _creak(r, 1.1, 120, 14, 500) * .3, at)          # 고사목
+    for at in (5.6, 12.9): place(b, modal(.3, [(r.uniform(900, 1300), .04, 1), (r.uniform(2200, 2800), .02, .4)], r) * .25, at)   # 기와 달각
+    return loopify(reverb(b, 2.0, .35, tone_hz=2600)[:n], .6)
+
+
+@sfx("amb.soulpath.gate", -25, "세계", "넋길 입구(밤): 새끼줄에 매단 혼불 다섯이 각자 낮게 웅웅 — 서로 조금씩 다른 높이로 떨고, 줄이 가끔 삐걱(반복용 12초)", loop=True, use="넋길 정류장 3곳(292,144 · 368,352 · 576,496) 3D 반복, 밤에만(낮 _off 모델일 땐 끔). 최소 1.5m·최대 10m")
+def _(r):
+    sec = 12.3; n = int(sec * SR); t = T(sec); y = np.zeros(n)
+    for k, f in enumerate((174.6, 196.0, 220.0, 233.1, 261.6)):
+        y += np.sin(2 * np.pi * f * t + r.uniform(0, 6)) * (.5 + .5 * np.sin(2 * np.pi * r.uniform(.2, .6) * t + k)) * .06
+    b = filt(y, "low", 1200)
+    for at in (3.0, 9.0): place(b, _creak(r, .7, 200, 22, 700) * .2, at)
+    return loopify(reverb(b, 1.6, .3)[:n], .5)
+
+
+# ── 외톨이 야영지: 무리에서 12~16m 떨어져 혼자 무릎 꿇고 기다리는 혼 ──
+@sfx("amb.loner", -27, "처결", "외톨이 혼: 홀로 무릎 꿇은 혼이 아주 작게 흐느끼듯 숨을 쉼 — 들이쉼이 떨리고, 가끔 코를 훌쩍, 말은 없음(반복용 10초)", loop=True, use="외톨이 혼 자리에 3D 반복. 최소 1m·최대 9m. 처결하면 0.5초에 끔. 싸움 중엔 0.5배(무리 소리에 묻혀도 됨)")
+def _(r):
+    sec = 10.2; b = _buf(sec)
+    for k, at in enumerate((.4, 3.1, 5.9, 8.4)):
+        d = r.uniform(1.0, 1.4); m = int(d * SR)
+        trem = 1 + .25 * np.sign(np.sin(2 * np.pi * 7 * T(d)))                # 떨리는 들숨
+        place(b, filt(noise(m, r), "band", 800, 2) * env(m, d * .6, d * .3, 2) * trem * .4, at)
+        place(b, filt(noise(int(.9 * SR), r), "band", 600, 1.5) * env(int(.9 * SR), .05, .6, 3) * .25, at + d)   # 날숨
+    place(b, filt(noise(int(.12 * SR), r), "band", 2500, 3) * env(int(.12 * SR), .005, .05, 3) * .3, 7.3)       # 훌쩍
+    return loopify(reverb(b, 1.0, .2), .3)
+
+
+@sfx("sfx.loner.notice", -18, "처결", "외톨이 혼이 이쪽을 알아챔: 고개를 드는 옷자락 스륵 + 숨을 멈췄다가 길게 내쉬는 '하아—'(1.4초) — 놀람이 아니라 기다림이 끝나는 쪽", use="차사가 외톨이 혼 8m 안에 처음 들어올 때 한 번")
+def _(r):
+    b = _buf(1.8)
+    place(b, _paper(r, .3, 600, 3000) * .4, 0)
+    d = 1.0; m = int(d * SR)
+    place(b, voice(curve(d, [(0, 150), (d, 120)]), [(600, 3, 1), (1100, 4, .4)], 1.4, r, nh=8) * env(m, .1, .6, 3) * .4, .45)
+    return reverb(b, 1.0, .2)
+
+
+# ── 처음 10분 길(솔고개 마을 → 보릿들 둑길): 구역 바탕 소리 ──
+@sfx("amb.village.night", -26, "세계", "솔고개 마을 밤: 사람들은 잠듦 — 문풍지가 바람에 떨고, 아궁이 불씨 타닥, 어느 집 소가 한 번 콧김, 장독 사이 풀벌레(반복용 18초)", loop=True, use="구역 '솔고개 마을'(160~232, 24~100) 바탕. 밤. 낮은 기존 amb.field")
+def _(r):
+    sec = 18.4; n = int(sec * SR); g = _gust_curve(sec, r, 3, .25)
+    air = filt(noise(n, r), "low", 350) * (.4 + .6 * g) * .45
+    paper = _flutter(sec, r, g * .5, rate=(14, 26), bright=1600) * .12        # 문풍지
+    ember = grains(sec, r, 25, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(1500, 3500), 2) * env(int(.003 * SR), .0002, .001) * r.uniform(.03, .12))
+    b = air + paper + ember + _crickets(sec, r, count=5, amp=.04)
+    m = int(.7 * SR); place(b, filt(noise(m, r), "band", 300, 1.2) * env(m, .05, .4, 3) * .25, 11.0)   # 소 콧김
+    return loopify(reverb(b, 1.2, .25)[:n], .6)
+
+
+@sfx("amb.boritdeul.night", -25, "세계", "보릿들 밤: 넓은 보리밭이 바람에 물결치며 쏴— 서걱, 밭고랑 풀벌레가 촘촘, 먼 논 개구리 몇, 허수아비 천 가끔(반복용 20초)", loop=True, use="구역 '보릿들'(208~448, 40~240) 바탕. 밤. 거센 혼(7~9분) 들머리도 여기")
+def _(r):
+    sec = 20.4; n = int(sec * SR); g = _gust_curve(sec, r, 4, .3)
+    field = filt(filt(noise(n, r), "high", 1200), "low", 6000) * g ** 1.5 * .35   # 보리 물결
+    low = filt(noise(n, r), "low", 280) * (.4 + .6 * g) * .4
+    frogs = grains(sec, r, 30, lambda r, k: voice(np.full(int(.09 * SR), r.uniform(260, 340)), [(700, 3, 1)], .1, r, nh=10) * env(int(.09 * SR), .005, .04, 3) * r.uniform(.02, .06))
+    b = field + low + filt(frogs, "low", 1500) + _crickets(sec, r, count=10, amp=.05)
+    return loopify(reverb(b, 1.4, .25)[:n], .8)
+
+
+@sfx("amb.mulmagi.night", -25, "세계", "물막이 골 밤: 벼랑 사이로 개울이 흐르는 소리가 바탕, 물막이 둑 너머 물이 낮게 넘침, 벼랑에 부딪는 바람, 풀벌레 드묾(반복용 18초)", loop=True, use="구역 '물막이 골'(264~504, 240~500) 바탕. 밤")
+def _(r):
+    sec = 18.4; n = int(sec * SR); g = _gust_curve(sec, r, 2, .3)
+    brook = filt(noise(n, r), "band", 700, .8) * .35 + filt(noise(n, r), "band", 1800, 1.5) * .08
+    weir = filt(noise(n, r), "low", 180) * .4
+    cliff = filt(noise(n, r), "band", 500, 2) * g ** 2 * .3
+    return loopify(reverb(brook + weir + cliff + _crickets(sec, r, count=2, amp=.03), 1.8, .3)[:n], .6)
+
+
+# ── 처음 10분 길: 자리 소리(3D, data/act1_soundscape.json 좌표) ──
+@sfx("amb.campfire.small", -24, "세계", "작은 모닥불: 장작이 타닥 타닥 + 불이 낮게 훅훅 숨 쉼 + 가끔 불티 탁(반복용 8초)", loop=True, use="1막 모닥불 7곳(prop_campfire) 3D. 최소 1m·최대 8m")
+def _(r):
+    sec = 8.2; n = int(sec * SR)
+    x = filt(noise(n, r), "band", 300, .8) * (.6 + .4 * np.abs(np.sin(2 * np.pi * .6 * T(sec)))) * .35
+    x += grains(sec, r, 60, lambda r, k: filt(noise(int(.004 * SR), r), "band", r.uniform(1500, 5000), 3) * env(int(.004 * SR), .0002, .0012) * r.uniform(.1, .6))
+    x += grains(sec, r, 5, lambda r, k: _thump(r, .06, 220, 1200) * .25)
+    return loopify(reverb(x, .6, .15)[:n], .4)
+
+
+@sfx("amb.forge.idle", -24, "세계", "밤의 대장간(박돌쇠): 식어 가는 화덕 숯이 쉬익 낮게, 걸어 둔 쇠가 식으며 틱… 틱, 풀무가 아주 느리게 한 번 숨(반복용 12초)", loop=True, use="대장간 화덕(222.9, 62.2) 3D. 최소 1.5m·최대 10m. 박돌쇠(4:40~5:00) 앞")
+def _(r):
+    sec = 12.3; n = int(sec * SR)
+    coal = filt(noise(n, r), "band", 500, .7) * .25 + grains(sec, r, 30, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(1800, 4200), 3) * env(int(.003 * SR), .0002, .001) * r.uniform(.05, .2))
+    b = coal
+    for at in (1.5, 4.2, 6.0, 9.7): place(b, modal(.4, [(r.uniform(3200, 4200), .05, 1), (r.uniform(6500, 7500), .02, .3)], r) * .18, at)   # 식는 쇠 틱
+    m = int(1.8 * SR); place(b, filt(noise(m, r), "low", 400) * env(m, .8, .8, 3) * .4, 7.5)   # 풀무 한 숨
+    return loopify(reverb(b, .9, .2)[:n], .5)
+
+
+@sfx("amb.stream.small", -25, "세계", "작은 개울: 돌 사이를 졸졸 흐르는 맑은 물 + 작은 퐁(반복용 10초)", loop=True, use="개울 칸(terrain_tile_stream)을 따라 12m 간격 3D 점(최대 6개, 가까운 순). 최소 1m·최대 9m")
+def _(r):
+    sec = 10.3; n = int(sec * SR)
+    x = filt(noise(n, r), "band", 1100, 1.2) * (.7 + .3 * np.sin(2 * np.pi * .43 * T(sec))) * .3
+    x += grains(sec, r, 50, lambda r, k: bubble(r.uniform(.02, .05), r.uniform(700, 1800)) * r.uniform(.05, .25))
+    return loopify(reverb(x, .7, .15)[:n], .4)
+
+
+@sfx("amb.tree.old", -25, "세계", "큰 고목: 높은 가지 사이로 바람이 쏴— 지나가고 굵은 가지가 낮게 삐걱, 잎이 한꺼번에 쓸림(반복용 14초)", loop=True, use="고목 5곳(prop_old_tree) 3D. 최소 2m·최대 12m")
+def _(r):
+    sec = 14.3; n = int(sec * SR); g = _gust_curve(sec, r, 3, .2)
+    leaves = filt(filt(noise(n, r), "high", 1500), "low", 6500) * g ** 1.3 * .3
+    b = leaves + filt(noise(n, r), "band", 350, .7) * (.3 + .7 * g) * .35
+    for at in (2.2, 7.8, 11.6): place(b, _creak(r, 1.3, 95, 11, 420) * .35, at)
+    return loopify(reverb(b, 1.4, .25)[:n], .6)
+
+
+@sfx("amb.scarecrow", -27, "세계", "허수아비: 낡은 저고리 천이 바람에 툭툭 펄럭이고 짚 몸통이 서걱, 매단 깡통 대신 마른 박 두 개가 서로 똑(반복용 12초)", loop=True, use="허수아비 19곳(prop_scarecrow) 3D, 가까운 2개만. 최소 1m·최대 7m")
+def _(r):
+    sec = 12.3; n = int(sec * SR); g = _gust_curve(sec, r, 3, .25)
+    b = _flutter(sec, r, g * .7, rate=(5, 11), bright=1500) * .35 + filt(filt(noise(n, r), "high", 2000), "low", 6000) * g * .12
+    for at in (3.4, 8.9): place(b, _wood_tap(r, 520, .03, .35) , at); place(b, _wood_tap(r, 610, .03, .25), at + .12)
+    return loopify(reverb(b, .8, .2)[:n], .5)
+
+
+# ── 처음 10분 길: 흩뿌리는 한 번짜리(구역마다 무작위 간격 · 무작위 방향 · 거리 15~40m) — '촘촘함'은 여기서 나온다 ──
+@sfx("sfx.night.owl", -22, "세계", "먼 부엉이: 부엉— 부엉(1.4초)", use="밤 · 보릿들·물막이 골·고목 근처. 25~60초마다 한 번, 먼 쪽에서")
+def _(r):
+    return reverb(_owl(r, 400), 2.2, .5, tone_hz=1600)
+
+
+@sfx("sfx.night.dog.far", -22, "세계", "먼 개 짖음: 마을 너머 개가 컹 컹 두 번(1.6초) — 업 10 이상이면 따로 있는 '차사 쪽 짖음'과 다름(멀고 무심)", use="밤 · 솔고개 마을·보릿들 가장자리. 40~90초마다 한 번")
+def _(r):
+    b = _buf(1.4)
+    for k, at in enumerate((.05, .42)):
+        d = .2; f0 = curve(d, [(0, 520), (.05, 640), (d, 430)])
+        place(b, voice(f0, [(900, 3, 1), (1800, 4, .5)], .6, r, nh=14) * env(int(d * SR), .005, .08, 3, hold=.04) * (1 - .2 * k), at)
+    return reverb(filt(b, "low", 1800), 2.0, .55, tone_hz=1500)
+
+
+@sfx("sfx.night.frog", -24, "세계", "개구리 몇 마리 한꺼번에: 개굴개굴 짧게 한 마디(1초)", use="밤 · 보릿들 논두렁·개울가. 15~35초마다")
+def _(r):
+    one = lambda r, k: voice(np.full(int(.08 * SR), r.uniform(240, 360)) * (1 + .08 * np.sign(np.sin(2 * np.pi * 40 * T(.08)))), [(650, 3, 1), (1300, 4, .3)], .15, r, nh=12) * env(int(.08 * SR), .004, .03, 3) * r.uniform(.4, 1)
+    return reverb(filt(grains(1.0, r, 9, one, spread=lambda k, r: k * .1 + r.uniform(0, .04)), "low", 2200), 1.0, .3)
+
+
+@sfx("sfx.night.gust", -20, "세계", "지나가는 돌풍: 멀리서 바람이 쏴아— 다가와 지나감(3초)", use="밤 · 모든 구역. 30~70초마다(바탕 소리의 돌풍과 따로 놀아 반복이 덜 들림)")
+def _(r):
+    sec = 3.0; n = int(sec * SR)
+    return sweep_filt(noise(n, r), "band", 300, 1200, .8) * env(n, 1.2, 1.4, 3, hold=.2) * .7
+
+
+@sfx("sfx.village.shutter", -21, "세계", "어느 집 덧문이 바람에 덜컹 — 한 번 부딪고 삐걱 멈춤(0.9초)", use="밤 · 솔고개 마을 안. 30~80초마다, 가까운 집 쪽")
+def _(r):
+    b = _buf(1.1)
+    place(b, _wood_tap(r, 300, .06, 1.0), 0); place(b, _thump(r, .1, 140, 700) * .5, 0)
+    place(b, _creak(r, .5, 260, 30, 900) * .3, .18)
+    return reverb(b, .8, .2)
+
+
+@sfx("sfx.barley.wave", -20, "세계", "보리 물결: 바람이 보리밭을 한쪽에서 다른 쪽으로 쓸고 지나가는 쏴르르(2.6초) — 좌우로 움직이게", use="밤·낮 · 보릿들. 20~45초마다. 왼→오른(또는 반대)으로 panStereo를 2.6초 동안 옮기면 바람이 '지나간다'")
+def _(r):
+    sec = 2.6; n = int(sec * SR)
+    return sweep_filt(filt(noise(n, r), "high", 900), "low", 2500, 7000, .7) * env(n, .9, 1.2, 3, hold=.3) * .6
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)
