@@ -68658,6 +68658,33 @@
    "note": "대장간 화덕(처마 밑 바깥쪽)(Light_forge)"
   },
   {
+   "piece": "prop_soulpath_gate",
+   "file": "assets3d/props/prop_soulpath_gate.glb",
+   "x": 292,
+   "y": 144,
+   "z": 0,
+   "rot": 0,
+   "note": "넋길 시작(마을 → 보릿들, 밤에만) 혼불 줄 입구(낮 대체: prop_soulpath_gate_off)"
+  },
+  {
+   "piece": "prop_soulpath_gate",
+   "file": "assets3d/props/prop_soulpath_gate.glb",
+   "x": 368,
+   "y": 352,
+   "z": 0,
+   "rot": 0,
+   "note": "넋길 중간 혼불 줄 입구(낮 대체: prop_soulpath_gate_off)"
+  },
+  {
+   "piece": "prop_soulpath_gate",
+   "file": "assets3d/props/prop_soulpath_gate.glb",
+   "x": 576,
+   "y": 496,
+   "z": 0,
+   "rot": 0,
+   "note": "넋길 끝(폐당집) 혼불 줄 입구(낮 대체: prop_soulpath_gate_off)"
+  },
+  {
    "piece": "br_ferry_boat",
    "file": "assets3d/blackrapids/br_ferry_boat.glb",
    "x": 84.6,
@@ -68676,8 +68703,8 @@
    "note": "보스 1호(404,288) 바로 옆 빈 나룻배(나루 영감 모델 안에도 배가 따로 있음)"
   },
   {
-   "piece": "prop_seonangdang",
-   "file": "assets3d/props/prop_seonangdang.glb",
+   "piece": "prop_seonangdang_geomeun",
+   "file": "assets3d/props/prop_seonangdang_geomeun.glb",
    "x": 108,
    "y": 452,
    "z": 0,
@@ -68703,8 +68730,8 @@
    "note": "서낭당 횃대(Light_ 포함)"
   },
   {
-   "piece": "prop_seonangdang",
-   "file": "assets3d/props/prop_seonangdang.glb",
+   "piece": "prop_seonangdang_solgogae",
+   "file": "assets3d/props/prop_seonangdang_solgogae.glb",
    "x": 188,
    "y": 36,
    "z": 0,
@@ -68730,8 +68757,8 @@
    "note": "서낭당 횃대(Light_ 포함)"
   },
   {
-   "piece": "prop_seonangdang",
-   "file": "assets3d/props/prop_seonangdang.glb",
+   "piece": "prop_seonangdang_boritdeul",
+   "file": "assets3d/props/prop_seonangdang_boritdeul.glb",
    "x": 160.0,
    "y": 180,
    "z": 0,
@@ -68757,8 +68784,8 @@
    "note": "서낭당 횃대(Light_ 포함)"
   },
   {
-   "piece": "prop_seonangdang",
-   "file": "assets3d/props/prop_seonangdang.glb",
+   "piece": "prop_seonangdang_mulmagi",
+   "file": "assets3d/props/prop_seonangdang_mulmagi.glb",
    "x": 356,
    "y": 324,
    "z": 0,
@@ -69013,7 +69040,7 @@
  "counts": {
   "tiles(비풀밭)": 1298,
   "props": 6259,
-  "structures": 47,
+  "structures": 50,
   "paddy": 0,
   "barley": 222
  }
