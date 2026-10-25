@@ -188,5 +188,6 @@ data = {
     },
     'funerals': [build(f) for f in FUNERALS],
 }
-json.dump(data, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-print(len(data['funerals']), 'funerals')
+if __name__ == '__main__':  # 2막 생성기(funerals_act2.py)가 이 파일의 틀을 가져다 쓴다. 가져갈 때는 파일을 쓰지 않는다
+    json.dump(data, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(len(data['funerals']), 'funerals')
