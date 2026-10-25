@@ -27,6 +27,11 @@ PARTS = [
     ("part1", "제1부", "솔고개", 15, ""),
     ("part2", "제2부", "검은여울", 12, "지운 자리는 하얗게 남는다."),
 ]
+# 1부를 새 기준(문장 흐름 3판)으로 처음부터 다시 쓰는 동안만 쓰는 표(2026-10-25~).
+#   여기 적힌 파일은 목차에 '새로 씀' 표시가 붙고, 안 적힌 장은 옛 원고라는 뜻이다.
+#   왜: 새 장과 옛 장이 한 책에 섞여 있으니, 오너가 어디까지가 새 원고인지 목차만 보고 알 수 있어야 한다.
+#   장을 하나 다시 쓸 때마다 파일 이름을 더하고, 1부를 다 다시 쓰면 이 표를 비운다.
+REWRITTEN = {"part1": {"00-prologue.md", "01.md", "02.md"}}
 NUM_WORD = ["영", "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한", "열두",
             "열세", "열네", "열다섯", "열여섯"]
 
@@ -89,6 +94,9 @@ def main():
         short = num.replace("제", "")      # "제2부" → "2부"
         written = len(files)
         side = "다 씀" if written >= planned else f"{planned}장 중 {written}장"
+        new_set = REWRITTEN.get(folder, set())
+        if new_set:   # 다시 쓰는 중인 부는 '새로 쓴 장 수 / 전체'를 보여 준다
+            side = f"다시 쓰는 중 · 새로 쓴 장 {sum(1 for f in files if f.name in new_set)}/{written}"
         rows.append(
             f'      <li class="toc-part"><span class="tp-num">{esc(num)}</span>'
             f'<span class="tp-name">{esc(name)}</span><span class="tp-side">{esc(side)}</span></li>'
@@ -107,7 +115,9 @@ def main():
             rows.append(
                 f'      <li><a href="{href}" data-ch="{i}">'
                 f'<span class="seal" data-state="none" aria-hidden="true">{esc(mark)}</span>'
-                f'<span class="t-main"><span class="t-label">{esc(label)}</span><span class="t-title">{esc(title)}</span></span>'
+                f'<span class="t-main"><span class="t-label">{esc(label)}'
+                + ('<span class="t-new">새로 씀</span>' if f.name in new_set else "")
+                + f'</span><span class="t-title">{esc(title)}</span></span>'
                 f'<span class="t-side">약 {mins}분</span></a></li>'
             )
         # 표지 아래 안내 줄: "1부 「솔고개」 프롤로그와 열네 장" / "2부 「검은여울」 세 장(쓰는 중)"
