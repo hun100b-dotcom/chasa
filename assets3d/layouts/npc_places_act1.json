@@ -52,25 +52,39 @@
    }
   },
   "S-002 윤 소사": {
-   "x": 190.4,
-   "y": 60.8,
+   "x": 192.0,
+   "y": 61.0,
    "face_deg": 233,
    "age": "fresh",
    "memo": "마을 안(명부 밖). 윤 소사네 마당 제사상(191.2,58) 곁. 방금 천도했다면 제사상 앞에 잠깐 서 있다 흩어짐",
    "nearest_prop": {
     "name": "prop_haystack",
     "dist_m": 6.3
+   },
+   "walk_snap": {
+    "from": [
+     190.4,
+     60.8
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "S-003 연이": {
-   "x": 202.0,
-   "y": 56.6,
+   "x": 202.5,
+   "y": 55.5,
    "face_deg": 229,
    "age": "fresh",
    "memo": "마을 안(명부 밖). 우물(200.2,54.5) 동쪽 길, 동쪽 초가 문 앞",
    "nearest_prop": {
     "name": "prop_millstone",
     "dist_m": 3.5
+   },
+   "walk_snap": {
+    "from": [
+     202.0,
+     56.6
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "S-006 장 둑지기": {
@@ -159,7 +173,7 @@
   "서낭당 돌무더기 곁": {
    "zone": "Hub",
    "x": 191.0,
-   "y": 33.4,
+   "y": 33.0,
    "face_deg": 139,
    "from_narrative_offset_m": [
     2,
@@ -170,6 +184,13 @@
    "nearest_prop": {
     "name": "night_torch_stand",
     "dist_m": 1.5
+   },
+   "walk_snap": {
+    "from": [
+     191.0,
+     33.4
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "서낭당 나무": {
@@ -190,7 +211,7 @@
   },
   "윤 소사네 제사상": {
    "zone": "Village",
-   "x": 191.2,
+   "x": 192.0,
    "y": 58.0,
    "face_deg": 195,
    "from_narrative_offset_m": [
@@ -202,6 +223,13 @@
    "nearest_prop": {
     "name": "prop_stepstones",
     "dist_m": 6.3
+   },
+   "walk_snap": {
+    "from": [
+     191.2,
+     58.0
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "서낭당 고개 고갯마루": {
@@ -222,7 +250,7 @@
   },
   "윤 소사네 마당 제사상": {
    "zone": "Village",
-   "x": 191.2,
+   "x": 192.0,
    "y": 58.0,
    "face_deg": 195,
    "from_narrative_offset_m": [
@@ -234,12 +262,19 @@
    "nearest_prop": {
     "name": "prop_stepstones",
     "dist_m": 6.3
+   },
+   "walk_snap": {
+    "from": [
+     191.2,
+     58.0
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "윤 소사네 마당": {
    "zone": "Village",
-   "x": 191.4,
-   "y": 59.4,
+   "x": 192.0,
+   "y": 59.5,
    "face_deg": 212,
    "from_narrative_offset_m": [
     -8,
@@ -250,12 +285,19 @@
    "nearest_prop": {
     "name": "prop_haystack",
     "dist_m": 6.9
+   },
+   "walk_snap": {
+    "from": [
+     191.4,
+     59.4
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "우물가": {
    "zone": "Village",
-   "x": 198.6,
-   "y": 53.2,
+   "x": 198.5,
+   "y": 52.5,
    "face_deg": 39,
    "from_narrative_offset_m": [
     0,
@@ -266,12 +308,19 @@
    "nearest_prop": {
     "name": "prop_millstone",
     "dist_m": 2.4
+   },
+   "walk_snap": {
+    "from": [
+     198.6,
+     53.2
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "마을 어귀 정자": {
    "zone": "Village",
-   "x": 190.8,
-   "y": 43.6,
+   "x": 187.5,
+   "y": 42.5,
    "face_deg": 250,
    "from_narrative_offset_m": [
     6,
@@ -282,12 +331,19 @@
    "nearest_prop": {
     "name": "jeongja",
     "dist_m": 1.2
+   },
+   "walk_snap": {
+    "from": [
+     190.8,
+     43.6
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "정자": {
    "zone": "Village",
-   "x": 190.8,
-   "y": 43.6,
+   "x": 187.5,
+   "y": 42.5,
    "face_deg": 250,
    "from_narrative_offset_m": [
     6,
@@ -298,6 +354,13 @@
    "nearest_prop": {
     "name": "jeongja",
     "dist_m": 1.2
+   },
+   "walk_snap": {
+    "from": [
+     190.8,
+     43.6
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "박돌쇠네 대장간": {
@@ -334,8 +397,8 @@
   },
   "당할미 집": {
    "zone": "Village",
-   "x": 190.8,
-   "y": 47.0,
+   "x": 192.0,
+   "y": 48.0,
    "face_deg": 256,
    "from_narrative_offset_m": [
     -4,
@@ -346,11 +409,18 @@
    "nearest_prop": {
     "name": "jeongja",
     "dist_m": 3.6
+   },
+   "walk_snap": {
+    "from": [
+     190.8,
+     47.0
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "도씨네 집": {
    "zone": "Village",
-   "x": 190.8,
+   "x": 192.0,
    "y": 67.0,
    "face_deg": 180,
    "from_narrative_offset_m": [
@@ -362,6 +432,13 @@
    "nearest_prop": {
     "name": "prop_millstone",
     "dist_m": 7.0
+   },
+   "walk_snap": {
+    "from": [
+     190.8,
+     67.0
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "보릿들 둑": {
@@ -494,8 +571,8 @@
   },
   "장터 약방": {
    "zone": "Market",
-   "x": 29,
-   "y": 391,
+   "x": 29.5,
+   "y": 391.0,
    "face_deg": 337,
    "from_narrative_offset_m": [
     -7,
@@ -506,12 +583,19 @@
    "nearest_prop": {
     "name": "br_med_sign",
     "dist_m": 3.5
+   },
+   "walk_snap": {
+    "from": [
+     29,
+     391
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "약방": {
    "zone": "Market",
-   "x": 29,
-   "y": 391,
+   "x": 29.5,
+   "y": 391.0,
    "face_deg": 337,
    "from_narrative_offset_m": [
     -7,
@@ -522,12 +606,19 @@
    "nearest_prop": {
     "name": "br_med_sign",
     "dist_m": 3.5
+   },
+   "walk_snap": {
+    "from": [
+     29,
+     391
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "장터 주막 부엌": {
    "zone": "Market",
-   "x": 43,
-   "y": 392,
+   "x": 42.5,
+   "y": 392.0,
    "face_deg": 210,
    "from_narrative_offset_m": [
     7,
@@ -538,12 +629,19 @@
    "nearest_prop": {
     "name": "prop_pyeongsang",
     "dist_m": 3.6
+   },
+   "walk_snap": {
+    "from": [
+     43,
+     392
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "주막": {
    "zone": "Market",
-   "x": 43,
-   "y": 391,
+   "x": 42.5,
+   "y": 391.0,
    "face_deg": 203,
    "from_narrative_offset_m": [
     7,
@@ -554,6 +652,13 @@
    "nearest_prop": {
     "name": "jumak_market",
     "dist_m": 4.0
+   },
+   "walk_snap": {
+    "from": [
+     43,
+     391
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "장터 엿판 자리": {
@@ -590,8 +695,8 @@
   },
   "동헌 터 탄 문서함 곁": {
    "zone": "Yamen",
-   "x": 37,
-   "y": 330,
+   "x": 36.5,
+   "y": 330.0,
    "face_deg": 180,
    "from_narrative_offset_m": [
     1,
@@ -602,6 +707,13 @@
    "nearest_prop": {
     "name": "prop_burnt_desk",
     "dist_m": 0.6
+   },
+   "walk_snap": {
+    "from": [
+     37,
+     330
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "동헌 뒤 둥근 돌담 옥": {
@@ -655,7 +767,7 @@
   "객사 앞 방": {
    "zone": "Yamen",
    "x": 31.0,
-   "y": 326.0,
+   "y": 325.5,
    "face_deg": 39,
    "from_narrative_offset_m": [
     -10,
@@ -666,6 +778,13 @@
    "nearest_prop": {
     "name": "prop_charred_pillar",
     "dist_m": 2.2
+   },
+   "walk_snap": {
+    "from": [
+     31.0,
+     326.0
+    ],
+    "why": "서 있을 자리가 담·집·나무 막힘 안쪽이라 열린 땅(여유폭 1.2m↑)으로 옮김"
    }
   },
   "역병막 빈 움막 섬돌": {
