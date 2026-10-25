@@ -92,4 +92,20 @@ namespace Chasa.Core
 
     /// <summary>지금 하늘 밝기(0~1)를 여러 곳(등불·햇빛)이 같이 읽는 공유값. 시계가 없는 모드에선 0(밤)으로 둔다</summary>
     public static class SkyState { public static float Daylight; }
+
+    /// <summary>
+    /// 달 주기 효과를 모아 둔 공유값 (기본값 = 효과 없음). 시계가 매 프레임 Set 으로 갱신한다.
+    /// 보름: 혼이 강해지고 기억을 더 얻는다 / 그믐: 덩어리가 많이 나와 파혼이 유리하다.
+    /// 천도와 파혼의 선택이 달에 따라 달라지게 하려는 장치.
+    /// </summary>
+    public static class MoonEffects
+    {
+        public static float MaedhimMult = 1f, MemoryMult = 1f, LumpBonus = 0f;
+        public static void Set(bool full, bool newMoon)
+        {
+            MaedhimMult = full ? Balance.MOON_FULL_MAEDHIM : 1f;
+            MemoryMult = full ? Balance.MOON_FULL_MEMORY : 1f;
+            LumpBonus = newMoon ? Balance.MOON_NEW_LUMP : 0f;
+        }
+    }
 }

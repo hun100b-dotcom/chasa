@@ -34,6 +34,7 @@ namespace Chasa.Core
             Fierce = fierce;
             MaedhimMax = kind == SoulKind.Lump ? Balance.MAEDHIM_LUMP : Balance.MAEDHIM_NORMAL;
             if (fierce) MaedhimMax = (int)(MaedhimMax * Balance.FIERCE_MULT);
+            MaedhimMax = System.Math.Max(1, (int)System.Math.Round(MaedhimMax * MoonEffects.MaedhimMult));   // 보름이면 더 질기다
             Maedhim = MaedhimMax;
         }
 

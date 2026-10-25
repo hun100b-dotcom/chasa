@@ -434,6 +434,7 @@ public class JudgeSystem : MonoBehaviour
     void TickClock(float dt)
     {
         clock.Tick(dt);
+        MoonEffects.Set(clock.FullMoon, clock.NewMoon);
         var ph = clock.Consume();
         if (ph.HasValue)
         {
@@ -572,10 +573,11 @@ public class JudgeSystem : MonoBehaviour
         FillEdges(h);
         if (clock != null)
         {
+            h.Peaceful = clock.Daylight > 0.6f && !Casting && !AnyEnemyNear(25f);
             h.TimeOfDay = clock.DayFraction; h.IsDawn = clock.Reddish; h.Daylight = clock.Daylight; h.FullMoon = clock.FullMoon; h.NewMoon = clock.NewMoon;
             h.ClockLabel = WorldClock.PhaseName(clock.Phase) + (clock.FullMoon ? " · 보름달" : clock.NewMoon ? " · 그믐" : "") + (clock.Speed > 1.5f ? "  x" + (int)clock.Speed : "");
         }
-        else { h.TimeOfDay = Mathf.Clamp01(1f - night.TimeLeft / Mathf.Max(1f, Balance.NIGHT_DURATION)); h.IsDawn = night.Warning; h.Daylight = 0f; h.ClockLabel = null; }
+        else { h.Peaceful = false; h.TimeOfDay = Mathf.Clamp01(1f - night.TimeLeft / Mathf.Max(1f, Balance.NIGHT_DURATION)); h.IsDawn = night.Warning; h.Daylight = 0f; h.ClockLabel = null; }
         h.Neok = ledger.Neok; h.Memory = ledger.Memory; h.Coin = ledger.Coin; h.Karma = ledger.Karma; h.ChainBonus = chainLeft > 0f;
         h.Hp = ledger.Hp; h.MaxHp = ledger.MaxHp; h.Heal = dayScreen.Pack.Heal;
         h.SecondsLeft = Mathf.CeilToInt(night.TimeLeft); h.Sent = night.Sent; h.Quota = Balance.NIGHT_QUOTA;
@@ -614,6 +616,15 @@ public class JudgeSystem : MonoBehaviour
             if (EdgeWarn.Compute(sp.x, hh - sp.y, w, hh, 48f, vr, out ex, out ey))   // 화면 y 는 위로 갈수록 커서 UI 좌표로 뒤집는다
                 h.Edges.Add(new EdgeMark { Nx = ex / w, Ny = ey / hh });
         }
+    }
+
+    /// <summary>싸울 수 있는 혼이나 처결 대기 혼이 이 거리 안에 있나 (평화로운 낮 판정)</summary>
+    bool AnyEnemyNear(float range)
+    {
+        float r2 = range * range;
+        foreach (var e in enemies.list)
+            if (!e.gone && (e.Pos - player.Pos).sqrMagnitude < r2) return true;
+        return false;
     }
 
     /// <summary>맥락 버튼: 지금 천도/파혼이 가능한 무릎 꿇은 혼이 가까이 있나 (폰 버튼을 그때만 켠다)</summary>

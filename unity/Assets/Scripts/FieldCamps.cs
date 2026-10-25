@@ -52,7 +52,8 @@ public class FieldCamps
     void Spawn(Camp c)
     {
         c.spawned = true;
-        for (int i = 0; i < c.row.n; i++)
+        int count = CampRules.CountFor(c.row.n, SkyState.Daylight);   // 낮엔 적게
+        for (int i = 0; i < count; i++)
         {
             // 군집 반지름 안 무작위 자리. 집·소품 안이면 밀려난다
             float a = Random.value * Mathf.PI * 2f, rr = Mathf.Sqrt(Random.value) * c.row.r;

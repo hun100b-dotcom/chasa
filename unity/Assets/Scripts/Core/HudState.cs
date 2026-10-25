@@ -24,6 +24,7 @@ namespace Chasa.Core
         // 지금은 밤 남은 시간에서 만들고, 3단계(월드 시계)가 오면 그 값으로 바꾼다
         public float TimeOfDay; public bool IsDawn;
         public float Daylight; public bool FullMoon, NewMoon;   // 하늘 밝기(0~1)와 달 (시각 고리가 해/달 모양을 고름)
+        public bool Peaceful;                                    // 평화로운 낮(주변에 적 없음): 시각 고리만 남기고 나머지 화면을 걷는다
         public string ClockLabel;                                // 필드 모드의 시간대 글자('해질녘 · 보름달'). null 이면 옛 밤 타이머 글자
         // 아래쪽 기술 줄
         public float DodgeCharges; public int DodgeMax;     // 피하기 충전(소수는 충전 중인 칸)

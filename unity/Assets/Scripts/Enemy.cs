@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
     /// <summary>혼 종류를 무작위로. 덩어리는 드물게 (LUMP_SPAWN_CHANCE)</summary>
     static SoulKind RandomKind()
     {
-        if (Random.value < Balance.LUMP_SPAWN_CHANCE) return SoulKind.Lump;
+        if (Random.value < Balance.LUMP_SPAWN_CHANCE + MoonEffects.LumpBonus) return SoulKind.Lump;   // 그믐엔 덩어리가 많다
         return (SoulKind)Random.Range(0, 3);
     }
 

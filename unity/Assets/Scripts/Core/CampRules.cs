@@ -20,6 +20,13 @@ namespace Chasa.Core
             return !spawned && dist <= ActivateDist && cooldownLeft <= 0f;
         }
 
+        /// <summary>낮이 밝을수록 군집 인원이 줄어든다 (밤 1.0 → 한낮 DAY_CAMP_MIN_FRAC). 최소 1명</summary>
+        public static int CountFor(int baseCount, float daylight)
+        {
+            float f = 1f - (1f - Balance.DAY_CAMP_MIN_FRAC) * System.Math.Max(0f, System.Math.Min(1f, daylight));
+            return System.Math.Max(1, (int)System.Math.Round(baseCount * f));
+        }
+
         /// <summary>지금 군집을 걷어내야 하나?</summary>
         public static bool ShouldRelease(bool spawned, float dist)
         {

@@ -372,4 +372,8 @@ public static class Balance
     public const float CLOCK_NIGHT_MIN = 22.0f;  // 밤 길이(분)
     public const float CLOCK_START_MIN = 16.0f;  // 게임 시작 시각(하루 안의 분). 16 = 해질녘 시작
     public const float MOON_DAYS = 7.0f;  // 달 주기(일). 보름=가운데 날, 그믐=첫날
+    public const float MOON_FULL_MAEDHIM = 1.25f;  // 보름 밤: 새로 태어나는 혼의 맺힘 배율(혼이 강하다)
+    public const float MOON_FULL_MEMORY = 1.5f;  // 보름 밤: 천도로 얻는 기억 배율(기억이 길게)
+    public const float MOON_NEW_LUMP = 0.2f;  // 그믐 밤: 덩어리가 나올 확률 가산(파혼이 유리)
+    public const float DAY_CAMP_MIN_FRAC = 0.4f;  // 한낮에 적 군집 인원이 줄어드는 최소 비율(밤=1.0)
 }

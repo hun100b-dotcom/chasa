@@ -1374,4 +1374,26 @@ public class CoreTests
         for (int i = 0; i < 240 * 20; i++) c.Tick(0.05f);                                  // 실제 240초 = 4분
         Assert.AreEqual(1, c.Day);
     }
+
+    [Test]
+    public void Camp_FewerEnemiesByDay()
+    {
+        Assert.AreEqual(8, CampRules.CountFor(8, 0f));                                     // 밤엔 그대로
+        Assert.Less(CampRules.CountFor(8, 1f), 8);                                         // 한낮엔 줄어든다
+        Assert.GreaterOrEqual(CampRules.CountFor(1, 1f), 1);                               // 최소 1명
+    }
+
+    [Test]
+    public void Moon_FullStrongerAndNewMoreLumps()
+    {
+        MoonEffects.Set(true, false);
+        var strong = new Soul(SoulKind.Fresh);
+        MoonEffects.Set(false, false);
+        var normal = new Soul(SoulKind.Fresh);
+        Assert.Greater(strong.MaedhimMax, normal.MaedhimMax);                              // 보름은 혼이 질기다
+        MoonEffects.Set(false, true);
+        Assert.Greater(MoonEffects.LumpBonus, 0f);                                         // 그믐은 덩어리 가산
+        MoonEffects.Set(false, false);                                                     // 다른 시험에 영향 없게 되돌림
+        Assert.AreEqual(1f, MoonEffects.MaedhimMult);
+    }
 }

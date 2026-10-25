@@ -24,7 +24,7 @@ public class UiRoot : MonoBehaviour
     VisualElement hpFill, root, toastBox, skillBar;
     readonly System.Collections.Generic.List<VisualElement> edgePool = new System.Collections.Generic.List<VisualElement>();   // 화면 가장자리 경고 표시 재사용 묶음
     Label dodgeLabel, pullLabel, weaponLabel; VisualElement[] pips = new VisualElement[0];
-    VisualElement ringBox, ringMarker;   // 시각 고리: 바탕 원 / 해·달 표시
+    VisualElement ringBox, ringMarker, note;   // 시각 고리: 바탕 원 / 해·달 표시
     string lastToasts;
     string lastLedger, lastVital, lastNight;
 
@@ -57,7 +57,7 @@ public class UiRoot : MonoBehaviour
         r.Add(root);
 
         // 장부 쪽지(왼쪽 위, 세로로 쌓기): 장부 / 체력 / 밤
-        var note = new VisualElement { name = "ledger-note", pickingMode = PickingMode.Ignore };
+        note = new VisualElement { name = "ledger-note", pickingMode = PickingMode.Ignore };
         note.style.position = Position.Absolute; note.style.left = 12; note.style.top = 32;
         note.style.backgroundColor = PaperBg;
         note.style.paddingLeft = 12; note.style.paddingRight = 14; note.style.paddingTop = 8; note.style.paddingBottom = 10;
@@ -144,7 +144,7 @@ public class UiRoot : MonoBehaviour
         var a = Hud.LedgerLine(); if (a != lastLedger) { ledger.text = lastLedger = a; }
         var b = Hud.VitalLine(); if (b != lastVital) { vital.text = lastVital = b; }
         var c = Hud.NightLine(); if (c != lastNight) { night.text = lastNight = c; }
-        RefreshSkillBar(); RefreshToasts(); RefreshEdges(); RefreshTimeRing();
+        RefreshSkillBar(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         hpFill.style.width = Length.Percent(Hud.HpRatio * 100f);
         hpFill.style.backgroundColor = Hud.HpLow ? new Color(0.9f, 0.3f, 0.3f) : new Color(0.72f, 0.82f, 0.95f);
     }
@@ -259,5 +259,15 @@ public class UiRoot : MonoBehaviour
             : Hud.ClockLabel != null ? Color.Lerp(new Color(0.8f, 0.88f, 1f), new Color(1f, 0.85f, 0.45f), Hud.Daylight)   // 밤 달 청백 → 낮 해 금색
             : Color.Lerp(new Color(1f, 0.85f, 0.5f), new Color(0.8f, 0.88f, 1f), Mathf.Clamp01(Hud.TimeOfDay * 2f));
    // 노을 금색 → 달 청백
+    }
+
+    /// <summary>평화로운 낮: 장부·기술 줄을 서서히 걷어 시각 고리와 풍경만 남긴다(적이 가까워지면 곧바로 돌아온다)</summary>
+    float peace = 1f;
+    void RefreshPeace()
+    {
+        peace = Mathf.MoveTowards(peace, Hud.Peaceful ? 0f : 1f, Time.unscaledDeltaTime * (Hud.Peaceful ? 0.8f : 4f));   // 천천히 사라지고 빨리 돌아온다
+        note.style.opacity = peace; skillBar.style.opacity = peace;
+        note.style.display = peace < 0.01f ? DisplayStyle.None : DisplayStyle.Flex;
+        skillBar.style.display = peace < 0.01f ? DisplayStyle.None : DisplayStyle.Flex;
     }
 }

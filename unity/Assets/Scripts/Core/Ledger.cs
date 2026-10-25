@@ -59,7 +59,7 @@ namespace Chasa.Core
         public void CompleteTendo()
         {
             Neok += (int)System.Math.Round(Balance.TENDO_NEOK * CoreRules.RewardMult(Karma));
-            Memory += Balance.TENDO_MEMORY;
+            Memory += (int)System.Math.Round(Balance.TENDO_MEMORY * MoonEffects.MemoryMult);   // 보름 밤엔 기억이 길게
             TendoStreak++;
             CountForDecay();
         }
