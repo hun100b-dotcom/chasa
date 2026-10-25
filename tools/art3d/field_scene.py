@@ -65,17 +65,17 @@ def build(win):
         cx, cy = t["ix"] * 8 + 4, t["iy"] * 8 + 4
         if inwin(cx, cy, win, 6): put(t["tile"], cx, cy, t["z"], t["rot"])   # 틈은 아래 깔린 풀 타일(1.03배, 3~6mm 낮음)이 덮는다
     for p in FIELD["props"]:
-        if inwin(p["x"], p["y"], win, 4): put(p["prop"], p["x"], p["y"], p.get("z", 0), p["rot"])
+        if inwin(p["x"], p["y"], win, 4): put(p["prop"], p["x"], p["y"], p.get("gz", p.get("z", 0) + 0.3), p["rot"])
     for s in FIELD.get("structures", []):
         if "pieces" in s:
             for q in s["pieces"]:
-                if inwin(q["x"], q["y"], win, 6): put(q["piece"], q["x"], q["y"], q["z"], q["rot"])
-        elif inwin(s["x"], s["y"], win, 8): put(s["piece"], s["x"], s["y"], s.get("z", 0), s["rot"])
+                if inwin(q["x"], q["y"], win, 6): put(q["piece"], q["x"], q["y"], q["z"] + (0 if q["piece"].startswith("br_") else 0.3), q["rot"])
+        elif inwin(s["x"], s["y"], win, 8): put(s["piece"], s["x"], s["y"], s.get("z", 0) + (0 if s["piece"].startswith("br_") else 0.3), s["rot"])
     for b in VIL["buildings"]:
         for q in b["pieces"]:
-            if inwin(q["x"] + VX, q["y"] + VY, win, 6): put(q["piece"], q["x"] + VX, q["y"] + VY, q["z"], q["rot"])
+            if inwin(q["x"] + VX, q["y"] + VY, win, 6): put(q["piece"], q["x"] + VX, q["y"] + VY, q["z"] + 0.3, q["rot"])
     for p in VIL["props"]:
-        if inwin(p["x"] + VX, p["y"] + VY, win, 6): put(p["prop"], p["x"] + VX, p["y"] + VY, 0, p["rot"])
+        if inwin(p["x"] + VX, p["y"] + VY, win, 6): put(p["prop"], p["x"] + VX, p["y"] + VY, 0.3, p["rot"])
     # 마을 길(마을 배치표가 따로 깐 3.4m 길·마당. 필드 길 타일과 같은 색)
     if inwin(VX, VY, win, 60):
         box("v_road", (3.4, 52, 0.04), (VX, VY - 2, 0.32), "road"); box("v_plaza", (7, 5, 0.04), (VX + 3.4, VY - 5.5, 0.325), "road")
@@ -84,7 +84,7 @@ def build(win):
     decor += [("night_stone_lantern", VX - 4.2, VY - 22, 0, 0), ("night_stone_lantern", VX + 4.2, VY - 22, 0, 0), ("night_torch_stand", VX - 8, VY - 19, 0, 0), ("night_soulfire_pedestal", VX + 6.6, VY - 8.2, 0, 0)]
     decor += [("night_torch_stand", 76.5, FIELD["structures"][0]["y"] - 4.5, 0, 0), ("night_torch_stand", 91.5, FIELD["structures"][0]["y"] + 4.5, 0, 0), ("night_soulfire_pedestal", 404 - 6, 288 + 5, 0.62, 0)]
     for n, x, y, z, r in decor:
-        if inwin(x, y, win, 6): put(n, x, y, z, r)
+        if inwin(x, y, win, 6): put(n, x, y, z + 0.3, r)
 
 def world_night():
     sc = bpy.context.scene; w = bpy.data.worlds.new("W"); sc.world = w; w.use_nodes = True
@@ -128,6 +128,9 @@ SHOTS = {
   "barley": dict(win=(250, 70, 470, 220), center=(352, 134, 0), ortho=150, title="보릿들(밤)"),
   "hamlet": dict(win=(280, 100, 370, 200), center=(324, 148, 0), ortho=56, title="보릿들 한가운데 마을(밤)"),
   "mill": dict(win=(370, 310, 430, 372), center=(402, 340, 0), ortho=30, title="개울가 방앗간(밤)"),
+  "ruin": dict(win=(540, 500, 630, 620), center=(584, 545, 2.0), ortho=50, title="폐당집 무덤 터(밤)"),
+  "plague": dict(win=(60, 410, 140, 500), center=(94, 452, 0), ortho=40, title="검은여울 역병 분위기(밤)"),
+  "landmark": dict(win=(300, 100, 390, 180), center=(340, 138, 0), ortho=40, title="길목 랜드마크(밤)"),
   "bridge": dict(win=(40, 410, 130, 500), center=(84, 452, 0), ortho=48, title="검은여울 돌다리(밤)"),
   "naru":   dict(win=(340, 230, 470, 340), center=(404, 290, 0.6), ortho=40, title="나루 영감 보스 자리(밤)"),
   "tendo":  dict(win=(170, 30, 230, 90), center=(196, 51, 0), ortho=18, title="천도 이펙트(밤)"),

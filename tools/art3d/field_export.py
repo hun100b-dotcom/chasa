@@ -9,11 +9,11 @@ F = json.load(open(os.path.join(A3, "field_5x5.json"))); T = 8; CH = 128
 
 # 1) 인스턴스 묶음
 inst = defaultdict(lambda: defaultdict(list))
-for p in F["props"]: inst[p["prop"]][f'{int(p["x"] // CH)}_{int(p["y"] // CH)}'].append([p["x"], p["y"], p["rot"], p.get("z", 0.0)])
+for p in F["props"]: inst[p["prop"]][f'{int(p["x"] // CH)}_{int(p["y"] // CH)}'].append([p["x"], p["y"], p["rot"], p.get("z", 0.0), p.get("gz", round(p.get("z", 0.0) + 0.3, 2))])
 tiles = defaultdict(lambda: defaultdict(list))
 for t in F["tiles"]: tiles[t["tile"]][f'{int(t["ix"] * T // CH)}_{int(t["iy"] * T // CH)}'].append([t["ix"], t["iy"], t["rot"], t["z"]])
 out = {"units": "m", "axes": "x=동, y=북(유니티 (x,z)=(x,y)), rot=반시계 도", "chunk_m": CH,
-       "note": "props: 모델 이름 → 청크 '열_행' → [x, y, rot, z]. 같은 모델은 GPU 인스턴싱 한 번에. tiles는 [ix, iy, rot, z](칸 중심 = ix*8+4).",
+       "note": "props: 모델 이름 → 청크 '열_행' → [x, y, rot, z, gz(땅 윗면, 소품은 이 높이에 놓는다)]. 같은 모델은 GPU 인스턴싱 한 번에. tiles는 [ix, iy, rot, z](칸 중심 = ix*8+4).",
        "props": {k: dict(v) for k, v in inst.items()}, "tiles": {k: dict(v) for k, v in tiles.items()},
        "counts": {"prop_kinds": len(inst), "prop_total": sum(len(l) for v in inst.values() for l in v.values())}}
 json.dump(out, open(os.path.join(A3, "field_5x5_instances.json"), "w"), ensure_ascii=False, separators=(",", ":"))

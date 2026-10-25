@@ -216,6 +216,47 @@ def _clear():
 _clear()
 structures.append({"piece": "prop_mill", "file": "assets3d/props/prop_mill.glb", "x": 399.3, "y": 340.0, "z": 0, "rot": 0, "note": "개울가 방앗간(물레방아가 +X=개울 쪽)"})
 for pr_, dx_, dy_, rt_ in (("prop_sacks", -3.8, -4.0, 0), ("prop_cart", -5.5, 2.5, 100), ("prop_haystack", -8.0, -1.0, 0), ("prop_stepstones", -4.0, -8.0, 0)): props.append({"zone": "방앗간", "prop": pr_, "x": round(399.3 + dx_, 1), "y": round(340.0 + dy_, 1), "rot": rt_, "z": 0.0})
+# ── 5-4) 3차: 구역 개성(폐당집 무덤 터, 검은여울 역병)과 길목 랜드마크 ───────────────────────────────────────────────
+LANDMARKS = []
+RUIN = (72 * 8 + 4, 69 * 8)
+life("prop_ruined_shrine", RUIN[0], RUIN[1] - 17.0, 0, zone="폐당집 당집")      # 터 위 한가운데(마커 ruin은 입구)
+SH = (RUIN[0], RUIN[1] - 17.0)
+for _ in range(60):   # 무덤 터: 터 위에 오래된 무덤·봉분을 흩뿌린다(당집 자리와 길은 비운다)
+    gx, gy = rnd.uniform(70 * T - 6, 77 * T + 6), rnd.uniform(65 * T + 2, 74 * T + 6)
+    if abs(gx - SH[0]) < 8.5 and abs(gy - SH[1]) < 7.5: continue
+    if abs(gx - RUIN[0]) < 3.5 and gy < 66 * T + 2: continue
+    if any(abs(gx - p["x"]) < 5 and abs(gy - p["y"]) < 5 for p in props if p["zone"] in ("폐당집 무덤",)): continue
+    life(rnd.choice(("prop_tomb_old", "prop_tomb_old", "prop_grave")), gx, gy, rnd.choice((0, 20, -20, 160, 200)), zone="폐당집 무덤")
+for mx, my in ((SH[0] - 12, SH[1] - 8), (SH[0] + 12, SH[1] - 8), (SH[0] + 16, SH[1] + 4), (SH[0] - 15, SH[1] + 6)): life("prop_mangjang", mx, my, rnd.choice((0, 10, -10)), zone="폐당집 만장")
+for x in range(440, 564, 22): life("prop_soulfire_lantern", x, 62 * T + (-5.0 if (x // 22) % 2 else 13.0), 0, zone="혼불 길")   # 폐당집 가는 길 혼불 석등
+for yy in (66 * T, 66 * T + 14, 66 * T + 28): life("prop_soulfire_lantern", RUIN[0] - 5.5, yy - 40, 0, zone="혼불 길"); life("prop_soulfire_lantern", RUIN[0] + 5.5, yy - 40, 0, zone="혼불 길")
+# 검은여울 역병: 길목 금줄, 의원 집 둘레 약탕·병자·격리 움막, 둑마다 독기 웅덩이와 깃발
+life("prop_plague_rope", 116.0, 380.0, 0, zone="역병 금줄"); life("prop_plague_rope", 104.0, 452.0, 90, zone="역병 금줄"); life("prop_plague_rope", 116.0, 330.0, 0, zone="역병 금줄")
+for pr, x, y, rt in (("prop_herb_pot", 47.0, 478.0, 0), ("prop_herb_pot", 58.5, 460.0, 90), ("prop_sick_mats", 40.0, 466.0, 0), ("prop_sick_mats", 45.0, 484.0, 90), ("prop_quarantine_hut", 30.0, 448.0, 0), ("prop_quarantine_hut", 36.0, 460.0, 10), ("prop_quarantine_hut", 30.0, 474.0, -8), ("prop_quarantine_hut", 38.0, 490.0, 5)):
+    life(pr, x, y, rt, zone="검은여울 의원 둘레")
+for pr, x, y, rt in (("prop_plague_banner", 99.5, 446.0, 0), ("prop_plague_banner", 99.5, 459.0, 10), ("prop_foul_pool", 103.0, 437.0, 20), ("prop_foul_pool", 72.0, 440.0, 70), ("prop_foul_pool", 72.5, 466.0, 10), ("prop_sick_mats", 107.0, 463.0, 0), ("prop_herb_pot", 108.0, 446.0, 0), ("prop_quarantine_hut", 110.0, 432.0, 0), ("prop_quarantine_hut", 112.0, 470.0, 5)):
+    life(pr, x, y, rt, zone="검은여울 다리목")   # 다리 동쪽 어귀를 눈에 띄게(금줄 뒤로 격리 움막과 병자)
+for k in range(10): life("prop_foul_pool", rnd.choice((rnd.uniform(60, 74), rnd.uniform(97, 112))), rnd.uniform(300, 620), rnd.uniform(0, 360), zone="독기 웅덩이")
+for k in range(9): life("prop_plague_banner", rnd.choice((rnd.uniform(64, 74), rnd.uniform(97, 108))), rnd.uniform(300, 620), rnd.choice((0, 15, -15)), zone="역병 깃발")
+for k in range(5): life("prop_sick_mats", rnd.uniform(20, 66), rnd.uniform(430, 520), rnd.choice((0, 90)), zone="검은여울 병자")
+# 길목 랜드마크: 큰 길과 샛길을 따라 72m마다 길에서 7m 떨어진 곳에 큰 바위·고목·사당·고갯마루 돌무더기를 돌려 가며
+LM_KINDS = ("prop_big_rock", "prop_old_tree", "prop_small_shrine", "prop_pass_cairn")
+_n = 0; _acc = 0.0
+for path in [ROUTE] + list(BRANCH.values()):
+    for (ax, ay), (bx, by) in zip(path, path[1:]):
+        seg = math.hypot(bx - ax, by - ay) * T; ux, uy = (bx - ax) * T / seg, (by - ay) * T / seg; d = 0.0
+        while d < seg:
+            if _acc >= 72:
+                _acc = 0.0; side = 1 if _n % 2 else -1; px, py = ax * T + 4 + ux * d - uy * 9 * side, ay * T + 4 + uy * d + ux * 9 * side; kind = LM_KINDS[_n % 4]
+                if 24 <= px <= 616 and 24 <= py <= 616 and not (150 < px < 242 and 20 < py < 110):
+                    life(kind, px, py, rnd.choice((0, 90, 180, 270)) if kind != "prop_small_shrine" else (90 if side > 0 else -90), zone="랜드마크")
+                    LANDMARKS.append({"kind": kind, "x": round(px, 1), "y": round(py, 1)}); _n += 1
+            d += 8.0; _acc += 8.0
+RAD = {"prop_old_tree": 7.0, "prop_big_rock": 5.5, "prop_small_shrine": 4.5, "prop_pass_cairn": 3.5, "prop_ruined_shrine": 9.0}
+_big = [(p["x"], p["y"], RAD[p["prop"]]) for p in props if p["prop"] in RAD]
+props[:] = [p for p in props if p["prop"] in RAD or p["zone"] in ("폐당집 무덤", "폐당집 만장", "혼불 길") or not any((p["x"] - x) ** 2 + (p["y"] - y) ** 2 < r * r for x, y, r in _big)]   # 큰 랜드마크 자리의 숲 정리
+# 폐당집 터는 휑한 무덤 터: 터 위 숲을 걷어 낸다(마른 나무만 군데군데 남김)
+props[:] = [p for p in props if not (552 <= p["x"] <= 622 and 516 <= p["y"] <= 600 and p["prop"].startswith(("nature_pine", "nature_zelkova", "nature_bamboo", "nature_bush", "terrain_bush")))]
 scatter("통나무", (16, 16, 63, 62), ["prop_log_pile"], 70); scatter("숲 야영", (28, 30, 56, 60), ["prop_campfire"], 4, lvl=0)
 life("prop_campfire", 99.5, 548.0, zone="나루터 모닥불"); life("prop_log_pile", 100.8, 551.0, 70, zone="나루터")
 scatter("폐당집 터", (66, 62, 78, 76), DEAD + ROCK, 40, lvl=1); scatter("폐당집 둘레", (60, 56, 79, 79), DEAD + PINE, 45, lvl=0)
@@ -237,12 +278,13 @@ for m_ in [m for m in markers if m["kind"] == "seonang"]:   # 서낭당 4곳에 
 zones = [{"name": "검은여울", "rect_m": [0, 272, 200, 640]}, {"name": "솔고개 마을", "rect_m": [160, 24, 232, 100]}, {"name": "보릿들", "rect_m": [208, 40, 448, 240]}, {"name": "물막이 골", "rect_m": [264, 240, 504, 500]}, {"name": "폐당집", "rect_m": [520, 500, 620, 620]}]
 
 # ── 7) 내보내기 ─────────────────────────────────────────────────────────────
+for p_ in props: p_["gz"] = round(p_.get("z", 0.0) + 0.3, 2)   # 땅 윗면 높이(타일 아랫면 z + 두께 0.3). 소품은 이 높이에 놓아야 묻히지 않는다
 KIND = {"grass": "terrain_tile_grass", "paddy": "terrain_tile_paddy", "barley": "terrain_tile_barley", "stream": "terrain_tile_stream"}
 tiles = [{"ix": ix, "iy": iy, "tile": (v["t"] if v["t"].startswith("br_") else "terrain_tile_" + v["t"]), "rot": v["rot"], "z": v["lv"] * 2.0} for (ix, iy), v in sorted(tile.items(), key=lambda a: (a[0][1], a[0][0]))]
 out = {"map": "첫 필드 5×5칸 640m", "units": "m", "axes": "x=동,y=북, 원점=남서쪽 모서리, 타일 중심=(ix*8+4, iy*8+4)", "grid": {"tiles": [N, N], "tile_m": T, "cell_m": 128, "cells": [5, 5]},
        "default_tile": "terrain_tile_grass(표에 없는 칸은 풀밭, z=0)", "rotation": "반시계 도. 비탈 0=북쪽으로 오름, 길 직선 0=동서",
        "provisional": "비탈 모서리(slope_corner_out)의 rot는 추정값. 유니티에서 높이가 어긋나면 rot를 ±90 보정(코드팀 QA).",
-       "zones": zones, "tiles": tiles, "props": props + br_props, "structures": structures, "file_dirs": {"terrain_*": "assets3d/terrain/", "nature_*": "assets3d/nature/", "br_*": "assets3d/blackrapids/", "hanok_*": "assets3d/hanok/", "prop_*": "assets3d/props/", "night_*": "assets3d/night/"}, "markers": markers, "village_layout": "assets3d/layouts/solgogae_village.json (원점 = 필드 (196,60)에 놓는다)",
+       "zones": zones, "tiles": tiles, "props": props + br_props, "structures": structures, "file_dirs": {"terrain_*": "assets3d/terrain/", "nature_*": "assets3d/nature/", "br_*": "assets3d/blackrapids/", "hanok_*": "assets3d/hanok/", "prop_*": "assets3d/props/", "night_*": "assets3d/night/"}, "tile_thickness_m": 0.3, "z_note": "props[].z·tiles[].z는 칸 아랫면 기준. 땅 윗면=z+tile_thickness_m. 소품·건물을 얹을 땐 props[].gz(=z+0.3)를 쓴다. 다리·나루터·배·길 조각(br_*)은 처음부터 칸 아랫면 기준으로 만든 모델이라 z 그대로.", "landmarks": LANDMARKS, "markers": markers, "village_layout": "assets3d/layouts/solgogae_village.json (원점 = 필드 (196,60)에 놓는다)",
        "village_offset_m": [196, 60], "counts": {"tiles(비풀밭)": len(tiles), "props": len(props) + len(br_props), "structures": len(structures), "paddy": sum(1 for t in tiles if t["tile"].endswith("paddy")), "barley": sum(1 for t in tiles if t["tile"].endswith("barley"))}}
 json.dump(out, open(os.path.join(ROOT, "layouts", "field_5x5.json"), "w"), ensure_ascii=False, indent=1)
 
