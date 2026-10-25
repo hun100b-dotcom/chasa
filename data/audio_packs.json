@@ -415,7 +415,27 @@
   "cut.book.set": "sfx_lowband",
   "amb.wind.dry": "amb_loop",
   "amb.ondol.fire": "amb_loop",
-  "vo.far.reply": "sfx_lowband"
+  "vo.far.reply": "sfx_lowband",
+  "amb.crow.far": "sfx_lowband",
+  "amb.river.morning": "amb_loop",
+  "cut.bell.shaman": "sfx_short",
+  "cut.bell.small": "sfx_lowband",
+  "cut.chain.scratch": "sfx_short",
+  "cut.flint.strike": "sfx_short",
+  "cut.footstep.leave": "sfx_lowband",
+  "cut.kiln.light": "sfx_short",
+  "cut.knife.carve": "sfx_short",
+  "cut.stake.drive": "sfx_short",
+  "cut.stone.roll": "sfx_lowband",
+  "cut.tag.sway": "sfx_short",
+  "cut.tool.set": "sfx_short",
+  "cut.water.still": "sfx_lowband",
+  "cut.well.bucket": "sfx_short",
+  "mus.boat.answer": "long_oneshot",
+  "vo.sumbi": "long_oneshot",
+  "cut.seal.set.nine": "long_oneshot",
+  "cut.ink.grind.room": "amb_loop",
+  "cut.ink.grind.stop": "sfx_lowband"
  },
  "packs": {
   "core": {
@@ -517,7 +537,9 @@
     "amb.weather.plague",
     "amb.weather.cloudy.night",
     "amb.weather.rain.heavy",
-    "sfx.weather.thunder.far"
+    "sfx.weather.thunder.far",
+    "amb.crow.far",
+    "amb.river.morning"
    ],
    "bgm": []
   },
@@ -785,7 +807,14 @@
     "cut.thread.reel",
     "cut.hull.beach",
     "cut.hull.scrape",
-    "cut.rope.taut"
+    "cut.rope.taut",
+    "cut.chain.scratch",
+    "cut.flint.strike",
+    "cut.kiln.light",
+    "cut.knife.carve",
+    "cut.stake.drive",
+    "mus.boat.answer",
+    "vo.sumbi"
    ],
    "bgm": [
     "bgm_below_water_combat",
@@ -834,7 +863,9 @@
     "cut.lime.crack",
     "cut.gate.close",
     "amb.wind.dry",
-    "vo.far.reply"
+    "vo.far.reply",
+    "cut.stone.roll",
+    "cut.tag.sway"
    ],
    "bgm": [
     "bgm_below_earth_combat",
@@ -876,7 +907,16 @@
     "cut.rope.fall",
     "cut.cloth.wave",
     "cut.book.set",
-    "amb.ondol.fire"
+    "amb.ondol.fire",
+    "cut.bell.shaman",
+    "cut.bell.small",
+    "cut.footstep.leave",
+    "cut.tool.set",
+    "cut.water.still",
+    "cut.well.bucket",
+    "cut.seal.set.nine",
+    "cut.ink.grind.room",
+    "cut.ink.grind.stop"
    ],
    "bgm": [
     "bgm_below_ink_combat",

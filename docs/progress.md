@@ -1323,3 +1323,9 @@
 - 지금 설정(Vorbis 품질 100%, 전부 Resources)으로는 약 159MB가 첫 화면에 한꺼번에 온다. 권장 설정에서는 전체 약 45MB가 되고, 첫 화면은 공통+1막만 받는다. 코드팀 할 일은 `docs/audio-delivery-plan.md`에 정리했다.
 - 클리핑 0개. 트루 피크가 −1dB를 넘은 것은 `bgm_solgogae_finish`(−0.8) 하나. 요령방울 타격 2개를 4dB 내렸다.
 - 시즌3 컷신 89컷 소리 대본: `tools/cutscene_audio_s3.py` → `data/cutscene_audio_s3.json`(80컷 232박자). 서사가 요청한 새 소리 26개를 `sfx_render.py`에 추가했다(총 368개).
+
+## 2026-10-26 새벽 — [기획·사운드] 시즌3 장례 소리 20개
+- 서사 요청(funerals_s3.json, PR #32) 20개 중 이미 있던 3개(`amb.dawn.still`·`cut.chain.fall`·`cut.seal.set`)를 뺀 17개를 `sfx_render.py`에 만들었다.
+- 덤으로 3개: 먹방 1초 끊김용 `cut.ink.grind.room`(반복)·`cut.ink.grind.stop`, 멀리서 인 아홉 번 `cut.seal.set.nine`. 효과음은 모두 388개. 다시 잰 전체 용량은 웹 46.0MB(+0.8), 첫 화면 7.7MB.
+- `data/funeral_audio_s3.json` 신설: FUN-B28 먹방 20.0의 끊김 박자, FUN-S-276의 인 아홉 번 바꿔 끼우기. 끊긴 1초는 앞 소리보다 −77dB(사실상 무음)인 것을 쟀다.
+- `audio_budget.py`: 시즌3 장례(FUN-S-181~300)에 쓰는 소리를 관할에 따라 6·7·8막 묶음에 넣도록 고쳤다.

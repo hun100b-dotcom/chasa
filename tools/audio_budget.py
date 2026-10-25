@@ -158,6 +158,9 @@ def sfx_pack(s, cut_first):
         if any(w in s.get("use", "") for w in ("S3-", "RITE-REVERSE", "LEDGER-REVERSE")): cands.append("act6")
         f = re.search(r"FUN-S(\d+)", s.get("use", ""))
         if f and int(f.group(1)) >= 80: cands.append("act3")      # S-080 넘는 장례 = 3막 갯마을·도성 사람들
+        f3 = re.search(r"FUN-S-(\d{3})", s.get("use", ""))      # 시즌3 장례(S-181~300): 관할 번호대로 물 밑·흙 밑·먹 밑
+        if f3:
+            k = int(f3.group(1)); cands.append("act6" if k <= 216 else "act7" if k <= 264 else "act8")
         return min(cands, key=PACK_ORDER.index) if cands else "act1"
     return "core"   # UI·발소리·전투·처결·탐색·날씨·1막 세계 소리 = 어디서나 쓰는 것
 
