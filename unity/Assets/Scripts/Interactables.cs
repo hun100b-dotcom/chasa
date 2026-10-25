@@ -218,7 +218,7 @@ public class Interactables
     public void Restore(IEnumerable<string> picked, IEnumerable<string> herbTaken, int herbs)
     {
         Picked.Clear(); HerbTaken.Clear(); KeepsakeSouls.Clear(); Herbs = herbs;
-        if (picked != null) foreach (var p in picked) if (p.Length > 0 && !p.StartsWith("jesa:") && !p.StartsWith("fp:") && !p.StartsWith("fd:") && !p.StartsWith("fday:")) Picked.Add(p);   // 제사·장례 기록은 JudgeSystem 이 따로 읽는다(옛 값이 새 값을 덮지 않게 거른다)
+        if (picked != null) foreach (var p in picked) if (p.Length > 0 && !p.StartsWith("jesa:") && !p.StartsWith("fp:") && !p.StartsWith("fd:") && !p.StartsWith("fday:") && !p.StartsWith("fn:") && !p.StartsWith("fb:")) Picked.Add(p);   // 제사·장례 기록은 JudgeSystem 이 따로 읽는다(옛 값이 새 값을 덮지 않게 거른다)
         if (herbTaken != null) foreach (var h in herbTaken) { var kv = h.Split(':'); int d; if (kv.Length == 2 && int.TryParse(kv[1], out d)) HerbTaken[kv[0]] = d; }
         foreach (var n in nodes) if (n.kind == "keep" && Picked.Contains(n.id) && n.extra != null) KeepsakeSouls.Add(n.extra);   // 만진 유품의 혼 이름을 되살린다
     }

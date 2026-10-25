@@ -19,7 +19,9 @@ def convert(cid, b, lock):
         cam = st.get("camera", {}); mode = cam.get("then") if cam.get("then") in ZOOM else cam.get("mode")
         row = {"t": st["t"]}
         if cam:
-            row["cam"] = "pan"; row["camTo"] = "funeral"; row["camTime"] = cam.get("time", 2.0)
+            row["cam"] = "pan"; row["camTime"] = cam.get("time", 2.0)
+            # 서사 카메라 대상 → 기획 funeral_targets 좌표 종류: 멈춘 것 / 대문 / 그 밖(다시 움직이는 것·제사상·개·부엌 …) / 노제·사라지는 자리
+            to = cam.get("to"); row["camTo"] = {"stopped_thing": "funeral_stop", "gate": "funeral_gate", "procession": "funeral_noje", "sky": "funeral_exit"}.get(to, "funeral_restart" if to else "funeral_gate")
             if mode in ZOOM: row["zoom"] = ZOOM[mode]
         if st.get("control"): row["ctl"] = st["control"]
         ids = list(st.get("sfx", []))

@@ -289,6 +289,12 @@ public class GameMain : MonoBehaviour
             case "boss": case "boss_boat": return bp;
             case "player_and_boss": return (bp + pp) * 0.5f;
             case "funeral": return judge.FuneralPos;   // 지금 장례가 열린 집 마당(박돌쇠는 대장간 문 앞, 아트 확정 좌표)
+            // 기획 funeral_targets: 혼마다 다른 좌표(멈춘 것·다시 움직이는 것·대문·노제·사라지는 자리)
+            case "funeral_stop": return judge.FuneralPoint("stop");
+            case "funeral_restart": return judge.FuneralPoint("restart");
+            case "funeral_gate": return judge.FuneralPoint("gate");
+            case "funeral_noje": return judge.FuneralPoint("noje");
+            case "funeral_exit": return judge.FuneralPoint("exit");
             case "forge": return new Vector3(218f, 0f, 62f);              // 대장간 안(건물 모델이 없어 터 좌표만)
             case "far_sky_over_hub": return new Vector3(188f, 0f, 60f);   // 서낭당 쪽 먼 하늘
             default: return pp;
