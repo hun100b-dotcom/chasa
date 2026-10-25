@@ -55,7 +55,7 @@ def build():
     for k in range(10): add("harbor_pier", 1108 + k * 4.0, 440, 0, "선창(R3-3 끝, 바다 위 널판 높이 1.5)" if k == 0 else "", force=True, z=0.95)
     add("harbor_gauge_post", 1128, 443, 0, "물때 눈금 말뚝", force=True, z=0.95); add("harbor_gauge_post", 1146, 437, 0, "물때 눈금 말뚝", force=True, z=0.95)
     for x, y, r in [(1126, 452, 80), (1138, 428, 100), (1152, 450, 90), (1164, 430, 85)]: add("harbor_boat", x, y, r, "묶인 빈 배(흔들림은 코드, 기준 z=썰물 높이)", force=True, z=0.1)
-    add("harbor_lamp_hut", 1132, 452, 0, "등대지기 막", force=True)
+    add("harbor_lamp_hut", 1141, 440, 0, "등대지기 막(S-089, 기획 대문 (1130,450)은 바다 바닥이라 선창 끝 널판 위로 옮김. 썰물 -2.5 m 물속에 막이 잠기던 것을 고침)", force=True, z=1.5)
     for x, y in [(1000, 455), (1003, 463), (1010, 450)]: add("harbor_net_frame", x, y, 0, "그물 너는 마당(B09-D2 엿듣기 자리)" if x == 1000 else "")
     for x, y in [(993, 447), (1018, 461), (1022, 447)]: add("harbor_net_pile", x, y, RNG.uniform(0, 360))
     add("harbor_gaekju_house", 1052, 478, 180, "객주 집(마루 앞 (1048,466), B10-D1 장부)")
