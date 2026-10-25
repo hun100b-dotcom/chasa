@@ -1,0 +1,255 @@
+{
+ "orientation_notes": {
+  "좌표": "블렌더(x=동, y=북, z=위). rot=위에서 볼 때 반시계 도(°). 아래는 rot 0 기준. u=서→동 0..1, v=남→북 0..1, 높이=0.3+2.0×h(u,v)",
+  "tile_slope_straight": "h=v. 남쪽 가장자리 0.3m, 북쪽 가장자리 2.3m. 북쪽이 높다(오르막은 +Y). rot 90이면 서쪽이 높다.",
+  "tile_slope_corner_out": "h=min(u,v). 서쪽·남쪽 가장자리는 전부 0.3m(낮음). 북쪽 가장자리는 서→동으로, 동쪽 가장자리는 남→북으로 오르고 북동 꼭짓점이 2.3m로 가장 높다. 즉 북동 꼭짓점이 뾰족 솟은 모서리. rot 90이면 북서 꼭짓점이 최고.",
+  "tile_slope_corner_in": "h=max(u,v). 남서 꼭짓점만 0.3m(가장 낮음), 북쪽·동쪽 가장자리는 전부 2.3m. 즉 북동 두 면이 높은 고지에 맞닿은 오목 모서리. rot 90이면 북서쪽 두 면이 높다.",
+  "tile_cliff_wall": "벽은 북쪽 가장자리에 선다(위가 북). 고지 2m는 벽 북쪽 타일이 맡는다."
+ },
+ "tile_m": 8.0,
+ "thickness_m": 0.3,
+ "cell_128m_holds": "16 x 16 tiles",
+ "front": "-Y(내보내면 +Z)",
+ "tiles": [
+  {
+   "name": "terrain_tile_grass",
+   "label": "풀바닥",
+   "note": "기본 바닥",
+   "tris": 12,
+   "size_m": [
+    8.0,
+    8.0,
+    0.3
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_road_straight",
+   "label": "흙길 직진",
+   "note": "동서로 이어짐, 폭 3.2m",
+   "tris": 24,
+   "size_m": [
+    8.0,
+    8.0,
+    0.32
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_road_corner",
+   "label": "흙길 모서리",
+   "note": "동쪽과 남쪽으로 이어짐",
+   "tris": 36,
+   "size_m": [
+    8.0,
+    8.0,
+    0.32
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_road_t",
+   "label": "흙길 삼거리",
+   "note": "동·서·남쪽으로 이어짐",
+   "tris": 36,
+   "size_m": [
+    8.0,
+    8.0,
+    0.32
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_road_end",
+   "label": "흙길 끝(마당)",
+   "note": "동쪽에서 들어와 마당으로 끝남",
+   "tris": 60,
+   "size_m": [
+    8.0,
+    8.0,
+    0.32
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_paddy",
+   "label": "논(둘레 논두렁)",
+   "note": "물 찬 논 한 칸",
+   "tris": 504,
+   "size_m": [
+    8.0,
+    8.0,
+    0.62
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_stream",
+   "label": "개울 반쪽 칸",
+   "note": "서쪽에 둑, 동쪽은 얕은 물. 동쪽 칸은 180° 돌려 놓는다",
+   "tris": 294,
+   "size_m": [
+    8.0,
+    8.0,
+    0.34
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_barley",
+   "label": "보리밭(이랑 7줄)",
+   "note": "보릿들 밭 한 칸. 이랑은 남북으로 뻗음",
+   "tris": 180,
+   "size_m": [
+    8.0,
+    8.0,
+    0.74
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_bank_straight",
+   "label": "논두렁 직진",
+   "note": "동서로 이어지는 폭 1m 둑",
+   "tris": 36,
+   "size_m": [
+    8.0,
+    8.0,
+    0.79
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_bank_corner",
+   "label": "논두렁 모서리",
+   "note": "동쪽과 남쪽으로 이어짐",
+   "tris": 36,
+   "size_m": [
+    8.0,
+    8.0,
+    0.75
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_slope_straight",
+   "label": "비탈 직진",
+   "note": "남쪽 낮은 쪽 → 북쪽 높은 쪽, 높이차 2m, 등고선 3줄",
+   "tris": 112,
+   "size_m": [
+    8.0,
+    8.0,
+    2.3
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_slope_corner_out",
+   "label": "비탈 볼록 모서리",
+   "note": "언덕 모서리(바깥으로 볼록)",
+   "tris": 76,
+   "size_m": [
+    8.0,
+    8.0,
+    2.3
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_slope_corner_in",
+   "label": "비탈 오목 모서리",
+   "note": "움푹 파인 모서리",
+   "tris": 76,
+   "size_m": [
+    8.0,
+    8.0,
+    2.3
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_tile_cliff_wall",
+   "label": "벼랑 벽",
+   "note": "북쪽 가장자리를 따라 선 바위벽 2m",
+   "tris": 108,
+   "size_m": [
+    8.75,
+    8.1,
+    1.54
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_rock_small",
+   "label": "바위 작은 것",
+   "note": "높이 0.5m",
+   "tris": 40,
+   "size_m": [
+    0.94,
+    1.12,
+    0.79
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_rock_medium",
+   "label": "바위 중간",
+   "note": "높이 1.3m",
+   "tris": 20,
+   "size_m": [
+    1.79,
+    1.94,
+    1.67
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_rock_cluster",
+   "label": "바위 무리",
+   "note": "5m 폭 무리",
+   "tris": 140,
+   "size_m": [
+    4.89,
+    4.51,
+    2.25
+   ],
+   "min_z": -0.0
+  },
+  {
+   "name": "terrain_bush_low",
+   "label": "풀숲(낮음)",
+   "note": "무릎 높이 풀",
+   "tris": 180,
+   "size_m": [
+    2.16,
+    2.25,
+    0.64
+   ],
+   "min_z": 0.055
+  },
+  {
+   "name": "terrain_bush_tall",
+   "label": "풀숲(키 큼)",
+   "note": "허리 높이 수풀",
+   "tris": 144,
+   "size_m": [
+    2.96,
+    2.4,
+    2.07
+   ],
+   "min_z": 0.0
+  },
+  {
+   "name": "terrain_bush_flower",
+   "label": "꽃 핀 풀숲",
+   "note": "붉은·노란 들꽃 섞임",
+   "tris": 180,
+   "size_m": [
+    1.71,
+    1.55,
+    0.64
+   ],
+   "min_z": 0.055
+  }
+ ]
+}

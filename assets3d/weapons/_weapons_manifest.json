@@ -1,0 +1,145 @@
+{
+ "note": "원점=쥐는 곳. socket 참고",
+ "weapons": [
+  {
+   "name": "weapon_chain",
+   "label": "철삭",
+   "tris": 1098,
+   "length_m": 1.53,
+   "z_range_m": [
+    -0.38,
+    1.15
+   ],
+   "width_m": 0.22,
+   "socket": {
+    "bone": "Hand.R",
+    "position_in_bone_m": [
+     0,
+     0,
+     0
+    ],
+    "blade_axis_in_file": "+Y(glTF 위쪽)",
+    "aim_blade_to": "캐릭터 앞(+Z glTF)",
+    "rotate_deg_x": 90,
+    "hero_hand_R_rest_pos_m": [
+     -0.52,
+     0.87,
+     0.0
+    ]
+   },
+   "note": "기준 무기. 사슬 길이는 1.2m까지만, 늘어나는 연출은 코드 이펙트"
+  },
+  {
+   "name": "weapon_bangmang",
+   "label": "육모방망이",
+   "tris": 756,
+   "length_m": 1.21,
+   "z_range_m": [
+    -0.47,
+    0.74
+   ],
+   "width_m": 0.21,
+   "socket": {
+    "bone": "Hand.R",
+    "position_in_bone_m": [
+     0,
+     0,
+     0
+    ],
+    "blade_axis_in_file": "+Y(glTF 위쪽)",
+    "aim_blade_to": "캐릭터 앞(+Z glTF)",
+    "rotate_deg_x": 90,
+    "hero_hand_R_rest_pos_m": [
+     -0.52,
+     0.87,
+     0.0
+    ]
+   },
+   "note": "짧은 한 손 둔기"
+  },
+  {
+   "name": "weapon_yoryeong",
+   "label": "요령방울",
+   "tris": 1154,
+   "length_m": 0.84,
+   "z_range_m": [
+    -0.4,
+    0.44
+   ],
+   "width_m": 0.42,
+   "socket": {
+    "bone": "Hand.R",
+    "position_in_bone_m": [
+     0,
+     0,
+     0
+    ],
+    "blade_axis_in_file": "+Y(glTF 위쪽)",
+    "aim_blade_to": "캐릭터 앞(+Z glTF)",
+    "rotate_deg_x": 90,
+    "hero_hand_R_rest_pos_m": [
+     -0.52,
+     0.87,
+     0.0
+    ]
+   },
+   "note": "도술형. 방울이 흔들리는 연출은 코드에서 회전"
+  },
+  {
+   "name": "weapon_samjichang",
+   "label": "삼지창",
+   "tris": 744,
+   "length_m": 2.44,
+   "z_range_m": [
+    -0.7,
+    1.74
+   ],
+   "width_m": 0.37,
+   "socket": {
+    "bone": "Hand.R",
+    "position_in_bone_m": [
+     0,
+     0,
+     0
+    ],
+    "blade_axis_in_file": "+Y(glTF 위쪽)",
+    "aim_blade_to": "캐릭터 앞(+Z glTF)",
+    "rotate_deg_x": 90,
+    "hero_hand_R_rest_pos_m": [
+     -0.52,
+     0.87,
+     0.0
+    ]
+   },
+   "note": "긴 무기. 쥐는 곳은 자루 가운데에서 약간 아래"
+  },
+  {
+   "name": "weapon_myeongbu",
+   "label": "명부 붓",
+   "tris": 572,
+   "length_m": 1.56,
+   "z_range_m": [
+    -0.42,
+    1.14
+   ],
+   "width_m": 0.2,
+   "socket": {
+    "bone": "Hand.R",
+    "position_in_bone_m": [
+     0,
+     0,
+     0
+    ],
+    "blade_axis_in_file": "+Y(glTF 위쪽)",
+    "aim_blade_to": "캐릭터 앞(+Z glTF)",
+    "rotate_deg_x": 90,
+    "hero_hand_R_rest_pos_m": [
+     -0.52,
+     0.87,
+     0.0
+    ]
+   },
+   "note": "파혼/천도 문서 무기. 쪽지는 붓대에 달림"
+  }
+ ]
+}
