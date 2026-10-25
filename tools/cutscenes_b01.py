@@ -1,7 +1,9 @@
 # 1호 보스 나루 영감(B-01) 실시간 컷신 대본 생성기
 # 왜 JSON인가: 코드팀이 타임라인(시간 순서대로 카메라·동작·자막을 재생하는 장치)으로 그대로 읽게 하려고.
 # 원칙: 짧게(전투 흐름을 끊지 않게), 주인공 대사 0줄, 설명하지 않고 보여 준다(WORLD-BIBLE §6 대사 톤).
-import json, os
+import json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sfx_map import apply as sfx_apply  # 효과음 이름표 붙이기
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'docs', 'narrative', 'cutscenes_b01.json')
 
 def st(t, cam=None, act=None, line=None, ui=None, note=None):
@@ -64,6 +66,8 @@ cutscenes = [
    st(2.5, ui={'reward': {'coin': 30}, 'karma': '+3', 'karma_warning': '업 단계 경계를 넘으면 화면 경고', 'world_change': '물막이 골 큰 얼룩 지대(덩어리 +10%p)'})]},
 ]
 
+cutscenes = [sfx_apply(c) for c in cutscenes]
+
 data = {
  '_설명': '1호 보스 나루 영감(B-01) 실시간 컷신 4갈래 + 천도 불가 안내. tools/cutscenes_b01.py로 생성. 근거: BOSS-01-NARU.md, soul_memories.json B-01. 서사 확정 2026-10-25.',
  'boss': {'id': 'B-01', 'name': '나루 영감', 'ledger_name': '도한수', 'zone': 'Ravine', 'tint': '나룻불 주황'},
@@ -73,7 +77,7 @@ data = {
   'time': 't는 컷 시작부터 초. duration 안에서 끝난다',
   'camera': 'pan(옮기기)·push(다가가기)·pull(물러나기)·hold(멈춤)·cut(장면 바꾸기)·shake(흔들기)·return(플레이어로 돌아오기). zoom 1.0 = 평소 쿼터뷰 거리',
   'world': 'pause_enemies = 적 멈춤(입력 잠금 컷만) / run = 전투 계속',
-  'line_style': 'bubble 말풍선 · memory 기억 줄(시야 가장자리 기억 색, 화면 아래 가운데) · 소리는 아직 없음',
+  'line_style': 'bubble 말풍선 · memory 기억 줄(시야 가장자리 기억 색, 화면 아래 가운데)', 'sfx': 'sfx = 그 스텝 시각에 재생할 효과음 id(사운드팀 data/sfx_files.json, 루프는 amb.*). sfx_request = 아직 없는 소리(사운드팀 요청)',
   'skippable': '길게 눌러 건너뛰기. 건너뛰어도 보상·단서·세계 변화는 그대로'},
  'cutscenes': cutscenes}
 json.dump(data, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

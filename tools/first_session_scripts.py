@@ -3,7 +3,9 @@
 # 중요한 원칙: 둘 다 "대사·자막·내레이션 0"이다(FUNERAL-SEQUENCE §2-1). 그래서 이 파일의 글자는
 #   대부분 'sfx' 칸(소리 자막 — 소리가 아직 없는 지금 단계에서 무슨 소리가 나는지 알려 주는 대괄호 글)이다.
 #   sfx 자막은 소리가 들어오면 꺼지는 것이 기본이고, 접근성 설정(청각 보조)에서만 다시 켠다.
-import json, os
+import json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sfx_map import apply as sfx_apply  # 효과음 이름표 붙이기
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', 'docs', 'narrative', 'first_session_scripts.json')
 
@@ -67,9 +69,15 @@ funeral = {
    ]},
  ]}
 
+sfx_apply(opening)
+for b in funeral['branches']:
+    b['id_backup'] = b['id']
+    sfx_apply(b)
+    del b['id_backup']
+
 data = {'_설명': '첫 세션 대본 — 오프닝 C-01(20초) + 박돌쇠 장례 3갈래. tools/first_session_scripts.py로 생성. 서사 확정 2026-10-25.',
         'rules': {'dialogue': '오프닝과 장례(천도)는 대사·자막·내레이션 0. 화면에 글로 주제를 쓰지 않는다',
-                  'sfx': 'sfx는 소리 자막. 소리가 없는 지금은 기본으로 켜고, 소리가 들어오면 접근성 설정에서만 켠다',
+                  'sfx': 'sfx = 재생할 효과음 id(사운드팀 data/sfx_files.json). sfx_request = 아직 없는 소리(사운드팀 요청). caption = 소리 자막 글(접근성 설정에서만 표시)',
                   'control': 'none = 조작 없음 / walk = 걷기만 / restore = 조작 복귀',
                   'names': '맏아들 용득, 막내딸 금순, 요령잡이 갑술 영감(소설 1부와 같음)'},
         'opening': opening, 'funeral': funeral}

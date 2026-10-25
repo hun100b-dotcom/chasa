@@ -1,7 +1,9 @@
 # 1막 보스 B-02 월화 · B-03 서 의원 실시간 컷신 대본 생성기
 # 형식은 cutscenes_b01.json(나루 영감)과 같다: 등장 · 처결 대기 · 천도 불가 안내 · 천도 · 파혼.
 # 원칙: 짧게, 주인공 대사 0줄, 설명하지 않고 보여 준다. 보스 대사는 3줄 이하.
-import json, os
+import json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sfx_map import apply as sfx_apply  # 효과음 이름표 붙이기
 HERE = os.path.dirname(os.path.abspath(__file__))
 D = os.path.join(HERE, '..', 'docs', 'narrative')
 mem = {s['id']: s for s in json.load(open(os.path.join(D, 'soul_memories.json'), encoding='utf-8'))['souls']}
@@ -23,7 +25,7 @@ RULES = {
  'time': 't는 컷 시작부터 초. duration 안에서 끝난다',
  'camera': 'pan·push·pull·hold·cut·shake·return. zoom 1.0 = 평소 쿼터뷰 거리',
  'world': 'pause_enemies = 적 멈춤(입력 잠금 컷만) / run = 전투 계속',
- 'line_style': 'bubble 말풍선 · memory 기억 줄(시야 가장자리 기억 색) · 소리는 아직 없음',
+ 'line_style': 'bubble 말풍선 · memory 기억 줄(시야 가장자리 기억 색)', 'sfx': 'sfx = 그 스텝 시각에 재생할 효과음 id(사운드팀 data/sfx_files.json, 루프는 amb.*). sfx_request = 아직 없는 소리(사운드팀 요청)',
  'skippable': '길게 눌러 건너뛰기. 건너뛰어도 보상·단서·세계 변화는 그대로',
  'format': 'cutscenes_b01.json과 같은 형식'}
 
@@ -107,6 +109,9 @@ b03 = [
    st(1.5, act='번호 칸 바닥의 붉은 선만 잠깐 남았다가 꺼진다', note='대사 없음'),
    st(2.5, ui={'reward': {'potion': 5}, 'karma': '+3', 'karma_warning': '업 단계 경계를 넘으면 화면 경고', 'world_change': '검은여울 이름혼은 끝까지 인 없음', 'item_spawn': '씻은 붓(약장 터진 자리)'})]},
 ]
+
+b02 = [sfx_apply(c) for c in b02]
+b03 = [sfx_apply(c) for c in b03]
 
 for bid, name, ledger, zone, tint, cuts, lines in [
     ('B-02', '월화', '월화', 'Shrine', mem['B-02']['tint'], b02, '월화 대사 3줄(등장 2 · 처결 대기 1) + 천도 기억 한 줄'),

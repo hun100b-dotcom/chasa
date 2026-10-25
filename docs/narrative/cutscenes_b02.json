@@ -12,7 +12,8 @@
   "time": "t는 컷 시작부터 초. duration 안에서 끝난다",
   "camera": "pan·push·pull·hold·cut·shake·return. zoom 1.0 = 평소 쿼터뷰 거리",
   "world": "pause_enemies = 적 멈춤(입력 잠금 컷만) / run = 전투 계속",
-  "line_style": "bubble 말풍선 · memory 기억 줄(시야 가장자리 기억 색) · 소리는 아직 없음",
+  "line_style": "bubble 말풍선 · memory 기억 줄(시야 가장자리 기억 색)",
+  "sfx": "sfx = 그 스텝 시각에 재생할 효과음 id(사운드팀 data/sfx_files.json, 루프는 amb.*). sfx_request = 아직 없는 소리(사운드팀 요청)",
   "skippable": "길게 눌러 건너뛰기. 건너뛰어도 보상·단서·세계 변화는 그대로",
   "format": "cutscenes_b01.json과 같은 형식",
   "lines_total": "월화 대사 3줄(등장 2 · 처결 대기 1) + 천도 기억 한 줄. 파혼에는 대사가 없다"
@@ -50,7 +51,10 @@
       "text": "첫째 거리부터 다시 하자.",
       "style": "bubble",
       "duration": 1.6
-     }
+     },
+     "sfx": [
+      "cut.yoryeong.ring"
+     ]
     },
     {
      "t": 3.6,
@@ -95,7 +99,11 @@
       "time": 0.4,
       "zoom": 1.25
      },
-     "action": "월화가 굿판 한가운데 주저앉는다. 방울이 손에서 굴러 나간다. 부채는 놓지 않는다"
+     "action": "월화가 굿판 한가운데 주저앉는다. 방울이 손에서 굴러 나간다. 부채는 놓지 않는다",
+     "sfx": [
+      "sfx.kneel",
+      "cut.bell.roll"
+     ]
     },
     {
      "t": 0.3,
@@ -140,7 +148,10 @@
       "toast": "이름이 들리지 않는다.",
       "toast_time": 1.0
      },
-     "note": "안내일 뿐. 캐스팅은 시작되지 않고 대기 시간은 계속 흐른다"
+     "note": "안내일 뿐. 캐스팅은 시작되지 않고 대기 시간은 계속 흐른다",
+     "sfx": [
+      "cut.seal.fade"
+     ]
     }
    ]
   },
@@ -166,7 +177,12 @@
      "ui": {
       "ledger_name": "월화",
       "ledger_fx": "strokes_join"
-     }
+     },
+     "sfx": [
+      "cut.ledger.open",
+      "cut.brush.stroke",
+      "cut.seal.set"
+     ]
     },
     {
      "t": 1.0,
@@ -176,11 +192,17 @@
       "style": "memory",
       "duration": 3.4
      },
-     "note": "기억 M-B02(★F12 전모). 시야 가장자리에 기억 색"
+     "note": "기억 M-B02(★F12 전모). 시야 가장자리에 기억 색",
+     "sfx": [
+      "sfx.clue"
+     ]
     },
     {
      "t": 1.5,
-     "action": "월화가 일어나 엎어진 열두째 잔을 두 손으로 세운다. 잔 열두 개가 모두 바로 놓인다"
+     "action": "월화가 일어나 엎어진 열두째 잔을 두 손으로 세운다. 잔 열두 개가 모두 바로 놓인다",
+     "sfx": [
+      "cut.cups.set"
+     ]
     },
     {
      "t": 3.0,
@@ -195,11 +217,18 @@
       "time": 1.5,
       "vignette": 0.0
      },
-     "action": "월화가 부채를 접어 굿상 머리에 뉘고, 오방 천 빛으로 흩어진다"
+     "action": "월화가 부채를 접어 굿상 머리에 뉘고, 오방 천 빛으로 흩어진다",
+     "sfx": [
+      "cut.cloth.flutter",
+      "cut.dissolve"
+     ]
     },
     {
      "t": 6.0,
-     "action": "폐당집 처마 밑에 등 하나가 켜진다(두 번째 쉼터)"
+     "action": "폐당집 처마 밑에 등 하나가 켜진다(두 번째 쉼터)",
+     "sfx": [
+      "cut.lantern.light"
+     ]
     },
     {
      "t": 7.0,
@@ -237,7 +266,11 @@
       "strength": "big",
       "time": 0.5
      },
-     "action": "대폭발. 굿판의 잔 열두 개가 한꺼번에 엎어진다"
+     "action": "대폭발. 굿판의 잔 열두 개가 한꺼번에 엎어진다",
+     "sfx": [
+      "sfx.pahon.burst",
+      "cut.cups.topple"
+     ]
     },
     {
      "t": 0.3,
@@ -245,11 +278,18 @@
      "ui": {
       "ledger_name": "월화",
       "ledger_fx": "strokes_scatter"
-     }
+     },
+     "sfx": [
+      "cut.stroke.scatter"
+     ]
     },
     {
      "t": 0.8,
-     "action": "붉은 천과 오방 천 조각이 흩날린다. 방울 하나만 굿판 위로 굴러 와 멈춘다(월화의 방울)"
+     "action": "붉은 천과 오방 천 조각이 흩날린다. 방울 하나만 굿판 위로 굴러 와 멈춘다(월화의 방울)",
+     "sfx": [
+      "cut.cloth.flutter",
+      "cut.bell.roll"
+     ]
     },
     {
      "t": 1.5,
