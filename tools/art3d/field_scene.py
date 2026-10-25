@@ -102,6 +102,17 @@ def world_night():
     sun = bpy.data.lights.new("moon", "SUN"); sun.energy = float(os.environ.get("FS_MOON","1.3")); sun.color = (0.62, 0.74, 1.0); sun.angle = math.radians(6)
     so = bpy.data.objects.new("moon", sun); bpy.context.collection.objects.link(so); so.rotation_euler = Euler((math.radians(58), 0, math.radians(-35)))
 
+DAY = bool(os.environ.get("FS_DAY"))
+
+def world_day():
+    """낮 장면: 파란 하늘빛 + 따뜻한 해(그림자 길이는 밤 달과 비슷한 방향). 점광(등롱)은 그대로 두되 낮에는 거의 안 보인다."""
+    sc = bpy.context.scene; w = bpy.data.worlds.new("W"); sc.world = w; w.use_nodes = True
+    bg = w.node_tree.nodes["Background"]; bg.inputs[0].default_value = (0.42, 0.58, 0.85, 1); bg.inputs[1].default_value = 1.1
+    sun = bpy.data.lights.new("sun", "SUN"); sun.energy = 4.2; sun.color = (1.0, 0.95, 0.84); sun.angle = math.radians(4)
+    so = bpy.data.objects.new("sun", sun); bpy.context.collection.objects.link(so); so.rotation_euler = Euler((math.radians(50), 0, math.radians(-35)))
+    for ob in list(bpy.data.objects):
+        if ob.type == "LIGHT" and ob.data.type == "POINT": ob.data.energy *= 0.12
+
 def camera(center, ortho, size, elev=50):
     sc = bpy.context.scene; sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = 64
     try: sc.cycles.use_denoising = True; sc.cycles.denoiser = "OPENIMAGEDENOISE"
@@ -139,6 +150,7 @@ SHOTS = {
   "village": dict(win=(150, 20, 245, 110), center=(196, 62, 0), ortho=60, title="마을 안(밤)"),
   "barley": dict(win=(250, 70, 470, 220), center=(352, 134, 0), ortho=150, title="보릿들(밤)"),
   "hamlet": dict(win=(280, 100, 370, 200), center=(324, 148, 0), ortho=56, title="보릿들 한가운데 마을(밤)"),
+  "stream": dict(win=(380, 325, 430, 360), center=(405, 342, 0), ortho=15, title="개울(가까이)"),
   "mill": dict(win=(370, 310, 430, 372), center=(402, 340, 0), ortho=30, title="개울가 방앗간(밤)"),
   "ruin": dict(win=(540, 500, 630, 620), center=(584, 545, 2.0), ortho=50, title="폐당집 무덤 터(밤)"),
   "plague": dict(win=(60, 410, 140, 500), center=(94, 452, 0), ortho=40, title="검은여울 역병 분위기(밤)"),
@@ -163,9 +175,9 @@ def run(key):
         pose("soul_old", 197.6, 46.2, 0, 20, "Windup", 33)
         put("fx_pahon_shards_a", 193.8, 46.8, 0.36, 0, scale=0.8)
         put("fx_stain_decal", 196.4, 43.6, 0.37, 30)
-    world_night(); camera(cfg["center"], cfg["ortho"], (1280, 720) if not os.environ.get("FS_TEST") else (640, 360))
+    (world_day if DAY else world_night)(); camera(cfg["center"], cfg["ortho"], (1280, 720) if not os.environ.get("FS_TEST") else (640, 360))
     if os.environ.get("FS_TEST"): bpy.context.scene.cycles.samples = 16
-    path = os.path.join(A3, "previews", f"scene_{key}.png"); render(path)
+    path = os.path.join(A3, "previews", f"scene_{key}{'_day' if DAY else ''}.png"); render(path)
     print(key, "객체", stats["objs"], "조명", len(placed_lights), "초", round(time.time() - t0)); return path
 
 if __name__ == "__main__":

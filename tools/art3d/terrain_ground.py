@@ -24,7 +24,7 @@ C = {k: hexc(v) for k, v in dict(
     barley_ridge="#A9A058", barley_ear="#C9B764", furrow="#66512F", bund="#7C6A44", bund_grass="#6E7F44",
     litter_pine="#7A5636", litter_leaf="#8B6A34", moss="#3E5E35", ash="#6A645A", rock_grit="#86816F",
     shore="#8D8878", wet="#4A4636", bed="#6A5B45", soil="#7A6648", cliff="#8A8678",
-    sick="#5B6A55", haze_purple="#5B5163", dead="#8A8456").items()}
+    foam="#E4EEEA", sick="#5B6A55", haze_purple="#5B5163", dead="#8A8456").items()}
 
 # ───────────────────────── 재료: 노이즈·블러·표본 추출 ─────────────────────────
 def _h(i, j, seed):
@@ -221,7 +221,11 @@ def chunk_maps(cx, cy, s_=S, pad_=PAD, size_=CH, masks=False):
     shc = mix(np.broadcast_to(C["shore"], col.shape) * (0.8 + 0.4 * n3[..., None]), np.broadcast_to(C["wet"], col.shape), sstep(0.75, 0.2, shore) * 0.6)
     shc = mix(shc, np.broadcast_to(C["pebble"], col.shape), pebbles * 0.7)
     col = mix(col, shc, shore * 0.95); col = mix(col, bedc, water)
-    D += (shore + water) * (pebbles * 0.035 + (n3 - 0.5) * 0.02)
+    foam_line = np.exp(-(((wet_z - WATER_Z) / 0.05) ** 2)) * is_stream.astype(np.float32)          # 물높이와 땅이 만나는 선 근처
+    foam = foam_line * sstep(0.35, 0.65, vnoise(X * 2.2, Y * 0.45, 0.5, 66) * 0.7 + vnoise(X, Y, 0.18, 67) * 0.4)   # 남북으로 길게 이어지다 끊기는 거품
+    foam = np.clip(foam + foam_line * 0.25, 0, 1)
+    col = mix(col, np.broadcast_to(C["foam"], col.shape) * (0.9 + 0.1 * n3[..., None]), foam * 0.9)
+    D += (shore + water) * (pebbles * 0.035 + (n3 - 0.5) * 0.02) + foam * 0.012
     # --- 길: 흙, 가장자리 풀 번짐, 바퀴 자국
     road = np.zeros(X.shape, np.float32); rut = np.zeros(X.shape, np.float32); fringe = np.zeros(X.shape, np.float32); centerline = np.zeros(X.shape, np.float32)
     wob = (fbm(X, Y, [9, 3.3], 71) - 0.5) * 0.6; wob2 = (vnoise(X, Y, 0.9, 72) - 0.5) * 0.35
@@ -265,7 +269,7 @@ def chunk_maps(cx, cy, s_=S, pad_=PAD, size_=CH, masks=False):
         leaf = sstep(0.15, 0.55, forest) * 0.85
         dirt_w = np.clip(gd + sl * 0.7, 0, 1)
         top = np.clip(dirt_w + gravel + paddy + leaf, 0, 1)
-        return dict(dirt=dirt_w, gravel=gravel, paddy=paddy, leaf=leaf, grass=np.clip(1 - top, 0, 1), steep=steep, X=X, Y=Y)
+        return dict(foam=foam, wet=np.clip(shore * 0.8 + water, 0, 1), dirt=dirt_w, gravel=gravel, paddy=paddy, leaf=leaf, grass=np.clip(1 - top, 0, 1), steep=steep, X=X, Y=Y)
     return np.clip(col, 0, 255).astype(np.uint8), D.astype(np.float32), X, Y
 
 def normal_map(D):
@@ -297,15 +301,22 @@ def write_glb(path, prims, images):
         idx = p["idx"].astype(np.uint16); vi = add_view(idx.tobytes(), 34963); acc.append({"bufferView": vi, "componentType": 5123, "count": len(idx), "type": "SCALAR"})
         meshp.append({"attributes": a, "indices": len(acc) - 1, "material": p["material"], "mode": 4})
     imgv = [add_view(b) for b in images]
+    has_w = len(images) > 2      # 3·4번째 그림 = 물 알베도(RGBA PNG)·물 노멀(PNG), 반복 샘플러
     j = {"asset": {"version": "2.0", "generator": "chasa terrain_ground.py"}, "scene": 0, "scenes": [{"nodes": [0]}], "nodes": [{"mesh": 0, "name": os.path.basename(path)[:-4]}],
          "meshes": [{"primitives": meshp}], "accessors": acc, "bufferViews": views, "buffers": [{"byteLength": len(binb)}],
-         "images": [{"bufferView": v, "mimeType": "image/jpeg", "name": f"{os.path.basename(path)[:-4]}_{'albedo' if k == 0 else 'normal'}"} for k, v in enumerate(imgv)], "samplers": [{"magFilter": 9729, "minFilter": 9987, "wrapS": 33071, "wrapT": 33071}],
-         "textures": [{"source": i, "sampler": 0} for i in range(len(imgv))],
+         "images": [{"bufferView": v, "mimeType": "image/jpeg" if k < 2 else "image/png", "name": f"{os.path.basename(path)[:-4]}_{['albedo', 'normal', 'water', 'water_normal'][k]}"} for k, v in enumerate(imgv)],
+         "samplers": [{"magFilter": 9729, "minFilter": 9987, "wrapS": 33071, "wrapT": 33071}, {"magFilter": 9729, "minFilter": 9987, "wrapS": 10497, "wrapT": 10497}],
+         "textures": [{"source": i, "sampler": 0 if i < 2 else 1} for i in range(len(imgv))],
          "materials": [{"name": "ground_" + os.path.basename(path)[:-4], "pbrMetallicRoughness": {"baseColorTexture": {"index": 0}, "metallicFactor": 0.0, "roughnessFactor": 1.0}, "normalTexture": {"index": 1, "scale": 1.0}},
-                       {"name": "water_" + os.path.basename(path)[:-4], "pbrMetallicRoughness": {"baseColorFactor": [0.06, 0.15, 0.21, 0.58], "metallicFactor": 0.0, "roughnessFactor": 0.08}, "alphaMode": "BLEND", "doubleSided": True}]}
+                       dict({"name": "water_" + os.path.basename(path)[:-4], "pbrMetallicRoughness": dict({"baseColorFactor": [1, 1, 1, 1], "metallicFactor": 0.0, "roughnessFactor": 0.06}, **({"baseColorTexture": {"index": 2}} if has_w else {})), "alphaMode": "BLEND", "doubleSided": True}, **({"normalTexture": {"index": 3, "scale": 0.8}} if has_w else {}))]}
     js = pad4(json.dumps(j, separators=(",", ":")).encode(), b" ")
     out = struct.pack("<III", 0x46546C67, 2, 12 + 8 + len(js) + 8 + len(binb)) + struct.pack("<II", len(js), 0x4E4F534A) + js + struct.pack("<II", len(binb), 0x004E4942) + binb
     os.makedirs(os.path.dirname(path), exist_ok=True); open(path, "wb").write(out)
+
+import terrain_detail as TD
+WATER_TILE_M = 4.0; WATER_RGBA, WATER_NRM = TD.water_tiles(256)   # 물 그림(4m 타일, 흐름=남북)
+def png_bytes(arr):
+    b = io.BytesIO(); Image.fromarray(arr).save(b, "PNG", optimize=True); return b.getvalue()
 
 def jpg(arr, q):
     b = io.BytesIO(); Image.fromarray(arr).save(b, "JPEG", quality=q, subsampling=0 if q > 90 else 2); return b.getvalue()
@@ -334,9 +345,11 @@ def build_chunk(cx, cy, save_png=False):
         for k, (i, j) in enumerate(water_cells):
             x0, y0 = i * G, j * G; b0 = len(wp)
             wp += [(x0, y0, WATER_Z), (x0 + G, y0, WATER_Z), (x0 + G, y0 + G, WATER_Z), (x0, y0 + G, WATER_Z)]; wi += [b0, b0 + 1, b0 + 2, b0, b0 + 2, b0 + 3]
-        wp = np.array(wp, np.float32); prims.append({"pos": wp, "nrm": np.tile([0, 0, 1.0], (len(wp), 1)), "uv": np.zeros((len(wp), 2)), "idx": np.array(wi, np.uint16), "material": 1})
+        wp = np.array(wp, np.float32); prims.append({"pos": wp, "nrm": np.tile([0, 0, 1.0], (len(wp), 1)), "uv": np.stack([(cx * CH + wp[:, 0]) / WATER_TILE_M, -(cy * CH + wp[:, 1]) / WATER_TILE_M], 1), "idx": np.array(wi, np.uint16), "material": 1})
     path = os.path.join(A3, "terrain", f"chunk_{cx}_{cy}.glb")
-    write_glb(path, prims, [jpg(col, 80), jpg(nm, 82)])
+    imgs = [jpg(col, 80), jpg(nm, 82)]
+    if water_cells: imgs += [png_bytes(WATER_RGBA), png_bytes(WATER_NRM)]
+    write_glb(path, prims, imgs)
     if save_png: Image.fromarray(col).save(os.path.join("/tmp", f"chunk_{cx}_{cy}_albedo.png")); Image.fromarray(nm).save(os.path.join("/tmp", f"chunk_{cx}_{cy}_normal.png"))
     return {"file": f"assets3d/terrain/chunk_{cx}_{cy}.glb", "origin_m": [cx * CH, cy * CH], "tris": len(idx) // 3, "water_cells": len(water_cells), "size_kb": os.path.getsize(path) // 1024}
 
