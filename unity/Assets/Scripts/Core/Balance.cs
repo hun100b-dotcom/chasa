@@ -105,6 +105,10 @@ public static class Balance
     public const int STAIN_SUMMON_COUNT = 3;  // P-010 3개가 겹치면 사나운 적 소환
     public const float FIERCE_MULT = 1.5f;  // P-011 사나운 적: 맺힘·공격력 +50%
     public const int PAHON_HITSTOP_FRAMES = 8;  // (기획 타격감 분석 10-24, 임시) 파혼 정지: 게임에서 가장 큰 정지 [4→8]
+    public const int PAHON_KNOCK_SFX_MAX = 4;  // (사운드 설계 10-26) 파혼 한 번에 넉백 소리를 내는 적 수 상한
+    public const float PAHON_KNOCK_SFX_GAP = 0.03f;  // 넉백 소리 간격(초)
+    public const float PAHON_KNOCK_PITCH_STEP = 0.04f;  // 넉백 소리 하나마다 음높이 +4%
+    public const int PAHON_CASCADE_MIN = 3;  // 셋 이상 함께 깨지면 cascade 소리
     public const float PAHON_SHAKE = 0.65f;  // (기획 타격감 분석 10-24, 임시) 파혼 충격값 [0.8→0.65]
     public const int KARMA_TIER_1 = 10;  // K-002 시작 (10~29): 마을 주민 반응 변화. 🔴수치 미정 → 지금은 단계 표시만
     public const int KARMA_TIER_2 = 30;  // K-003 시작 (30~59): 명부(=넋) 보상 -10%

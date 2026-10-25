@@ -1444,3 +1444,17 @@
 - 아트 PR #35(e2be1b9) 합침. M2: 새로 시작하면 카메라가 줌 20 m → 16 m로 0.5초 머문 뒤 2초 동안 easeOutCubic으로 내려온다(`TitleScreen.WakeAt`, `GameMain` 카메라 배율). 이어하기는 연출 없음. 입력 잠금(2.5초)·Wake 동작·HUD 순차 등장은 아직(Idle로 대체).
 - M14: WebGL 로딩 화면(`WebGLTemplates/Chasa/index.html`)에 구역 그림 7장(무작위) + 팁 판 + 그 구역 팁 한 줄. 같은 줄 연속 금지는 새로고침마다 새로 뽑는 구조라 해당 없음. 게임 안 구역 이동 로딩은 없다(바깥 청크 스트리밍).
 - 화면 확인은 PC에서.
+## 2026-10-26 새벽 — [기획·사운드] 천도 시전 중 위험을 귀로
+- 시야 밖 혼 경고음 6개를 만들었다: 보통 혼 `sfx.warn.plain` · 넋두리 `sfx.warn.wail` · 잔넋 `sfx.warn.mote` · 묻힌 혼 `sfx.warn.buried` · 거센 혼·덩어리 `sfx.warn.fierce` · 예비동작 `sfx.warn.wind`. 여기에 천도 중 심장 박동 `amb.cast.heart`와 마무리 직전 `sfx.cast.peak`을 더했다. 모두 먹먹함을 건너뛴다(bypass). 효과음은 모두 427개.
+- 코드팀용 설계·연결법 `docs/cast-danger-sound.md`: 누구에게 울리나(시야 밖·12m 안·다가옴, 최대 3), 거리→간격·크기, 방향→좌우·밝기, 마지막 30%에 심장이 빨라지고 peak, Balance 상수 제안. Sfx.cs·JudgeSystem.cs는 손대지 않았다.
+- 미리 듣기에 7초 시연(스테레오)을 올렸다.
+
+## 2026-10-26 새벽 — [기획·사운드] 파혼 손맛 · 업 배경층 · 원념 얼룩
+- 파혼 손맛: 넉백 `sfx.pahon.knock`, 연쇄 `sfx.pahon.chain.2/3/4`, 큰 연쇄 꼬리 `sfx.pahon.cascade`. 연쇄 소리는 저음을 빼고 한 칸마다 온음씩 높아진다. 겹쳐도 뭉개지지 않고, 첫 폭발 저음과도 부딪히지 않는다.
+- 업 배경층 `amb.karma.1/2/3`(업 10·30·60): 구역 환경음 위에 8초에 걸쳐 스며든다. 60에서는 환경음에 저역 통과 6kHz를 건다.
+- 원념 얼룩 5개: 생김·곁(3D 반복)·밟음(발소리 대신)·셋 겹침(사나운 적 예고)·마름. 효과음은 모두 440개.
+- 코드팀용 연결법 `docs/pahon-karma-sound.md`. 미리 듣기에 시연 2개(파혼 연쇄, 업 단계). 코드 파일은 손대지 않았다.
+
+## 파혼 넉백·연쇄 소리 (코드·QA, 10-26)
+- 사운드 PR #36 둘째 묶음 합침. `Sfx.PlayLater(id, 지연, 음높이, 좌우)` 추가. 파혼 폭발: 밀린 적마다 `sfx.pahon.knock`(최대 4·0.03초 간격·+4%·화면 x로 좌우), 잔넋 연쇄 `sfx.pahon.chain.2~4`(0.16초 간격), 셋 이상이면 `sfx.pahon.cascade`. 상수 4개를 balance.json에.
+- 아직(사운드 문서): 천도 중 위험 경고음·심장 박동·bypass_cast_filter, 업 환경층 amb.karma.1~3, 원념 얼룩 소리 5종.

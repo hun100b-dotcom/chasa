@@ -203,10 +203,12 @@ public class JudgeSystem : MonoBehaviour
                 if (m == null || m == e || !m.alive || m.soul.Boss) continue;
                 if (new Vector2(m.Pos.x - at.x, m.Pos.z - at.z).magnitude > Balance.MOTE_CHAIN_PAHON_M) continue;
                 m.PlayFinishAnim(false); m.Finish(); chained++;
+                if (chained <= 4) Sfx.PlayLater("sfx.pahon.chain." + Mathf.Min(4, chained + 1), 0.16f * chained, 1f, 0f);   // 둘째·셋째·넷째… 깨진 순서대로 0.16초 간격(저음 없는 짧은 소리)
                 int c = Mathf.RoundToInt(Balance.PAHON_COIN * Balance.MOTE_CHAIN_COIN_MULT * lo.stats.CoinMult * lo.stats.PahonCoinMult);
                 ledger.Coin += c; night.RecordCoin(c); ledger.AddKarma(Balance.MOTE_CHAIN_KARMA);
             }
             if (chained > 0) Say("잔넋 " + chained + "마리가 함께 깨졌다");
+            if (chained + 1 >= Balance.PAHON_CASCADE_MIN) Sfx.PlayLater("sfx.pahon.cascade", 0.16f * Mathf.Min(chained, 4) + 0.15f);   // 셋 이상 함께 깨지면 부서진 조각 비 + 엽전 짤랑
         }
         if (e.soul.Boss)
         {
@@ -238,6 +240,7 @@ public class JudgeSystem : MonoBehaviour
                 o.soul.TryPahon(); o.Finish(); ledger.DoPahon(false); numbers.Spawn(o.HeadPosition, 0, "heavy");
                 int sc = Mathf.RoundToInt(Balance.PAHON_COIN * lo.stats.CoinMult * lo.stats.PahonCoinMult); ledger.Coin += sc; night.RecordCoin(sc);   // 함께 깨진 혼도 엽전을 낸다(균형 2차)
             }
+        int knockSfx = 0;   // 이번 폭발에서 넉백 소리를 낸 수
         foreach (var o in enemies.list)
         {
             if (o == e || !o.alive) continue;
@@ -246,6 +249,13 @@ public class JudgeSystem : MonoBehaviour
             var dir = d.magnitude > 0.01f ? d.normalized : Vector3.right;
             o.TakeHit(pahonDmg, dir, kb, 0.3f);
             numbers.Spawn(o.HeadPosition, pahonDmg, "heavy");
+            // 밀려난 적마다 넉백 소리(사운드팀 표): 폭발 0.05초 뒤부터 0.03초 간격·음높이 +4%씩, 최대 4개. 저음은 폭발 하나만 갖게 따로 얹는다
+            if (knockSfx < Balance.PAHON_KNOCK_SFX_MAX)
+            {
+                float px = 0f; var cm = Camera.main; if (cm != null) px = Mathf.Clamp(cm.WorldToViewportPoint(o.Pos).x * 2f - 1f, -1f, 1f);
+                Sfx.PlayLater("sfx.pahon.knock", 0.05f + Balance.PAHON_KNOCK_SFX_GAP * knockSfx, 1f + Balance.PAHON_KNOCK_PITCH_STEP * knockSfx, px);
+                knockSfx++;
+            }
         }
         // 파편 모델: 3종 중 하나를 무작위 방향으로 터뜨린다 (반경에 맞춰 크기)
         FxMesh.Burst("fx_pahon_shards_" + "abc"[Random.Range(0, 3)], new Vector3(at.x, at.y + 0.05f, at.z), radius / 1.25f, 0.55f, 0.5f, 1.15f, 0.4f, null, Random.Range(0f, 360f));

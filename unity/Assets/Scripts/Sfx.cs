@@ -96,6 +96,10 @@ public class Sfx : MonoBehaviour
         return "sfx.hit." + WeaponTag(w) + (heavy ? ".heavy" : "");
     }
     public static void Play(string id) { if (I != null) I.PlayInternal(id); }
+    /// <summary>늦게·다른 음높이·좌우로 울리기(파혼 넉백·연쇄 소리용). delay 초 뒤, pitch 배, pan -1(왼)~1(오른)</summary>
+    public static void PlayLater(string id, float delay, float pitch = 1f, float pan = 0f) { if (I != null) I.later.Add(new Later { id = id, t = Time.unscaledTime + delay, pitch = pitch, pan = pan }); }
+    struct Later { public string id; public float t, pitch, pan; }
+    readonly List<Later> later = new List<Later>();
 
     AudioSource wxLoop; Weather wxNow = Weather.Clear; string wxId;
     /// <summary>날씨 소리: 비=amb.weather.rain, 흐림=바람, 안개·역병 안개=fog_night. 맑음은 끈다. 바뀌면 서서히(0.5초) 갈아 끼운다</summary>
@@ -141,7 +145,7 @@ public class Sfx : MonoBehaviour
         s.Play();
     }
 
-    void PlayInternal(string id)
+    void PlayInternal(string id, float pitchMul = 1f, float pan = 0f)
     {
         if (muted || voices == null) return;
         var c = Clip(id); if (c == null) return;
@@ -156,7 +160,8 @@ public class Sfx : MonoBehaviour
         if (v == null) { v = voices[0]; foreach (var s in voices) if (s.time > v.time) v = s; }
         v.clip = c;
         bool hit = id.StartsWith("sfx.hit") || id == "sfx.player.hurt";
-        v.pitch = hit ? 1f + Random.Range(-0.06f, 0.06f) : 1f;
+        v.pitch = (hit ? 1f + Random.Range(-0.06f, 0.06f) : 1f) * pitchMul;
+        v.panStereo = pan;
         v.volume = (hit ? Mathf.Pow(10f, Random.Range(-1.5f, 1.5f) / 20f) : 1f) * SaveStore.Settings.Sfx;   // 설정의 효과음 크기
         v.bypassListenerEffects = id == "sfx.enemy.telegraph";   // 예고음은 먹먹 필터를 건너뛴다
         v.Play();
@@ -165,6 +170,9 @@ public class Sfx : MonoBehaviour
 
     void Update()
     {
+        // 예약된 소리(파혼 넉백·연쇄): 때가 된 것부터 울린다. 오래 쌓이지 않게 1초 넘게 밀린 것은 버린다
+        for (int i = later.Count - 1; i >= 0; i--)
+            if (Time.unscaledTime >= later[i].t) { if (Time.unscaledTime - later[i].t < 1f) PlayInternal(later[i].id, later[i].pitch, later[i].pan); later.RemoveAt(i); }
         if (Input.GetKeyDown(KeyCode.N)) ToggleMute();   // 소리 끄기는 N (M 은 지도)
         if (judge == null) return;
         // 천도 캐스팅: 먹먹 필터 + 낮은 드론. CastZoom(0~1)이 올라갈수록 소리가 깎인다

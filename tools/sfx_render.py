@@ -4536,6 +4536,195 @@ def _(r):
     return reverb(b, 2.6, .4)
 
 
+# ===== 천도 시전 중 위험을 귀로 (코디 요청 10-26, 연결법 docs/cast-danger-sound.md) =====
+# 천도 중엔 세상이 먹먹해진다(Sfx.cs 저역 통과 1.2kHz). 이 소리들은 모두 bypass_cast — 먹먹함을 뚫고 또렷이 들린다.
+# 혼 종류마다 '결'이 다르고, 모두 짧은 소리(0.2~0.4초)라 코드가 거리에 따라 반복 간격·좌우·밝기를 바꿔 방향을 알린다.
+# 높이는 일부러 500~3000Hz 쪽 — 사람 귀가 좌우를 가장 잘 가리는 대역.
+@sfx("sfx.warn.plain", -14, "전투", "시야 밖 보통 혼이 다가옴: 맨발이 흙을 끄는 '스윽' + 짧게 끊긴 숨 '흐'(0.3초) — 거리마다 반복", bypass_cast=True, use="천도 중 좁아진 시야 밖에서 다가오는 보통 혼(Plain). 반복 간격·좌우는 코드가 정함")
+def _(r):
+    b = _buf(.4); m = int(.22 * SR)
+    place(b, filt(noise(m, r), "band", 1300, 1.5) * env(m, .04, .12, 3) * .7, 0)
+    d = .14; k = int(d * SR)
+    place(b, voice(curve(d, [(0, 160), (d, 140)]), [(700, 3, 1), (1200, 4, .5)], 1.2, r, nh=10) * env(k, .01, .08, 3) * .5, .12)
+    return b
+
+
+@sfx("sfx.warn.wail", -14, "전투", "시야 밖 넋두리가 노림: 흐느끼는 높은 숨이 '히이—' 짧게 떨림(0.35초) — 멀리서 던지는 혼", bypass_cast=True, use="천도 중 시야 밖 넋두리(Wail). 던지기 예비동작이면 간격을 가장 짧게")
+def _(r):
+    d = .34; m = int(d * SR)
+    f0 = curve(d, [(0, 520), (.1, 640), (d, 560)]) * (1 + .04 * np.sin(2 * np.pi * 9 * T(d)))
+    return voice(f0, [(1800, 4, 1), (2600, 6, .5)], .8, r, nh=10) * env(m, .03, .15, 3, hold=.1) * .8
+
+
+@sfx("sfx.warn.mote", -16, "전투", "시야 밖 잔넋 무리: 작은 혼 여럿이 찍·찍·찍 잘게(0.25초) — 하나가 아니라 떼", bypass_cast=True, use="천도 중 시야 밖 잔넋(Mote). 여럿이어도 이 소리 하나로(무리 중심 방향)")
+def _(r):
+    one = lambda r, k: tone(.035, r.uniform(2400, 3000), r.uniform(1900, 2300)) * env(int(.035 * SR), .002, .02, 3) * r.uniform(.5, 1)
+    return grains(.28, r, 4, one, spread=lambda k, r: k * .06 + r.uniform(0, .015))
+
+
+@sfx("sfx.warn.buried", -12, "전투", "발밑 가까이 묻힌 혼: 땅속에서 낮게 우르릉 + 흙이 금 가는 짧은 바스락(0.4초) — 보이지 않는 곳 아래", bypass_cast=True, use="천도 중 묻힌 혼(Buried)이 가까이 숨어 있거나 솟기 직전")
+def _(r):
+    d = .42; m = int(d * SR)
+    rum = filt(noise(m, r), "low", 160) * env(m, .08, .2, 3, hold=.1) * 1.6
+    crk = grains(d, r, 8, lambda r, k: filt(noise(int(.006 * SR), r), "band", r.uniform(900, 2200), 2) * env(int(.006 * SR), .0005, .003) * r.uniform(.2, .6), t0=.12)
+    return rum + crk
+
+
+@sfx("sfx.warn.fierce", -11, "전투", "시야 밖 거센 혼·덩어리: 무거운 발 '쿵' + 아주 짧은 징 울림(0.4초) — 큰 놈이 온다", bypass_cast=True, use="천도 중 시야 밖 거센 혼(Fierce/엘리트)·덩어리(Lump)·보스의 졸개")
+def _(r):
+    b = _buf(.6)
+    place(b, _drum(r, 60, .12, 1.0), 0)
+    j = _jing(r, 196, .5, .02) * env(int(.5 * SR), .005, .15, 3)
+    place(b, filt(j, "band", 900, .8) * .5, .01)
+    return b
+
+
+@sfx("sfx.warn.wind", -12, "전투", "시야 밖에서 공격 준비: 바람이 '휙' 빨려 드는 짧은 소리(0.25초) — 종류와 상관없이 '지금 친다'", bypass_cast=True, use="천도 중 시야 밖 적이 예비동작(Winding)에 들어간 그 순간 한 번. 종류별 경고음 위에 얹음")
+def _(r):
+    m = int(.26 * SR)
+    return sweep_filt(noise(m, r), "band", 700, 2600, 3) * env(m, .2, .04, 2)
+
+
+@sfx("amb.cast.heart", -18, "처결", "천도 중 심장 박동: 쿵·쿵 낮은 두 박이 한 번(반복용 1초 = 1분에 60박). 코드가 위험할수록 빠르게(최대 1.8배)", loop=True, bypass_cast=True, use="천도 시전 중 내내. 위험도(가까운 시야 밖 혼)에 따라 pitch 1.0~1.8, 음량 0.3~1.0. 마지막 30%에 한 단계 더")
+def _(r):
+    sec = 1.0; b = _buf(sec)
+    place(b, _drum(r, 52, .09, 1.0), .02)
+    place(b, _drum(r, 48, .08, .65), .27)
+    return loopify(filt(b, "low", 400), .02)
+
+
+@sfx("sfx.cast.peak", -14, "처결", "천도 마무리 직전: 먹먹하던 소리가 숨을 멈춘 듯 '훅' 끊기고 높은 실 같은 음이 가늘게 떨림(0.5초)", bypass_cast=True, use="천도 시전 끝 0.5초 전(마무리 순간이 가장 위험). 이 0.5초 동안 경고음만 남기고 다른 소리는 0.4배")
+def _(r):
+    d = .55; m = int(d * SR)
+    thread = tone(d, 1760, 1800) * (1 + .3 * np.sin(2 * np.pi * 13 * T(d))) * env(m, .15, .1, 2, hold=.25) * .3
+    inhale = sweep_filt(noise(m, r), "band", 500, 1600, 2) * env(m, .4, .05, 2) * .5
+    return thread + inhale
+
+
+# ===== 파혼 손맛 · 업 배경층 · 원념 얼룩 (코디 요청 10-26, 연결법 docs/pahon-karma-sound.md) =====
+# 파혼은 '시원하지만 찜찜하게'. 손맛(넉백·연쇄)은 아주 시원하게, 대신 그 뒤에 남는 것(업·얼룩)이 조금씩 귀를 탁하게 만든다.
+# 겹침 규칙: 첫 폭발(sfx.pahon.burst.*)만 땅을 울리는 저음을 갖는다. 연쇄 소리에는 저음이 없고 한 단씩 높아진다 → 겹쳐도 뭉개지지 않고 '차르르 번지는' 느낌.
+@sfx("sfx.pahon.knock", -11, "처결", "파혼 넉백: 폭발에 날린 혼 하나가 몸으로 퍽 맞고 흙바닥을 쓰윽 미끄러짐(0.45초)", use="파혼 폭발에 밀려난 적 하나마다(최대 4, 0.03초 간격, 음높이 +4%씩). 첫 폭발 0.05초 뒤")
+def _(r):
+    b = _buf(.6)
+    place(b, _flesh(r, .2, 700, .9), 0)
+    place(b, _thump(r, .12, 120, 600) * .7, 0)
+    m = int(.35 * SR)
+    place(b, filt(noise(m, r), "band", 900, 1.2) * env(m, .02, .2, 3, hold=.1) * .45, .06)   # 흙바닥을 쓸며 밀려남
+    return b
+
+
+def _chain_burst(r, step):
+    """연쇄 파혼 한 칸: 저음 없이 깨지는 유리·쇠 + 짧은 폭풍. step(1·2·3)마다 높아지고 밝아짐"""
+    sec = .8; n = int(sec * SR); up = 2 ** (step * 2 / 12)                # 한 칸에 온음(2반음)씩 위로
+    blast = sweep_filt(noise(n, r), "band", 2500 * up, 700 * up, 1.0) * env(n, .002, .18, 3)
+    crack = modal(sec, [(1661 * up, .18, 1), (1760 * up, .18, .9), (3322 * up, .08, .4)], r) * .3   # 반음 두 음(찜찜함은 그대로)
+    shards = grains(sec, r, 10 + step * 4, lambda r, k: filt(noise(int(.012 * SR), r), "band", r.uniform(3000, 7000), 3) * env(int(.012 * SR), .0004, .005) * r.uniform(.2, .6),
+                    spread=lambda k, r: r.exponential(.12))
+    return reverb(filt(blast + crack + shards * .5, "high", 250), .9, .22)  # 250Hz 아래를 걷어 첫 폭발 저음과 안 부딪힘
+
+
+@sfx("sfx.pahon.chain.2", -8, "처결", "연쇄 파혼 둘째: 폭발이 옆 혼에 번져 한 번 더 '쨍' — 저음 없이 깨지는 소리만(0.6초)", use="파혼 폭발로 둘째 혼(잔넋 포함)이 함께 깨질 때")
+def _(r):
+    return _chain_burst(r, 1)
+
+
+@sfx("sfx.pahon.chain.3", -8, "처결", "연쇄 파혼 셋째: 한 단 더 높게 '쨍'(0.6초)", use="연쇄 셋째")
+def _(r):
+    return _chain_burst(r, 2)
+
+
+@sfx("sfx.pahon.chain.4", -8, "처결", "연쇄 파혼 넷째 이상: 가장 높고 밝게 '쨍' — 넷째부터는 이것만 반복(0.6초)", use="연쇄 넷째부터(같은 소리 동시 최대 2개)")
+def _(r):
+    return _chain_burst(r, 3)
+
+
+@sfx("sfx.pahon.cascade", -10, "처결", "큰 연쇄 마무리: 셋 이상 함께 깨진 뒤 부서진 조각이 비처럼 차르르 떨어지고 엽전이 짤랑 모임(1.4초) — 시원함의 꼬리", use="한 번의 파혼으로 셋 이상 깨졌을 때, 마지막 연쇄 0.15초 뒤 한 번")
+def _(r):
+    b = _buf(1.8)
+    place(b, grains(1.4, r, 60, lambda r, k: filt(noise(int(.01 * SR), r), "band", r.uniform(2500, 8000), 3) * env(int(.01 * SR), .0004, .004) * r.uniform(.1, .5) * (1 - k / 70),
+                    spread=lambda k, r: (k / 60) ** 1.4 * 1.2 + r.uniform(0, .03)), 0)
+    coin = lambda r, k: modal(.25, [(r.uniform(3800, 4600), .06, 1), (r.uniform(6400, 7400), .03, .4)], r) * r.uniform(.3, .8)
+    place(b, grains(.5, r, 7, coin), .7)
+    return reverb(b, 1.0, .2)
+
+
+# ── 업이 쌓일수록 탁해지는 배경 층(업 10 · 30 · 60) — 구역 환경음 '위에' 겹쳐 까는 아주 작은 반복음 ──
+@sfx("amb.karma.1", -36, "세계", "업 10~29: 거의 안 들리는 낮은 웅 — 세상 밑바닥에서 무언가 조금 어긋남(반복용 20초, 귀를 기울여야 들림)", loop=True, use="업 10 이상. 구역 환경음 위에 음량 1.0으로 겹침(파일이 이미 아주 작다)")
+def _(r):
+    sec = 20.4; n = int(sec * SR); t = T(sec)
+    hum = (np.sin(2 * np.pi * 55 * t) + .6 * np.sin(2 * np.pi * 55.7 * t)) * (.6 + .4 * np.sin(2 * np.pi * .05 * t))   # 0.7Hz 맥놀이
+    air = filt(noise(n, r), "low", 220) * .6
+    return loopify(hum * .5 + air, .8)
+
+
+@sfx("amb.karma.2", -32, "세계", "업 30~59: 어긋난 두 음이 천천히 비벼지는 드론 + 가끔 먼 데서 들이쉬는 숨(뜻 없음) — 마음이 편치 않음(반복용 24초)", loop=True, use="업 30 이상. amb.karma.1 과 함께 겹침(1 을 끄지 않음)")
+def _(r):
+    sec = 24.4; n = int(sec * SR); t = T(sec)
+    dr = filt(np.sin(2 * np.pi * 146.8 * t) + np.sin(2 * np.pi * 155.6 * t) * .8, "low", 600) * (.5 + .5 * np.sin(2 * np.pi * t / sec * 2) ** 2)   # D와 D#: 반음 비빔
+    b = dr * .35
+    for at in (5.0, 15.5):
+        d = 1.2; m = int(d * SR)
+        place(b, filt(noise(m, r), "band", 900, 2) * env(m, .7, .4, 2) * .25, at)     # 먼 숨
+    return loopify(reverb(b, 3.0, .5, tone_hz=1500)[:n], 1.0)
+
+
+@sfx("amb.karma.3", -18, "세계", "업 60 이상: 공기가 탁함 — 바닥에서 지글지글 끓는 잡음 + 느린 맥박 같은 울렁임 + 아주 먼 곳의 깨지는 소리 메아리(반복용 28초)", loop=True, use="업 60 이상. 1·2 위에 겹침. 같이 구역 환경음 전체에 저역 통과 6kHz(맑은 높은 소리가 사라짐)")
+def _(r):
+    sec = 28.4; n = int(sec * SR); t = T(sec)
+    grit = grains(sec, r, 900, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(400, 1500), 2) * env(int(.003 * SR), .0002, .0015) * r.uniform(.05, .3))
+    throb = filt(noise(n, r), "low", 120) * (.5 + .5 * np.sin(2 * np.pi * .4 * t)) ** 3 * 1.2   # 2.5초마다 울렁
+    b = grit * .6 + throb
+    for at in (9.0, 21.0):
+        place(b, filt(_chain_burst(r, 0), "low", 1800) * .12, at)              # 아주 먼 파혼의 메아리
+    return loopify(reverb(b, 2.5, .4, tone_hz=1800)[:n], 1.0)
+
+
+# ── 원념 얼룩 ──
+@sfx("sfx.stain.form", -15, "처결", "얼룩이 생김: 폭발 자리 땅에 검붉은 것이 '쯔으—' 스며 번지며 낮게 끓음(1초)", use="파혼 직후 얼룩이 바닥에 생길 때(폭발 0.4초 뒤)")
+def _(r):
+    sec = 1.1; n = int(sec * SR)
+    seep = sweep_filt(noise(n, r), "band", 1800, 500, 2) * env(n, .1, .5, 3, hold=.3) * .6
+    boil = grains(sec, r, 14, lambda r, k: bubble(.06, r.uniform(180, 380)) * r.uniform(.2, .5), t0=.2)
+    return reverb(seep + boil, .8, .2)
+
+
+@sfx("sfx.stain.step", -17, "처결", "얼룩을 밟음: 끈적하게 '쩍' 들러붙었다 떨어지는 발 + 발밑에서 작게 '흐' 하는 원념(0.35초) — 느려진 걸음마다", use="얼룩 위 발소리마다(재질 발소리 대신). 이동 −20% 동안")
+def _(r):
+    b = _buf(.45); m = int(.18 * SR)
+    place(b, filt(noise(m, r), "band", 600, 2) * env(m, .005, .1, 3) * .7, 0)
+    place(b, _mud(r, .25, 3, (200, 420)) * .6, .02)
+    k = int(.12 * SR)                                                     # 떨어질 때 '쩍'
+    place(b, filt(noise(k, r), "band", 2200, 4) * env(k, .002, .04, 3) * .4, .16)
+    d = .2; q = int(d * SR)
+    place(b, voice(curve(d, [(0, 120), (d, 100)]), [(500, 3, 1)], 1.2, r, nh=8) * env(q, .02, .1, 3) * .25, .1)
+    return b
+
+
+@sfx("amb.stain.near", -26, "처결", "얼룩 곁: 낮게 끓는 거품 + 웅웅 떨리는 원념(반복용 6초) — 얼룩 자리에서 3D로", loop=True, use="얼룩마다 하나(3D, 최소 1m · 최대 8m), 사라질 때 1초 페이드. 최대 4개")
+def _(r):
+    sec = 6.2; n = int(sec * SR); t = T(sec)
+    boil = grains(sec, r, 40, lambda r, k: bubble(r.uniform(.04, .08), r.uniform(150, 350)) * r.uniform(.1, .4))
+    hum = filt(noise(n, r), "band", 230, 4) * (.6 + .4 * np.sin(2 * np.pi * 3.3 * t)) * .5
+    return loopify(boil + hum, .4)
+
+
+@sfx("sfx.stain.overlap", -10, "처결", "얼룩 셋이 겹침(사나운 적이 온다): 세 끓는 소리가 한데 모여 꿀렁 꿀렁 꿀렁 + 땅속에서 낮게 부풀어 오름(1.6초)", bypass_cast=True, use="얼룩 3개가 겹쳐 사나운 적이 소환되기 직전")
+def _(r):
+    b = _buf(2.0)
+    for k in range(3):
+        place(b, _mud(r, .3, 3, (140, 300)) * (.6 + .15 * k), .1 + k * .32)
+    m = int(1.3 * SR)
+    place(b, sweep_filt(noise(m, r), "low", 80, 400) * env(m, 1.0, .2, 2) * 1.2, .4)
+    return reverb(b, 1.2, .25)
+
+
+@sfx("sfx.stain.fade", -22, "처결", "얼룩이 마름: 끓던 것이 '스으' 잦아들며 땅에 말라붙음(0.8초)", use="얼룩 지속 15초가 끝날 때")
+def _(r):
+    m = int(.8 * SR)
+    return sweep_filt(noise(m, r), "band", 900, 300, 1.5) * env(m, .05, .5, 3) * .6
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)

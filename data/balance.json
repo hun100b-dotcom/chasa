@@ -411,6 +411,10 @@
   "value": 8,
   "note": "(기획 타격감 분석 10-24, 임시) 파혼 정지: 게임에서 가장 큰 정지 [4→8]"
  },
+ "PAHON_KNOCK_SFX_MAX": {"value": 4, "note": "(사운드 설계 10-26) 파혼 한 번에 넉백 소리를 내는 적 수 상한"},
+ "PAHON_KNOCK_SFX_GAP": {"value": 0.03, "note": "넉백 소리 간격(초)"},
+ "PAHON_KNOCK_PITCH_STEP": {"value": 0.04, "note": "넉백 소리 하나마다 음높이 +4%"},
+ "PAHON_CASCADE_MIN": {"value": 3, "note": "셋 이상 함께 깨지면 cascade 소리"},
  "PAHON_SHAKE": {
   "value": 0.65,
   "note": "(기획 타격감 분석 10-24, 임시) 파혼 충격값 [0.8→0.65]"
