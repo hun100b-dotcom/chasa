@@ -1,0 +1,4118 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(필드 절대)",
+ "note": "place_act2.py가 만든다. 직접 고치지 말고 스크립트를 고친다. z=땅 높이(terrain_act2)",
+ "props": [
+  {
+   "prop": "sanseong_geumjul_jangseung_pair",
+   "file": "assets3d/act2/sanseong_geumjul_jangseung_pair.glb",
+   "x": 101,
+   "y": 668,
+   "rot": 0,
+   "z": 1.73,
+   "note": "R2-1 2막 금줄(1막 마지막 일 뒤 풀림)",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_geumjul_jangseung_pair",
+   "file": "assets3d/act2/sanseong_geumjul_jangseung_pair.glb",
+   "x": 441,
+   "y": 648,
+   "rot": 0,
+   "z": 0.6,
+   "note": "R2-2 2막 금줄",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_shrine",
+   "file": "assets3d/act2/sanseong_shrine.glb",
+   "x": 112,
+   "y": 793,
+   "rot": 0,
+   "z": 2.27,
+   "note": "SH2-1 붉은재 서낭당 자리 장식(서낭당 규칙 원은 코드)",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_sul_vat",
+   "file": "assets3d/act2/sanseong_sul_vat.glb",
+   "x": 86,
+   "y": 884,
+   "rot": 200,
+   "z": 1.81,
+   "note": "술도가 뒤뜰 술독 무리 B05-D1"
+  },
+  {
+   "prop": "sanseong_sul_vat",
+   "file": "assets3d/act2/sanseong_sul_vat.glb",
+   "x": 92,
+   "y": 887,
+   "rot": 232,
+   "z": 1.82,
+   "note": "술도가 뒤뜰 술독 무리 B05-D1"
+  },
+  {
+   "prop": "sanseong_sul_vat",
+   "file": "assets3d/act2/sanseong_sul_vat.glb",
+   "x": 88,
+   "y": 891,
+   "rot": 171,
+   "z": 1.81,
+   "note": "술도가 뒤뜰 술독 무리 B05-D1"
+  },
+  {
+   "prop": "sanseong_sul_vat",
+   "file": "assets3d/act2/sanseong_sul_vat.glb",
+   "x": 95,
+   "y": 889,
+   "rot": 62,
+   "z": 1.82,
+   "note": "술도가 뒤뜰 술독 무리 B05-D1"
+  },
+  {
+   "prop": "sanseong_sul_vat",
+   "file": "assets3d/act2/sanseong_sul_vat.glb",
+   "x": 84,
+   "y": 879,
+   "rot": 0,
+   "z": 1.81,
+   "note": "술도가 뒤뜰 술독 무리 B05-D1"
+  },
+  {
+   "prop": "sanseong_sul_vat",
+   "file": "assets3d/act2/sanseong_sul_vat.glb",
+   "x": 97,
+   "y": 892,
+   "rot": 350,
+   "z": 1.81,
+   "note": "술도가 뒤뜰 술독 무리 B05-D1"
+  },
+  {
+   "prop": "sanseong_wall_unfinished",
+   "file": "assets3d/act2/sanseong_wall_unfinished.glb",
+   "x": 140.0,
+   "y": 915.0,
+   "rot": 90,
+   "z": 1.82,
+   "note": "S-051 석수가 쌓다 만 성벽"
+  },
+  {
+   "prop": "sanseong_wall_unfinished",
+   "file": "assets3d/act2/sanseong_wall_unfinished.glb",
+   "x": 144.0,
+   "y": 915.4,
+   "rot": 90,
+   "z": 1.82,
+   "note": "S-051 석수가 쌓다 만 성벽"
+  },
+  {
+   "prop": "sanseong_wall_unfinished",
+   "file": "assets3d/act2/sanseong_wall_unfinished.glb",
+   "x": 149.5,
+   "y": 918.4,
+   "rot": 90,
+   "z": 1.82,
+   "note": "S-051 석수가 쌓다 만 성벽",
+   "walk_snap": {
+    "from": [
+     148.0,
+     915.8
+    ],
+    "to": [
+     149.5,
+     918.4
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_wall_unfinished",
+   "file": "assets3d/act2/sanseong_wall_unfinished.glb",
+   "x": 152.0,
+   "y": 916.2,
+   "rot": 90,
+   "z": 1.82,
+   "note": "S-051 석수가 쌓다 만 성벽"
+  },
+  {
+   "prop": "sanseong_wall_unfinished",
+   "file": "assets3d/act2/sanseong_wall_unfinished.glb",
+   "x": 156.0,
+   "y": 916.6,
+   "rot": 90,
+   "z": 1.82,
+   "note": "S-051 석수가 쌓다 만 성벽"
+  },
+  {
+   "prop": "sanseong_wall_unfinished",
+   "file": "assets3d/act2/sanseong_wall_unfinished.glb",
+   "x": 160.0,
+   "y": 917.0,
+   "rot": 90,
+   "z": 1.82,
+   "note": "S-051 석수가 쌓다 만 성벽"
+  },
+  {
+   "prop": "sanseong_wipae",
+   "file": "assets3d/act2/sanseong_wipae.glb",
+   "x": 132.5,
+   "y": 902,
+   "rot": 0,
+   "z": 1.82,
+   "note": "마을 사당 위패 '장군지위'",
+   "by_design": true
+  },
+  {
+   "prop": "prop_firewood",
+   "file": "assets3d/props/prop_firewood.glb",
+   "x": 85.5,
+   "y": 886.03,
+   "rot": 353,
+   "z": 1.81
+  },
+  {
+   "prop": "prop_firewood",
+   "file": "assets3d/props/prop_firewood.glb",
+   "x": 162.85,
+   "y": 878.17,
+   "rot": 331,
+   "z": 1.81
+  },
+  {
+   "prop": "prop_firewood",
+   "file": "assets3d/props/prop_firewood.glb",
+   "x": 102.51,
+   "y": 909.08,
+   "rot": 214,
+   "z": 1.82
+  },
+  {
+   "prop": "prop_firewood",
+   "file": "assets3d/props/prop_firewood.glb",
+   "x": 122.25,
+   "y": 829.52,
+   "rot": 87,
+   "z": 1.82
+  },
+  {
+   "prop": "prop_fence",
+   "file": "assets3d/props/prop_fence.glb",
+   "x": 69.34,
+   "y": 894.64,
+   "rot": 198,
+   "z": 1.8
+  },
+  {
+   "prop": "prop_fence",
+   "file": "assets3d/props/prop_fence.glb",
+   "x": 103.9,
+   "y": 917.65,
+   "rot": 165,
+   "z": 1.82
+  },
+  {
+   "prop": "prop_fence",
+   "file": "assets3d/props/prop_fence.glb",
+   "x": 94.61,
+   "y": 897.83,
+   "rot": 207,
+   "z": 1.81
+  },
+  {
+   "prop": "prop_fence",
+   "file": "assets3d/props/prop_fence.glb",
+   "x": 150.71,
+   "y": 842.62,
+   "rot": 160,
+   "z": 1.82
+  },
+  {
+   "prop": "prop_fence",
+   "file": "assets3d/props/prop_fence.glb",
+   "x": 148.31,
+   "y": 857.58,
+   "rot": 248,
+   "z": 1.82
+  },
+  {
+   "prop": "sanseong_gate",
+   "file": "assets3d/act2/sanseong_gate.glb",
+   "x": 118,
+   "y": 944,
+   "rot": 0,
+   "z": 6.64,
+   "note": "산성 문(성 문 앞 서낭당 SH2-3은 B-06 천도 뒤 열림)",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_stairs",
+   "file": "assets3d/act2/sanseong_stairs.glb",
+   "x": 114,
+   "y": 975,
+   "rot": 0,
+   "z": 9.0,
+   "note": "R2-3 갈지자 돌계단"
+  },
+  {
+   "prop": "sanseong_stairs",
+   "file": "assets3d/act2/sanseong_stairs.glb",
+   "x": 119.5,
+   "y": 992.87,
+   "rot": 0,
+   "z": 8.98,
+   "walk_snap": {
+    "from": [
+     120,
+     992
+    ],
+    "to": [
+     119.5,
+     992.87
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 74.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.02,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 78.22,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.02,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 82.44,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.03,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 86.67,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.04,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 90.89,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.04,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 95.11,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.05,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 99.33,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.05,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 103.56,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.06,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 107.78,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.05,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 112.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 7.82,
+   "note": "산성 남벽 왼쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 126.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.0,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 130.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 8.99,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 134.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 8.99,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 138.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 8.99,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 142.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.0,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 146.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.02,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 150.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.03,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 154.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.03,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 158.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.03,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 162.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.04,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 166.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.04,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 170.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.05,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 174.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.05,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 178.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 9.01,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 182.0,
+   "y": 952.0,
+   "rot": 90,
+   "z": 8.88,
+   "note": "산성 남벽 오른쪽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 74.0,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.04,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 80.24,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.04,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 86.47,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.04,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 92.71,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.04,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 98.94,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.03,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 105.18,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 8.95,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 111.16,
+   "y": 1061.57,
+   "rot": 90,
+   "z": 8.82,
+   "note": "무너진 북벽",
+   "walk_snap": {
+    "from": [
+     111.41176470588235,
+     1062.0
+    ],
+    "to": [
+     111.16,
+     1061.57
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 117.65,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.01,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 123.88,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.01,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 130.12,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.01,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 136.35,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.0,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 142.59,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.0,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 148.82,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.0,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 155.06,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.0,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 161.29,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.0,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 167.53,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.0,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 173.76,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.01,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 180.0,
+   "y": 1062.0,
+   "rot": 90,
+   "z": 9.01,
+   "note": "무너진 북벽"
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 962,
+   "rot": 0,
+   "z": 9.02
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 962,
+   "rot": 0,
+   "z": 8.96
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 970,
+   "rot": 0,
+   "z": 9.03
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 970,
+   "rot": 0,
+   "z": 8.97
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 978,
+   "rot": 0,
+   "z": 9.03
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 978,
+   "rot": 0,
+   "z": 8.98
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 986,
+   "rot": 0,
+   "z": 9.03
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 986,
+   "rot": 0,
+   "z": 8.97
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 994,
+   "rot": 0,
+   "z": 9.03
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 994,
+   "rot": 0,
+   "z": 8.97
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 1002,
+   "rot": 0,
+   "z": 9.03
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 1002,
+   "rot": 0,
+   "z": 8.98
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 1010,
+   "rot": 0,
+   "z": 9.02
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 1010,
+   "rot": 0,
+   "z": 8.98
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 1018,
+   "rot": 0,
+   "z": 9.02
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 1018,
+   "rot": 0,
+   "z": 8.98
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 1026,
+   "rot": 0,
+   "z": 9.01
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 1026,
+   "rot": 0,
+   "z": 8.98
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 1034,
+   "rot": 0,
+   "z": 9.0
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 1034,
+   "rot": 0,
+   "z": 9.0
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 1042,
+   "rot": 0,
+   "z": 9.0
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 1042,
+   "rot": 0,
+   "z": 9.03
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 1050,
+   "rot": 0,
+   "z": 9.0
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 1050,
+   "rot": 0,
+   "z": 9.04
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 76,
+   "y": 1058,
+   "rot": 0,
+   "z": 9.02
+  },
+  {
+   "prop": "sanseong_wall_straight",
+   "file": "assets3d/act2/sanseong_wall_straight.glb",
+   "x": 180,
+   "y": 1058,
+   "rot": 0,
+   "z": 9.02
+  },
+  {
+   "prop": "sanseong_tower",
+   "file": "assets3d/act2/sanseong_tower.glb",
+   "x": 76.85,
+   "y": 949.04,
+   "rot": 0,
+   "z": 9.0,
+   "walk_snap": {
+    "from": [
+     78,
+     950
+    ],
+    "to": [
+     76.85,
+     949.04
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_tower",
+   "file": "assets3d/act2/sanseong_tower.glb",
+   "x": 181.25,
+   "y": 948.7,
+   "rot": 0,
+   "z": 8.87,
+   "walk_snap": {
+    "from": [
+     182,
+     950
+    ],
+    "to": [
+     181.25,
+     948.7
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_tower",
+   "file": "assets3d/act2/sanseong_tower.glb",
+   "x": 182.5,
+   "y": 1064.0,
+   "rot": 0,
+   "z": 8.98,
+   "note": "산성 위",
+   "walk_snap": {
+    "from": [
+     182,
+     1064
+    ],
+    "to": [
+     182.5,
+     1064.0
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_beacon",
+   "file": "assets3d/act2/sanseong_beacon.glb",
+   "x": 163.0,
+   "y": 1040.0,
+   "rot": 0,
+   "z": 9.03,
+   "note": "봉화대 터",
+   "walk_snap": {
+    "from": [
+     160,
+     1040
+    ],
+    "to": [
+     163.0,
+     1040.0
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_banner_torn",
+   "file": "assets3d/act2/sanseong_banner_torn.glb",
+   "x": 125,
+   "y": 1018,
+   "rot": 0,
+   "z": 9.0,
+   "note": "B-05 깃대 터 찢긴 깃발",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_flag_shard",
+   "file": "assets3d/act2/sanseong_flag_shard.glb",
+   "x": 130.5,
+   "y": 1018.0,
+   "rot": 56,
+   "z": 9.0,
+   "note": "깃대 조각(깃발 꽂기 반경 6m)",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_flag_shard",
+   "file": "assets3d/act2/sanseong_flag_shard.glb",
+   "x": 126.68,
+   "y": 1023.24,
+   "rot": 310,
+   "z": 9.0,
+   "note": "깃대 조각(깃발 꽂기 반경 6m)",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_flag_shard",
+   "file": "assets3d/act2/sanseong_flag_shard.glb",
+   "x": 120.53,
+   "y": 1021.2,
+   "rot": 120,
+   "z": 9.0,
+   "note": "깃대 조각(깃발 꽂기 반경 6m)",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_flag_shard",
+   "file": "assets3d/act2/sanseong_flag_shard.glb",
+   "x": 120.58,
+   "y": 1014.72,
+   "rot": 265,
+   "z": 9.0,
+   "note": "깃대 조각(깃발 꽂기 반경 6m)",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_flag_shard",
+   "file": "assets3d/act2/sanseong_flag_shard.glb",
+   "x": 126.77,
+   "y": 1012.79,
+   "rot": 178,
+   "z": 9.0,
+   "note": "깃대 조각(깃발 꽂기 반경 6m)",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_arrow_rock",
+   "file": "assets3d/act2/sanseong_arrow_rock.glb",
+   "x": 212,
+   "y": 935,
+   "rot": 65,
+   "z": 7.01,
+   "note": "양옆 벼랑 바위"
+  },
+  {
+   "prop": "sanseong_arrow_rock",
+   "file": "assets3d/act2/sanseong_arrow_rock.glb",
+   "x": 228,
+   "y": 948,
+   "rot": 185,
+   "z": 4.29,
+   "note": "양옆 벼랑 바위"
+  },
+  {
+   "prop": "sanseong_arrow_rock",
+   "file": "assets3d/act2/sanseong_arrow_rock.glb",
+   "x": 236,
+   "y": 968,
+   "rot": 26,
+   "z": 8.05,
+   "note": "양옆 벼랑 바위"
+  },
+  {
+   "prop": "sanseong_arrow_rock",
+   "file": "assets3d/act2/sanseong_arrow_rock.glb",
+   "x": 270,
+   "y": 984,
+   "rot": 66,
+   "z": 8.13,
+   "note": "양옆 벼랑 바위"
+  },
+  {
+   "prop": "sanseong_arrow_rock",
+   "file": "assets3d/act2/sanseong_arrow_rock.glb",
+   "x": 292,
+   "y": 1008,
+   "rot": 126,
+   "z": 7.98,
+   "note": "양옆 벼랑 바위"
+  },
+  {
+   "prop": "sanseong_arrow_rock",
+   "file": "assets3d/act2/sanseong_arrow_rock.glb",
+   "x": 300,
+   "y": 992,
+   "rot": 285,
+   "z": 7.49,
+   "note": "양옆 벼랑 바위"
+  },
+  {
+   "prop": "sanseong_arrow_rock",
+   "file": "assets3d/act2/sanseong_arrow_rock.glb",
+   "x": 262,
+   "y": 972,
+   "rot": 0,
+   "z": 7.06,
+   "note": "B05-D3 만져 보기: 바위틈 화살촉",
+   "by_design": true
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 211.88,
+   "y": 999.34,
+   "rot": 334,
+   "z": 8.13
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 217.91,
+   "y": 983.61,
+   "rot": 214,
+   "z": 8.12
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 238.97,
+   "y": 939.59,
+   "rot": 244,
+   "z": 3.35
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 265.52,
+   "y": 927.78,
+   "rot": 19,
+   "z": 8.23
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 245.1,
+   "y": 972.07,
+   "rot": 257,
+   "z": 3.0
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 233.82,
+   "y": 936.05,
+   "rot": 114,
+   "z": 3.92
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 294.37,
+   "y": 957.86,
+   "rot": 324,
+   "z": 8.01
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 303.57,
+   "y": 912.16,
+   "rot": 8,
+   "z": 7.28
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 258.08,
+   "y": 998.76,
+   "rot": 255,
+   "z": 4.4
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 251.67,
+   "y": 922.87,
+   "rot": 318,
+   "z": 8.17
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 267.72,
+   "y": 999.66,
+   "rot": 297,
+   "z": 8.08
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 245.18,
+   "y": 945.53,
+   "rot": 17,
+   "z": 3.22
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 214.7,
+   "y": 1001.46,
+   "rot": 103,
+   "z": 8.12
+  },
+  {
+   "prop": "sanseong_arrow_field",
+   "file": "assets3d/act2/sanseong_arrow_field.glb",
+   "x": 285.49,
+   "y": 1009.13,
+   "rot": 335,
+   "z": 8.06
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 248.17,
+   "y": 967.26,
+   "rot": 322,
+   "z": 2.96
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 231.82,
+   "y": 944.69,
+   "rot": 131,
+   "z": 3.96
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 279.32,
+   "y": 910.99,
+   "rot": 303,
+   "z": 8.16
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 259.22,
+   "y": 958.1,
+   "rot": 110,
+   "z": 5.06
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 240.39,
+   "y": 936.28,
+   "rot": 242,
+   "z": 4.1
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 208.11,
+   "y": 976.05,
+   "rot": 113,
+   "z": 8.26
+  },
+  {
+   "prop": "sanseong_tent",
+   "file": "assets3d/act2/sanseong_tent.glb",
+   "x": 210,
+   "y": 1110,
+   "rot": 5,
+   "z": 4.49,
+   "note": "천막 터"
+  },
+  {
+   "prop": "sanseong_tent",
+   "file": "assets3d/act2/sanseong_tent.glb",
+   "x": 225,
+   "y": 1150,
+   "rot": 342,
+   "z": 4.49,
+   "note": "천막 터"
+  },
+  {
+   "prop": "sanseong_tent",
+   "file": "assets3d/act2/sanseong_tent.glb",
+   "x": 270,
+   "y": 1105,
+   "rot": 6,
+   "z": 4.49,
+   "note": "천막 터"
+  },
+  {
+   "prop": "sanseong_tent",
+   "file": "assets3d/act2/sanseong_tent.glb",
+   "x": 285,
+   "y": 1150,
+   "rot": 18,
+   "z": 4.5,
+   "note": "천막 터"
+  },
+  {
+   "prop": "sanseong_tent",
+   "file": "assets3d/act2/sanseong_tent.glb",
+   "x": 214,
+   "y": 1175,
+   "rot": 353,
+   "z": 4.49,
+   "note": "천막 터"
+  },
+  {
+   "prop": "sanseong_tent",
+   "file": "assets3d/act2/sanseong_tent.glb",
+   "x": 280,
+   "y": 1176,
+   "rot": 6,
+   "z": 4.51,
+   "note": "천막 터"
+  },
+  {
+   "prop": "sanseong_spear_rack",
+   "file": "assets3d/act2/sanseong_spear_rack.glb",
+   "x": 210,
+   "y": 1135,
+   "rot": 13,
+   "z": 4.48
+  },
+  {
+   "prop": "sanseong_spear_rack",
+   "file": "assets3d/act2/sanseong_spear_rack.glb",
+   "x": 280,
+   "y": 1128,
+   "rot": 307,
+   "z": 4.49
+  },
+  {
+   "prop": "sanseong_spear_rack",
+   "file": "assets3d/act2/sanseong_spear_rack.glb",
+   "x": 236,
+   "y": 1162,
+   "rot": 134,
+   "z": 4.49
+  },
+  {
+   "prop": "sanseong_spear_rack",
+   "file": "assets3d/act2/sanseong_spear_rack.glb",
+   "x": 258,
+   "y": 1163,
+   "rot": 357,
+   "z": 4.5
+  },
+  {
+   "prop": "sanseong_jinbeop_map",
+   "file": "assets3d/act2/sanseong_jinbeop_map.glb",
+   "x": 232,
+   "y": 1124,
+   "rot": 0,
+   "z": 4.5,
+   "note": "진법도(B-06 단서)"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 195,
+   "y": 1100,
+   "rot": 90,
+   "z": 4.49
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 195,
+   "y": 1112,
+   "rot": 90,
+   "z": 4.48
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 192.0,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.49,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 195.27,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 198.55,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 201.82,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 205.09,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 208.36,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 211.64,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 214.91,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.49,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 218.18,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.49,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 221.45,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.49,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 224.73,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.49,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 228.0,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.49,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 231.27,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.49,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 234.55,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 237.82,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 241.09,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 244.36,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 247.64,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 250.91,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 254.18,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 257.45,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 260.73,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 264.0,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 267.27,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.5,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 270.55,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 273.82,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 277.09,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 280.36,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 283.64,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 286.91,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 290.18,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 293.45,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 296.73,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_palisade",
+   "file": "assets3d/act2/sanseong_palisade.glb",
+   "x": 300.0,
+   "y": 1186.0,
+   "rot": 0,
+   "z": 4.51,
+   "note": "군막 북쪽 목책"
+  },
+  {
+   "prop": "sanseong_big_mound",
+   "file": "assets3d/act2/sanseong_big_mound.glb",
+   "x": 90,
+   "y": 1190,
+   "rot": 0,
+   "z": 4.22,
+   "note": "비석 없는 큰 봉분",
+   "by_design": true
+  },
+  {
+   "prop": "prop_grave",
+   "file": "assets3d/props/prop_grave.glb",
+   "x": 55,
+   "y": 1200,
+   "rot": 359,
+   "z": 2.97,
+   "note": "작은 무덤 떼"
+  },
+  {
+   "prop": "prop_grave",
+   "file": "assets3d/props/prop_grave.glb",
+   "x": 62,
+   "y": 1212,
+   "rot": 4,
+   "z": 2.96,
+   "note": "작은 무덤 떼"
+  },
+  {
+   "prop": "prop_grave",
+   "file": "assets3d/props/prop_grave.glb",
+   "x": 70,
+   "y": 1198,
+   "rot": 5,
+   "z": 2.97,
+   "note": "작은 무덤 떼"
+  },
+  {
+   "prop": "prop_grave",
+   "file": "assets3d/props/prop_grave.glb",
+   "x": 48,
+   "y": 1215,
+   "rot": 13,
+   "z": 2.97,
+   "note": "작은 무덤 떼"
+  },
+  {
+   "prop": "prop_grave",
+   "file": "assets3d/props/prop_grave.glb",
+   "x": 60,
+   "y": 1185,
+   "rot": 4,
+   "z": 2.97,
+   "note": "작은 무덤 떼"
+  },
+  {
+   "prop": "prop_grave",
+   "file": "assets3d/props/prop_grave.glb",
+   "x": 110,
+   "y": 1215,
+   "rot": 13,
+   "z": 2.97,
+   "note": "작은 무덤 떼"
+  },
+  {
+   "prop": "prop_grave",
+   "file": "assets3d/props/prop_grave.glb",
+   "x": 120,
+   "y": 1200,
+   "rot": 347,
+   "z": 2.96,
+   "note": "작은 무덤 떼"
+  },
+  {
+   "prop": "prop_dolddam",
+   "file": "assets3d/props/prop_dolddam.glb",
+   "x": 77.37,
+   "y": 1224.51,
+   "rot": 49,
+   "z": 2.97
+  },
+  {
+   "prop": "prop_dolddam",
+   "file": "assets3d/props/prop_dolddam.glb",
+   "x": 111.23,
+   "y": 1156.03,
+   "rot": 182,
+   "z": 2.97
+  },
+  {
+   "prop": "prop_dolddam",
+   "file": "assets3d/props/prop_dolddam.glb",
+   "x": 89.38,
+   "y": 1195.78,
+   "rot": 41,
+   "z": 3.53
+  },
+  {
+   "prop": "prop_dolddam",
+   "file": "assets3d/props/prop_dolddam.glb",
+   "x": 118.53,
+   "y": 1167.5,
+   "rot": 46,
+   "z": 2.97
+  },
+  {
+   "prop": "sanseong_shrine",
+   "file": "assets3d/act2/sanseong_shrine.glb",
+   "x": 455,
+   "y": 793,
+   "rot": 0,
+   "z": 1.59,
+   "note": "SH2-2 산신각(서낭당 규칙 원은 코드)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 435.5,
+   "y": 862.0,
+   "rot": 0,
+   "z": 3.08,
+   "walk_snap": {
+    "from": [
+     432,
+     862
+    ],
+    "to": [
+     435.5,
+     862.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 448.5,
+   "y": 890.0,
+   "rot": 20,
+   "z": 3.99,
+   "walk_snap": {
+    "from": [
+     445,
+     890
+    ],
+    "to": [
+     448.5,
+     890.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 465.5,
+   "y": 875.0,
+   "rot": 180,
+   "z": 3.88,
+   "walk_snap": {
+    "from": [
+     462,
+     875
+    ],
+    "to": [
+     465.5,
+     875.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 470,
+   "y": 905,
+   "rot": 10,
+   "z": 4.1
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 432,
+   "y": 835,
+   "rot": 0,
+   "z": 2.88
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 480,
+   "y": 860,
+   "rot": 90,
+   "z": 3.07
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 495.5,
+   "y": 842.0,
+   "rot": 0,
+   "z": 2.93,
+   "walk_snap": {
+    "from": [
+     492,
+     842
+    ],
+    "to": [
+     495.5,
+     842.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_mokpae_board",
+   "file": "assets3d/act2/soegol_mokpae_board.glb",
+   "x": 520,
+   "y": 935,
+   "rot": 0,
+   "z": 6.44,
+   "note": "목패 걸이 판(2막 꿀팁: 이름 목패)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_windlass",
+   "file": "assets3d/act2/soegol_windlass.glb",
+   "x": 490,
+   "y": 920,
+   "rot": 0,
+   "z": 5.12
+  },
+  {
+   "prop": "soegol_lantern_post",
+   "file": "assets3d/act2/soegol_lantern_post.glb",
+   "x": 458,
+   "y": 800,
+   "rot": 0,
+   "z": 1.94
+  },
+  {
+   "prop": "soegol_lantern_post",
+   "file": "assets3d/act2/soegol_lantern_post.glb",
+   "x": 472.0,
+   "y": 836.0,
+   "rot": 0,
+   "z": 2.9,
+   "walk_snap": {
+    "from": [
+     470,
+     836
+    ],
+    "to": [
+     472.0,
+     836.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_lantern_post",
+   "file": "assets3d/act2/soegol_lantern_post.glb",
+   "x": 520,
+   "y": 925,
+   "rot": 0,
+   "z": 5.99
+  },
+  {
+   "prop": "soegol_ore_basket",
+   "file": "assets3d/act2/soegol_ore_basket.glb",
+   "x": 466,
+   "y": 840,
+   "rot": 0,
+   "z": 2.92
+  },
+  {
+   "prop": "soegol_ore_basket",
+   "file": "assets3d/act2/soegol_ore_basket.glb",
+   "x": 505,
+   "y": 915,
+   "rot": 40,
+   "z": 4.9
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 493.0,
+   "y": 940.0,
+   "rot": 0,
+   "z": 7.0,
+   "note": "주인집 앞마당 가장자리"
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 496.57,
+   "y": 940.0,
+   "rot": 0,
+   "z": 6.9,
+   "note": "주인집 앞마당 가장자리"
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 499.67,
+   "y": 940.17,
+   "rot": 0,
+   "z": 6.59,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     500.14285714285717,
+     940.0
+    ],
+    "to": [
+     499.67,
+     940.17
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 506.21,
+   "y": 940.0,
+   "rot": 0,
+   "z": 6.63,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     503.7142857142857,
+     940.0
+    ],
+    "to": [
+     506.21,
+     940.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 508.79,
+   "y": 940.0,
+   "rot": 0,
+   "z": 6.68,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     507.2857142857143,
+     940.0
+    ],
+    "to": [
+     508.79,
+     940.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 511.36,
+   "y": 940.0,
+   "rot": 0,
+   "z": 6.17,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     510.85714285714283,
+     940.0
+    ],
+    "to": [
+     511.36,
+     940.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 514.25,
+   "y": 940.98,
+   "rot": 0,
+   "z": 5.88,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     514.4285714285714,
+     940.0
+    ],
+    "to": [
+     514.25,
+     940.98
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 516.25,
+   "y": 943.03,
+   "rot": 0,
+   "z": 5.9,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     518.0,
+     940.0
+    ],
+    "to": [
+     516.25,
+     943.03
+    ]
+   }
+  },
+  {
+   "prop": "soegol_sorting_bench",
+   "file": "assets3d/act2/soegol_sorting_bench.glb",
+   "x": 615.0,
+   "y": 872.0,
+   "rot": 0,
+   "z": 2.19,
+   "note": "선탄 평상",
+   "walk_snap": {
+    "from": [
+     612,
+     872
+    ],
+    "to": [
+     615.0,
+     872.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_sorting_bench",
+   "file": "assets3d/act2/soegol_sorting_bench.glb",
+   "x": 600,
+   "y": 860,
+   "rot": 0,
+   "z": 2.19
+  },
+  {
+   "prop": "soegol_sorting_bench",
+   "file": "assets3d/act2/soegol_sorting_bench.glb",
+   "x": 622,
+   "y": 885,
+   "rot": 90,
+   "z": 2.19
+  },
+  {
+   "prop": "soegol_sorting_bench",
+   "file": "assets3d/act2/soegol_sorting_bench.glb",
+   "x": 590,
+   "y": 888,
+   "rot": 0,
+   "z": 2.19
+  },
+  {
+   "prop": "soegol_slag_heap",
+   "file": "assets3d/act2/soegol_slag_heap.glb",
+   "x": 640,
+   "y": 845,
+   "rot": 1,
+   "z": 2.18,
+   "note": "슬래그 무더기"
+  },
+  {
+   "prop": "soegol_slag_heap",
+   "file": "assets3d/act2/soegol_slag_heap.glb",
+   "x": 650,
+   "y": 865,
+   "rot": 185,
+   "z": 2.19,
+   "note": "슬래그 무더기"
+  },
+  {
+   "prop": "soegol_slag_heap",
+   "file": "assets3d/act2/soegol_slag_heap.glb",
+   "x": 575,
+   "y": 905,
+   "rot": 333,
+   "z": 2.18,
+   "note": "슬래그 무더기"
+  },
+  {
+   "prop": "soegol_slag_heap",
+   "file": "assets3d/act2/soegol_slag_heap.glb",
+   "x": 655,
+   "y": 900,
+   "rot": 25,
+   "z": 2.21,
+   "note": "슬래그 무더기"
+  },
+  {
+   "prop": "soegol_slag_heap",
+   "file": "assets3d/act2/soegol_slag_heap.glb",
+   "x": 630,
+   "y": 835,
+   "rot": 203,
+   "z": 2.19,
+   "note": "슬래그 무더기"
+  },
+  {
+   "prop": "soegol_cart",
+   "file": "assets3d/act2/soegol_cart.glb",
+   "x": 585,
+   "y": 878,
+   "rot": 70,
+   "z": 2.19
+  },
+  {
+   "prop": "soegol_cart",
+   "file": "assets3d/act2/soegol_cart.glb",
+   "x": 645,
+   "y": 880,
+   "rot": 100,
+   "z": 2.19
+  },
+  {
+   "prop": "soegol_smelter",
+   "file": "assets3d/act2/soegol_smelter.glb",
+   "x": 650,
+   "y": 830,
+   "rot": 0,
+   "z": 2.19,
+   "note": "제련로"
+  },
+  {
+   "prop": "soegol_wash_flume",
+   "file": "assets3d/act2/soegol_wash_flume.glb",
+   "x": 604,
+   "y": 845,
+   "rot": 0,
+   "z": 2.19
+  },
+  {
+   "prop": "soegol_ingot_stack",
+   "file": "assets3d/act2/soegol_ingot_stack.glb",
+   "x": 592,
+   "y": 855,
+   "rot": 0,
+   "z": 2.19
+  },
+  {
+   "prop": "soegol_ore_pile",
+   "file": "assets3d/act2/soegol_ore_pile.glb",
+   "x": 628,
+   "y": 862,
+   "rot": 0,
+   "z": 2.18
+  },
+  {
+   "prop": "soegol_ore_pile",
+   "file": "assets3d/act2/soegol_ore_pile.glb",
+   "x": 575.43,
+   "y": 872.46,
+   "rot": 0,
+   "z": 2.73,
+   "walk_snap": {
+    "from": [
+     575,
+     870
+    ],
+    "to": [
+     575.43,
+     872.46
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 545.0,
+   "y": 870.0,
+   "rot": 90,
+   "z": 3.18,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 548.05,
+   "y": 870.0,
+   "rot": 90,
+   "z": 3.14,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 551.09,
+   "y": 870.0,
+   "rot": 90,
+   "z": 3.09,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 554.14,
+   "y": 870.0,
+   "rot": 90,
+   "z": 3.05,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 557.18,
+   "y": 870.0,
+   "rot": 90,
+   "z": 3.0,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 560.23,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.96,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 563.27,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.91,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 566.32,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.87,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 569.36,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.82,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 572.41,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.78,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 575.45,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.73,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 578.5,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.69,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 581.55,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.64,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 584.59,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.6,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 587.64,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.55,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 590.68,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.51,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 593.73,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.46,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 596.77,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.42,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 599.82,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.37,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 602.86,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.32,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 605.91,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.28,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 608.95,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.23,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 612.0,
+   "y": 870.0,
+   "rot": 90,
+   "z": 2.19,
+   "note": "R2-8 선탄장 길 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_mine_entrance",
+   "file": "assets3d/act2/soegol_mine_entrance.glb",
+   "x": 560,
+   "y": 984,
+   "rot": 215,
+   "z": 4.97,
+   "note": "갱 입구(큰 갱도 시작)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 552,
+   "y": 976,
+   "rot": 0,
+   "z": 5.09
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 570,
+   "y": 992,
+   "rot": 0,
+   "z": 4.96
+  },
+  {
+   "prop": "sanseong_wipae",
+   "file": "assets3d/act2/sanseong_wipae.glb",
+   "x": 552,
+   "y": 985,
+   "rot": 0,
+   "z": 8.26,
+   "note": "갱 입구 산신 돌(S-083)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 500.0,
+   "y": 925.0,
+   "rot": 313,
+   "z": 6.07,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 502.22,
+   "y": 927.04,
+   "rot": 313,
+   "z": 6.15,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 504.44,
+   "y": 929.07,
+   "rot": 313,
+   "z": 6.2,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 506.67,
+   "y": 931.11,
+   "rot": 313,
+   "z": 6.1,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 508.89,
+   "y": 933.15,
+   "rot": 313,
+   "z": 5.94,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 511.11,
+   "y": 935.19,
+   "rot": 313,
+   "z": 5.9,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 513.33,
+   "y": 937.22,
+   "rot": 313,
+   "z": 5.86,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 515.56,
+   "y": 939.26,
+   "rot": 313,
+   "z": 5.83,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 517.78,
+   "y": 941.3,
+   "rot": 313,
+   "z": 5.8,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 520.0,
+   "y": 943.33,
+   "rot": 313,
+   "z": 5.76,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 522.22,
+   "y": 945.37,
+   "rot": 313,
+   "z": 5.73,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 524.44,
+   "y": 947.41,
+   "rot": 313,
+   "z": 5.69,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 526.67,
+   "y": 949.44,
+   "rot": 313,
+   "z": 5.66,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 528.89,
+   "y": 951.48,
+   "rot": 313,
+   "z": 5.63,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 531.11,
+   "y": 953.52,
+   "rot": 313,
+   "z": 5.58,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 533.33,
+   "y": 955.56,
+   "rot": 313,
+   "z": 5.53,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 535.56,
+   "y": 957.59,
+   "rot": 313,
+   "z": 5.49,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 537.78,
+   "y": 959.63,
+   "rot": 313,
+   "z": 5.44,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 540.0,
+   "y": 961.67,
+   "rot": 313,
+   "z": 5.39,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 542.22,
+   "y": 963.7,
+   "rot": 313,
+   "z": 5.35,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 544.44,
+   "y": 965.74,
+   "rot": 313,
+   "z": 5.3,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 546.67,
+   "y": 967.78,
+   "rot": 313,
+   "z": 5.25,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 548.89,
+   "y": 969.81,
+   "rot": 313,
+   "z": 5.21,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 551.11,
+   "y": 971.85,
+   "rot": 313,
+   "z": 5.16,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 553.33,
+   "y": 973.89,
+   "rot": 313,
+   "z": 5.11,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 555.56,
+   "y": 975.93,
+   "rot": 313,
+   "z": 5.03,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 557.78,
+   "y": 977.96,
+   "rot": 313,
+   "z": 4.98,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 560.0,
+   "y": 980.0,
+   "rot": 313,
+   "z": 4.98,
+   "note": "R2-7 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 562.12,
+   "y": 982.88,
+   "rot": 324,
+   "z": 4.97,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 558.41,
+   "y": 985.6,
+   "rot": 143,
+   "z": 4.51,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 565.82,
+   "y": 980.16,
+   "rot": 324,
+   "z": 4.71,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 566.35,
+   "y": 988.65,
+   "rot": 324,
+   "z": 4.97,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 562.64,
+   "y": 991.37,
+   "rot": 143,
+   "z": 4.16,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 570.06,
+   "y": 985.93,
+   "rot": 324,
+   "z": 4.11,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 570.58,
+   "y": 994.42,
+   "rot": 324,
+   "z": 4.96,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 566.87,
+   "y": 997.14,
+   "rot": 143,
+   "z": 4.12,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 574.29,
+   "y": 991.7,
+   "rot": 324,
+   "z": 4.14,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 574.81,
+   "y": 1000.19,
+   "rot": 324,
+   "z": 4.95,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 571.1,
+   "y": 1002.91,
+   "rot": 143,
+   "z": 4.08,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 578.52,
+   "y": 997.47,
+   "rot": 324,
+   "z": 4.12,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 579.04,
+   "y": 1005.96,
+   "rot": 324,
+   "z": 4.95,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 575.33,
+   "y": 1008.68,
+   "rot": 143,
+   "z": 4.09,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 582.75,
+   "y": 1003.24,
+   "rot": 324,
+   "z": 4.08,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 583.27,
+   "y": 1011.73,
+   "rot": 324,
+   "z": 4.94,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 579.56,
+   "y": 1014.45,
+   "rot": 143,
+   "z": 4.09,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 586.98,
+   "y": 1009.01,
+   "rot": 324,
+   "z": 4.03,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 587.5,
+   "y": 1017.5,
+   "rot": 324,
+   "z": 4.93,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 583.79,
+   "y": 1020.22,
+   "rot": 143,
+   "z": 4.05,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 591.21,
+   "y": 1014.78,
+   "rot": 324,
+   "z": 4.06,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 591.73,
+   "y": 1023.27,
+   "rot": 324,
+   "z": 4.93,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 588.02,
+   "y": 1025.99,
+   "rot": 143,
+   "z": 3.99,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 595.44,
+   "y": 1020.55,
+   "rot": 324,
+   "z": 4.06,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 595.96,
+   "y": 1029.04,
+   "rot": 324,
+   "z": 4.92,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 592.25,
+   "y": 1031.76,
+   "rot": 143,
+   "z": 4.01,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 599.67,
+   "y": 1026.32,
+   "rot": 324,
+   "z": 4.02,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 600.19,
+   "y": 1034.81,
+   "rot": 324,
+   "z": 4.91,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 596.48,
+   "y": 1037.53,
+   "rot": 143,
+   "z": 4.02,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 603.9,
+   "y": 1032.09,
+   "rot": 324,
+   "z": 3.98,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 604.42,
+   "y": 1040.58,
+   "rot": 324,
+   "z": 4.91,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 600.71,
+   "y": 1043.3,
+   "rot": 143,
+   "z": 4.0,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 608.13,
+   "y": 1037.86,
+   "rot": 324,
+   "z": 3.99,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 608.65,
+   "y": 1046.35,
+   "rot": 324,
+   "z": 4.9,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 604.94,
+   "y": 1049.07,
+   "rot": 143,
+   "z": 3.95,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 612.36,
+   "y": 1043.63,
+   "rot": 324,
+   "z": 4.0,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 612.88,
+   "y": 1052.12,
+   "rot": 324,
+   "z": 4.9,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 609.18,
+   "y": 1054.84,
+   "rot": 143,
+   "z": 3.95,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 616.59,
+   "y": 1049.4,
+   "rot": 324,
+   "z": 3.98,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 617.05,
+   "y": 1057.95,
+   "rot": 326,
+   "z": 4.88,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 613.26,
+   "y": 1060.57,
+   "rot": 145,
+   "z": 3.94,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 620.83,
+   "y": 1055.34,
+   "rot": 326,
+   "z": 3.94,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 621.14,
+   "y": 1063.86,
+   "rot": 326,
+   "z": 4.86,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 617.35,
+   "y": 1066.48,
+   "rot": 145,
+   "z": 3.93,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 624.92,
+   "y": 1061.25,
+   "rot": 326,
+   "z": 3.89,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 625.23,
+   "y": 1069.77,
+   "rot": 326,
+   "z": 4.84,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 621.45,
+   "y": 1072.39,
+   "rot": 145,
+   "z": 3.91,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 629.01,
+   "y": 1067.15,
+   "rot": 326,
+   "z": 3.85,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 629.32,
+   "y": 1075.68,
+   "rot": 326,
+   "z": 4.82,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 625.54,
+   "y": 1078.3,
+   "rot": 145,
+   "z": 3.88,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 633.1,
+   "y": 1073.06,
+   "rot": 326,
+   "z": 3.84,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 633.41,
+   "y": 1081.59,
+   "rot": 326,
+   "z": 4.79,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 629.63,
+   "y": 1084.21,
+   "rot": 145,
+   "z": 3.85,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 637.19,
+   "y": 1078.97,
+   "rot": 326,
+   "z": 3.83,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 637.5,
+   "y": 1087.5,
+   "rot": 326,
+   "z": 4.77,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 633.72,
+   "y": 1090.12,
+   "rot": 145,
+   "z": 3.82,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 641.28,
+   "y": 1084.88,
+   "rot": 326,
+   "z": 3.82,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 641.59,
+   "y": 1093.41,
+   "rot": 326,
+   "z": 4.75,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 637.81,
+   "y": 1096.03,
+   "rot": 145,
+   "z": 3.78,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 645.37,
+   "y": 1090.79,
+   "rot": 326,
+   "z": 3.81,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 645.68,
+   "y": 1099.32,
+   "rot": 326,
+   "z": 4.73,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 641.9,
+   "y": 1101.94,
+   "rot": 145,
+   "z": 3.74,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 649.46,
+   "y": 1096.7,
+   "rot": 326,
+   "z": 3.78,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 649.77,
+   "y": 1105.23,
+   "rot": 326,
+   "z": 4.71,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 645.99,
+   "y": 1107.85,
+   "rot": 145,
+   "z": 3.7,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 653.55,
+   "y": 1102.61,
+   "rot": 326,
+   "z": 3.75,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 653.86,
+   "y": 1111.14,
+   "rot": 326,
+   "z": 4.68,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 650.08,
+   "y": 1113.75,
+   "rot": 145,
+   "z": 3.69,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 657.65,
+   "y": 1108.52,
+   "rot": 326,
+   "z": 3.72,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 657.95,
+   "y": 1117.05,
+   "rot": 326,
+   "z": 4.66,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 654.17,
+   "y": 1119.66,
+   "rot": 145,
+   "z": 3.67,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 661.74,
+   "y": 1114.43,
+   "rot": 326,
+   "z": 3.68,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 662.2,
+   "y": 1123.0,
+   "rot": 324,
+   "z": 4.63,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 658.49,
+   "y": 1125.72,
+   "rot": 143,
+   "z": 3.66,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 665.91,
+   "y": 1120.28,
+   "rot": 324,
+   "z": 3.62,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 666.6,
+   "y": 1129.0,
+   "rot": 324,
+   "z": 4.59,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 662.89,
+   "y": 1131.72,
+   "rot": 143,
+   "z": 3.6,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 670.31,
+   "y": 1126.28,
+   "rot": 324,
+   "z": 3.62,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 671.0,
+   "y": 1135.0,
+   "rot": 324,
+   "z": 4.55,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 667.29,
+   "y": 1137.72,
+   "rot": 143,
+   "z": 3.57,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 674.71,
+   "y": 1132.28,
+   "rot": 324,
+   "z": 3.57,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 675.4,
+   "y": 1141.0,
+   "rot": 324,
+   "z": 4.51,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 671.69,
+   "y": 1143.72,
+   "rot": 143,
+   "z": 3.54,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 679.11,
+   "y": 1138.28,
+   "rot": 324,
+   "z": 3.52,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 679.8,
+   "y": 1147.0,
+   "rot": 324,
+   "z": 4.47,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 676.09,
+   "y": 1149.72,
+   "rot": 143,
+   "z": 3.47,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 683.51,
+   "y": 1144.28,
+   "rot": 324,
+   "z": 3.51,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 683.64,
+   "y": 1152.86,
+   "rot": 331,
+   "z": 4.25,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 679.66,
+   "y": 1155.15,
+   "rot": 150,
+   "z": 3.36,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 687.63,
+   "y": 1150.56,
+   "rot": 331,
+   "z": 3.36,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 686.93,
+   "y": 1158.57,
+   "rot": 331,
+   "z": 3.86,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 682.94,
+   "y": 1160.86,
+   "rot": 150,
+   "z": 3.06,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 690.92,
+   "y": 1156.28,
+   "rot": 331,
+   "z": 3.06,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 690.21,
+   "y": 1164.29,
+   "rot": 331,
+   "z": 3.47,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 686.23,
+   "y": 1166.58,
+   "rot": 150,
+   "z": 2.82,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 694.2,
+   "y": 1161.99,
+   "rot": 331,
+   "z": 2.82,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 693.5,
+   "y": 1170.0,
+   "rot": 331,
+   "z": 3.08,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 689.51,
+   "y": 1172.29,
+   "rot": 150,
+   "z": 2.59,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 697.49,
+   "y": 1167.71,
+   "rot": 331,
+   "z": 2.59,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 696.79,
+   "y": 1175.71,
+   "rot": 331,
+   "z": 2.69,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 692.8,
+   "y": 1178.01,
+   "rot": 150,
+   "z": 2.17,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 700.77,
+   "y": 1173.42,
+   "rot": 331,
+   "z": 2.18,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 700.07,
+   "y": 1181.43,
+   "rot": 331,
+   "z": 2.3,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 696.08,
+   "y": 1183.72,
+   "rot": 150,
+   "z": 1.83,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 704.06,
+   "y": 1179.14,
+   "rot": 331,
+   "z": 1.83,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_gol_module",
+   "file": "assets3d/act2/soegol_gol_module.glb",
+   "x": 703.36,
+   "y": 1187.14,
+   "rot": 331,
+   "z": 1.91,
+   "note": "갱도 골 바닥(지붕 없음)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 699.37,
+   "y": 1189.44,
+   "rot": 150,
+   "z": 1.58,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_canyon_wall",
+   "file": "assets3d/act2/soegol_canyon_wall.glb",
+   "x": 707.34,
+   "y": 1184.85,
+   "rot": 331,
+   "z": 1.58,
+   "note": "갱도 골 벽",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 566.35,
+   "y": 988.65,
+   "rot": 53,
+   "z": 4.97,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 574.81,
+   "y": 1000.19,
+   "rot": 53,
+   "z": 4.95,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 583.27,
+   "y": 1011.73,
+   "rot": 53,
+   "z": 4.94,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 591.73,
+   "y": 1023.27,
+   "rot": 53,
+   "z": 4.93,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 600.19,
+   "y": 1034.81,
+   "rot": 53,
+   "z": 4.91,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 608.65,
+   "y": 1046.35,
+   "rot": 53,
+   "z": 4.9,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 617.05,
+   "y": 1057.95,
+   "rot": 55,
+   "z": 4.88,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 625.23,
+   "y": 1069.77,
+   "rot": 55,
+   "z": 4.84,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 633.41,
+   "y": 1081.59,
+   "rot": 55,
+   "z": 4.79,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 641.59,
+   "y": 1093.41,
+   "rot": 55,
+   "z": 4.75,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 649.77,
+   "y": 1105.23,
+   "rot": 55,
+   "z": 4.71,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 657.95,
+   "y": 1117.05,
+   "rot": 55,
+   "z": 4.66,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 666.6,
+   "y": 1129.0,
+   "rot": 53,
+   "z": 4.59,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 675.4,
+   "y": 1141.0,
+   "rot": 53,
+   "z": 4.51,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 683.64,
+   "y": 1152.86,
+   "rot": 60,
+   "z": 4.25,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 690.21,
+   "y": 1164.29,
+   "rot": 60,
+   "z": 3.47,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 696.79,
+   "y": 1175.71,
+   "rot": 60,
+   "z": 2.69,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 703.36,
+   "y": 1187.14,
+   "rot": 60,
+   "z": 1.91,
+   "note": "버팀목 아치(카메라 가림 없게 낮은 틀)",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_rail",
+   "file": "assets3d/act2/soegol_rail.glb",
+   "x": 640,
+   "y": 1090,
+   "rot": 30,
+   "z": 4.76,
+   "note": "갱도 골 레일",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_lantern_post",
+   "file": "assets3d/act2/soegol_lantern_post.glb",
+   "x": 640.26,
+   "y": 1087.48,
+   "rot": 0,
+   "z": 4.75,
+   "walk_snap": {
+    "from": [
+     640,
+     1086
+    ],
+    "to": [
+     640.26,
+     1087.48
+    ]
+   }
+  },
+  {
+   "prop": "soegol_chalk_rock",
+   "file": "assets3d/act2/soegol_chalk_rock.glb",
+   "x": 690,
+   "y": 1170,
+   "rot": 0,
+   "z": 3.14,
+   "note": "막장 입구 분필 '13 나감'",
+   "by_design": true
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 715,
+   "y": 1170,
+   "rot": 242,
+   "z": 8.74,
+   "note": "낙반"
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 730,
+   "y": 1200,
+   "rot": 177,
+   "z": 8.67,
+   "note": "낙반"
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 688,
+   "y": 1210,
+   "rot": 184,
+   "z": 8.79,
+   "note": "낙반"
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 720,
+   "y": 1222,
+   "rot": 312,
+   "z": 8.62,
+   "note": "낙반"
+  },
+  {
+   "prop": "soegol_scree",
+   "file": "assets3d/act2/soegol_scree.glb",
+   "x": 738,
+   "y": 1182,
+   "rot": 197,
+   "z": 8.72,
+   "note": "낙반"
+  },
+  {
+   "prop": "soegol_timber_frame",
+   "file": "assets3d/act2/soegol_timber_frame.glb",
+   "x": 700,
+   "y": 1205,
+   "rot": 90,
+   "z": 1.0,
+   "note": "칠성 마당 버팀목"
+  }
+ ]
+}

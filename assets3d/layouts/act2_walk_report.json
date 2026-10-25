@@ -1,0 +1,442 @@
+{
+ "count": 422,
+ "dropped_no_open_ground": [],
+ "overlaps": [],
+ "moved": [
+  {
+   "prop": "sanseong_wall_unfinished",
+   "file": "assets3d/act2/sanseong_wall_unfinished.glb",
+   "x": 149.5,
+   "y": 918.4,
+   "rot": 90,
+   "z": 1.82,
+   "note": "S-051 석수가 쌓다 만 성벽",
+   "walk_snap": {
+    "from": [
+     148.0,
+     915.8
+    ],
+    "to": [
+     149.5,
+     918.4
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_stairs",
+   "file": "assets3d/act2/sanseong_stairs.glb",
+   "x": 119.5,
+   "y": 992.87,
+   "rot": 0,
+   "z": 8.98,
+   "walk_snap": {
+    "from": [
+     120,
+     992
+    ],
+    "to": [
+     119.5,
+     992.87
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_wall_ruin",
+   "file": "assets3d/act2/sanseong_wall_ruin.glb",
+   "x": 111.16,
+   "y": 1061.57,
+   "rot": 90,
+   "z": 8.82,
+   "note": "무너진 북벽",
+   "walk_snap": {
+    "from": [
+     111.41176470588235,
+     1062.0
+    ],
+    "to": [
+     111.16,
+     1061.57
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_tower",
+   "file": "assets3d/act2/sanseong_tower.glb",
+   "x": 76.85,
+   "y": 949.04,
+   "rot": 0,
+   "z": 9.0,
+   "walk_snap": {
+    "from": [
+     78,
+     950
+    ],
+    "to": [
+     76.85,
+     949.04
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_tower",
+   "file": "assets3d/act2/sanseong_tower.glb",
+   "x": 181.25,
+   "y": 948.7,
+   "rot": 0,
+   "z": 8.87,
+   "walk_snap": {
+    "from": [
+     182,
+     950
+    ],
+    "to": [
+     181.25,
+     948.7
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_tower",
+   "file": "assets3d/act2/sanseong_tower.glb",
+   "x": 182.5,
+   "y": 1064.0,
+   "rot": 0,
+   "z": 8.98,
+   "note": "산성 위",
+   "walk_snap": {
+    "from": [
+     182,
+     1064
+    ],
+    "to": [
+     182.5,
+     1064.0
+    ]
+   }
+  },
+  {
+   "prop": "sanseong_beacon",
+   "file": "assets3d/act2/sanseong_beacon.glb",
+   "x": 163.0,
+   "y": 1040.0,
+   "rot": 0,
+   "z": 9.03,
+   "note": "봉화대 터",
+   "walk_snap": {
+    "from": [
+     160,
+     1040
+    ],
+    "to": [
+     163.0,
+     1040.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 435.5,
+   "y": 862.0,
+   "rot": 0,
+   "z": 3.08,
+   "walk_snap": {
+    "from": [
+     432,
+     862
+    ],
+    "to": [
+     435.5,
+     862.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 448.5,
+   "y": 890.0,
+   "rot": 20,
+   "z": 3.99,
+   "walk_snap": {
+    "from": [
+     445,
+     890
+    ],
+    "to": [
+     448.5,
+     890.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 465.5,
+   "y": 875.0,
+   "rot": 180,
+   "z": 3.88,
+   "walk_snap": {
+    "from": [
+     462,
+     875
+    ],
+    "to": [
+     465.5,
+     875.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_miner_hut",
+   "file": "assets3d/act2/soegol_miner_hut.glb",
+   "x": 495.5,
+   "y": 842.0,
+   "rot": 0,
+   "z": 2.93,
+   "walk_snap": {
+    "from": [
+     492,
+     842
+    ],
+    "to": [
+     495.5,
+     842.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_lantern_post",
+   "file": "assets3d/act2/soegol_lantern_post.glb",
+   "x": 472.0,
+   "y": 836.0,
+   "rot": 0,
+   "z": 2.9,
+   "walk_snap": {
+    "from": [
+     470,
+     836
+    ],
+    "to": [
+     472.0,
+     836.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 499.67,
+   "y": 940.17,
+   "rot": 0,
+   "z": 6.59,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     500.14285714285717,
+     940.0
+    ],
+    "to": [
+     499.67,
+     940.17
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 506.21,
+   "y": 940.0,
+   "rot": 0,
+   "z": 6.63,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     503.7142857142857,
+     940.0
+    ],
+    "to": [
+     506.21,
+     940.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 508.79,
+   "y": 940.0,
+   "rot": 0,
+   "z": 6.68,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     507.2857142857143,
+     940.0
+    ],
+    "to": [
+     508.79,
+     940.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 511.36,
+   "y": 940.0,
+   "rot": 0,
+   "z": 6.17,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     510.85714285714283,
+     940.0
+    ],
+    "to": [
+     511.36,
+     940.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 514.25,
+   "y": 940.98,
+   "rot": 0,
+   "z": 5.88,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     514.4285714285714,
+     940.0
+    ],
+    "to": [
+     514.25,
+     940.98
+    ]
+   }
+  },
+  {
+   "prop": "soegol_rope_fence",
+   "file": "assets3d/act2/soegol_rope_fence.glb",
+   "x": 516.25,
+   "y": 943.03,
+   "rot": 0,
+   "z": 5.9,
+   "note": "주인집 앞마당 가장자리",
+   "walk_snap": {
+    "from": [
+     518.0,
+     940.0
+    ],
+    "to": [
+     516.25,
+     943.03
+    ]
+   }
+  },
+  {
+   "prop": "soegol_sorting_bench",
+   "file": "assets3d/act2/soegol_sorting_bench.glb",
+   "x": 615.0,
+   "y": 872.0,
+   "rot": 0,
+   "z": 2.19,
+   "note": "선탄 평상",
+   "walk_snap": {
+    "from": [
+     612,
+     872
+    ],
+    "to": [
+     615.0,
+     872.0
+    ]
+   }
+  },
+  {
+   "prop": "soegol_ore_pile",
+   "file": "assets3d/act2/soegol_ore_pile.glb",
+   "x": 575.43,
+   "y": 872.46,
+   "rot": 0,
+   "z": 2.73,
+   "walk_snap": {
+    "from": [
+     575,
+     870
+    ],
+    "to": [
+     575.43,
+     872.46
+    ]
+   }
+  },
+  {
+   "prop": "soegol_lantern_post",
+   "file": "assets3d/act2/soegol_lantern_post.glb",
+   "x": 640.26,
+   "y": 1087.48,
+   "rot": 0,
+   "z": 4.75,
+   "walk_snap": {
+    "from": [
+     640,
+     1086
+    ],
+    "to": [
+     640.26,
+     1087.48
+    ]
+   }
+  }
+ ],
+ "per_model": {
+  "prop_dolddam": 4,
+  "prop_fence": 5,
+  "prop_firewood": 4,
+  "prop_grave": 7,
+  "sanseong_arrow_field": 14,
+  "sanseong_arrow_rock": 7,
+  "sanseong_banner_torn": 1,
+  "sanseong_beacon": 1,
+  "sanseong_big_mound": 1,
+  "sanseong_flag_shard": 5,
+  "sanseong_gate": 1,
+  "sanseong_geumjul_jangseung_pair": 2,
+  "sanseong_jinbeop_map": 1,
+  "sanseong_palisade": 36,
+  "sanseong_shrine": 2,
+  "sanseong_spear_rack": 4,
+  "sanseong_stairs": 2,
+  "sanseong_sul_vat": 6,
+  "sanseong_tent": 6,
+  "sanseong_tower": 3,
+  "sanseong_wall_ruin": 31,
+  "sanseong_wall_straight": 38,
+  "sanseong_wall_unfinished": 6,
+  "sanseong_wipae": 2,
+  "soegol_canyon_wall": 72,
+  "soegol_cart": 2,
+  "soegol_chalk_rock": 1,
+  "soegol_gol_module": 36,
+  "soegol_ingot_stack": 1,
+  "soegol_lantern_post": 4,
+  "soegol_mine_entrance": 1,
+  "soegol_miner_hut": 7,
+  "soegol_mokpae_board": 1,
+  "soegol_ore_basket": 2,
+  "soegol_ore_pile": 2,
+  "soegol_rail": 52,
+  "soegol_rope_fence": 8,
+  "soegol_scree": 11,
+  "soegol_slag_heap": 5,
+  "soegol_smelter": 1,
+  "soegol_sorting_bench": 4,
+  "soegol_timber_frame": 21,
+  "soegol_wash_flume": 1,
+  "soegol_windlass": 1
+ }
+}

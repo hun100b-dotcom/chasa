@@ -34,3 +34,11 @@
 ## 부탁
 1. 직사각 Terrain 지원 (`size_x_m` ≠ `size_z_m`) 과 origin 오프셋.
 2. 2막 splat 색표를 위 표로 바꿔 입히기 (1막 색표 그대로 쓰면 초록 논이 생김).
+
+## 2막 배치표 (act2_layout.json)
+- 만드는 법: `python3 tools/art3d/place_act2.py` → `assets3d/layouts/act2_layout.json`(422개), `act2_walk_report.json`(점검 결과).
+- 형식은 1막 `act1_extra.json`과 같다(`prop, file, x, y, rot, z`). 차이: **z가 0이 아니다**(terrain_act2 높이를 읽어 바닥을 붙였다). rot = 위에서 볼 때 반시계(Unity yaw = -rot).
+- 갱도 골(R2-9)은 `soegol_gol_module`(바닥, 지붕 없음)을 길 따라 이어 붙이고 양옆에 `soegol_canyon_wall`을 세웠다.
+- 길 가운데 3 m, 장소·서낭당·보스 마당 중심은 비웠다. 막힌 21곳은 열린 땅으로 옮기고 `walk_snap`(원래 좌표)을 남겼다. 겹침 0, 못 놓은 것 0.
+- `by_design:true` 는 일부러 길 위에 둔 것(금줄·산성 문·갱 입구·단서 바위·깃대 조각).
+- 코드팀 할 일: `tools/build_field_data.py`가 이 파일도 합치게 하기(1막 act1_extra 블록과 같은 방식, 좌표에 오프셋 불필요 — 이미 필드 절대 좌표).
