@@ -1,0 +1,916 @@
+{
+ "_설명": "화면 분위기 값(아트). 색보정표(LUT) 20장 = 시간대 4 × 날씨 5. 코드는 지금 시각의 LUT 둘을 골라 섞고(아래 hour_map), 날씨 LUT는 날씨 바뀔 때 1.5초 교차. 블룸·비네트는 같은 키의 값을 보간. 확정은 Unity 실제 화면에서 튜닝.",
+ "lut_format": {
+  "size": 32,
+  "file": "1024x32 가로 띠",
+  "unity": "Color Lookup(Texture=띠, Contribution=1.0). 가져오기: sRGB 끔, 압축 없음, Mip 끔, Wrap Clamp, Filter Bilinear",
+  "order": "칸=파랑, 칸 안 가로=빨강, 위쪽=초록 큰 값"
+ },
+ "hour_map": {
+  "_설명": "게임 시(0~24)별 기본 시간대. 경계 앞뒤 0.5시간(약 50초)은 두 LUT를 smoothstep 으로 섞는다",
+  "dawn": [
+   4.5,
+   7.0
+  ],
+  "day": [
+   7.0,
+   16.0
+  ],
+  "dusk": [
+   16.0,
+   19.5
+  ],
+  "night": [
+   19.5,
+   28.5
+  ],
+  "crossfade_hours": 0.5,
+  "note": "sky_clock.json 키프레임과 같은 시각 기준. 밤은 19.5~다음날 4.5시"
+ },
+ "weather_blend_s": 1.5,
+ "weather_lut_keys": {
+  "Clear": "clear",
+  "Cloudy": "cloudy",
+  "Rain": "rain",
+  "Fog": "fog",
+  "Plague": "plague"
+ },
+ "vignette_max_except_tendo": 0.45,
+ "presets": {
+  "day_clear": {
+   "lut": "lut_day_clear.png",
+   "label": "낮·맑음",
+   "grade": {
+    "exposure": -0.04,
+    "contrast": 1.14,
+    "sat": 0.78,
+    "lift": 0.025,
+    "shadow": [
+     0.05,
+     0.09,
+     0.18
+    ],
+    "shadow_amt": 0.8,
+    "high": [
+     0.02,
+     0.01,
+     -0.02
+    ],
+    "mid": [
+     -0.01,
+     0.0,
+     0.02
+    ],
+    "accent": 0.42,
+    "mute": 0.65
+   },
+   "bloom": {
+    "threshold": 1.0,
+    "intensity": 0.22,
+    "scatter": 0.55,
+    "tint": "#FFF4DC"
+   },
+   "vignette": {
+    "intensity": 0.2,
+    "smoothness": 0.55,
+    "color": "#0F1729",
+    "rounded": false
+   }
+  },
+  "day_cloudy": {
+   "lut": "lut_day_cloudy.png",
+   "label": "낮·흐림",
+   "grade": {
+    "exposure": -0.16,
+    "contrast": 1.072,
+    "sat": 0.671,
+    "lift": 0.035,
+    "shadow": [
+     0.060000000000000005,
+     0.11,
+     0.21
+    ],
+    "shadow_amt": 0.8,
+    "high": [
+     0.01,
+     0.01,
+     -0.005000000000000001
+    ],
+    "mid": [
+     -0.015,
+     0.0,
+     0.035
+    ],
+    "accent": 0.42,
+    "mute": 0.7
+   },
+   "bloom": {
+    "threshold": 1.0,
+    "intensity": 0.187,
+    "scatter": 0.58,
+    "tint": "#FFF4DC"
+   },
+   "vignette": {
+    "intensity": 0.22,
+    "smoothness": 0.55,
+    "color": "#10192B",
+    "rounded": false
+   }
+  },
+  "day_rain": {
+   "lut": "lut_day_rain.png",
+   "label": "낮·비",
+   "grade": {
+    "exposure": -0.32,
+    "contrast": 1.094,
+    "sat": 0.562,
+    "lift": 0.06,
+    "shadow": [
+     0.05,
+     0.13,
+     0.24
+    ],
+    "shadow_amt": 0.8,
+    "high": [
+     0.0,
+     0.015,
+     0.005000000000000001
+    ],
+    "mid": [
+     -0.03,
+     0.005,
+     0.05
+    ],
+    "accent": 0.37,
+    "mute": 0.75
+   },
+   "bloom": {
+    "threshold": 1.05,
+    "intensity": 0.176,
+    "scatter": 0.6,
+    "tint": "#FFF4DC"
+   },
+   "vignette": {
+    "intensity": 0.24,
+    "smoothness": 0.55,
+    "color": "#0D1826",
+    "rounded": false
+   }
+  },
+  "day_fog": {
+   "lut": "lut_day_fog.png",
+   "label": "낮·안개",
+   "grade": {
+    "exposure": -0.14,
+    "contrast": 0.912,
+    "sat": 0.484,
+    "lift": 0.11,
+    "shadow": [
+     0.08,
+     0.14,
+     0.24
+    ],
+    "shadow_amt": 0.8,
+    "high": [
+     0.02,
+     0.02,
+     0.0
+    ],
+    "mid": [
+     -0.01,
+     0.01,
+     0.05
+    ],
+    "accent": 0.32,
+    "mute": 0.75
+   },
+   "bloom": {
+    "threshold": 0.9,
+    "intensity": 0.33,
+    "scatter": 0.67,
+    "tint": "#D8E0E4"
+   },
+   "vignette": {
+    "intensity": 0.26,
+    "smoothness": 0.55,
+    "color": "#16202F",
+    "rounded": false
+   }
+  },
+  "day_plague": {
+   "lut": "lut_day_plague.png",
+   "label": "낮·역병",
+   "grade": {
+    "exposure": -0.24,
+    "contrast": 1.186,
+    "sat": 0.53,
+    "lift": 0.075,
+    "shadow": [
+     0.04,
+     0.16,
+     0.22
+    ],
+    "shadow_amt": 0.8,
+    "high": [
+     0.0,
+     0.045000000000000005,
+     -0.01
+    ],
+    "mid": [
+     -0.04,
+     0.04,
+     0.02
+    ],
+    "accent": 0.57,
+    "mute": 0.5
+   },
+   "bloom": {
+    "threshold": 0.95,
+    "intensity": 0.264,
+    "scatter": 0.6,
+    "tint": "#8FE0A8"
+   },
+   "vignette": {
+    "intensity": 0.3,
+    "smoothness": 0.55,
+    "color": "#0A1511",
+    "rounded": false
+   }
+  },
+  "dusk_clear": {
+   "lut": "lut_dusk_clear.png",
+   "label": "저녁놀·맑음",
+   "grade": {
+    "exposure": -0.1,
+    "contrast": 1.18,
+    "sat": 0.88,
+    "lift": 0.03,
+    "shadow": [
+     0.1,
+     0.04,
+     0.18
+    ],
+    "shadow_amt": 0.85,
+    "high": [
+     0.05,
+     0.012,
+     -0.03
+    ],
+    "mid": [
+     0.008,
+     -0.015,
+     -0.005
+    ],
+    "accent": 0.45,
+    "mute": 0.65
+   },
+   "bloom": {
+    "threshold": 0.9,
+    "intensity": 0.5,
+    "scatter": 0.65,
+    "tint": "#FFB070"
+   },
+   "vignette": {
+    "intensity": 0.28,
+    "smoothness": 0.6,
+    "color": "#0F1729",
+    "rounded": false
+   }
+  },
+  "dusk_cloudy": {
+   "lut": "lut_dusk_cloudy.png",
+   "label": "저녁놀·흐림",
+   "grade": {
+    "exposure": -0.22,
+    "contrast": 1.109,
+    "sat": 0.757,
+    "lift": 0.04,
+    "shadow": [
+     0.11,
+     0.06,
+     0.21
+    ],
+    "shadow_amt": 0.85,
+    "high": [
+     0.04,
+     0.012,
+     -0.015
+    ],
+    "mid": [
+     0.003,
+     -0.015,
+     0.009999999999999998
+    ],
+    "accent": 0.45,
+    "mute": 0.7
+   },
+   "bloom": {
+    "threshold": 0.9,
+    "intensity": 0.425,
+    "scatter": 0.68,
+    "tint": "#FFB070"
+   },
+   "vignette": {
+    "intensity": 0.3,
+    "smoothness": 0.6,
+    "color": "#10192B",
+    "rounded": false
+   }
+  },
+  "dusk_rain": {
+   "lut": "lut_dusk_rain.png",
+   "label": "저녁놀·비",
+   "grade": {
+    "exposure": -0.38,
+    "contrast": 1.133,
+    "sat": 0.634,
+    "lift": 0.065,
+    "shadow": [
+     0.1,
+     0.08,
+     0.24
+    ],
+    "shadow_amt": 0.85,
+    "high": [
+     0.030000000000000002,
+     0.017,
+     -0.0049999999999999975
+    ],
+    "mid": [
+     -0.012,
+     -0.009999999999999998,
+     0.024999999999999998
+    ],
+    "accent": 0.4,
+    "mute": 0.75
+   },
+   "bloom": {
+    "threshold": 0.95,
+    "intensity": 0.4,
+    "scatter": 0.7,
+    "tint": "#FFB070"
+   },
+   "vignette": {
+    "intensity": 0.32,
+    "smoothness": 0.6,
+    "color": "#0D1826",
+    "rounded": false
+   }
+  },
+  "dusk_fog": {
+   "lut": "lut_dusk_fog.png",
+   "label": "저녁놀·안개",
+   "grade": {
+    "exposure": -0.2,
+    "contrast": 0.944,
+    "sat": 0.546,
+    "lift": 0.115,
+    "shadow": [
+     0.13,
+     0.09,
+     0.24
+    ],
+    "shadow_amt": 0.85,
+    "high": [
+     0.05,
+     0.022,
+     -0.009999999999999998
+    ],
+    "mid": [
+     0.008,
+     -0.004999999999999999,
+     0.024999999999999998
+    ],
+    "accent": 0.35,
+    "mute": 0.75
+   },
+   "bloom": {
+    "threshold": 0.8,
+    "intensity": 0.75,
+    "scatter": 0.77,
+    "tint": "#D8E0E4"
+   },
+   "vignette": {
+    "intensity": 0.34,
+    "smoothness": 0.6,
+    "color": "#16202F",
+    "rounded": false
+   }
+  },
+  "dusk_plague": {
+   "lut": "lut_dusk_plague.png",
+   "label": "저녁놀·역병",
+   "grade": {
+    "exposure": -0.3,
+    "contrast": 1.227,
+    "sat": 0.598,
+    "lift": 0.08,
+    "shadow": [
+     0.09000000000000001,
+     0.11000000000000001,
+     0.22
+    ],
+    "shadow_amt": 0.85,
+    "high": [
+     0.030000000000000002,
+     0.047,
+     -0.019999999999999997
+    ],
+    "mid": [
+     -0.022,
+     0.025,
+     -0.005
+    ],
+    "accent": 0.6,
+    "mute": 0.5
+   },
+   "bloom": {
+    "threshold": 0.85,
+    "intensity": 0.6,
+    "scatter": 0.7,
+    "tint": "#8FE0A8"
+   },
+   "vignette": {
+    "intensity": 0.38,
+    "smoothness": 0.6,
+    "color": "#0A1511",
+    "rounded": false
+   }
+  },
+  "night_clear": {
+   "lut": "lut_night_clear.png",
+   "label": "밤·맑음",
+   "grade": {
+    "exposure": -0.06,
+    "contrast": 1.24,
+    "sat": 0.74,
+    "lift": 0.035,
+    "shadow": [
+     0.04,
+     0.09,
+     0.22
+    ],
+    "shadow_amt": 1.0,
+    "high": [
+     -0.01,
+     0.015,
+     0.045
+    ],
+    "mid": [
+     -0.05,
+     -0.005,
+     0.09
+    ],
+    "accent": 0.6,
+    "mute": 0.7
+   },
+   "bloom": {
+    "threshold": 0.8,
+    "intensity": 0.95,
+    "scatter": 0.72,
+    "tint": "#9FDCFF"
+   },
+   "vignette": {
+    "intensity": 0.36,
+    "smoothness": 0.65,
+    "color": "#0F1729",
+    "rounded": false
+   }
+  },
+  "night_cloudy": {
+   "lut": "lut_night_cloudy.png",
+   "label": "밤·흐림",
+   "grade": {
+    "exposure": -0.18,
+    "contrast": 1.166,
+    "sat": 0.636,
+    "lift": 0.045,
+    "shadow": [
+     0.05,
+     0.11,
+     0.25
+    ],
+    "shadow_amt": 1.0,
+    "high": [
+     -0.02,
+     0.015,
+     0.06
+    ],
+    "mid": [
+     -0.055,
+     -0.005,
+     0.105
+    ],
+    "accent": 0.6,
+    "mute": 0.75
+   },
+   "bloom": {
+    "threshold": 0.8,
+    "intensity": 0.807,
+    "scatter": 0.75,
+    "tint": "#9FDCFF"
+   },
+   "vignette": {
+    "intensity": 0.38,
+    "smoothness": 0.65,
+    "color": "#10192B",
+    "rounded": false
+   }
+  },
+  "night_rain": {
+   "lut": "lut_night_rain.png",
+   "label": "밤·비",
+   "grade": {
+    "exposure": -0.34,
+    "contrast": 1.19,
+    "sat": 0.533,
+    "lift": 0.07,
+    "shadow": [
+     0.04,
+     0.13,
+     0.28
+    ],
+    "shadow_amt": 1.0,
+    "high": [
+     -0.03,
+     0.02,
+     0.07
+    ],
+    "mid": [
+     -0.07,
+     0.0,
+     0.12
+    ],
+    "accent": 0.55,
+    "mute": 0.8
+   },
+   "bloom": {
+    "threshold": 0.85,
+    "intensity": 0.76,
+    "scatter": 0.77,
+    "tint": "#9FDCFF"
+   },
+   "vignette": {
+    "intensity": 0.4,
+    "smoothness": 0.65,
+    "color": "#0D1826",
+    "rounded": false
+   }
+  },
+  "night_fog": {
+   "lut": "lut_night_fog.png",
+   "label": "밤·안개",
+   "grade": {
+    "exposure": -0.16,
+    "contrast": 0.992,
+    "sat": 0.459,
+    "lift": 0.12,
+    "shadow": [
+     0.07,
+     0.14,
+     0.28
+    ],
+    "shadow_amt": 1.0,
+    "high": [
+     -0.01,
+     0.025,
+     0.065
+    ],
+    "mid": [
+     -0.05,
+     0.005,
+     0.12
+    ],
+    "accent": 0.5,
+    "mute": 0.8
+   },
+   "bloom": {
+    "threshold": 0.7,
+    "intensity": 1.425,
+    "scatter": 0.84,
+    "tint": "#D8E0E4"
+   },
+   "vignette": {
+    "intensity": 0.42,
+    "smoothness": 0.65,
+    "color": "#16202F",
+    "rounded": false
+   }
+  },
+  "night_plague": {
+   "lut": "lut_night_plague.png",
+   "label": "밤·역병",
+   "grade": {
+    "exposure": -0.26,
+    "contrast": 1.29,
+    "sat": 0.503,
+    "lift": 0.085,
+    "shadow": [
+     0.03,
+     0.16,
+     0.26
+    ],
+    "shadow_amt": 1.0,
+    "high": [
+     -0.03,
+     0.05,
+     0.055
+    ],
+    "mid": [
+     -0.08,
+     0.035,
+     0.09
+    ],
+    "accent": 0.75,
+    "mute": 0.55
+   },
+   "bloom": {
+    "threshold": 0.75,
+    "intensity": 1.14,
+    "scatter": 0.77,
+    "tint": "#8FE0A8"
+   },
+   "vignette": {
+    "intensity": 0.45,
+    "smoothness": 0.65,
+    "color": "#0A1511",
+    "rounded": false
+   }
+  },
+  "dawn_clear": {
+   "lut": "lut_dawn_clear.png",
+   "label": "새벽·맑음",
+   "grade": {
+    "exposure": 0.02,
+    "contrast": 1.1,
+    "sat": 0.68,
+    "lift": 0.08,
+    "shadow": [
+     0.08,
+     0.07,
+     0.2
+    ],
+    "shadow_amt": 0.9,
+    "high": [
+     0.05,
+     0.005,
+     0.0
+    ],
+    "mid": [
+     -0.01,
+     -0.005,
+     0.055
+    ],
+    "accent": 0.4,
+    "mute": 0.6
+   },
+   "bloom": {
+    "threshold": 0.9,
+    "intensity": 0.45,
+    "scatter": 0.7,
+    "tint": "#FFC49A"
+   },
+   "vignette": {
+    "intensity": 0.28,
+    "smoothness": 0.6,
+    "color": "#0F1729",
+    "rounded": false
+   }
+  },
+  "dawn_cloudy": {
+   "lut": "lut_dawn_cloudy.png",
+   "label": "새벽·흐림",
+   "grade": {
+    "exposure": -0.1,
+    "contrast": 1.034,
+    "sat": 0.585,
+    "lift": 0.09,
+    "shadow": [
+     0.09,
+     0.09000000000000001,
+     0.23
+    ],
+    "shadow_amt": 0.9,
+    "high": [
+     0.04,
+     0.005,
+     0.015
+    ],
+    "mid": [
+     -0.015,
+     -0.005,
+     0.07
+    ],
+    "accent": 0.4,
+    "mute": 0.65
+   },
+   "bloom": {
+    "threshold": 0.9,
+    "intensity": 0.383,
+    "scatter": 0.73,
+    "tint": "#FFC49A"
+   },
+   "vignette": {
+    "intensity": 0.3,
+    "smoothness": 0.6,
+    "color": "#10192B",
+    "rounded": false
+   }
+  },
+  "dawn_rain": {
+   "lut": "lut_dawn_rain.png",
+   "label": "새벽·비",
+   "grade": {
+    "exposure": -0.26,
+    "contrast": 1.056,
+    "sat": 0.49,
+    "lift": 0.115,
+    "shadow": [
+     0.08,
+     0.11000000000000001,
+     0.26
+    ],
+    "shadow_amt": 0.9,
+    "high": [
+     0.030000000000000002,
+     0.01,
+     0.025
+    ],
+    "mid": [
+     -0.03,
+     0.0,
+     0.08499999999999999
+    ],
+    "accent": 0.35,
+    "mute": 0.7
+   },
+   "bloom": {
+    "threshold": 0.95,
+    "intensity": 0.36,
+    "scatter": 0.75,
+    "tint": "#FFC49A"
+   },
+   "vignette": {
+    "intensity": 0.32,
+    "smoothness": 0.6,
+    "color": "#0D1826",
+    "rounded": false
+   }
+  },
+  "dawn_fog": {
+   "lut": "lut_dawn_fog.png",
+   "label": "새벽·안개",
+   "grade": {
+    "exposure": -0.08,
+    "contrast": 0.88,
+    "sat": 0.422,
+    "lift": 0.165,
+    "shadow": [
+     0.11,
+     0.12000000000000001,
+     0.26
+    ],
+    "shadow_amt": 0.9,
+    "high": [
+     0.05,
+     0.015,
+     0.02
+    ],
+    "mid": [
+     -0.01,
+     0.005,
+     0.08499999999999999
+    ],
+    "accent": 0.3,
+    "mute": 0.7
+   },
+   "bloom": {
+    "threshold": 0.8,
+    "intensity": 0.675,
+    "scatter": 0.82,
+    "tint": "#D8E0E4"
+   },
+   "vignette": {
+    "intensity": 0.34,
+    "smoothness": 0.6,
+    "color": "#16202F",
+    "rounded": false
+   }
+  },
+  "dawn_plague": {
+   "lut": "lut_dawn_plague.png",
+   "label": "새벽·역병",
+   "grade": {
+    "exposure": -0.18,
+    "contrast": 1.144,
+    "sat": 0.462,
+    "lift": 0.13,
+    "shadow": [
+     0.07,
+     0.14,
+     0.24000000000000002
+    ],
+    "shadow_amt": 0.9,
+    "high": [
+     0.030000000000000002,
+     0.04,
+     0.01
+    ],
+    "mid": [
+     -0.04,
+     0.035,
+     0.055
+    ],
+    "accent": 0.55,
+    "mute": 0.45
+   },
+   "bloom": {
+    "threshold": 0.85,
+    "intensity": 0.54,
+    "scatter": 0.75,
+    "tint": "#8FE0A8"
+   },
+   "vignette": {
+    "intensity": 0.38,
+    "smoothness": 0.6,
+    "color": "#0A1511",
+    "rounded": false
+   }
+  }
+ },
+ "tendo": {
+  "lut": "lut_tendo.png",
+  "lut_contribution": [
+   0.0,
+   0.6
+  ],
+  "lut_enter_s": 0.25,
+  "lut_exit_s": 0.15,
+  "radius": {
+   "normal": 1.0,
+   "casting": 0.6,
+   "min_on_small_screen": 0.55,
+   "enter_s": 0.25,
+   "exit_s": 0.15,
+   "enter_ease": "easeOutCubic(빠르게 조이고 끝에서 천천히)",
+   "exit_ease": "easeInQuad(천천히 열렸다가 빠르게)",
+   "unit": "화면 짧은 변의 절반=1.0"
+  },
+  "edge": {
+   "color": "#0F1729",
+   "alpha_outer": 0.94,
+   "alpha_inner": 0.0,
+   "width_of_radius": 0.12,
+   "noise": "vision_noise.png",
+   "noise_amp": 0.07,
+   "noise_scroll_uv_per_s": [
+    0.012,
+    -0.008
+   ],
+   "note": "부드러운 비네트 대신 먹이 번지는 가장자리. 안쪽은 투명→바깥 불투명으로 smoothstep"
+  },
+  "pattern": {
+   "texture": "vision_pattern.png",
+   "opacity": 0.14,
+   "opacity_boss": 0.24,
+   "tint": "#D4A94E",
+   "extra_ring_boss": true,
+   "note": "가장자리 띠에 단청 문양(연화·마름모)이 은은히 비침. 보스 천도는 한 겹 더 켜지고 더 진하다"
+  },
+  "center_glow": {
+   "color": "#5FE3C0",
+   "radius_m_caster": 2.4,
+   "radius_m_target": 1.6,
+   "intensity": 0.55,
+   "note": "진행도는 글로우 크기가 아니라 대상 혼 윤곽이 선명해지는 정도로. 청록 글로우는 두 곳(차사·대상 혼)만"
+  },
+  "danger_pulse": {
+   "color": "#E85C41",
+   "hz": 2.5,
+   "max_hz": 3.0,
+   "alpha": [
+    0.15,
+    0.55
+   ],
+   "width_deg": 28,
+   "note": "시야 밖에서 다가오는 적의 방향만 가장자리에 붉은 호로 맥박. 모습은 안 보인다. 3Hz 이하(광과민 안전)"
+  },
+  "success_flash": {
+   "color": "#C9B0FF",
+   "border_px": 18,
+   "duration_s": 0.3,
+   "note": "천도 성공 순간 보라 테두리. 파혼에는 없음(이야기 없음을 색으로 대비)"
+  },
+  "bloom_during": {
+   "intensity_mult": 1.25,
+   "tint": "#5FE3C0"
+  },
+  "vignette_during": "기본 비네트는 끄고(0) 위 가장자리 셰이더로 대체. 둘이 겹치면 가장자리가 검게 죽는다"
+ },
+ "forbidden": [
+  "순검정(#000) 가장자리 — 항상 남청 #0F1729",
+  "주황 계열 틴트를 화면 전체에 — 주황(#E8683A)은 파혼 전용 색",
+  "비네트 0.45 초과(천도 제외)",
+  "블룸이 UI를 번지게 하지 말 것: UI는 후처리 뒤 오버레이 카메라/Overlay Canvas"
+ ]
+}
