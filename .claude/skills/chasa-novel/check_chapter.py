@@ -201,6 +201,13 @@ def narration_flow(text: str):
         if p[0] in "\"“'‘「":
             out.append(("대화", p))
             continue
+        # 기억 한 줄(*…* 한 문단)은 soul_memories.json 원문 그대로라 한 글자도 고칠 수 없다.
+        # 왜(2026-10-25 3장): 연이의 기억은 짧은 세 문장("상여가 너무 자주 나가. …")이라
+        #     서술로 세면 '짧은 문장 셋 연속' 오류가 난다. 전자책에서도 따로 띄운 한 줄로 읽히므로
+        #     대화처럼 흐름을 끊는 표지로 둔다.
+        if p.startswith("*") and p.endswith("*") and p.count("*") == 2:
+            out.append(("기억", p))
+            continue
         p = p.replace("*", "")
         for s in re.split(r"(?<=[.?!…])\s+", p):
             s = s.strip()
