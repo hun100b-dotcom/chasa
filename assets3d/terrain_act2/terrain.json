@@ -1,0 +1,41 @@
+{
+ "origin_m": [
+  0,
+  640
+ ],
+ "size_x_m": 768,
+ "size_z_m": 640,
+ "size": 768,
+ "height_res_x": 769,
+ "height_res_z": 641,
+ "splat_res_x": 768,
+ "splat_res_z": 640,
+ "height_min_m": -1.0,
+ "height_max_m": 14.0,
+ "layer_tile_m": [
+  6,
+  6,
+  6,
+  6,
+  6
+ ],
+ "layers": {
+  "dirt": "붉은 흙(③)",
+  "grass": "마른 풀",
+  "gravel": "회색 바위·자갈(급경사)",
+  "paddy": "검은 쇠찌꺼기·석탄(④, splat_a A 채널)",
+  "leaf": "누런 황토(④, splat_b R 채널)"
+ },
+ "detail": "1막 detail_*.png 를 그대로 쓴다(층 이름이 같다)",
+ "note": "아트 terrain_act2.py가 만든다. 행 0=남쪽(월드 y 640). 월드 좌표=origin+픽셀. 코드는 1막 땅과 같은 셰이더에 origin·직사각형 크기만 더해 받는다.",
+ "slope_at_shrines_and_arenas": {
+  "SH2-1": 0.0,
+  "SH2-2": 0.0,
+  "SH2-3": 0.0,
+  "B-05": 0.0,
+  "B-06": 0.001,
+  "B-07": 0.007,
+  "B-08": 0.017
+ },
+ "heights_note": "산성 마당 9m, 군막 터 4.5m, 갱도 골 바닥 2.4→1.0m, 막장 웅덩이 1.0m, 가장자리 산 9~12m"
+}

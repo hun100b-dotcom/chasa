@@ -11,7 +11,7 @@
       62.0
      ],
      "clearance_m": 1.4,
-     "reach_from_hub_m": 3.01,
+     "reach_from_hub_m": 4.0,
      "ok": true,
      "snap_to": null
     },
@@ -22,7 +22,7 @@
       57.5
      ],
      "clearance_m": 2.81,
-     "reach_from_hub_m": 3.01,
+     "reach_from_hub_m": 4.0,
      "ok": true,
      "snap_to": null
     },
@@ -33,7 +33,7 @@
       60.5
      ],
      "clearance_m": 3.43,
-     "reach_from_hub_m": 3.01,
+     "reach_from_hub_m": 4.0,
      "ok": true,
      "snap_to": null
     },
@@ -43,12 +43,12 @@
       222.9,
       62.2
      ],
-     "clearance_m": -0.07,
-     "reach_from_hub_m": 3.01,
-     "ok": true,
+     "clearance_m": -0.1,
+     "reach_from_hub_m": 4.0,
+     "ok": false,
      "snap_to": [
-      219.75,
-      62.5
+      219.5,
+      62.0
      ]
     },
     {
@@ -57,12 +57,12 @@
       222.9,
       62.2
      ],
-     "clearance_m": -0.07,
-     "reach_from_hub_m": 3.01,
-     "ok": true,
+     "clearance_m": -0.1,
+     "reach_from_hub_m": 4.0,
+     "ok": false,
      "snap_to": [
-      219.75,
-      62.5
+      219.5,
+      62.0
      ]
     },
     {
@@ -188,9 +188,9 @@
      ],
      "clearance_m": 0.02,
      "reach_from_hub_m": 3.14,
-     "ok": true,
+     "ok": false,
      "snap_to": [
-      200.25,
+      200.0,
       50.5
      ]
     },
@@ -224,10 +224,10 @@
      ],
      "clearance_m": -0.39,
      "reach_from_hub_m": 3.14,
-     "ok": true,
+     "ok": false,
      "snap_to": [
       204.0,
-      54.25
+      54.5
      ]
     },
     {
@@ -238,10 +238,10 @@
      ],
      "clearance_m": -0.39,
      "reach_from_hub_m": 3.14,
-     "ok": true,
+     "ok": false,
      "snap_to": [
       204.0,
-      54.25
+      54.5
      ]
     },
     {
@@ -267,7 +267,7 @@
      "snap_to": null
     }
    ],
-   "procession_min_clearance_m": 0.9,
+   "procession_min_clearance_m": 0.02,
    "procession_ok": false
   },
   {
@@ -325,7 +325,7 @@
       86.0
      ],
      "clearance_m": 1.5,
-     "reach_from_hub_m": 4.2,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -356,10 +356,10 @@
      ],
      "clearance_m": -0.1,
      "reach_from_hub_m": 3.14,
-     "ok": true,
+     "ok": false,
      "snap_to": [
-      200.25,
-      66.5
+      200.0,
+      67.0
      ]
     },
     {
@@ -392,9 +392,9 @@
      ],
      "clearance_m": -0.6,
      "reach_from_hub_m": 3.14,
-     "ok": true,
+     "ok": false,
      "snap_to": [
-      200.25,
+      200.0,
       70.5
      ]
     },
@@ -406,9 +406,9 @@
      ],
      "clearance_m": -0.6,
      "reach_from_hub_m": 3.14,
-     "ok": true,
+     "ok": false,
      "snap_to": [
-      200.25,
+      200.0,
       70.5
      ]
     },
@@ -435,7 +435,7 @@
      "snap_to": null
     }
    ],
-   "procession_min_clearance_m": 0.9,
+   "procession_min_clearance_m": -0.1,
    "procession_ok": false
   },
   {
@@ -448,8 +448,8 @@
       39.8,
       383.6
      ],
-     "clearance_m": 5.21,
-     "reach_from_hub_m": null,
+     "clearance_m": 5.0,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -460,7 +460,7 @@
       386.5
      ],
      "clearance_m": 3.8,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -471,7 +471,7 @@
       381.5
      ],
      "clearance_m": 5.42,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -481,8 +481,8 @@
       39.8,
       383.6
      ],
-     "clearance_m": 5.21,
-     "reach_from_hub_m": null,
+     "clearance_m": 5.0,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -493,7 +493,7 @@
       383.0
      ],
      "clearance_m": 6.11,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -504,7 +504,7 @@
       452
      ],
      "clearance_m": 6.3,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -520,7 +520,7 @@
      "snap_to": null
     }
    ],
-   "procession_min_clearance_m": 0.08,
+   "procession_min_clearance_m": -0.2,
    "procession_ok": false
   },
   {
@@ -534,7 +534,7 @@
       382.0
      ],
      "clearance_m": 5.0,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -545,7 +545,7 @@
       379.0
      ],
      "clearance_m": 99.0,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -556,7 +556,7 @@
       382.5
      ],
      "clearance_m": 5.8,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -567,7 +567,7 @@
       378.5
      ],
      "clearance_m": 99.0,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -578,7 +578,7 @@
       381.5
      ],
      "clearance_m": 6.01,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -589,7 +589,7 @@
       452
      ],
      "clearance_m": 6.3,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -605,7 +605,7 @@
      "snap_to": null
     }
    ],
-   "procession_min_clearance_m": 0.08,
+   "procession_min_clearance_m": -0.2,
    "procession_ok": false
   },
   {
@@ -618,12 +618,12 @@
       44.8,
       391.0
      ],
-     "clearance_m": -0.85,
-     "reach_from_hub_m": null,
-     "ok": true,
+     "clearance_m": -1.1,
+     "reach_from_hub_m": 4.7,
+     "ok": false,
      "snap_to": [
-      42.75,
-      390.5
+      42.5,
+      391.0
      ]
     },
     {
@@ -633,7 +633,7 @@
       391.5
      ],
      "clearance_m": 1.62,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -644,11 +644,11 @@
       389.0
      ],
      "clearance_m": 0.4,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": false,
      "snap_to": [
-      42.75,
-      388.5
+      42.5,
+      389.0
      ]
     },
     {
@@ -658,7 +658,7 @@
       387.0
      ],
      "clearance_m": 2.4,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -668,11 +668,11 @@
       45.2,
       389.5
      ],
-     "clearance_m": -0.54,
-     "reach_from_hub_m": null,
-     "ok": true,
+     "clearance_m": -0.6,
+     "reach_from_hub_m": 4.7,
+     "ok": false,
      "snap_to": [
-      42.75,
+      42.5,
       389.5
      ]
     },
@@ -683,7 +683,7 @@
       452
      ],
      "clearance_m": 6.3,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -699,7 +699,7 @@
      "snap_to": null
     }
    ],
-   "procession_min_clearance_m": 0.08,
+   "procession_min_clearance_m": -1.1,
    "procession_ok": false
   },
   {
@@ -713,11 +713,11 @@
       390.5
      ],
      "clearance_m": 0.0,
-     "reach_from_hub_m": null,
-     "ok": true,
+     "reach_from_hub_m": 4.7,
+     "ok": false,
      "snap_to": [
-      38.0,
-      391.75
+      37.0,
+      391.5
      ]
     },
     {
@@ -727,7 +727,7 @@
       386.0
      ],
      "clearance_m": 3.97,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -738,7 +738,7 @@
       392.0
      ],
      "clearance_m": 1.56,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -749,11 +749,11 @@
       390.0
      ],
      "clearance_m": -0.5,
-     "reach_from_hub_m": null,
-     "ok": true,
+     "reach_from_hub_m": 4.7,
+     "ok": false,
      "snap_to": [
-      38.0,
-      388.25
+      37.0,
+      388.5
      ]
     },
     {
@@ -763,7 +763,7 @@
       388.0
      ],
      "clearance_m": 2.33,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -774,7 +774,7 @@
       452
      ],
      "clearance_m": 6.3,
-     "reach_from_hub_m": null,
+     "reach_from_hub_m": 4.7,
      "ok": true,
      "snap_to": null
     },
@@ -790,7 +790,7 @@
      "snap_to": null
     }
    ],
-   "procession_min_clearance_m": 0.08,
+   "procession_min_clearance_m": -0.2,
    "procession_ok": false
   }
  ],
@@ -804,7 +804,7 @@
     65.5
    ],
    "clearance_m": 4.12,
-   "reach_from_hub_m": 3.01,
+   "reach_from_hub_m": 4.7,
    "ok": true,
    "snap_to": null
   },
@@ -833,7 +833,7 @@
    "reach_from_hub_m": 3.34,
    "ok": false,
    "snap_to": [
-    200.25,
+    200.0,
     47.5
    ]
   },
@@ -850,7 +850,7 @@
    "ok": false,
    "snap_to": [
     190.5,
-    75.25
+    75.0
    ]
   },
   {
@@ -874,8 +874,8 @@
     37.5,
     382.0
    ],
-   "clearance_m": 99.0,
-   "reach_from_hub_m": null,
+   "clearance_m": 7.91,
+   "reach_from_hub_m": 4.7,
    "ok": true,
    "snap_to": null
   },
@@ -888,7 +888,7 @@
     377.5
    ],
    "clearance_m": 99.0,
-   "reach_from_hub_m": null,
+   "reach_from_hub_m": 4.7,
    "ok": true,
    "snap_to": null
   },
@@ -901,7 +901,7 @@
     390.5
    ],
    "clearance_m": 1.45,
-   "reach_from_hub_m": null,
+   "reach_from_hub_m": 4.7,
    "ok": true,
    "snap_to": null
   },
@@ -914,7 +914,7 @@
     398.0
    ],
    "clearance_m": 5.76,
-   "reach_from_hub_m": null,
+   "reach_from_hub_m": 4.7,
    "ok": true,
    "snap_to": null
   }
