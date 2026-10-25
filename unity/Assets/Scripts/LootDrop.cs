@@ -10,7 +10,7 @@ using Chasa.Core;
 
 public class LootDrop : MonoBehaviour
 {
-    class Drop { public ItemDef item; public Vector3 pos; public float age; public Transform beam, orb; public SpriteRenderer beamSr, orbSr; public string label; public Color col; }
+    class Drop { public ItemDef item; public Vector3 pos; public float age; public Transform beam, orb; public SpriteRenderer beamSr, orbSr; public string label; public Color col; public string tier; public GameObject pillar; }
     readonly List<Drop> drops = new List<Drop>();
     Sprite dot;
     public System.Func<Vector3> PlayerPos;
@@ -34,19 +34,25 @@ public class LootDrop : MonoBehaviour
     public static Color RarityColor(ItemDef it) { return it.Named || it.Rarity == Rarity.Rare ? new Color(1f, 0.82f, 0.35f) : it.Rarity == Rarity.Crafted ? new Color(0.4f, 0.9f, 0.85f) : new Color(0.9f, 0.88f, 0.78f); }
     static float BeamHeight(ItemDef it) { return it.Named || it.Rarity == Rarity.Rare ? 4f : it.Rarity == Rarity.Crafted ? 2.5f : 1.5f; }
 
+    /// <summary>등급 → 아트 이름(흔한 common · 손본 refined · 귀한 rare · 이름 있는 named. 옛 차사 antique 는 장비 등급이 생기면)</summary>
+    public static string TierOf(ItemDef it) { return it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "refined" : "common"; }
+
     public int Count { get { return drops.Count; } }
 
     public void Add(ItemDef it, Vector3 at, string label)
     {
         var d = new Drop { item = it, pos = new Vector3(at.x, at.y, at.z), label = label, col = RarityColor(it) };
+        d.tier = TierOf(it);
         float h = BeamHeight(it);
-        var beam = new GameObject("LootBeam"); beam.transform.SetParent(transform, false);
+        var prefab = Resources.Load<GameObject>("Models/Fx/fx_drop_" + d.tier);   // 아트의 3D 빛줄기(등급마다 꼭대기 모양이 다르다)
+        if (prefab != null) { d.pillar = Instantiate(prefab, d.pos, Quaternion.identity, transform); }
+        var beam = new GameObject("LootBeam"); beam.transform.SetParent(transform, false); beam.SetActive(d.pillar == null);
         d.beamSr = beam.AddComponent<SpriteRenderer>(); d.beamSr.sprite = Dot(); d.beamSr.sortingOrder = 40;
         d.beamSr.color = new Color(d.col.r, d.col.g, d.col.b, 0.55f);
         beam.transform.localScale = new Vector3(0.35f, h, 1f); d.beam = beam.transform;   // 가늘고 긴 빛줄기(1유닛=1m 동그라미를 늘임)
         var orb = new GameObject("LootOrb"); orb.transform.SetParent(transform, false);
         d.orbSr = orb.AddComponent<SpriteRenderer>(); d.orbSr.sprite = Dot(); d.orbSr.sortingOrder = 41; d.orbSr.color = d.col;
-        orb.transform.localScale = Vector3.one * 0.5f; d.orb = orb.transform;
+        orb.transform.localScale = Vector3.one * 0.5f; d.orb = orb.transform; orb.SetActive(d.pillar == null);
         drops.Add(d);
     }
 
@@ -64,7 +70,7 @@ public class LootDrop : MonoBehaviour
             if (flat <= PickRadius || d.age >= MaxAge)
             {
                 var it = d.item; var at = d.pos;
-                Destroy(d.beam.gameObject); Destroy(d.orb.gameObject); drops.RemoveAt(i);
+                Destroy(d.beam.gameObject); Destroy(d.orb.gameObject); if (d.pillar != null) Destroy(d.pillar); drops.RemoveAt(i);
                 if (OnPick != null) OnPick(it, at);
             }
         }
@@ -80,11 +86,17 @@ public class LootDrop : MonoBehaviour
         if (st == null) st = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 16 };
         foreach (var d in drops)
         {
-            var sp = cam.WorldToScreenPoint(d.pos + Vector3.up * (d.beam.localScale.y + 0.3f));
+            var sp = cam.WorldToScreenPoint(d.pos + Vector3.up * (BeamHeight(d.item) + 0.3f));
             if (sp.z < 0f) continue;
-            var r = new Rect(sp.x - 150, Screen.height - sp.y - 14, 300, 28);
-            st.normal.textColor = Color.black; GUI.Label(new Rect(r.x + 1, r.y + 1, r.width, r.height), d.label, st);
-            st.normal.textColor = d.col; GUI.Label(r, d.label, st);
+            float k = Mathf.Clamp(Screen.height / 1080f, 0.6f, 1.4f) * 1.0f;   // 화면 크기에 맞춘 이름표 배율
+            var plate = First10.Tex("drop_tag_" + d.tier); var mark = First10.Tex("tier_mark_" + d.tier);
+            float w = 220f * k, h = 40f * k; var r = new Rect(sp.x - w * 0.5f, Screen.height - sp.y - h * 0.5f, w, h);
+            if (plate != null) GUI.DrawTexture(r, plate);
+            if (mark != null) GUI.DrawTexture(new Rect(r.x + 4f * k, r.y + 4f * k, 32f * k, 32f * k), mark);   // 왼쪽 28px 자리: 등급 모양(색 없이도 구분)
+            var lr = new Rect(r.x + (plate != null ? 34f * k : 0f), r.y, r.width - (plate != null ? 38f * k : 0f), r.height);
+            st.fontSize = Mathf.RoundToInt(16 * k);
+            st.normal.textColor = Color.black; if (plate == null) GUI.Label(new Rect(lr.x + 1, lr.y + 1, lr.width, lr.height), d.label, st);
+            st.normal.textColor = plate != null ? new Color(0.97f, 0.94f, 0.84f) : d.col;; GUI.Label(lr, d.label, st);   // 이름표 판은 짙은 남색 → 밝은 글자
         }
     }
 }

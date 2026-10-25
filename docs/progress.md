@@ -1382,3 +1382,8 @@
 - 본 게임(필드)은 새로 시작하면 도술이 비어 있고 카드로 얻는다. 옛 저장(도술 있음)은 카드를 건너뛴다. 저장 `cp:N`.
 - 화면: UiRoot 한지색 카드 3장(1·2·3 또는 클릭, R 다시 뽑기), 떠 있는 동안 세계 정지. 아트 `skill_card_frame` 입히기는 아직(코드 도형 대체).
 - 기획과 다른 점: 액티브 도술은 최대 1단계라 "+1단계" 카드는 패시브만 나온다. 서낭당에서 쉴 때 뜨는 대신 싸움이 잠잠하면 바로 뜬다(품계 인 1.6초 뒤).
+
+## 처음 10분 그림 입히기 (코드·QA, 10-26) — 아트 PR #35 (170a65e)
+- 그림 묶음을 `Resources/Sprites/first10/`·`Models/Fx/fx_drop_*`로 들임(`First10.cs` 창고: 이름으로 꺼내기·가로 띠 자르기). 그림이 없으면 예전 코드 도형으로 대신한다.
+- 품계 인: 명부 종이 + `rank_stamp` 12프레임 12fps + 현판에 계급명. 흡수: `absorb_*_fly/spin` + 도착 순간 `absorb_*_burst`. 장비 드롭: `fx_drop_*` 3D 빛줄기 + `drop_tag_*` 이름표 + `tier_mark_*`. 도술 카드: `skill_card_frame` + 갈래 큰 표시 + 삽화. 거센 혼: `elite_ring` 머리 위, 예고 `tele_*_border/fill_red`.
+- 아직 안 쓴 그림: elite_name_band·bind_bar_*(기존 보스 막대로 대신), clear_ring, roar_vignette, craft_flash, rank_dot, reward_*(M5), goal_arrow·goal_dist_plate(M12), menu_btn·title_fog(M1), loading_tip_plate(M14), 노랑 예고(색약 옵션). 예고 채움은 '가운데서/시작에서 차오름'(명세는 바깥→안 마스크, 셰이더 마스크는 PC 확인 뒤).

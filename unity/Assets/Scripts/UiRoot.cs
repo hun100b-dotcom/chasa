@@ -139,13 +139,25 @@ public class UiRoot : MonoBehaviour
         root.Add(toastBox);
     }
 
-    // ---- 품계 승급 인: 화면 가운데에 붉은 글자가 쾅 찍힌다(처음 10분 M6) ----
-    VisualElement stampBox; Label stampTitle, stampSub;
+    // ---- 품계 승급 인: 명부 종이 위에 붉은 品 인이 쾅 찍힌다(처음 10분 M6). 그림이 없으면 붉은 글자로 대신 ----
+    VisualElement stampBox, stampPaper, stampInk; Label stampTitle, stampSub, stampPlaque;
     void BuildStamp()
     {
         stampBox = new VisualElement { name = "stamp", pickingMode = PickingMode.Ignore };
-        stampBox.style.position = Position.Absolute; stampBox.style.left = 0; stampBox.style.right = 0; stampBox.style.top = Length.Percent(32);
+        stampBox.style.position = Position.Absolute; stampBox.style.left = 0; stampBox.style.right = 0; stampBox.style.top = Length.Percent(24);
         stampBox.style.alignItems = Align.Center; stampBox.style.display = DisplayStyle.None;
+        float k = Ko.TouchUI ? 0.55f : 0.75f;   // 640x400 그림을 패널 단위로 줄인다
+        stampPaper = new VisualElement { pickingMode = PickingMode.Ignore }; stampPaper.style.width = 640 * k; stampPaper.style.height = 400 * k;
+        var paper = First10.Whole("rank_paper");
+        if (paper != null) stampPaper.style.backgroundImage = new StyleBackground(paper);
+        stampBox.Add(stampPaper);
+        stampPlaque = Line(stampPaper, 26); stampPlaque.style.position = Position.Absolute; stampPlaque.style.left = 60 * k; stampPlaque.style.top = 64 * k;
+        stampPlaque.style.width = 520 * k; stampPlaque.style.height = 56 * k; stampPlaque.style.unityTextAlign = TextAnchor.MiddleCenter;
+        stampPlaque.style.color = new Color(0.12f, 0.08f, 0.07f); stampPlaque.style.unityFontStyleAndWeight = FontStyle.Bold;
+        stampInk = new VisualElement { pickingMode = PickingMode.Ignore }; stampInk.style.position = Position.Absolute;
+        stampInk.style.width = 256 * k; stampInk.style.height = 256 * k; stampInk.style.left = (640 - 256) * 0.5f * k; stampInk.style.top = 160 * k;
+        stampPaper.Add(stampInk);
+        // 그림이 없을 때 대신하는 글자
         stampTitle = Line(stampBox, 56); stampTitle.style.color = new Color(0.86f, 0.12f, 0.1f); stampTitle.style.unityFontStyleAndWeight = FontStyle.Bold;
         stampSub = Line(stampBox, 28); stampSub.style.color = new Color(0.95f, 0.85f, 0.6f);
         root.Add(stampBox);
@@ -156,15 +168,29 @@ public class UiRoot : MonoBehaviour
         bool on = Hud.StampAge >= 0f;
         stampBox.style.display = on ? DisplayStyle.Flex : DisplayStyle.None;
         if (!on) return;
-        stampTitle.text = Hud.StampTitle; stampSub.text = Hud.StampSub;
-        float a = Hud.StampAge, k = Mathf.Clamp01(a / 0.15f);               // 처음 0.15초에 크게→제 크기로 쾅
-        stampBox.style.scale = new Scale(Vector2.one * Mathf.Lerp(1.7f, 1f, k));
+        float a = Hud.StampAge;
+        var frames = First10.Strip("rank_stamp", 12);
+        bool art = First10.Tex("rank_paper") != null && frames != null;
+        stampPaper.style.display = art ? DisplayStyle.Flex : DisplayStyle.None;
+        stampTitle.style.display = stampSub.style.display = art ? DisplayStyle.None : DisplayStyle.Flex;
+        if (art)
+        {
+            stampPlaque.text = Hud.StampSub + "  ·  " + Hud.StampTitle;
+            int f = Mathf.Min(11, (int)(a * 12f));   // 12프레임 12fps = 1초. 프레임 4(0.33초)가 찍히는 순간
+            stampInk.style.backgroundImage = new StyleBackground(frames[f]);
+            stampInk.style.display = a >= 0.08f ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+        else
+        {
+            stampTitle.text = Hud.StampTitle; stampSub.text = Hud.StampSub;
+            stampBox.style.scale = new Scale(Vector2.one * Mathf.Lerp(1.7f, 1f, Mathf.Clamp01(a / 0.15f)));
+        }
         stampBox.style.opacity = Mathf.Clamp01((Balance.RANKUP_STAMP_SEC - a) / 0.25f);   // 마지막 0.25초에 사라짐
     }
 
     // ---- 첫 도술 카드: 한지 빛깔 카드 세 장 중 하나를 고른다(처음 10분 M9). 추천·별점 없음, 같은 크기 ----
     VisualElement cardsBox, cardsRow, rerollBtn; Label cardsTitle, rerollLabel; string lastCards;
-    VisualElement[] cardEl = new VisualElement[3]; Label[] cardMark = new Label[3], cardName = new Label[3], cardDesc = new Label[3], cardKey = new Label[3];
+    VisualElement[] cardEl = new VisualElement[3], cardBadge = new VisualElement[3], cardArt = new VisualElement[3]; Label[] cardMark = new Label[3], cardName = new Label[3], cardDesc = new Label[3], cardKey = new Label[3];
     void BuildDosulCards()
     {
         cardsBox = new VisualElement { name = "dosul-cards", pickingMode = PickingMode.Position };   // 화면 전체를 덮어 뒤 클릭을 막는다
@@ -177,18 +203,34 @@ public class UiRoot : MonoBehaviour
         {
             int idx = i;
             var c = new VisualElement { pickingMode = PickingMode.Position };
-            float w = Ko.TouchUI ? 190f : 240f, h = Ko.TouchUI ? 260f : 330f;   // 명세 320x440 의 3/4(패널 단위)
-            c.style.width = w; c.style.height = h; c.style.marginLeft = 10; c.style.marginRight = 10; c.style.alignItems = Align.Center;
-            c.style.backgroundColor = new Color(0.90f, 0.86f, 0.74f, 0.97f);   // 한지
-            var edge = new Color(0.10f, 0.08f, 0.07f, 1f);
-            c.style.borderTopWidth = 4; c.style.borderBottomWidth = 4; c.style.borderLeftWidth = 4; c.style.borderRightWidth = 4;
-            c.style.borderTopColor = edge; c.style.borderBottomColor = edge; c.style.borderLeftColor = edge; c.style.borderRightColor = edge;   // 먹 테두리(등급 테두리 없음)
-            c.style.borderTopLeftRadius = 6; c.style.borderBottomLeftRadius = 6; c.style.borderTopRightRadius = 6; c.style.borderBottomRightRadius = 6;
-            c.style.paddingTop = 14; c.style.paddingLeft = 12; c.style.paddingRight = 12;
-            cardMark[i] = Line(c, 54); cardMark[i].style.color = new Color(0.12f, 0.09f, 0.08f);
-            cardName[i] = Line(c, 22); cardName[i].style.color = new Color(0.12f, 0.09f, 0.08f); cardName[i].style.marginTop = 6; cardName[i].style.unityFontStyleAndWeight = FontStyle.Bold;
-            cardDesc[i] = Line(c, 15); cardDesc[i].style.color = new Color(0.2f, 0.17f, 0.14f); cardDesc[i].style.whiteSpace = WhiteSpace.Normal; cardDesc[i].style.marginTop = 10; cardDesc[i].style.unityTextAlign = TextAnchor.UpperCenter;
-            cardKey[i] = Line(c, 16); cardKey[i].style.color = new Color(0.4f, 0.1f, 0.08f); cardKey[i].style.position = Position.Absolute; cardKey[i].style.bottom = 8; cardKey[i].text = (i + 1).ToString();
+            float k = Ko.TouchUI ? 0.6f : 0.78f;   // 명세 320x440 카드를 패널 단위로 줄인다
+            float w = 320f * k, h = 440f * k;
+            c.style.width = w; c.style.height = h; c.style.marginLeft = 10; c.style.marginRight = 10;
+            var frame = First10.Whole("skill_card_frame");
+            bool art = frame != null;
+            if (art) c.style.backgroundImage = new StyleBackground(frame);   // 한지 틀(배지·삽화 창·이름 띠 자리가 정해져 있다)
+            else
+            {
+                c.style.backgroundColor = new Color(0.90f, 0.86f, 0.74f, 0.97f);   // 한지
+                var edge = new Color(0.10f, 0.08f, 0.07f, 1f);
+                c.style.borderTopWidth = 4; c.style.borderBottomWidth = 4; c.style.borderLeftWidth = 4; c.style.borderRightWidth = 4;
+                c.style.borderTopColor = edge; c.style.borderBottomColor = edge; c.style.borderLeftColor = edge; c.style.borderRightColor = edge;
+            }
+            Color ink = new Color(0.12f, 0.09f, 0.08f);
+            // 배지(지름 84, 중심 160,44): 갈래 큰 표시 80². 그림이 없으면 글자 기호
+            cardBadge[i] = new VisualElement { pickingMode = PickingMode.Ignore }; cardBadge[i].style.position = Position.Absolute;
+            cardBadge[i].style.left = (160 - 40) * k; cardBadge[i].style.top = (44 - 40) * k; cardBadge[i].style.width = 80 * k; cardBadge[i].style.height = 80 * k; c.Add(cardBadge[i]);
+            cardMark[i] = Line(c, 54); cardMark[i].style.color = ink; cardMark[i].style.position = Position.Absolute; cardMark[i].style.left = 0; cardMark[i].style.width = w; cardMark[i].style.top = 2 * k; cardMark[i].style.unityTextAlign = TextAnchor.MiddleCenter;
+            // 삽화 창(16,66, 288x130)
+            cardArt[i] = new VisualElement { pickingMode = PickingMode.Ignore }; cardArt[i].style.position = Position.Absolute;
+            cardArt[i].style.left = 16 * k; cardArt[i].style.top = 66 * k; cardArt[i].style.width = 288 * k; cardArt[i].style.height = 130 * k; c.Add(cardArt[i]);
+            // 이름 띠(16,208, 288x44)
+            cardName[i] = Line(c, 22); cardName[i].style.color = ink; cardName[i].style.position = Position.Absolute; cardName[i].style.left = 16 * k; cardName[i].style.top = 208 * k;
+            cardName[i].style.width = 288 * k; cardName[i].style.height = 44 * k; cardName[i].style.unityTextAlign = TextAnchor.MiddleCenter; cardName[i].style.unityFontStyleAndWeight = FontStyle.Bold;
+            // 효과 글(y 262~362)
+            cardDesc[i] = Line(c, 15); cardDesc[i].style.color = new Color(0.2f, 0.17f, 0.14f); cardDesc[i].style.whiteSpace = WhiteSpace.Normal; cardDesc[i].style.position = Position.Absolute;
+            cardDesc[i].style.left = 24 * k; cardDesc[i].style.top = 262 * k; cardDesc[i].style.width = 272 * k; cardDesc[i].style.height = 100 * k; cardDesc[i].style.unityTextAlign = TextAnchor.UpperCenter;
+            cardKey[i] = Line(c, 16); cardKey[i].style.color = new Color(0.4f, 0.1f, 0.08f); cardKey[i].style.position = Position.Absolute; cardKey[i].style.bottom = 8; cardKey[i].style.left = 0; cardKey[i].style.width = w; cardKey[i].style.unityTextAlign = TextAnchor.MiddleCenter; cardKey[i].text = (i + 1).ToString();
             c.RegisterCallback<ClickEvent>(ev => { if (Hud.CardPick != null) Hud.CardPick(idx); });
             cardEl[i] = c; cardsRow.Add(c);
         }
@@ -212,7 +254,12 @@ public class UiRoot : MonoBehaviour
             bool has = i < Hud.CardNames.Length;
             cardEl[i].style.display = has ? DisplayStyle.Flex : DisplayStyle.None;
             if (!has) continue;
-            cardMark[i].text = Hud.CardMarks[i]; cardName[i].text = Hud.CardNames[i]; cardDesc[i].text = Hud.CardDescs[i];
+            cardName[i].text = Hud.CardNames[i]; cardDesc[i].text = Hud.CardDescs[i];
+            string br = Hud.CardMarks[i] == "↑" ? "bureum" : Hud.CardMarks[i] == "●" ? "jul" : "eolluk";   // 갈래 → 그림 이름
+            var big = First10.Whole("branch_" + br + "_big"); var artImg = First10.Whole("skill_card_art_" + br);
+            cardBadge[i].style.backgroundImage = big != null ? new StyleBackground(big) : new StyleBackground();
+            cardArt[i].style.backgroundImage = artImg != null ? new StyleBackground(artImg) : new StyleBackground();
+            cardMark[i].text = big != null ? "" : Hud.CardMarks[i];   // 그림이 없을 때만 글자 기호
         }
         rerollBtn.style.display = string.IsNullOrEmpty(Hud.CardReroll) ? DisplayStyle.None : DisplayStyle.Flex;
         rerollLabel.text = Hud.CardReroll ?? "";

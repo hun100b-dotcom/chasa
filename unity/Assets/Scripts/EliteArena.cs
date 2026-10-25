@@ -12,7 +12,7 @@ public class EliteArena : MonoBehaviour
 {
     public static bool Met;   // 이번 판에 한 번이라도 만났나(첫 만남에만 예고 1.3배)
 
-    class Tele { public bool bar; public Vector3 c, dir; public float r, len, wid, t, warn, mult; public bool fired, pounce; public GameObject border, back, fill; }
+    class Tele { public bool bar; public Vector3 c, dir; public float r, len, wid, t, warn, mult; public bool fired, pounce, art; public GameObject border, back, fill; }
 
     JudgeSystem judge; Enemy e;
     readonly List<Tele> teles = new List<Tele>();
@@ -39,7 +39,8 @@ public class EliteArena : MonoBehaviour
     void Update()
     {
         if (judge == null || e == null) { Destroy(gameObject); return; }
-        if (e.gone) { ClearTeles(); Destroy(gameObject, 0.1f); return; }
+        if (e.gone) { ClearTeles(); if (ring != null) Destroy(ring.gameObject); Destroy(gameObject, 0.1f); return; }
+        TickRing();
         float dist = new Vector2(judge.player.Pos.x - e.Pos.x, judge.player.Pos.z - e.Pos.z).magnitude;
         bool fight = e.alive && dist < 30f && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
         if (!fight) { if (!e.alive) ClearTeles(); return; }
@@ -55,6 +56,19 @@ public class EliteArena : MonoBehaviour
         if (gapT > 0f) return;
         gapT = Balance.ELITE_PATTERN_GAP;
         if (patternIdx++ % 2 == 0) Slam(); else Pounce();
+    }
+
+    // 머리 위 붉은 가시 고리(눕혀 놓은 그림 4프레임 8fps): 한눈에 '센 놈'
+    SpriteRenderer ring; Sprite[] ringFrames;
+    void TickRing()
+    {
+        if (ringFrames == null) ringFrames = First10.Strip("elite_ring", 4, 128f);
+        if (ringFrames == null) return;
+        if (ring == null) { var g = new GameObject("EliteRing"); ring = g.AddComponent<SpriteRenderer>(); ring.sortingOrder = 45; }
+        ring.gameObject.SetActive(e.alive || e.kneeling);
+        ring.sprite = ringFrames[(int)(Time.time * 8f) % ringFrames.Length];
+        ring.transform.position = e.HeadPosition + Vector3.up * 0.3f;
+        ring.transform.rotation = Quaternion.LookRotation(Vector3.down, Vector3.forward);
     }
 
     float Warn(float basic) { float w = first ? basic * 1.3f : basic; first = false; return w; }   // 첫 패턴(첫 만남)만 예고 1.3배
@@ -99,8 +113,24 @@ public class EliteArena : MonoBehaviour
         g.GetComponent<Renderer>().sharedMaterial = U.Unlit(c); return g;
     }
     static readonly Color Edge = new Color(1f, 0.93f, 0.72f, 1f), Back = new Color(0.26f, 0.03f, 0.04f, 1f), Fill = new Color(0.9f, 0.14f, 0.1f, 1f);
+    // 아트 장판(그림이 있으면): 테두리는 늘 보이고, 채움은 가운데서(원)·시작에서(띠) 차오른다. 접근성: 밝은 테두리 + 35% 채움
+    GameObject Flat(string name, Vector3 at, Vector3 dir, float ppu, int order)
+    {
+        var sp = First10.Whole(name, ppu); var g = new GameObject("EliteTele_" + name);
+        var sr = g.AddComponent<SpriteRenderer>(); sr.sprite = sp; sr.sortingOrder = order;
+        g.transform.position = Flat(at) + Vector3.up * 0.04f; g.transform.rotation = Quaternion.LookRotation(Vector3.down, dir);   // 땅에 눕히고 그림의 위쪽이 dir 을 향하게
+        return g;
+    }
     void Show(Tele t)
     {
+        if (First10.Tex(t.bar ? "tele_band_border" : "tele_circle_border") != null)
+        {
+            var dir = t.bar ? t.dir : Vector3.forward;
+            if (t.bar) { t.border = Flat("tele_band_border", t.c, dir, 256f / Balance.ELITE_POUNCE_W, 30); t.fill = Flat("tele_band_fill_red", t.c, dir, 256f / Balance.ELITE_POUNCE_W, 31); }
+            else { t.border = Flat("tele_circle_border", t.c, dir, 512f / (t.r * 2f), 30); t.fill = Flat("tele_circle_fill_red", t.c, dir, 512f / (t.r * 2f), 31); }
+            t.art = true; t.fill.transform.localScale = new Vector3(1f, 0.01f, 1f);
+            return;
+        }
         if (t.bar)
         {
             t.border = Slab(t.c, t.dir, t.len, t.wid, Edge, 0f);
@@ -115,6 +145,16 @@ public class EliteArena : MonoBehaviour
     void Grow(Tele t)
     {
         float k = Mathf.Clamp01(t.t / t.warn);
+        if (t.art)
+        {
+            if (t.bar)
+            {
+                t.fill.transform.localScale = new Vector3(1f, Mathf.Max(0.01f, k), 1f);
+                t.fill.transform.position = Flat(t.c - t.dir * (t.len * 0.5f) + t.dir * (t.len * k * 0.5f)) + Vector3.up * 0.045f;   // 시작에서 끝으로 차오른다
+            }
+            else t.fill.transform.localScale = new Vector3(Mathf.Max(0.01f, k), Mathf.Max(0.01f, k), 1f);   // 가운데서 퍼진다
+            return;
+        }
         if (t.bar)
         {
             float l = Mathf.Max(0.01f, (t.len - 0.2f) * k);
@@ -146,7 +186,7 @@ public class EliteArena : MonoBehaviour
                     if (t.pounce) e.Pos = new Vector3(t.c.x + t.dir.x * t.len * 0.5f, e.Pos.y, t.c.z + t.dir.z * t.len * 0.5f) - t.dir * 1.2f;   // 덮치기: 띠 끝까지 달려든다
                     judge.feel.AddShake(0.3f); Sfx.Play("sfx.boss.naru.sweep");
                     if (Inside(t, judge.player.Pos) && judge.BossAreaHit(e, t.mult) && t.pounce) judge.player.actLock = Mathf.Max(judge.player.actLock, Balance.ELITE_POUNCE_HOLD);   // 맞으면 1초 붙잡힘
-                    t.fill.GetComponent<Renderer>().sharedMaterial.color = new Color(1f, 0.55f, 0.25f, 1f);
+                    if (!t.art) t.fill.GetComponent<Renderer>().sharedMaterial.color = new Color(1f, 0.55f, 0.25f, 1f);
                 }
             }
             if (t.t >= t.warn + 0.25f) { Kill(t); teles.RemoveAt(i); }
