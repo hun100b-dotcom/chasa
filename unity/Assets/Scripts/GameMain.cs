@@ -380,6 +380,12 @@ public class GameMain : MonoBehaviour
         if (judge.cuts.InputLocked) { kbMove = false; return; }   // 잠금 컷신 중엔 입력이 먹지 않는다
         HandleKeyboardMove();
         Vector3 mouse = Input.mousePosition;
+        if (!Ko.TouchUI)   // 적 위에 커서를 올리면 칼 모양(손이 '누르면 때린다'를 미리 안다). 클릭 판정은 1.3배 넓게
+        {
+            var hray = cam.ScreenPointToRay(mouse);
+            bool over = !MiniMap.BigOpen && !CharacterPanel.Open && !SettingsPanel.Open && enemies.Pick(hray, Ground(hray), Config.ENEMY_PICK_RADIUS * 1.3f) != null;
+            CursorFx.Set(over ? CursorFx.Kind.Attack : CursorFx.Kind.Default);
+        }
         if (Input.GetKeyDown(KeyCode.Q)) { if (player.loadout.Def.HasQuake) player.CommandQuake(); else if (player.loadout.Def.HasPull) SkillPull(mouse); }   // Q: 철삭=견인 / 육모방망이=땅울림 / 그 외 무기는 없음
         if (Input.GetKeyDown(KeyCode.Space)) SkillDodge(mouse); // Space: 피하기(구르기). 휘두르기는 마우스 클릭으로 충분하다(기획 타격감 분석)
         if (Input.GetMouseButtonDown(1) && !OverTouchButtons(mouse)) SkillSwing(mouse);   // 우클릭: 커서 방향으로 그 자리에서 즉시 공격(명세 v1.2). 견인은 Q 만
@@ -388,7 +394,7 @@ public class GameMain : MonoBehaviour
         {
             var ray = cam.ScreenPointToRay(mouse);
             var ground = Ground(ray);
-            var e = enemies.Pick(ray, ground, Config.ENEMY_PICK_RADIUS);
+            var e = enemies.Pick(ray, ground, Config.ENEMY_PICK_RADIUS * 1.3f);   // 클릭 판정 1.3배(명세 §3-3)
             if (e != null) player.CommandAttack(e);
             else if (ground.HasValue) { player.CommandMove(ground.Value); marker.Show(ground.Value); holdingMove = true; }
         }

@@ -359,9 +359,6 @@ public static class Balance
     public const float TRICK_TRIGGER_DIST = 3.0f;  // 속임수 혼: 플레이어가 이 거리(m) 안에 있으면 도화선이 탄다
     public const float TRICK_FUSE = 0.7f;  // 속임수 혼: 가까이 선 채로 이 시간(초)이 지나면 덮친다. 그 전에 파혼하면 안전(천도는 캐스팅이 길어 걸림)
     public const float TRICK_REVIVE = 0.5f;  // 속임수 혼: 덮치며 되찾는 맺힘 비율
-    public const float CAMERA_WHEEL_MIN = 0.45f;  // 마우스 휠 최대 확대 배율(카메라 거리의 45%)
-    public const float CAMERA_WHEEL_MAX = 1.8f;  // 마우스 휠 최대 축소 배율(카메라 거리의 180%)
-    public const float CAMERA_WHEEL_STEP = 0.12f;  // 휠 한 칸당 배율 변화
     public const float CAMERA_WHEEL_SMOOTH = 12.0f;  // 휠 줌이 따라가는 부드러움(클수록 빠름) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_ACCEL = 70.0f;  // 걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_START_FRAC = 0.5f;  // 걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발) | 기획 표준 명세 hud-controls-spec v1(10-25)
@@ -446,9 +443,6 @@ public static class Balance
     public const float MOVE_LEAN_DEG = 3.0f;  // (기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_BANK_DEG = 3.0f;  // (기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_LEAN_SMOOTH = 12.0f;  // (기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)
-    public const float CAMERA_PITCH_PER_ZOOM_DEG = 22.0f;  // (기획 조작감) 줌 배율이 1.0 달라질 때 카메라 내려다보는 각도 변화(도). 확대하면 눕고(몰입), 축소하면 일어선다(지도처럼)
-    public const float CAMERA_PITCH_MIN_DEG = 28.0f;  // (기획 조작감) 줌으로 바뀌는 카메라 각도의 하한(도) — 낮으면 언덕·나무에 시야가 가려진다
-    public const float CAMERA_PITCH_MAX_DEG = 62.0f;  // (기획 조작감) 줌으로 바뀌는 카메라 각도의 상한(도)
     public const float JOY_RADIUS_PX = 90.0f;  // (폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)
     public const float JOY_DEADZONE_PX = 14.0f;  // (폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다
     public const float JOY_ZONE_WIDTH_FRAC = 0.45f;  // (폰 조작) 조이스틱이 생기는 화면 왼쪽 영역 너비 비율

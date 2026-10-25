@@ -1427,18 +1427,6 @@
   "value": 0.5,
   "note": "속임수 혼: 덮치며 되찾는 맺힘 비율"
  },
- "CAMERA_WHEEL_MIN": {
-  "value": 0.45,
-  "note": "마우스 휠 최대 확대 배율(카메라 거리의 45%)"
- },
- "CAMERA_WHEEL_MAX": {
-  "value": 1.8,
-  "note": "마우스 휠 최대 축소 배율(카메라 거리의 180%)"
- },
- "CAMERA_WHEEL_STEP": {
-  "value": 0.12,
-  "note": "휠 한 칸당 배율 변화"
- },
  "CAMERA_WHEEL_SMOOTH": {
   "value": 12.0,
   "note": "휠 줌이 따라가는 부드러움(클수록 빠름) | 기획 표준 명세 hud-controls-spec v1(10-25)"
@@ -1774,18 +1762,6 @@
  "MOVE_LEAN_SMOOTH": {
   "value": 12.0,
   "note": "(기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)"
- },
- "CAMERA_PITCH_PER_ZOOM_DEG": {
-  "value": 22.0,
-  "note": "(기획 조작감) 줌 배율이 1.0 달라질 때 카메라 내려다보는 각도 변화(도). 확대하면 눕고(몰입), 축소하면 일어선다(지도처럼)"
- },
- "CAMERA_PITCH_MIN_DEG": {
-  "value": 28.0,
-  "note": "(기획 조작감) 줌으로 바뀌는 카메라 각도의 하한(도) — 낮으면 언덕·나무에 시야가 가려진다"
- },
- "CAMERA_PITCH_MAX_DEG": {
-  "value": 62.0,
-  "note": "(기획 조작감) 줌으로 바뀌는 카메라 각도의 상한(도)"
  },
  "JOY_RADIUS_PX": {
   "value": 90.0,
