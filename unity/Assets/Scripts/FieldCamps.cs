@@ -9,7 +9,7 @@ using Chasa.Core;
 
 public class FieldCamps
 {
-    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public bool loner; public string who, memory, speaker, line, half; }
+    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public bool loner; public string who, memory, speaker, line, half; public float kx, kz; }
     [System.Serializable] class CampFile { public CampRow[] camps; }
 
     class Camp
@@ -125,6 +125,7 @@ public class FieldCamps
             {
                 float a = Random.value * Mathf.PI * 2f, rr = c.row.r + 12f + Random.value * 4f;
                 float lx = c.row.x + Mathf.Cos(a) * rr, lz = c.row.z + Mathf.Sin(a) * rr;
+                if (k == 0 && c.row.kx != 0f) { lx = c.row.kx; lz = c.row.kz; }   // 첫째는 야영지 소품(아트 camp_layouts)이 놓인 자리에 꿇는다
                 MapLayout.PushOut(ref lx, ref lz, Config.ENEMY_RADIUS + 1f);
                 var l = enemies.SpawnCamp(new Vector3(lx, 0f, lz), k % 2 == 0);
                 if (k == 0 && !string.IsNullOrEmpty(c.row.who)) { l.label = c.row.who; l.soul.LonerMemory = c.row.memory; }   // 첫째가 서사 표의 그 혼(이름표 + 기억). 둘째는 공용 기억
