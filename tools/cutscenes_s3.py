@@ -504,7 +504,7 @@ CUTS += [
      ui={'poem_card': BC['B-28']['lay'].split('「')[1].split('」')[0], 'poem_card_time': 6.0, 'poem_rule': 'S-272를 안 눕혔으면 첫 줄만(도감에서 나중에 채움)'},
      note='시 글은 season3_outline B-28 lay가 정본. B-16 원본 마지막 줄 "내 먹 냄새를 모르겠다"에 대한 답(ink_link)'),
   st(10.0, beat='위층', cam={'mode': 'tilt', 'dir': 'up', 'time': 1.0}, act='위에서 벼루가 멈춘다. 벼루지기의 혼이 갈기를 멈추고 줄 쪽으로 걸어간다')],
-  dur=14.0, light_t=12.0, extra_ui={'collection': '도감 "벼루지기의 시"'}),
+  dur=14.0, light_t=12.0, extra_ui={'collection': ['도감 "벼루지기의 시"', '도감 "백의 원본"(baek_originals.json)']}),
  brk('B-28', ['대폭발. 앙금이 터져 먹물이 솟는다', '손이 반 줄에서 굳는다'], '진한 먹 한 통(캐스팅 중 피격 시 안 끊김 1회/밤)'),
 ]
 
