@@ -165,6 +165,7 @@ public class Interactables
         {
             var g = Object.Instantiate(prefab, new Vector3(s[0], GroundTerrain.HeightAt(s[0], s[1]), s[1]), Quaternion.identity, root);
             foreach (var c in g.GetComponentsInChildren<Collider>()) Object.Destroy(c);
+            GroundSnap.Attach(g);   // 2·3막 땅은 가까워질 때 읽히므로, 처음 높이가 틀려도 땅이 올라오면 따라 선다
             var lt = g.transform.Find("Light_seonang_rest");
             if (lt != null && QualityTier.Current != QualityTier.Level.Low)
             {

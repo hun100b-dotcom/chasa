@@ -15,9 +15,49 @@ public static class GroundTerrain
 
     public static bool Active, Active2;   // Active2: 2막 땅(768×640m, 원점 (0,640))이 켜졌다
     // 붙은 땅들(2막 북쪽·3막 ⑤ 동쪽·⑥ 서쪽): 1막 땅(0~640)과 같은 셰이더에 원점·직사각 크기만 더해 받는다
-    class Region { public Meta meta; public HeightField h; public SplatField s; public Material m; public float ox, oz, sx, sz; public bool Has(float x, float z) { return x >= ox && x < ox + sx && z >= oz && z < oz + sz; } }
+    class Region
+    {
+        public Meta meta; public HeightField h; public SplatField s; public Material m; public float ox, oz, sx, sz;
+        public string dir; public Color[] tints; public Texture2D[] texs;   // 다시 읽고(dir·tints) 지울 때(texs) 쓴다
+        public bool loaded, failed;   // loaded: 높이·재질 데이터가 메모리에 올라와 있다 / failed: 읽다 실패(다시 시도하지 않는다)
+        public bool Has(float x, float z) { return loaded && x >= ox && x < ox + sx && z >= oz && z < oz + sz; }   // 안 읽은 땅은 '없는 것'으로 본다(높이는 옛 땅 값)
+        public bool Covers(float x, float z) { return x >= ox && x < ox + sx && z >= oz && z < oz + sz; }          // 읽었든 안 읽었든 이 땅 위인가
+        public float DistTo(float x, float z) { float dx = Mathf.Max(Mathf.Max(ox - x, 0f), x - (ox + sx)), dz = Mathf.Max(Mathf.Max(oz - z, 0f), z - (oz + sz)); return Mathf.Sqrt(dx * dx + dz * dz); }
+    }
+    /// <summary>땅 데이터를 읽거나 지울 때마다 1 씩 올라간다 — FieldManager 가 '못 만든 청크'를 다시 시도할 때를 안다</summary>
+    public static int LoadVersion;
+    // 층 타일·잔무늬 그림은 땅마다 새로 풀면 같은 그림이 여러 장 쌓인다 → 이름별로 한 번만 풀어 모두가 나눠 쓴다(모바일 메모리)
+    static readonly Dictionary<string, Texture2D> texCache = new Dictionary<string, Texture2D>();
     static readonly List<Region> extras = new List<Region>();
     static Region RegionAt(float x, float z) { for (int i = 0; i < extras.Count; i++) if (extras[i].Has(x, z)) return extras[i]; return null; }
+
+    /// <summary>이 청크(128m 칸)의 땅을 지금 만들 수 있나: 붙은 땅 위인데 아직 안 읽었으면 false(FieldManager 가 읽힐 때까지 기다린다)</summary>
+    public static bool ChunkReady(int cx, int cz)
+    {
+        float x = cx * FieldRules.ChunkSize + FieldRules.ChunkSize * 0.5f, z = cz * FieldRules.ChunkSize + FieldRules.ChunkSize * 0.5f;
+        foreach (var r in extras) if (r.Covers(x, z)) return r.loaded || r.failed;
+        return true;
+    }
+
+    // 붙은 땅을 가까울 때만 메모리에 올린다. 읽는 거리 300m > 청크 하나가 닿는 최대 거리(약 256m), 지우는 거리는 그보다 훨씬 멀리(들락날락 방지)
+    const float LoadDist = 300f, UnloadDist = 520f;
+    static float tickT;
+    /// <summary>
+    /// 플레이어 위치에 따라 붙은 땅(2막·3막)을 읽고 지운다. 금줄이 닫힌 땅은 읽지 않는다(못 가는 곳을 메모리에 올릴 이유가 없다).
+    /// 왜? 2막·3막 땅 넷을 시작 때 다 풀면 WASM 메모리가 약 90MB 늘어 폰이 버티기 어렵다. 1막 동안은 0.
+    /// </summary>
+    public static void Tick(float px, float pz)
+    {
+        tickT -= Time.unscaledDeltaTime; if (tickT > 0f) return; tickT = 0.5f;
+        foreach (var r in extras)
+        {
+            if (r.failed) continue;
+            bool open = FieldRules.RegionOpen(r.ox, r.oz, r.ox + r.sx, r.oz + r.sz);
+            float d = r.DistTo(px, pz);
+            if (!r.loaded && open && d < LoadDist) LoadRegion(r);
+            else if (r.loaded && (!open || d > UnloadDist)) UnloadRegion(r);
+        }
+    }
     static HeightField height; static SplatField splat;
     static Material mat; static Meta meta;
     const float Step = 2f;   // 땅 메쉬 꼭짓점 간격(m). 128m 청크 = 64칸 = 4225 꼭짓점
@@ -74,28 +114,51 @@ public static class GroundTerrain
     {
         try
         {
-            var mj = Resources.Load<TextAsset>(dir + "/terrain"); var hb = Resources.Load<TextAsset>(dir + "/heightmap"); var sa = Resources.Load<TextAsset>(dir + "/splat_a");
-            if (mj == null || hb == null || sa == null) return false;
+            var mj = Resources.Load<TextAsset>(dir + "/terrain");   // 작은 설명 파일만(원점·크기). 큰 그림은 가까워질 때 LoadRegion 이 읽는다
+            if (mj == null) return false;
             var mt = JsonUtility.FromJson<Meta>(mj.text);
             float ox = mt.origin_m != null && mt.origin_m.Length >= 2 ? mt.origin_m[0] : 0f, oz = mt.origin_m != null && mt.origin_m.Length >= 2 ? mt.origin_m[1] : 640f;
             float sx = mt.size_x_m > 0f ? mt.size_x_m : mt.size, sz = mt.size_z_m > 0f ? mt.size_z_m : mt.size;
-            var ht = Decode(hb, true); if (ht == null) return false;
-            var px = ht.GetPixels32(); var r = new byte[px.Length]; var g = new byte[px.Length];
-            for (int i = 0; i < px.Length; i++) { r[i] = px[i].r; g[i] = px[i].g; }
-            var hf = HeightField.FromRGRect(ht.width, ht.height, sx, sz, ox, oz, r, g, mt.height_min_m, mt.height_max_m);
-            var ta = Decode(sa, true); var tb = Decode(Resources.Load<TextAsset>(dir + "/splat_b"), true);
-            if (ta == null) return false;
+            extras.Add(new Region { meta = mt, ox = ox, oz = oz, sx = sx, sz = sz, dir = dir, tints = tints });
+            FieldRules.AddRegion(ox, oz, ox + sx, oz + sz);   // 걸을 수 있는 땅(사각형)은 처음부터 넓힌다: 보스·NPC 가 멀리서도 제자리에 서 있게
+            return true;
+        }
+        catch (System.Exception e) { Debug.LogWarning(dir + " 땅 설명을 읽지 못했다: " + e.Message); return false; }
+    }
+
+    /// <summary>붙은 땅 하나의 높이·재질 데이터를 메모리에 올린다(실패하면 그 땅은 옛 땅 높이로 남고 다시 시도하지 않는다)</summary>
+    static void LoadRegion(Region r)
+    {
+        try
+        {
+            var hb = Resources.Load<TextAsset>(r.dir + "/heightmap"); var sa = Resources.Load<TextAsset>(r.dir + "/splat_a"); var sbA = Resources.Load<TextAsset>(r.dir + "/splat_b");
+            if (hb == null || sa == null) { r.failed = true; return; }
+            var mt = r.meta;
+            var ht = Decode(hb, true); if (ht == null) { r.failed = true; return; }
+            var px = ht.GetPixels32(); var rr = new byte[px.Length]; var g = new byte[px.Length];
+            for (int i = 0; i < px.Length; i++) { rr[i] = px[i].r; g[i] = px[i].g; }
+            var hf = HeightField.FromRGRect(ht.width, ht.height, r.sx, r.sz, r.ox, r.oz, rr, g, mt.height_min_m, mt.height_max_m);
+            Object.Destroy(ht);   // 높이 값만 뽑았으면 그림은 바로 버린다
+            var ta = Decode(sa, true); var tb = Decode(sbA, true);
+            if (ta == null) { r.failed = true; return; }
             var pa = ta.GetPixels32(); var pb = tb != null && tb.width == ta.width && tb.height == ta.height ? tb.GetPixels32() : null;
             var layers = new float[SplatField.Layers][];
             for (int l = 0; l < layers.Length; l++) layers[l] = new float[pa.Length];
             for (int i = 0; i < pa.Length; i++) { layers[0][i] = pa[i].r / 255f; layers[1][i] = pa[i].g / 255f; layers[2][i] = pa[i].b / 255f; layers[3][i] = pa[i].a / 255f; layers[4][i] = pb == null ? 0f : pb[i].r / 255f; }
-            var sf = new SplatField(ta.width, ta.height, sx, sz, ox, oz, layers);
-            var m = MakeMaterial(ta, tb, mt, new Vector4(ox, oz, sx, sz), tints);
-            extras.Add(new Region { meta = mt, h = hf, s = sf, m = m, ox = ox, oz = oz, sx = sx, sz = sz });
-            FieldRules.AddRegion(ox, oz, ox + sx, oz + sz);   // 걸을 수 있는 땅이 넓어진다
-            return true;
+            var sf = new SplatField(ta.width, ta.height, r.sx, r.sz, r.ox, r.oz, layers);
+            r.m = MakeMaterial(ta, tb, mt, new Vector4(r.ox, r.oz, r.sx, r.sz), r.tints);
+            r.h = hf; r.s = sf; r.texs = new[] { ta, tb }; r.loaded = true; LoadVersion++;
+            Resources.UnloadAsset(hb); Resources.UnloadAsset(sa); if (sbA != null) Resources.UnloadAsset(sbA);   // 원본 파일 덩어리는 풀고 나면 필요 없다
         }
-        catch (System.Exception e) { Debug.LogWarning(dir + " 땅을 읽지 못했다: " + e.Message); return false; }
+        catch (System.Exception e) { Debug.LogWarning(r.dir + " 땅을 읽지 못했다: " + e.Message); r.failed = true; }
+    }
+
+    /// <summary>멀어진(또는 금줄이 다시 닫힌) 땅의 데이터를 메모리에서 내린다. 그 땅의 청크는 이미 FieldManager 가 껐을 거리다</summary>
+    static void UnloadRegion(Region r)
+    {
+        if (r.m != null) Object.Destroy(r.m);
+        if (r.texs != null) foreach (var t in r.texs) if (t != null) Object.Destroy(t);
+        r.m = null; r.h = null; r.s = null; r.texs = null; r.loaded = false; LoadVersion++;
     }
 
     /// <summary>PNG 를 읽는다. flipRows: 지도(높이·재질)는 약속이 '그림 첫 줄(위) = 남쪽(z 0)'인데 유니티는 그림 맨 아랫줄을 0번으로 읽어 남북이 뒤집힌다 → 줄 순서를 뒤집어 바로잡는다</summary>
@@ -123,10 +186,12 @@ public static class GroundTerrain
 
     static Texture2D LayerTex(string layer, string fallbackTile)
     {
+        Texture2D hit; if (texCache.TryGetValue("L" + layer, out hit) && hit != null) return hit;
         var ta = Resources.Load<TextAsset>("Terrain/layer_" + layer);   // 아트가 이음매 없는 전용 타일을 주면 그것을, 아니면 옛 타일 그림을 대신 쓴다
         Texture2D t = ta != null ? Decode(ta) : null;
         if (t == null) t = SpriteLib.Texture("tiles/" + fallbackTile);
         if (t != null) t.wrapMode = TextureWrapMode.Repeat;
+        texCache["L" + layer] = t;
         return t;
     }
 
@@ -226,8 +291,11 @@ public static class GroundTerrain
         string[] dn = { "dirt", "grass", "gravel", "paddy", "leaf" }; int found = 0;
         for (int i = 0; i < 5; i++)
         {
-            var ta = Resources.Load<TextAsset>("Terrain/detail_" + dn[i]);
-            var t = ta != null ? Decode(ta) : null;
+            Texture2D t; if (!texCache.TryGetValue("D" + dn[i], out t) || t == null)
+            {
+                var ta = Resources.Load<TextAsset>("Terrain/detail_" + dn[i]);
+                t = ta != null ? Decode(ta) : null; texCache["D" + dn[i]] = t;
+            }
             if (t == null) continue;
             t.wrapMode = TextureWrapMode.Repeat; mat.SetTexture("_D" + i, t); found++;
         }

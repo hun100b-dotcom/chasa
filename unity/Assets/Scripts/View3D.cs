@@ -22,7 +22,7 @@ public static class View3D
     }
 
     // 카메라 안: 내려다보는 각도 / 플레이어 위치에서 화면 세로가 보여 주는 높이(m) / 시야각
-    //   A: 영상 속 디아블로풍에 가장 가깝게(가깝고 깊게 내려다봄)  B: 조금 멀고 완만  C: 더 가깝고 더 가파름
+    //   A: 영상 속 쿼터뷰 액션 시점에 가장 가깝게(가깝고 깊게 내려다봄)  B: 조금 멀고 완만  C: 더 가깝고 더 가파름
     public static readonly CamVariant[] Variants =
     {
         new CamVariant("a", 50f, 11.5f, 35f),

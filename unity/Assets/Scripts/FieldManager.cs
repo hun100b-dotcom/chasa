@@ -105,18 +105,21 @@ public class FieldManager : MonoBehaviour
         l.Add(it);
     }
 
+    bool waitingLand; int seenLandVersion;   // 땅 데이터가 아직 안 올라와 못 연 칸이 있다 / 마지막으로 본 땅 읽기 횟수
+
     void Update()
     {
         if (player == null || data == null) return;
         if (cover != null && cover.player == null) cover.player = player;   // GameMain 이 player 를 Awake 뒤에 넣어 준다
         int cx = FieldRules.ChunkX(player.Pos.x), cz = FieldRules.ChunkZ(player.Pos.z);
         int key = FieldRules.Key(cx, cz);
-        if (key != curChunk)
+        GroundTerrain.Tick(player.Pos.x, player.Pos.z);   // 가까워진 붙은 땅(2·3막)을 읽고, 멀어진 땅은 내린다
+        if (key != curChunk || (waitingLand && GroundTerrain.LoadVersion != seenLandVersion))   // 못 만든 칸이 있으면 땅이 읽힌 뒤 다시 시도
         {
-            curChunk = key;
+            curChunk = key; seenLandVersion = GroundTerrain.LoadVersion; waitingLand = false;
             for (int x = cx - 1; x <= cx + 1; x++)
                 for (int z = cz - 1; z <= cz + 1; z++)
-                    if (FieldRules.ChunkHasLand(x, z)) Open(x, z);   // 땅이 있는 칸만 연다(빈 칸·바다는 건너뜀)
+                    if (FieldRules.ChunkHasLand(x, z)) { if (GroundTerrain.ChunkReady(x, z)) Open(x, z); else waitingLand = true; }   // 땅이 있는 칸만 연다(빈 칸·바다는 건너뜀). 아직 안 읽은 붙은 땅 위 칸은 기다린다
             var drop = new List<int>();
             foreach (var kv in roots) { int ox = FieldRules.KeyX(kv.Key), oz = FieldRules.KeyZ(kv.Key); if (Mathf.Abs(ox - cx) > 1 || Mathf.Abs(oz - cz) > 1) drop.Add(kv.Key); }
             foreach (var k in drop) Close(k);

@@ -118,6 +118,8 @@ namespace Chasa.Core
             foreach (var r in walk) if ((!player || Open(r)) && x >= r[0] + radius && x <= r[2] - radius && z >= r[1] + radius && z <= r[3] - radius) return true;
             return false;
         }
+        /// <summary>이 땅 사각형이 지금 주인공에게 열려 있나(금줄 규칙). GroundTerrain 이 '가고 있는 땅만' 메모리에 올릴 때 쓴다</summary>
+        public static bool RegionOpen(float x0, float z0, float x1, float z1) { return Open(new[] { x0, z0, x1, z1 }); }
         /// <summary>금줄이 막지 않는 사각형인가: 2막(z≥640 이고 x&lt;768)은 Act2Open, ⑤(x≥768)·⑥(x&lt;0)은 Act3Open 이 필요하다</summary>
         static bool Open(float[] r)
         {
