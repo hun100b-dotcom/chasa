@@ -1,0 +1,655 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(필드 절대)",
+ "note": "place_act1_route.py가 만든다. 직접 고치지 말고 스크립트를 고친다. act1_life.json 옆에 같이 읽는다. z=0(1막 땅은 평평)",
+ "props": [
+  {
+   "prop": "a1r_lean_to",
+   "file": "assets3d/props/a1r_lean_to.glb",
+   "x": 262,
+   "y": 122,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 원두막(둑길 표지)"
+  },
+  {
+   "prop": "prop_stepstones",
+   "file": "assets3d/props/prop_stepstones.glb",
+   "x": 190.8,
+   "y": 32.49,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 디딤돌"
+  },
+  {
+   "prop": "prop_jangdok",
+   "file": "assets3d/props/prop_jangdok.glb",
+   "x": 198.66,
+   "y": 26.29,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 장독"
+  },
+  {
+   "prop": "cover_stones_b",
+   "file": "assets3d/nature/cover_stones_b.glb",
+   "x": 175.99,
+   "y": 36.12,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길가 돌"
+  },
+  {
+   "prop": "prop_jangdok",
+   "file": "assets3d/props/prop_jangdok.glb",
+   "x": 179.1,
+   "y": 23.54,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 장독"
+  },
+  {
+   "prop": "prop_firewood",
+   "file": "assets3d/props/prop_firewood.glb",
+   "x": 181.7,
+   "y": 21.93,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 땔감"
+  },
+  {
+   "prop": "prop_stepstones",
+   "file": "assets3d/props/prop_stepstones.glb",
+   "x": 175.99,
+   "y": 27.1,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 디딤돌"
+  },
+  {
+   "prop": "prop_sacks",
+   "file": "assets3d/props/prop_sacks.glb",
+   "x": 170.18,
+   "y": 39.76,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 가마니"
+  },
+  {
+   "prop": "prop_log_pile",
+   "file": "assets3d/props/prop_log_pile.glb",
+   "x": 170.44,
+   "y": 27.76,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 통나무 더미"
+  },
+  {
+   "prop": "prop_sacks",
+   "file": "assets3d/props/prop_sacks.glb",
+   "x": 174.91,
+   "y": 41.51,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 가마니"
+  },
+  {
+   "prop": "prop_firewood",
+   "file": "assets3d/props/prop_firewood.glb",
+   "x": 179.2,
+   "y": 28.44,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 땔감"
+  },
+  {
+   "prop": "a1r_wayside_rest",
+   "file": "assets3d/props/a1r_wayside_rest.glb",
+   "x": 165.1,
+   "y": 31.06,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길가 쉼터"
+  },
+  {
+   "prop": "prop_sacks",
+   "file": "assets3d/props/prop_sacks.glb",
+   "x": 178.76,
+   "y": 39.52,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 가마니"
+  },
+  {
+   "prop": "nature_bush_a",
+   "file": "assets3d/nature/nature_bush_a.glb",
+   "x": 162.02,
+   "y": 27.35,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길섶 덤불"
+  },
+  {
+   "prop": "prop_log_pile",
+   "file": "assets3d/props/prop_log_pile.glb",
+   "x": 156.3,
+   "y": 33.4,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 통나무 더미"
+  },
+  {
+   "prop": "nature_bush_a",
+   "file": "assets3d/nature/nature_bush_a.glb",
+   "x": 162.02,
+   "y": 43.0,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길섶 덤불"
+  },
+  {
+   "prop": "prop_log_pile",
+   "file": "assets3d/props/prop_log_pile.glb",
+   "x": 159.51,
+   "y": 37.79,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 통나무 더미"
+  },
+  {
+   "prop": "prop_stepstones",
+   "file": "assets3d/props/prop_stepstones.glb",
+   "x": 170.44,
+   "y": 45.16,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 디딤돌"
+  },
+  {
+   "prop": "prop_stepstones",
+   "file": "assets3d/props/prop_stepstones.glb",
+   "x": 168.3,
+   "y": 60.06,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 디딤돌"
+  },
+  {
+   "prop": "cover_stones_b",
+   "file": "assets3d/nature/cover_stones_b.glb",
+   "x": 174.29,
+   "y": 53.67,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길가 돌"
+  },
+  {
+   "prop": "a1r_gourd_trellis",
+   "file": "assets3d/props/a1r_gourd_trellis.glb",
+   "x": 175.88,
+   "y": 58.13,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 박 시렁"
+  },
+  {
+   "prop": "prop_firewood",
+   "file": "assets3d/props/prop_firewood.glb",
+   "x": 171.04,
+   "y": 69.39,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 땔감"
+  },
+  {
+   "prop": "a1r_wayside_rest",
+   "file": "assets3d/props/a1r_wayside_rest.glb",
+   "x": 180.99,
+   "y": 77.8,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길가 쉼터"
+  },
+  {
+   "prop": "prop_jangdok",
+   "file": "assets3d/props/prop_jangdok.glb",
+   "x": 181.77,
+   "y": 103.79,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 장독"
+  },
+  {
+   "prop": "prop_sacks",
+   "file": "assets3d/props/prop_sacks.glb",
+   "x": 184.25,
+   "y": 107.41,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 가마니"
+  },
+  {
+   "prop": "a1r_drink_jars",
+   "file": "assets3d/props/a1r_drink_jars.glb",
+   "x": 193.54,
+   "y": 104.5,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길가 물독"
+  },
+  {
+   "prop": "prop_sacks",
+   "file": "assets3d/props/prop_sacks.glb",
+   "x": 178.39,
+   "y": 100.09,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 가마니"
+  },
+  {
+   "prop": "prop_sacks",
+   "file": "assets3d/props/prop_sacks.glb",
+   "x": 193.1,
+   "y": 116.71,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 가마니"
+  },
+  {
+   "prop": "nature_bush_a",
+   "file": "assets3d/nature/nature_bush_a.glb",
+   "x": 188.97,
+   "y": 117.95,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길섶 덤불"
+  },
+  {
+   "prop": "prop_firewood",
+   "file": "assets3d/props/prop_firewood.glb",
+   "x": 186.02,
+   "y": 112.74,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 땔감"
+  },
+  {
+   "prop": "prop_log_pile",
+   "file": "assets3d/props/prop_log_pile.glb",
+   "x": 200.06,
+   "y": 120.12,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 통나무 더미"
+  },
+  {
+   "prop": "cover_stones_b",
+   "file": "assets3d/nature/cover_stones_b.glb",
+   "x": 203.15,
+   "y": 106.93,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길가 돌"
+  },
+  {
+   "prop": "nature_bush_a",
+   "file": "assets3d/nature/nature_bush_a.glb",
+   "x": 205.58,
+   "y": 118.23,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 길섶 덤불"
+  },
+  {
+   "prop": "prop_sacks",
+   "file": "assets3d/props/prop_sacks.glb",
+   "x": 213.61,
+   "y": 105.22,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 가마니"
+  },
+  {
+   "prop": "prop_stepstones",
+   "file": "assets3d/props/prop_stepstones.glb",
+   "x": 211.34,
+   "y": 118.17,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 디딤돌"
+  },
+  {
+   "prop": "prop_haystack",
+   "file": "assets3d/props/prop_haystack.glb",
+   "x": 227.98,
+   "y": 104.14,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 건초 더미"
+  },
+  {
+   "prop": "nature_bush_b",
+   "file": "assets3d/nature/nature_bush_b.glb",
+   "x": 223.15,
+   "y": 118.01,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭둑 덤불"
+  },
+  {
+   "prop": "a1r_manure_heap",
+   "file": "assets3d/props/a1r_manure_heap.glb",
+   "x": 223.86,
+   "y": 106.46,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 두엄 더미"
+  },
+  {
+   "prop": "prop_haystack",
+   "file": "assets3d/props/prop_haystack.glb",
+   "x": 218.74,
+   "y": 106.92,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 건초 더미"
+  },
+  {
+   "prop": "prop_scarecrow",
+   "file": "assets3d/props/prop_scarecrow.glb",
+   "x": 235.76,
+   "y": 118.34,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 허수아비"
+  },
+  {
+   "prop": "a1r_water_gate",
+   "file": "assets3d/props/a1r_water_gate.glb",
+   "x": 236.2,
+   "y": 104.16,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 물꼬"
+  },
+  {
+   "prop": "a1r_manure_heap",
+   "file": "assets3d/props/a1r_manure_heap.glb",
+   "x": 240.1,
+   "y": 113.9,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 두엄 더미"
+  },
+  {
+   "prop": "prop_haystack",
+   "file": "assets3d/props/prop_haystack.glb",
+   "x": 235.57,
+   "y": 113.71,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 건초 더미"
+  },
+  {
+   "prop": "a1r_manure_heap",
+   "file": "assets3d/props/a1r_manure_heap.glb",
+   "x": 231.03,
+   "y": 106.81,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 두엄 더미"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 240.41,
+   "y": 105.85,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭 돌"
+  },
+  {
+   "prop": "prop_scarecrow",
+   "file": "assets3d/props/prop_scarecrow.glb",
+   "x": 251.69,
+   "y": 113.68,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 허수아비"
+  },
+  {
+   "prop": "prop_scarecrow",
+   "file": "assets3d/props/prop_scarecrow.glb",
+   "x": 242.04,
+   "y": 118.52,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 허수아비"
+  },
+  {
+   "prop": "prop_haystack",
+   "file": "assets3d/props/prop_haystack.glb",
+   "x": 246.38,
+   "y": 102.64,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 건초 더미"
+  },
+  {
+   "prop": "prop_haystack",
+   "file": "assets3d/props/prop_haystack.glb",
+   "x": 250.3,
+   "y": 105.31,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 건초 더미"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 246.85,
+   "y": 113.89,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭 돌"
+  },
+  {
+   "prop": "prop_haystack",
+   "file": "assets3d/props/prop_haystack.glb",
+   "x": 254.57,
+   "y": 103.7,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 건초 더미"
+  },
+  {
+   "prop": "nature_bush_b",
+   "file": "assets3d/nature/nature_bush_b.glb",
+   "x": 261.26,
+   "y": 113.29,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭둑 덤불"
+  },
+  {
+   "prop": "cover_flower_mix",
+   "file": "assets3d/nature/cover_flower_mix.glb",
+   "x": 260.44,
+   "y": 105.56,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 둑 들꽃"
+  },
+  {
+   "prop": "nature_bush_b",
+   "file": "assets3d/nature/nature_bush_b.glb",
+   "x": 253.46,
+   "y": 118.18,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭둑 덤불"
+  },
+  {
+   "prop": "a1r_ridge_marker",
+   "file": "assets3d/props/a1r_ridge_marker.glb",
+   "x": 269.32,
+   "y": 102.65,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 두렁 말뚝"
+  },
+  {
+   "prop": "a1r_bird_line",
+   "file": "assets3d/props/a1r_bird_line.glb",
+   "x": 268.61,
+   "y": 112.98,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 새 쫓는 줄"
+  },
+  {
+   "prop": "nature_bush_b",
+   "file": "assets3d/nature/nature_bush_b.glb",
+   "x": 262.82,
+   "y": 100.69,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭둑 덤불"
+  },
+  {
+   "prop": "a1r_sheaf_stack",
+   "file": "assets3d/props/a1r_sheaf_stack.glb",
+   "x": 282.09,
+   "y": 112.36,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 보릿단 말림"
+  },
+  {
+   "prop": "a1r_water_gate",
+   "file": "assets3d/props/a1r_water_gate.glb",
+   "x": 275.78,
+   "y": 113.38,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 물꼬"
+  },
+  {
+   "prop": "a1r_sheaf_stack",
+   "file": "assets3d/props/a1r_sheaf_stack.glb",
+   "x": 278.72,
+   "y": 102.72,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 보릿단 말림"
+  },
+  {
+   "prop": "a1r_water_gate",
+   "file": "assets3d/props/a1r_water_gate.glb",
+   "x": 283.12,
+   "y": 105.09,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 물꼬"
+  },
+  {
+   "prop": "nature_bush_b",
+   "file": "assets3d/nature/nature_bush_b.glb",
+   "x": 273.99,
+   "y": 105.38,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭둑 덤불"
+  },
+  {
+   "prop": "a1r_sheaf_stack",
+   "file": "assets3d/props/a1r_sheaf_stack.glb",
+   "x": 287.92,
+   "y": 112.46,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 보릿단 말림"
+  },
+  {
+   "prop": "a1r_water_gate",
+   "file": "assets3d/props/a1r_water_gate.glb",
+   "x": 287.03,
+   "y": 104.19,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 물꼬"
+  },
+  {
+   "prop": "cover_flower_mix",
+   "file": "assets3d/nature/cover_flower_mix.glb",
+   "x": 292.71,
+   "y": 102.7,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 둑 들꽃"
+  },
+  {
+   "prop": "cover_flower_mix",
+   "file": "assets3d/nature/cover_flower_mix.glb",
+   "x": 293.03,
+   "y": 112.86,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 둑 들꽃"
+  },
+  {
+   "prop": "a1r_ridge_marker",
+   "file": "assets3d/props/a1r_ridge_marker.glb",
+   "x": 299.87,
+   "y": 105.52,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 두렁 말뚝"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 300.15,
+   "y": 111.49,
+   "rot": 0,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭 돌"
+  },
+  {
+   "prop": "a1r_sheaf_stack",
+   "file": "assets3d/props/a1r_sheaf_stack.glb",
+   "x": 304.59,
+   "y": 108.31,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 보릿단 말림"
+  },
+  {
+   "prop": "nature_bush_b",
+   "file": "assets3d/nature/nature_bush_b.glb",
+   "x": 302.61,
+   "y": 101.31,
+   "rot": 90,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 밭둑 덤불"
+  },
+  {
+   "prop": "a1r_bird_line",
+   "file": "assets3d/props/a1r_bird_line.glb",
+   "x": 297.3,
+   "y": 99.33,
+   "rot": 180,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 새 쫓는 줄"
+  },
+  {
+   "prop": "prop_stepstones",
+   "file": "assets3d/props/prop_stepstones.glb",
+   "x": 204.99,
+   "y": 25.86,
+   "rot": 270,
+   "z": 0.0,
+   "note": "처음 10분 길 보강: 디딤돌"
+  }
+ ]
+}

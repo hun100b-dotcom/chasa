@@ -6,6 +6,7 @@ import sys, os, json
 sys.path.insert(0, os.path.dirname(__file__))
 from lib3d import *
 from characters import souls
+from fx import annulus
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets3d")
 
 def mix(a, b, t):
@@ -41,9 +42,18 @@ def region_extra(region, kind):
     elif region == "soegol":    # 쇳골 광부: 등불 달린 광부 모자와 곡괭이
         e += [cyl("helmet", hr * 1.0, hr * 0.7, 0.2, (0, 0, hz + hr * 0.75), "stone_dark", 8), sphere("lamp", 0.07, (0, fy - 0.02, hz + hr * 0.85), mat("gold", 1.2), 5, 4),
               limb("pickaxe", (hr + 0.12, fy + 0.1, cz - 0.15), (hr + 0.25, fy + 0.1, cz + 0.55), 0.025, 0.025, "wood", 4), box("pickhead", (0.28, 0.04, 0.05), (hr + 0.25, fy + 0.1, cz + 0.55), "iron")]
+    elif region in ("number", "number_named"):   # 쇳골 숫자 혼(인 없음): 명부에 번호로만 적힌 광부. 광부 혼(등불·곡괭이)과 달리 불 꺼진 투구 + 목 쇠고리 + 가슴 아래까지 늘어진 큰 번호 목패
+        e += [cyl("helmet", hr * 1.0, hr * 0.7, 0.2, (0, 0, hz + hr * 0.75), "#4A4640", 8), box("lamp_dead", (0.07, 0.05, 0.06), (0, fy - 0.02, hz + hr * 0.85), "#2A2826")]
+        collar = annulus("collar", hr * 0.62, hr * 0.92, 0.04, hz - hr * 0.95, "iron", 10); e.append(collar)
+        tz = cz - 0.12   # 목패 중심 높이(가슴 아래로 늘어진다)
+        e += [limb("cord_l", (-hr * 0.55, fy + 0.05, hz - hr * 0.9), (-0.1, fy - 0.02, tz + 0.22), 0.012, 0.012, "wood_dark", 3), limb("cord_r", (hr * 0.55, fy + 0.05, hz - hr * 0.9), (0.1, fy - 0.02, tz + 0.22), 0.012, 0.012, "wood_dark", 3),
+              box("numtag", (0.3, 0.035, 0.42), (0, fy - 0.03, tz), "#8A7A5E"), box("numtag_hole", (0.05, 0.04, 0.05), (0, fy - 0.035, tz + 0.17), "#2A2826")]
+        e += [box(f"tally{i}", (0.2, 0.04, 0.035), (0, fy - 0.045, tz + 0.08 - i * 0.09), "#2A2826") for i in range(3)]   # 번호를 새긴 홈(글자 없음: 번호는 홈 줄로만 읽힌다)
+        if region == "number_named":   # B-08 천도 뒤: 번호 옆에 이름이 떠 있다 → 목패 옆에 발광 이름 쪽지가 붙는다(글자 없음)
+            e += [box("name_slip", (0.15, 0.015, 0.24), (0.21, fy - 0.05, tz - 0.02), mat("#F3E7D3", 1.4), rot=(0, 0, 0.12)), limb("slip_thread", (0.15, fy - 0.04, tz + 0.12), (0.2, fy - 0.05, tz + 0.1), 0.006, 0.006, "#F3E7D3", 3)]
     return e
 
-REGIONS = {"yeoksa": ("검은여울 역병", "#5E8F63", 0.75), "bungjae": ("붉은재 번호 병사", "#7C86A6", 0.7), "soegol": ("쇳골 광부", "#8C8478", 0.7)}
+REGIONS = {"yeoksa": ("검은여울 역병", "#5E8F63", 0.75), "bungjae": ("붉은재 번호 병사", "#7C86A6", 0.7), "soegol": ("쇳골 광부", "#8C8478", 0.7), "number": ("쇳골 숫자 혼", "#7A7C84", 0.5), "number_named": ("쇳골 숫자 혼(이름 되찾음)", "#7A7C84", 0.5)}
 
 def variant(kind, region, o=0):
     parts = souls()[kind](o)
@@ -61,7 +71,7 @@ if __name__ == "__main__":
             export(o, os.path.join(OUT, "souls", f"soul_{kind}_{region}.glb"))
     # 미리보기: 행=지역(기본 포함 4행), 열=혼 4종
     reset()
-    for r, region in enumerate((None, "yeoksa", "bungjae", "soegol")):
+    for r, region in enumerate((None, "soegol", "number", "number_named")):
         for c, kind in enumerate(BASE):
             parts = souls()[kind](c * 1.6) if region is None else variant(kind, region, c * 1.6)
             for p in parts: p.location.y += 0  # 기준 유지
