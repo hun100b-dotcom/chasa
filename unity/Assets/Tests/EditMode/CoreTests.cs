@@ -2144,5 +2144,17 @@ public class CoreTests
         Assert.IsFalse(Act2Gate.IsOpen(3, 3, false, -1)); Assert.IsTrue(Act2Gate.IsOpen(4, 3, false, -1));
     }
 
+    [Test]
+    public void CutPlayback_AudioCommands_QueueAtBeat_AndClearOnSkip()
+    {
+        var d = new CutData { id = "T", duration = 5f, steps = new[] {
+            new CutStep { t = 0f, audio = new[] { "music:duck::0.3:1" } },
+            new CutStep { t = 2f, audio = new[] { "loop:amb.snow.wind:0.5" } } } };
+        var p = new CutPlayback(d);
+        Assert.AreEqual(1, p.AudioPending.Count); Assert.AreEqual("music:duck::0.3:1", p.AudioPending.Dequeue());
+        p.Tick(2.5f); Assert.AreEqual("loop:amb.snow.wind:0.5", p.AudioPending.Dequeue());
+        var q = new CutPlayback(d); q.Skip(); Assert.AreEqual(0, q.AudioPending.Count);   // 건너뛰면 소리 명령은 버린다
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

@@ -21,6 +21,23 @@ public class BgmPlayer : MonoBehaviour
     bool loadedAny;
     AudioClip dayA, dayBclip, night, combat, finish;
 
+    // ---- 컷신 소리 대본의 음악 명령(CutscenePlayer 가 보낸다) ----
+    // duck: 음악을 to 배율로 줄임 / silence: 0 / resume: 원래대로(강제 층·곡도 해제) / layer: 전투·처결 층으로 강제 / play: 지정 곡(없으면 fallback)
+    static float mixTarget = 1f, mixRate = 1f, mixNow = 1f;
+    static string forceLayer, playId, playFallback;
+    public static void Command(string op, string id, float to, float fade, string fallback)
+    {
+        mixRate = 1f / Mathf.Max(0.05f, fade);
+        switch (op)
+        {
+            case "duck": mixTarget = Mathf.Clamp01(to); break;
+            case "silence": mixTarget = 0f; break;
+            case "resume": mixTarget = 1f; forceLayer = null; playId = null; break;
+            case "layer": forceLayer = id; mixTarget = 1f; break;
+            case "play": playId = id; playFallback = fallback; mixTarget = 1f; break;
+        }
+    }
+
     public static BgmPlayer Create(JudgeSystem j)
     {
         var go = new GameObject("BgmPlayer");
@@ -54,10 +71,12 @@ public class BgmPlayer : MonoBehaviour
         int kneeling; float near = judge.NearestEnemyDist(out kneeling);
         bool started = judge.KneelEvents != lastKneel; lastKneel = judge.KneelEvents;
         dir.Update(dt, judge.clock.Daylight, near, started, kneeling > 0 || judge.Casting);
+        mixNow = Mathf.MoveTowards(mixNow, mixTarget, dt * mixRate);
 
         // 틀어야 할 곡 정하기
         AudioClip want = null; string wantId = null; bool loop = true;
-        switch (dir.Layer)
+        var layer = forceLayer == "combat" ? BgmLayer.Combat : forceLayer == "finish" ? BgmLayer.Finish : dir.Layer;   // 컷이 층을 강제하면 그것을 따른다
+        switch (layer)
         {
             case BgmLayer.Combat: want = combat; wantId = "combat"; break;
             case BgmLayer.Finish: want = finish; wantId = "finish"; loop = false; break;
@@ -76,6 +95,12 @@ public class BgmPlayer : MonoBehaviour
                 }
                 break;
         }
+        if (playId != null)   // 컷이 지정한 곡(시즌1 끝 곡 등). 파일이 없으면 fallback(silence 면 조용히)
+        {
+            var pc = Load(playId);
+            if (pc != null) { want = pc; wantId = "cut:" + playId; loop = false; }
+            else if (playFallback == "silence") { want = null; wantId = "cut-none"; }
+        }
         if (wantId != curId) Switch(want, wantId, loop, nearEndFade: dir.Layer == BgmLayer.Explore && (curId == "day_a" || curId == "day_b") && (wantId == "day_a" || wantId == "day_b") ? 2f : dir.Fade);
 
         // 교차 진행
@@ -84,7 +109,7 @@ public class BgmPlayer : MonoBehaviour
         float mute = Sfx.Muted ? 0f : SaveStore.Settings.Bgm;   // 설정의 배경음 크기(음소거면 0)
         // 믹스 기준표: 탐험 0.5 / 전투·처결 0.45 를 곱해 타격음을 덮지 않게 한다(1막 BGM 이 -16~-20 LUFS 로 큼)
         float layerMix = dir.Layer == BgmLayer.Combat || dir.Layer == BgmLayer.Finish ? 0.45f : 0.5f;
-        mute *= layerMix * Sfx.Duck;
+        mute *= layerMix * Sfx.Duck * mixNow;
         cur.volume = (cur.clip != null ? k : 0f) * mute;
         prev.volume = (1f - k) * mute;
         if (k >= 1f && prev.isPlaying) prev.Stop();

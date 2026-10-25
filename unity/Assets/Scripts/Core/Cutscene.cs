@@ -20,6 +20,7 @@ namespace Chasa.Core
         public string[] sfx;                     // 이 시각에 틀 효과음 id 들(서사 대본 sfx 칸)
         public string weather;                   // 장면 날씨: clear·cloudy·rain·fog·plague 로 고정(서사가 정하면 무작위보다 우선), auto 면 풀림
         public string cond;                      // 이 조건일 때만 적용(예: "B-01 천도함"). 비면 늘 적용 — 서사 장례 대본의 condition 칸
+        public string[] audio;                   // 소리 명령(사운드 대본): "loop:id:fade" 반복 시작 / "stop:id:fade" 반복 끄기 / "music:op:id:to:fade:fallback" 음악
         public string ctl;                       // 조작 허용: none(잠금) / walk(걷기만) / restore(복귀). 비면 그대로 — 서사 대본의 control 칸
     }
 
@@ -43,6 +44,7 @@ namespace Chasa.Core
         public float CamTime = 0.3f;             // 가장 최근 단계가 정한 이동 시간
         public float ShakeRequest;               // 이번 프레임에 새로 걸린 흔들림(쓴 쪽이 읽고 0 으로)
         public readonly Queue<string> SfxPending = new Queue<string>();   // 틀어야 할 효과음 대기줄(쓰는 쪽이 비운다)
+        public readonly Queue<string> AudioPending = new Queue<string>(); // 소리 명령 대기줄(반복·음악. 쓰는 쪽이 비운다)
         public bool Walk;                        // 지금 구간이 '걷기만 허용'인가(잠금 컷이어도 걸을 수 있다)
         public string LineText = "", LineStyle = "";
         float lineUntil;
@@ -67,6 +69,7 @@ namespace Chasa.Core
                 var s = Data.steps[next++];
                 if (!string.IsNullOrEmpty(s.cond) && (Cond == null || !Cond(s.cond))) continue;   // 조건이 아니면 시간은 비워 둔 채 다음 박자로
                 if (s.sfx != null) foreach (var id in s.sfx) if (!string.IsNullOrEmpty(id)) SfxPending.Enqueue(id);
+                if (s.audio != null) foreach (var a in s.audio) if (!string.IsNullOrEmpty(a)) AudioPending.Enqueue(a);
                 if (!string.IsNullOrEmpty(s.weather)) SceneWeather = s.weather == "auto" ? null : s.weather;
                 if (s.ctl == "walk" || s.ctl == "restore") Walk = true; else if (s.ctl == "none") Walk = false;
                 if (!string.IsNullOrEmpty(s.cam))
@@ -87,6 +90,7 @@ namespace Chasa.Core
             Time = Data.duration;
             Apply(Data.duration + 1f);
             SfxPending.Clear();                   // 건너뛰면 남은 효과음은 틀지 않는다
+            AudioPending.Clear();                 // 반복·음악 명령도 버린다(끝낼 때 CutscenePlayer 가 반복을 끄고 음악을 되돌린다)
             Walk = false; LineText = "";          // 건너뛰면 대사도 지운다
             CamTarget = "player"; CamZoom = 1f;   // 항상 플레이어로 돌아온다(마지막 단계가 return 이 아니어도 안전)
         }

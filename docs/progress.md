@@ -1160,3 +1160,9 @@
 - 소리 대본: `tools/cutscene_audio_s1.py` → `data/cutscene_audio_s1.json`. (컷, 박자) 열쇠로 add(얹을 소리, 크기·늦춤·반복·loop/stop)·replace·music(duck/silence/resume/layer/play) 지시. 36컷 118박자. 남은 무음 박자는 일부러(silent_by_design에 이유).
 - 시즌1 끝 곡 5개(흑월 결전·A판·B판·마지막 새벽·크레딧) Gemini 지시문 21~25 추가. 곡이 없으면 fallback(silence/combat).
 - 효과음 총 224개. 기존 파일 변화 없음. 미리듣기 v15, 지시문 페이지 v4.
+
+## 시즌1 컷신 44컷 + 소리 대본 연결 (코드·QA, 10-25)
+- `tools/build_cutscenes_s1.py` → Resources/Data/cutscenes_s1.json: 서사 cutscenes_s1.json(B-05~12·C-12A/B·C-13) + 사운드 cutscene_audio_s1.json(add·delay·repeat·loop/stop·replace·music). 코드는 이미 `<보스 컷>-INTRO/KNEEL/TENDO/PAHON/NOCLUE` 를 부르므로 2·3막 보스 연출이 바로 붙는다.
+- CutStep.audio 명령 큐(Core/Cutscene) → CutscenePlayer.RunAudio: 반복 소리(컷이 켠 것만 끄고, 컷이 끝나거나 건너뛰면 0.5초 안에 정리) / BgmPlayer.Command: duck·silence·resume·layer·play(+fallback silence). 시즌1 끝 곡 파일(bgm_s1_*)이 없으면 조용히.
+- 한계: 소리 gain 은 Sfx 가 크기 인자가 없어 무시. 카메라 대상 이름 중 boss_face·boss_hand·arena 는 보스 자리, 나머지 새 이름(flagpole 등)은 아직 주인공 자리로 대신.
+- 흑월 B-12 전투음: B12-KNEEL 컷이 chain.down 을 대신 튼다(전투 쪽에서는 그 소리를 쓰지 않을 것).

@@ -65,6 +65,8 @@ public class CutscenePlayer
         // 서사 첫 세션 대본(오프닝·장례): 있으면 코드 속 임시 장면보다 우선(Add 는 이미 있는 id 를 건드리지 않는다)
         var fs = Resources.Load<TextAsset>("Data/cutscenes_first_session");
         if (fs != null) { var f2 = JsonUtility.FromJson<FileData>(fs.text); if (f2 != null && f2.cuts != null) foreach (var c in f2.cuts) byId[c.id] = c; }
+        var fs1 = Resources.Load<TextAsset>("Data/cutscenes_s1");   // 시즌1: 2막 B-05~08·3막 B-09~11·흑월·끝 컷(소리 대본 포함)
+        if (fs1 != null) { var f4 = JsonUtility.FromJson<FileData>(fs1.text); if (f4 != null && f4.cuts != null) foreach (var c in f4.cuts) byId[c.id] = c; }
         var fn = Resources.Load<TextAsset>("Data/cutscenes_funerals");   // 1막 장례 대본 8개(박돌쇠 제외)
         if (fn != null) { var f3 = JsonUtility.FromJson<FileData>(fn.text); if (f3 != null && f3.cuts != null) foreach (var c in f3.cuts) byId[c.id] = c; }
         AddBuiltIn();
@@ -100,10 +102,63 @@ public class CutscenePlayer
         return true;
     }
 
-    void DrainSfx() { if (cur != null) while (cur.SfxPending.Count > 0) Sfx.Play(cur.SfxPending.Dequeue()); }   // 서사 대본의 효과음을 그 시각에 튼다
+    void DrainSfx()
+    {
+        if (cur == null) return;
+        while (cur.SfxPending.Count > 0) Sfx.Play(cur.SfxPending.Dequeue());   // 서사 대본의 효과음을 그 시각에 튼다
+        while (cur.AudioPending.Count > 0) RunAudio(cur.AudioPending.Dequeue());
+    }
+
+    // ---- 사운드 대본의 반복 소리·음악 명령 ----
+    readonly Dictionary<string, AudioSource> loops = new Dictionary<string, AudioSource>();   // 이 컷이 켠 반복 소리
+    readonly Dictionary<string, float> loopFade = new Dictionary<string, float>();             // 끄는 중인 것의 남은 시간 비율 계산용(초당 줄이는 양)
+    bool musicTouched;                                                                          // 이 컷이 음악을 건드렸나(끝나면 되돌린다)
+
+    void RunAudio(string cmd)
+    {
+        var p = cmd.Split(':');
+        float F(int i, float d) { float v; return i < p.Length && float.TryParse(p[i], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out v) ? v : d; }
+        if (p[0] == "loop" && p.Length > 1)
+        {
+            if (loops.ContainsKey(p[1])) return;
+            var s = Sfx.MakeLoop(p[1]); s.volume = 0f; loops[p[1]] = s; loopFade.Remove(p[1]);
+        }
+        else if (p[0] == "stop" && p.Length > 1)
+        {
+            // 컷이 켠 반복이면 서서히 끈다. 컷 밖 환경음(비 등)을 끄라는 명령은 날씨 쪽이 맡으므로 여기선 무시
+            if (loops.ContainsKey(p[1])) loopFade[p[1]] = Mathf.Max(0.05f, F(2, 0.5f));
+        }
+        else if (p[0] == "music" && p.Length > 1)
+        {
+            musicTouched = true;
+            BgmPlayer.Command(p[1], p.Length > 2 ? p[2] : "", F(3, 1f), F(4, 1f), p.Length > 5 ? p[5] : "");
+        }
+    }
+
+    /// <summary>반복 소리를 키우거나(시작) 줄여서(끄는 중) 부드럽게 바꾼다. 컷이 끝나면 남은 반복을 모두 끄고 음악을 되돌린다</summary>
+    void TickAudio(float dt)
+    {
+        if (loops.Count == 0 && !musicTouched) return;
+        var dead = new List<string>();
+        foreach (var kv in loops)
+        {
+            if (kv.Value == null) { dead.Add(kv.Key); continue; }
+            float tgt = Sfx.Muted || loopFade.ContainsKey(kv.Key) ? 0f : 0.6f * SaveStore.Settings.Sfx;
+            float rate = loopFade.ContainsKey(kv.Key) ? 1f / loopFade[kv.Key] : 2f;
+            kv.Value.volume = Mathf.MoveTowards(kv.Value.volume, tgt, dt * rate);
+            if (loopFade.ContainsKey(kv.Key) && kv.Value.volume <= 0.001f) { Object.Destroy(kv.Value); dead.Add(kv.Key); }
+        }
+        foreach (var k in dead) { loops.Remove(k); loopFade.Remove(k); }
+        if (!Active)   // 컷이 끝났다(끝까지 봤든 건너뛰었든): 켜 둔 반복을 0.5초 안에 끄고 음악을 되돌린다
+        {
+            foreach (var k in new List<string>(loops.Keys)) if (!loopFade.ContainsKey(k)) loopFade[k] = 0.5f;
+            if (musicTouched) { musicTouched = false; BgmPlayer.Command("resume", "", 0f, 1.5f, ""); }
+        }
+    }
 
     public void Tick(float dt)
     {
+        TickAudio(dt);
         DrainSfx();   // 방금 시작한 컷의 0초 소리·직전 프레임에 끝난 컷의 마지막 소리
         if (!Active) return;
         cur.Tick(dt);

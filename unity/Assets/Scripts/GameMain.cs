@@ -289,7 +289,7 @@ public class GameMain : MonoBehaviour
         var pp = new Vector3(player.Pos.x, 0f, player.Pos.z);
         switch (name)
         {
-            case "boss": case "boss_boat": return bp;
+            case "boss": case "boss_boat": case "boss_face": case "boss_hand": case "arena": return bp;
             case "player_and_boss": return (bp + pp) * 0.5f;
             case "funeral": return judge.FuneralPos;   // 지금 장례가 열린 집 마당(박돌쇠는 대장간 문 앞, 아트 확정 좌표)
             // 기획 funeral_targets: 혼마다 다른 좌표(멈춘 것·다시 움직이는 것·대문·노제·사라지는 자리)
