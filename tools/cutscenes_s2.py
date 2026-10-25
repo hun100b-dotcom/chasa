@@ -324,7 +324,7 @@ C18 = {'id': 'C-18', 'branch': '⑨ 끝 — 먹지기, 자기 이름을 적다(�
                                'B': {'camera': {'mode': 'close', 'to': 'ledger', 'time': 2.0}, 'action': '조각 하나로 이름 하나에 찍는다. 붉은빛이 하나 켜진다. 나머지는 어둡다', 'sfx': ['cut.seal.set']}}),
   st(28.0, beat='제 이름', cam={'mode': 'pull', 'zoom': 0.6, 'time': 4.0, 'framing': '아주 멀리, 명부 여백에 붓을 대는 먹지기'}, act='먹지기가 명부 여백에 처음으로 자기 이름을 적는다', sfx=['cut.brush.write'],
      ui={'collection': '먹지기 항목에 이름 기록(천도 300 이상이면 또렷, 아니면 번짐)'}, note='화면에선 읽히지 않는 거리. 이름 글은 이 파일에 없다(시즌 4 고리)'),
-  st(40.0, beat='새벽', cond='A', cam={'mode': 'hold', 'framing': '빈 고을 위로 처음 드는 새벽빛'}, act='⑨에 처음으로 새벽이 온다. 안개가 걷힌다', req=['amb.dawn.birds(새벽 새 한두 마리)']),
+  st(40.0, beat='새벽', cond='A', cam={'mode': 'hold', 'framing': '빈 고을 위로 처음 드는 새벽빛'}, act='⑨에 처음으로 새벽이 온다. 안개가 걷힌다', req=['amb.dawn.still(바람 없는 새벽 — ⑨에 처음 드는 새벽, 저승엔 산 것의 소리가 없다)']),
   st(48.0, beat='쪽지', variant={'A': {'ui': {'note_card': '⑩으로 가라. 처음이 거기 있다. 나는 인을 돌려놓고 뒤따라가겠다.', 'note_card_time': 6.0}},
                                 'B': {'ui': {'note_card': '⑩으로 가라. 나는 조각을 다 찍고 가겠다. 오래 걸릴 거다.', 'note_card_time': 6.0}}}),
   st(60.0, cam={'mode': 'fade_out', 'time': 1.0}, ui={'world_change': '⑩ 금줄(물막이 둑 남쪽 안개 벽)이 걷힌다. 안개 벽 앞 바위에 먹지기 붓 표시'}),

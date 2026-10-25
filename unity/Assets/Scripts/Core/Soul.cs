@@ -26,6 +26,7 @@ namespace Chasa.Core
         public bool Fierce;          // 얼룩 3개로 소환된 사나운 적
         public int BossId;           // 보스 번호(1~3, 보스가 아니면 0)
         public bool Boss;            // 보스 여부 (천도에 단서 3개 필요, 보상이 큼)
+        public string LonerMemory;   // 외톨이 혼의 기억 한 줄(천도해야만 보인다. 감사 보강: 혼자 앉은 까닭)
         public string Name;          // 이름혼/보스의 이름 (무명 혼은 null)
         public float WaitBonus;      // 인(seal)이 흐리면 처결 대기가 늘어난다(흐림 +0.25 · 없음 +0.5초). 서사 규칙
         public bool Frozen;          // 처결 대기 시간이 흐르지 않는다 (첫 갈림: 처음 배우는 사람이 천천히 고르게)

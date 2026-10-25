@@ -9,7 +9,7 @@ using Chasa.Core;
 
 public class FieldCamps
 {
-    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public bool loner; }
+    [System.Serializable] class CampRow { public float x, z, r; public int n; public string zone, theme; public bool loner; public string who, memory, speaker, line, half; }
     [System.Serializable] class CampFile { public CampRow[] camps; }
 
     class Camp
@@ -22,6 +22,18 @@ public class FieldCamps
     readonly EnemyManager enemies;
 
     public int Count => camps.Count;
+    /// <summary>외톨이 야영지의 엿듣기 자리(낮, 야영지에서 가까운 길가). NpcWorld 가 자리로 세운다</summary>
+    public void LonerOverhears(System.Action<Vector3, string, string, string> add)
+    {
+        foreach (var c in camps)
+        {
+            if (!c.row.loner || string.IsNullOrEmpty(c.row.line)) continue;
+            // 야영지 한가운데는 혼 무리 자리라, 마을(남쪽) 쪽으로 반경 + 6m 비껴 선 곳에서 듣게 한다
+            float x = c.row.x, z = c.row.z - (c.row.r + 6f);
+            MapLayout.PushOut(ref x, ref z, 0.6f);
+            add(new Vector3(x, 0f, z), c.row.speaker, c.row.line, c.row.half);
+        }
+    }
     public static int EarlyMaxAlive = int.MaxValue;   // 처음 5분(시계 정지 중)엔 살아 있는 혼을 이 수까지만(시작 지점에 28마리가 줄 맞춰 서던 것 방지: 아트 검수)
     public float GhostMult = 1f;   // 흐린 밤 +15%: 군집이 설 때 혼 수에 곱한다
 
@@ -115,6 +127,7 @@ public class FieldCamps
                 float lx = c.row.x + Mathf.Cos(a) * rr, lz = c.row.z + Mathf.Sin(a) * rr;
                 MapLayout.PushOut(ref lx, ref lz, Config.ENEMY_RADIUS + 1f);
                 var l = enemies.SpawnCamp(new Vector3(lx, 0f, lz), k % 2 == 0);
+                if (k == 0 && !string.IsNullOrEmpty(c.row.who)) { l.label = c.row.who; l.soul.LonerMemory = c.row.memory; }   // 첫째가 서사 표의 그 혼(이름표 + 기억). 둘째는 공용 기억
                 l.soul.Trick = false; l.soul.TakeHit(l.soul.MaedhimMax + 1);   // 맺힘 0 → 무릎 꿇음
                 c.members.Add(l);
             }

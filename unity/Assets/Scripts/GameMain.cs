@@ -73,6 +73,7 @@ public class GameMain : MonoBehaviour
             judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
+            if (judge.camps != null) judge.camps.LonerOverhears(judge.npcs.AddOverhear);   // 외톨이 야영지 엿듣기
             // 제사 지켜보기(기획 jesa_watch_act1): 처결하면 닫히고, 박돌쇠는 천도했을 때만 열린다. 끝까지 본 혼은 천도할 때 기억 끝에 한 줄이 붙는다
             judge.npcs.dayFrac = () => Mathf.Clamp01((judge.clock.Minutes - Balance.CLOCK_DAWN_MIN) / Balance.CLOCK_DAY_MIN);
             judge.npcs.soulDone = n => judge.named != null && judge.named.IsDone(n);

@@ -774,6 +774,8 @@ public class JudgeSystem : MonoBehaviour
     bool heukwolSpawned, heukwolRetreated, gateAnnounced, heukwolWarned; Enemy heukwol; float gateToastT;
     readonly HashSet<int> bossTendoIds = new HashSet<int>();   // 천도로 처결한 보스 번호(넋길 추가 도착점)
     /// <summary>넋길 정류장: 서낭당들 + 천도로 보낸 보스의 마당 가장자리(반경 + 4m, 가까운 서낭당 쪽 = 들어오는 방향). 밤에만 쓴다</summary>
+    readonly Dictionary<string, string> stopArrive = new Dictionary<string, string>();   // 도착점 이름 → 처음 닿을 때 한 줄
+    readonly HashSet<string> stopSeen = new HashSet<string>();
     List<float[]> SoulStops(out List<string> names)
     {
         var stops = new List<float[]>(FieldRules.Shrines); names = new List<string>(FieldRules.ShrineNames);
@@ -786,7 +788,10 @@ public class JudgeSystem : MonoBehaviour
             if (near == null) continue;
             var dir = new Vector2(near[0] - bd.X, near[1] - bd.Z).normalized;
             float r = (id <= 3 ? 16f : id == 12 ? 18f : id >= 9 ? 15f : 14f) + 4f;   // 마당 반경(보스마다) + 4m
-            stops.Add(new[] { bd.X + dir.x * r, bd.Z + dir.y * r }); names.Add(bd.Name + "의 마당 어귀");
+            stops.Add(new[] { bd.X + dir.x * r, bd.Z + dir.y * r });
+            string nm0 = bd.Name + "의 마당 어귀", arr0 = null;
+            SoulRoadTexts.Find(id, out nm0, out arr0, nm0);   // 서사 표의 이름·처음 닿을 때 한 줄(없으면 옛 이름)
+            names.Add(nm0); if (arr0 != null) stopArrive[nm0] = arr0;
         }
         return stops;
     }
@@ -1431,6 +1436,7 @@ public class JudgeSystem : MonoBehaviour
         if (onTeleport != null) onTeleport(dest);
         Sfx.Play("sfx.tendo.done");
         Say("넋길 — " + nm[to]);
+        string arr; if (extra && stopArrive.TryGetValue(nm[to], out arr) && stopSeen.Add(nm[to])) ui?.Hud.Toasts.Add(arr);   // 처음 닿을 때만 한 줄(알림)
     }
 
     /// <summary>세계 시계를 흘리고, 단계가 바뀌면 종을 울리고 알린다</summary>

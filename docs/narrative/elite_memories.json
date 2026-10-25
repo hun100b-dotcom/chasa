@@ -1,0 +1,233 @@
+{
+ "_설명": "거센 혼 기억 — 첫 판 EL-001 + 구역 공용 줄 30. tools/elite_memories.py로 생성. 서사 2026-10-26",
+ "rules": {
+  "pick": "천도하면 그 구역 줄에서 하나(그 판에 이미 본 줄은 뺀다). 파혼은 기억 없음",
+  "band": "이름 띠는 언제나 「거센 혼」. 첫 판(EL-001)만 천도할 때 명부에서 이름이 읽힌다",
+  "season3": "시즌 3 아래층은 거센 혼 대신 백 — 줄 없음"
+ },
+ "first": {
+  "id": "EL-001",
+  "name": "두레 좌상 오봉",
+  "band": "거센 혼",
+  "region": 1,
+  "zone": "Field",
+  "where": "첫 밤 보릿들 둑길 들머리(기획 §1-1)",
+  "life": "보릿들 두레패를 이끌던 좌상. 징을 쳐 들일꾼을 모았다. 올봄 보리 베기 마지막 날 둑길 들머리에서 징채를 쥔 채 쓰러졌다.",
+  "memory": "징을 치면 들판이 다 모였다. 아무도 오지 않아서, 더 세게 쳤다.",
+  "tint": "징 놋빛",
+  "funeral": false,
+  "note": "이름 띠는 「거센 혼」. 이름은 천도할 때 명부에서 처음 읽힌다. 부르기(맺힘 50%) 울부짖음에 징 소리를 섞는다. 잔넋 셋은 그의 두레패가 아니라 징 소리에 끌려온 들판의 잔넋. 파혼하면 징이 한 번 갈라지는 소리, 기억 없음"
+ },
+ "pool": [
+  {
+   "id": "EL-01-01",
+   "region": 1,
+   "region_name": "솔고개",
+   "season": 1,
+   "memory": "보리는 다 벴는데 아무도 새참을 내오지 않았다."
+  },
+  {
+   "id": "EL-01-02",
+   "region": 1,
+   "region_name": "솔고개",
+   "season": 1,
+   "memory": "장날 싸움에서 진 채로 죽었다. 아직 주먹이 안 펴진다."
+  },
+  {
+   "id": "EL-01-03",
+   "region": 1,
+   "region_name": "솔고개",
+   "season": 1,
+   "memory": "빚 문서를 태우러 가던 길이었다. 불씨가 먼저 꺼졌다."
+  },
+  {
+   "id": "EL-02-01",
+   "region": 2,
+   "region_name": "검은여울",
+   "season": 1,
+   "memory": "장세를 두 번 냈다. 세 번째는 못 내겠다고 했다."
+  },
+  {
+   "id": "EL-02-02",
+   "region": 2,
+   "region_name": "검은여울",
+   "season": 1,
+   "memory": "외상값 받으러 간 집 문 앞에서 쓰러졌다. 문은 끝내 안 열렸다."
+  },
+  {
+   "id": "EL-02-03",
+   "region": 2,
+   "region_name": "검은여울",
+   "season": 1,
+   "memory": "고뿔이라고 하라기에 고뿔이라고 했다. 그래도 화가 안 풀린다."
+  },
+  {
+   "id": "EL-03-01",
+   "region": 3,
+   "region_name": "붉은재",
+   "season": 1,
+   "memory": "물러서라는 북은 끝내 울리지 않았다."
+  },
+  {
+   "id": "EL-03-02",
+   "region": 3,
+   "region_name": "붉은재",
+   "season": 1,
+   "memory": "칼을 놓으면 진 것 같아서 못 놓았다."
+  },
+  {
+   "id": "EL-03-03",
+   "region": 3,
+   "region_name": "붉은재",
+   "season": 1,
+   "memory": "누구와 싸우는지 모르고 싸웠다. 아직도 모른다."
+  },
+  {
+   "id": "EL-04-01",
+   "region": 4,
+   "region_name": "쇳골",
+   "season": 1,
+   "memory": "한 자만 더 파라고 했다. 그 한 자가 무너졌다."
+  },
+  {
+   "id": "EL-04-02",
+   "region": 4,
+   "region_name": "쇳골",
+   "season": 1,
+   "memory": "품삯을 쌀로 준다더니 돌가루를 주었다."
+  },
+  {
+   "id": "EL-04-03",
+   "region": 4,
+   "region_name": "쇳골",
+   "season": 1,
+   "memory": "곡괭이 소리가 그치면 무서워서 더 세게 내리쳤다."
+  },
+  {
+   "id": "EL-05-01",
+   "region": 5,
+   "region_name": "갯마을",
+   "season": 1,
+   "memory": "풍랑이 온다는데 선주가 배를 내보냈다."
+  },
+  {
+   "id": "EL-05-02",
+   "region": 5,
+   "region_name": "갯마을",
+   "season": 1,
+   "memory": "객주에게 뱃삯을 떼였다. 바다에서도 그 생각만 났다."
+  },
+  {
+   "id": "EL-05-03",
+   "region": 5,
+   "region_name": "갯마을",
+   "season": 1,
+   "memory": "만선 깃발을 달고 돌아오는 꿈을 백 번 꾸었다."
+  },
+  {
+   "id": "EL-06-01",
+   "region": 6,
+   "region_name": "도성",
+   "season": 1,
+   "memory": "성문 닫히는 소리를 바로 코앞에서 들었다."
+  },
+  {
+   "id": "EL-06-02",
+   "region": 6,
+   "region_name": "도성",
+   "season": 1,
+   "memory": "품을 팔러 왔는데 아무도 나를 사지 않았다."
+  },
+  {
+   "id": "EL-06-03",
+   "region": 6,
+   "region_name": "도성",
+   "season": 1,
+   "memory": "관아 문 앞에서 사흘을 외쳤다. 북은 치지 못하게 했다."
+  },
+  {
+   "id": "EL-07-01",
+   "region": 7,
+   "region_name": "삼도천",
+   "season": 2,
+   "memory": "줄이 줄지 않는다. 앞사람 뒤통수만 보고 섰다."
+  },
+  {
+   "id": "EL-07-02",
+   "region": 7,
+   "region_name": "삼도천",
+   "season": 2,
+   "memory": "배가 오다가 돌아간다. 몇 번 봤는지 셀 수도 없다."
+  },
+  {
+   "id": "EL-07-03",
+   "region": 7,
+   "region_name": "삼도천",
+   "season": 2,
+   "memory": "노잣돈을 쥐고 왔는데 받을 사람이 없다."
+  },
+  {
+   "id": "EL-08-01",
+   "region": 8,
+   "region_name": "명부전 담장 밖",
+   "season": 2,
+   "memory": "이름 대신 숫자를 받았다. 숫자로는 아무도 나를 안 부른다."
+  },
+  {
+   "id": "EL-08-02",
+   "region": 8,
+   "region_name": "명부전 담장 밖",
+   "season": 2,
+   "memory": "문서 한 장이 모자라 들어가지 못했다."
+  },
+  {
+   "id": "EL-08-03",
+   "region": 8,
+   "region_name": "명부전 담장 밖",
+   "season": 2,
+   "memory": "담장 너머에서 누가 부르는 것 같았다. 문은 안 열렸다."
+  },
+  {
+   "id": "EL-09-01",
+   "region": 9,
+   "region_name": "빈 고을",
+   "season": 2,
+   "memory": "인 없는 이름이라 아무도 데리러 오지 않았다."
+  },
+  {
+   "id": "EL-09-02",
+   "region": 9,
+   "region_name": "빈 고을",
+   "season": 2,
+   "memory": "문패를 걸었는데 읽어 주는 사람이 없었다."
+  },
+  {
+   "id": "EL-09-03",
+   "region": 9,
+   "region_name": "빈 고을",
+   "season": 2,
+   "memory": "기다리는 것도 화가 난다. 그래도 또 기다렸다."
+  },
+  {
+   "id": "EL-10-01",
+   "region": 10,
+   "region_name": "열째 관할",
+   "season": 2,
+   "memory": "여기가 끝이라고 들었다. 끝에도 줄이 있었다."
+  },
+  {
+   "id": "EL-10-02",
+   "region": 10,
+   "region_name": "열째 관할",
+   "season": 2,
+   "memory": "이름을 잃었다. 찾으러 온 길도 잃었다."
+  },
+  {
+   "id": "EL-10-03",
+   "region": 10,
+   "region_name": "열째 관할",
+   "season": 2,
+   "memory": "백 년을 세다가 셈을 잊었다. 화는 안 잊었다."
+  }
+ ]
+}

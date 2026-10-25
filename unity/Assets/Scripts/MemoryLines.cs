@@ -32,6 +32,7 @@ public class MemoryLines
     public string Collect(Soul soul, out string fact)
     {
         fact = null;
+        if (!string.IsNullOrEmpty(soul.LonerMemory)) { Fragments++; return soul.LonerMemory; }   // 외톨이 혼: 서사 표의 기억 한 줄(혼자 앉은 까닭)
         if (data == null) return null;
         SoulRow row;
         if (soul.Name != null && byName.TryGetValue(soul.Name, out row))

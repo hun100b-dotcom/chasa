@@ -575,7 +575,10 @@
     {
      "t": 3.2,
      "action": "배가 떠난다. 노인이 말뚝에 칼금을 하나 더 긋는다",
-     "sfx_request": [
+     "sfx": [
+      "cut.knife.notch"
+     ],
+     "sfx_note": [
       "cut.knife.notch(나무에 칼금 긋는 짧은 소리)"
      ]
     },
@@ -1702,7 +1705,10 @@
       "framing": "문서 창고 아홉째 칸, 먼지 없는 빈 서가"
      },
      "action": "문서 창고 아홉째 칸 빈 서가 뒤 문이 열려 있다",
-     "sfx_request": [
+     "sfx": [
+      "cut.door.slide"
+     ],
+     "sfx_note": [
       "cut.door.slide(오래된 나무 문이 밀려 열림)"
      ]
     },
@@ -1766,7 +1772,10 @@
       "time": 1.5
      },
      "action": "품에서 종이 한 장을 꺼내 바위 위에 놓는다",
-     "sfx_request": [
+     "sfx": [
+      "cut.paper.set"
+     ],
+     "sfx_note": [
       "cut.paper.set(종이를 돌 위에 놓는 소리)"
      ]
     },
@@ -1970,7 +1979,10 @@
       "time": 1.5
      },
      "action": "문지기가 눈꺼풀의 철사를 푼다",
-     "sfx_request": [
+     "sfx": [
+      "cut.wire.untie"
+     ],
+     "sfx_note": [
       "cut.wire.untie(가는 쇠줄 풀리는 소리)"
      ]
     },
@@ -2106,7 +2118,10 @@
       "time": 0.8
      },
      "action": "그가 인을 제 이마에 찍는다. 찍히지 않는다. 붉은 물만 흐른다",
-     "sfx_request": [
+     "sfx": [
+      "cut.seal.thud"
+     ],
+     "sfx_note": [
       "cut.seal.thud(돌도장이 이마에 닿는 둔한 소리)"
      ]
     },
@@ -2512,10 +2527,10 @@
      "action": "⑨에 처음으로 새벽이 온다. 안개가 걷힌다",
      "condition": "A",
      "sfx": [
-      "amb.dawn.birds"
+      "amb.dawn.still"
      ],
      "sfx_note": [
-      "amb.dawn.birds(새벽 새 한두 마리)"
+      "amb.dawn.still(바람 없는 새벽 — ⑨에 처음 드는 새벽, 저승엔 산 것의 소리가 없다)"
      ]
     },
     {
@@ -2568,7 +2583,10 @@
       "framing": "우물과 그 곁에 선 차사, 늘 같은 새벽빛"
      },
      "action": "처음 마을 우물터. 실이 다 풀린 검은 갓. 사슬이 아니라 새끼줄을 쥔 차사가 우물 쪽을 본다",
-     "sfx_request": [
+     "sfx": [
+      "amb.dawn.still"
+     ],
+     "sfx_note": [
       "amb.dawn.still(바람 없는 새벽, 아주 고요)"
      ]
     },
@@ -2890,10 +2908,13 @@
     {
      "t": 3.0,
      "action": "귀를 대지 않아도 이름이 들린다. 수천 개가 한꺼번에",
-     "sfx_request": [
-      "amb.names.many(수천 사람이 한꺼번에 낮게 부르는 소리 — 말은 안 들리게)"
+     "note": "S-044 기억과 같은 소리",
+     "sfx": [
+      "amb.names.many"
      ],
-     "note": "S-044 기억과 같은 소리"
+     "sfx_note": [
+      "amb.names.many(수천 사람이 한꺼번에 낮게 부르는 소리 — 말은 안 들리게)"
+     ]
     },
     {
      "t": 6.0,
@@ -3057,7 +3078,10 @@
       "vignette_color": "먹물 검정"
      },
      "action": "덩어리가 이름 하나하나로 풀려 강물에 실린다",
-     "sfx_request": [
+     "sfx": [
+      "cut.names.release"
+     ],
+     "sfx_note": [
       "cut.names.release(이름들이 하나씩 풀려 흩어지는 소리)"
      ]
     },
@@ -3082,7 +3106,10 @@
       "framing": "물막이 바닥에서 강 상류 쪽으로 길게"
      },
      "action": "강이 흐른다. 물빛이 먹빛에서 맑아진다",
-     "sfx_request": [
+     "sfx": [
+      "cut.river.flow"
+     ],
+     "sfx_note": [
       "cut.river.flow(막혔던 물이 흐르기 시작)"
      ]
     },
@@ -3227,10 +3254,13 @@
       "framing": "물살을 따라 하류로"
      },
      "action": "강이 사납게 흐른다. 가루가 하류로 쓸려 간다",
-     "sfx_request": [
-      "cut.river.rush(거센 물살)"
+     "note": "다음 시즌 어딘가에 다시 쌓일 것 — 말하지 않는다",
+     "sfx": [
+      "cut.river.rush"
      ],
-     "note": "다음 시즌 어딘가에 다시 쌓일 것 — 말하지 않는다"
+     "sfx_note": [
+      "cut.river.rush(거센 물살)"
+     ]
     },
     {
      "t": 16.0,

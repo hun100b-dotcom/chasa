@@ -133,6 +133,13 @@ public class NpcWorld
 
     bool LateDay() { return dayFrac != null && dayFrac() >= 0.5f; }   // 낮 뒤 7분
 
+    /// <summary>외톨이 야영지 곁의 낮 엿듣기 한 자리(단서가 아니라 '들은 말' 기록. 보스 단서 수에 들지 않는다)</summary>
+    public void AddOverhear(Vector3 pos, string speaker, string line, string half)
+    {
+        all.Add(new Spot { row = new Row { npc = "loner", name = speaker, zone = "Field", place = "외톨이 야영지 " + speaker, time = 1, unlock = 1, region = 1, verb = "엿듣기" }, clue = "", line = line, half = half, verb = "엿듣기", label = speaker, pos = pos });
+        builtPhase = -1;
+    }
+
     /// <summary>처결 결과로 바뀐 풍경 한 곳을 더한다(예: 보스를 천도하면 나루에 배가 묶여 있다). 다가서면 글이 뜬다. timeSlot: 0 동틀녘 1 낮 2 해질녘 3 밤</summary>
     public void AddScenery(Vector3 pos, string text, int timeSlot)
     {
