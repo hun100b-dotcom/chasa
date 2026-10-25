@@ -34,6 +34,8 @@ public class JudgeSystem : MonoBehaviour
     readonly List<Vector3> cluePos = new List<Vector3>();   // 아직 안 주운 단서 위치
     readonly List<GameObject> clueViews = new List<GameObject>();
     float castT, castTotal, chainLeft;
+    /// <summary>약점 점(깃발·옷·횃불)을 낚아챈 보스 번호. 그 보스는 천도 시전 -0.5초(하한 0.5), 파혼 엽전 x1.2 (기획 감사 보강)</summary>
+    public readonly System.Collections.Generic.HashSet<int> snatched = new System.Collections.Generic.HashSet<int>();
     public float CastZoom { get { return visionP; } }   // 카메라가 캐스팅 중 다가가는 정도(0~1)
     float visionP;                       // 0(평소) ~ 1(캐스팅 중): 시야 축소·기억색 정도. 0.2초에 걸쳐 부드럽게 변한다
     string toast = ""; float toastT;     // 화면 안내 글자(영문: 기본 글꼴에 한글이 없다)
@@ -135,7 +137,7 @@ public class JudgeSystem : MonoBehaviour
         player.ConsumeAct();   // 후딜·피하기를 끊고 천도 시작
         castTarget = e;
         castT = 0f;
-        castTotal = e.soul.Boss ? Balance.BOSS_TENDO_CAST_TIME : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
+        castTotal = e.soul.Boss ? Mathf.Max(0.5f, Balance.BOSS_TENDO_CAST_TIME - (snatched.Contains(e.soul.BossId) ? 0.5f : 0f)) : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;   // 요령방울은 천도가 빠르다   // 연속 천도면 0.8초, 보스는 2.0초
         if (!e.soul.Boss)
         {
             if (interactables != null && e.label != null && interactables.KeepsakeSouls.Contains(e.label)) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.KEEPSAKE_CAST_CUT);   // 유품을 만져 둔 혼
@@ -181,7 +183,8 @@ public class JudgeSystem : MonoBehaviour
         if (growth.AddPahon()) ui?.Hud.Toasts.Add("얼룩 도술 점수 +1");   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Balance.BOSS_PAHON_COIN : Balance.PAHON_COIN;
-        float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
+        float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;   // 낚아챈 보스는 파혼 엽전 x1.2
+        float coinX = baseCoin * lo.stats.CoinMult * lo.stats.PahonCoinMult * snatchMult - baseCoin + coinFrac;   // 소수점을 모아 반영(작은 보너스도 평균에는 들어간다)
         int coinAdd = Mathf.FloorToInt(coinX); coinFrac = coinX - coinAdd; ledger.Coin += coinAdd;
         night.RecordCoin(ledger.Coin - coinBefore);   // 몫 달성 전/후로 나눠 쌓는다
         // 잔넋 대장 파혼 연쇄(기획 F-1b): 4m 안 같은 무리 잔넋이 함께 깨진다. 엽전은 마리당 ×0.6, 업은 마리당 +0.5 (파혼이 늘 1등이 되지 않게)
@@ -521,7 +524,9 @@ public class JudgeSystem : MonoBehaviour
                 int dmg = Mathf.RoundToInt(Balance.AC_THROWNAME_DMG * lo.stats.DamageMult);
                 near[0].TakeHit(dmg, (near[0].Pos - player.Pos).normalized, 6f, 0.2f);
                 numbers.Spawn(near[0].HeadPosition, dmg, "heavy");
-                lastPahonAt = -99f; Say(name); return true;
+                lastPahonAt = -99f;
+                ledger.AddKarma(1);   // 대가: 던진 혼은 업이 1 더 쌓인다(파혼 +1과 합쳐 +2). 엽전은 그대로
+                Say(name + " (업 +1 더)"); return true;
             }
             case "검은 갓의 그림자": shadowT = Balance.AC_SHADOW_SEC; Say("파혼 폭발이 무릎 꿇은 혼까지 깨뜨린다"); return true;
         }

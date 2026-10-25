@@ -178,7 +178,7 @@ public class Act2BossArena : MonoBehaviour
             var at = new Vector3(def.X + (Random.value - 0.5f) * fightArea, 0f, def.Z + (Random.value - 0.5f) * fightArea);   // 물속 어딘가
             torchPt = MakePoint(at, new Color(1f, 0.6f, 0.2f, 1f), 0.7f, () =>
             {
-                if (brain3.OnTorchPulled()) judge.Say("물속 횃불을 건졌다 — 흑월이 멈춘다");
+                judge.snatched.Add(12); if (brain3.OnTorchPulled()) judge.Say("물속 횃불을 건졌다 — 흑월이 멈춘다");
                 DropPoint(ref torchPt, ref torchView);
             }, out torchView, "boss_grab_torch_b12");
             judge.Say("물속에 횃불이 하나 떠 있다");
@@ -200,7 +200,7 @@ public class Act2BossArena : MonoBehaviour
             case BossAct.FlagPlant:
                 Add(new Tele { shape = Shape.Circle, c = bp + dir * 5f, r = m.Radius, warn = 20f, mine = false }, false);
                 DropPoint(ref flagPt, ref flagView);
-                flagPt = MakePoint(bp + dir * 5f, new Color(0.9f, 0.2f, 0.2f, 1f), 0.6f, () => { brain.OnFlagPulled(); judge.Say("깃발을 뽑았다"); DropPoint(ref flagPt, ref flagView); }, out flagView, "boss_grab_flag_b05");   // 견인으로 뽑으면 깃발 효과가 사라진다
+                flagPt = MakePoint(bp + dir * 5f, new Color(0.9f, 0.2f, 0.2f, 1f), 0.6f, () => { brain.OnFlagPulled(); judge.snatched.Add(5); judge.Say("깃발을 뽑았다 — 이 보스를 부르는 시간이 짧아진다"); DropPoint(ref flagPt, ref flagView); }, out flagView, "boss_grab_flag_b05");   // 견인으로 뽑으면 깃발 효과가 사라진다
                 break;   // 깃발 반경(병사 공격 +20%는 다음 일). 피해 없이 표식만
             case BossAct.FlagSwing: Add(new Tele { shape = Shape.Circle, c = bp, r = m.Radius, warn = m.Warn }); break;
             case BossAct.PoleCharge: Add(new Tele { shape = Shape.Bar, c = bp + dir * (m.Param * 0.5f), dir = dir, len = m.Param, wid = 2f, warn = m.Warn }); break;
@@ -238,7 +238,7 @@ public class Act2BossArena : MonoBehaviour
                 DropPoint(ref clothPt, ref clothView);
                 clothPt = MakePoint(bp + dir * 1.5f, new Color(0.8f, 0.9f, 1f, 1f), 0.6f, () =>
                 {
-                    float cut = brain3.OnClothCaught(); boss.soul.Maedhim = Mathf.Max(1, (int)brain3.Maedhim);
+                    judge.snatched.Add(9); float cut = brain3.OnClothCaught(); boss.soul.Maedhim = Mathf.Max(1, (int)brain3.Maedhim);
                     if (cut > 0f) { judge.Say("옷을 낚아챘다 — 아낙이 흔들린다"); Sfx.Play("sfx.boss.mangbu.cloth.catch"); }
                     DropPoint(ref clothPt, ref clothView);
                 }, out clothView, "boss_grab_clothes_b09");
