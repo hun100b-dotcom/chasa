@@ -1688,12 +1688,12 @@
    "id": "sfx.wait.tick.fresh",
    "file": "sfx_wait_tick_fresh",
    "category": "처결",
-   "desc": "대기 똑딱(갓 죽은 혼): 아직 사람 같은 낮은 심장 소리 '두근'",
+   "desc": "대기 똑딱(갓 죽은 혼): 아직 사람 같은 심장 소리 '두근' — 가슴을 안에서 두드리는 둔한 톡 두 번",
    "use": "갓 죽은 혼이 무릎 꿇고 기다리는 동안 반복(남은 시간에 따라 간격을 줄임)",
    "loop": false,
    "bypass_cast_filter": true,
    "length_sec": 0.25,
-   "peak_dbfs": -16
+   "peak_dbfs": -11
   },
   {
    "id": "sfx.wait.tick.year",
@@ -1704,7 +1704,7 @@
    "loop": false,
    "bypass_cast_filter": true,
    "length_sec": 0.18,
-   "peak_dbfs": -16
+   "peak_dbfs": -14
   },
   {
    "id": "sfx.wait.tick.old",
@@ -1715,7 +1715,7 @@
    "loop": false,
    "bypass_cast_filter": true,
    "length_sec": 0.18,
-   "peak_dbfs": -15
+   "peak_dbfs": -13
   },
   {
    "id": "sfx.wait.final",
@@ -1726,7 +1726,7 @@
    "loop": false,
    "bypass_cast_filter": true,
    "length_sec": 1.5,
-   "peak_dbfs": -14
+   "peak_dbfs": -10
   },
   {
    "id": "sfx.wait.expire",
@@ -6412,7 +6412,7 @@
    "loop": false,
    "bypass_cast_filter": true,
    "length_sec": 0.12,
-   "peak_dbfs": -16
+   "peak_dbfs": -14
   },
   {
    "id": "sfx.soul.numbered.release",

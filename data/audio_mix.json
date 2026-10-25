@@ -1,38 +1,172 @@
 {
  "_설명": "소리 크기 믹스 기준표(기획·사운드, 2026-10-25). 값은 '버스(소리 묶음) 기본 크기' — 실제 크기 = 이 값 × 설정 슬라이더(배경음/효과음) × 전체. 1.0 = 파일 그대로. dB는 참고(0.5≈-6dB, 0.7≈-3dB). 귀로 맞출 때 이 파일만 고친다.",
  "_왜": "BGM 파일은 -16~-20 LUFS(평균 음량)로 크게 마스터되어 있고 효과음은 짧은 순간 최고점만 맞춰져 있다. 지금 코드처럼 BGM 0.8·환경음 1.0이면 음악이 타격음을 덮고, 지역 환경음+날씨가 겹치면 바닥이 웅웅 가득 찬다. 그래서 '효과 > 음악 > 환경' 순서로 층을 둔다.",
- "target_lufs": {"_설명": "게임 안에서 들릴 목표 평균 음량(LUFS, 0에 가까울수록 큼). 슬라이더 기본값(배경음 0.8·효과음 1.0) 기준. 1막 BGM 파일 실측: 탐험 -20, 전투 -16 → ×0.5×0.8 = 약 -28, ×0.45×0.8 = 약 -25",
-   "combat_sfx_peak_moments": -14, "bgm_explore": -28, "bgm_combat": -25, "ambience_total": -40, "ui": -30},
- "bus": {
-   "bgm_explore": 0.5,
-   "bgm_combat": 0.45,
-   "bgm_finish": 0.5,
-   "sfx_combat": 1.0,
-   "sfx_telegraph": 1.0,
-   "sfx_cutscene": 0.9,
-   "voice_wail": 0.8,
-   "footstep": 0.45,
-   "ui": 0.8,
-   "amb_zone": 0.7,
-   "amb_weather": 0.6,
-   "amb_field": 0.6
+ "target_lufs": {
+  "_설명": "게임 안에서 들릴 목표 평균 음량(LUFS, 0에 가까울수록 큼). 슬라이더 기본값(배경음 0.8·효과음 1.0) 기준. 1막 BGM 파일 실측: 탐험 -20, 전투 -16 → ×0.5×0.8 = 약 -28, ×0.45×0.8 = 약 -25",
+  "combat_sfx_peak_moments": -14,
+  "bgm_explore": -28,
+  "bgm_combat": -25,
+  "ambience_total": -40,
+  "ui": -30
  },
- "stack": {"_설명": "여러 개가 겹칠 때", "amb_zone_when_weather": 0.7, "amb_weather_when_rain_heavy_and_zone": 0.85},
+ "bus": {
+  "bgm_explore": 0.5,
+  "bgm_combat": 0.45,
+  "bgm_finish": 0.5,
+  "sfx_combat": 1.0,
+  "sfx_telegraph": 1.0,
+  "sfx_cutscene": 0.9,
+  "voice_wail": 0.8,
+  "footstep": 0.45,
+  "ui": 0.8,
+  "amb_zone": 0.7,
+  "amb_weather": 0.6,
+  "amb_field": 0.6
+ },
+ "stack": {
+  "_설명": "여러 개가 겹칠 때",
+  "amb_zone_when_weather": 0.7,
+  "amb_weather_when_rain_heavy_and_zone": 0.85
+ },
  "duck": {
-   "_설명": "잠깐 다른 묶음을 낮추기(더킹). mult=낮출 배수, attack/release=초. telegraph(예고음)와 bypass_cast 소리는 절대 낮추지 않는다 — 피할 정보이기 때문",
-   "cutscene":        {"targets": ["bgm", "amb"], "mult": 0.6, "attack": 0.3, "release": 1.0},
-   "tendo_cast":      {"targets": ["bgm", "amb", "footstep"], "mult": 0.7, "attack": 0.15, "release": 0.6},
-   "ledger_open":     {"targets": ["bgm", "amb"], "mult": 0.6, "attack": 0.2, "release": 0.4},
-   "settings_open":   {"targets": ["bgm", "amb"], "mult": 0.6, "attack": 0.2, "release": 0.4},
-   "rank_up":         {"targets": ["bgm"], "mult": 0.6, "attack": 0.05, "release": 1.5},
-   "heukwol_chain_down": {"targets": ["bgm"], "mult": 0.3, "attack": 1.5, "release": 4.0},
-   "boss_phase_change":  {"targets": ["bgm"], "mult": 0.75, "attack": 0.1, "release": 1.2}
+  "_설명": "잠깐 다른 묶음을 낮추기(더킹). mult=낮출 배수, attack/release=초. telegraph(예고음)와 bypass_cast 소리는 절대 낮추지 않는다 — 피할 정보이기 때문",
+  "cutscene": {
+   "targets": [
+    "bgm",
+    "amb"
+   ],
+   "mult": 0.6,
+   "attack": 0.3,
+   "release": 1.0
+  },
+  "tendo_cast": {
+   "targets": [
+    "bgm",
+    "amb",
+    "footstep"
+   ],
+   "mult": 0.7,
+   "attack": 0.15,
+   "release": 0.6
+  },
+  "ledger_open": {
+   "targets": [
+    "bgm",
+    "amb"
+   ],
+   "mult": 0.6,
+   "attack": 0.2,
+   "release": 0.4
+  },
+  "settings_open": {
+   "targets": [
+    "bgm",
+    "amb"
+   ],
+   "mult": 0.6,
+   "attack": 0.2,
+   "release": 0.4
+  },
+  "rank_up": {
+   "targets": [
+    "bgm"
+   ],
+   "mult": 0.6,
+   "attack": 0.05,
+   "release": 1.5
+  },
+  "heukwol_chain_down": {
+   "targets": [
+    "bgm"
+   ],
+   "mult": 0.3,
+   "attack": 1.5,
+   "release": 4.0
+  },
+  "boss_phase_change": {
+   "targets": [
+    "bgm"
+   ],
+   "mult": 0.75,
+   "attack": 0.1,
+   "release": 1.2
+  },
+  "wait_tick": {
+   "targets": [
+    "bgm"
+   ],
+   "mult": 0.7,
+   "attack": 0.2,
+   "release": 0.5,
+   "_왜": "10-26 처음 10분 믹스 점검: 둘러싸인 채 혼이 꿇으면 전투 곡 아래에서 대기 똑딱이 묻혔다. 14 m 안에 처결 대기 혼이 있는 동안 음악만 0.7배(효과음·예고음은 그대로)"
+  }
  },
  "limits": {
-   "_설명": "한꺼번에 울리는 수 제한(같은 소리가 쌓이면 귀가 아프고 정보가 묻힌다)",
-   "same_id_max": 3, "same_id_min_gap_sec": 0.03, "hits_max": 4, "voices_total": 16,
-   "bell_hit_once_per_swing": true, "trident_extra_targets": {"delay_sec": 0.03, "gain": 0.7},
-   "wait_tick_only_nearest_soul": true
+  "_설명": "한꺼번에 울리는 수 제한(같은 소리가 쌓이면 귀가 아프고 정보가 묻힌다)",
+  "same_id_max": 3,
+  "same_id_min_gap_sec": 0.03,
+  "hits_max": 4,
+  "voices_total": 16,
+  "bell_hit_once_per_swing": true,
+  "trident_extra_targets": {
+   "delay_sec": 0.03,
+   "gain": 0.7
+  },
+  "wait_tick_only_nearest_soul": true
  },
- "phone": {"_설명": "폰 스피커는 150Hz 아래가 거의 안 나온다. 사운드 쪽에서 중요한 소리는 모두 400Hz~4kHz에 몸통을 넣어 두었으니 코드는 따로 할 것 없음. 단, 폰에서 BGM은 0.85배 더(작은 스피커에서 음악이 먼저 찬다)", "bgm_extra_mult": 0.85}
+ "phone": {
+  "_설명": "폰 스피커는 150Hz 아래가 거의 안 나온다. 사운드 쪽에서 중요한 소리는 모두 400Hz~4kHz에 몸통을 넣어 두었으니 코드는 따로 할 것 없음. 단, 폰에서 BGM은 0.85배 더(작은 스피커에서 음악이 먼저 찬다)",
+  "bgm_extra_mult": 0.85
+ },
+ "sequence": {
+  "_설명": "한꺼번에 몰리는 보상 소리의 순서(처결 끝 기준 초). 같은 순간에 겹치면 귀가 하나도 못 잡는다(박돌쇠 천도 끝 1초에 7개)",
+  "tendo_end": [
+   [
+    "sfx.tendo.done.<무기>",
+    0.0
+   ],
+   [
+    "sfx.reward.honbul",
+    0.5
+   ],
+   [
+    "sfx.clue(기억 한 줄)",
+    1.2
+   ],
+   [
+    "sfx.rank.seal(품계가 오를 때)",
+    2.0
+   ],
+   [
+    "sfx.reward.bar.open(처음 한 번)",
+    2.6
+   ]
+  ],
+  "pahon_end": [
+   [
+    "sfx.pahon.burst.<무기>",
+    0.0
+   ],
+   [
+    "sfx.reward.coin.pop",
+    0.05
+   ],
+   [
+    "sfx.reward.coin.gather",
+    0.6
+   ],
+   [
+    "sfx.rank.seal(품계가 오를 때)",
+    1.4
+   ],
+   [
+    "sfx.reward.bar.open(처음 한 번)",
+    2.0
+   ]
+  ]
+ },
+ "bypass_cast": {
+  "_설명": "천도 먹먹 필터(1.2 kHz)를 건너뛸 소리. data/sfx_files.json 의 bypass_cast_filter=true(84개)를 그대로 쓴다. 10-26 점검: 지금 Sfx.cs 는 sfx.enemy.telegraph 하나만 건너뛰어, 천도 중 잔넋 경고가 14 dB·넋두리 8 dB·바람 6 dB 깎인다"
+ },
+ "_고친날": "2026-10-26 처음 10분 믹스 점검(docs/first-10min-mix.md): 대기 똑딱 +2~3 dB, wait.final +2 dB, wait_tick 더킹, 보상 순서, bypass_cast 연결"
 }
