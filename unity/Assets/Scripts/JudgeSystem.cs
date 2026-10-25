@@ -2101,6 +2101,21 @@ public class JudgeSystem : MonoBehaviour
                 int rows = so.Kind == SoulKind.Lump ? 2 : 1;
                 float wBar = named ? 72f : 56f;
                 // 아트 맺힘 막대(틀 96x14 / 보스 금테 / 덩어리 두 줄 96x28 + 홈 88x8): 있으면 그림으로, 없으면 아래 색 막대
+                // 아트 PR #47 의 월드 맺힘 막대(96×12 / 덩어리 두 줄 96×22 + 채움 88×6)가 있으면 그것을 쓴다: 틀 안 홈(4,3)에 채움을 비율만큼 잘라 깐다
+                var wFrame = SpriteLib.Texture("first10/" + (rows == 2 ? "bind_world_frame2" : "bind_world_frame")); var wFill = SpriteLib.Texture("first10/bind_world_fill");
+                if (wFrame != null && wFill != null && !so.Boss)
+                {
+                    float k = (named ? 80f : 64f) / 96f, fw = 96f * k, fh = wFrame.height * k;
+                    var fr = new Rect(sp.x - fw * 0.5f, Screen.height - sp.y - fh * 0.5f, fw, fh);
+                    GUI.DrawTexture(fr, wFrame);
+                    for (int r2 = 0; r2 < rows; r2++)
+                    {
+                        float rr = rows == 1 ? ratio : Mathf.Clamp01(ratio * 2f - (rows - 1 - r2));
+                        var slot = new Rect(fr.x + 4f * k, fr.y + (rows == 1 ? 3f : 3f + r2 * 10f) * k, 88f * k, 6f * k);
+                        GUI.DrawTextureWithTexCoords(new Rect(slot.x, slot.y, slot.width * rr, slot.height), wFill, new Rect(0f, 0f, rr, 1f));   // 비율만큼만 잘라 그린다(찌그러지지 않게)
+                    }
+                    continue;
+                }
                 var gFrame = SpriteLib.Texture("ui/" + (rows == 2 ? "ui_bar_gyeol_frame_x2" : so.Boss ? "ui_bar_gyeol_frame_gold" : "ui_bar_gyeol_frame"));
                 var gFill = SpriteLib.Texture("ui/ui_bar_gyeol_fill"); var gGhost = SpriteLib.Texture("ui/ui_bar_gyeol_ghost");
                 if (gFrame != null && gFill != null && gGhost != null)

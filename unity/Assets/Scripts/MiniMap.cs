@@ -28,7 +28,7 @@ public class MiniMap : MonoBehaviour
     public static bool OverMini(Vector2 screenPos) { return miniRect.width > 0f && miniRect.Contains(new Vector2(screenPos.x, Screen.height - screenPos.y)); }
     Texture2D baseTex, white, dot, frameTex; bool ready;
     readonly Dictionary<string, Texture2D> icons = new Dictionary<string, Texture2D>();
-    void LoadIcons() { foreach (var n in new[] { "me", "boss", "enemy", "elite", "seonang", "bridge", "ferry", "quest", "soul_lump", "soul_fresh", "soul_named", "npc" }) icons[n] = SpriteLib.Texture("ui/map_icon_" + n); }
+    void LoadIcons() { foreach (var n in new[] { "me", "boss", "enemy", "elite", "seonang", "bridge", "ferry", "quest", "soul_lump", "soul_fresh", "soul_named", "npc" }) icons[n] = SpriteLib.Texture("ui/map_icon_" + n); icons["soul_wait"] = SpriteLib.Texture("icon_soul_wait"); icons["soulpath_off"] = SpriteLib.Texture("icon_soulpath_off"); }   // 처결 대기 혼(속 빈 청록 고리)·낮에 닫힌 넋길(아트 PR #47)
     // 아트 아이콘(64px 그림)을 화면 크기 sz 로 줄여 그린다. 없으면 false
     bool Icon(string n, Vector2 c, float sz)
     {
@@ -330,7 +330,7 @@ public class MiniMap : MonoBehaviour
             Color col = m.kind == "seonang" ? new Color(0.45f, 0.95f, 0.85f) : m.kind == "village" ? new Color(1f, 0.85f, 0.4f) : m.kind == "doctor" ? new Color(0.5f, 0.9f, 0.5f) : new Color(0.85f, 0.85f, 0.95f);
             var p = toScreen(m.x, m.z); if (!p.HasValue) continue;
             var v = p.Value; if (!big && (Mathf.Abs(v.x - cen.x) > half - 4f || Mathf.Abs(v.y - cen.y) > half - 4f)) continue;
-            string mi = m.kind == "seonang" ? "seonang" : m.kind == "bridge" ? "bridge" : m.kind == "ferry" ? "ferry" : (m.kind == "village" || m.kind == "doctor") ? "npc" : null;
+            string mi = m.kind == "seonang" ? (Sfx.NightNow ? "seonang" : "soulpath_off") :   /* 넋길(서낭당)은 낮에 닫혀 있다: 낮엔 닫힌 아이콘(명세 v1.5) */ m.kind == "bridge" ? "bridge" : m.kind == "ferry" ? "ferry" : (m.kind == "village" || m.kind == "doctor") ? "npc" : null;
             if (mi == null || !Icon(mi, v, 17f)) { Box(new Rect(v.x - 5, v.y - 5, 10, 10), new Color(0.05f, 0.06f, 0.08f, 0.9f)); Box(new Rect(v.x - 3.5f, v.y - 3.5f, 7, 7), col); }
             if (big && (m.kind == "seonang" || m.kind == "village" || m.kind == "ferry" || m.kind == "doctor") && !ZoneHasName(m.name)) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(0.12f, 0.06f, 0.02f, 1f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white; /* 밝은 지도 위에서도 읽히게 짙은 글자 + 연한 그림자 */ }
         }
@@ -347,7 +347,12 @@ public class MiniMap : MonoBehaviour
             if (e.soul.Boss) { D(e.Pos.x, e.Pos.z, new Color(1f, 0.3f, 0.25f), s + 6f, "boss"); continue; }
             Color col = e.kneeling ? new Color(1f, 0.85f, 0.35f) : e.soul.Kind == SoulKind.Lump ? new Color(0.7f, 0.4f, 0.95f) : new Color(0.95f, 0.3f, 0.3f);
             if (!e.Targetable) continue;   // 땅속 혼은 지도에도 안 보인다
-            D(e.Pos.x, e.Pos.z, col, s - 1f, e.kneeling ? "soul_fresh" : e.soul.Kind == SoulKind.Lump ? "soul_lump" : "enemy");
+            // 점 크기(명세 v1.5 §2): 적 8 · 정예 12 · 처결 대기 혼 10 · 덩어리 10. 폰은 ×1.2. 흙빛 지도의 보리 점·집 그림자와 섞이지 않게 키웠다
+            float ps = Ko.TouchUI ? 1.2f : 1f;
+            if (e.kneeling) D(e.Pos.x, e.Pos.z, col, 10f * ps, "soul_wait");
+            else if (e.elite) D(e.Pos.x, e.Pos.z, col, 12f * ps, "elite");
+            else if (e.soul.Kind == SoulKind.Lump) D(e.Pos.x, e.Pos.z, col, 10f * ps, "soul_lump");
+            else D(e.Pos.x, e.Pos.z, col, 8f * ps, "enemy");
         }
         // 나: 흰 화살표(카메라 기준 방향)
         var me = toScreen(player.Pos.x, player.Pos.z).Value;

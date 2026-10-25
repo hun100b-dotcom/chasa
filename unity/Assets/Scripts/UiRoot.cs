@@ -447,6 +447,24 @@ public class UiRoot : MonoBehaviour
         float bw = jagged ? 5f : 2f; c.style.borderTopWidth = bw; c.style.borderBottomWidth = bw; c.style.borderLeftWidth = bw; c.style.borderRightWidth = bw;
         c.style.borderTopColor = edge; c.style.borderBottomColor = edge; c.style.borderLeftColor = edge; c.style.borderRightColor = edge;
         float rad = jagged ? 0f : 14f; c.style.borderTopLeftRadius = rad; c.style.borderTopRightRadius = rad; c.style.borderBottomLeftRadius = rad; c.style.borderBottomRightRadius = rad;
+        // 아트 처결 카드(PR #47, 280×96): 틀·보상 그림이 이미 그려져 있다. 키는 칸(98,14, 36×24)에, 글자는 오른쪽(144~)에 얹는다.
+        // 천도는 실선·둥근 모서리, 파혼은 점선·톱니라 색 없이도 갈린다(명세 §9-2). 두 카드의 평균 밝기를 맞춰 뒀으니 색을 더 입히지 않는다
+        var cardArt = First10.Whole(jagged ? "exec_card_pahon" : "exec_card_tendo");
+        if (cardArt != null)
+        {
+            c.style.backgroundColor = Color.clear; c.style.backgroundImage = new StyleBackground(cardArt);
+            c.style.borderTopWidth = 0; c.style.borderBottomWidth = 0; c.style.borderLeftWidth = 0; c.style.borderRightWidth = 0;
+            c.style.justifyContent = Justify.FlexStart; c.style.alignItems = Align.FlexStart;
+            var k = Line(c, 18); k.text = key; k.style.position = Position.Absolute; k.style.left = U(98); k.style.top = U(14); k.style.width = U(36); k.style.height = U(24); k.style.unityTextAlign = TextAnchor.MiddleCenter; k.style.color = new Color(0.1f, 0.08f, 0.06f);
+            var nt = Line(c, 24); nt.text = name; nt.style.position = Position.Absolute; nt.style.left = U(144); nt.style.top = U(12);
+            var ns = Line(c, 18); ns.text = sub; ns.style.position = Position.Absolute; ns.style.left = U(144); ns.style.top = U(48);
+            if (!jagged)
+            {
+                rimIcon = new VisualElement { pickingMode = PickingMode.Ignore }; var rim0 = First10.Whole("reward_gold_rim");
+                if (rim0 != null) { rimIcon.style.backgroundImage = new StyleBackground(rim0); rimIcon.style.position = Position.Absolute; rimIcon.style.left = U(12); rimIcon.style.top = U(20); rimIcon.style.width = U(56); rimIcon.style.height = U(56); rimIcon.style.display = DisplayStyle.None; c.Add(rimIcon); }
+            }
+            return c;
+        }
         var t = Line(c, 24); t.text = mark + " [" + key + "] " + name; t.style.unityTextAlign = TextAnchor.MiddleCenter;
         var s2 = Line(c, 18); s2.text = sub; s2.style.unityTextAlign = TextAnchor.MiddleCenter;
         // 고르기 전에 보상이 보인다(M5): 천도=혼불+기억, 파혼=엽전+얼룩. 같은 크기·밝기. 이름혼이면 기억 아이콘에 금테
