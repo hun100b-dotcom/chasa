@@ -108,7 +108,9 @@ public class NpcWorld
         foreach (var s in all)
         {
             // WorldClock 의 ClockPhase(Dawn0 Day1 Dusk2 Night3) 와 데이터의 time(0 새벽 1 낮 2 저녁 3 밤)이 같은 순서다
-            if (s.row.time != ph || s.row.unlock > night) continue;
+            // 첫 보스(B01) 단서는 첫날부터 모두 열려 있다(서사 확정: 첫 저녁~밤에 4개를 얻을 수 있게)
+            bool firstBoss = !string.IsNullOrEmpty(s.clue) && s.clue.StartsWith("B01-");
+            if (s.row.time != ph || (s.row.unlock > night && !firstBoss)) continue;
             s.view = MakeView(s);
             spots.Add(s);
         }

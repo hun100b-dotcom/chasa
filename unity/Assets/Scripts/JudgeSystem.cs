@@ -185,6 +185,7 @@ public class JudgeSystem : MonoBehaviour
             if (night.TakeNamedSpawn()) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
         }
         // 기억 한 줄: 천도해야만 보이는 이야기(파혼엔 없다). 이름혼의 기억은 추리판 사실도 켠다
+        if (castTarget.soul.Name == "곽 뱃꾼" && clueBook.Add("B01-D4")) Say("단서 — 곽 뱃꾼의 기억");   // 밤 대체 단서(서사 확정): 천도해야만 얻는다
         string fact; var ml = memories.Collect(castTarget.soul, out fact);
         if (ml != null) { memLine = ml; memLineT = 5f; if (fact != null) ui?.Hud.Toasts.Add("추리판 " + fact + " 켜짐"); }
         chainLeft = lo.stats.ChainWindow;   // 젖은 소매가 있으면 창이 길다
