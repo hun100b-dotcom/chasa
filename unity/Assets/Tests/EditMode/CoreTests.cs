@@ -1530,4 +1530,54 @@ public class CoreTests
         var faded = Soul.Named("B", SoulKind.Fresh, 1); faded.WaitBonus = 0.25f; faded.TakeHit(5);
         Assert.AreEqual(clear.WaitTotal + 0.25f, faded.WaitTotal, 1e-4f);
     }
+
+    // ---------- 성장: 품계·능력치·도술 ----------
+    [Test]
+    public void Growth_RankCurveIncreasesAndCapsAt50()
+    {
+        Assert.AreEqual(1, GrowthState.RankFor(0));
+        Assert.AreEqual(2, GrowthState.RankFor(GrowthState.NeokForRank(2)));
+        Assert.AreEqual(1, GrowthState.RankFor(GrowthState.NeokForRank(2) - 1));
+        Assert.AreEqual(50, GrowthState.RankFor(99999999));                            // 상한
+        for (int r = 2; r <= 50; r++) Assert.Greater(GrowthState.NeokForRank(r), GrowthState.NeokForRank(r - 1));
+    }
+
+    [Test]
+    public void Growth_RankUpGivesSkillAndStatPoints()
+    {
+        var g = new GrowthState();
+        int ups = g.AddNeok(GrowthState.NeokForRank(4));                                // 한 번에 3단계
+        Assert.AreEqual(3, ups); Assert.AreEqual(4, g.Rank);
+        Assert.AreEqual(3, g.SkillPointsFree); Assert.AreEqual(15, g.StatPointsFree);
+        g.AddBossPoint(); Assert.AreEqual(4, g.SkillPointsFree);                       // 보스 천도 +1
+    }
+
+    [Test]
+    public void Growth_StatsStartTenAndSpendPoints()
+    {
+        var g = new GrowthState();
+        Assert.IsFalse(g.AddStat(0));                                                    // 점수 없이는 못 올림
+        g.AddNeok(GrowthState.NeokForRank(2));
+        Assert.IsTrue(g.AddStat(0)); Assert.AreEqual(11, g.Stats[0]); Assert.AreEqual(4, g.StatPointsFree);
+    }
+
+    [Test]
+    public void Growth_DeepSkillNeedsTenInBranch()
+    {
+        var g = new GrowthState { SkillPointsEarned = 30 };
+        Assert.IsFalse(g.CanLearn("일곱 이름"));                                        // 부름 갈래 점수 0
+        foreach (var n in new[] { "초혼", "혼불 날리기", "이름 비추기", "배웅길" }) Assert.IsTrue(g.Learn(n));   // 액티브 4 (점수 4)
+        foreach (var n in new[] { "오래 부르기", "고마운 넋", "곁을 지킴" }) { Assert.IsTrue(g.Learn(n)); Assert.IsTrue(g.Learn(n)); }   // 패시브 3×2 (점수 6) → 합 10
+        Assert.IsTrue(g.CanLearn("일곱 이름"));                                          // 10점 이상이라 열림
+    }
+
+    [Test]
+    public void Growth_PassiveMaxTwoLevelsActiveOnce_AndBarHoldsFour()
+    {
+        var g = new GrowthState { SkillPointsEarned = 20 };
+        Assert.IsTrue(g.Learn("휘감기")); Assert.IsFalse(g.Learn("휘감기"));            // 액티브는 한 번
+        Assert.IsTrue(g.Learn("단단한 손")); Assert.IsTrue(g.Learn("단단한 손")); Assert.IsFalse(g.Learn("단단한 손"));   // 패시브는 두 단계
+        foreach (var n in new[] { "여럿 끌기", "매듭 걸음", "한 줄 꿰기", "터뜨리기" }) g.Learn(n);
+        Assert.AreEqual(SkillTree.ActiveSlots, g.ActiveBar.Count);                       // 칸은 넷까지
+    }
 }

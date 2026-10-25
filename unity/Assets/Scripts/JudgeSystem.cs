@@ -22,6 +22,7 @@ public class JudgeSystem : MonoBehaviour
     CharacterPanel panel;
     Loadout lo => player.loadout;                // 든 무기·도술·장비 (Player 가 소유)
     public readonly Ledger ledger = new Ledger();
+    public readonly GrowthState growth = new GrowthState();   // 품계·능력치·도술 점수(잃지 않는 성장). 명부 책 탭이 보여 준다
     public NightRun night = new NightRun();   // 하룻밤 한 판의 뼈대(시간·몫·귀환) — 규칙은 Core
     GameObject shrineView;                      // 서낭당 표시(바닥 원)
     readonly StainSet stains = new StainSet();
@@ -171,6 +172,8 @@ public class JudgeSystem : MonoBehaviour
         if (castTarget.soul.Boss)
         {
             int g = ledger.CompleteBossTendo();
+            growth.AddBossPoint();                  // 보스 천도 = 도술 점수 1
+            ui?.Hud.Toasts.Add("도술 점수 +1");
             night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
             Say("나루 영감을 천도했다!"); bossOutcome = 1;
@@ -181,6 +184,8 @@ public class JudgeSystem : MonoBehaviour
             int before = ledger.Neok;
             ledger.CompleteTendo();
             ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (lo.stats.TendoNeokMult - 1f));   // 향 내음: 천도 넋 보너스
+            int gained = ledger.Neok - before;
+            if (growth.AddNeok(gained) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
             if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
