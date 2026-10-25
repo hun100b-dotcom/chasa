@@ -1,0 +1,192 @@
+[
+ {
+  "name": "harbor_pier",
+  "tris": 276,
+  "size_m": [
+   4.0,
+   3.26,
+   1.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "harbor_gauge_post",
+  "tris": 176,
+  "size_m": [
+   0.34,
+   0.34,
+   3.05
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "harbor_boat",
+  "tris": 204,
+  "size_m": [
+   5.14,
+   1.33,
+   0.74
+  ],
+  "min_z": -0.05
+ },
+ {
+  "name": "harbor_net_frame",
+  "tris": 280,
+  "size_m": [
+   6.07,
+   0.16,
+   2.6
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "harbor_net_pile",
+  "tris": 142,
+  "size_m": [
+   1.4,
+   1.14,
+   0.68
+  ],
+  "min_z": -0.03
+ },
+ {
+  "name": "harbor_jar",
+  "tris": 432,
+  "size_m": [
+   1.23,
+   1.14,
+   0.78
+  ],
+  "min_z": -0.03
+ },
+ {
+  "name": "harbor_gaekju_house",
+  "tris": 204,
+  "size_m": [
+   8.8,
+   7.01,
+   4.8
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "harbor_inn",
+  "tris": 92,
+  "size_m": [
+   6.8,
+   6.05,
+   4.1
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "harbor_lamp_hut",
+  "tris": 64,
+  "size_m": [
+   4.17,
+   3.6,
+   4.92
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "salt_pan",
+  "tris": 144,
+  "size_m": [
+   4.0,
+   4.0,
+   0.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "salt_pile",
+  "tris": 126,
+  "size_m": [
+   2.82,
+   2.03,
+   1.73
+  ],
+  "min_z": -0.325
+ },
+ {
+  "name": "salt_warehouse",
+  "tris": 92,
+  "size_m": [
+   6.6,
+   4.6,
+   4.1
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "salt_dike",
+  "tris": 144,
+  "size_m": [
+   4.0,
+   0.9,
+   1.01
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "cape_waiting_rock",
+  "tris": 276,
+  "size_m": [
+   5.44,
+   4.18,
+   7.45
+  ],
+  "min_z": -0.86
+ },
+ {
+  "name": "cape_hutmyo",
+  "tris": 60,
+  "size_m": [
+   1.6,
+   2.08,
+   0.8
+  ],
+  "min_z": -0.3
+ },
+ {
+  "name": "cape_new_grave",
+  "tris": 84,
+  "size_m": [
+   1.78,
+   2.87,
+   1.2
+  ],
+  "min_z": -0.45
+ },
+ {
+  "name": "shoal_wreck",
+  "tris": 452,
+  "size_m": [
+   7.0,
+   4.39,
+   2.77
+  ],
+  "min_z": 0.104
+ },
+ {
+  "name": "shoal_rock",
+  "tris": 324,
+  "size_m": [
+   3.08,
+   2.05,
+   2.06
+  ],
+  "min_z": -0.4
+ },
+ {
+  "name": "shoal_plank",
+  "tris": 36,
+  "size_m": [
+   3.0,
+   0.8,
+   0.16
+  ],
+  "min_z": 0.25
+ }
+]
