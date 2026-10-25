@@ -1,0 +1,92 @@
+{
+ "_설명": "솔고개 필드 BGM 층 배정(기획·사운드, 2026-10-25). 층은 겹쳐 틀지 않고 crossfade_sec 동안 교차로 넘긴다. 파일은 Resources.Load('Audio/BGM/<id>')로 읽음. 음량은 파일에 이미 맞춰 둠(탐색 -20 LUFS, 전투·처결 -16 LUFS) → 재생 볼륨 1.0 기준.",
+ "region": "solgogae",
+ "crossfade_sec": {
+  "day_to_night": 8.0,
+  "explore_to_combat": 1.0,
+  "combat_to_explore": 3.0,
+  "to_finish": 0.3,
+  "finish_to_explore": 2.0
+ },
+ "combat_exit_delay_sec": 4.0,
+ "layers": {
+  "explore_day": {
+   "clips": [
+    "bgm_solgogae_day_a",
+    "bgm_solgogae_day_b"
+   ],
+   "loop": true,
+   "pick": "번갈아(한 곡 끝나면 다른 곡으로 2초 교차)",
+   "when": "월드 시계 낮"
+  },
+  "explore_night": {
+   "clips": [
+    "bgm_solgogae_night"
+   ],
+   "loop": true,
+   "when": "월드 시계 해 진 뒤"
+  },
+  "combat": {
+   "clips": [
+    "bgm_solgogae_combat"
+   ],
+   "loop": true,
+   "when": "적이 8m 안. 마지막 적이 멀어지거나 처치되고 combat_exit_delay_sec 지나면 탐색으로"
+  },
+  "finish": {
+   "clips": [
+    "bgm_solgogae_finish_temp"
+   ],
+   "loop": false,
+   "when": "적이 무릎 꿇는 순간 1회. 천도·파혼 끝날 때까지 BGM 쉼(이 소리 끝난 뒤 무음)",
+   "temp": true
+  }
+ },
+ "clips": {
+  "bgm_solgogae_day_a": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_day_a.ogg",
+   "length_sec": 132.25,
+   "source": "Wind_Over_the_Ridge",
+   "source_range_sec": [
+    16.2,
+    148.45
+   ]
+  },
+  "bgm_solgogae_day_b": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_day_b.ogg",
+   "length_sec": 133.55,
+   "source": "Where_the_Pine_Meets_Sky",
+   "source_range_sec": [
+    26.6,
+    160.15
+   ]
+  },
+  "bgm_solgogae_night": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_night.ogg",
+   "length_sec": 31.55,
+   "source": "Mountain_Ridge_at_Noontide",
+   "source_range_sec": [
+    56.5,
+    88.05
+   ]
+  },
+  "bgm_solgogae_combat": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_combat.ogg",
+   "length_sec": 41.85,
+   "source": "Storm_on_the_High_Ridge",
+   "source_range_sec": [
+    91.35,
+    133.2
+   ]
+  },
+  "bgm_solgogae_finish_temp": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_finish_temp.ogg",
+   "length_sec": 6.9,
+   "source": "Storm_on_the_High_Ridge",
+   "source_range_sec": [
+    135.6,
+    142.5
+   ]
+  }
+ }
+}
