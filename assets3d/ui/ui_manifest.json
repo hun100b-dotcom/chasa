@@ -1507,5 +1507,125 @@
   ],
   "x2": "prompt_pahon_16@2x.png",
   "note": "기록 탭 줄 앞 파혼 단순판 16px(@2x 32): 안쪽 하이라이트 없음, 테두리 2px(점선), 모양 하나"
+ },
+ "boss_warn/warn_circle_border_L": {
+  "size_px": [
+   678,
+   678
+  ],
+  "x2": "warn_circle_border_L@2x.png",
+  "note": "원 경고 테두리 지름 5 m(그림 5.3 m 안에 반경 2.5 m). 한지 12 cm + 먹선. 거적(r3)은 6/5.3 배로 키움"
+ },
+ "boss_warn/warn_circle_fill_red": {
+  "size_px": [
+   678,
+   678
+  ],
+  "x2": "warn_circle_fill_red@2x.png",
+  "note": "원 경고 채움(빨강 35%, 안쪽으로 차오르는 마스크는 코드)"
+ },
+ "boss_warn/warn_mat_fill": {
+  "size_px": [
+   678,
+   678
+  ],
+  "x2": "warn_mat_fill@2x.png",
+  "note": "거적 던지기 원 채움: 비스듬 짚결 줄무늬(다른 원 경고와 무늬로 구분). 반경 3 m·예고 0.8초·느려짐 2초"
+ },
+ "boss_warn/warn_cell_border_L": {
+  "size_px": [
+   256,
+   256
+  ],
+  "x2": "warn_cell_border_L@2x.png",
+  "note": "칸 경고 테두리 한 변 2 m + 모서리 꺾쇠(낙인 파동 12칸·호령 대형)"
+ },
+ "boss_warn/warn_cell_fill_red": {
+  "size_px": [
+   256,
+   256
+  ],
+  "x2": "warn_cell_fill_red@2x.png",
+  "note": "칸 경고 채움 빨강 35%"
+ },
+ "boss_warn/warn_band_border_L": {
+  "size_px": [
+   205,
+   768
+  ],
+  "x2": "warn_band_border_L@2x.png",
+  "note": "띠 경고 테두리 1.6×6 m(파도 한 줄·물살). 가로로 눕혀 쓴다"
+ },
+ "boss_warn/warn_band_fill_red": {
+  "size_px": [
+   205,
+   768
+  ],
+  "x2": "warn_band_fill_red@2x.png",
+  "note": "띠 경고 채움 빨강 35%, 0.9 m 마디 옅은 줄"
+ },
+ "boss_warn/warn_safe_cell": {
+  "size_px": [
+   256,
+   256
+  ],
+  "x2": "warn_safe_cell@2x.png",
+  "note": "안전 칸(낙인 13번째 칸·호령 틈 칸): 점선 한지 테두리 + 옥색 흰빛 25% + 안쪽 ▸ 눈금"
+ },
+ "boss_warn/warn_safe_band": {
+  "size_px": [
+   205,
+   768
+  ],
+  "x2": "warn_safe_band@2x.png",
+  "note": "안전 띠(파도 줄의 안전 구간): 점선 한지 테두리 + 옥색 흰빛 25%"
+ },
+ "boss_warn/warn_rock_border_L": {
+  "size_px": [
+   499,
+   499
+  ],
+  "x2": "warn_rock_border_L@2x.png",
+  "note": "낙석 그림자 테두리 지름 3 m: 한지 고리 + 안쪽을 가리키는 삼각 눈금 8개"
+ },
+ "boss_warn/warn_rock_fill": {
+  "size_px": [
+   499,
+   499
+  ],
+  "x2": "warn_rock_fill@2x.png",
+  "note": "낙석 그림자 채움: 가운데 짙은 먹(#0F1729) + 가장자리 빨강 35%"
+ },
+ "boss_warn/warn_rock_border_you_L": {
+  "size_px": [
+   729,
+   729
+  ],
+  "x2": "warn_rock_border_you_L@2x.png",
+  "note": "내 발밑 낙석: 위 고리 + 바깥 점선 고리(지름 4.7 m)와 눈금 4개. 3개 중 하나만 겹쳐 얹는다"
+ },
+ "boss_warn/warn_deck_arrow_border_L": {
+  "size_px": [
+   512,
+   256
+  ],
+  "x2": "warn_deck_arrow_border_L@2x.png",
+  "note": "갑판 기울기 방향 화살 3겹 테두리 4×2 m, 오른쪽(+x)이 앞. 코드가 미끄러지는 방향으로 돌려 놓는다"
+ },
+ "boss_warn/warn_deck_arrow_fill": {
+  "size_px": [
+   512,
+   256
+  ],
+  "x2": "warn_deck_arrow_fill@2x.png",
+  "note": "갑판 기울기 화살 채움(빨강 55%). 한 겹씩 차례로 켜면 방향이 읽힘"
+ },
+ "boss_warn/warn_spawn": {
+  "size_px": [
+   256,
+   256
+  ],
+  "x2": "warn_spawn@2x.png",
+  "note": "물 혼 나오는 자리: 물결 고리 둘 + 붉은 물방울. 채움 없음"
  }
 }
