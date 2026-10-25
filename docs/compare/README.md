@@ -83,3 +83,8 @@
 - `field-fix-doctor-house.png` 의원 집 기와지붕 / `field-fix-doctor-roof-fade.png` 의원 집 뒤 / `field-fix-grass-tones.png` 풀밭 색 4단계
 - `field-fix2-forest-nw·west·north.png` 숲 자리(아직 듬성듬성) / `field-fix2-barley-edge.png` 보릿들 둘레
 - `field-fix2-boss-boat.png` 보스 자리 옆 나룻배(보스와 약 15m 떨어짐) / `field-fix2-ferry-boat.png` 나루터 배 / `field-fix2-north-empty.png` 북쪽 빈 땅
+
+## 2026-10-25 12:40 KST — PC 검증 900416d·6888ec5(+94bc09b 수정)
+- `pc-verify-6888ec5-demo.mp4` — ?demo=1&cam=a 30초(원본 14초 지점부터), 4.6MB. 새 땅·대기 고리·천도
+- `pc-verify-terrain-walk.png` — ?field 시작에서 위·오른쪽·아래·왼쪽으로 걷기(새 땅 위 이동 정상)
+- `pc-verify-terrain-tour.png` — ?field 걷기 8컷
