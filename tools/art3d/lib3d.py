@@ -11,7 +11,7 @@ PAL = {  # 팔레트 토큰(docs/art/palette-tokens.json)을 3D용으로 옮긴 
     "teal": "#4FA8A0", "chain": "#BFE8FF", "cheondo": "#5FE3C0", "wood": "#6B4A2E", "wood_dark": "#4A3322",
     "pillar": "#7A3F2C", "mud": "#C9B38A", "thatch": "#B89A55", "stone": "#8A8A82", "stone_dark": "#666660",
     "jar": "#7A4A2E", "leaf": "#3F6B4E", "leaf_dark": "#2F5440", "bark": "#5A3E2A", "water": "#2B3A66",
-    "soul_fresh": "#BFE8FF", "soul_day": "#FFCC55", "soul_old": "#665659", "soul_lump": "#9A5CFF",
+    "soul_fresh": "#BFE8FF", "soul_day": "#FFCC55", "soul_old": "#6E5446", "soul_lump": "#9A5CFF",
     "ground": "#6F7B5B", "dead": "#6B5E50", "reed_top": "#8A6B4A", "silver": "#D8D0C0", "pine": "#2F5A44", "pine_light": "#3F7455", "zelkova": "#6E9B4F", "zelkova_dark": "#4F7A3B", "bamboo": "#6F9A4A", "bamboo_leaf": "#4F7F3A", "reed": "#B4A66A", "berry": "#B53A4A", "iron": "#3A3A44", "slope_top": "#9CC25F", "slope_side": "#5A4630", "slope_line": "#3E5A2C", "cliff_light": "#B4B2BC", "cliff_dark": "#4E5264", "robe": "#586080", "sagat": "#8A7448", "old_skin": "#B58E70", "hull": "#3B3F52", "beard": "#D8D0C0", "hat": "#14141F", "face": "#0A0A12", "cloth": "#232338", "road": "#A8946B", "skin": "#D9B79B", "blue_cloth": "#3E64B0", "yellow_cloth": "#E8C15A",
 }
 _mats = {}

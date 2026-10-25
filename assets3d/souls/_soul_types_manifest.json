@@ -71,11 +71,11 @@
     },
     {
      "name": "Windup",
-     "frames": 19,
-     "length_sec": 0.3,
+     "frames": 25,
+     "length_sec": 0.4,
      "loop": false,
      "events": {
-      "flash": 9,
+      "flash": 14,
       "end_pose_held": true
      }
     },

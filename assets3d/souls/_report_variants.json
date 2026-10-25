@@ -2,132 +2,132 @@
  {
   "name": "soul_fresh_yeoksa",
   "region": "검은여울 역병",
-  "tris": 266,
-  "min_z": -0.007,
+  "tris": 654,
+  "min_z": 0.028,
   "size_m": [
+   0.54,
    0.51,
-   0.51,
-   1.23
+   1.3
   ]
  },
  {
   "name": "soul_day_yeoksa",
   "region": "검은여울 역병",
-  "tris": 298,
-  "min_z": 0.0,
+  "tris": 982,
+  "min_z": 0.013,
   "size_m": [
-   0.88,
-   0.54,
-   1.35
+   0.95,
+   0.55,
+   1.36
   ]
  },
  {
   "name": "soul_old_yeoksa",
   "region": "검은여울 역병",
-  "tris": 292,
-  "min_z": 0.0,
+  "tris": 594,
+  "min_z": -0.004,
   "size_m": [
-   0.79,
    0.93,
-   1.29
+   0.99,
+   1.32
   ]
  },
  {
   "name": "soul_lump_yeoksa",
   "region": "검은여울 역병",
-  "tris": 432,
+  "tris": 1210,
   "min_z": 0.0,
   "size_m": [
-   1.45,
-   0.96,
+   1.51,
+   1.11,
    1.41
   ]
  },
  {
   "name": "soul_fresh_bungjae",
   "region": "붉은재 번호 병사",
-  "tris": 230,
-  "min_z": -0.007,
+  "tris": 618,
+  "min_z": 0.028,
   "size_m": [
    0.6,
    0.6,
-   1.23
+   1.3
   ]
  },
  {
   "name": "soul_day_bungjae",
   "region": "붉은재 번호 병사",
-  "tris": 262,
-  "min_z": 0.0,
+  "tris": 946,
+  "min_z": 0.013,
   "size_m": [
-   0.88,
-   0.54,
-   1.49
+   0.95,
+   0.55,
+   1.48
   ]
  },
  {
   "name": "soul_old_bungjae",
   "region": "붉은재 번호 병사",
-  "tris": 256,
-  "min_z": 0.0,
+  "tris": 558,
+  "min_z": -0.004,
   "size_m": [
-   0.9,
-   1.02,
-   1.29
+   0.93,
+   1.05,
+   1.32
   ]
  },
  {
   "name": "soul_lump_bungjae",
   "region": "붉은재 번호 병사",
-  "tris": 396,
+  "tris": 1174,
   "min_z": 0.0,
   "size_m": [
-   1.45,
-   0.96,
+   1.51,
+   1.11,
    1.6
   ]
  },
  {
   "name": "soul_fresh_soegol",
   "region": "쇳골 광부",
-  "tris": 220,
-  "min_z": -0.007,
+  "tris": 608,
+  "min_z": 0.028,
   "size_m": [
-   0.87,
+   0.9,
    0.55,
-   1.23
+   1.3
   ]
  },
  {
   "name": "soul_day_soegol",
   "region": "쇳골 광부",
-  "tris": 252,
-  "min_z": 0.0,
+  "tris": 936,
+  "min_z": 0.013,
   "size_m": [
-   1.03,
-   0.54,
-   1.5
+   1.06,
+   0.55,
+   1.49
   ]
  },
  {
   "name": "soul_old_soegol",
   "region": "쇳골 광부",
-  "tris": 246,
-  "min_z": 0.0,
+  "tris": 548,
+  "min_z": -0.004,
   "size_m": [
-   1.15,
-   0.98,
-   1.29
+   1.2,
+   1.01,
+   1.32
   ]
  },
  {
   "name": "soul_lump_soegol",
   "region": "쇳골 광부",
-  "tris": 386,
+  "tris": 1164,
   "min_z": 0.0,
   "size_m": [
-   1.45,
-   0.96,
+   1.51,
+   1.11,
    1.61
   ]
  }

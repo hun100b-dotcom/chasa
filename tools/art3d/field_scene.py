@@ -196,6 +196,7 @@ SHOTS = {
   "arena2t": dict(win=(550, 490, 612, 552), center=(580, 521, 2.3), ortho=30, title="패턴 예고 ② 잔이 열린다(3칸)"),
   "arena3t": dict(win=(20, 428, 72, 480), center=(46, 453, 0.35), ortho=26, title="패턴 예고 ③ 번호 낙인(16칸)"),
   "title":  dict(win=(150, 0, 240, 80), cam=((194.0, 29.4, 1.2), (187.0, 38.4, 2.3), 27), size=(1920, 1080), title="타이틀 배경: 밤 서낭당 앞의 차사"),
+  "portrait": dict(win=(180, 38, 212, 60), cam=((196.0, 45.7, 1.62), (196.0, 48.0, 1.52), 85), size=(768, 768), title="HUD 초상(차사 가슴 위)"),
   "load_a": dict(win=(160, 10, 240, 100), cam=((196, 16, 3.2), (196, 52, 2.6), 28), size=(1920, 1080), title="로딩 ① 솔고개 마을 어귀"),
   "load_b": dict(win=(370, 255, 450, 335), cam=((388, 262, 2.6), (404, 292, 1.2), 30), size=(1920, 1080), title="로딩 ② 물막이 골 나루"),
   "load_c": dict(win=(540, 490, 625, 590), cam=((571, 514, 4.6), (581, 537, 3.2), 27), size=(1920, 1080), title="로딩 ③ 폐당집 터"),
@@ -253,6 +254,10 @@ def run(key):
         pose("boss_naru", 404, 288, 0.55, 0, "Windup", 56)
         put("fx_wait_ring_old", 404, 281, 0.4, 0, scale=1.0); 
     if key.startswith("arena"): arena_scene(key)
+    if key == "portrait":   # 초상: 정면에서 가슴 위. 청록 테두리빛(왼쪽 뒤)과 따뜻한 등불빛(오른쪽 앞)
+        pose("hero_chasa", 196.0, 48.0, 0, 0, "Idle", 20)
+        for nm, loc, col, en in (("rimL", (194.2, 49.6, 2.2), (0.37, 0.89, 0.75), 260), ("warmR", (197.4, 45.4, 1.9), (1.0, 0.62, 0.38), 90)):
+            ld = bpy.data.lights.new(nm, "POINT"); ld.energy = en; ld.color = col; ld.shadow_soft_size = 0.5; lo = bpy.data.objects.new(nm, ld); bpy.context.collection.objects.link(lo); lo.location = loc
     if key == "title":   # 서낭당 앞에 선 차사(서낭당을 마주 봄) + 둘레에 떠도는 넋
         pose("hero_chasa", 189.2, 34.6, 0.3, 215, "Idle", 20)
         orbs(((184.4, 33.6, 1.3), (191.0, 37.2, 1.9), (183.0, 40.0, 2.4), (187.6, 31.6, 0.9), (190.6, 41.5, 2.8)))
