@@ -136,7 +136,7 @@ public partial class CharacterPanel
                     if (node.Active && g.LevelOf(node.Name) > 0) g.ToggleBar(node.Name);   // 배운 액티브는 칸에 올렸다 내렸다
                     else { g.Learn(node.Name); judge.RefreshGrowth(); }                     // 배우면 패시브 효과가 바로 붙는다
                 }, c, 13, barAt >= 0);
-                bt.RegisterCallback<PointerEnterEvent>(e => desc.text = node.Name + ": " + node.Desc);
+                bt.RegisterCallback<PointerEnterEvent>(e => { string fl = ItemTexts.Skill(node.Name); desc.text = node.Name + ": " + node.Desc + (fl.Length > 0 ? "\n" + fl : ""); });
                 bt.RegisterCallback<PointerLeaveEvent>(e => desc.text = idle);
             }
             cols.Add(col);

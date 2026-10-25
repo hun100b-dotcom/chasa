@@ -1353,3 +1353,8 @@
 ## 소리 가져오기 설정 (10-25, 코드·QA — 사운드 audio-delivery-plan §1)
 - 이미 있던 `AudioImportRules`(웹 Vorbis·모노·압축 상태로 메모리)에 `data/audio_packs.json`(kind_of)을 읽어 소리 종류별 품질·표본율(짧은 소리 0.4/44.1k, 저음역·반복 환경음·긴 소리 0.3/22.05k)을 거는 규칙을 더함. 사운드가 말한 "품질 100%·DecompressOnLoad"는 .meta 기본값이고, 웹 빌드에는 이미 WebGL 덮어쓰기가 걸려 있었다. 실제 크기는 PC 빌드 보고서로 확인 후 품질 조정.
 - 아직(PC·빌드 필요): 막별 나눠 받기(AssetBundle), webGLCompressionFormat Brotli/Gzip(Vercel 머리말 확인 필요), 시작 화면 오디오 깨우기 확인.
+
+## 서사 아이템 설명글 연결 (10-25, 코드·QA)
+- 서사 `item_texts.json`(PR #32 브랜치)을 Resources/Data 로 가져와 `ItemTexts`로 읽음. 인 탭에서 고른 인 아래, 도술 설명 위에 올리면 기능 문구 아래 세계관 문장이 흐리게 나온다.
+- 문구표 120번(붙잡아 부르기→초혼)은 적용하지 않음(초혼은 결말 A 전용, 10-25 확정). 코드에 '초혼' 없음 확인.
+- 아직: 장비 이름·세트 설명글(gear 30·sets 12)은 장비 이름 체계(녹슨 철삭 등)가 코드에 없어 보류.

@@ -83,6 +83,12 @@ public partial class CharacterPanel
             int bi = i; var sl = lo.sealBag[i];
             VBtn(p, (selBagSeal == i ? "▶ " : "") + (sl.Large ? "큰 " : "") + SealLabel(sl) + " · " + SealEffects.Describe(sl), () => selBagSeal = selBagSeal == bi ? -1 : bi, selBagSeal == i ? hi : txt, 14, selBagSeal == i);
         }
+        if (selBagSeal >= 0 && selBagSeal < lo.sealBag.Count)
+        {
+            // 고른 인의 세계관 문장(서사): 기능 문구 아래 흐린 글씨
+            string fl = ItemTexts.Seal(SealEffects.Name(lo.sealBag[selBagSeal]));
+            if (fl.Length > 0) VTxt(p, fl, 13, new Color(txt.r, txt.g, txt.b, 0.6f));
+        }
         // 4) 인 만들기: 서낭당 곁에서만
         var gap2 = new VisualElement { pickingMode = PickingMode.Ignore }; gap2.style.height = 8; p.Add(gap2);
         if (!atShrine) { VTxt(p, "인은 서낭당 곁에서 만든다", 14, txt); return; }
