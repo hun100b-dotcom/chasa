@@ -220,8 +220,8 @@ public class JudgeSystem : MonoBehaviour
     void FinishTendo()
     {
         var tp = castTarget.Pos;   // Finish 뒤엔 혼이 사라질 수 있어 자리를 미리 적어 둔다
-        FxMesh.Burst("fx_tendo_pillar", tp, 1f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f));
-        FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 1f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f));
+        FxMesh.Burst("fx_tendo_pillar", tp, 0.8f, 0.9f, 0.6f, 1f, 1.5f, new Color(0.85f, 0.8f, 1f, 0.7f));   // 크기 −20%·알파 −30%(아트 검수: 화면 1/3을 흰 덩어리로 덮음)
+        FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 0.85f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f, 0.7f));
         TendoSuccessAt = Time.time;
         weather.ClearPlague(tp);   // 역병 안개: 천도한 자리 반경 4m 가 15초 걷힌다
         castTarget.PlayFinishAnim(true);   // 천도 동작(일어남→빛 알갱이→숨김)
@@ -1137,7 +1137,8 @@ public class JudgeSystem : MonoBehaviour
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (white == null) return;
-        if (CharacterPanel.Open || SettingsPanel.Open) return;   // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
+        if (CharacterPanel.Open || SettingsPanel.Open || MiniMap.BigOpen) return;   // 큰 지도가 열리면 월드 이름표·막대도 숨긴다(아트 검수)
+        // 캐릭터 창·설정이 열리면 밤 화면 글자·버튼은 그리지 않는다(QA B2)
         if (inDay) { dayScreen.OnGUI(white); return; }   // 낮 화면이 모든 것을 덮는다
         weather.DrawOverlay(player.Pos);   // 비 줄기(HUD 보다 아래)
         // (0) 화면 번쩍임: 천도/파혼 순간의 색
@@ -1258,10 +1259,10 @@ public class JudgeSystem : MonoBehaviour
         // (2.5) 산 사람 대사 자막(엿듣기): 화면 아래 가운데
         if (npcs != null && npcs.SubtitleT > 0f)
         {
-            var st = new GUIStyle(GUI.skin.label) { fontSize = Ko.TouchUI ? 24 : 20, alignment = TextAnchor.MiddleCenter, wordWrap = true };
-            st.normal.textColor = new Color(1f, 0.97f, 0.88f, Mathf.Clamp01(npcs.SubtitleT / 0.6f));
-            var r = new Rect(Screen.width * 0.15f, Screen.height - 190, Screen.width * 0.7f, 60);
-            GUI.color = new Color(0, 0, 0, 0.5f * Mathf.Clamp01(npcs.SubtitleT / 0.6f)); GUI.DrawTexture(r, white); GUI.color = Color.white;
+            var st = new GUIStyle(GUI.skin.label) { fontSize = Mathf.RoundToInt((Ko.TouchUI ? 26 : 22) * Mathf.Max(1f, Screen.height / 720f)), alignment = TextAnchor.MiddleCenter, wordWrap = true };
+            st.normal.textColor = new Color(0.953f, 0.906f, 0.827f, Mathf.Clamp01(npcs.SubtitleT / 0.6f));   // 한지색 글자
+            var r = new Rect(Screen.width * 0.15f, Screen.height - Mathf.Max(190f, Screen.height * 0.24f), Screen.width * 0.7f, Mathf.Max(60f, Screen.height * 0.085f));
+            GUI.color = new Color(0.06f, 0.05f, 0.05f, 0.55f * Mathf.Clamp01(npcs.SubtitleT / 0.6f));   // 먹색 반투명 띠 GUI.DrawTexture(r, white); GUI.color = Color.white;
             GUI.Label(r, npcs.Subtitle, st);
         }
         // (3) 장부(넋·기억·엽전·업)와 안내
@@ -1325,7 +1326,7 @@ public class JudgeSystem : MonoBehaviour
         }
         if (Casting)
         {
-            var bar = new Rect(Screen.width / 2f - 80, Screen.height - 90, 160, 12);
+            var bar = new Rect(Screen.width / 2f - 80, Screen.height * 0.72f, 160, 12);   // 스킬바·처결 카드 위(도술 칸을 가리지 않게)
             GUI.color = new Color(0, 0, 0, 0.7f); GUI.DrawTexture(bar, white);
             GUI.color = ChasaPalette.CheondoGlow;
             GUI.DrawTexture(new Rect(bar.x + 1, bar.y + 1, 158f * Mathf.Clamp01(castT / castTotal), 10), white);

@@ -86,8 +86,8 @@ public class NightLights : MonoBehaviour
             float cast = judge != null ? judge.CastZoom : 0f;
             lantern.transform.position = player.Pos + Vector3.up * 2.6f;
             lantern.color = Color.Lerp(Warm, Violet, cast);
-            lantern.range = Mathf.Lerp(12f, 7f, cast);
-            lantern.intensity = Mathf.Lerp(2.0f, 1.4f, cast) * (1f - 0.8f * Chasa.Core.SkyState.Daylight);
+            lantern.range = Mathf.Lerp(9f, 6f, cast);   // 주인공 둘레 광원: 반경을 줄이고 세기를 25% 낮춤(아트 검수: 중심이 하얗게 탐)
+            lantern.intensity = Mathf.Lerp(1.5f, 1.05f, cast) * (1f - 0.8f * Chasa.Core.SkyState.Daylight);
         }
         // 불꽃 깜빡임: 느린 숨결 + 빠른 떨림을 섞는다
         for (int i = 0; i < lamps.Count; i++)

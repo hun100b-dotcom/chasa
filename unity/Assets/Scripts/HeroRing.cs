@@ -1,6 +1,6 @@
 // =============================================================================
 // HeroRing.cs — 주인공 발밑의 옅은 청록 고리 (아트 검수 P2: 검은 도포가 어두운 땅에 묻힌다)
-// 왜 고리? 윤곽선을 따로 그리는 것보다 가볍고, 어두운 땅에서도 주인공 자리를 한눈에 알려 준다. 지름 2m·알파 25%.
+// 왜 고리? 윤곽선을 따로 그리는 것보다 가볍고, 어두운 땅에서도 주인공 자리를 한눈에 알려 준다. 지름 2m·알파 35%.
 // 그림 파일 없이 코드로 부드러운 고리 그림을 만든다(아트가 전용 고리 그림을 주면 Resources/Sprites/fx/hero_ring 으로 바꾼다).
 // =============================================================================
 using UnityEngine;
@@ -28,7 +28,7 @@ public class HeroRing : MonoBehaviour
         }
         var sh = Shader.Find("Sprites/Default");
         if (sh == null) { enabled = false; return; }
-        mat = new Material(sh) { mainTexture = tex, color = new Color(1, 1, 1, 0.25f) };   // 전체 알파 25%
+        mat = new Material(sh) { mainTexture = tex, color = new Color(1, 1, 1, 0.35f) };   // 전체 알파 35%
         var go = GameObject.CreatePrimitive(PrimitiveType.Quad);
         Destroy(go.GetComponent<Collider>());
         go.name = "HeroRing"; go.GetComponent<Renderer>().sharedMaterial = mat;
