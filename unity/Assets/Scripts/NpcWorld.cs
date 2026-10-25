@@ -100,6 +100,7 @@ public class NpcWorld
     }
 
     /// <summary>장례 대상 혼의 집 마당 좌표(없으면 false)</summary>
+    public bool HasHome(string soul) { return soulHome.ContainsKey(soul); }
     public bool HomeOf(string soul, out Vector3 pos) { return soulHome.TryGetValue(soul, out pos); }
 
     /// <summary>기획 jesa_watch_act1.json: 장례 대상 9명의 제사 지켜보기 자리. 이미 있는 자리(윤 소사)는 혼과의 연결만 잇고, 나머지는 애도하는 사람을 새로 세운다</summary>

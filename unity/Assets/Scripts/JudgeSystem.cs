@@ -792,11 +792,16 @@ public class JudgeSystem : MonoBehaviour
         foreach (var x in f.funerals) funeralCut[x.soul] = x.id;
         var tt = Resources.Load<TextAsset>("Data/funeral_targets_act1");
         if (tt != null) { var tf = JsonUtility.FromJson<FTargetFile>(tt.text); if (tf != null && tf.funerals != null) foreach (var x in tf.funerals) funeralTargets[x.name] = x; }
+        if (FieldRules.Act2)   // 2막 장례 좌표는 기획 act2_map.json 의 funerals(이름·대문·멈춘 것·다시 움직이는 것·노제·사라지는 자리)
+        {
+            var t2 = Resources.Load<TextAsset>("Data/act2_map");
+            if (t2 != null) { var f2 = JsonUtility.FromJson<FTargetFile>(t2.text); if (f2 != null && f2.funerals != null) foreach (var x in f2.funerals) funeralTargets[x.name] = x; }
+        }
     }
     /// <summary>장례 컷의 조건 글자(서사 condition). 지금은 1호 결과만 안다(3호 결과는 아직 따로 세지 않아 false)</summary>
     bool FuneralCond(string c) { return c == "B-01 천도함" ? bossOutcome == 1 : false; }
     /// <summary>제사를 지켜보기 전에는 장례 대상 이름혼의 지도 표식을 숨긴다(기획: 지켜보면 그 혼의 오늘 밤 자리가 명부에 표시된다). 윤 소사·연이는 첫 세션 흐름이라 처음부터 보인다</summary>
-    public bool NamedMarkerHidden(string name) { return name != null && name != "윤 소사" && name != "연이" && funeralCut.ContainsKey(name) && (npcs == null || !npcs.JesaSeen.Contains(name)); }
+    public bool NamedMarkerHidden(string name) { return name != null && name != "윤 소사" && name != "연이" && funeralCut.ContainsKey(name) && (npcs == null || !npcs.JesaSeen.Contains(name)) && (npcs == null || npcs.HasHome(name)); }   // 제사 자리 데이터가 없는 이름혼(2막)은 숨기지 않는다
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
     // ===== 저장·불러오기 (규칙은 Core/SaveGame.cs, 저장소는 SaveStore) ==================
     bool loadChecked; float autoSaveT = 30f;

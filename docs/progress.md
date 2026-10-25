@@ -1068,3 +1068,9 @@
 - `tools/build_npc_act2.py` → Resources/Data/npc_flat_act2.json (act2_map 좌표 + 서사 boss_clues_act2 말). `?act2=1` 일 때 NpcWorld 가 읽어 세운다: 산 사람 9줄·물건 단서 8곳(좌표 절대값). 지켜보기 줄은 서사 대사가 없어 '무엇을 보나(what)'를 임시 글로 쓴다 — 서사가 npc_act2.json schedule 에 line 을 쓰면 우선한다.
 - 칠복 개집을 (190.5,75.0)으로 옮김(field.json), Interactables 의 중복 임시 개집 삭제.
 - 남음: 2막 장례 9곳·서낭당 SH2-1~3(쉬기·넋길)·금줄 해금 규칙·B-05/B-08 천도 조건.
+
+## 2막 장례·이름혼 연결 (코드·QA, 10-25)
+- `tools/build_named_souls_act2.py` → named_souls_act2.json: 2막 장례 대상 9명을 대문 남쪽 8m(임시)에 세운다. NamedSoulSpawns 가 `?act2=1` 에서 읽는다.
+- 장례 좌표(대문·멈춘 것·다시 움직이는 것·노제·사라지는 자리)는 act2_map.json funerals 를 JudgeSystem 이 읽는다 → 천도 다음 낮 대문 20m 안에서 FUN-S049… 컷이 열린다(컷 대본은 이미 cutscenes_funerals.json 에 있음).
+- 제사 지켜보기 자리 데이터가 없는 이름혼(2막)은 명부 표식을 숨기지 않는다.
+- 남음: 2막 제사 지켜보기 줄(서사 대사 없음), 이름혼 자리 아트 확정, 금줄 해금, SH2-3 해금.
