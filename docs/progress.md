@@ -1055,3 +1055,7 @@
 - 날씨 6개: `amb.weather.fog`(낮 안개)·`.plague`(역병 안개)·`.cloudy.night`(흐린 밤)·`.rain.heavy`(큰비), `sfx.weather.thunder.far`(먼 천둥 한 번).
 - 코드 연결 제안: Sfx.SetWeatherInternal 짝 바꾸기(안개=낮 fog/밤 fog_night, 역병=plague, 흐림=낮 wind/밤 cloudy.night, 1호 보스 날 비=rain.heavy), BossArena 파동 예고·발사 시점, 나루 영감 예비동작.
 - 기존 파일 변화 없음. 효과음 총 173개. 미리듣기 v13.
+
+## 사운드 PR #27 연결 1차 (코드·QA, 10-25)
+- 병합 후 연결: 무기별 타격·휘두름(Player), 무기별 천도·파혼(JudgeSystem), 명부 열고 닫기, 품계 상승, 월화 예고·서 의원 약점 끝, 날씨 소리(낮·밤·안개·역병 구분, Sfx.NightNow).
+- 남음: 처결 대기 똑딱(5종), 나루 영감 전투음·월화 부채꼴/몰아침·서 의원 터짐/피함, 큰비·천둥, UI(탭·저장·deny·들은 말), 요령방울 1회/삼지창 지연.

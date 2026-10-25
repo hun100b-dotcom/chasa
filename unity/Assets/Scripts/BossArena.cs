@@ -91,7 +91,7 @@ public class BossArena : MonoBehaviour
             var pick = TwelveStreets.Pick(() => Random.value, TwelveStreets.CupsPerWave(ratio));
             // 월화 '열두 거리': 굿판 한가운데에서 그 잔 쪽으로 30° 부채꼴이 열린다(잔 방향 = 30i°, 아트 예고 그림과 같은 모양)
             foreach (int i in pick) AddSector(i * Mathf.PI * 2f / Balance.B02_CUPS, Balance.B02_WARN_TIME);
-            Sfx.Play("cut.yoryeong.ring");   // 요령(방울) 한 번
+            Sfx.Play("sfx.boss.wolhwa.warn");   // 월화 예고음(컷신용 요령 소리 대신 전투용)
             waveT = Balance.B02_WAVE_GAP + Balance.B02_WARN_TIME;
         }
         else
@@ -188,6 +188,7 @@ public class BossArena : MonoBehaviour
         bool wasOpen = weak.Open;
         weak.Tick(dt);
         if (!wasOpen && weak.Open) Sfx.Play("cut.drawer");   // 약장 서랍이 밀려 나온다
+        if (wasOpen && !weak.Open) Sfx.Play("sfx.boss.seo.weak.close");   // 약점 3초가 끝났다
         boss.damageTakenMult = weak.DamageMult;
         if (decor != null && decor.WeakLamp != null) decor.WeakLamp.enabled = weak.Open;   // 약장 맨 아래 서랍의 청록 불
         if (weakMark != null) { weakMark.SetActive(weak.Open); weakMark.transform.position = boss.HeadPosition + Vector3.up * 0.6f; }

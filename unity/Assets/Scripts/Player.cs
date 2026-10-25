@@ -501,7 +501,7 @@ public class Player : MonoBehaviour
             chainLag *= Mathf.Exp(-14f * dt);
             chain.SetShape(hand, angle, Mathf.Lerp(0.3f, 0.55f, p) * (cfg.reach + loadout.stats.ReachAdd), hand.y + 0.25f * p, chainLag, 0.25f);
             a.prevAngle = a.startAngle;
-            if (a.t >= cfg.windup) { a.phase = "swing"; a.t = 0f; }
+            if (a.t >= cfg.windup) { a.phase = "swing"; a.t = 0f; Sfx.Play("sfx.swing." + Sfx.WeaponTag(loadout.weapon)); }   // 예비→휘두름 순간에 휘두르는 소리
             return;
         }
         if (a.phase == "swing")
@@ -602,7 +602,7 @@ public class Player : MonoBehaviour
         if (!killed) e.ReactHit(a.step);   // 맞은 동작: 1타 약·2타 중·3타 강(아트 맞는 동작)
         // 손맛 5요소: 맞은 놈만 굳기(국소 히트스톱) · 처치/마지막 타격만 전체 정지 · 흔들림 · 줌 펀치 · 맞은 방향 카메라 밀림
         bool last = a.step == Steps.Length;
-        Sfx.Play(killed || last ? "sfx.hit.heavy" : "sfx.hit.chain");   // 타격음은 히트스톱과 같은 순간에
+        Sfx.Play(Sfx.HitKey(loadout.weapon, killed || last));   // 타격음은 히트스톱과 같은 순간에(무기마다 다른 소리)
         if (killed || last) feel.HitStop(cfg.hitStopFrames + (killed ? Config.FEEL_KILL_BONUS_FRAMES : 0));
         else e.Freeze(cfg.hitStopFrames * Config.FEEL_FRAME_TIME * 1.5f);   // 일반 타격은 국소 정지(조금 더 길게 — 전체 정지보다 덜 거슬리니까)
         feel.AddShake(cfg.shake + (killed ? Config.FEEL_KILL_BONUS_SHAKE : 0f));

@@ -19,7 +19,7 @@ public partial class CharacterPanel : MonoBehaviour
     bool bookMode; GUIStyle bookBtn;                   // 명부에서 마우스를 올린 도술의 설명
 
     // 명부 탭은 시연판 설정과 무관하게 항상 열린다. 옛 세 탭(장비·도술·능력치)은 DEMO_PANEL 이 켜졌을 때만 보인다
-    public void Toggle() { Open = !Open; if (Open && !Demo.Panel) tab = 3; }
+    public void Toggle() { Open = !Open; Sfx.Play(Open ? "sfx.ui.ledger.open" : "sfx.ui.ledger.close"); if (Open && !Demo.Panel) tab = 3; }
 
     void Update()
     {

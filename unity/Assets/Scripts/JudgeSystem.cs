@@ -222,7 +222,7 @@ public class JudgeSystem : MonoBehaviour
         // 파편 모델: 3종 중 하나를 무작위 방향으로 터뜨린다 (반경에 맞춰 크기)
         FxMesh.Burst("fx_pahon_shards_" + "abc"[Random.Range(0, 3)], new Vector3(at.x, at.y + 0.05f, at.z), radius / 1.25f, 0.55f, 0.5f, 1.15f, 0.4f, null, Random.Range(0f, 360f));
         feel.HitStop(Balance.PAHON_HITSTOP_FRAMES);
-        Sfx.Play("sfx.pahon.burst");
+        Sfx.Play("sfx.pahon.burst." + Sfx.WeaponTag(lo.weapon));
         feel.AddShake(Balance.PAHON_SHAKE);
         feel.AddZoom(1f);                       // 파혼: 확 다가가는 쿵
         flashColor = new Color(0.55f, 0.05f, 0.08f); flashA = 0.55f;   // 붉은 번쩍임(깨뜨림)
@@ -255,7 +255,7 @@ public class JudgeSystem : MonoBehaviour
             {
                 t2.soul.BeginSending(); t2.Finish();
                 int nb = ledger.Neok; ledger.CompleteTendo(); gainedExtra = ledger.Neok - nb;
-                if (growth.AddNeok(gainedExtra) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");
+                if (growth.AddNeok(gainedExtra) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }
                 night.RecordTendo(gainedExtra);
                 Say("한 줄로 함께 천도했다");
             }
@@ -280,7 +280,7 @@ public class JudgeSystem : MonoBehaviour
             if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
             int gained = ledger.Neok - before;
-            if (growth.AddNeok(gained) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");   // 품계 상승 알림
+            if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
             if (castTarget.soul.Name == null) introPlainDone++;
@@ -293,7 +293,7 @@ public class JudgeSystem : MonoBehaviour
         if (ml != null) { memLine = ml; memLineT = 5f; if (fact != null) ui?.Hud.Toasts.Add("추리판 " + fact + " 켜짐"); }
         chainLeft = lo.stats.ChainWindow + lo.Def.ChainWindowAddS;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
-        Sfx.Play("sfx.tendo.done");
+        Sfx.Play("sfx.tendo.done." + Sfx.WeaponTag(lo.weapon));
         feel.SlowMo(Balance.TENDO_COMPLETE_SLOWMO, Balance.TENDO_COMPLETE_SLOWMO_SCALE);   // 멈춤이 아니라 느림 = 보냄
         feel.AddZoom(-0.7f);                    // 천도 완료: 숨을 내쉬듯 화면이 살짝 멀어졌다 돌아온다
         flashColor = new Color(0.85f, 0.8f, 1f); flashA = 0.5f;        // 흰 보랏빛 번쩍임(보냄)
@@ -679,6 +679,7 @@ public class JudgeSystem : MonoBehaviour
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
         if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
+        Sfx.NightNow = clock != null && clock.Phase == ClockPhase.Night;
         weather.state.Override = WeatherRules.Parse(cuts.SceneWeather);   // 서사 컷이 정한 날씨가 무작위보다 우선
         float wxSlow; int wxDrain;
         weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
