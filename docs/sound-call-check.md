@@ -50,12 +50,12 @@
 
 (묶음표로는 시즌1이 30개지만 `amb.crow.far`·`amb.river.morning`은 공통으로 잡혔을 뿐 시즌3 장례 소리라 아래 시즌3에 센다. `cut.bones.crumble`도 시즌3.)
 
-## 그 밖(160개) — 아직 들어올 때가 아닌 것
+## 그 밖(163개) — 아직 들어올 때가 아닌 것
 | 묶음 | 개수 | 왜 안 불리나 |
 |---|---|---|
 | 방금 넘긴 천도 위험·파혼·업·얼룩 | 21 | 이 소리가 든 커밋(c1acd4e, 2a9f680)이 아직 코드 브랜치에 안 들어감. 연결법 `docs/cast-danger-sound.md`, `docs/pahon-karma-sound.md` |
 | 시즌2 저승 ⑦~⑩ | 13 | 구역 환경음 9개(`amb.styx.*`·`amb.archive` 등)는 `ZoneAmbient`에 ⑦~⑩ 구역 이름이 아직 없음. 장치음 4개(`sfx.dam.gauge.up`·`sfx.name.slip.catch`·`sfx.clerk.hush` 등)는 장치가 생길 때 |
-| 시즌3(6·7·8막) | 126 | `cutscenes_s3`·`funerals_s3`와 소리 대본(`cutscene_audio_s3`·`funeral_audio_s3`)이 아직 `Resources/Data`에 없음. 시즌3 보스·아래층 환경음도 시즌3 코드와 함께 |
+| 시즌3(6·7·8막) | 129 | `cutscenes_s3`·`funerals_s3`와 소리 대본(`cutscene_audio_s3`·`funeral_audio_s3`)이 아직 `Resources/Data`에 없음. 시즌3 보스·아래층 환경음도 시즌3 코드와 함께 |
 
 ## 같이 본 것
 - 시즌1·2 컷신 소리 대본은 `cutscenes_s1`(audio 명령 78개)·`cutscenes_s2`(104개)에 잘 녹아 있다.
