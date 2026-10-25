@@ -596,6 +596,7 @@ public class Player : MonoBehaviour
         int dmg = Mathf.Max(1, Mathf.RoundToInt(cfg.damage * loadout.stats.DamageMult * (1f + Random.Range(-Config.DAMAGE_VARIANCE, Config.DAMAGE_VARIANCE))));
         bool killed = e.TakeHit(dmg, dir, cfg.knockback, cfg.stun);
         onHitLanded?.Invoke();
+        if (!killed) e.ReactHit(a.step);   // 맞은 동작: 1타 약·2타 중·3타 강(아트 맞는 동작)
         // 손맛 5요소: 맞은 놈만 굳기(국소 히트스톱) · 처치/마지막 타격만 전체 정지 · 흔들림 · 줌 펀치 · 맞은 방향 카메라 밀림
         bool last = a.step == Steps.Length;
         Sfx.Play(killed || last ? "sfx.hit.heavy" : "sfx.hit.chain");   // 타격음은 히트스톱과 같은 순간에

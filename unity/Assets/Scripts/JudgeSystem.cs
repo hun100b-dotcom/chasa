@@ -162,6 +162,7 @@ public class JudgeSystem : MonoBehaviour
         var at = e.Pos;
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
+        e.PlayFinishAnim(false);   // 파혼 동작(터짐)
         e.Finish();
         int coinBefore = ledger.Coin;
         ledger.DoPahon(e.soul.Boss);
@@ -223,6 +224,7 @@ public class JudgeSystem : MonoBehaviour
         FxMesh.Burst("fx_tendo_ring", new Vector3(tp.x, tp.y + 0.06f, tp.z), 1f, 0.8f, 0.5f, 1.6f, 0f, new Color(0.85f, 0.8f, 1f));
         TendoSuccessAt = Time.time;
         weather.ClearPlague(tp);   // 역병 안개: 천도한 자리 반경 4m 가 15초 걷힌다
+        castTarget.PlayFinishAnim(true);   // 천도 동작(일어남→빛 알갱이→숨김)
         castTarget.Finish();
         tendoToday++;                                                    // 혼불 발 수
         if (escortArmed) { escortT = Balance.AC_ESCORT_SEC; escortArmed = false; }   // 배웅길: 천도 직후 적이 느려진다

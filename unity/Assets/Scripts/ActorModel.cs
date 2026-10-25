@@ -87,7 +87,7 @@ public class ActorModel : MonoBehaviour
         var all = Resources.LoadAll<AnimationClip>(heroRow.path);
         var byName = new Dictionary<string, AnimationClip>();
         foreach (var c in all) if (!c.name.StartsWith("__")) byName[c.name] = c;
-        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw };
+        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw, Pose.Hit2, Pose.Stagger, Pose.Tendo };
         graph = PlayableGraph.Create("Hero");
         graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);   // 우리가 직접 시간을 흘린다(히트스톱과 무관하게 부드럽게)
         var output = AnimationPlayableOutput.Create(graph, "out", anim);
@@ -177,6 +177,13 @@ public class ActorModel : MonoBehaviour
     Pose oneShot; float oneShotT;   // 파혼·무기 바꿈 같은 한 번짜리 동작이 도는 동안은 그림 이름이 자세를 덮어쓰지 않는다
 
     /// <summary>한 번짜리 몸 동작(파혼·무기 바꿔 들기). 클립 길이만큼 자세를 붙든다. 주인공 3D 모델이 아니면 무시</summary>
+    /// <summary>한 번짜리 동작의 길이(초). 모델에 그 동작이 없으면 0</summary>
+    public float ClipLength(Pose p)
+    {
+        int idx; if (hero == null || heroPlayables == null || !heroInput.TryGetValue(p, out idx) || !heroPlayables[idx].IsValid()) return 0f;
+        return heroPlayables[idx].GetAnimationClip().length;
+    }
+
     public void PlayOneShot(Pose p)
     {
         int idx; if (hero == null || heroPlayables == null || !heroInput.TryGetValue(p, out idx) || !heroPlayables[idx].IsValid()) return;
