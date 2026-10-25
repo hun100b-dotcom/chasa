@@ -13,7 +13,8 @@
   "time": "t는 컷 시작부터 초. duration 안에서 끝난다",
   "camera": "pan(옮기기)·push(다가가기)·pull(물러나기)·hold(멈춤)·cut(장면 바꾸기)·shake(흔들기)·return(플레이어로 돌아오기). zoom 1.0 = 평소 쿼터뷰 거리",
   "world": "pause_enemies = 적 멈춤(입력 잠금 컷만) / run = 전투 계속",
-  "line_style": "bubble 말풍선 · memory 기억 줄(시야 가장자리 기억 색, 화면 아래 가운데) · 소리는 아직 없음",
+  "line_style": "bubble 말풍선 · memory 기억 줄(시야 가장자리 기억 색, 화면 아래 가운데)",
+  "sfx": "sfx = 그 스텝 시각에 재생할 효과음 id(사운드팀 data/sfx_files.json, 루프는 amb.*). sfx_request = 아직 없는 소리(사운드팀 요청)",
   "skippable": "길게 눌러 건너뛰기. 건너뛰어도 보상·단서·세계 변화는 그대로"
  },
  "cutscenes": [
@@ -35,11 +36,17 @@
       "time": 1.2,
       "zoom": 1.15
      },
-     "action": "물안개가 깔린다. 무너진 징검다리 옆, 반쯤 가라앉은 나룻배"
+     "action": "물안개가 깔린다. 무너진 징검다리 옆, 반쯤 가라앉은 나룻배",
+     "sfx": [
+      "amb.river.mist"
+     ]
     },
     {
      "t": 1.2,
-     "action": "삿갓 쓴 영감이 부러진 삿대로 물을 짚는다. 허리에 엽전 꾸러미 자국만 남은 빈 끈"
+     "action": "삿갓 쓴 영감이 부러진 삿대로 물을 짚는다. 허리에 엽전 꾸러미 자국만 남은 빈 끈",
+     "sfx": [
+      "cut.water.pole"
+     ]
     },
     {
      "t": 1.6,
@@ -58,7 +65,10 @@
       "text": "…한 사람만 더.",
       "style": "bubble",
       "duration": 1.5
-     }
+     },
+     "sfx": [
+      "cut.water.hands"
+     ]
     },
     {
      "t": 4.5,
@@ -93,7 +103,11 @@
       "time": 0.4,
       "zoom": 1.25
      },
-     "action": "영감이 배 위에서 무릎 꿇는다. 삿대가 손에서 미끄러져 물에 뜬다"
+     "action": "영감이 배 위에서 무릎 꿇는다. 삿대가 손에서 미끄러져 물에 뜬다",
+     "sfx": [
+      "sfx.kneel",
+      "cut.water.drop"
+     ]
     },
     {
      "t": 0.3,
@@ -139,7 +153,10 @@
       "toast": "이름이 들리지 않는다.",
       "toast_time": 1.0
      },
-     "note": "실패 연출이 아니라 안내(BOSS-01 §6). 캐스팅은 시작되지 않는다. 대기 시간은 계속 흐른다"
+     "note": "실패 연출이 아니라 안내(BOSS-01 §6). 캐스팅은 시작되지 않는다. 대기 시간은 계속 흐른다",
+     "sfx": [
+      "cut.seal.fade"
+     ]
     }
    ]
   },
@@ -165,7 +182,12 @@
      "ui": {
       "ledger_name": "도한수",
       "ledger_fx": "strokes_join"
-     }
+     },
+     "sfx": [
+      "cut.ledger.open",
+      "cut.brush.stroke",
+      "cut.seal.set"
+     ]
     },
     {
      "t": 1.0,
@@ -175,11 +197,17 @@
       "style": "memory",
       "duration": 3.0
      },
-     "note": "기억 M-B01(★F4 전모). 시야 가장자리에 기억 색"
+     "note": "기억 M-B01(★F4 전모). 시야 가장자리에 기억 색",
+     "sfx": [
+      "sfx.clue"
+     ]
     },
     {
      "t": 1.5,
-     "action": "영감이 삿대를 물에서 건져 노 자리에 내려놓는다. 빈 허리끈에 엽전 다섯 닢이 다시 매달린다(D-1의 엽전)"
+     "action": "영감이 삿대를 물에서 건져 노 자리에 내려놓는다. 빈 허리끈에 엽전 다섯 닢이 다시 매달린다(D-1의 엽전)",
+     "sfx": [
+      "cut.coins.few"
+     ]
     },
     {
      "t": 3.5,
@@ -204,7 +232,10 @@
       "time": 0.0,
       "hold": 1.0
      },
-     "action": "먼 하늘. 서낭당 쪽 저편에 나룻불 하나가 켜진다"
+     "action": "먼 하늘. 서낭당 쪽 저편에 나룻불 하나가 켜진다",
+     "sfx": [
+      "cut.lantern.light"
+     ]
     },
     {
      "t": 6.5,
@@ -241,7 +272,11 @@
       "strength": "big",
       "time": 0.5
      },
-     "action": "반경 6m 대폭발. 배가 터져 판자가 흩어진다"
+     "action": "반경 6m 대폭발. 배가 터져 판자가 흩어진다",
+     "sfx": [
+      "sfx.pahon.burst",
+      "cut.boat.break"
+     ]
     },
     {
      "t": 0.3,
@@ -249,11 +284,17 @@
      "ui": {
       "ledger_name": "도한수",
       "ledger_fx": "strokes_scatter"
-     }
+     },
+     "sfx": [
+      "cut.stroke.scatter"
+     ]
     },
     {
      "t": 0.8,
-     "action": "엽전이 물 위로 쏟아진다(엽전 ×30). 빈 허리끈 하나가 떠내려간다"
+     "action": "엽전이 물 위로 쏟아진다(엽전 ×30). 빈 허리끈 하나가 떠내려간다",
+     "sfx": [
+      "cut.coins.spill"
+     ]
     },
     {
      "t": 1.5,

@@ -368,3 +368,12 @@
 ## 2026-10-25 [기획·사운드] 서사 대본 요청 효과음 9개 추가(합계 48)
 - amb.rain, cut.torch.sink, cut.chain.wrap, cut.cough, amb.rooster, vo.wail, mus.sangyeo.far(반복 12.6초), cut.bellows, sfx.dog.whine. 모두 `tools/sfx_render.py` 직접 합성 — 목소리류(곡소리·닭·상여소리·기침·개)는 포먼트 합성(성대 톱니파 + 입 모양 필터)이라 외부 음원 없음.
 - 반복: amb.rain, mus.sangyeo.far. 기존 39개 파일은 바뀌지 않음(고정 난수).
+
+## 2026-10-25 — [코드·QA] 2호 월화·3호 서 의원 보스 자리 + 컷 효과음
+- `Core/Boss.cs`: 보스 목록(Bosses.Get 1~3: 이름·컷 접두어·단서 접두어·자리·맺힘), 월화 '열두 거리'(열두째 잔 11번은 절대 안 열림, 맺힘 50%↓ 2국면 5잔), 서 의원 '번호 부르기'(5×5 중 16칸)와 약점 창(연속 3파동 피하면 3초 열림, 열림 ×1.5/닫힘 ×0.25). 수치 balance.json `B02_*`·`B03_*`·`BOSS_S2_MAEDHIM`(임시). 테스트 2개(142 통과).
+- 자리: 월화 = 폐당집 굿판(580,527), 서 의원 = 검은여울 역병막 마당(36,459). 둘 다 아트 확정 장소 근처의 **임시 좌표**(보스 중심) — PC에서 건물·굿상과 겹침 확인 필요.
+- `JudgeSystem`: 보스 일반화(단서 접두어별 개수 `CluesFor`, 컷 이름 `BossCut`, 가장 가까운 보스 `NearestBoss`, 등장 컷 보스별 1회), 필드에서 2·3호 생성. 1호만 밤 장부·나루 풍경 결과를 쓴다.
+- `BossArena.cs`: 붉은 예고 바닥→터짐→피해(`BossAreaHit`), 약점 청록 표시. 3D 모델 표(models.json)에 boss_b02·boss_b03 행, ActorModel 대역 도형 추가.
+- NpcWorld 단서 자리에 Market·Yamen·Plague 추가(3호 단서 B03-D1~3이 나오도록, 아트 확정 좌표).
+- 컷 효과음: 서사 대본 최신본(sfx 칸) 반영, `CutStep.sfx`→`CutPlayback.SfxPending`→`Sfx.Play`. 첫 세션 소리 자막은 기본 꺼짐(`CAPTIONS=False`). 반복 소리는 아직 한 번만 재생.
+- 미확인(PC): 모델 재생·방향·크기, 바닥 무늬 체감(예고 1초/0.8초 공정성), 보스 접근 거리, 단서 NPC 위치.

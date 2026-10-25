@@ -16,6 +16,8 @@ TARGET = {"forge_inside": "forge", "procession": "funeral", "gate": "funeral", "
 ZOOM = {"quarter": 1.0, "slow_zoom_in": 1.3, "low_move": 1.3, "side_track": 1.15, "tilt_up": 1.0, "move": 1.3, "pull_out": 0.9,
         "follow": 1.2, "close": 1.6, "fade_in": 1.2, "fade_out": 1.2, "black": 1.2}
 
+CAPTIONS = False   # 소리 자막(접근성): 서사 확정 — 소리가 들어오면 접근성 설정에서만 켠다. 설정 화면이 생기면 런타임 옵션으로
+
 def convert(cid, data, lock):
     steps = data["steps"]
     out = []
@@ -30,8 +32,9 @@ def convert(cid, data, lock):
             if mode in ZOOM: row["zoom"] = ZOOM[mode]
         if st.get("control"): row["ctl"] = st["control"]
         nxt = steps[i + 1]["t"] if i + 1 < len(steps) else data["duration"]
-        if st.get("sfx"):
-            row["text"] = st["sfx"]; row["style"] = "sfx"; row["lineDur"] = max(1.5, nxt - t)
+        if st.get("sfx"): row["sfx"] = st["sfx"]   # 틀 효과음 id 들(소리가 생겼으니 글자 자막은 기본으로 끈다)
+        if CAPTIONS and st.get("caption"):
+            row["text"] = st["caption"]; row["style"] = "sfx"; row["lineDur"] = max(1.5, nxt - t)
         out.append(row)
     out.append({"t": max(0.0, data["duration"] - 0.5), "cam": "return", "camTime": 1.5})
     return {"id": cid, "duration": data["duration"], "lock": lock, "pause": False, "skippable": data.get("skippable", False), "steps": out}

@@ -19,6 +19,7 @@ for c in [x for sr in srcs for x in sr["cutscenes"]]:
             "t": s["t"], "cam": cam.get("mode", ""), "camTo": cam.get("to", ""), "camTime": cam.get("time", 0.0),
             "zoom": cam.get("zoom", 0.0), "shake": 1.0 if cam.get("strength") == "big" else 0.0,
             "text": line.get("text", ""), "style": line.get("style", ""), "lineDur": line.get("duration", 0.0),
+            "sfx": s.get("sfx", []),   # 그 시각에 틀 효과음 id 들(사운드팀 data/sfx_files.json)
         })
     cuts.append({"id": c["id"], "duration": c["duration"], "lock": bool(c.get("input_lock")),
                  "pause": c.get("world") == "pause_enemies", "skippable": bool(c.get("skippable")), "steps": steps})

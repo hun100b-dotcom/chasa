@@ -93,10 +93,14 @@ public class CutscenePlayer
         return true;
     }
 
+    void DrainSfx() { if (cur != null) while (cur.SfxPending.Count > 0) Sfx.Play(cur.SfxPending.Dequeue()); }   // 서사 대본의 효과음을 그 시각에 튼다
+
     public void Tick(float dt)
     {
+        DrainSfx();   // 방금 시작한 컷의 0초 소리·직전 프레임에 끝난 컷의 마지막 소리
         if (!Active) return;
         cur.Tick(dt);
+        DrainSfx();
         // 길게 누르면 건너뛴다: Space·Esc·마우스·터치 중 무엇이든 1초
         if (cur.Data.skippable)
         {
