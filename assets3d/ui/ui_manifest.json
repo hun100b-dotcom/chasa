@@ -1399,5 +1399,97 @@
    16
   ],
   "note": "한 벌 등급 바닥 이름표 판 220×40(9칸 16). 왼쪽 28px는 tier_mark 자리"
+ },
+ "first10/prompt_tendo": {
+  "size_px": [
+   48,
+   48
+  ],
+  "x2": "prompt_tendo@2x.png",
+  "note": "월드 안내·E 버튼 앞 천도 모양(▲ 불꽃 + 실선 테두리) 48², 화면에는 32px로"
+ },
+ "first10/prompt_pahon": {
+  "size_px": [
+   48,
+   48
+  ],
+  "x2": "prompt_pahon@2x.png",
+  "note": "월드 안내·R 버튼 앞 파혼 모양(✕ 깨진 조각 + 점선·톱니 테두리) 48², 화면에는 32px로"
+ },
+ "first10/prompt_soulpath": {
+  "size_px": [
+   48,
+   48
+  ],
+  "x2": "prompt_soulpath@2x.png",
+  "note": "넋길 안내(서낭당 [F] 앞): 보라 혼불 셋 달린 줄 48² — 3D 넋길 문의 보라 혼불과 같은 말, 둥근 문 모양 아님"
+ },
+ "first10/exec_card_tendo": {
+  "size_px": [
+   280,
+   96
+  ],
+  "x2": "exec_card_tendo@2x.png",
+  "note": "첫 처결 카드(천도) 280×96: 왼쪽 모양 아이콘, 키 칸(98,14,36×24)에 E/R, 오른쪽 글자 자리. 천도 실선 / 파혼 점선 테두리, 두 카드 밝기 맞춤"
+ },
+ "first10/exec_card_pahon": {
+  "size_px": [
+   280,
+   96
+  ],
+  "x2": "exec_card_pahon@2x.png",
+  "note": "첫 처결 카드(파혼) 280×96: 왼쪽 모양 아이콘, 키 칸(98,14,36×24)에 E/R, 오른쪽 글자 자리. 천도 실선 / 파혼 점선 테두리, 두 카드 밝기 맞춤"
+ },
+ "first10/bind_world_frame": {
+  "size_px": [
+   96,
+   12
+  ],
+  "x2": "bind_world_frame@2x.png",
+  "nine_slice_px": [
+   6,
+   6,
+   6,
+   6
+  ],
+  "note": "일반 혼 머리 위 맺힘 막대 틀 96×12(월드 빌보드)"
+ },
+ "first10/bind_world_frame2": {
+  "size_px": [
+   96,
+   22
+  ],
+  "x2": "bind_world_frame2@2x.png",
+  "nine_slice_px": [
+   6,
+   6,
+   6,
+   6
+  ],
+  "note": "덩어리 혼 맺힘 막대 틀 96×22(두 줄)"
+ },
+ "first10/bind_world_fill": {
+  "size_px": [
+   88,
+   6
+  ],
+  "x2": "bind_world_fill@2x.png",
+  "note": "맺힘 채움 88×6(틀 안쪽 +4,+3). 덩어리는 두 줄 각각"
+ },
+ "map/icons/icon_soul_wait": {
+  "size_px": [
+   64,
+   64
+  ],
+  "x2": "icon_soul_wait@2x.png",
+  "note": "미니맵 처결 대기 혼(청록 고리+점). 명세 크기 12~14px"
+ },
+ "map/icons/icon_soulpath_off": {
+  "size_px": [
+   64,
+   64
+  ],
+  "x2": "icon_soulpath_off@2x.png",
+  "note": "낮에 닫힌 넋길(흐림). 밤이 되면 icon_soulpath로 바꾼다"
  }
 }
