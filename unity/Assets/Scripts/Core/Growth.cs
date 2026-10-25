@@ -34,7 +34,7 @@ namespace Chasa.Core
             new SkillNode("이름 비추기", Branch.Call, true, "다음 천도 캐스팅 -0.4초 (8초)"),
             new SkillNode("배웅길", Branch.Call, true, "천도 직후 3초 동안 적 이동 -30%"),
             new SkillNode("오래 부르기", Branch.Call, false, "연속 천도 창 +1/+2초"),
-            new SkillNode("고마운 넋", Branch.Call, false, "천도 넋 +10/+20%"),
+            new SkillNode("고마운 넋", Branch.Call, false, "천도 넋 +6/+12%"),
             new SkillNode("곁을 지킴", Branch.Call, false, "천도 중 받는 피해 -10/-20%"),
             new SkillNode("몫을 채움", Branch.Call, false, "그날 명부 몫을 채우면 이동 속도 +8%"),
             new SkillNode("일곱 이름", Branch.Call, true, "연속 천도 7회째 다음 천도는 하한 0.5초로 끝난다", true),
@@ -43,19 +43,19 @@ namespace Chasa.Core
             new SkillNode("여럿 끌기", Branch.Chain, true, "적 셋을 한꺼번에 끌어온다 (8초)"),
             new SkillNode("매듭 걸음", Branch.Chain, true, "사슬을 걸어 8m 돌진, 지나는 동안 피격 없음 (7초)"),
             new SkillNode("한 줄 꿰기", Branch.Chain, true, "무릎 꿇은 혼 둘을 한 줄로 묶어 함께 천도 또는 함께 파혼"),
-            new SkillNode("단단한 손", Branch.Chain, false, "공격 속도 +5/+10%"),
+            new SkillNode("단단한 손", Branch.Chain, false, "공격 속도 +8/+16%"),
             new SkillNode("긴 사슬", Branch.Chain, false, "무기 사거리 +0.4/+0.8m"),
-            new SkillNode("묶인 자", Branch.Chain, false, "묶인 적이 받는 맺힘 피해 +15%"),
+            new SkillNode("묶인 자", Branch.Chain, false, "묶인 적이 받는 맺힘 피해 +30%"),
             new SkillNode("손에 익음", Branch.Chain, false, "지금 든 무기 계열의 특성 하나 강화"),
-            new SkillNode("쇠사슬 울", Branch.Chain, true, "반경 5m 원 안의 적 3초 고정 (40초)", true),
+            new SkillNode("쇠사슬 울", Branch.Chain, true, "반경 5m 원 안의 적 3초 고정 (20초)", true),
             // 얼룩 갈래 (파혼 쪽)
             new SkillNode("터뜨리기", Branch.Stain, true, "가까운 얼룩 하나를 터뜨려 없앤다. 반경 2.5m 맺힘 40, 업은 그대로 (9초)"),
             new SkillNode("원념 두르기", Branch.Stain, true, "5초간 업 단계에 따라 공격력 +5/10/15/20%"),
             new SkillNode("얼룩 타기", Branch.Stain, true, "6초간 얼룩 위에서 둔화 대신 이동 +15%"),
-            new SkillNode("깨진 이름 던지기", Branch.Stain, true, "방금 파혼한 혼의 파편을 던져 원거리 피해 (그 파혼의 엽전은 0)"),
+            new SkillNode("깨진 이름 던지기", Branch.Stain, true, "방금 파혼한 혼의 파편을 던져 원거리 피해 (8초마다)"),
             new SkillNode("큰 폭발", Branch.Stain, false, "파혼 반경 +0.2/+0.4m (합계 상한 안)"),
             new SkillNode("세찬 넉백", Branch.Stain, false, "파혼 넉백 +20/+40%"),
-            new SkillNode("노잣돈", Branch.Stain, false, "파혼 엽전 +20/+40%"),
+            new SkillNode("노잣돈", Branch.Stain, false, "파혼 엽전 +7/+14%"),
             new SkillNode("마른 얼룩", Branch.Stain, false, "얼룩 지속 -15/-30%"),
             new SkillNode("검은 갓의 그림자", Branch.Stain, true, "10초간 파혼 폭발이 주변 무릎 꿇은 혼까지 깨뜨린다. 깨진 혼마다 업 +1", true),
         };
@@ -194,14 +194,14 @@ namespace Chasa.Core
             s.TendoNeokPct += mind * Balance.GROWTH_NEOK_PER_MIND;
             // 패시브(단계 1/2): 도술 설명문의 수치 그대로
             s.ChainWindowAddS += 1f * g.LevelOf("오래 부르기");
-            s.TendoNeokPct += 0.10f * g.LevelOf("고마운 넋");
+            s.TendoNeokPct += 0.06f * g.LevelOf("고마운 넋");
             s.CastDamageReducePct += 0.10f * g.LevelOf("곁을 지킴");
-            s.AttackSpeedPct += 0.05f * g.LevelOf("단단한 손");
+            s.AttackSpeedPct += 0.08f * g.LevelOf("단단한 손");
             s.PahonRadiusM += 0.2f * g.LevelOf("큰 폭발");
             s.PahonKnockbackPct += 0.2f * g.LevelOf("세찬 넉백");
-            s.PahonCoinPct += 0.2f * g.LevelOf("노잣돈");
+            s.PahonCoinPct += 0.07f * g.LevelOf("노잣돈");
             s.ReachAdd += 0.4f * g.LevelOf("긴 사슬");
-            s.BoundBonus += 0.15f * g.LevelOf("묶인 자");
+            s.BoundBonus += 0.30f * g.LevelOf("묶인 자");
             s.StainShorten += 0.15f * g.LevelOf("마른 얼룩");
             s.DamagePct += 0.05f * g.LevelOf("손에 익음");   // 근사: '무기 계열 특성 하나 강화'가 정해지기 전까지 피해 +5%/+10%
         }

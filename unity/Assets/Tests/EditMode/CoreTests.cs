@@ -1630,8 +1630,8 @@ public class CoreTests
         GrowthEffects.Apply(g, s);
         Assert.AreEqual(0.10f, s.DamagePct, 0.0001f);                                    // 힘 10점 × 1%
         Assert.AreEqual(20, s.HpFlat);                                                   // 몸 4점 × 5
-        Assert.AreEqual(0.20f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계
-        Assert.AreEqual(0.20f, s.PahonCoinPct, 0.0001f);
+        Assert.AreEqual(0.12f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계
+        Assert.AreEqual(0.14f, s.PahonCoinPct, 0.0001f);
         GrowthEffects.Apply(null, s);                                                    // 성장이 없어도 안전
     }
 

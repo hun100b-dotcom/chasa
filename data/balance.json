@@ -948,7 +948,7 @@
   "note": "(시연판 임시) 기획서 6절 초안: 휘감기: 적 묶는 시간(초)"
  },
  "SKILL_BIND_COOLDOWN": {
-  "value": 10.0,
+  "value": 8.0,
   "note": "(시연판 임시) 기획서 6절 초안: 휘감기 재사용(초)"
  },
  "SKILL_BURST_RADIUS": {
@@ -956,7 +956,7 @@
   "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기 반경(m)"
  },
  "SKILL_BURST_DAMAGE": {
-  "value": 40,
+  "value": 30,
   "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기 맺힘 피해. 업은 그대로"
  },
  "SKILL_BURST_COOLDOWN": {
@@ -1656,11 +1656,11 @@
   "note": "(액티브 도술 임시) 한 줄 꿰기 재사용"
  },
  "ACD_CAGE": {
-  "value": 40.0,
+  "value": 20.0,
   "note": "(액티브 도술 임시) 쇠사슬 울 재사용(깊은 도술)"
  },
  "ACD_WRATH": {
-  "value": 14.0,
+  "value": 10.0,
   "note": "(액티브 도술 임시) 원념 두르기 재사용"
  },
  "ACD_STAINRIDE": {
@@ -1668,7 +1668,7 @@
   "note": "(액티브 도술 임시) 얼룩 타기 재사용"
  },
  "ACD_THROWNAME": {
-  "value": 6.0,
+  "value": 8.0,
   "note": "(액티브 도술 임시) 깨진 이름 던지기 재사용"
  },
  "ACD_SHADOW": {
@@ -1676,7 +1676,7 @@
   "note": "(액티브 도술 임시) 검은 갓의 그림자 재사용(깊은 도술)"
  },
  "AC_SOULFIRE_DMG": {
-  "value": 25,
+  "value": 8,
   "note": "(액티브 도술 임시) 혼불 한 발 맺힘 피해"
  },
  "AC_SOULFIRE_MAX": {
@@ -1688,7 +1688,7 @@
   "note": "(액티브 도술 임시) 혼불이 닿는 거리(m)"
  },
  "AC_NAMELIGHT_SEC": {
-  "value": 0.4,
+  "value": 0.25,
   "note": "(액티브 도술 임시) 다음 천도 캐스팅 단축(초)"
  },
  "AC_ESCORT_SEC": {
@@ -1736,7 +1736,7 @@
   "note": "(액티브 도술 임시) 얼룩 타기 이동 +%"
  },
  "AC_THROWNAME_DMG": {
-  "value": 40,
+  "value": 30,
   "note": "(액티브 도술 임시) 깨진 이름 던지기 피해"
  },
  "AC_THROWNAME_WINDOW": {
@@ -1812,7 +1812,7 @@
   "note": "(무기 5계열 맛, 임시) 철삭: 연속 천도 창 +초 (이어 가는 맛)"
  },
  "BELL_CAST_MULT": {
-  "value": 0.85,
+  "value": 0.9,
   "note": "(무기 5계열 맛, 임시) 요령방울: 천도 시전 시간 배율 (소리가 넋을 달랜다)"
  },
  "BELL_PAHON_DAMAGE_MULT": {
@@ -1828,11 +1828,11 @@
   "note": "(무기 5계열 맛, 임시) 삼지창: 파혼 피해 배율"
  },
  "BRUSH_NEOK_PCT": {
-  "value": 0.12,
+  "value": 0.05,
   "note": "(무기 5계열 맛, 임시) 명부 붓: 천도 넋 +% (기록하는 맛)"
  },
  "BRUSH_PAHON_DAMAGE_MULT": {
-  "value": 0.7,
+  "value": 1.0,
   "note": "(무기 5계열 맛, 임시) 명부 붓: 파혼 피해 배율 (먹이 번져 약하다)"
  },
  "SOULTYPE_WAIL_HP": {
