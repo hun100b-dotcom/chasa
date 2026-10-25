@@ -882,6 +882,11 @@ public class JudgeSystem : MonoBehaviour
         h.Clues = night.Clues; h.CluesNeeded = Balance.BOSS_CLUES_REQUIRED;
         h.BossDone = night.BossDone; h.QuotaDone = night.QuotaDone; h.Warning = night.Warning;
         h.DodgeCharges = player.DodgeCharges; h.DodgeMax = Balance.DODGE_CHARGES; h.PullCd = player.PullCooldown; h.WeaponName = lo.Def.Name;
+        for (int si = 0; si < h.Slots.Length; si++)   // 도술 4칸 표시값(HUD 가 그림으로 그린다)
+        {
+            string sn = ActiveNameAt(si); var sv = h.Slots[si];
+            sv.Name = sn; sv.Cd = sn == null ? 0f : lo.active.Ratio(sn); sv.CdSec = sn == null ? 0f : lo.active.Left(sn);
+        }
         // 얻은 것 알림: 장부 값이 늘어난 만큼 쪽지를 띄운다(같은 글은 합쳐진다). 낮 화면을 넘어온 첫 프레임엔 띄우지 않는다
         if (toastReady)
         {
@@ -1161,9 +1166,16 @@ public class JudgeSystem : MonoBehaviour
             bool nearKneel = AnyKneelNearby(out bool nearTendo);
             bool wasEnabled = GUI.enabled;
             GUI.enabled = wasEnabled && nearTendo;
-            if (GUI.Button(new Rect(24, Screen.height - 110, 110, 90), "천도", bs)) CommandTendo();
+            // 아트 버튼 그림(천도 청록·파혼 주황)이 있으면 그림 위에 투명 버튼을 얹는다. 없으면 옛 글자 버튼
+            var artBs = new GUIStyle(bs);
+            artBs.normal.background = null; artBs.hover.background = null; artBs.active.background = null; artBs.focused.background = null;
+            artBs.normal.textColor = Color.white; artBs.fontSize = 18; artBs.alignment = TextAnchor.LowerCenter;
+            var rT = new Rect(24, Screen.height - 110, 110, 90); var rP = new Rect(148, Screen.height - 110, 130, 90);
+            bool artT = DrawArt(rT, TouchHeld(rT) && nearTendo ? "ui_btn_cheondo_pressed" : "ui_btn_cheondo", nearTendo);
+            if (GUI.Button(rT, "천도", artT ? artBs : bs)) CommandTendo();
             GUI.enabled = wasEnabled && nearKneel;
-            if (GUI.Button(new Rect(148, Screen.height - 110, 130, 90), "파혼", bs)) CommandPahon();
+            bool artP = DrawArt(rP, TouchHeld(rP) && nearKneel ? "ui_btn_pahon_pressed" : "ui_btn_pahon", nearKneel);
+            if (GUI.Button(rP, "파혼", artP ? artBs : bs)) CommandPahon();
             GUI.enabled = wasEnabled;
             if (SoulPathStop() >= 0 && GUI.Button(new Rect(292, Screen.height - 110, 110, 90), "넋길", bs)) CommandSoulPath();   // 서낭당 곁 밤에만 나타난다
             // 도술 세 칸과 무기 바꾸기 (위쪽 줄) — 시연판 기본 구성에서는 숨김
@@ -1172,11 +1184,38 @@ public class JudgeSystem : MonoBehaviour
                 {
                     string an = ActiveNameAt(i); if (an == null) continue;
                     bool rdy = lo.active.Ready(an);
-                    if (GUI.Button(new Rect(24 + i * 94, Screen.height - 206, 86, 80), (i + 1) + "\n" + an + (rdy ? "" : "\n" + Mathf.CeilToInt(lo.active.Left(an)) + "s"), sbs)) UseSkill(i);
+                    var rs = new Rect(24 + i * 94, Screen.height - 206, 86, 80);
+                    // 아트 도술 칸: 틀 + 갈래 아이콘 + 대기 덮개 위에 투명 버튼. 그림이 없으면 옛 글자 버튼
+                    bool artS = DrawArt(rs, "ui_skill_slot", true);
+                    if (artS)
+                    {
+                        DrawArt(new Rect(rs.x + 14, rs.y + 8, 58, 58), SpriteLib.Texture("ui/" + UiRoot.SkillIcon(an)) != null ? UiRoot.SkillIcon(an) : "ui_skill_slot", true);
+                        if (!rdy) DrawArt(rs, "ui_skill_slot_cool", true, 0.4f + 0.6f * lo.active.Ratio(an));
+                        var kb = new GUIStyle(sbs); kb.normal.background = null; kb.hover.background = null; kb.active.background = null; kb.normal.textColor = Color.white; kb.alignment = TextAnchor.UpperLeft;
+                        if (GUI.Button(rs, (i + 1) + (rdy ? "" : "   " + Mathf.CeilToInt(lo.active.Left(an))), kb)) UseSkill(i);
+                    }
+                    else if (GUI.Button(rs, (i + 1) + "\n" + an + (rdy ? "" : "\n" + Mathf.CeilToInt(lo.active.Left(an)) + "s"), sbs)) UseSkill(i);
                 }
             if (Demo.Weapons && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "교체", bs)) player.CommandSwap();
             if ((Demo.Panel || FieldRules.On) && GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "메뉴", bs)) panel.Toggle();
             if (Demo.Weapons && lo.Def.HasQuake && GUI.Button(new Rect(24 + 6 * 94, Screen.height - 206, 86, 80), "땅울림", bs)) player.CommandQuake();
         }
+    }
+
+    /// <summary>Resources/Sprites/ui 그림을 IMGUI 위에 그린다(화면 비율 유지). 그림이 없으면 false — 부르는 쪽이 옛 버튼으로 대신한다</summary>
+    static bool DrawArt(Rect r, string name, bool on, float alpha = 1f)
+    {
+        var t = SpriteLib.Texture("ui/" + name); if (t == null) return false;
+        var c = GUI.color; GUI.color = new Color(1f, 1f, 1f, (on ? 1f : 0.45f) * alpha);   // 눌러도 안 되는 버튼은 흐리게
+        GUI.DrawTexture(r, t, ScaleMode.ScaleToFit); GUI.color = c;
+        return true;
+    }
+
+    /// <summary>지금 이 영역을 누르고 있나(눌림 그림으로 바꾸려고)</summary>
+    static bool TouchHeld(Rect r)
+    {
+        var e = Event.current; if (e == null) return false;
+        if (Input.touchCount > 0) { for (int i = 0; i < Input.touchCount; i++) { var tp = Input.GetTouch(i).position; if (r.Contains(new Vector2(tp.x, Screen.height - tp.y))) return true; } return false; }
+        return Input.GetMouseButton(0) && r.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y));
     }
 }

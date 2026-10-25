@@ -30,6 +30,9 @@ namespace Chasa.Core
         public float DodgeCharges; public int DodgeMax;     // 피하기 충전(소수는 충전 중인 칸)
         public float PullCd;                                // 끌어당김 남은 시간(초, 0이면 쓸 수 있음)
         public string WeaponName = "";
+        /// <summary>도술 4칸(이름 없으면 빈 칸). Cd = 남은 비율 0~1, CdSec = 남은 초</summary>
+        public sealed class SkillSlotView { public string Name; public float Cd, CdSec; }
+        public readonly SkillSlotView[] Slots = { new SkillSlotView(), new SkillSlotView(), new SkillSlotView(), new SkillSlotView() };
         public readonly System.Collections.Generic.List<EdgeMark> Edges = new System.Collections.Generic.List<EdgeMark>();   // 화면 가장자리 경고(시야 밖 공격 예고)
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 

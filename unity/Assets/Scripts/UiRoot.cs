@@ -26,6 +26,9 @@ public class UiRoot : MonoBehaviour
     Label dodgeLabel, pullLabel, weaponLabel; VisualElement[] pips = new VisualElement[0];
     VisualElement ringBox, ringMarker, note;   // 시각 고리: 바탕 원 / 해·달 표시
     string lastToasts;
+    VisualElement vitalClip, vitalFillImg, slotBar; VisualElement[] slotBox = new VisualElement[0], slotIcon = new VisualElement[0], slotCool = new VisualElement[0]; Label[] slotKey = new Label[0], slotSec = new Label[0];
+    bool artRing;   // 아트 시각 고리 틀이 있나(없으면 옛 눈금 고리로 대신 그린다)
+    float ringSize = 84f;   // 시각 고리 지름(px, 1280×720 기준). 아트 틀이 있으면 키운다
     string lastLedger, lastVital, lastNight;
 
     static readonly Color PaperBg = new Color(0.05f, 0.05f, 0.09f, 0.62f);
@@ -71,10 +74,40 @@ public class UiRoot : MonoBehaviour
         hpFill = new VisualElement { pickingMode = PickingMode.Ignore };
         hpFill.style.height = 8; hpFill.style.backgroundColor = new Color(0.72f, 0.82f, 0.95f);
         bar.Add(hpFill);
+        if (UiTex("ui_bar_vital_frame") != null)
+        {
+            // 아트 막대: 틀(320x32) 안 홈(x8,y8,304x16)에 어두운 잔상 + 채움을 깔고, 채움은 폭만큼 잘라 보인다
+            bar = Img("ui_bar_vital_frame", 320, 32); bar.name = "vitals"; bar.style.marginTop = 2; bar.style.marginBottom = 4;
+            var ghost = Img("ui_bar_vital_ghost", 304, 16); ghost.style.position = Position.Absolute; ghost.style.left = 8; ghost.style.top = 8;
+            vitalClip = new VisualElement { pickingMode = PickingMode.Ignore };
+            vitalClip.style.position = Position.Absolute; vitalClip.style.left = 8; vitalClip.style.top = 8; vitalClip.style.height = 16; vitalClip.style.width = 304; vitalClip.style.overflow = Overflow.Hidden;
+            vitalFillImg = Img("ui_bar_vital_fill", 304, 16);
+            vitalClip.Add(vitalFillImg); bar.Add(ghost); bar.Add(vitalClip);
+            hpFill = null;
+        }
         note.Add(bar);
         night = Line(note, 18);
-        BuildToasts(); BuildSkillBar(); BuildTimeRing();
+        BuildToasts(); BuildSkillBar(); BuildSlots(); BuildTimeRing();
         hint = Line(note, 14); hint.text = HudState.KeyHint(); hint.style.opacity = 0.65f; hint.style.marginTop = 4;
+    }
+
+    // ---- 아트팀 UI 그림(Resources/Sprites/ui). 없으면 null 이라 부르는 쪽이 옛 색 도형으로 대신 그린다(그림 없이도 돈다)
+    static Texture2D UiTex(string n) { return SpriteLib.Texture("ui/" + n); }
+    static void SetImg(VisualElement v, string n) { var t = UiTex(n); if (t != null) v.style.backgroundImage = Background.FromTexture2D(t); }
+    static VisualElement Img(string n, float w, float h)
+    {
+        var v = new VisualElement { pickingMode = PickingMode.Ignore };
+        v.style.width = w; v.style.height = h; SetImg(v, n); return v;
+    }
+
+    /// <summary>도술 이름 → 아이콘 이름. 갈래별 액티브 순서(부름 청록·줄 사슬·얼룩 보라)가 아트 파일 번호 1~5와 같다</summary>
+    public static string SkillIcon(string name)
+    {
+        var node = SkillTree.Find(name); if (node == null) return null;
+        int n = 0;
+        foreach (var k in SkillTree.All) { if (k.Branch != node.Branch || !k.Active) continue; n++; if (k.Name == name) break; }
+        string br = node.Branch == Branch.Call ? "bureum" : node.Branch == Branch.Chain ? "jul" : "eolluk";
+        return "icon_skill_" + br + "_" + n;
     }
 
     static void Panel(VisualElement v)
@@ -117,6 +150,47 @@ public class UiRoot : MonoBehaviour
         skillBar.Add(d);
     }
 
+    /// <summary>도술 4칸(PC): 틀 + 아이콘 + 대기 덮개 + 단축키 숫자. 폰에서는 터치 버튼(IMGUI)이 같은 그림으로 대신한다</summary>
+    void BuildSlots()
+    {
+        if (UiTex("ui_skill_slot") == null) return;   // 그림 없으면 만들지 않는다
+        int n = SkillTree.ActiveSlots;
+        slotBox = new VisualElement[n]; slotIcon = new VisualElement[n]; slotCool = new VisualElement[n]; slotKey = new Label[n]; slotSec = new Label[n];
+        slotBar = new VisualElement { name = "skill-slots", pickingMode = PickingMode.Ignore };
+        slotBar.style.position = Position.Absolute; slotBar.style.left = 0; slotBar.style.right = 0; slotBar.style.bottom = 64;
+        slotBar.style.flexDirection = FlexDirection.Row; slotBar.style.justifyContent = Justify.Center;
+        root.Add(slotBar);
+        for (int i = 0; i < n; i++)
+        {
+            var b = Img("ui_skill_slot", 64, 64); b.style.marginLeft = 4; b.style.marginRight = 4;
+            var ic = Img("ui_skill_slot", 52, 52); ic.style.position = Position.Absolute; ic.style.left = 6; ic.style.top = 6; ic.style.backgroundImage = StyleKeyword.None;
+            var cool = Img("ui_skill_slot_cool", 64, 64); cool.style.position = Position.Absolute; cool.style.left = 0; cool.style.top = 0; cool.style.opacity = 0f;
+            var key = Line(b, 14); key.text = (i + 1).ToString(); key.style.position = Position.Absolute; key.style.left = 4; key.style.top = 1;
+            var sec = Line(b, 18); sec.style.position = Position.Absolute; sec.style.left = 0; sec.style.right = 0; sec.style.top = 20; sec.style.unityTextAlign = TextAnchor.MiddleCenter;
+            b.Insert(0, ic); b.Insert(1, cool);
+            slotBar.Add(b); slotBox[i] = b; slotIcon[i] = ic; slotCool[i] = cool; slotKey[i] = key; slotSec[i] = sec;
+        }
+    }
+
+    void RefreshSlots()
+    {
+        if (slotBar == null) return;
+        bool any = false;
+        for (int i = 0; i < slotBox.Length && i < Hud.Slots.Length; i++) if (Hud.Slots[i].Name != null) any = true;
+        slotBar.style.display = any && !Ko.TouchUI ? DisplayStyle.Flex : DisplayStyle.None;   // 폰은 터치 버튼이 그린다
+        if (!any || Ko.TouchUI) return;
+        for (int i = 0; i < slotBox.Length && i < Hud.Slots.Length; i++)
+        {
+            var sv = Hud.Slots[i];
+            bool has = sv.Name != null;
+            slotBox[i].style.opacity = has ? 1f : 0.35f;
+            var t = has ? UiTex(SkillIcon(sv.Name)) : null;
+            slotIcon[i].style.backgroundImage = t != null ? new StyleBackground(Background.FromTexture2D(t)) : new StyleBackground(StyleKeyword.None);
+            slotCool[i].style.opacity = has && sv.Cd > 0f ? 0.4f + 0.6f * sv.Cd : 0f;   // 막 쓴 직후일수록 진한 덮개
+            slotSec[i].text = has && sv.CdSec > 0.05f ? Mathf.CeilToInt(sv.CdSec).ToString() : "";
+        }
+    }
+
     Label Slot(string text)
     {
         var s = new VisualElement { pickingMode = PickingMode.Ignore }; Panel(s); s.style.marginLeft = 6;
@@ -144,9 +218,17 @@ public class UiRoot : MonoBehaviour
         var a = Hud.LedgerLine(); if (a != lastLedger) { ledger.text = lastLedger = a; }
         var b = Hud.VitalLine(); if (b != lastVital) { vital.text = lastVital = b; }
         var c = Hud.NightLine(); if (c != lastNight) { night.text = lastNight = c; }
-        RefreshSkillBar(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
-        hpFill.style.width = Length.Percent(Hud.HpRatio * 100f);
-        hpFill.style.backgroundColor = Hud.HpLow ? new Color(0.9f, 0.3f, 0.3f) : new Color(0.72f, 0.82f, 0.95f);
+        RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
+        if (hpFill != null)
+        {
+            hpFill.style.width = Length.Percent(Hud.HpRatio * 100f);
+            hpFill.style.backgroundColor = Hud.HpLow ? new Color(0.9f, 0.3f, 0.3f) : new Color(0.72f, 0.82f, 0.95f);
+        }
+        else if (vitalClip != null)
+        {
+            vitalClip.style.width = 304f * Hud.HpRatio;   // 틀 안 홈 길이에 맞춰 자른다(그림이 찌그러지지 않게)
+            vitalFillImg.style.unityBackgroundImageTintColor = Hud.HpLow ? new Color(1f, 0.45f, 0.4f) : Color.white;   // 위험하면 붉게
+        }
     }
 
     void RefreshSkillBar()
@@ -204,7 +286,6 @@ public class UiRoot : MonoBehaviour
         }
     }
 
-    const float RingSize = 84f;   // 시각 고리 지름(px, 1280×720 기준)
 
     /// <summary>
     /// 시각 고리(기획 UI 밑그림): 12지시 해시계처럼 둘레에 눈금 12개, 해·달 표시가 둘레를 돈다. 동틀녘엔 붉게.
@@ -214,9 +295,20 @@ public class UiRoot : MonoBehaviour
     {
         ringBox = new VisualElement { name = "time-ring", pickingMode = PickingMode.Ignore };
         ringBox.style.position = Position.Absolute; ringBox.style.right = 14; ringBox.style.top = 64;
-        ringBox.style.width = RingSize; ringBox.style.height = RingSize;
+        artRing = UiTex("ui_time_ring_frame") != null;
+        if (artRing) ringSize = 120f;   // 아트 틀은 구간 호가 그려져 있어 조금 크게 둔다
+        ringBox.style.width = ringSize; ringBox.style.height = ringSize;
         ringBox.style.backgroundColor = PaperBg;
-        float rad = RingSize / 2f;
+        float rad = ringSize / 2f;
+        if (artRing)
+        {
+            // 아트 틀(동틀녘 붉음·낮 한지·해질녘 금·밤 남청 호가 이미 그려짐): 바탕·테두리·눈금 대신 그림 한 장 + 해·달 표시
+            ringBox.style.backgroundColor = Color.clear; SetImg(ringBox, "ui_time_ring_frame");
+            ringMarker = new VisualElement { pickingMode = PickingMode.Ignore };
+            ringMarker.style.position = Position.Absolute; ringMarker.style.width = 22; ringMarker.style.height = 22;
+            ringBox.Add(ringMarker); root.Add(ringBox);
+            return;
+        }
         ringBox.style.borderTopLeftRadius = rad; ringBox.style.borderTopRightRadius = rad; ringBox.style.borderBottomLeftRadius = rad; ringBox.style.borderBottomRightRadius = rad;
         var edge = new Color(1f, 1f, 1f, 0.3f);
         ringBox.style.borderTopWidth = 2; ringBox.style.borderBottomWidth = 2; ringBox.style.borderLeftWidth = 2; ringBox.style.borderRightWidth = 2;
@@ -250,7 +342,19 @@ public class UiRoot : MonoBehaviour
             deg = Mathf.Repeat(Hud.TimeOfDay - midnight, 1f) * 360f;
         }
         else deg = Mathf.Lerp(-120f, 120f, Mathf.Clamp01(Hud.TimeOfDay));   // 옛 한 판: 해질녘 왼쪽 아래 → 동틀녘 오른쪽 아래
-        float a = deg * Mathf.Deg2Rad, rad = RingSize / 2f, r = rad - 2f - 16f;
+        if (artRing)
+        {
+            // 아트 틀: 해·달 표시는 틀 반지름 228/512 위를 돈다. 낮엔 해, 밤엔 달 그림(동틀녘엔 붉게 물들임)
+            float aa = deg * Mathf.Deg2Rad, c = ringSize / 2f, rr = ringSize * 228f / 512f, ms = Hud.ClockLabel != null && Hud.Daylight < 0.5f && Hud.FullMoon ? 28f : 22f;
+            ringMarker.style.width = ms; ringMarker.style.height = ms;
+            ringMarker.style.left = c + Mathf.Sin(aa) * rr - ms / 2f; ringMarker.style.top = c - Mathf.Cos(aa) * rr - ms / 2f;
+            bool sun = Hud.ClockLabel != null ? Hud.Daylight >= 0.5f : Hud.TimeOfDay < 0.0f;
+            var mt = UiTex(sun ? "ui_marker_sun" : "ui_marker_moon");
+            if (mt != null) ringMarker.style.backgroundImage = Background.FromTexture2D(mt);
+            ringMarker.style.unityBackgroundImageTintColor = Hud.IsDawn ? new Color(1f, 0.55f, 0.5f) : Color.white;
+            return;
+        }
+        float a = deg * Mathf.Deg2Rad, rad = ringSize / 2f, r = rad - 2f - 16f;
         float msz = Hud.ClockLabel != null && Hud.Daylight < 0.5f && Hud.FullMoon ? 20f : 14f;   // 보름달 밤엔 표시가 커진다
         ringMarker.style.width = msz; ringMarker.style.height = msz;
         ringMarker.style.left = rad - 2f + Mathf.Sin(a) * r - msz / 2f;   // 크기가 달라도 중심이 어긋나지 않게
@@ -266,7 +370,7 @@ public class UiRoot : MonoBehaviour
     void RefreshPeace()
     {
         peace = Mathf.MoveTowards(peace, Hud.Peaceful ? 0f : 1f, Time.unscaledDeltaTime * (Hud.Peaceful ? 0.8f : 4f));   // 천천히 사라지고 빨리 돌아온다
-        note.style.opacity = peace; skillBar.style.opacity = peace;
+        note.style.opacity = peace; skillBar.style.opacity = peace; if (slotBar != null) slotBar.style.opacity = peace;
         note.style.display = peace < 0.01f ? DisplayStyle.None : DisplayStyle.Flex;
         skillBar.style.display = peace < 0.01f ? DisplayStyle.None : DisplayStyle.Flex;
     }
