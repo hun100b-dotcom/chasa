@@ -553,6 +553,8 @@ public class JudgeSystem : MonoBehaviour
         if (ledger.Dead || night.Over || !player.Hurt()) return;
         // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
         int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult * weather.Fx.CastHit / Balance.WEATHER_CLEAR_CAST_HIT)) : by.damage;   // 안개: 천도 중 맞는 피해 ×(0.85/0.75)
+        // 첫 5분(시계 정지 중)은 배우는 시간: 보스가 아닌 혼의 피해를 절반으로(처음 1분을 못 버티고 쓰러지던 것 방지)
+        if (introFrozen && !by.soul.Boss) incoming = Mathf.Max(1, Mathf.RoundToInt(incoming * Balance.INTRO_DAMAGE_MULT));
         sinceHit = 0f;
         Hint(HintEvent.FirstHurt);
         guide.Complete("dodge");   // 맞아도 피하기 안내는 닫힌다(기획)
@@ -799,7 +801,7 @@ public class JudgeSystem : MonoBehaviour
     void TickClock(float dt)
     {
         // 처음 5분: 박돌쇠를 처결할 때까지(최대 10분) 시계를 멈춘다 — 시간 압박 없이 배우게(기획 first-5-minutes)
-        FieldCamps.EarlyMaxAlive = introFrozen ? 7 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
+        FieldCamps.EarlyMaxAlive = introFrozen ? 5 : int.MaxValue;   // 첫 5분엔 혼 8~10마리까지만
         if (introFrozen && !cuts.Active && !inDay) introT += dt;
         if (introFrozen && (pahonOrTendo != 0 || introT >= 600f)) { introFrozen = false; ui?.Hud.Toasts.Add("밤이 깊어 간다"); }
         if (!cuts.PauseClock && !introFrozen) clock.Tick(dt);   // 오프닝 컷 동안·첫 5분엔 시계가 멈춘다
