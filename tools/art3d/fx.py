@@ -59,11 +59,12 @@ def decal():
 
 def wait_ring(color):
     """처결 대기 고리. 50° 카메라 점검(밝은 낮 풀밭·어두운 밤)에서 오래된 혼(갈회색) 고리가 풀색과 밝기가 비슷해 약했다 → 고리 바로 밑에 어두운 먹 받침(발광 없음)을 깔아 어떤 땅에서도 윤곽이 서게 했다."""
-    m = mat(color, 1.2); p = [annulus("rim_ink", 0.78, 0.95, 0.01, -0.005, mat("ink", 0.0), 16), annulus("rim", 0.82, 0.9, 0.04, 0.0, m, 16)]
+    # 줌이 24m까지 멀어지면(폰 기준 고리 두께 0.28mm로 실선처럼 얇아짐) 띠를 0.08→0.17m, 눈금을 2배 크게, 먹 받침도 따라 넓힌다. 바깥 지름(2.12)은 그대로라 코드 배율 그대로 쓴다.
+    m = mat(color, 1.2); p = [annulus("rim_ink", 0.68, 0.98, 0.01, -0.005, mat("ink", 0.0), 16), annulus("rim", 0.74, 0.91, 0.04, 0.0, m, 16)]
     for i in range(12):
         a = i / 12 * math.tau
-        p.append(box(f"tick_ink{i:02d}", (0.08, 0.16, 0.012), (math.cos(a) * 1.0, math.sin(a) * 1.0, 0.004), mat("ink", 0.0), rot=(0, 0, a - math.pi / 2)))
-        p.append(box(f"tick{i:02d}", (0.04, 0.12, 0.04), (math.cos(a) * 1.0, math.sin(a) * 1.0, 0.02), m, rot=(0, 0, a - math.pi / 2)))
+        p.append(box(f"tick_ink{i:02d}", (0.16, 0.26, 0.012), (math.cos(a) * 0.93, math.sin(a) * 0.93, 0.004), mat("ink", 0.0), rot=(0, 0, a - math.pi / 2)))
+        p.append(box(f"tick{i:02d}", (0.09, 0.2, 0.05), (math.cos(a) * 0.93, math.sin(a) * 0.93, 0.02), m, rot=(0, 0, a - math.pi / 2)))
     return p
 
 FX = [("fx_tendo_pillar", pillar), ("fx_tendo_ring", ring_tendo), ("fx_pahon_shards_a", lambda: shards(1)), ("fx_pahon_shards_b", lambda: shards(2)), ("fx_pahon_shards_c", lambda: shards(3)), ("fx_stain_decal", decal),

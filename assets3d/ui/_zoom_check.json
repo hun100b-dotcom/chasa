@@ -1,0 +1,17 @@
+{
+ "13": {
+  "pitch": 46,
+  "px_per_m_center": 131.7,
+  "hero_px_tall": 183.0
+ },
+ "19": {
+  "pitch": 52,
+  "px_per_m_center": 90.1,
+  "hero_px_tall": 106.7
+ },
+ "24": {
+  "pitch": 58,
+  "px_per_m_center": 71.4,
+  "hero_px_tall": 71.2
+ }
+}
