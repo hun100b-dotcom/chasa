@@ -528,6 +528,326 @@
    "bypass_cast_filter": false,
    "length_sec": 2.07,
    "peak_dbfs": -16
+  },
+  {
+   "id": "sfx.step.dirt.1",
+   "file": "sfx_step_dirt_1",
+   "category": "발소리",
+   "desc": "흙길: 낮은 툭 + 고운 흙 사각 (변형 1)",
+   "use": "흙 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.14,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "sfx.step.dirt.2",
+   "file": "sfx_step_dirt_2",
+   "category": "발소리",
+   "desc": "흙길: 낮은 툭 + 고운 흙 사각 (변형 2)",
+   "use": "흙 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.14,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "sfx.step.dirt.3",
+   "file": "sfx_step_dirt_3",
+   "category": "발소리",
+   "desc": "흙길: 낮은 툭 + 고운 흙 사각 (변형 3)",
+   "use": "흙 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.14,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "sfx.step.dirt.4",
+   "file": "sfx_step_dirt_4",
+   "category": "발소리",
+   "desc": "흙길: 낮은 툭 + 고운 흙 사각 (변형 4)",
+   "use": "흙 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.15,
+   "peak_dbfs": -20
+  },
+  {
+   "id": "sfx.step.grass.1",
+   "file": "sfx_step_grass_1",
+   "category": "발소리",
+   "desc": "풀밭: 풀잎 스치는 쉭 + 먹먹한 바닥 (변형 1)",
+   "use": "풀 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.26,
+   "peak_dbfs": -19
+  },
+  {
+   "id": "sfx.step.grass.2",
+   "file": "sfx_step_grass_2",
+   "category": "발소리",
+   "desc": "풀밭: 풀잎 스치는 쉭 + 먹먹한 바닥 (변형 2)",
+   "use": "풀 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.25,
+   "peak_dbfs": -19
+  },
+  {
+   "id": "sfx.step.grass.3",
+   "file": "sfx_step_grass_3",
+   "category": "발소리",
+   "desc": "풀밭: 풀잎 스치는 쉭 + 먹먹한 바닥 (변형 3)",
+   "use": "풀 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.24,
+   "peak_dbfs": -19
+  },
+  {
+   "id": "sfx.step.grass.4",
+   "file": "sfx_step_grass_4",
+   "category": "발소리",
+   "desc": "풀밭: 풀잎 스치는 쉭 + 먹먹한 바닥 (변형 4)",
+   "use": "풀 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.27,
+   "peak_dbfs": -19
+  },
+  {
+   "id": "sfx.step.gravel.1",
+   "file": "sfx_step_gravel_1",
+   "category": "발소리",
+   "desc": "자갈: 돌 알갱이 자글자글 + 바삭 (변형 1)",
+   "use": "자갈 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.18,
+   "peak_dbfs": -21
+  },
+  {
+   "id": "sfx.step.gravel.2",
+   "file": "sfx_step_gravel_2",
+   "category": "발소리",
+   "desc": "자갈: 돌 알갱이 자글자글 + 바삭 (변형 2)",
+   "use": "자갈 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.27,
+   "peak_dbfs": -21
+  },
+  {
+   "id": "sfx.step.gravel.3",
+   "file": "sfx_step_gravel_3",
+   "category": "발소리",
+   "desc": "자갈: 돌 알갱이 자글자글 + 바삭 (변형 3)",
+   "use": "자갈 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.2,
+   "peak_dbfs": -21
+  },
+  {
+   "id": "sfx.step.gravel.4",
+   "file": "sfx_step_gravel_4",
+   "category": "발소리",
+   "desc": "자갈: 돌 알갱이 자글자글 + 바삭 (변형 4)",
+   "use": "자갈 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.18,
+   "peak_dbfs": -21
+  },
+  {
+   "id": "sfx.step.paddy.1",
+   "file": "sfx_step_paddy_1",
+   "category": "발소리",
+   "desc": "논·진흙: 질척 + 발 빼는 쩍 (변형 1)",
+   "use": "논 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.26,
+   "peak_dbfs": -23
+  },
+  {
+   "id": "sfx.step.paddy.2",
+   "file": "sfx_step_paddy_2",
+   "category": "발소리",
+   "desc": "논·진흙: 질척 + 발 빼는 쩍 (변형 2)",
+   "use": "논 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.27,
+   "peak_dbfs": -23
+  },
+  {
+   "id": "sfx.step.paddy.3",
+   "file": "sfx_step_paddy_3",
+   "category": "발소리",
+   "desc": "논·진흙: 질척 + 발 빼는 쩍 (변형 3)",
+   "use": "논 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.25,
+   "peak_dbfs": -23
+  },
+  {
+   "id": "sfx.step.paddy.4",
+   "file": "sfx_step_paddy_4",
+   "category": "발소리",
+   "desc": "논·진흙: 질척 + 발 빼는 쩍 (변형 4)",
+   "use": "논 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.24,
+   "peak_dbfs": -23
+  },
+  {
+   "id": "sfx.step.leaves.1",
+   "file": "sfx_step_leaves_1",
+   "category": "발소리",
+   "desc": "낙엽: 마른 잎 바스러짐 + 바스락 (변형 1)",
+   "use": "낙엽 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.24,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.step.leaves.2",
+   "file": "sfx_step_leaves_2",
+   "category": "발소리",
+   "desc": "낙엽: 마른 잎 바스러짐 + 바스락 (변형 2)",
+   "use": "낙엽 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.24,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.step.leaves.3",
+   "file": "sfx_step_leaves_3",
+   "category": "발소리",
+   "desc": "낙엽: 마른 잎 바스러짐 + 바스락 (변형 3)",
+   "use": "낙엽 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.26,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.step.leaves.4",
+   "file": "sfx_step_leaves_4",
+   "category": "발소리",
+   "desc": "낙엽: 마른 잎 바스러짐 + 바스락 (변형 4)",
+   "use": "낙엽 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.24,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.step.water.1",
+   "file": "sfx_step_water_1",
+   "category": "발소리",
+   "desc": "얕은 물: 첨벙 + 물방울 (변형 1)",
+   "use": "물 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.29,
+   "peak_dbfs": -22
+  },
+  {
+   "id": "sfx.step.water.2",
+   "file": "sfx_step_water_2",
+   "category": "발소리",
+   "desc": "얕은 물: 첨벙 + 물방울 (변형 2)",
+   "use": "물 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.29,
+   "peak_dbfs": -22
+  },
+  {
+   "id": "sfx.step.water.3",
+   "file": "sfx_step_water_3",
+   "category": "발소리",
+   "desc": "얕은 물: 첨벙 + 물방울 (변형 3)",
+   "use": "물 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.29,
+   "peak_dbfs": -22
+  },
+  {
+   "id": "sfx.step.water.4",
+   "file": "sfx_step_water_4",
+   "category": "발소리",
+   "desc": "얕은 물: 첨벙 + 물방울 (변형 4)",
+   "use": "물 위를 걸을 때 한 걸음",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 0.29,
+   "peak_dbfs": -22
+  },
+  {
+   "id": "amb.weather.rain",
+   "file": "amb_weather_rain",
+   "category": "날씨",
+   "desc": "비: 고른 빗줄기 + 지붕·잎에 떨어지는 톡톡 + 낮은 웅웅(반복용 12초)",
+   "use": "비 오는 날 필드 배경(옛 amb.rain보다 길고 풍성)",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 11.9,
+   "peak_dbfs": -23
+  },
+  {
+   "id": "amb.weather.rain_light",
+   "file": "amb_weather_rain_light",
+   "category": "날씨",
+   "desc": "가랑비: 성긴 빗방울 + 잎사귀 톡톡(반복용 10초)",
+   "use": "비가 오기 시작·그칠 때",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 9.9,
+   "peak_dbfs": -27
+  },
+  {
+   "id": "amb.weather.wind",
+   "file": "amb_weather_wind",
+   "category": "날씨",
+   "desc": "바람: 낮게 웅— 하다가 가끔 휘잉 불어오는 돌풍 + 마른 풀 스치는 소리(반복용 16초)",
+   "use": "고개·능선·바람 부는 날",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 15.9,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "amb.weather.fog_night",
+   "file": "amb_weather_fog_night",
+   "category": "날씨",
+   "desc": "안개 낀 밤 공기: 거의 고요한 낮은 공기 울림 + 먼 개구리·풀벌레 + 가끔 물방울(반복용 15초)",
+   "use": "안개 낀 밤, 원념 짙은 곳 직전의 고요",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 14.9,
+   "peak_dbfs": -27
   }
- ]
+ ],
+ "footsteps": {
+  "_설명": "Sfx.PlayStep: 가장 큰 재질 층을 골라 '<prefix>_<1~variants 무작위>' 재생. 직전과 같은 번호는 피하기. 높낮이 ±4% 무작위만, 재질별 피치·크기 보정은 파일에 이미 들어 있음",
+  "layers": [
+   "sfx_step_dirt",
+   "sfx_step_grass",
+   "sfx_step_gravel",
+   "sfx_step_paddy",
+   "sfx_step_leaves"
+  ],
+  "wet": "sfx_step_water",
+  "variants": 4
+ }
 }

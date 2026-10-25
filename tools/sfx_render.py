@@ -640,6 +640,144 @@ def _(r):
     return reverb(buf, .7, .15)
 
 
+# ===== 땅 재질별 발소리 (2026-10-25) =====
+# 코드의 땅 재질 층 순서(GroundTerrain): 0 흙 · 1 풀 · 2 자갈 · 3 논 · 4 낙엽, 그리고 물(얕은 물·강가)
+# 한 걸음 = 뒤꿈치(heel) 닿는 소리 + 0.06~0.09초 뒤 앞꿈치(toe) 소리. 재질마다 '알갱이'가 다르다.
+# 변형 4개: 같은 재질도 매번 조금씩 달라야 기계처럼 안 들린다(같은 파일만 반복하면 귀가 금방 알아챈다).
+STEP_VARIANTS = 4
+
+
+def _heel_toe(r, part):
+    """part(r, 세기) → 한 번 닿는 소리. 뒤꿈치(세게) + 앞꿈치(약하게, 조금 뒤) 두 번을 붙인다"""
+    gap = r.uniform(.055, .09)
+    buf = np.zeros(int(.45 * SR))
+    place(buf, part(r, 1.0), 0)
+    place(buf, part(r, r.uniform(.45, .65)), gap)
+    return buf
+
+
+def _step_dirt(r, k):
+    def part(r, g):
+        n = int(.12 * SR)
+        thump = tone(.12, r.uniform(95, 120), 60) * env(n, .002, .025)
+        grit = filt(noise(n, r) * (r.random(n) > .55), "band", r.uniform(1800, 2600), 1) * env(n, .002, .035)
+        return g * (thump * .8 + grit * .45)
+    return _heel_toe(r, part)
+
+
+def _step_grass(r, k):
+    def part(r, g):
+        n = int(.2 * SR)
+        swish = filt(noise(n, r), "band", r.uniform(3000, 4200), 1.2) * env(n, .015, .06, 3)    # 풀잎이 스치는 '쉭'(시작이 부드럽다)
+        thump = tone(.2, r.uniform(80, 100), 55) * env(n, .004, .03) * .5                       # 흙보다 먹먹한 바닥
+        return g * (swish * .6 + filt(thump, "low", 400))
+    return _heel_toe(r, part)
+
+
+def _step_gravel(r, k):
+    def part(r, g):
+        n = int(.18 * SR)
+        pebbles = grains(.18, r, int(r.integers(9, 15)), lambda r, i: modal(.04, [(r.uniform(1800, 5200), .008, 1), (r.uniform(5200, 8000), .005, .5)], r) * r.uniform(.2, 1),
+                         spread=lambda i, r: r.exponential(.025))                                   # 자갈끼리 부딪히는 '자글'
+        crunch = filt(noise(n, r), "band", 2500, .8) * env(n, .002, .04)
+        thump = tone(.18, 110, 65) * env(n, .002, .02) * .6
+        return g * (pebbles * .55 + crunch * .4 + thump)
+    return _heel_toe(r, part)
+
+
+def _step_paddy(r, k):
+    def part(r, g):
+        n = int(.3 * SR)
+        thump = filt(tone(.3, r.uniform(70, 90), 50) * env(n, .006, .04), "low", 300)
+        suck = bubble(.3, r.uniform(140, 220), 2.6, .05) * env(n, .03, .08, 3, hold=.03)        # 진흙에서 발을 뺄 때 '쩍'(낮게 올라가는 음)
+        squish = filt(noise(n, r), "low", 900) * (1 + np.sin(2 * np.pi * r.uniform(35, 55) * T(.3))) * env(n, .01, .07) * .5
+        return g * (thump + suck * .5 + squish * .5)
+    return _heel_toe(r, part)
+
+
+def _step_leaves(r, k):
+    def part(r, g):
+        n = int(.2 * SR)
+        crackle = grains(.2, r, int(r.integers(18, 30)), lambda r, i: filt(noise(int(.004 * SR), r), "high", r.uniform(3000, 6000)) * env(int(.004 * SR), .0002, .0015) * r.uniform(.2, 1),
+                         spread=lambda i, r: r.exponential(.04))                                    # 마른 잎이 바스러지는 '바삭'
+        rustle = filt(noise(n, r), "band", 2200, 1) * env(n, .01, .06, 3) * .4
+        thump = tone(.2, 95, 60) * env(n, .003, .02) * .35
+        return g * (crackle * .7 + rustle + thump)
+    return _heel_toe(r, part)
+
+
+def _step_water(r, k):
+    def part(r, g):
+        n = int(.35 * SR)
+        splash = filt(noise(n, r), "band", r.uniform(1400, 2200), .9) * env(n, .004, .08, 3)
+        bub = grains(.35, r, 6, lambda r, i: bubble(.1, r.uniform(400, 1200), 2, .015) * r.uniform(.3, 1), spread=lambda i, r: .01 + r.exponential(.05))
+        slap = filt(tone(.35, 140, 80) * env(n, .002, .03), "low", 500) * .5
+        return g * (splash * .7 + bub * .4 + slap)
+    return _heel_toe(r, part)
+
+
+# 최대 크기(dBFS)는 재질마다 다르게: 낙엽처럼 뾰족한 소리는 최대값만 크고 평균은 작아서, 귀로 듣는 크기(평균 −38dB 근처)를 맞추려고 조정함
+STEPS = [("dirt", "흙", _step_dirt, -20, "흙길: 낮은 툭 + 고운 흙 사각"),
+         ("grass", "풀", _step_grass, -19, "풀밭: 풀잎 스치는 쉭 + 먹먹한 바닥"),
+         ("gravel", "자갈", _step_gravel, -21, "자갈: 돌 알갱이 자글자글 + 바삭"),
+         ("paddy", "논", _step_paddy, -23, "논·진흙: 질척 + 발 빼는 쩍"),
+         ("leaves", "낙엽", _step_leaves, -13, "낙엽: 마른 잎 바스러짐 + 바스락"),
+         ("water", "물", _step_water, -22, "얕은 물: 첨벙 + 물방울")]
+for _key, _ko, _fn, _g, _desc in STEPS:
+    for _k in range(1, STEP_VARIANTS + 1):
+        sfx(f"sfx.step.{_key}.{_k}", _g, "발소리", f"{_desc} (변형 {_k})", use=f"{_ko} 위를 걸을 때 한 걸음")(lambda r, f=_fn, k=_k: f(r, k))
+
+
+# ===== 날씨 소리 (반복용) =====
+@sfx("amb.weather.rain", -23, "날씨", "비: 고른 빗줄기 + 지붕·잎에 떨어지는 톡톡 + 낮은 웅웅(반복용 12초)", loop=True, use="비 오는 날 필드 배경(옛 amb.rain보다 길고 풍성)")
+def _(r):
+    sec = 12.3; n = int(sec * SR); t = T(sec)
+    hiss = filt(filt(noise(n, r), "high", 700), "low", 8000) * (.85 + .15 * np.sin(2 * np.pi * t / 6))
+    patter = grains(sec, r, 1600, lambda r, k: bubble(.025, r.uniform(2500, 6500), 1.3, .0025) * r.uniform(.05, .4))
+    leaf = grains(sec, r, 120, lambda r, k: filt(noise(int(.01 * SR), r), "band", r.uniform(1200, 3000), 2) * env(int(.01 * SR), .0005, .004) * r.uniform(.1, .5))
+    roof = grains(sec, r, 40, lambda r, k: modal(.08, [(r.uniform(600, 1100), .02, 1)], r) * r.uniform(.2, .6))   # 처마·나무에 맞는 굵은 방울
+    rumble = filt(noise(n, r), "low", 180) * .35
+    return loopify(hiss * .45 + patter * .25 + leaf * .3 + roof * .25 + rumble, .4)
+
+
+@sfx("amb.weather.rain_light", -27, "날씨", "가랑비: 성긴 빗방울 + 잎사귀 톡톡(반복용 10초)", loop=True, use="비가 오기 시작·그칠 때")
+def _(r):
+    sec = 10.3; n = int(sec * SR)
+    hiss = filt(filt(noise(n, r), "high", 1500), "low", 7000) * .15
+    patter = grains(sec, r, 260, lambda r, k: bubble(.03, r.uniform(2200, 5500), 1.3, .003) * r.uniform(.1, .5))
+    drips = grains(sec, r, 25, lambda r, k: bubble(.12, r.uniform(700, 1400), 2, .015) * r.uniform(.3, .7))
+    return loopify(hiss + patter * .35 + drips * .4, .4)
+
+
+@sfx("amb.weather.wind", -24, "날씨", "바람: 낮게 웅— 하다가 가끔 휘잉 불어오는 돌풍 + 마른 풀 스치는 소리(반복용 16초)", loop=True, use="고개·능선·바람 부는 날")
+def _(r):
+    sec = 16.4; n = int(sec * SR); t = T(sec)
+    base = filt(noise(n, r), "low", 260) * (.6 + .25 * np.sin(2 * np.pi * t / 16.0))
+    # 돌풍 두 번: 바람 '음높이'가 올라갔다 내려감(좁은 대역 잡음의 중심이 움직임)
+    gust = np.zeros(n)
+    for at, dur in [(2.5, 4.5), (9.5, 5.0)]:
+        m = int(dur * SR)
+        g = sweep_filt(noise(m, r), "band", 300, 900, 5) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2
+        g2 = sweep_filt(noise(m, r), "band", 900, 350, 5) * np.sin(np.pi * np.linspace(0, 1, m)) ** 2
+        place(gust, np.concatenate([g[:m // 2], g2[m // 2:]]), at)
+    grass = filt(noise(n, r), "band", 3500, 1) * (.2 + .8 * np.clip(np.abs(gust) * 0, 0, 1))
+    grass = grass * (.15 + .85 * filt(np.abs(gust), "low", 3) / (np.abs(filt(np.abs(gust), "low", 3)).max() + 1e-9)) * .2
+    return loopify(base + gust * .9 + grass, .5)
+
+
+@sfx("amb.weather.fog_night", -27, "날씨", "안개 낀 밤 공기: 거의 고요한 낮은 공기 울림 + 먼 개구리·풀벌레 + 가끔 물방울(반복용 15초)", loop=True, use="안개 낀 밤, 원념 짙은 곳 직전의 고요")
+def _(r):
+    sec = 15.4; n = int(sec * SR); t = T(sec)
+    air = filt(noise(n, r), "low", 140) * (.8 + .2 * np.sin(2 * np.pi * t / 7.7))           # 들릴 듯 말 듯한 낮은 공기
+    hum = (tone(sec, 55) * .3 + tone(sec, 82.6) * .15) * (.5 + .5 * np.sin(2 * np.pi * t / 15.4 * 2))   # 아주 느리게 숨 쉬는 밑음
+    frogs = grains(sec, r, 22, lambda r, k: (tone(.09, r.uniform(380, 520)) * (np.sin(2 * np.pi * 28 * T(.09)) > 0)) * env(int(.09 * SR), .005, .05) * r.uniform(.2, .6),
+                   spread=lambda k, r: (k // 3) * 2.0 + (k % 3) * .14 + r.uniform(0, .03))   # 먼 개구리: 세 번씩 '개굴'
+    frogs = filt(frogs, "low", 1500)
+    insect = np.sin(2 * np.pi * 4100 * t) * (np.sin(2 * np.pi * 24 * t) > .3) * (np.sin(2 * np.pi * .21 * t) > .4) * .02
+    drips = grains(sec, r, 7, lambda r, k: bubble(.15, r.uniform(800, 1300), 2, .02) * r.uniform(.2, .5))
+    return loopify(reverb(air * .9 + hum * .4 + frogs * .35 + insect + drips * .3, 2.5, .35, tone_hz=2500)[:n], .5)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)
@@ -658,6 +796,10 @@ def main():
                                        loop=s["loop"], bypass_cast_filter=s["bypass_cast"],
                                        length_sec=round(len(x) / SR, 2), peak_dbfs=s["gain"]))
         print(f"{id:22s} {len(x)/SR:5.2f}s  {s['cat']}")
+    # 발소리 표: 코드의 땅 재질 층 번호(0 흙·1 풀·2 자갈·3 논·4 낙엽) → 파일 이름 앞부분. 물속(wet)이면 water
+    manifest["footsteps"] = {"_설명": "Sfx.PlayStep: 가장 큰 재질 층을 골라 '<prefix>_<1~variants 무작위>' 재생. 직전과 같은 번호는 피하기. 높낮이 ±4% 무작위만, 재질별 피치·크기 보정은 파일에 이미 들어 있음",
+                             "layers": ["sfx_step_dirt", "sfx_step_grass", "sfx_step_gravel", "sfx_step_paddy", "sfx_step_leaves"],
+                             "wet": "sfx_step_water", "variants": STEP_VARIANTS}
     with open(os.path.join(ROOT, "data/sfx_files.json"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=1)
     print(len(REG), "개")
