@@ -9,6 +9,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int damage = Balance.ENEMY_ATTACK_DAMAGE;   // 공격력 (보스는 더 아프다)
+    public bool loner;                                 // 외톨이 야영지의 혼(소리: amb.loner)
     public string label;                               // 이름혼·보스 이름표 (없으면 null)
     public float radius = Config.ENEMY_RADIUS;
     public float height = Config.ENEMY_HEIGHT;

@@ -129,6 +129,7 @@ public class FieldCamps
                 MapLayout.PushOut(ref lx, ref lz, Config.ENEMY_RADIUS + 1f);
                 var l = enemies.SpawnCamp(new Vector3(lx, 0f, lz), k % 2 == 0);
                 if (k == 0 && !string.IsNullOrEmpty(c.row.who)) { l.label = c.row.who; l.soul.LonerMemory = c.row.memory; }   // 첫째가 서사 표의 그 혼(이름표 + 기억). 둘째는 공용 기억
+                l.loner = true;
                 l.soul.Trick = false; l.soul.TakeHit(l.soul.MaedhimMax + 1);   // 맺힘 0 → 무릎 꿇음
                 c.members.Add(l);
             }

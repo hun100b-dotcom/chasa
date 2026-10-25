@@ -77,6 +77,9 @@ public class Sfx : MonoBehaviour
     }
 
     /// <summary>구역 환경음용 반복 음원 하나를 만든다(소리 0으로 시작, 호출한 쪽이 서서히 키운다). 소리 파일이 없으면 null 대신 빈 음원</summary>
+    /// <summary>소리 id 의 클립(없으면 null). 3D 반복음처럼 따로 음원을 만드는 쪽이 쓴다</summary>
+    public static AudioClip ClipFor(string id) { return I != null ? I.Clip(id) : null; }
+
     public static AudioSource MakeLoop(string id)
     {
         var host = I != null ? I.gameObject : new GameObject("SfxLoop");

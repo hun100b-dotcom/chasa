@@ -80,11 +80,21 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+    static Item[] loadedItems;
+    /// <summary>필드 표에서 이름이 같은 소품의 자리(x,z). 소품 점 소리(Act1Soundscape)가 쓴다</summary>
+    public static List<Vector2> PositionsOf(string name)
+    {
+        var l = new List<Vector2>();
+        if (loadedItems != null) foreach (var it in loadedItems) if (it.n == name) l.Add(new Vector2(it.x, it.z));
+        return l;
+    }
+
     void Awake()
     {
         var ta = Resources.Load<TextAsset>("Data/field");
         if (ta == null) { Debug.LogWarning("field.json 이 없다: 필드를 세우지 못한다"); enabled = false; return; }
         data = JsonUtility.FromJson<FieldFile>(ta.text);
+        loadedItems = data.items;
         cover = gameObject.AddComponent<CoverInstancer>(); cover.player = player;
         // 표에 적힌 항목을 청크별로 묶는다. 풀밭 칸(적히지 않은 8m 칸)은 켤 때 채운다
         foreach (var it in data.items) Bucket(it);
