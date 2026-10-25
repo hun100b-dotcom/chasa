@@ -1364,7 +1364,7 @@
   "note": "(기획 타격감 분석 10-24, 임시) 연속으로 피할 수 있는 횟수"
  },
  "DODGE_RECHARGE": {
-  "value": 3.0,
+  "value": 1.1,
   "note": "(기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초) | 기획 표준 명세 hud-controls-spec v1(10-25)"
  },
  "DODGE_CANCEL_TO_ATTACK": {
@@ -2054,5 +2054,9 @@
  "CAMERA_PITCH_FAR": {
   "value": 58.0,
   "note": "멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMP_DENSITY_MULT": {
+  "value": 1.0,
+  "note": "군집 인원 전체 배율(1.0=그대로). 첫 30분 난이도 조정용: 코디 지시로 봇이 첫 보스까지 2번 이하 쓰러지게 0.7~0.8 까지 낮춘다(10-25)"
  }
 }

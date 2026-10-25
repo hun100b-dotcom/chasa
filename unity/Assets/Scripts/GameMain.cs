@@ -64,6 +64,8 @@ public class GameMain : MonoBehaviour
             judge.camps = new FieldCamps(enemies);
             judge.named = new NamedSoulSpawns(enemies);
             judge.clock = new WorldClock();
+            judge.clock.Minutes = WorldClock.DayLength - Balance.CLOCK_NIGHT_MIN + 3f;   // 첫 5분: 밤이 막 깊어진 때(밤 9시 무렵)에서 시작해 박돌쇠 처결까지 멈춘다
+            judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
             judge.onTeleport = p => focus = p;   // 넋길로 옮겨 가면 카메라도 곧바로 따라간다(날아가지 않게)
@@ -71,6 +73,7 @@ public class GameMain : MonoBehaviour
             int ci = cu.IndexOf("clock=");
             float sp; if (ci >= 0 && float.TryParse(new string(cu.Substring(ci + 6).TakeWhile(char.IsDigit).ToArray()), out sp) && sp > 0f) judge.clock.Speed = sp;   // 주소 ?clock=10 이면 10배속(한 바퀴 검사용)
         }
+        player.onHitLanded = () => judge.guide.Complete("hit");   // 첫 타가 맞으면 '때리기' 안내가 닫힌다
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
         if (View3D.On)
         {
@@ -269,7 +272,7 @@ public class GameMain : MonoBehaviour
     /// <summary>휠·핀치로 3단계(가깝게/기본/멀리) 줌. 단계 거리는 balance.json 의 CAMERA_DIST_* (기획 표준: 11/16/20 m)</summary>
     int zoomStep = 1;   // 0=가깝게 1=기본 2=멀리
     float StepDist(int i) { return i <= 0 ? Balance.CAMERA_DIST_NEAR : i == 1 ? Balance.CAMERA_DIST_MID : Balance.CAMERA_DIST_FAR; }
-    void SetZoomStep(int i) { zoomStep = Mathf.Clamp(i, 0, 2); wheelTarget = StepDist(zoomStep) / Mathf.Max(0.1f, camDist); }   // 배율 = 목표 거리 / 기준 거리
+    void SetZoomStep(int i) { if (i != zoomStep && judge != null) judge.guide.Complete("zoom"); zoomStep = Mathf.Clamp(i, 0, 2); wheelTarget = StepDist(zoomStep) / Mathf.Max(0.1f, camDist); }   // 배율 = 목표 거리 / 기준 거리
     void HandleZoom()
     {
         // 휠 한 칸 = 한 단계(앞으로 굴리면 가깝게). 연속 값이 아니라 단계라서 '딱 3번'만 멈춘다
@@ -390,6 +393,7 @@ public class GameMain : MonoBehaviour
 
     void SkillPull(Vector3 screen)
     {
+        judge.guide.Complete("pull");
         var ray = cam.ScreenPointToRay(screen);
         var g = Ground(ray);
         var e = enemies.Pick(ray, g, Config.PULL_PICK_RADIUS);
@@ -399,6 +403,7 @@ public class GameMain : MonoBehaviour
     /// <summary>피하기: 마우스가 있는 쪽으로. 마우스 위치를 못 구하면 걷던 방향</summary>
     void SkillDodge(Vector3 screen)
     {
+        judge.guide.Complete("dodge");
         var g = Ground(cam.ScreenPointToRay(screen));
         player.CommandDodge(g);
     }
@@ -435,9 +440,7 @@ public class GameMain : MonoBehaviour
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (judge.InDay || CharacterPanel.Open || SettingsPanel.Open || judge.NightOver) return;   // 낮 화면·캐릭터 창에서는 밤의 안내·버튼을 그리지 않는다
-        var hint = new GUIStyle(GUI.skin.label) { fontSize = 14 };
-        hint.normal.textColor = new Color(1, 1, 1, 0.55f);
-        if (!Ko.TouchUI) GUI.Label(new Rect(12, 8, 600, 24), "마우스: 이동·대상   Q: 끌어당김   Space: 피하기" + ((Demo.Panel || FieldRules.On) ? "   C: 명부(품계·도술)" : ""), hint);   // 폰(터치)에는 마우스 안내를 숨긴다
+        // 상시 조작 안내 줄은 지웠다(기획 표준). 안내는 처음 해당 행동이 필요할 때 하나씩 띄운다(TutorialHints)
         if (!Ko.TouchUI) return;
         DrawJoystick();
         var bs = new GUIStyle(GUI.skin.button) { fontSize = 20 };

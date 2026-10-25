@@ -16,7 +16,7 @@ using UnityEngine.Playables;
 
 public class ActorModel : MonoBehaviour
 {
-    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
+    public enum Pose { Idle, Walk, Attack, Hit, Cast, Kneel, Dodge, Attack2, Attack3, Pahon, Draw, Hit2, Stagger, Tendo, RunStart, RunStop }   // Attack2·3 은 모델 동작 전용(콤보 2·3타). 도형 대역은 Attack 하나를 쓴다
 
     // 모양 설명서: 이름에서 골라 쓴다
     struct Spec
@@ -87,7 +87,7 @@ public class ActorModel : MonoBehaviour
         var all = Resources.LoadAll<AnimationClip>(heroRow.path);
         var byName = new Dictionary<string, AnimationClip>();
         foreach (var c in all) if (!c.name.StartsWith("__")) byName[c.name] = c;
-        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw };
+        clipsByName = byName; heroOrder = new[] { Pose.Idle, Pose.Walk, Pose.Attack, Pose.Hit, Pose.Cast, Pose.Kneel, Pose.Dodge, Pose.Attack2, Pose.Attack3, Pose.Pahon, Pose.Draw, Pose.Hit2, Pose.Stagger, Pose.Tendo, Pose.RunStart, Pose.RunStop };
         graph = PlayableGraph.Create("Hero");
         graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);   // 우리가 직접 시간을 흘린다(히트스톱과 무관하게 부드럽게)
         var output = AnimationPlayableOutput.Create(graph, "out", anim);
@@ -143,14 +143,27 @@ public class ActorModel : MonoBehaviour
         }
     }
 
+    bool wasMoving; float startT, stopT, runTime;
     void HeroUpdate(float dt, bool moving)
     {
         var want = pose == Pose.Idle && moving ? Pose.Walk : pose;
+        // 출발·정지 동작(아트 HERO-MOTION): 서 있다가 달리기 시작할 때 Run_Start 9프레임(0.15초), 달리다 멈출 때 Run_Stop 16프레임(0.27초). 주인공만(해당 동작이 있는 모델)
+        if (pose == Pose.Idle || pose == Pose.Walk)
+        {
+            if (moving && !wasMoving && heroInput.ContainsKey(Pose.RunStart)) startT = 0.15f;
+            if (!moving && wasMoving && heroInput.ContainsKey(Pose.RunStop) && runTime > 0.3f) stopT = 0.27f;
+            runTime = moving ? runTime + dt : 0f;
+        }
+        else { startT = 0f; stopT = 0f; runTime = 0f; }
+        wasMoving = moving;
+        if (startT > 0f) { startT -= dt; if (!moving) startT = 0f; else want = Pose.RunStart; }
+        else if (stopT > 0f) { stopT -= dt; if (moving) stopT = 0f; else want = Pose.RunStop; }
         if (want == Pose.Attack) want = atkPose;   // 콤보 2·3타는 전용 동작
         if (want == Pose.Walk && !moving && pose == Pose.Walk) want = Pose.Idle;
         int idx; if (!heroInput.TryGetValue(want, out idx)) idx = 0;
         if (idx != heroCur) { heroCur = idx; heroT = 0f; heroSpeed = 1f; }   // 새 동작은 처음부터
-        heroT += dt;
+        // 달리기(Run)는 5.5 m/s 에서 1.0배로 재생하면 발이 안 미끄러진다(아트 HERO-MOTION). 다른 속도면 속도 비율만큼 빠르거나 느리게
+        heroT += dt * (want == Pose.Walk ? Mathf.Clamp(speed / Mathf.Max(0.1f, Balance.PLAYER_MOVE_SPEED), 0.4f, 1.5f) : 1f);
         // 가중치를 부드럽게 옮긴다 (0.12초 안팎 크로스페이드)
         for (int i = 0; i < mixer.GetInputCount(); i++)
         {
@@ -176,6 +189,13 @@ public class ActorModel : MonoBehaviour
     Pose oneShot; float oneShotT;   // 파혼·무기 바꿈 같은 한 번짜리 동작이 도는 동안은 그림 이름이 자세를 덮어쓰지 않는다
 
     /// <summary>한 번짜리 몸 동작(파혼·무기 바꿔 들기). 클립 길이만큼 자세를 붙든다. 주인공 3D 모델이 아니면 무시</summary>
+    /// <summary>한 번짜리 동작의 길이(초). 모델에 그 동작이 없으면 0</summary>
+    public float ClipLength(Pose p)
+    {
+        int idx; if (hero == null || heroPlayables == null || !heroInput.TryGetValue(p, out idx) || !heroPlayables[idx].IsValid()) return 0f;
+        return heroPlayables[idx].GetAnimationClip().length;
+    }
+
     public void PlayOneShot(Pose p)
     {
         int idx; if (hero == null || heroPlayables == null || !heroInput.TryGetValue(p, out idx) || !heroPlayables[idx].IsValid()) return;

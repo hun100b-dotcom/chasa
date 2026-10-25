@@ -59,6 +59,20 @@ public class Enemy : MonoBehaviour
     public float boundT;               // 묶임 남은 시간(휘감기·쇠사슬 울)
     public float slowMult = 1f;        // 이동 감소 배율(배웅길: 천도 직후 적이 느려진다)
     Material mat;
+    float deathHold = Config.ENEMY_DEATH_HOLD, deathShrink = Config.ENEMY_DEATH_SHRINK;   // 천도·파혼 모델 동작이 있으면 그 길이만큼 몸을 유지(동작이 스스로 흩어지는 모양)
+    /// <summary>맞은 동작: 1 약(Hit1)·2 중(Hit2)·3 강(Stagger). 무릎 꿇음·죽음·보스(전용 동작 없는 것)에는 안 쓴다. 동작이 없는 모델이면 아무 일 없음</summary>
+    public void ReactHit(int kind)
+    {
+        if (spr == null || !alive || kneeling) return;
+        spr.PlayReact(kind >= 3 ? ActorModel.Pose.Stagger : kind == 2 ? ActorModel.Pose.Hit2 : ActorModel.Pose.Hit);
+    }
+    /// <summary>처결로 떠날 때 모델 동작(천도=Tendo 0.8초·파혼=Pahon 0.3초)을 틀고 그 길이만큼 몸을 남긴다</summary>
+    public void PlayFinishAnim(bool tendo)
+    {
+        if (spr == null) return;
+        float len = spr.PlayReact(tendo ? ActorModel.Pose.Tendo : ActorModel.Pose.Pahon);
+        if (len > 0f) { deathHold = len; deathShrink = 0.05f; }
+    }
     ActorSprite spr;               // 아트팀 그림(없으면 색 도형으로 대신)
     Renderer bodyRenderer;
     Vector3 lastPlayerPos;         // 그림이 플레이어 쪽을 보게 하려고 기억
@@ -412,7 +426,7 @@ public class Enemy : MonoBehaviour
         mat.SetColor("_EmissionColor", Color.white * (flash * 0.9f));
         // 등장 팝인(0→1) 또는 죽은 뒤 쪼그라듦(1→0)
         float b = U.EaseOutQuad(Mathf.Clamp01(spawnT / Config.ENEMY_SPAWN_POP_TIME));
-        if (gone) b = 1f - Mathf.Clamp01((deathT - Config.ENEMY_DEATH_HOLD) / Config.ENEMY_DEATH_SHRINK);
+        if (gone) b = 1f - Mathf.Clamp01((deathT - deathHold) / deathShrink);
         float kneel = alive || gone ? 1f : (View3D.On ? 0.92f : 0.62f);   // 3D 인형은 무릎 꿇는 자세가 따로 있어 덜 찌그러뜨린다   // 무릎 꿇으면 키가 줄어든다(눈으로 '처결 대기'를 알아보게)
         // 맞은 순간: 옆으로 넓어지고 키가 줄어드는 찌그러짐 (무게감)
         float sx = 1f + Config.ENEMY_SQUASH * flash;

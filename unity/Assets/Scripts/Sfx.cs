@@ -183,6 +183,6 @@ public class Sfx : MonoBehaviour
         Ko.Apply();
         GUI.depth = -50;
         var st = new GUIStyle(GUI.skin.button) { fontSize = Ko.TouchUI ? 22 : 14 };
-        if (GUI.Button(new Rect(Screen.width - (Ko.TouchUI ? 104 : 78), 8, Ko.TouchUI ? 96 : 70, Ko.TouchUI ? 48 : 26), muted ? "소리 끔" : "소리 켬", st)) ToggleMute();
+        if (GUI.Button(new Rect(Mathf.Min(Screen.width, MiniMap.LeftPx > 0f ? MiniMap.LeftPx : Screen.width) - (Ko.TouchUI ? 104 : 78), 8, Ko.TouchUI ? 96 : 70, Ko.TouchUI ? 48 : 26), muted ? "소리 끔" : "소리 켬", st)) ToggleMute();
     }
 }

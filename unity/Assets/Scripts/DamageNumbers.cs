@@ -44,6 +44,7 @@ public class DamageNumbers : MonoBehaviour
 
     void OnGUI()
     {
+        if (MiniMap.BigOpen) return;   // 큰 지도가 열리면 맞은 숫자가 지도 위를 가리지 않게 숨긴다
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
         if (style == null)
         {

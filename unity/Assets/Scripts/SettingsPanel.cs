@@ -54,7 +54,7 @@ public class SettingsPanel : MonoBehaviour
             // 닫혀 있을 땐 오른쪽 위 작은 버튼(소리 버튼 아래). 낮 화면·캐릭터 창·컷신 중엔 숨긴다
             if (judge.InDay || CharacterPanel.Open || judge.cuts.Active) return;
             bool t = Ko.TouchUI;
-            if (GUI.Button(new Rect(Screen.width - (t ? 104 : 78), t ? 62 : 38, t ? 96 : 70, t ? 48 : 26), "설정")) Toggle();
+            if (GUI.Button(new Rect(Mathf.Min(Screen.width, MiniMap.LeftPx > 0f ? MiniMap.LeftPx : Screen.width) - (t ? 104 : 78), t ? 62 : 38, t ? 96 : 70, t ? 48 : 26), "설정")) Toggle();
             return;
         }
         float w = Mathf.Min(Screen.width - 24f, 640f), h = Mathf.Min(Screen.height - 24f, showKeys ? 470f : 460f);

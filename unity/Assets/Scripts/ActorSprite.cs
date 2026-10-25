@@ -29,6 +29,8 @@ public class ActorSprite : MonoBehaviour
 
     /// <summary>공격 시작을 3D 인형에 알린다(동작을 처음부터, 판정 시각에 맞춰 재생). 2D 그림 쪽은 할 일 없음</summary>
     public void PlayPahon() { if (model != null) model.PlayOneShot(ActorModel.Pose.Pahon); }
+    /// <summary>맞은 동작(Hit1·Hit2·Stagger)·천도(Tendo)·파혼(Pahon) 한 번짜리. 모델이 없으면 0(할 일 없음), 있으면 클립 길이(초)</summary>
+    public float PlayReact(ActorModel.Pose p) { if (model == null) return 0f; float len = model.ClipLength(p); if (len > 0f) model.PlayOneShot(p); return len; }
     public void PlayDraw() { if (model != null) model.PlayOneShot(ActorModel.Pose.Draw); }
     public void PlayAttack(float windup, float swing, int step = 1) { if (model != null) model.PlayAttack(windup, swing, step); }
 

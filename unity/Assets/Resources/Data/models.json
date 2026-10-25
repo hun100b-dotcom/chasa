@@ -14,7 +14,7 @@
     },
     {
      "pose": "Walk",
-     "clip": "Walk"
+     "clip": "Run"
     },
     {
      "pose": "Attack",
@@ -42,7 +42,15 @@
     },
     {
      "pose": "Dodge",
-     "clip": "Dodge"
+     "clip": "Roll"
+    },
+    {
+     "pose": "RunStart",
+     "clip": "Run_Start"
+    },
+    {
+     "pose": "RunStop",
+     "clip": "Run_Stop"
     }
    ],
    "loop": [
@@ -220,7 +228,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -233,6 +241,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -269,7 +293,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -282,6 +306,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -318,7 +358,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -331,6 +371,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -367,7 +423,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -380,6 +436,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -416,7 +488,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -429,6 +501,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -465,7 +553,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -478,6 +566,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -514,7 +618,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -527,6 +631,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -563,7 +683,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -576,6 +696,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -612,7 +748,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -625,6 +761,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -661,7 +813,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -674,6 +826,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -710,7 +878,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -723,6 +891,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -759,7 +943,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -772,6 +956,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -808,7 +1008,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -821,6 +1021,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -857,7 +1073,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -870,6 +1086,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -906,7 +1138,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -919,6 +1151,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -955,7 +1203,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -968,6 +1216,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -1004,7 +1268,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -1017,6 +1281,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -1053,7 +1333,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -1066,6 +1346,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -1102,7 +1398,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -1115,6 +1411,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -1151,7 +1463,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -1164,6 +1476,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -1200,7 +1528,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -1213,6 +1541,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -1249,7 +1593,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -1262,6 +1606,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -1298,7 +1658,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -1311,6 +1671,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
@@ -1347,7 +1723,7 @@
     },
     {
      "pose": "Hit",
-     "clip": "Float"
+     "clip": "Hit1"
     },
     {
      "pose": "Cast",
@@ -1360,6 +1736,22 @@
     {
      "pose": "Dodge",
      "clip": "Float"
+    },
+    {
+     "pose": "Hit2",
+     "clip": "Hit2"
+    },
+    {
+     "pose": "Stagger",
+     "clip": "Stagger"
+    },
+    {
+     "pose": "Tendo",
+     "clip": "Tendo"
+    },
+    {
+     "pose": "Pahon",
+     "clip": "Pahon"
     }
    ],
    "loop": [
