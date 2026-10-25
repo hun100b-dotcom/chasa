@@ -12,7 +12,7 @@
 
 ## 동작 클립 (60fps, 이벤트 프레임은 매니페스트 `assets3d/souls/_soul_types_manifest.json`)
 - wail: Float 90f 루프 / Windup 42f(번쩍 28) / Attack 22f(투척 5, 탄=fx_wonnyeom_orb) / Kneel 40f
-- mote: Float 40f(빠른 떨림) / Windup 18f(번쩍 14) / Attack 14f(적중 4) / Kneel 24f
+- mote: Float 40f(빠른 떨림) / Windup 24f(번쩍 14, 기획 F-1b 선딜 0.4s) / Attack 14f(적중 4) / Kneel 24f
 - buried: Hidden 60f 루프(무덤만, 손끝 삐죽) / Windup 44f(번쩍 26, 솟구침 30, 먼지 26) / Attack 20f(적중 6) / Kneel 40f / Sink 30f(먼지 22)
 
 ## 행동 규칙 제안
