@@ -1,0 +1,362 @@
+{
+ "_설명": "3막 ⑤갯마을·⑥도성 주변 소리 배치(기획·사운드 10-26). 좌표는 act3_map.json 의 x, y(=유니티 z). 2막 data/act2_soundscape.json 과 같은 모양. ZoneAmbient 의 지금 구역 소리는 그대로 두고 위에 얹는다",
+ "beds": {
+  "_설명": "[밤, 낮]. null 이면 지금 ZoneAmbient 소리 그대로",
+  "Harbor": [
+   "amb.harbor.night",
+   null
+  ],
+  "SaltField": [
+   "amb.saltfield.night",
+   null
+  ],
+  "WaitingRock": [
+   "amb.waitingrock",
+   "amb.waitingrock"
+  ],
+  "WreckShoal": [
+   null,
+   null
+  ],
+  "Market": [
+   "amb.market.night",
+   null
+  ],
+  "BridgeUnder": [
+   null,
+   null
+  ],
+  "Shacks": [
+   "amb.shacks",
+   "amb.shacks"
+  ],
+  "CityGate": [
+   null,
+   "amb.citygate.day"
+  ]
+ },
+ "points": [
+  {
+   "id": "amb.seonang.harbor",
+   "x": 962,
+   "z": 395,
+   "min": 2,
+   "max": 14,
+   "when": "always",
+   "note": "SH3-1 포구 서낭당"
+  },
+  {
+   "id": "amb.seonang.market",
+   "x": -140,
+   "z": 432,
+   "min": 2,
+   "max": 12,
+   "when": "always",
+   "note": "SH3-2 저잣거리 서낭당"
+  },
+  {
+   "id": "amb.seonang.bridge",
+   "x": -335,
+   "z": 415,
+   "min": 1.5,
+   "max": 10,
+   "when": "always",
+   "unlock": "B-11 천도 뒤",
+   "note": "SH3-3 다리 밑 서낭"
+  },
+  {
+   "id": "amb.net.yard",
+   "x": 1000,
+   "z": 455,
+   "min": 1.5,
+   "max": 10,
+   "when": "always",
+   "note": "그물 너는 마당"
+  },
+  {
+   "id": "amb.jumak.harbor",
+   "x": 1020,
+   "z": 410,
+   "min": 1.5,
+   "max": 10,
+   "when": "evening_night",
+   "note": "포구 주막"
+  },
+  {
+   "id": "amb.lighthouse.lamp",
+   "x": 1132,
+   "z": 452,
+   "min": 1.5,
+   "max": 10,
+   "when": "night",
+   "note": "등대지기 막. B-09 천도 뒤 1.5배"
+  },
+  {
+   "id": "amb.salt.rake",
+   "x": 880,
+   "z": 250,
+   "min": 1.5,
+   "max": 12,
+   "when": "day",
+   "note": "염전 둑"
+  },
+  {
+   "id": "amb.salt.store",
+   "x": 900,
+   "z": 300,
+   "min": 1.5,
+   "max": 10,
+   "when": "day",
+   "note": "소금 창고"
+  },
+  {
+   "id": "amb.market.stall",
+   "x": -240,
+   "z": 445,
+   "min": 1.5,
+   "max": 12,
+   "when": "day",
+   "note": "저잣거리 한가운데. ⑥ 장례 중엔 끔"
+  },
+  {
+   "id": "amb.ricecake",
+   "x": -225,
+   "z": 460,
+   "min": 1,
+   "max": 9,
+   "when": "day",
+   "note": "떡장수 좌판. S-103 장례 뒤 0.4배"
+  },
+  {
+   "id": "amb.bridge.stone",
+   "x": -380,
+   "z": 410,
+   "min": 1.5,
+   "max": 12,
+   "when": "day",
+   "note": "큰 다리 상판"
+  },
+  {
+   "id": "amb.jumak.citygate",
+   "x": -470,
+   "z": 265,
+   "min": 1.5,
+   "max": 10,
+   "when": "always",
+   "note": "성문 밖 주막"
+  },
+  {
+   "id": "amb.gate.bar",
+   "x": -558,
+   "z": 215,
+   "min": 2,
+   "max": 14,
+   "when": "always",
+   "note": "닫힌 성문 빗장"
+  },
+  {
+   "id": "amb.well.village",
+   "x": -480,
+   "z": 440,
+   "min": 1,
+   "max": 8,
+   "when": "day",
+   "note": "움막촌 우물(2막 우물 소리 같이 씀)"
+  }
+ ],
+ "overhear": {
+  "_설명": "엿듣기 자리 생활 소리(docs/narrative/overhear_act3.json spots). 2막과 같은 규칙: 자리가 열려 있고 그 시각일 때만 반경 10m, 문구가 뜨는 동안 0.6배, 자리가 닫히면 끔. points 와 같은 소리가 가까이 겹치면 하나만",
+  "R3-01": {
+   "id": "amb.net.mending",
+   "note": "갯골댁 집 저녁 — 그물 깁기('그 코 하나가 비었다')"
+  },
+  "R3-02": {
+   "id": "amb.salt.store",
+   "note": "소금 창고 낮"
+  },
+  "R3-03": {
+   "id": "amb.lamp.room",
+   "note": "덕보 집 밤, 담 너머"
+  },
+  "R3-04": {
+   "id": "amb.cloth.fold",
+   "note": "순덕 집 저녁 — 장롱·혼례 옷"
+  },
+  "R3-05": {
+   "id": "amb.lighthouse.lamp",
+   "note": "등대지기 막 새벽"
+  },
+  "R3-06": {
+   "id": "amb.salt.rake",
+   "note": "염전 둑 낮"
+  },
+  "R3-07": {
+   "id": "amb.rock.waves",
+   "note": "여울 북쪽 갯바위 낮 — 해녀. vo.sumbi 를 아주 작게(0.2배) 120초에 한 번 이하"
+  },
+  "R3-08": {
+   "id": "amb.boat.repair",
+   "note": "포구 어귀 낮 — 배 손보기"
+  },
+  "R3-09": {
+   "id": "amb.ricecake",
+   "note": "떡장수 좌판 낮"
+  },
+  "R3-10": {
+   "id": "amb.lamp.room",
+   "note": "문지기 막 밤, 담 너머"
+  },
+  "R3-11": {
+   "id": "amb.market.stall",
+   "note": "저잣거리 한가운데 낮"
+  },
+  "R3-12": {
+   "id": "amb.bridge.stone",
+   "note": "큰 다리 낮"
+  },
+  "R3-13": {
+   "id": "amb.well.village",
+   "note": "움막촌 우물 저녁"
+  },
+  "R3-14": {
+   "id": "amb.gate.queue",
+   "note": "성문 새벽 — 문 열리기를 기다리는 줄"
+  },
+  "R3-15": {
+   "id": "amb.market.stall",
+   "note": "저잣거리 한가운데 저녁(광대 탈) — sfx.market.drum 간격 절반"
+  },
+  "radius_m": 10
+ },
+ "sprinkles": {
+  "_설명": "[id, 최소초, 최대초, (night|day)]. 2막과 같은 규칙",
+  "Harbor": [
+   [
+    "sfx.gull.far",
+    20,
+    50,
+    "day"
+   ],
+   [
+    "sfx.net.throw",
+    40,
+    90,
+    "day"
+   ],
+   [
+    "sfx.oar.knock",
+    30,
+    70,
+    "night"
+   ]
+  ],
+  "SaltField": [
+   [
+    "sfx.gull.far",
+    30,
+    70,
+    "day"
+   ],
+   [
+    "sfx.salt.crack",
+    25,
+    60,
+    "night"
+   ]
+  ],
+  "WaitingRock": [
+   [
+    "sfx.wave.big",
+    15,
+    35
+   ],
+   [
+    "sfx.gull.far",
+    40,
+    90,
+    "day"
+   ]
+  ],
+  "WreckShoal": [
+   [
+    "sfx.gull.far",
+    30,
+    70,
+    "day"
+   ],
+   [
+    "sfx.wave.big",
+    30,
+    70
+   ]
+  ],
+  "Market": [
+   [
+    "sfx.market.call",
+    15,
+    40,
+    "day"
+   ],
+   [
+    "sfx.market.scale",
+    20,
+    50,
+    "day"
+   ],
+   [
+    "sfx.market.drum",
+    60,
+    140
+   ],
+   [
+    "sfx.geomeun.clapper",
+    70,
+    140,
+    "night"
+   ]
+  ],
+  "BridgeUnder": [
+   [
+    "sfx.shacks.baby",
+    80,
+    160
+   ]
+  ],
+  "Shacks": [
+   [
+    "sfx.shacks.baby",
+    50,
+    120
+   ],
+   [
+    "sfx.snow.slide",
+    40,
+    100
+   ],
+   [
+    "sfx.night.dog.far",
+    50,
+    110
+   ]
+  ],
+  "CityGate": [
+   [
+    "sfx.gate.bang",
+    60,
+    150,
+    "night"
+   ],
+   [
+    "sfx.snow.slide",
+    40,
+    100
+   ],
+   [
+    "sfx.geomeun.crow",
+    50,
+    110,
+    "day"
+   ]
+  ]
+ }
+}
