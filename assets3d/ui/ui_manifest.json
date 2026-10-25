@@ -1627,5 +1627,197 @@
   ],
   "x2": "warn_spawn@2x.png",
   "note": "물 혼 나오는 자리: 물결 고리 둘 + 붉은 물방울. 채움 없음"
+ },
+ "phone/btn_tendo_136": {
+  "size_px": [
+   136,
+   136
+  ],
+  "x2": "btn_tendo_136@2x.png",
+  "note": "천도 ▲ 버튼 136: 청록 불꽃 + 매끈한 실선 고리. 처결할 혼이 있을 때만 0.15초에 뜸. 누르고 있기 = 시전"
+ },
+ "phone/btn_tendo_136_pressed": {
+  "size_px": [
+   136,
+   136
+  ],
+  "x2": "btn_tendo_136_pressed@2x.png",
+  "note": "천도 ▲ 눌린 모양(바탕 밝아지고 고리 굵어짐)"
+ },
+ "phone/btn_pahon_136": {
+  "size_px": [
+   136,
+   136
+  ],
+  "x2": "btn_pahon_136@2x.png",
+  "note": "파혼 ✕ 버튼 136: 주황 깨진 조각 넷 + 점선 고리 + 바깥 톱니. 톡 = 즉시 파혼, 끌기 = 방향 조준(삼지창)"
+ },
+ "phone/btn_pahon_136_pressed": {
+  "size_px": [
+   136,
+   136
+  ],
+  "x2": "btn_pahon_136_pressed@2x.png",
+  "note": "파혼 ✕ 눌린 모양"
+ },
+ "phone/btn_tendo_ring_fill": {
+  "size_px": [
+   136,
+   136
+  ],
+  "x2": "btn_tendo_ring_fill@2x.png",
+  "note": "천도 시전 진행 고리(흰·청록, Image Filled Radial360, 12시부터 시계 방향). 지름 136, 두께 7. 연속 천도(0.8초)면 절반 찬 채로 시작. 맞아 끊기면 코드가 한 번 붉게 틴트(#E85C41)"
+ },
+ "phone/btn_tendo_ring_track": {
+  "size_px": [
+   136,
+   136
+  ],
+  "x2": "btn_tendo_ring_track@2x.png",
+  "note": "천도 시전 고리 바닥(먹색 트랙)"
+ },
+ "phone/btn_pahon_chain_ring": {
+  "size_px": [
+   152,
+   152
+  ],
+  "x2": "btn_pahon_chain_ring@2x.png",
+  "note": "파혼 연쇄 고리(업 30): ✕ 테두리를 두른 사슬 마디 16개. 파혼 직후 1초 동안 Filled Radial360이 시계 반대로 줄어든다. 연쇄 대상이 없으면 안 띄움"
+ },
+ "phone/mark_chain_target": {
+  "size_px": [
+   48,
+   48
+  ],
+  "x2": "mark_chain_target@2x.png",
+  "note": "연쇄 대상 표시(4 m 안 다음 꿇은 혼 머리 위): 맞물린 사슬 둘 + ▼. 화면 48 px"
+ },
+ "phone/btn_q_frame_104": {
+  "size_px": [
+   104,
+   104
+  ],
+  "x2": "btn_q_frame_104@2x.png",
+  "note": "무기 기술 Q 버튼 틀 104(금 고리). 재사용 중엔 코드가 어둡게 + 남은 초"
+ },
+ "phone/q_glyph_pin": {
+  "size_px": [
+   64,
+   64
+  ],
+  "x2": "q_glyph_pin@2x.png",
+  "note": "Q 무기 기술 그림(삼지창: 꽂아 버티기) 64. btn_q_frame_104 위 가운데에 얹는다"
+ },
+ "phone/btn_q_pin_104": {
+  "size_px": [
+   104,
+   104
+  ],
+  "x2": "btn_q_pin_104@2x.png",
+  "note": "Q 버튼 완성본(삼지창: 꽂아 버티기) 104"
+ },
+ "phone/q_glyph_call": {
+  "size_px": [
+   64,
+   64
+  ],
+  "x2": "q_glyph_call@2x.png",
+  "note": "Q 무기 기술 그림(요령: 불러 세우기) 64. btn_q_frame_104 위 가운데에 얹는다"
+ },
+ "phone/btn_q_call_104": {
+  "size_px": [
+   104,
+   104
+  ],
+  "x2": "btn_q_call_104@2x.png",
+  "note": "Q 버튼 완성본(요령: 불러 세우기) 104"
+ },
+ "phone/q_glyph_brush": {
+  "size_px": [
+   64,
+   64
+  ],
+  "x2": "q_glyph_brush@2x.png",
+  "note": "Q 무기 기술 그림(붓: 이름 쓰기) 64. btn_q_frame_104 위 가운데에 얹는다"
+ },
+ "phone/btn_q_brush_104": {
+  "size_px": [
+   104,
+   104
+  ],
+  "x2": "btn_q_brush_104@2x.png",
+  "note": "Q 버튼 완성본(붓: 이름 쓰기) 104"
+ },
+ "phone/q_glyph_chain": {
+  "size_px": [
+   64,
+   64
+  ],
+  "x2": "q_glyph_chain@2x.png",
+  "note": "Q 무기 기술 그림(철삭: 사슬(끌기)) 64. btn_q_frame_104 위 가운데에 얹는다"
+ },
+ "phone/btn_q_chain_104": {
+  "size_px": [
+   104,
+   104
+  ],
+  "x2": "btn_q_chain_104@2x.png",
+  "note": "Q 버튼 완성본(철삭: 사슬(끌기)) 104"
+ },
+ "phone/q_dot_on": {
+  "size_px": [
+   16,
+   16
+  ],
+  "x2": "q_dot_on@2x.png",
+  "note": "붓 표식 먹점 켜짐 16(Q 버튼 위 ●●●)"
+ },
+ "phone/q_dot_off": {
+  "size_px": [
+   16,
+   16
+  ],
+  "x2": "q_dot_off@2x.png",
+  "note": "붓 표식 먹점 꺼짐 16"
+ },
+ "phone/btn_f_frame_104": {
+  "size_px": [
+   104,
+   104
+  ],
+  "x2": "btn_f_frame_104@2x.png",
+  "note": "상호작용 F 버튼 틀 104(청록 고리)"
+ },
+ "phone/f_glyph_lamp": {
+  "size_px": [
+   64,
+   64
+  ],
+  "x2": "f_glyph_lamp@2x.png",
+  "note": "등잔 그림 64"
+ },
+ "phone/btn_f_lamp_104": {
+  "size_px": [
+   104,
+   104
+  ],
+  "x2": "btn_f_lamp_104@2x.png",
+  "note": "F 자리 등잔 버튼(밤·오늘 안 켰고 둘레 대상 없을 때). 길게 0.5초 = 켜짐"
+ },
+ "phone/btn_f_hold_ring": {
+  "size_px": [
+   104,
+   104
+  ],
+  "x2": "btn_f_hold_ring@2x.png",
+  "note": "F 길게 누르기 0.5초 진행 고리(Filled Radial360) 104"
+ },
+ "phone/preview_line_6x2": {
+  "size_px": [
+   768,
+   256
+  ],
+  "x2": "preview_line_6x2@2x.png",
+  "note": "삼지창 ✕ 끌기 6 m×2 m 직선 미리보기(바닥 눕힘, 1 m=128 px). 주황 점선 테두리 + 앞(+x) 화살 — 위험 예고(빨강 실선)와 구별. 채움 없음"
  }
 }

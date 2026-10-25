@@ -278,6 +278,7 @@ def run(key):
         pose("hero_chasa", 189.2, 34.6, 0.3, 215, "Idle", 20)
         orbs(((184.4, 33.6, 1.3), (191.0, 37.2, 1.9), (183.0, 40.0, 2.4), (187.6, 31.6, 0.9), (190.6, 41.5, 2.8)))
     if key == "load_b": put("night_soulfire_pedestal", 400.5, 276.0, 0.62 + 0.3, 0)
+    for ex in cfg.get("extras", []): ex()      # 처음 10분 길 스틸(field_route_stills.py)이 주인공·혼을 얹는 자리
     if key == "tendo":
         # 마을 길 한가운데(집 지붕이 기둥을 가리지 않게 길 폭 안쪽에 모은다)
         pose("hero_chasa", 195.8, 49.5, 0, 0, "Cast", 30)
