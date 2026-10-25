@@ -2118,5 +2118,20 @@ public class CoreTests
         finally { FieldRules.Extend(x0, z0); }
     }
 
+    [Test]
+    public void Tide_Cycle_And_FiveDayTable()
+    {
+        // 0분 = 만조에서 썰물 시작, 25분 = 간조, 50분 = 다시 만조
+        Assert.AreEqual(1f, Tide.Level(0f), 0.001f);
+        Assert.AreEqual(0f, Tide.Level(25f), 0.001f);
+        Assert.AreEqual(1f, Tide.Level(50f), 0.001f);
+        Assert.IsTrue(Tide.IsEbb(24.9f)); Assert.IsFalse(Tide.IsEbb(25.1f));
+        // 기획 act3_map.json 5일 표: 밤 썰물 분 7·17·20·10·0 (오차 0.5분), 썰물 밤은 2·3·4일차
+        float[] want = { 7f, 17f, 20f, 10f, 0f };
+        for (int d = 0; d < 5; d++) Assert.AreEqual(want[d], Tide.EbbMinutesInNight(d), 0.6f, "day " + (d + 1));
+        Assert.IsFalse(Tide.IsEbbNight(0)); Assert.IsTrue(Tide.IsEbbNight(1)); Assert.IsTrue(Tide.IsEbbNight(3)); Assert.IsFalse(Tide.IsEbbNight(4));
+        float dx, dz; Tide.SmokeDir(5, out dx, out dz); Assert.AreEqual(1f, dx); Assert.AreEqual(0f, dz);
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

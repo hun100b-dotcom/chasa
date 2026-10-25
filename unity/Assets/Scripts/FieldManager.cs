@@ -224,6 +224,7 @@ public class FieldManager : MonoBehaviour
         if (prefab == null) return;
         var inst = Instantiate(prefab, parent);
         inst.transform.SetPositionAndRotation(new Vector3(x, y, z), Quaternion.Euler(0f, -rot, 0f));   // 유니티 yaw = -rot (아트 약속)
+        BridgeDeckFade.Register(name, inst);   // 3막: 썰물 물판·큰 다리 상판 동작 붙이기(해당 이름일 때만)
         // 지붕·처마·용마루·굴뚝은 카메라와 주인공 사이를 가리면 비켜 준다(큰 기와집 지붕이 보스를 가리던 문제)
         if (name.StartsWith("hanok_") && (name.Contains("roof") || name.Contains("eave") || name.Contains("ridge") || name.Contains("chimney")))
         { var of = inst.AddComponent<OccluderFade>(); of.radius = 3.2f; of.centerHeight = 3.2f; }

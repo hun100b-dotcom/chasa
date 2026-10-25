@@ -119,6 +119,7 @@ public class GameMain : MonoBehaviour
         WireTouchControls();
         if (FieldRules.On) { var mm = gameObject.AddComponent<MiniMap>(); mm.judge = judge; mm.player = player; mm.cam = cam; }   // 필드 지도(오른쪽 위 작은 지도 + M 큰 지도)
         { var gfx = cam.gameObject.AddComponent<GradingFx>(); gfx.judge = judge; }   // 화면 분위기 후처리(색보정·블룸·비네트·천도 시야 축소). 카메라에 붙어야 OnRenderImage 가 불린다
+        if (FieldRules.On) { var bf = gameObject.AddComponent<BridgeDeckFade>(); bf.player = player.transform; }   // 큰 다리 밑에 서면 상판을 숨긴다(3막)
         if (FieldRules.On) { var fm = gameObject.AddComponent<FieldManager>(); fm.player = player; }   // 걸어가면 둘레 청크를 켜고 끈다
         if (World.Enabled) { var zm = gameObject.AddComponent<ZoneManager>(); zm.player = player; }   // 걸어가면 둘레 구역을 켜고 끈다
         if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)

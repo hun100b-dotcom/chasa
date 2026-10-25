@@ -698,6 +698,7 @@ public class JudgeSystem : MonoBehaviour
         if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
         Sfx.NightNow = clock != null && clock.Phase == ClockPhase.Night;
+        if (clock != null) TideWater.WorldMinutes = Tide.TotalMinutes(clock.Day, clock.Minutes);   // 썰물·밀물 시계
         weather.state.Override = WeatherRules.Parse(cuts.SceneWeather);   // 서사 컷이 정한 날씨가 무작위보다 우선
         float wxSlow; int wxDrain;
         weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
