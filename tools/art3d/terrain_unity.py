@@ -92,6 +92,7 @@ def write_details():
     for name, (c, nm) in TD.detail_tiles(tg.C, 512).items():
         Image.fromarray(c).save(os.path.join(OUT, f"detail_{name}.png"), optimize=True); Image.fromarray(nm).save(os.path.join(OUT, f"detail_{name}_n.png"), optimize=True)
     rgba, nrm = TD.water_tiles(256)
+    Image.fromarray(TD.water_tiles(256, True)[0], "RGBA").save(os.path.join(OUT, "water_albedo_deep.png"), optimize=True)   # 큰 강(검은여울)용: 더 어둡고 덜 비침
     Image.fromarray(rgba, "RGBA").save(os.path.join(OUT, "water_albedo.png"), optimize=True); Image.fromarray(nrm).save(os.path.join(OUT, "water_normal.png"), optimize=True)
 
 if __name__ == "__main__":

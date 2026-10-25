@@ -8,10 +8,12 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "..", "assets3d")
 T = 8.0; WZ = 0.18   # 물 윗면 높이
 rnd = lambda s: random.Random(s)
 
-def water_slab(color="#1C2744"): return box("water", (T, T, WZ), (0, 0, WZ / 2), color)
+def water_slab(color="#1C2744", deep=False):
+    """물 한 칸: 바닥(자갈 흙) 상자 + 흐르는 물면 판(개울과 같은 물 그림). 옛 단색 상자 대신."""
+    return [box("bed", (T, T, 0.12), (0, 0, 0.06), "#6A5B45"), water_plane("water", -T / 2, -T / 2, T, T, WZ, deep)]
 
 def rapids():
-    r = rnd(11); p = [water_slab()]
+    r = rnd(11); p = water_slab()
     for i in range(7):   # 흐름 방향(동서) 거품 줄
         y = -3.2 + i * 1.05 + r.uniform(-0.2, 0.2); x = r.uniform(-1.5, 1.5); L = r.uniform(1.2, 2.6)
         p.append(box(f"foam{i}", (L, 0.09, 0.02), (x, y, WZ + 0.01), "chain"))
@@ -22,14 +24,13 @@ def rapids():
     return p
 
 def deep():
-    r = rnd(12); p = [water_slab("#0F1626")]
-    for i in range(3): p.append(box(f"ripple{i}", (r.uniform(1.5, 3), 0.05, 0.015), (r.uniform(-2, 2), r.uniform(-3, 3), WZ + 0.008), "water"))
+    r = rnd(12); p = water_slab(deep=True)
     return p
 
 def shore():
     """남쪽 절반은 풀 둑(윗면 0.3), 북쪽 절반은 물. 둑 가장자리 돌."""
     r = rnd(13)
-    p = [box("land", (T, T / 2, 0.3), (0, -T / 4, 0.15), "ground"), box("water", (T, T / 2, WZ), (0, T / 4, WZ / 2), "#1C2744"), box("lip", (T, 0.35, 0.34), (0, 0.17, 0.17), "slope_side")]
+    p = [box("land", (T, T / 2, 0.3), (0, -T / 4, 0.15), "ground"), box("bed", (T, T / 2, 0.12), (0, T / 4, 0.06), "#6A5B45"), water_plane("water", -T / 2, 0, T, T / 2, WZ), box("lip", (T, 0.35, 0.34), (0, 0.17, 0.17), "slope_side")]
     for i in range(6):
         x = -3.4 + i * 1.35 + r.uniform(-0.2, 0.2); s = r.uniform(0.2, 0.35)
         p.append(sphere(f"edge{i}", s, (x, r.uniform(0.0, 0.3), 0.26), "stone", 5, 4, (1.3, 1, 0.7)))

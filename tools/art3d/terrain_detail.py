@@ -106,7 +106,7 @@ def detail_tiles(C, n=512):
     out["leaf"] = (base, normal_from_height(h, 4.0))
     return {k: (np.clip(c, 0, 255).astype(np.uint8), np.clip(nm * 255, 0, 255).astype(np.uint8)) for k, (c, nm) in out.items()}
 
-def water_tiles(n=256):
+def water_tiles(n=256, dark=False):
     """개울물 4m 타일: 흐름 방향이 세로(남북)로 길게 늘어진 잔물결·반사 줄 + 흩어진 거품 알갱이. RGBA(알파=투명도)와 노멀.
     Unity에서는 uv를 흐름 방향으로 흘리면 흐르는 물이 되고, Blender 정지 장면에서는 줄무늬가 흐름을 암시한다."""
     h = 0.5 * fb(n, 22, 5, 201, 4) + 0.35 * fb(n, 34, 8, 202, 3) + 0.2 * pnoise(n, 60, 14, 203)   # 가로 칸 많고 세로 칸 적음 = 세로(남북)로 길쭉한 줄
@@ -119,5 +119,7 @@ def water_tiles(n=256):
     bub = (np.clip(1 - d1 * 2.6, 0, 1) ** 2.0) * (v > 0.93) * (pnoise(n, 8, 3, 205) > 0.5)        # 드문 거품 알갱이
     col = _mixc(col, np.broadcast_to(np.array([0.92, 0.96, 0.95], np.float32), (n, n, 3)), np.clip(bub * 1.2, 0, 1) * 0.8)
     alpha = np.clip(0.50 + 0.14 * h + 0.2 * streak + 0.35 * bub, 0, 0.95)
+    if dark:   # 큰 강: 더 깊고 어둡고 덜 비침
+        col = col * np.array([0.85, 0.92, 1.0], np.float32); alpha = np.clip(alpha + 0.1, 0, 0.95)
     rgba = np.concatenate([col, alpha[..., None]], -1)
     return (np.clip(rgba, 0, 1) * 255).astype(np.uint8), (normal_from_height(h + 0.3 * pnoise(n, 90, 30, 206), 7.0) * 255).astype(np.uint8)

@@ -91,6 +91,10 @@ def pyramid(name, w, d, h, base, material, rot=(0, 0, 0), top=0.0):
     return _obj(name, bm, material, base, rot)
 
 def join(name, objs):
+    # 합칠 때 첫 오브젝트에 UV 칸이 없으면 다른 조각(물면 등)의 UV가 버려진다 → 하나라도 UV가 있으면 모두에 빈 UV 칸을 만들어 둔다
+    if any(len(o.data.uv_layers) for o in objs):
+        for o in objs:
+            if not len(o.data.uv_layers): o.data.uv_layers.new(name="UVMap")
     for o in bpy.context.view_layer.objects: o.select_set(False)
     for o in objs: o.select_set(True)
     bpy.context.view_layer.objects.active = objs[0]
@@ -224,3 +228,32 @@ def chain_pts(name, pts, r1, r2, material, segs=5):
         a = r1 + (r2 - r1) * i / n; b = r1 + (r2 - r1) * (i + 1) / n
         out.append(limb(f"{name}{i}", pts[i], pts[i + 1], a, b, material, segs))
     return out
+
+
+def mat_water(deep=False):
+    """흐르는 물 재질: 알베도(RGBA 반복 그림)+노멀 그림, 알파 블렌드, 거칠기 0.06. 그림은 assets3d/terrain/water_*.png(개울과 같은 그림, 큰 강은 어둡게 한 _deep).
+    glTF로 나가면 baseColorTexture·normalTexture·alphaMode BLEND가 된다(REPEAT 샘플러)."""
+    key = ("water_tex", deep)
+    if key in _mats: return _mats[key]
+    d = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "assets3d", "terrain")
+    m = bpy.data.materials.new("M_water_deep" if deep else "M_water"); m.use_nodes = True; nt = m.node_tree; b = nt.nodes["Principled BSDF"]
+    b.inputs["Roughness"].default_value = 0.06
+    ta = nt.nodes.new("ShaderNodeTexImage"); ta.image = bpy.data.images.load(os.path.join(d, "water_albedo_deep.png" if deep else "water_albedo.png")); ta.extension = "REPEAT"
+    tn = nt.nodes.new("ShaderNodeTexImage"); tn.image = bpy.data.images.load(os.path.join(d, "water_normal.png")); tn.image.colorspace_settings.name = "Non-Color"; tn.extension = "REPEAT"
+    nm = nt.nodes.new("ShaderNodeNormalMap"); nm.inputs["Strength"].default_value = 0.8
+    nt.links.new(ta.outputs["Color"], b.inputs["Base Color"]); nt.links.new(ta.outputs["Alpha"], b.inputs["Alpha"])
+    nt.links.new(tn.outputs["Color"], nm.inputs["Color"]); nt.links.new(nm.outputs["Normal"], b.inputs["Normal"])
+    for attr, val in (("surface_render_method", "BLENDED"), ("blend_method", "BLEND")):
+        try: setattr(m, attr, val)
+        except Exception: pass
+    _mats[key] = m
+    return m
+
+def water_plane(name, x0, y0, w, h, z, deep=False, tile_m=4.0):
+    """물면 판 하나: 타일 안 좌표 (x0,y0)~(x0+w,y0+h), 높이 z. uv는 월드 미터/tile_m, 흐름은 타일의 서→동(+X)이라 줄무늬가 X로 눕게 u·v를 바꿔 쓴다."""
+    bm = bmesh.new(); uvl = bm.loops.layers.uv.new("UVMap")
+    vs = [bm.verts.new((x0, y0, z)), bm.verts.new((x0 + w, y0, z)), bm.verts.new((x0 + w, y0 + h, z)), bm.verts.new((x0, y0 + h, z))]
+    f = bm.faces.new(vs)
+    for lp in f.loops: p = lp.vert.co; lp[uvl].uv = (p.y / tile_m, -p.x / tile_m)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    return _obj(name, bm, mat_water(deep))
