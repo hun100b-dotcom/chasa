@@ -299,6 +299,12 @@ scatter("통나무", (16, 16, 63, 62), ["prop_log_pile"], 70); scatter("숲 야�
 life("prop_campfire", 99.5, 548.0, zone="나루터 모닥불"); life("prop_log_pile", 100.8, 551.0, 70, zone="나루터")
 scatter("폐당집 터", (66, 62, 78, 76), DEAD + ROCK, 40, lvl=1); scatter("폐당집 둘레", (60, 56, 79, 79), DEAD + PINE, 45, lvl=0)
 
+# 보스 싸움터 3곳(boss_arenas.py): 둘레를 비워야 바닥 무늬와 예고 장판이 읽힌다. 억새만 남기고 걷어 낸다. (보스 좌표는 코드팀 Boss.cs)
+ARENA_CLEAR = [(404.0, 288.0, 19.0), (580.0, 521.0, 11.5), (46.0, 453.0, 9.8)]
+_n0 = len(props)
+props[:] = [p for p in props if p["prop"] == "nature_silvergrass_a" or not any((p["x"] - x) ** 2 + (p["y"] - y) ** 2 < r * r for x, y, r in ARENA_CLEAR)]
+print("보스 싸움터 비움:", _n0 - len(props), "개 제거")
+
 # ── 6) 표식: 동선·거점(코드팀이 NPC·서낭당·굴 입구·혼 무리 자리로 쓴다) ──────────────
 M = lambda x, y, kind, name, z=0: {"kind": kind, "name": name, "x": round(x, 1), "y": round(y, 1), "z": z}
 markers = [M(13 * 8 + 4, 56 * 8 + 4, "seonang", "서낭당 ④(검은여울 어귀)"), M(84, 56 * 8 + 4, "bridge", "검은여울 돌다리 한가운데"), M(92.4 - 4, 68 * 8 + 4, "ferry", "나루터(2막 뱃사공 자리 후보)"), M(HX, HY, "doctor", "의원 집(서 의원 집, 보스 ③ 서 의원 무대 후보)"), M(196, 62, "village", "솔고개 마을(원점, 마을 배치표 참조)"), M(188, 36, "seonang", "서낭당·넋길 이동 지점 ①(마을)"), M(196, 30, "spawn", "시작 위치(마을 남쪽 입구)"),

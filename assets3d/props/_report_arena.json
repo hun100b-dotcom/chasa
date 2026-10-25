@@ -1,0 +1,162 @@
+[
+ {
+  "name": "prop_mooring_post",
+  "tris": 148,
+  "size_m": [
+   0.56,
+   0.4,
+   2.32
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_flood_marker",
+  "tris": 190,
+  "size_m": [
+   1.24,
+   1.21,
+   2.48
+  ],
+  "min_z": -0.08
+ },
+ {
+  "name": "prop_broken_pole",
+  "tris": 184,
+  "size_m": [
+   0.83,
+   0.11,
+   2.95
+  ],
+  "min_z": -0.009
+ },
+ {
+  "name": "prop_arena_cup",
+  "tris": 164,
+  "size_m": [
+   0.59,
+   0.62,
+   0.53
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_arena_cup_down",
+  "tris": 120,
+  "size_m": [
+   1.1,
+   0.77,
+   0.46
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_arena_gutsang",
+  "tris": 434,
+  "size_m": [
+   2.7,
+   1.32,
+   1.26
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_obangki_blue",
+  "tris": 138,
+  "size_m": [
+   1.21,
+   0.6,
+   4.38
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_obangki_red",
+  "tris": 138,
+  "size_m": [
+   1.21,
+   0.6,
+   4.38
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_obangki_yellow",
+  "tris": 138,
+  "size_m": [
+   1.21,
+   0.6,
+   4.38
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_obangki_white",
+  "tris": 138,
+  "size_m": [
+   1.21,
+   0.6,
+   4.38
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_obangki_black",
+  "tris": 138,
+  "size_m": [
+   1.21,
+   0.6,
+   4.38
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_brazier",
+  "tris": 194,
+  "size_m": [
+   0.84,
+   0.84,
+   1.66
+  ],
+  "min_z": -0.007
+ },
+ {
+  "name": "prop_medicine_chest_big",
+  "tris": 1116,
+  "size_m": [
+   2.8,
+   1.03,
+   2.4
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_name_board_row",
+  "tris": 524,
+  "size_m": [
+   4.13,
+   0.13,
+   2.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_corner_stone",
+  "tris": 112,
+  "size_m": [
+   0.66,
+   0.66,
+   1.22
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_brand_rack",
+  "tris": 240,
+  "size_m": [
+   1.6,
+   0.6,
+   1.25
+  ],
+  "min_z": 0.0
+ }
+]

@@ -1,0 +1,590 @@
+{
+ "note": "보스 싸움터 3곳 배치표. 좌표는 필드 m(x 동·y 북, Unity z=y). 소품 z는 땅 높이에 붙이면 된다(ground_z는 반경 내 최고 높이). rot=반시계 도, 0이면 정면이 남쪽.",
+ "telegraph_textures": {
+  "dir": "assets3d/boss/",
+  "files": [
+   "tele_circle.png",
+   "tele_sector120.png",
+   "tele_sector30.png",
+   "tele_line.png",
+   "tele_cell.png",
+   "tele_band.png"
+  ],
+  "usage": "흰색+알파 그림. 코드가 색을 입히고 예고 시간 동안 알파/색을 올린다(0.3→1). 부채꼴·원은 반지름=그림 반폭, 직선은 아래가 보스 쪽, 띠는 오른쪽이 미는 방향."
+ },
+ "arenas": {
+  "B01": {
+   "name": "나루 영감 · 나루터",
+   "boss_pos": {
+    "x": 404.0,
+    "y": 288.0
+   },
+   "ground_z": 0.05,
+   "arena_radius_m": 18.0,
+   "shrink_radius_m": 11.0,
+   "medium": "물 위(배)",
+   "decal": {
+    "file": "assets3d/boss/arena_b01_floor.png",
+    "size_m": 44.0,
+    "z_above_water": 0.05,
+    "note": "물 표면 위에 얹는 반투명 판. 반경 18m 바깥 띠=처음 가장자리, 반경 11m 점선 띠=큰물(50%) 뒤 경계"
+   },
+   "props": [
+    {
+     "prop": "prop_mooring_post",
+     "x": 414.16,
+     "y": 292.21,
+     "rot": -67.5,
+     "note": "큰물 안쪽 경계(반경 11m) 말뚝"
+    },
+    {
+     "prop": "prop_mooring_post",
+     "x": 408.21,
+     "y": 298.16,
+     "rot": -22.5,
+     "note": "큰물 안쪽 경계(반경 11m) 말뚝"
+    },
+    {
+     "prop": "prop_mooring_post",
+     "x": 399.79,
+     "y": 298.16,
+     "rot": 22.5,
+     "note": "큰물 안쪽 경계(반경 11m) 말뚝"
+    },
+    {
+     "prop": "prop_mooring_post",
+     "x": 393.84,
+     "y": 292.21,
+     "rot": 67.5,
+     "note": "큰물 안쪽 경계(반경 11m) 말뚝"
+    },
+    {
+     "prop": "prop_mooring_post",
+     "x": 393.84,
+     "y": 283.79,
+     "rot": 112.5,
+     "note": "큰물 안쪽 경계(반경 11m) 말뚝"
+    },
+    {
+     "prop": "prop_mooring_post",
+     "x": 399.79,
+     "y": 277.84,
+     "rot": 157.5,
+     "note": "큰물 안쪽 경계(반경 11m) 말뚝"
+    },
+    {
+     "prop": "prop_mooring_post",
+     "x": 408.21,
+     "y": 277.84,
+     "rot": 202.5,
+     "note": "큰물 안쪽 경계(반경 11m) 말뚝"
+    },
+    {
+     "prop": "prop_mooring_post",
+     "x": 414.16,
+     "y": 283.79,
+     "rot": 247.5,
+     "note": "큰물 안쪽 경계(반경 11m) 말뚝"
+    },
+    {
+     "prop": "prop_flood_marker",
+     "x": 421.19,
+     "y": 292.61,
+     "rot": -75,
+     "note": "처음 싸움터 바깥 경계(반경 18m) 표시탑"
+    },
+    {
+     "prop": "prop_flood_marker",
+     "x": 408.61,
+     "y": 305.19,
+     "rot": -15,
+     "note": "처음 싸움터 바깥 경계(반경 18m) 표시탑"
+    },
+    {
+     "prop": "prop_flood_marker",
+     "x": 391.41,
+     "y": 300.59,
+     "rot": 45,
+     "note": "처음 싸움터 바깥 경계(반경 18m) 표시탑"
+    },
+    {
+     "prop": "prop_flood_marker",
+     "x": 386.81,
+     "y": 283.39,
+     "rot": 105,
+     "note": "처음 싸움터 바깥 경계(반경 18m) 표시탑"
+    },
+    {
+     "prop": "prop_flood_marker",
+     "x": 399.39,
+     "y": 270.81,
+     "rot": 165,
+     "note": "처음 싸움터 바깥 경계(반경 18m) 표시탑"
+    },
+    {
+     "prop": "prop_flood_marker",
+     "x": 416.59,
+     "y": 275.41,
+     "rot": 225,
+     "note": "처음 싸움터 바깥 경계(반경 18m) 표시탑"
+    },
+    {
+     "prop": "prop_broken_pole",
+     "x": 397.5,
+     "y": 292.5,
+     "rot": 20,
+     "note": "부러진 삿대(칼금 열한 개+반 개 단서). 나루 계단 곁 갈대 속"
+    },
+    {
+     "prop": "prop_brazier",
+     "x": 399.5,
+     "y": 295.0,
+     "rot": 0,
+     "note": "물가 화톳불(싸움터 서쪽 따뜻한 불빛, 보스 반대편 대비)"
+    }
+   ],
+   "lights": [
+    {
+     "x": 404.0,
+     "y": 288.0,
+     "z": 4.5,
+     "color": "#7FA8E8",
+     "intensity": 1.0,
+     "range_m": 22.0,
+     "flicker": false,
+     "tag": "싸움터 위 차가운 달빛 무리(전투 중에만)"
+    }
+   ],
+   "telegraph": [
+    {
+     "pattern": "삿대 휩쓸기",
+     "tex": "tele_sector120.png",
+     "radius_m": 4.0,
+     "warn_s": 0.6
+    },
+    {
+     "pattern": "삿대 내려찍기",
+     "tex": "tele_line.png",
+     "length_m": 6.0,
+     "width_m": 1.5,
+     "warn_s": 0.8
+    },
+    {
+     "pattern": "물살 밀기",
+     "tex": "tele_band.png",
+     "width_m": 3.0,
+     "warn_s": 1.0,
+     "note": "길이는 싸움터 지름"
+    }
+   ]
+  },
+  "B02": {
+   "name": "월화 · 폐당집 굿판",
+   "boss_pos": {
+    "x": 580.0,
+    "y": 521.0
+   },
+   "ground_z": 2.32,
+   "arena_radius_m": 9.6,
+   "ring_radius_m": 7.0,
+   "cups": 12,
+   "safe_cup": 11,
+   "medium": "폐당집 터 평지(+2.3m 고지)",
+   "decal": {
+    "file": "assets3d/boss/arena_b02_floor.png",
+    "size_m": 24.0,
+    "z_above_ground": 0.04,
+    "note": "그림 위=북·오른쪽=동. 잔 i는 중심에서 (cos 30i°, sin 30i°)×7m(코드 CupPos와 일치). 한자 번호는 i+1"
+   },
+   "props": [
+    {
+     "prop": "prop_arena_cup",
+     "x": 587.0,
+     "y": 521.0,
+     "rot": -90,
+     "cup": 0,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 586.06,
+     "y": 524.5,
+     "rot": -60,
+     "cup": 1,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 583.5,
+     "y": 527.06,
+     "rot": -30,
+     "cup": 2,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 580.0,
+     "y": 528.0,
+     "rot": 0,
+     "cup": 3,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 576.5,
+     "y": 527.06,
+     "rot": 30,
+     "cup": 4,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 573.94,
+     "y": 524.5,
+     "rot": 60,
+     "cup": 5,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 573.0,
+     "y": 521.0,
+     "rot": 90,
+     "cup": 6,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 573.94,
+     "y": 517.5,
+     "rot": 120,
+     "cup": 7,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 576.5,
+     "y": 514.94,
+     "rot": 150,
+     "cup": 8,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 580.0,
+     "y": 514.0,
+     "rot": 180,
+     "cup": 9,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup",
+     "x": 583.5,
+     "y": 514.94,
+     "rot": 210,
+     "cup": 10,
+     "note": "잔 앞 부채꼴 칸이 열림"
+    },
+    {
+     "prop": "prop_arena_cup_down",
+     "x": 586.06,
+     "y": 517.5,
+     "rot": 240,
+     "cup": 11,
+     "note": "열두째(번호 11) 엎어진 잔: 늘 안전"
+    },
+    {
+     "prop": "prop_obangki_blue",
+     "x": 590.4,
+     "y": 521.0,
+     "rot": -90,
+     "note": "오방기"
+    },
+    {
+     "prop": "prop_obangki_black",
+     "x": 580.0,
+     "y": 531.4,
+     "rot": 0,
+     "note": "오방기"
+    },
+    {
+     "prop": "prop_obangki_white",
+     "x": 569.6,
+     "y": 521.0,
+     "rot": 90,
+     "note": "오방기"
+    },
+    {
+     "prop": "prop_obangki_red",
+     "x": 580.0,
+     "y": 510.6,
+     "rot": 180,
+     "note": "오방기"
+    },
+    {
+     "prop": "prop_obangki_yellow",
+     "x": 584.69,
+     "y": 529.83,
+     "rot": -28,
+     "note": "오방기"
+    },
+    {
+     "prop": "prop_brazier",
+     "x": 586.43,
+     "y": 527.43,
+     "rot": -45,
+     "note": "굿판 화로(굿판 가장자리 붉은 불빛)"
+    },
+    {
+     "prop": "prop_brazier",
+     "x": 573.57,
+     "y": 527.43,
+     "rot": 45,
+     "note": "굿판 화로(굿판 가장자리 붉은 불빛)"
+    },
+    {
+     "prop": "prop_brazier",
+     "x": 573.57,
+     "y": 514.57,
+     "rot": 135,
+     "note": "굿판 화로(굿판 가장자리 붉은 불빛)"
+    },
+    {
+     "prop": "prop_brazier",
+     "x": 586.43,
+     "y": 514.57,
+     "rot": 225,
+     "note": "굿판 화로(굿판 가장자리 붉은 불빛)"
+    },
+    {
+     "prop": "prop_arena_gutsang",
+     "x": 575.31,
+     "y": 529.83,
+     "rot": 28,
+     "note": "굿상. 처결 뒤 굿상 머리에 옥이의 신칼 / 월화의 방울이 굴러 와 멈추는 자리 쪽"
+    },
+    {
+     "prop": "prop_mangjang",
+     "x": 568.35,
+     "y": 516.76,
+     "rot": 110,
+     "note": "굿판 둘레 만장(바깥)"
+    },
+    {
+     "prop": "prop_mangjang",
+     "x": 575.76,
+     "y": 509.35,
+     "rot": 160,
+     "note": "굿판 둘레 만장(바깥)"
+    },
+    {
+     "prop": "prop_mangjang",
+     "x": 587.11,
+     "y": 510.84,
+     "rot": 215,
+     "note": "굿판 둘레 만장(바깥)"
+    }
+   ],
+   "lights": [
+    {
+     "x": 580.0,
+     "y": 521.0,
+     "z": 3.2,
+     "color": "#E8503A",
+     "intensity": 0.9,
+     "range_m": 13.0,
+     "flicker": true,
+     "tag": "굿판 한가운데 붉은 무기운"
+    },
+    {
+     "x": 580.0,
+     "y": 521.0,
+     "z": 7.0,
+     "color": "#A28CFF",
+     "intensity": 0.5,
+     "range_m": 18.0,
+     "flicker": false,
+     "tag": "폐당집 보랏빛 혼불 하늘빛"
+    }
+   ],
+   "telegraph": [
+    {
+     "pattern": "잔이 열린다",
+     "tex": "tele_sector30.png",
+     "radius_m": 8.0,
+     "warn_s": 1.0,
+     "note": "잔 i 앞 30° 부채꼴(잔 방향 = 30i°), 한 번에 3칸(50% 이하 4칸, 0.9초)"
+    },
+    {
+     "pattern": "붉은 천 휘감기",
+     "tex": "tele_line.png",
+     "length_m": 9.0,
+     "width_m": 1.0,
+     "warn_s": 0.7
+    }
+   ]
+  },
+  "B03": {
+   "name": "서 의원 · 역병막 마당",
+   "boss_pos": {
+    "x": 46.0,
+    "y": 453.0
+   },
+   "ground_z": 0.4,
+   "arena_radius_m": 8.0,
+   "grid": 5,
+   "cell_m": 2.0,
+   "medium": "검은여울 서쪽 둑 평지",
+   "decal": {
+    "file": "assets3d/boss/arena_b03_floor.png",
+    "size_m": 14.0,
+    "z_above_ground": 0.04,
+    "note": "그림 위=북·오른쪽=동. 칸 (i,j)는 코드 CellPos와 같다: i=동쪽 +, j=북쪽 +, 번호 = i*5+j+1(한자)"
+   },
+   "props": [
+    {
+     "prop": "prop_corner_stone",
+     "x": 40.1,
+     "y": 447.1,
+     "rot": 0,
+     "note": "번호 칸 모서리석(10×10m의 네 귀퉁이 바깥)"
+    },
+    {
+     "prop": "prop_corner_stone",
+     "x": 40.1,
+     "y": 458.9,
+     "rot": 0,
+     "note": "번호 칸 모서리석(10×10m의 네 귀퉁이 바깥)"
+    },
+    {
+     "prop": "prop_corner_stone",
+     "x": 51.9,
+     "y": 447.1,
+     "rot": 0,
+     "note": "번호 칸 모서리석(10×10m의 네 귀퉁이 바깥)"
+    },
+    {
+     "prop": "prop_corner_stone",
+     "x": 51.9,
+     "y": 458.9,
+     "rot": 0,
+     "note": "번호 칸 모서리석(10×10m의 네 귀퉁이 바깥)"
+    },
+    {
+     "prop": "prop_medicine_chest_big",
+     "x": 46.0,
+     "y": 461.6,
+     "rot": 0,
+     "note": "큰 약장(북쪽 가장자리, 정면=남쪽). 맨 아래 가운데 서랍이 '진짜 명단'. 처결 뒤 씻은 붓이 놓이는 자리"
+    },
+    {
+     "prop": "prop_name_board_row",
+     "x": 38.4,
+     "y": 453.0,
+     "rot": 90,
+     "note": "지워진 이름 줄(서쪽)"
+    },
+    {
+     "prop": "prop_name_board_row",
+     "x": 53.6,
+     "y": 453.0,
+     "rot": 90,
+     "note": "지워진 이름 줄(동쪽)"
+    },
+    {
+     "prop": "prop_brand_rack",
+     "x": 53.0,
+     "y": 446.4,
+     "rot": 160,
+     "note": "낙인 인두 걸이(남동쪽, 붉은 불빛)"
+    },
+    {
+     "prop": "prop_quarantine_hut",
+     "x": 37.6,
+     "y": 446.4,
+     "rot": 30,
+     "note": "격리 움막(바깥 둘레)"
+    },
+    {
+     "prop": "prop_quarantine_hut",
+     "x": 36.4,
+     "y": 458.0,
+     "rot": -30,
+     "note": "격리 움막"
+    },
+    {
+     "prop": "prop_herb_pot",
+     "x": 52.4,
+     "y": 460.0,
+     "rot": 0,
+     "note": "약탕 화로"
+    },
+    {
+     "prop": "prop_herb_pot",
+     "x": 40.0,
+     "y": 460.4,
+     "rot": 0,
+     "note": "약탕 화로"
+    },
+    {
+     "prop": "prop_plague_rope",
+     "x": 46.0,
+     "y": 443.4,
+     "rot": 0,
+     "note": "마당 어귀 금줄(남쪽)"
+    },
+    {
+     "prop": "prop_sick_lantern",
+     "x": 38.4,
+     "y": 449.0,
+     "rot": 0,
+     "note": "초록 등불"
+    },
+    {
+     "prop": "prop_sick_lantern",
+     "x": 53.8,
+     "y": 456.0,
+     "rot": 180,
+     "note": "초록 등불"
+    }
+   ],
+   "lights": [
+    {
+     "x": 46.0,
+     "y": 453.0,
+     "z": 3.4,
+     "color": "#7FC49A",
+     "intensity": 0.8,
+     "range_m": 12.0,
+     "flicker": true,
+     "tag": "마당 위 탁한 연두 빛"
+    },
+    {
+     "x": 46.0,
+     "y": 461.4,
+     "z": 0.6,
+     "color": "#4FA8A0",
+     "intensity": 0.7,
+     "range_m": 5.0,
+     "flicker": false,
+     "tag": "약장 맨 아래 서랍(약점) 청록 — 약점이 열릴 때만 켠다"
+    }
+   ],
+   "telegraph": [
+    {
+     "pattern": "번호 낙인",
+     "tex": "tele_cell.png",
+     "size_m": 2.0,
+     "warn_s": 0.8,
+     "note": "칸 16개(50% 이하 20개) 동시"
+    },
+    {
+     "pattern": "붉은 도장 찍기",
+     "tex": "tele_circle.png",
+     "radius_m": 2.5,
+     "warn_s": 0.7
+    }
+   ]
+  }
+ }
+}

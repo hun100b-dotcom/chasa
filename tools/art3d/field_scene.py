@@ -157,8 +157,58 @@ SHOTS = {
   "landmark": dict(win=(300, 100, 390, 180), center=(340, 138, 0), ortho=40, title="길목 랜드마크(밤)"),
   "bridge": dict(win=(40, 410, 130, 500), center=(84, 452, 0), ortho=48, title="검은여울 돌다리(밤)"),
   "naru":   dict(win=(340, 230, 470, 340), center=(404, 290, 0.6), ortho=40, title="나루 영감 보스 자리(밤)"),
+  "arena1": dict(win=(360, 245, 450, 335), center=(404, 288, 0.3), ortho=46, title="보스 싸움터 ① 나루 영감 · 나루터(밤)"),
+  "arena2": dict(win=(550, 490, 612, 552), center=(580, 521, 2.3), ortho=30, title="보스 싸움터 ② 월화 · 폐당집 굿판(밤)"),
+  "arena3": dict(win=(20, 428, 72, 480), center=(46, 453, 0.35), ortho=26, title="보스 싸움터 ③ 서 의원 · 역병막 마당(밤)"),
+  "arena1t": dict(win=(360, 245, 450, 335), center=(404, 288, 0.3), ortho=46, title="패턴 예고 ① 삿대 휩쓸기 + 내려찍기"),
+  "arena2t": dict(win=(550, 490, 612, 552), center=(580, 521, 2.3), ortho=30, title="패턴 예고 ② 잔이 열린다(3칸)"),
+  "arena3t": dict(win=(20, 428, 72, 480), center=(46, 453, 0.35), ortho=26, title="패턴 예고 ③ 번호 낙인(16칸)"),
   "tendo":  dict(win=(170, 30, 230, 90), center=(196, 51, 0), ortho=18, title="천도 이펙트(밤)"),
 }
+
+
+def decal(png, x, y, z, size, tint=None, rot=0.0, w=None, h=None, emit=0.0):
+    """그림(알파) 한 장을 땅 위 판(plane)으로 깐다. 보스 싸움터 바닥 무늬·예고 장판용. tint=(r,g,b)면 흰 예고 그림에 색을 입힌다."""
+    w = w or size; h = h or size
+    bpy.ops.mesh.primitive_plane_add(size=1, location=(x, y, z)); o = bpy.context.active_object; o.scale = (w, h, 1); o.rotation_euler = (0, 0, math.radians(rot))
+    m = bpy.data.materials.new("decal"); m.use_nodes = True; nt = m.node_tree; b = nt.nodes["Principled BSDF"]
+    t = nt.nodes.new("ShaderNodeTexImage"); t.image = bpy.data.images.load(os.path.join(A3, "boss", png)); t.interpolation = "Linear"; t.extension = "CLIP"
+    nt.links.new(t.outputs["Alpha"], b.inputs["Alpha"]); b.inputs["Roughness"].default_value = 0.95
+    if tint:
+        b.inputs["Base Color"].default_value = (*tint, 1); b.inputs["Emission Color"].default_value = (*tint, 1); b.inputs["Emission Strength"].default_value = emit or 2.0
+    else:
+        nt.links.new(t.outputs["Color"], b.inputs["Base Color"])
+        if emit: nt.links.new(t.outputs["Color"], b.inputs["Emission Color"]); b.inputs["Emission Strength"].default_value = emit
+    o.data.materials.append(m); return o
+
+ARENA = json.load(open(os.path.join(A3, "layouts", "boss_arenas.json"), encoding="utf-8"))["arenas"]
+def arena_scene(key):
+    """보스 싸움터 하나를 꾸민다: 바닥 무늬 + 둘레 소품(배치표) + 조명 + 보스. key 끝에 t가 붙으면 패턴 예고 장판도 켠다."""
+    tele = key.endswith("t"); aid = {"1": "B01", "2": "B02", "3": "B03"}[key[5]]; a = ARENA[aid]; bx, by = a["boss_pos"]["x"], a["boss_pos"]["y"]; gz = a["ground_z"]
+    d = a["decal"]; dz = (0.42 if aid == "B01" else gz) + 0.05
+    decal(os.path.basename(d["file"]), bx, by, dz, d["size_m"])
+    for p in a["props"]:
+        put(p["prop"], p["x"], p["y"], (0.3 if aid == "B01" else 0.0) + (gz if aid != "B01" else 0.0) + (0.0 if aid != "B03" else 0.0), p["rot"])
+    for l in a["lights"]:
+        if l["tag"].startswith("약장"): continue
+        add_light((l["x"], l["y"], l["z"] + (gz if aid != "B01" else 0)), l["color"], l["intensity"], l["range_m"], l["flicker"], l["tag"])
+    if aid == "B01": pose("boss_naru", bx, by, 0.55, 0, "Windup", 56)
+    if aid == "B02": pose("boss_b02_wolhwa", bx, by, gz, 270, "Idle", 20)
+    if aid == "B03": pose("boss_b03_seo", bx, by, gz, 270, "Idle", 20)
+    if tele:
+        RED = (0.95, 0.18, 0.1); z = dz + 0.03
+        if aid == "B01":   # 삿대 휩쓸기(부채꼴 120° 반경 4m, 동쪽으로) + 내려찍기(직선 6×1.5 북쪽으로) + 안쪽 경계는 이미 바닥 무늬
+            z = 0.64   # 보스 배 바닥(0.55)보다 위에 얹어야 가려지지 않는다
+            decal("tele_sector120.png", bx, by, z, 8.0, RED, rot=-60, emit=1.6)
+            decal("tele_line.png", bx - 3.0, by, z, 1.5, RED, rot=90, w=1.5, h=6.0, emit=1.6)
+        if aid == "B02":   # 잔 3칸(i=1,2,3): 그 잔 방향 30° 부채꼴 반경 8m. 열두째(11)는 안전
+            for i in (2, 3, 4): decal("tele_sector30.png", bx, by, z, 16.0, RED, rot=i * 30, emit=1.6)
+        if aid == "B03":   # 번호 칸 16개(약장 쪽 몇 줄을 비운 안전 9칸은 이어 붙게)
+            safe = {(0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (2, 1), (0, 2), (1, 2), (3, 0)}
+            for i in range(5):
+                for j in range(5):
+                    if (i, j) in safe: continue
+                    decal("tele_cell.png", bx + (i - 2) * 2.0, by + (j - 2) * 2.0, z, 1.9, RED, emit=1.6)
 
 def run(key):
     cfg = SHOTS[key]; reset(); lib.t.clear(); lib.lights.clear(); placed_lights.clear(); stats["objs"] = 0; t0 = time.time()
@@ -166,6 +216,7 @@ def run(key):
     if key == "naru":
         pose("boss_naru", 404, 288, 0.55, 0, "Windup", 56)
         put("fx_wait_ring_old", 404, 281, 0.4, 0, scale=1.0); 
+    if key.startswith("arena"): arena_scene(key)
     if key == "tendo":
         # 마을 길 한가운데(집 지붕이 기둥을 가리지 않게 길 폭 안쪽에 모은다)
         pose("hero_chasa", 195.8, 49.5, 0, 0, "Cast", 30)

@@ -112,3 +112,13 @@ hero_chasa.glb 동작 34개(60fps). 기존 9개(Idle·Walk·Attack/2/3=철삭·D
   공격 hit(또는 3타 hit_start/hit_end·impact), windup_end, swing_end / Draw swap_hide 9·swap_show 13 / Tendo hold_start 14·hold_end 46·finish_start 46·finish_peak 52 / Pahon hit 8·recover_dodge_from 10.
 소켓(중요): 무기마다 손에 쥐는 각도가 다르다. 무기 모델을 Hand.R 뼈에 붙일 때 X축 회전 socket_rotate_deg_x = Chain 90 · Mace 40 · Bell 20 · Trident 30 · Brush 55 (매니페스트 clip.socket_rotate_deg_x에도 있음). 철삭 외 무기를 90°로 붙이면 동작이 어긋난다.
 확인 그림: assets3d/previews/anim_hero_<클립>.png, 요약 anim_hero_weapons_overview.jpg
+
+== 보스 싸움터 3곳 (tools/art3d/boss_arenas.py → layouts/boss_arenas.json) ==
+나루 영감 B01 (404,288 물 위) · 월화 B02 (580,521 폐당집 굿판) · 서 의원 B03 (46,453 역병막 마당). 좌표는 코드팀 Boss.cs, 시간·모양은 balance.json·기획 부록 E.
+  바닥 무늬(정사각 RGBA, 위=북·오른쪽=동·한가운데=보스 자리): assets3d/boss/arena_b01_floor.png(44m, 물 위 반경 18m 바깥 경계 + 반경 11m '큰물' 경계) / arena_b02_floor.png(24m, 굿판 반경 9.6m·잔 열두 자리 r=7m 한자 번호·오방색 띠·열두째는 청록 테두리) / arena_b03_floor.png(14m, 5×5 번호 칸 2m 한자 一~二十五).
+    땅 위 quad로 깔고 0.04m 띄운다. 칸 번호는 코드 CellPos(i=동 +, j=북 +)·CupPos(30i°, 반경 7m)와 같은 규칙이라 코드 판정 칸과 그림이 어긋나지 않는다.
+  예고 장판 그림 6장(흰색+알파, 코드가 색을 입힘): assets3d/boss/tele_circle·tele_sector120·tele_sector30·tele_line·tele_cell·tele_band.png. 가장자리 선명(1.0)·안쪽 옅음(0.3).
+  소품 새 16종: prop_mooring_post·flood_marker·broken_pole(나루), prop_arena_cup·arena_cup_down·arena_gutsang·obangki_{blue,red,yellow,white,black}·brazier(굿판), prop_medicine_chest_big·name_board_row·corner_stone·brand_rack(역병막). 불빛은 Light_ 빈 오브젝트.
+  배치표 layouts/boss_arenas.json: 싸움터별 중심·땅 높이·바닥 무늬 규격·소품 위치·조명·예고 장판 규격(패턴별 그림·크기·예고 시간).
+  싸움터 둘레는 field_layout.py의 ARENA_CLEAR로 나무·바위를 비웠다(필드 JSON 재생성, 33개 제거).
+  확인 그림: previews/scene_arena{1,2,3}_final.jpg(밤), scene_arena{1,2,3}t_final.jpg(패턴 예고 켠 장면).
