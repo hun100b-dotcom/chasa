@@ -61,8 +61,8 @@
  },
  {
   "id": "sfx-synth-all",
-  "파일": "unity/Assets/Resources/Audio/Sfx/*.wav (39개, 목록 data/sfx_files.json)",
-  "출처": "차사 기획·사운드가 tools/sfx_render.py로 직접 합성(사인파·잡음·울림 계산). 녹음·외부 샘플 없음",
+  "파일": "unity/Assets/Resources/Audio/Sfx/*.wav (48개, 목록 data/sfx_files.json)",
+  "출처": "차사 기획·사운드가 tools/sfx_render.py로 직접 합성(사인파·잡음·울림 계산). 녹음·외부 샘플 없음 · 곡소리·닭울음·상여소리·기침·개도 목소리 합성(포먼트)으로 만듦, 녹음 없음",
   "AI생성": false,
   "라이선스": "직접 제작 — 외부 저작권 없음",
   "작성자": "차사 기획·사운드",

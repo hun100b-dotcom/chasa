@@ -364,3 +364,7 @@
 - 기존 12개 id 그대로(sfx.hit.chain 등, 최대 크기도 기존 gainDb와 같음) + 기획 문서에만 있던 5개(footstep, ui.click, ui.confirm, danger.enter, clock.toll) + 보스 컷신 B01~B03 장면용 22개(cut.*, amb.river.mist).
 - 코드 연결 요청: `Sfx.Clip(id)`가 `Resources.Load<AudioClip>("Audio/Sfx/"+id.Replace('.','_'))`를 먼저 찾고 없으면 SfxSynth. 컷신 단계에 `sfx` 칸 추가 시 cut.* id 사용.
 - 다시 만들기: `python3 tools/sfx_render.py`(같은 id는 항상 같은 소리).
+
+## 2026-10-25 [기획·사운드] 서사 대본 요청 효과음 9개 추가(합계 48)
+- amb.rain, cut.torch.sink, cut.chain.wrap, cut.cough, amb.rooster, vo.wail, mus.sangyeo.far(반복 12.6초), cut.bellows, sfx.dog.whine. 모두 `tools/sfx_render.py` 직접 합성 — 목소리류(곡소리·닭·상여소리·기침·개)는 포먼트 합성(성대 톱니파 + 입 모양 필터)이라 외부 음원 없음.
+- 반복: amb.rain, mus.sangyeo.far. 기존 39개 파일은 바뀌지 않음(고정 난수).

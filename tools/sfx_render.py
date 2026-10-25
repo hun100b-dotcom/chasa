@@ -493,6 +493,153 @@ def _(r):
     return pulse + buzz
 
 
+
+# ===== 서사 대본(705bcf0) 추가 요청 9종 =====
+def voice(f0, formants, breath=0.15, rng=None, nh=40):
+    """사람·동물 목소리 흉내(포먼트 합성): 성대 떨림(배음 많은 소리) → 입·목 모양 필터(포먼트).
+    f0 = 매 샘플의 음높이 배열, formants = [(중심 주파수, Q, 크기), ...] (모음 '아'는 700·1200·2600Hz 근처)"""
+    n = len(f0); ph = 2 * np.pi * np.cumsum(f0) / SR
+    src = np.zeros(n)
+    for k in range(1, nh + 1):
+        src += np.where(k * f0 < SR / 2 - 500, np.sin(k * ph) / k, 0)      # 톱니파(배음 1/k) = 성대 소리 대용
+    if rng is not None:
+        src += breath * rng.standard_normal(n)                               # 숨소리 섞기
+    out = np.zeros(n)
+    for fc, bw, a in formants:
+        out += a * filt(src, "band", fc, bw)                                 # bw = Q(날카로움): 클수록 좁은 공명
+    return out
+
+
+def curve(sec, pts):
+    """[(초, 값), ...] 점들을 이은 곡선(음높이 윤곽 그리기용)"""
+    t = T(sec); xs, ys = zip(*pts)
+    return np.interp(t, xs, ys)
+
+
+@sfx("amb.rain", -24, "세계", "빗소리: 고른 쏴아 + 처마 물방울 톡톡(반복용 8초)", loop=True, use="비 오는 날·장례 장면 배경")
+def _(r):
+    sec = 8.3; n = int(sec * SR)
+    hiss = filt(filt(noise(n, r), "high", 900), "low", 9000) * .5
+    patter = grains(sec, r, 900, lambda r, k: bubble(.03, r.uniform(2500, 6000), 1.3, .003) * r.uniform(.1, .5))
+    drips = grains(sec, r, 30, lambda r, k: bubble(.12, r.uniform(700, 1500), 2, .015) * r.uniform(.3, .8))
+    rumble = filt(noise(n, r), "low", 250) * .25
+    return loopify(hiss + patter * .25 + drips * .35 + rumble, .3)
+
+
+@sfx("cut.torch.sink", -13, "컷신", "횃불이 물에 잠김: 치익 김 빠지는 소리 + 불꽃 툭툭 꺼짐 + 물 꿀렁", use="횃불이 물에 잠기는 장면")
+def _(r):
+    n = int(2.2 * SR)
+    fire = grains(.5, r, 25, lambda r, k: filt(noise(int(.008 * SR), r), "band", r.uniform(1500, 5000), 2) * env(int(.008 * SR), .0003, .003) * r.uniform(.3, 1))
+    hiss = sweep_filt(noise(n, r), "high", 2500, 5500) * env(n, .03, .6, 3, hold=.2)
+    plunge = bubble(1.0, 300, 2.0, .05)
+    gl = grains(2.2, r, 15, lambda r, k: bubble(.1, r.uniform(300, 900), 2, .02) * .5, spread=lambda k, r: .1 + r.uniform(0, .9))
+    buf = np.zeros(n); place(buf, fire, 0); place(buf, hiss * .6, .25); place(buf, plunge * .8, .25); buf += gl * .4
+    return reverb(buf, 1.0, .2)
+
+
+@sfx("cut.chain.wrap", -12, "컷신", "사슬이 손목에 감김: 차르르 고리 미끄러짐 + 마지막 철컥 조임", use="철삭이 손목에 감기는 장면")
+def _(r):
+    link = lambda r, k: modal(.12, [(r.uniform(2600, 4200), .02, 1), (r.uniform(5000, 7500), .012, .5)], r) * (.4 + .6 * k / 18)
+    rattle = grains(1.2, r, 18, link, spread=lambda k, r: .02 + .9 * (k / 18) ** .8 + r.uniform(0, .015))   # 점점 빨라지며 감김
+    slide = filt(noise(int(1.2 * SR), r), "band", 3500, 1.5) * env(int(1.2 * SR), .1, .4, 3, hold=.4) * .15
+    lock = modal(.5, [(1240, .08, 1), (1873, .06, .8), (2631, .05, .6), (180, .05, .8)], r)
+    buf = rattle + slide; place(buf, lock * .9, .98)
+    return reverb(buf, .6, .15)
+
+
+@sfx("cut.cough", -14, "컷신", "서 의원 마른기침: 콜록 두 번 + 숨 들이켬(목소리 합성)", use="B03 등장: 의원이 기침")
+def _(r):
+    def burst(r, dur):
+        n = int(dur * SR)
+        src = noise(n, r) * env(n, .004, dur * .5, 4)
+        y = filt(src, "band", 600, 1.5) * .8 + filt(src, "band", 1700, 2.5) * .6 + filt(src, "band", 2700, 3) * .3   # 거친 '에' 모음 모양 잡음
+        f0 = np.full(n, r.uniform(140, 170)) * np.linspace(1.05, .9, n)
+        y += voice(f0, [(600, 1.5, 1), (1700, 2.5, .5)], .1, r) * env(n, .006, dur * .4, 5) * .25          # 목이 살짝 울리는 소리
+        return y
+    buf = np.zeros(int(1.6 * SR))
+    place(buf, burst(r, .22), 0); place(buf, burst(r, .18) * .8, .32); place(buf, burst(r, .12) * .5, .58)
+    inhale = sweep_filt(noise(int(.5 * SR), r), "band", 900, 1800, 2) * env(int(.5 * SR), .3, .1, 5) * .2
+    place(buf, inhale, 1.0)
+    return reverb(buf, .6, .12)
+
+
+@sfx("amb.rooster", -18, "세계", "먼 닭울음: 꼬끼오— 마을 너머에서 들림(목소리 합성, 멀리 깎음)", use="동틀 녘 마을")
+def _(r):
+    sec = 2.4
+    f0 = curve(sec, [(0, 520), (.12, 560), (.18, 700), (.35, 760), (.45, 820), (.7, 900), (1.3, 880), (1.6, 700), (1.75, 600)])
+    f0 = f0 * (1 + .02 * np.sin(2 * np.pi * 22 * T(sec)))                     # 닭 특유의 떨림
+    amp = curve(sec, [(0, 0), (.03, 1), (.13, .9), (.15, .2), (.19, 1), (.33, .9), (.36, .3), (.40, 1), (1.55, .9), (1.8, 0), (2.4, 0)])
+    y = voice(f0, [(900, 3, 1), (1900, 4, .6), (3100, 5, .3)], .25, r, nh=20) * amp
+    y = filt(y, "low", 2500)                                                     # 멀리서 들리면 높은 소리가 먼저 사라진다
+    return reverb(y, 2.2, .6, tone_hz=2000)
+
+
+@sfx("vo.wail", -14, "컷신", "말 없는 곡소리: '아—이—' 길게 흐느끼며 내려가는 울음(목소리 합성, 가사 없음)", use="장례·곡하는 장면")
+def _(r):
+    sec = 5.5; t = T(sec)
+    f0 = curve(sec, [(0, 330), (.4, 392), (1.2, 370), (1.8, 330), (2.2, 294), (2.6, 330), (3.4, 294), (4.2, 262), (5.2, 247)])
+    f0 = f0 * (1 + .025 * np.sin(2 * np.pi * 5.5 * t) + .01 * np.sin(2 * np.pi * 1.3 * t))   # 흐느끼는 떨림
+    sob = 1 - .6 * (np.sin(2 * np.pi * t / 1.4 - 1) > .85)                     # 중간중간 끊기는 흐느낌
+    amp = curve(sec, [(0, 0), (.25, 1), (2.0, .9), (2.15, .3), (2.4, 1), (4.5, .7), (5.5, 0)]) * sob
+    # 모음이 '아'에서 '이'로 천천히 바뀜 → 포먼트 이동
+    a_mix = curve(sec, [(0, 1), (1.8, 1), (2.6, 0), (3.6, 0), (4.4, 1), (5.5, 1)])
+    va = voice(f0, [(800, 5, 1), (1250, 6, .5), (2800, 8, .25)], .12, r)
+    vi = voice(f0, [(320, 4, 1), (2300, 7, .45), (3000, 8, .25)], .12, r)
+    y = (va * a_mix + vi * (1 - a_mix)) * amp
+    return reverb(y, 2.0, .45, tone_hz=4000)
+
+
+@sfx("mus.sangyeo.far", -18, "컷신", "먼 상여소리: 요령 소리에 맞춰 여러 사내가 받는 낮은 소리(가사 안 들림, 반복용 12초)", loop=True, use="장례 행렬이 멀리 지나갈 때")
+def _(r):
+    sec = 12.6; n = int(sec * SR); buf = np.zeros(n)
+    # 앞소리(한 명) → 뒷소리(여럿이 받음) 두 마디 반복. 계면조 비슷한 음 D-F-G-A
+    lead = [(0.0, 2.4, [294, 349, 330, 294]), (6.3, 2.4, [294, 392, 349, 294])]
+    chorus = [(3.0, 2.8, [220, 262, 247, 220]), (9.3, 2.8, [220, 262, 220, 196])]
+    def phrase(dur, notes, voices, rng):
+        m = len(notes); pts = []
+        for i, f in enumerate(notes):
+            pts += [(dur * i / m, f), (dur * (i + .8) / m, f)]
+        f0 = curve(dur, pts)
+        y = np.zeros(int(dur * SR))
+        for v in range(voices):                                               # 여러 사람이 조금씩 어긋나게 = 합창
+            det = 1 + rng.uniform(-.012, .012)
+            fv = f0 * det * (1 + .02 * np.sin(2 * np.pi * rng.uniform(4.5, 6) * T(dur) + rng.uniform(0, 6)))
+            y += voice(fv, [(500, 4, 1), (850, 5, .6), (2500, 8, .15)], .1, rng, nh=25)   # '오' 비슷한 모음
+        return y * env(len(y), .3, dur * .2, 3, hold=dur * .6)
+    for at, d, notes in lead:
+        place(buf, phrase(d, notes, 1, r), at)
+    for at, d, notes in chorus:
+        place(buf, phrase(d, notes, 6, r) * .5, at)
+    bell = lambda r, k: modal(.6, [(2140, .25, 1), (3215, .15, .5)], r) * .25
+    for k in range(int(sec / .7)):                                              # 요령이 박마다 짤랑
+        place(buf, bell(r, k), k * .7 + .05)
+    y = filt(buf, "low", 1800)                                                  # 멀리서 들림
+    return loopify(reverb(y, 2.5, .55, tone_hz=1500)[:n + int(.3 * SR)], .3)
+
+
+@sfx("cut.bellows", -13, "컷신", "풀무질과 불꽃: 훅—훅 바람 두 번 + 불이 확 살며 튀는 불티", use="대장간·풀무 장면")
+def _(r):
+    sec = 3.0; n = int(sec * SR); buf = np.zeros(n)
+    def puff(r):
+        m = int(.7 * SR)
+        return filt(noise(m, r), "low", 500) * env(m, .15, .25, 3, hold=.1) + tone(.7, 60) * env(m, .15, .25, 3) * .3
+    place(buf, puff(r), 0); place(buf, puff(r), 1.2)
+    roar = filt(noise(n, r), "band", 700, .8) * curve(sec, [(0, 0), (.4, .4), (.8, .15), (1.6, .6), (2.2, .3), (3, .1)])
+    sparks = grains(sec, r, 45, lambda r, k: filt(noise(int(.006 * SR), r), "band", r.uniform(2500, 7000), 3) * env(int(.006 * SR), .0002, .002) * r.uniform(.2, 1),
+                    spread=lambda k, r: (.4 if k < 15 else 1.6) + r.exponential(.3))
+    return reverb(buf * .9 + roar * .4 + sparks * .5, .8, .15)
+
+
+@sfx("sfx.dog.whine", -16, "세계", "개 낑낑: 높게 올라갔다 내려가는 짧은 콧소리 세 번(합성)", use="마을 개·겁먹은 개")
+def _(r):
+    buf = np.zeros(int(2.0 * SR))
+    for k, (at, d, hi) in enumerate([(0, .45, 1150), (.6, .35, 1050), (1.1, .6, 1250)]):
+        f0 = curve(d, [(0, 700), (d * .35, hi), (d, 650)])
+        y = voice(f0, [(1200, 4, 1), (2600, 5, .4), (400, 3, .3)], .3, r, nh=10) * env(int(d * SR), .04, d * .4, 3, hold=d * .3)
+        place(buf, y * (1 - .15 * k), at)
+    return reverb(buf, .7, .15)
+
+
 # ---------------------------------------------------------------------------
 def main():
     os.makedirs(OUT, exist_ok=True)

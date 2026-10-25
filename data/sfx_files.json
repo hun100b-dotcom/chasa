@@ -429,6 +429,105 @@
    "bypass_cast_filter": true,
    "length_sec": 0.77,
    "peak_dbfs": -14
+  },
+  {
+   "id": "amb.rain",
+   "file": "amb_rain",
+   "category": "세계",
+   "desc": "빗소리: 고른 쏴아 + 처마 물방울 톡톡(반복용 8초)",
+   "use": "비 오는 날·장례 장면 배경",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 8.0,
+   "peak_dbfs": -24
+  },
+  {
+   "id": "cut.torch.sink",
+   "file": "cut_torch_sink",
+   "category": "컷신",
+   "desc": "횃불이 물에 잠김: 치익 김 빠지는 소리 + 불꽃 툭툭 꺼짐 + 물 꿀렁",
+   "use": "횃불이 물에 잠기는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.01,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "cut.chain.wrap",
+   "file": "cut_chain_wrap",
+   "category": "컷신",
+   "desc": "사슬이 손목에 감김: 차르르 고리 미끄러짐 + 마지막 철컥 조임",
+   "use": "철삭이 손목에 감기는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.7,
+   "peak_dbfs": -12
+  },
+  {
+   "id": "cut.cough",
+   "file": "cut_cough",
+   "category": "컷신",
+   "desc": "서 의원 마른기침: 콜록 두 번 + 숨 들이켬(목소리 합성)",
+   "use": "B03 등장: 의원이 기침",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 1.88,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "amb.rooster",
+   "file": "amb_rooster",
+   "category": "세계",
+   "desc": "먼 닭울음: 꼬끼오— 마을 너머에서 들림(목소리 합성, 멀리 깎음)",
+   "use": "동틀 녘 마을",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.8,
+   "peak_dbfs": -18
+  },
+  {
+   "id": "vo.wail",
+   "file": "vo_wail",
+   "category": "컷신",
+   "desc": "말 없는 곡소리: '아—이—' 길게 흐느끼며 내려가는 울음(목소리 합성, 가사 없음)",
+   "use": "장례·곡하는 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 6.92,
+   "peak_dbfs": -14
+  },
+  {
+   "id": "mus.sangyeo.far",
+   "file": "mus_sangyeo_far",
+   "category": "컷신",
+   "desc": "먼 상여소리: 요령 소리에 맞춰 여러 사내가 받는 낮은 소리(가사 안 들림, 반복용 12초)",
+   "use": "장례 행렬이 멀리 지나갈 때",
+   "loop": true,
+   "bypass_cast_filter": false,
+   "length_sec": 12.6,
+   "peak_dbfs": -18
+  },
+  {
+   "id": "cut.bellows",
+   "file": "cut_bellows",
+   "category": "컷신",
+   "desc": "풀무질과 불꽃: 훅—훅 바람 두 번 + 불이 확 살며 튀는 불티",
+   "use": "대장간·풀무 장면",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 3.54,
+   "peak_dbfs": -13
+  },
+  {
+   "id": "sfx.dog.whine",
+   "file": "sfx_dog_whine",
+   "category": "세계",
+   "desc": "개 낑낑: 높게 올라갔다 내려가는 짧은 콧소리 세 번(합성)",
+   "use": "마을 개·겁먹은 개",
+   "loop": false,
+   "bypass_cast_filter": false,
+   "length_sec": 2.07,
+   "peak_dbfs": -16
   }
  ]
 }
