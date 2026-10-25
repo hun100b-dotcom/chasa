@@ -3,7 +3,7 @@
 //
 // 배치(1080p 기준 px, 화면 높이에 비례해 줄인다):
 //   공격 버튼 — 우하, 오른쪽·아래 여백 64, 지름 160. 누르고 있으면 연속 공격, 가까운 적(6m)을 자동 조준
-//   도술 4개 — 공격 버튼 둘레 부채꼴(9시→12시), 중심에서 250px, 지름 104. 탭=발동
+//   도술 4개 — 공격 버튼 둘레 부채꼴(9시→12시), 중심에서 230px, 지름 104. 탭=발동
 //   피하기 — 공격 버튼 왼쪽 아래, 지름 104 / 끌기(견인) — 왼쪽 위 / 상호작용(넋길) — 공격 버튼 위, 대상이 있을 때만
 // 왜 Input.touches 로 직접 판정하나? 조이스틱을 잡은 채 다른 손가락으로 공격을 눌러야 해서(멀티터치),
 //   한 손가락만 다루는 GUI.Button 으로는 안 된다. 그리기만 OnGUI 에 맡긴다.
@@ -16,6 +16,7 @@ public class TouchControls : MonoBehaviour
 {
     public static bool Active;   // 이 조작이 켜져 있나(옛 IMGUI 도술 줄·넋길 버튼을 숨기는 데 쓴다)
     static TouchControls inst;
+    public static Rect[] JudgeRects;   // 천도·파혼 버튼(GUI 좌표). 보일 때만 채워지며, 조이스틱·이동 클릭보다 먼저 눌린다
 
     public Func<Vector3?> nearestEnemyPos;           // 6m 안 가장 가까운 적 위치(없으면 null)
     public Action onAttackHold, onDodge, onPull, onInteract;
@@ -38,6 +39,7 @@ public class TouchControls : MonoBehaviour
     {
         if (inst == null || !Active) return false;
         var p = new Vector2(screenPos.x, Screen.height - screenPos.y);
+        if (JudgeRects != null) foreach (var jr in JudgeRects) if (jr.Contains(p)) return true;
         foreach (var b in inst.btns) if ((p - b.center).magnitude <= b.r) return true;
         return false;
     }
@@ -51,7 +53,7 @@ public class TouchControls : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             float ang = (180f - 30f * i) * Mathf.Deg2Rad;   // 9시 → 12시
-            Add("sk" + i, ac + new Vector2(Mathf.Cos(ang), -Mathf.Sin(ang)) * 250f * s, 104f * s, "", new Color(0.12f, 0.45f, 0.45f), s);
+            Add("sk" + i, ac + new Vector2(Mathf.Cos(ang), -Mathf.Sin(ang)) * 230f * s, 104f * s, "", new Color(0.12f, 0.45f, 0.45f), s);
         }
         Add("dodge", ac + new Vector2(-136f * s, 63f * s), 104f * s, "피하기", new Color(0.30f, 0.34f, 0.46f), s);
         if (hasPull != null && hasPull()) { float a = 135f * Mathf.Deg2Rad; Add("pull", ac + new Vector2(Mathf.Cos(a), -Mathf.Sin(a)) * 130f * s, 104f * s, "끌기", new Color(0.55f, 0.42f, 0.16f), s); }

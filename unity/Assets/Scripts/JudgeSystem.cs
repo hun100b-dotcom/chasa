@@ -162,6 +162,7 @@ public class JudgeSystem : MonoBehaviour
         var at = e.Pos;
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
+        if (!e.soul.Boss && e.soul.Name == null) introPlainDone++;
         e.PlayFinishAnim(false);   // 파혼 동작(터짐)
         e.Finish();
         int coinBefore = ledger.Coin;
@@ -277,6 +278,7 @@ public class JudgeSystem : MonoBehaviour
             if (growth.AddNeok(gained) > 0) ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5");   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
+            if (castTarget.soul.Name == null) introPlainDone++;
             if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
             if (night.TakeNamedSpawn() && clock == null) SpawnNamedSoul();   // 몫의 마지막 하나는 이름혼 박돌쇠
         }
@@ -1002,10 +1004,13 @@ public class JudgeSystem : MonoBehaviour
 
     /// <summary>안내를 띄울 상황을 보고 요청하고, 화면 값(HudState)을 채운다. 컷신·낮 화면·창이 열려 있으면 쉰다</summary>
     // ---- 보스 체력바·지역 진입 알림 값 채우기 ----
-    string lastArea; float areaT = -1f;
+    string lastArea; float areaT = -1f; int introPlainDone;   // 첫 5분 퀘스트: 이름 없는 혼을 처결한 수
     void FillBossArea(HudState h)
     {
         h.BossName = null;
+        // 첫 5분 퀘스트 추적(기획): 명부 — 이름 없는 혼 n/2, 박돌쇠 n/1. 시계가 풀리면(첫 처결 끝) 사라진다
+        if (introFrozen && FieldRules.On) { h.QuestTitle = "명부"; h.QuestLines = new[] { "이름 없는 혼 " + Mathf.Min(2, introPlainDone) + "/2", "박돌쇠 " + (pahonOrTendo != 0 ? 1 : 0) + "/1" }; }
+        else { h.QuestTitle = null; h.QuestLines = null; }
         foreach (var e in enemies.list)
         {
             if (e == null || !e.soul.Boss || !e.alive && !e.kneeling) continue;
@@ -1015,9 +1020,9 @@ public class JudgeSystem : MonoBehaviour
         }
         string zn = FieldRules.On ? FieldZones.CurrentName : null;
         if (!string.IsNullOrEmpty(zn) && zn != lastArea) { lastArea = zn; areaT = 0f; }   // 구역이 바뀌면 4초 알림
-        if (areaT >= 0f && !cuts.Active) { areaT += Time.unscaledDeltaTime; if (areaT > 4f) areaT = -1f; }
+        if (areaT >= 0f && !cuts.Active) { areaT += Time.unscaledDeltaTime; if (areaT > 3.5f) areaT = -1f; }   // 나타남 0.5 + 유지 2 + 사라짐 1
         h.AreaText = areaT >= 0f ? lastArea : null;
-        h.AreaAlpha = areaT < 0f ? 0f : Mathf.Min(areaT / 0.5f, (4f - areaT) / 1f, 1f);   // 0.5초 나타나고 1초 사라진다
+        h.AreaAlpha = areaT < 0f ? 0f : Mathf.Min(areaT / 0.5f, (3.5f - areaT) / 1f, 1f);
     }
 
     void GuideTick(HudState h)
@@ -1412,18 +1417,26 @@ public class JudgeSystem : MonoBehaviour
             var artBs = new GUIStyle(bs);
             artBs.normal.background = null; artBs.hover.background = null; artBs.active.background = null; artBs.focused.background = null;
             artBs.normal.textColor = Color.white; artBs.fontSize = 18; artBs.alignment = TextAnchor.LowerCenter;
-            var rT = new Rect(24, Screen.height - 110, 110, 90); var rP = new Rect(148, Screen.height - 110, 130, 90);
+            // 폰 천도·파혼(기획 §5): 하단 가운데 지름 120px 둘을 같은 크기로 나란히(중심에서 ±110px, 아래 64px). 무릎 꿇은 혼이 가까울 때만 나타난다
+            float bs1 = Screen.height / 1080f, bd = 120f * bs1;
+            var rT = new Rect(Screen.width * 0.5f - 110f * bs1 - bd * 0.5f, Screen.height - 64f * bs1 - bd, bd, bd);
+            var rP = new Rect(Screen.width * 0.5f + 110f * bs1 - bd * 0.5f, Screen.height - 64f * bs1 - bd, bd, bd);
+            bool showJudge = nearKneel || nearTendo || Casting;
+            TouchControls.JudgeRects = showJudge ? new[] { rT, rP } : null;   // 조이스틱보다 먼저 눌리게 GameMain 에 알린다
+            if (showJudge)
+            {
             bool artT = DrawArt(rT, TouchHeld(rT) && nearTendo ? "ui_btn_cheondo_pressed" : "ui_btn_cheondo", nearTendo);
             if (GUI.Button(rT, "천도", artT ? artBs : bs)) CommandTendo();
             if (Casting && artT)   // 길게 누르기 고리: 천도 시전이 진행될수록 버튼 둘레 고리가 진해지며 커진다(원형 채움은 못 써서 투명도+크기로 대신)
             {
-                float cp = Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)), rs2 = 100f + 24f * cp;
+                float cp = Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)), rs2 = bd * (0.9f + 0.2f * cp);
                 DrawArt(new Rect(rT.center.x - rs2 * 0.5f, rT.center.y - rs2 * 0.5f, rs2, rs2), "ui_btn_hold_ring", true, 0.35f + 0.65f * cp);
             }
             GUI.enabled = wasEnabled && nearKneel;
             bool artP = DrawArt(rP, TouchHeld(rP) && nearKneel ? "ui_btn_pahon_pressed" : "ui_btn_pahon", nearKneel);
             if (GUI.Button(rP, "파혼", artP ? artBs : bs)) CommandPahon();
             GUI.enabled = wasEnabled;
+            }
             if (!TouchControls.Active && SoulPathStop() >= 0 && GUI.Button(new Rect(292, Screen.height - 110, 110, 90), "넋길", bs)) CommandSoulPath();   // 서낭당 곁 밤에만 나타난다
             // 도술 세 칸과 무기 바꾸기 (위쪽 줄) — 시연판 기본 구성에서는 숨김
             if (SkillsOn && !TouchControls.Active)   // 폰 도술은 새 부채꼴 버튼(TouchControls)이 맡는다

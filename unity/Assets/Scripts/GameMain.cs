@@ -312,6 +312,7 @@ public class GameMain : MonoBehaviour
     bool InJoyZone(Vector2 screenPos)
     {
         if (!Ko.TouchUI) return false;
+        if (TouchControls.Over(screenPos)) return false;   // 버튼 판정이 조이스틱보다 먼저(기획 §5)
         float py = Screen.height - screenPos.y;   // GUI 좌표(위가 0)
         return screenPos.x < Screen.width * Balance.JOY_ZONE_WIDTH_FRAC && py > 60f && py < Screen.height - 215f;   // 아래쪽은 천도·파혼·도술 버튼 줄
     }

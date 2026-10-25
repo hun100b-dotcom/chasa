@@ -443,8 +443,8 @@ public static class Balance
     public const float MOVE_LEAN_DEG = 3.0f;  // (기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_BANK_DEG = 3.0f;  // (기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_LEAN_SMOOTH = 12.0f;  // (기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)
-    public const float JOY_RADIUS_PX = 90.0f;  // (폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)
-    public const float JOY_DEADZONE_PX = 14.0f;  // (폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다
+    public const int JOY_RADIUS_PX = 120;  // (폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)
+    public const int JOY_DEADZONE_PX = 14;  // (폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다
     public const float JOY_ZONE_WIDTH_FRAC = 0.45f;  // (폰 조작) 조이스틱이 생기는 화면 왼쪽 영역 너비 비율
     public const int ENHANCE_MAX = 5;  // (기획 4-4절 10-25, 임시) 장비 손보기 최대 단계(칸마다 +1~+5)
     public const float ENHANCE_PCT = 0.3f;  // (기획 4-4절 10-25 수정, 임시) 장비 손보기 한 단계마다 그 칸 주옵션(첫 옵션) 수치의 +30% (6%->30%)
