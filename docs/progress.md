@@ -1085,3 +1085,10 @@
 - 3막 보스 16개: 망부석 아낙 `sfx.boss.mangbu.*` 4, 만선호 선장 `sfx.boss.seonjang.*` 4, 다리 밑 왕초 `sfx.boss.wangcho.*` 3, 흑월 2차 `sfx.boss.heukwol.*` 5(줄 위 넋 샘은 반복용).
 - 믹스 기준표: 숫자 원본 `data/audio_mix.json`, 설명 `docs/sound-mix-standard.md`. 1막 BGM 실측(탐험 -20·전투 -16 LUFS)이 커서 BGM 버스 0.5/0.45, 지역음 0.7, 날씨 0.6, UI 0.8, 컷신·천도·명부 때 더킹. 예고음은 절대 안 줄임.
 - 효과음 총 199개. 기존 파일 변화 없음. 미리듣기 v14.
+
+## 2026-10-25 밤 — [사운드] 시즌1 컷신 44컷 소리 대본 + 빠진 소리 25개 (기획·사운드)
+- 대본(cutscenes_s1.json, bf5edb4) 점검: 190박자 중 101박자가 소리 없음, sfx_request 16종(amb.harbor는 이미 있음).
+- 요청 16종을 대본 이름 그대로 만듦 → 서사 쪽 sfx_map.promote가 다음 생성 때 sfx로 옮긴다. 빈 박자용 9종 추가(cut.names.glow·paper.burn·paper.ascend·stone.crack·anchor.drop·beads.scatter·color.shift·soul.brush·straw.set).
+- 소리 대본: `tools/cutscene_audio_s1.py` → `data/cutscene_audio_s1.json`. (컷, 박자) 열쇠로 add(얹을 소리, 크기·늦춤·반복·loop/stop)·replace·music(duck/silence/resume/layer/play) 지시. 36컷 118박자. 남은 무음 박자는 일부러(silent_by_design에 이유).
+- 시즌1 끝 곡 5개(흑월 결전·A판·B판·마지막 새벽·크레딧) Gemini 지시문 21~25 추가. 곡이 없으면 fallback(silence/combat).
+- 효과음 총 224개. 기존 파일 변화 없음. 미리듣기 v15, 지시문 페이지 v4.
