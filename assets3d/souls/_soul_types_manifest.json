@@ -1,0 +1,324 @@
+{
+ "fps": 60,
+ "grades": [
+  "fresh",
+  "day",
+  "old",
+  "lump"
+ ],
+ "types": {
+  "wail": {
+   "label": "넋두리",
+   "desc": "원념을 던지는 원거리 혼",
+   "clips": [
+    {
+     "name": "Float",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 43,
+     "length_sec": 0.7,
+     "loop": false,
+     "events": {
+      "flash": 28,
+      "end_pose_held": true,
+      "orb_grow_from": 0,
+      "orb_full": 36
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "release": 5,
+      "release_bone": "Orb",
+      "projectile": "fx_wonnyeom_orb"
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "end_pose_held": true
+     }
+    }
+   ],
+   "bones": [
+    "Root",
+    "Body",
+    "Arm",
+    "Orb"
+   ]
+  },
+  "mote": {
+   "label": "잔넋",
+   "desc": "작게 무리 짓는 혼",
+   "clips": [
+    {
+     "name": "Float",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "flash": 9,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 15,
+     "length_sec": 0.233,
+     "loop": false,
+     "events": {
+      "hit": 4
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 25,
+     "length_sec": 0.4,
+     "loop": false,
+     "events": {
+      "end_pose_held": true
+     }
+    }
+   ],
+   "bones": [
+    "Root",
+    "Body"
+   ]
+  },
+  "buried": {
+   "label": "묻힌 혼",
+   "desc": "땅에서 솟는 혼",
+   "clips": [
+    {
+     "name": "Hidden",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Windup",
+     "frames": 45,
+     "length_sec": 0.733,
+     "loop": false,
+     "events": {
+      "flash": 26,
+      "emerge_peak": 30,
+      "end_pose_held": true,
+      "ground_dust_at": 26
+     }
+    },
+    {
+     "name": "Attack",
+     "frames": 21,
+     "length_sec": 0.333,
+     "loop": false,
+     "events": {
+      "hit": 6
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 41,
+     "length_sec": 0.667,
+     "loop": false,
+     "events": {
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "Sink",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "ground_dust_at": 22
+     }
+    }
+   ],
+   "bones": [
+    "Root",
+    "Body",
+    "ArmL",
+    "ArmR"
+   ]
+  }
+ },
+ "files": [
+  {
+   "name": "fx_wonnyeom_orb",
+   "tris": 256,
+   "size_m": [
+    0.5,
+    0.97,
+    0.5
+   ]
+  },
+  {
+   "file": "soul_wail_fresh.glb",
+   "skins": 1,
+   "joints": 4,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 110
+  },
+  {
+   "file": "soul_wail_day.glb",
+   "skins": 1,
+   "joints": 4,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 110
+  },
+  {
+   "file": "soul_wail_old.glb",
+   "skins": 1,
+   "joints": 4,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 110
+  },
+  {
+   "file": "soul_wail_lump.glb",
+   "skins": 1,
+   "joints": 4,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 110
+  },
+  {
+   "file": "soul_mote_fresh.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 44
+  },
+  {
+   "file": "soul_mote_day.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 44
+  },
+  {
+   "file": "soul_mote_old.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 44
+  },
+  {
+   "file": "soul_mote_lump.glb",
+   "skins": 1,
+   "joints": 2,
+   "animations": [
+    "Float",
+    "Windup",
+    "Attack",
+    "Kneel"
+   ],
+   "size_kb": 44
+  },
+  {
+   "file": "soul_buried_fresh.glb",
+   "skins": 1,
+   "joints": 4,
+   "animations": [
+    "Hidden",
+    "Windup",
+    "Attack",
+    "Kneel",
+    "Sink"
+   ],
+   "size_kb": 134
+  },
+  {
+   "file": "soul_buried_day.glb",
+   "skins": 1,
+   "joints": 4,
+   "animations": [
+    "Hidden",
+    "Windup",
+    "Attack",
+    "Kneel",
+    "Sink"
+   ],
+   "size_kb": 134
+  },
+  {
+   "file": "soul_buried_old.glb",
+   "skins": 1,
+   "joints": 4,
+   "animations": [
+    "Hidden",
+    "Windup",
+    "Attack",
+    "Kneel",
+    "Sink"
+   ],
+   "size_kb": 134
+  },
+  {
+   "file": "soul_buried_lump.glb",
+   "skins": 1,
+   "joints": 4,
+   "animations": [
+    "Hidden",
+    "Windup",
+    "Attack",
+    "Kneel",
+    "Sink"
+   ],
+   "size_kb": 134
+  }
+ ]
+}

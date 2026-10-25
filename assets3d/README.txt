@@ -135,3 +135,5 @@ hero_chasa.glb 동작 34개(60fps). 기존 9개(Idle·Walk·Attack/2/3=철삭·D
   title_screen.png(1920×1080, 로고 합성) · title_bg.png(로고 없음 → 코드가 로고·버튼을 올릴 때) — 밤 서낭당 앞에 선 차사(3D 렌더, field_scene.py의 title 샷).
   loading_1_solgogae.jpg · loading_2_mulmagi.jpg · loading_3_pyedang.jpg(1920×1080) — 구역별 밤 장면, 아래쪽 25%는 막대 자리라 어둡게. loading_bar_frame.png(1024×64) / loading_bar_fill.png(1024×40, 붉은 붓줄)은 왼쪽부터 잘라 보여 주면 막대가 된다.
   title_manifest.json: 로고·막대 권장 위치.
+
+[필드 혼 3유형] tools/art3d/soul_types.py → assets3d/souls/soul_{wail,mote,buried}_{fresh,day,old,lump}.glb (12), fx/fx_wonnyeom_orb.glb, _soul_types_manifest.json. 행동 제안: /mnt/project-files/art/souls/SOUL-TYPES.md
