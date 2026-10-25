@@ -11,6 +11,7 @@
   풀어 말하기, 장마다 되풀이되던 구절)과 긴 문장 비율·대화 문단 수도 센다.
   1~20장은 아직 이 기준 이전에 쓴 원고라 버릇 오류가 나온다 — 퇴고 때 고칠 목록으로 쓴다.
   2026-10-25 오너 지적 두 번으로 '문장 끝'(~다 ~다 ~다)과 '문장 흐름'(뚝뚝 끊김)도 센다.
+  같은 날 코디네이터 지적으로 '길이의 변화'(긴 문장만 줄지어 숨이 참)도 경고로 센다.
 
 쓰는 법:
   python3 check_chapter.py 장파일.md [장파일2.md ...]
@@ -138,6 +139,18 @@ FRAG_SHARE_MAX = 0.18     # 18%를 넘으면 오류(이음말로 앞뒤 문장�
 AVG_SENT_MIN = 30         # 서술 문장 평균 길이가 이보다 짧으면 오류(1~20장 평균 17자, 새 1장 첫 판 32자)
 ONE_LINE_PARA_WARN = 12   # 한 문장짜리 서술 문단이 이보다 많으면 경고(장면을 끊는 한 줄은 아껴 쓴다)
 
+# ── 길이의 변화(2026-10-25 12:07 KST 코디네이터 지적: "평균 51자는 반대쪽으로 지나칠 수 있다. 목표는 길이의 변화") ──
+# 왜: 끊김을 고치려고 문장을 잇다 보니 새 2장은 평균 51자, 짧은 문장 5%, 80자 넘는 문장 12%가 되었다.
+#     긴 문장만 줄지어 서면 숨이 차고 번역투가 된다. 긴 문장 사이에 짧은 문장이 박자로 들어가야 리듬이 생긴다.
+#     그렇다고 평균을 30자대로 내리면 오너가 '뚝뚝 끊긴다'고 한 1장 2판(평균 32자, 짧은 문장 23%)으로 돌아간다.
+#     그래서 목표는 평균 40~45자, 짧은 문장 열에 하나, 아주 긴 문장은 드물게, 긴 문장은 넷까지만 연달아.
+AVG_SENT_WARN = 47        # 서술 평균이 이보다 길면 경고(프롤로그 45자 · 1장 47자 · 새 2장 첫 판 51자)
+SHORT_SHARE_MIN = 0.07    # 짧은 문장이 이보다 적으면 경고(박자가 없음). 목표는 열에 하나
+VERY_LONG = 80            # 이보다 긴 문장을 '아주 긴 문장'으로 센다
+VERY_LONG_SHARE_WARN = 0.08   # 아주 긴 문장이 8%를 넘으면 경고(행렬·소리 늘어놓기·기억처럼 흐르는 것에만)
+LONG_RUN_LEN = 50         # 이보다 긴 문장이
+LONG_RUN_WARN = 5         # 이만큼 연달아 서면 경고(사이에 짧은 문장·대화를 둔다). 대화·쪽지·장면 구분에서 끊음
+
 
 def ending_form(sentence: str) -> str:
     """문장 끝 '꼴'을 고른다. 귀에 같은 소리로 들리는 끝끼리 한 꼴로 묶는다.
@@ -248,7 +261,17 @@ def sentence_flow(text: str) -> dict:
     flow = narration_flow(text)
     nar = [s for k, s in flow if k == "서술"]
     if not nar:
-        return {"평균 길이": 0, "짧은 비율": 0.0, "짧은 3연속": [], "조각 비율": 0.0, "한 줄 문단": []}
+        return {"평균 길이": 0, "짧은 비율": 0.0, "짧은 3연속": [], "조각 비율": 0.0, "한 줄 문단": [],
+                "아주 긴 비율": 0.0, "긴 연속": []}
+    # 긴 문장(LONG_RUN_LEN자 넘음)이 LONG_RUN_WARN번 넘게 연달아 서는 자리 — 한 연속에 한 번만 센다
+    long_hits, lrun = [], []
+    for kind, s in flow + [("끝", "")]:
+        if kind == "서술" and len(s) > LONG_RUN_LEN:
+            lrun.append(s)
+            continue
+        if len(lrun) >= LONG_RUN_WARN:
+            long_hits.append(f"{len(lrun)}연속: " + " / ".join(x[:18] + "…" for x in lrun[:3]))
+        lrun = []
     short_hits, run = [], []
     for kind, s in flow:
         if kind == "서술" and len(s) <= SHORT_SENT:
@@ -275,6 +298,8 @@ def sentence_flow(text: str) -> dict:
         "짧은 3연속": short_hits,
         "조각 비율": sum(1 for s in nar if ending_form(s) == "다 아님") / len(nar),
         "한 줄 문단": one_line,
+        "아주 긴 비율": sum(1 for s in nar if len(s) > VERY_LONG) / len(nar),
+        "긴 연속": long_hits,
     }
 
 
@@ -504,7 +529,8 @@ def check_file(path: str) -> dict:
     fl = sentence_flow(text)
     res["counts"]["문장 흐름"] = {"평균 길이": f"{fl['평균 길이']:.0f}자", "짧은 문장": f"{fl['짧은 비율']:.0%}",
                                "짧은 3연속": len(fl["짧은 3연속"]), "조각": f"{fl['조각 비율']:.0%}",
-                               "한 줄 문단": len(fl["한 줄 문단"])}
+                               "한 줄 문단": len(fl["한 줄 문단"]), "아주 긴 문장": f"{fl['아주 긴 비율']:.0%}",
+                               "긴 5연속": len(fl["긴 연속"])}
     if fl["평균 길이"] and fl["평균 길이"] < AVG_SENT_MIN:
         res["errors"].append(f"서술 문장 평균 {fl['평균 길이']:.0f}자 — {AVG_SENT_MIN}자 이상이어야 글이 이어져 읽힌다")
     if fl["짧은 3연속"]:
@@ -520,6 +546,19 @@ def check_file(path: str) -> dict:
     if len(fl["한 줄 문단"]) > ONE_LINE_PARA_WARN:
         res["warnings"].append(f"한 문장짜리 서술 문단 {len(fl['한 줄 문단'])}개 — {ONE_LINE_PARA_WARN}개 넘으면 끊겨 읽힌다"
                                "(크게 멈추는 자리만 남기고 앞뒤 문단에 붙인다)")
+    # 11) 길이의 변화(2026-10-25 12:07 코디네이터 지적: 긴 문장만 이어지면 숨이 차고 번역투가 된다). SKILL §3-2.
+    if fl["평균 길이"] > AVG_SENT_WARN:
+        res["warnings"].append(f"서술 문장 평균 {fl['평균 길이']:.0f}자 — {AVG_SENT_WARN}자 넘으면 길게만 이어져 숨이 찬다"
+                               "(아주 긴 문장을 나누고, 박자 자리에 짧은 문장을 놓는다. 목표 40~45자)")
+    if fl["짧은 비율"] < SHORT_SHARE_MIN:
+        res["warnings"].append(f"짧은 문장({SHORT_SENT}자 이하)이 서술의 {fl['짧은 비율']:.0%} — {SHORT_SHARE_MIN:.0%} 아래면 "
+                               "박자가 없다(놀람·멈춤·발견에 하나씩, 목표 열에 하나)")
+    if fl["아주 긴 비율"] > VERY_LONG_SHARE_WARN:
+        res["warnings"].append(f"{VERY_LONG}자 넘는 문장이 서술의 {fl['아주 긴 비율']:.0%} — {VERY_LONG_SHARE_WARN:.0%} 아래로"
+                               "(행렬·소리 늘어놓기·기억처럼 흐르는 것에만 남기고 나머지는 둘로 나눈다)")
+    if fl["긴 연속"]:
+        res["warnings"].append(f"{LONG_RUN_LEN}자 넘는 문장이 {LONG_RUN_WARN}번 이상 연달아 ×{len(fl['긴 연속'])}"
+                               f"(사이에 짧은 문장이나 대화를 둔다): {fl['긴 연속'][:3]}")
     return res
 
 
