@@ -1,0 +1,292 @@
+[
+ {
+  "name": "sanseong_wall_straight",
+  "tris": 636,
+  "size_m": [
+   4.0,
+   1.08,
+   3.19
+  ],
+  "min_z": 0.008
+ },
+ {
+  "name": "sanseong_wall_ruin",
+  "tris": 516,
+  "size_m": [
+   3.94,
+   2.21,
+   2.68
+  ],
+  "min_z": -0.085
+ },
+ {
+  "name": "sanseong_gate",
+  "tris": 768,
+  "size_m": [
+   6.6,
+   2.8,
+   5.88
+  ],
+  "min_z": -0.082
+ },
+ {
+  "name": "sanseong_tower",
+  "tris": 630,
+  "size_m": [
+   4.2,
+   4.2,
+   8.29
+  ],
+  "min_z": 0.007
+ },
+ {
+  "name": "sanseong_palisade",
+  "tris": 384,
+  "size_m": [
+   3.16,
+   0.43,
+   2.46
+  ],
+  "min_z": -0.008
+ },
+ {
+  "name": "sanseong_banner_torn",
+  "tris": 120,
+  "size_m": [
+   1.5,
+   1.0,
+   3.81
+  ],
+  "min_z": -0.004
+ },
+ {
+  "name": "sanseong_big_mound",
+  "tris": 784,
+  "size_m": [
+   5.2,
+   7.54,
+   2.6
+  ],
+  "min_z": -1.3
+ },
+ {
+  "name": "sanseong_arrow_field",
+  "tris": 264,
+  "size_m": [
+   1.96,
+   1.73,
+   0.77
+  ],
+  "min_z": -0.006
+ },
+ {
+  "name": "sanseong_arrow_rock",
+  "tris": 284,
+  "size_m": [
+   4.35,
+   2.93,
+   3.3
+  ],
+  "min_z": -0.75
+ },
+ {
+  "name": "sanseong_spear_rack",
+  "tris": 164,
+  "size_m": [
+   1.81,
+   2.26,
+   2.75
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "sanseong_tent",
+  "tris": 80,
+  "size_m": [
+   3.88,
+   4.97,
+   2.21
+  ],
+  "min_z": -0.012
+ },
+ {
+  "name": "sanseong_sul_vat",
+  "tris": 474,
+  "size_m": [
+   2.63,
+   1.81,
+   1.32
+  ],
+  "min_z": -0.175
+ },
+ {
+  "name": "sanseong_stairs",
+  "tris": 144,
+  "size_m": [
+   2.8,
+   4.05,
+   2.28
+  ],
+  "min_z": -0.677
+ },
+ {
+  "name": "sanseong_beacon",
+  "tris": 204,
+  "size_m": [
+   2.28,
+   2.4,
+   2.75
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_mine_entrance",
+  "tris": 524,
+  "size_m": [
+   8.84,
+   6.21,
+   6.08
+  ],
+  "min_z": -1.24
+ },
+ {
+  "name": "soegol_timber_frame",
+  "tris": 88,
+  "size_m": [
+   2.4,
+   0.29,
+   2.33
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_rail",
+  "tris": 96,
+  "size_m": [
+   0.95,
+   3.0,
+   0.14
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_cart",
+  "tris": 380,
+  "size_m": [
+   1.06,
+   1.73,
+   1.09
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_ore_pile",
+  "tris": 680,
+  "size_m": [
+   1.88,
+   1.59,
+   0.78
+  ],
+  "min_z": -0.039
+ },
+ {
+  "name": "soegol_slag_heap",
+  "tris": 872,
+  "size_m": [
+   3.99,
+   2.98,
+   2.28
+  ],
+  "min_z": -1.045
+ },
+ {
+  "name": "soegol_windlass",
+  "tris": 180,
+  "size_m": [
+   2.16,
+   1.16,
+   3.13
+  ],
+  "min_z": -0.032
+ },
+ {
+  "name": "soegol_miner_hut",
+  "tris": 116,
+  "size_m": [
+   3.4,
+   2.96,
+   2.25
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_lantern_post",
+  "tris": 64,
+  "size_m": [
+   0.89,
+   0.5,
+   2.6
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_ore_basket",
+  "tris": 184,
+  "size_m": [
+   0.9,
+   0.76,
+   1.16
+  ],
+  "min_z": -0.008
+ },
+ {
+  "name": "soegol_wash_flume",
+  "tris": 156,
+  "size_m": [
+   0.76,
+   4.0,
+   1.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_smelter",
+  "tris": 392,
+  "size_m": [
+   3.63,
+   3.58,
+   4.08
+  ],
+  "min_z": -0.083
+ },
+ {
+  "name": "soegol_ingot_stack",
+  "tris": 132,
+  "size_m": [
+   1.65,
+   0.2,
+   0.36
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "soegol_rope_fence",
+  "tris": 148,
+  "size_m": [
+   3.23,
+   0.09,
+   1.1
+  ],
+  "min_z": -0.003
+ },
+ {
+  "name": "soegol_scree",
+  "tris": 408,
+  "size_m": [
+   3.15,
+   2.84,
+   0.34
+  ],
+  "min_z": -0.093
+ }
+]
