@@ -30,6 +30,8 @@ static class Sim
     // 날씨(기획서 8절). null = 날씨 무시(옛 시뮬). Fixed = 밤 세 개를 같은 날씨로, Mixed = 솔고개 가중치로 밤마다(+밤 중간 25% 다시) 굴림
     static Weather? WxFixed = null; static bool WxMixed = false; static double PTendo = 0.5;
     static WeatherEffect Fx = WeatherRules.Effect(Weather.Clear, true);
+    // 혼 유형 보상은 환경변수가 아니라 게임과 같은 Balance 상수를 읽는다(시뮬과 실제가 어긋나지 않게)
+    static readonly double MOTE_COIN = Balance.MOTE_CHAIN_COIN_MULT, MOTE_KARMA = Balance.MOTE_CHAIN_KARMA, BURIED_NEOK = Balance.BURIED_TENDO_NEOK_MULT; static readonly int WAIL_MEM = Balance.WAIL_TENDO_MEMORY;
     static double MixMote = 0, MixWail = 0, MixBuried = 0;   // 혼 3유형 비율(%) — 0 이면 옛 시뮬(보통 혼만). --types 표가 구역별로 채운다
     static bool Growth = true;   // 성장(품계 힘 몰기·장비 손보기·얼룩 점수)을 전투에 직접 넣는다. --nogrowth 면 끈다(옛 시뮬)
     const double MainOptDmg = 0.055;   // 손보기 대상 주옵션을 피해 옵션 평균(기본 6% x 등급 0.5~1.1)으로 가정
@@ -244,13 +246,13 @@ static class Sim
 
     static double Avg(List<RunResult> L, Func<RunResult, double> f) { double s = 0; foreach (var r in L) s += f(r); return s / L.Count; }
 
-    static bool WantTendo(Strat s, Random rng, int others, double hp)
+    static bool WantTendo(Strat s, Random rng, int others, double hp, int ty = 0)
     {
         switch (s)
         {
             case Strat.TendoOnly: return true;
             case Strat.PahonOnly: return false;
-            case Strat.Adaptive: return others <= 1 && hp > 30;   // 주변이 붐비거나 위험하면 파혼, 한가하면 천도
+            case Strat.Adaptive: if (ty == 2) return others == 0 && hp > 50; if (ty == 1) return hp > 30; if (ty == 3) return others == 0 && hp > 40; return others <= 1 && hp > 30;   // 주변이 붐비거나 위험하면 파혼, 한가하면 천도
             default: return rng.NextDouble() < PTendo;
         }
     }
@@ -310,7 +312,7 @@ static class Sim
                 if (hp <= 0) break;
                 hp = Heal(hp, ref potions);
                 // 선택
-                bool tendo = !lump && WantTendo(s, rng, others, hp);
+                bool tendo = !lump && WantTendo(s, rng, others, hp, ty);
                 if (named && s == Strat.TendoOnly) tendo = true;
                 if (tendo)
                 {
@@ -323,14 +325,15 @@ static class Sim
                     if (Fx.StandDrain > 0 && !(t < fogClearUntil)) dmg += Fx.StandDrain * cast;   // 역병 안개: 서서 외는 동안 초당 1
                     Hit(ref hp, ref sinceHit, ref res, dmg); t += cast + Approach; if (dmg > 0) sinceHit = 0;
                     if (hp <= 0) break;
-                    { int nb = led.Neok; led.CompleteTendo(); led.Neok += (int)Math.Round((led.Neok - nb) * Wd.NeokPct); if (ty == 2) { for (int f = 1; f < moteN; f++) { t += CoreRules.CastTime(true) * Wd.CastTimeMult; led.Neok += (int)Math.Round((led.Neok - nb) * 0.4); } } } res.Tendo++;   // 잔넋 무리: 대장 1 + 나머지는 넋 ×0.4(기억 없음) sentTonight++; lastTendoAt = t; fogClearUntil = t + Balance.WEATHER_PLAGUE_CLEAR_SEC;   // 천도 자리 안개 15초 걷힘
+                    { int nb = led.Neok; led.CompleteTendo(); led.Neok += (int)Math.Round((led.Neok - nb) * Wd.NeokPct); if (ty == 2) { for (int f = 1; f < moteN; f++) { t += CoreRules.CastTime(true) * Wd.CastTimeMult; led.Neok += (int)Math.Round((led.Neok - nb) * 0.4); } } if (ty == 1) led.Memory += WAIL_MEM; if (ty == 3) led.Neok += (int)Math.Round((led.Neok - nb) * (BURIED_NEOK - 1)); }
+                    res.Tendo++; sentTonight++; lastTendoAt = t; fogClearUntil = t + Balance.WEATHER_PLAGUE_CLEAR_SEC;   // 천도 자리 안개 15초 걷힘
                     if (named) { namedDone = true; namedTendoed = true; }
                     if (sentTonight == Balance.NIGHT_QUOTA) res.QuotaSeconds[night] = t;
                 }
                 else
                 {
                     t += 0.25 + Approach; led.DoPahon(); res.Pahon++;
-                    if (ty == 2) led.Coin += (int)Math.Round((double)Balance.PAHON_COIN * (moteN - 1));   // 대장 파혼이 4m 안 잔넋을 함께 파혼(엽전은 마리마다)
+                    if (ty == 2) led.Coin += (int)Math.Round((double)Balance.PAHON_COIN * MOTE_COIN * (moteN - 1)); led.Karma += (int)Math.Round(MOTE_KARMA * (moteN - 1));   // 대장 파혼이 4m 안 잔넋을 함께 파혼(엽전은 마리마다)
                     if (Growth)
                     {
                         pahonCnt++; if (pahonCnt % Balance.PAHON_STAIN_POINT_EVERY == 0) stainPts++;
