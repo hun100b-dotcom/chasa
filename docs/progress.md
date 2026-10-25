@@ -188,3 +188,7 @@
 - 기획 `jesa_watch_act1.json` 확인: 대사 8곳 확정(3곳 고침), 새 인물 모두 역할 이름, 칠복 자리는 기와집(소설 6장), 장터 넷의 드러낸 장례는 "고뿔"로 치른 집 장례라 세계관과 맞음, 박돌쇠 예외 방식 승인.
 - npc_act1: 순임(N-102)·윤 소사네 아들(N-103) unlock_night 4 → 1(첫 세션 첫날에 나오므로. 밤 단위 폐지 뒤 남은 값).
 - (21:05) `tools/memories_act2.py` → `memories_act2.json`: 2막 혼·보스 40(미스터리 30), 축 main/mirror, 장례 대상 8명 jesa_extra. 밤 단위 칸(nights)은 넣지 않음.
+
+## 2026-10-25 21:15 KST — 서사: 보스 한(恨) 구조·단서 사슬
+- `tools/boss_clues_act2.py` → `boss_clues_act2.json`: 2막 보스 4(B-05~08). 1막 틀(단서 4 = 낮 3 동사 모두 다름 + 밤 대체 1, 3개면 천도)에 han·belief·truth·points_to를 더함. 엿듣기 대사·반쪽 문장, 만져 보기 한 줄, 밤 대체 기억(원본 그대로) 포함. 산 사람은 npc_act2 id.
+- 1막 B-01~03에도 같은 한 구조(han·belief·truth·decisive·points_to)를 더하고, zone_opens의 밤 번호를 "그 구역에 밤에 처음 들어간 다음 낮"으로 고침.
