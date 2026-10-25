@@ -337,3 +337,8 @@
 - `JudgeSystem`: 천도 넋 → `growth.AddNeok`, 보스 천도 → `AddBossPoint`, 품계 상승 토스트.
 - `CharacterPanel`: **명부 탭(기본, 항상 열림, C 키)** — 품계 막대, 능력치 + 버튼, 도술 3열 배우기 버튼·설명, 액티브 칸, 장비 칸 7·등급 5 안내(4칸은 준비 중). 옛 세 탭은 DEMO_PANEL 때만.
 - 아직 안 한 것: 배운 도술의 **실제 효과 연결**, 능력치→전투 수치 연결, 장비 4칸·등급 데이터, 넋 오방색·인 15종. 화면 확인은 PC 복귀 후(클라우드는 컴파일·테스트만).
+## 2026-10-25 [기획·사운드] 솔고개 필드 BGM 첫 적용 (오너 Gemini 생성곡)
+- 오너가 Gemini로 뽑은 5곡(그중 2곡은 같은 파일 → 실제 4곡)을 분석해 층 배정: 탐색-낮 = Wind Over the Ridge·Where the Pine Meets Sky 두 곡 번갈아, 탐색-밤 = Mountain Ridge at Noontide의 저음 지속 구간, 전투 = Storm on the High Ridge의 타악 절정 구간, 처결 = Storm의 장단 멈춤 구간 6.9초(임시).
+- 원곡은 3분짜리 "노래 구조"(조용한 시작 → 고조 → 끝맺음)라 통째 반복하면 페이드가 들림 → 반복에 맞는 구간만 골라 이음매가 닮은 지점을 찾아 자르고 끝 0.5초를 겹침(이음매 음량 차 1.3dB 이하). 음량 탐색 −20 / 전투·처결 −16 LUFS.
+- 파일: `unity/Assets/Resources/Audio/BGM/*.ogg`, 층 표 `data/bgm.json`(= `Resources/Data/bgm.json`), 출처 `data/audio_credits.json`(AI 생성 표기 필수).
+- 아직: BGM 재생기 연결(코드팀), 진짜 처결 곡(리듬 없는 징·아쟁·요령)과 차분한 밤 곡은 새로 뽑아야 함. **PC 확인 필요: .ogg .meta 생성, 반복 이음매 귀로 확인.**
