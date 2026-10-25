@@ -35,6 +35,11 @@ namespace Chasa.Core
                 case 6: return new BossDef { Id = 6, Name = "이름 없는 장수", Cut = "B06", CluePrefix = "B06-", X = 245f, Z = 1138f, Maedhim = Balance.B06_MAEDHIM, Speed = 0.4f, Damage = Balance.B06_DAMAGE, Model = "boss_b06_jangsu" };
                 case 7: return new BossDef { Id = 7, Name = "갱도 반장 칠성", Cut = "B07", CluePrefix = "B07-", X = 705f, Z = 1192f, Maedhim = Balance.B07_MAEDHIM, Speed = 0.5f, Damage = Balance.B07_DAMAGE, Model = "boss_b07_chilseong" };
                 case 8: return new BossDef { Id = 8, Name = "장부꾼 염씨", Cut = "B08", CluePrefix = "B08-", X = 505f, Z = 952f, Maedhim = Balance.B08_MAEDHIM, Speed = 0.3f, Damage = Balance.B08_DAMAGE, Model = "boss_b08_yeom" };
+                // 3막 보스 넷(기획 act3_map boss_arenas 좌표 · 맺힘은 부록 E 값, 전투 규칙은 Core/Act3Boss.cs)
+                case 9: return new BossDef { Id = 9, Name = "망부석 아낙", Cut = "B09", CluePrefix = "B09-", X = 1215f, Z = 690f, Maedhim = Balance.B09_MAEDHIM, Speed = 0.3f, Damage = Balance.B09_DAMAGE, Model = "boss_b09_mangbu_ahnak" };
+                case 10: return new BossDef { Id = 10, Name = "만선호 선장", Cut = "B10", CluePrefix = "B10-", X = 1135f, Z = 100f, Maedhim = Balance.B10_MAEDHIM, Speed = 0.4f, Damage = Balance.B10_DAMAGE, Model = "boss_b10_captain" };
+                case 11: return new BossDef { Id = 11, Name = "다리 밑 왕초", Cut = "B11", CluePrefix = "B11-", X = -382f, Z = 392f, Maedhim = Balance.B11_MAEDHIM, Speed = 0.5f, Damage = Balance.B11_DAMAGE, Model = "boss_b11_wangcho" };
+                case 12: return new BossDef { Id = 12, Name = "흑월 차사", Cut = "B12", CluePrefix = "B12-", X = -500f, Z = 185f, Maedhim = Balance.B12_MAEDHIM, Speed = 0.5f, Damage = Balance.B12_DAMAGE, Model = "boss_b12_heugwol" };
                 default: return new BossDef { Id = 1, Name = "나루 영감", Cut = "B01", CluePrefix = "B01-", X = FieldRules.BossX, Z = FieldRules.BossZ, Maedhim = Balance.BOSS_S1_MAEDHIM, Speed = Balance.BOSS_S1_SPEED_MULT, Damage = Balance.BOSS_S1_DAMAGE, Model = "boss_naru" };
             }
         }

@@ -1212,3 +1212,8 @@
 - `tools/build_npc_act3.py` → `npc_flat_act3.json`(일정 8·물건 단서 7·자리 21), `tools/build_named_souls_act3.py` → `named_souls_act3.json`(장례 대상 10명, 자리는 대문 남쪽 8m 임시 — 아트가 자리표를 주면 교체).
 - 장례 컷: `build_funeral_cuts.py` 가 funerals_act3 도 변환(총 54컷). 장례 좌표는 act3_map.funerals 를 JudgeSystem 이 읽는다.
 - NpcWorld·NamedSoulSpawns 가 FieldRules.Act3 일 때 3막 표를 더 읽는다. 미확인: 화면에서 자리·장례 흐름(PC), 3막 단서 규칙(B-05/B-08 천도 조건, SH3-3 해금)은 아직.
+
+## 3막 보스 넷 전투 뼈대 (코드·QA, 2026-10-25)
+- `Core/Act3Boss.cs`(Act3Brain): B-09 파도 줄·바다 부르기·50% 옷 던지기(창 2초·낚아채기 −15%), B-10 줄 끊기(50% 뒤 두 줄 X자)·밧줄 휘감기, B-11 거적·지팡이, B-12 4단계(거울 견인·그의 파혼 / 명단 줄 / 큰물 / 사슬 내려놓음)·횃불 약점 3초 멈춤(1회). 수치는 balance.json B09~B12_* (부록 E, 임시). 테스트 5개 추가(185개 통과).
+- `Bosses.Get(9~12)`(기획 act3_map 좌표), 화면은 Act2BossArena 가 3막도 그린다(예고 장판 가로 띠·X자·부채꼴). 보스 소리 연결: 파도·부르기·옷 던지기·거적·견인·명단 줄·큰물.
+- 아직: 혼이 얽힌 약점(물 혼 파도·선원 혼·별명 혼), 낚아채기·횃불 건지기 입력 연결(2막 약점과 함께), 명단 줄 넋 감소, B-10 썰물 밤 한정 입장, 보스 간 숨은 연결. 3막 컷(B09~B12-INTRO 등)은 대본이 오면.

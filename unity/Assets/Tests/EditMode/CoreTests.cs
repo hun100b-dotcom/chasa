@@ -2189,5 +2189,77 @@ public class CoreTests
         finally { FieldRules.ResetRegions(); FieldRules.Act2 = a2; FieldRules.Act3 = a3; FieldRules.Act2Open = o2; FieldRules.Act3Open = o3; FieldRules.On = on0; }
     }
 
+    // ---- 3막 보스(B-09~B-12) 행동 규칙 ----
+    static System.Collections.Generic.List<BossMove> RunBrain3(Act3Brain b, float sec, float dt = 0.1f)
+    {
+        var l = new System.Collections.Generic.List<BossMove>();
+        for (float t = 0f; t < sec; t += dt) { var m = b.Tick(dt); if (m.Act != BossAct.None) l.Add(m); }
+        return l;
+    }
+
+    [Test]
+    public void Act3Brain_B09_파도와_바다부르기_그리고_50퍼센트_옷던지기는_한번만()
+    {
+        var b = new Act3Brain(9, () => 0.5f);
+        var early = RunBrain3(b, 20f);
+        Assert.IsTrue(early.Exists(m => m.Act == BossAct.WaveRows && m.Count == Balance.B09_WAVE_ROWS));
+        Assert.IsTrue(early.Exists(m => m.Act == BossAct.CallSea));
+        Assert.IsFalse(early.Exists(m => m.Act == BossAct.ClothThrow));
+        b.Maedhim = b.MaedhimMax * 0.5f;
+        var late = RunBrain3(b, 0.2f);                       // 50% 가 되자마자 옷 던지기 장면이 나온다
+        Assert.AreEqual(1, late.FindAll(m => m.Act == BossAct.ClothThrow).Count);
+        float cut = b.OnClothCaught();                       // 창(2초)이 아직 열려 있으니 낚아채기 성공 → 맺힘이 준다
+        Assert.AreEqual(b.MaedhimMax * Balance.B09_CLOTH_CUT_PCT / 100f, cut, 0.01f);
+        Assert.AreEqual(0, RunBrain3(b, 20f).FindAll(m => m.Act == BossAct.ClothThrow).Count);   // 한 번뿐
+    }
+
+    [Test]
+    public void Act3Brain_B09_창이_닫힌_뒤_낚아채기는_효과없다()
+    {
+        var b = new Act3Brain(9, () => 0.5f); b.Maedhim = b.MaedhimMax * 0.4f;
+        RunBrain3(b, 10f);
+        float before = b.Maedhim;
+        Assert.AreEqual(0f, b.OnClothCaught()); Assert.AreEqual(before, b.Maedhim);
+    }
+
+    [Test]
+    public void Act3Brain_B10_50퍼센트_뒤엔_줄끊기가_두줄이다()
+    {
+        var b = new Act3Brain(10, () => 0.5f);
+        Assert.IsTrue(RunBrain3(b, 20f).Exists(m => m.Act == BossAct.RopeCut && m.Count == 1));
+        b.Maedhim = b.MaedhimMax * 0.4f;
+        var late = RunBrain3(b, 20f);
+        Assert.IsTrue(late.Exists(m => m.Act == BossAct.RopeCross && m.Count == 2));
+        Assert.IsFalse(late.Exists(m => m.Act == BossAct.RopeCut));
+    }
+
+    [Test]
+    public void Act3Brain_B12_단계마다_다른_공격_마지막은_공격없음_횃불은_큰물에서만_한번()
+    {
+        var b = new Act3Brain(12, () => 0.5f);
+        Assert.AreEqual(1, b.Stage12);
+        var s1 = RunBrain3(b, 30f);
+        Assert.IsTrue(s1.Exists(m => m.Act == BossAct.MirrorPull)); Assert.IsTrue(s1.Exists(m => m.Act == BossAct.HisPahon));
+        Assert.IsFalse(b.OnTorchPulled());                  // 큰물 단계가 아니면 횃불은 효과 없다
+        b.Maedhim = b.MaedhimMax * 0.6f; Assert.AreEqual(2, b.Stage12);
+        var s2 = RunBrain3(b, 30f);
+        Assert.IsTrue(s2.Exists(m => m.Act == BossAct.NameLines && m.Count == Balance.B12_LINES_ROWS));
+        Assert.IsFalse(s2.Exists(m => m.Act == BossAct.HisPahon));
+        b.Maedhim = b.MaedhimMax * 0.3f; Assert.AreEqual(3, b.Stage12);
+        Assert.IsTrue(b.OnTorchPulled()); Assert.IsFalse(b.OnTorchPulled());   // 1회만
+        Assert.AreEqual(Balance.B12_TORCH_STUN, b.Stun, 0.001f);
+        RunBrain3(b, Balance.B12_TORCH_STUN + 0.5f);
+        Assert.IsTrue(RunBrain3(b, 30f).Exists(m => m.Act == BossAct.Flood));
+        b.Maedhim = b.MaedhimMax * 0.1f; Assert.AreEqual(4, b.Stage12);
+        Assert.AreEqual(0, RunBrain3(b, 30f).Count);        // 사슬을 내려놓고 선다
+    }
+
+    [Test]
+    public void Act3Brain_번호_범위_밖은_예외()
+    {
+        Assert.Throws<System.ArgumentException>(() => new Act3Brain(8, () => 0f));
+        Assert.AreEqual(9, Bosses.Get(9).Id); Assert.AreEqual(12, Bosses.Get(12).Id);
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

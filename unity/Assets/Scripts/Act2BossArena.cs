@@ -15,7 +15,7 @@ public class Act2BossArena : MonoBehaviour
     enum Shape { Circle, Sector, Bar, Ring }
     class Tele { public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
 
-    JudgeSystem judge; Enemy boss; BossDef def; Act2Brain brain;
+    JudgeSystem judge; Enemy boss; BossDef def; Act2Brain brain; Act3Brain brain3;   // 2막(5~8)은 brain, 3막(9~12)은 brain3 — 같은 화면 코드가 둘을 다 그린다
     readonly List<Tele> teles = new List<Tele>();
     readonly List<Enemy> soldiers = new List<Enemy>();
     float fightArea = 16f;
@@ -23,7 +23,8 @@ public class Act2BossArena : MonoBehaviour
     public void Init(JudgeSystem j, Enemy b, BossDef d)
     {
         judge = j; boss = b; def = d;
-        brain = new Act2Brain(d.Id, () => Random.value);
+        if (d.Id >= 9) brain3 = new Act3Brain(d.Id, () => Random.value); else brain = new Act2Brain(d.Id, () => Random.value);
+        if (d.Id == 9) fightArea = 15f; else if (d.Id == 10 || d.Id == 11) fightArea = 14f; else if (d.Id == 12) fightArea = 18f;   // 기획 act3_map boss_arenas 반경
         if (d.Id == 7) fightArea = Balance.B07_ARENA_START + 2f;
     }
 
@@ -31,17 +32,17 @@ public class Act2BossArena : MonoBehaviour
 
     void Update()
     {
-        if (judge == null || boss == null || brain == null) return;
+        if (judge == null || boss == null || (brain == null && brain3 == null)) return;
         if (boss.soul.State == SoulState.Gone) { Clear(); return; }
         float dist = new Vector2(judge.player.Pos.x - def.X, judge.player.Pos.z - def.Z).magnitude;
         bool fight = dist < fightArea && boss.alive && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
         if (!fight) { Clear(); return; }
         float dt = Time.deltaTime;
-        brain.Maedhim = boss.soul.Maedhim; brain.MaedhimMax = boss.soul.MaedhimMax;
         soldiers.RemoveAll(s => s == null || !s.alive);
-        brain.Soldiers = soldiers.Count;
+        if (brain != null) { brain.Maedhim = boss.soul.Maedhim; brain.MaedhimMax = boss.soul.MaedhimMax; brain.Soldiers = soldiers.Count; }
+        else { brain3.Maedhim = boss.soul.Maedhim; brain3.MaedhimMax = boss.soul.MaedhimMax; }
         if (boss.kneeling) { Clear(); return; }   // 처결 대기 중엔 공격하지 않는다
-        var mv = brain.Tick(dt);
+        var mv = brain != null ? brain.Tick(dt) : brain3.Tick(dt);
         if (mv.Act != BossAct.None) Start(mv);
         TickTeles(dt);
     }
@@ -82,6 +83,34 @@ public class Act2BossArena : MonoBehaviour
                     Sfx.Play("sfx.boss.yeom.land"); break;
                 }
             case BossAct.AbacusSweep: Add(new Tele { shape = Shape.Sector, c = bp, dir = dir, r = m.Radius, deg = m.Param, warn = m.Warn }); break;
+            // ---- 3막(9~12): 예고 장판 ----
+            case BossAct.WaveRows:   // B-09: 가로 띠 여러 줄이 차례로 밀려온다(줄 사이는 안전 띠)
+                for (int i = 0; i < m.Count; i++)
+                    Add(new Tele { shape = Shape.Bar, c = new Vector3(def.X, 0f, def.Z + (i - (m.Count - 1) * 0.5f) * m.Param), dir = Vector3.right, len = fightArea * 2f, wid = m.Radius, warn = m.Warn + i * Balance.B09_WAVE_STEP });
+                Sfx.Play("sfx.boss.mangbu.wave"); break;
+            case BossAct.CallSea: Add(new Tele { shape = Shape.Circle, c = bp, r = m.Radius, warn = m.Warn }); Sfx.Play("sfx.boss.mangbu.call"); break;
+            case BossAct.ClothThrow: judge.Say("아낙이 남편의 옷을 바다에 던지려 한다"); Sfx.Play("sfx.boss.mangbu.cloth.throw"); break;   // 사슬로 낚아채기(약점)는 다음 일 — 지금은 안내만
+            case BossAct.RopeCut: case BossAct.RopeCross:
+                for (int i = 0; i < m.Count; i++)
+                {
+                    var dd = m.Count == 1 ? dir : Quaternion.Euler(0f, i == 0 ? 35f : -35f, 0f) * dir;   // 두 줄이면 X 자로 엇갈린다
+                    var cc = m.Count == 1 ? bp + dd * (m.Param * 0.5f) : pp;
+                    Add(new Tele { shape = Shape.Bar, c = cc, dir = dd, len = m.Param, wid = m.Radius, warn = m.Warn });
+                }
+                break;
+            case BossAct.RopeWrap: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); break;
+            case BossAct.MatThrow: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); Sfx.Play("sfx.boss.wangcho.call"); break;
+            case BossAct.StaffSwing: Add(new Tele { shape = Shape.Sector, c = bp, dir = dir, r = m.Radius, deg = m.Param, warn = m.Warn }); break;
+            case BossAct.MirrorPull: Add(new Tele { shape = Shape.Bar, c = bp + dir * (m.Param * 0.5f), dir = dir, len = m.Param, wid = m.Radius, warn = m.Warn }); Sfx.Play("sfx.boss.heukwol.line.draw"); break;
+            case BossAct.HisPahon: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); break;
+            case BossAct.NameLines:   // 위(북)에서부터 한 줄씩, 마지막 줄은 비워 둔다(안전 지대)
+                for (int i = 0; i < m.Count - 1; i++)
+                    Add(new Tele { shape = Shape.Bar, c = new Vector3(def.X, 0f, def.Z + fightArea - 3f - i * (m.Radius + 1.5f)), dir = Vector3.right, len = fightArea * 2f, wid = m.Radius, warn = m.Warn + i * 0.5f });
+                Sfx.Play("sfx.boss.heukwol.line.draw"); break;
+            case BossAct.Flood:       // 물살: 가로 띠가 무작위 자리에서 차례로
+                for (int i = 0; i < m.Count; i++)
+                    Add(new Tele { shape = Shape.Bar, c = new Vector3(def.X, 0f, def.Z + (Random.value - 0.5f) * fightArea * 1.6f), dir = Vector3.right, len = fightArea * 2f, wid = m.Radius, warn = m.Warn + i * 0.6f });
+                Sfx.Play("sfx.boss.heukwol.flood"); break;
             case BossAct.LedgerFlip: Sfx.Play("sfx.boss.yeom.backpage"); judge.Say("장부가 넘어간다"); break;   // 이름 종이 위만 안전한 연출은 다음 일
         }
     }

@@ -542,6 +542,13 @@ public class JudgeSystem : MonoBehaviour
                 var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
                 var arena = new GameObject("Act2BossArena" + bid).AddComponent<Act2BossArena>(); arena.Init(this, be, bd);
             }
+        if (FieldRules.On && FieldRules.Act3)   // 3막 보스 넷: 땅이 깔려 있으면 선다(금줄이 열리기 전엔 닿을 수 없다)
+            for (int bid = 9; bid <= 12; bid++)
+            {
+                var bd = Bosses.Get(bid);
+                var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
+                var arena = new GameObject("Act3BossArena" + bid).AddComponent<Act2BossArena>(); arena.Init(this, be, bd);
+            }
         cluePos.Clear();
         foreach (var v in clueViews) Destroy(v);
         clueViews.Clear();
@@ -566,7 +573,7 @@ public class JudgeSystem : MonoBehaviour
     bool heukwolSpawned, heukwolRetreated, gateAnnounced, heukwolWarned; Enemy heukwol; float gateToastT;
     void MarkBossDone(int id)
     {
-        if (id < 1 || id > 8 || id == 4 || clock == null || !bossDoneIds.Add(id)) return;
+        if (id < 1 || id > 12 || id == 4 || clock == null || !bossDoneIds.Add(id)) return;
         if (id <= 3 && bossDoneIds.Contains(1) && bossDoneIds.Contains(2) && bossDoneIds.Contains(3) && allDoneDay < 0) { allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }
         if (id >= 5 && bossDoneIds.Contains(5) && bossDoneIds.Contains(6) && bossDoneIds.Contains(7) && bossDoneIds.Contains(8) && act2DoneDay < 0) act2DoneDay = clock.Day;   // 2막 마지막 일
     }
