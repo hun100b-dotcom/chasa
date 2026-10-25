@@ -262,11 +262,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -327,11 +332,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -392,11 +402,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -457,11 +472,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -522,11 +542,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -587,11 +612,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -652,11 +682,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -717,11 +752,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -782,11 +822,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -847,11 +892,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -912,11 +962,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -977,11 +1032,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1042,11 +1102,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1107,11 +1172,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1172,11 +1242,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1237,11 +1312,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1302,11 +1382,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1367,11 +1452,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1432,11 +1522,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1497,11 +1592,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1562,11 +1662,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1627,11 +1732,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1692,11 +1802,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1757,11 +1872,16 @@
     {
      "pose": "Pahon",
      "clip": "Pahon"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1806,11 +1926,16 @@
     {
      "pose": "Dodge",
      "clip": "Sink"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1855,11 +1980,16 @@
     {
      "pose": "Dodge",
      "clip": "Sink"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1904,11 +2034,16 @@
     {
      "pose": "Dodge",
      "clip": "Sink"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   },
@@ -1953,11 +2088,16 @@
     {
      "pose": "Dodge",
      "clip": "Sink"
+    },
+    {
+     "pose": "KneelHold",
+     "clip": "KneelHold"
     }
    ],
    "loop": [
     "Idle",
-    "Walk"
+    "Walk",
+    "KneelHold"
    ],
    "yaw": 180
   }

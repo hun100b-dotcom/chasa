@@ -764,3 +764,7 @@
 - 이름혼을 파혼하면 그 유품 자리에 `prop_keep_ash`(재)가 남고 F 안내는 없음(저장됨, Picked의 "ash:id"). 천도하면 유품은 사라짐.
 - 서낭당 5곳에 `prop_seonang_rest` 설치(Light_seonang_rest에 따뜻한 깜박임 불빛, 낮음 품질은 불빛 생략).
 - 대기: 주인공 `Judge` 동작(아트 PR #21 병합 후 Pose 추가·크로스페이드 연결). 첫 장례 대본 갱신 반영(아내 대사 항상 나옴, 컷 출력 변화 없음).
+
+### 아트 PR #21 병합 + Judge·KneelHold 동작 (코드·QA)
+- 아트 브랜치(82eeiu)를 병합. 주인공: 무릎 꿇은 혼이 처결 범위 안이고 시전 중이 아니면 서 있을 때 `Judge` 자세(Pose.Judge, 3D 모델일 때만). 혼 28종: Kneel이 끝나면 `KneelHold`를 반복(Pose.KneelHold, 클립이 있는 모델만).
+- models.json에 Judge·KneelHold 연결. 유니티에서 클립 이름·전환이 실제로 맞는지는 PC 캡처로 확인 필요.
