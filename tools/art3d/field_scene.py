@@ -113,6 +113,22 @@ def world_day():
     for ob in list(bpy.data.objects):
         if ob.type == "LIGHT" and ob.data.type == "POINT": ob.data.energy *= 0.12
 
+HOUR = os.environ.get("FS_HOUR")   # 게임 시(예: 12.5·18.0·5.5). 있으면 sky_clock.json 키프레임 색으로 낮·저녁놀·새벽 장면을 만든다(색보정 전후 비교용)
+
+def world_hour(h):
+    """sky_clock.json 키프레임(아트 하늘 값)에서 그 시각의 빛 색·세기·그늘 색을 읽어 Blender 해와 하늘빛으로 옮긴다.
+    왜: 색보정표(LUT)는 '원본 렌더'에 걸어 보아야 전후가 의미 있다 → 시간대별 원본을 같은 장면에서 뽑는다."""
+    import json
+    ks = json.load(open(os.path.join(A3, "sky", "sky_clock.json")))["keyframes"]; k = min(ks, key=lambda q: abs(q["hour"] - h))
+    sc = bpy.context.scene; w = bpy.data.worlds.new("W"); sc.world = w; w.use_nodes = True
+    bg = w.node_tree.nodes["Background"]; bg.inputs[0].default_value = hex2rgb(k["sky_mid"]); bg.inputs[1].default_value = 0.9 if k["light_intensity"] > 0.8 else 0.6
+    sun = bpy.data.lights.new("sun", "SUN"); sun.energy = k["light_intensity"] * 2.8; sun.color = hex2rgb(k["light_color"])[:3]; sun.angle = math.radians(4)
+    so = bpy.data.objects.new("sun", sun); bpy.context.collection.objects.link(so)
+    low = h < 7 or h > 17     # 새벽·저녁놀은 해가 낮아 그림자가 길다(새벽은 동쪽, 저녁은 서쪽에서)
+    so.rotation_euler = Euler((math.radians(76 if low else 50), 0, math.radians(125 if h < 12 else -35)))
+    for ob in list(bpy.data.objects):
+        if ob.type == "LIGHT" and ob.data.type == "POINT": ob.data.energy *= (0.55 if low else 0.12)
+
 def camera(center, ortho, size, elev=50):
     sc = bpy.context.scene; sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = 64
     try: sc.cycles.use_denoising = True; sc.cycles.denoiser = "OPENIMAGEDENOISE"
@@ -250,13 +266,13 @@ def run(key):
         pose("soul_old", 197.6, 46.2, 0, 20, "Windup", 33)
         put("fx_pahon_shards_a", 193.8, 46.8, 0.36, 0, scale=0.8)
         put("fx_stain_decal", 196.4, 43.6, 0.37, 30)
-    (world_day if DAY else world_night)()
+    (lambda: world_hour(float(HOUR)))() if HOUR else (world_day if DAY else world_night)()
     sz = cfg.get("size", (1280, 720)); sz = (sz[0] // 3, sz[1] // 3) if os.environ.get("FS_TEST") else sz
     if os.environ.get("FS_CAM"): v = [float(t) for t in os.environ["FS_CAM"].split(",")]; cfg["cam"] = (tuple(v[:3]), tuple(v[3:6]), v[6])   # 카메라 시험용
     if "cam" in cfg: camera_persp(*cfg["cam"][:2], cfg["cam"][2], sz)
     else: camera(cfg["center"], cfg["ortho"], sz)
     if os.environ.get("FS_TEST"): bpy.context.scene.cycles.samples = 16
-    path = os.path.join(A3, "previews", f"scene_{key}{'_day' if DAY else ''}.png"); render(path)
+    path = os.path.join(A3, "previews", f"scene_{key}{('_h' + HOUR) if HOUR else ('_day' if DAY else '')}.png"); render(path)
     print(key, "객체", stats["objs"], "조명", len(placed_lights), "초", round(time.time() - t0)); return path
 
 if __name__ == "__main__":

@@ -137,3 +137,5 @@ hero_chasa.glb 동작 34개(60fps). 기존 9개(Idle·Walk·Attack/2/3=철삭·D
   title_manifest.json: 로고·막대 권장 위치.
 
 [필드 혼 3유형] tools/art3d/soul_types.py → assets3d/souls/soul_{wail,mote,buried}_{fresh,day,old,lump}.glb (12), fx/fx_wonnyeom_orb.glb, _soul_types_manifest.json. 행동 제안: /mnt/project-files/art/souls/SOUL-TYPES.md
+
+[화면 분위기] tools/art3d/grading.py → assets3d/grading/ (LUT 22장 lut_<dawn|day|dusk|night>_<clear|cloudy|rain|fog|plague>.png·lut_neutral·lut_tendo, grading_params.json, vision_noise·vision_pattern, README.md=GRADING.md). 전후 그림 previews/grading_*.jpg. field_scene.py 에 FS_HOUR(게임 시) 추가.
