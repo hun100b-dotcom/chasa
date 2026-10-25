@@ -436,6 +436,7 @@ public class UiRoot : MonoBehaviour
         root.Add(cardRow);
     }
     /// <summary>mark: 색 말고 모양으로도 구분(↑ 천도 = 오르는 불꽃·실선·둥근 모서리 / × 파혼 = 깨진 조각·두꺼운 각진 테두리). 색약 대응(명세 §9-2)</summary>
+    VisualElement rimIcon;   // 천도 카드의 금테(이름혼일 때만 보임)
     VisualElement Card(string key, string name, string sub, Color bg, string mark, bool jagged)
     {
         var c = new VisualElement { pickingMode = PickingMode.Ignore };
@@ -447,6 +448,14 @@ public class UiRoot : MonoBehaviour
         float rad = jagged ? 0f : 14f; c.style.borderTopLeftRadius = rad; c.style.borderTopRightRadius = rad; c.style.borderBottomLeftRadius = rad; c.style.borderBottomRightRadius = rad;
         var t = Line(c, 24); t.text = mark + " [" + key + "] " + name; t.style.unityTextAlign = TextAnchor.MiddleCenter;
         var s2 = Line(c, 18); s2.text = sub; s2.style.unityTextAlign = TextAnchor.MiddleCenter;
+        // 고르기 전에 보상이 보인다(M5): 천도=혼불+기억, 파혼=엽전+얼룩. 같은 크기·밝기. 이름혼이면 기억 아이콘에 금테
+        var icon = First10.Whole(jagged ? "reward_pahon" : "reward_tendo");
+        if (icon != null)
+        {
+            var iv = new VisualElement { pickingMode = PickingMode.Ignore }; iv.style.position = Position.Absolute; iv.style.left = U(12); iv.style.top = U(20);
+            iv.style.width = U(56); iv.style.height = U(56); iv.style.backgroundImage = new StyleBackground(icon); c.Add(iv);
+            if (!jagged) { rimIcon = new VisualElement { pickingMode = PickingMode.Ignore }; var rim = First10.Whole("reward_gold_rim"); if (rim != null) rimIcon.style.backgroundImage = new StyleBackground(rim); rimIcon.style.width = U(56); rimIcon.style.height = U(56); rimIcon.style.display = DisplayStyle.None; iv.Add(rimIcon); }
+        }
         return c;
     }
 
@@ -548,6 +557,7 @@ public class UiRoot : MonoBehaviour
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshGuide(); RefreshBossArea();
+        if (rimIcon != null) rimIcon.style.display = Hud.JudgeNamed ? DisplayStyle.Flex : DisplayStyle.None;
         if (cardRow != null) cardRow.style.display = Hud.JudgeCard && !Ko.TouchUI ? DisplayStyle.Flex : DisplayStyle.None;   // 폰은 처결 버튼 자체가 카드 역할
         RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshStamp(); RefreshDosulCards(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         if (hpFill != null)

@@ -1653,7 +1653,7 @@ public class JudgeSystem : MonoBehaviour
             if (nDone != guideSaved) { guideSaved = nDone; try { PlayerPrefs.SetString(GuidePref, string.Join(",", new List<string>(guide.DoneIds).ToArray())); PlayerPrefs.Save(); } catch { } }
         }
         if (firstCardSoul != null && (!firstCardSoul.kneeling || firstCardSoul.gone)) { firstCardSoul.soul.Frozen = false; firstCardSoul = null; }   // 처결했으면 카드를 접고 대기 시간을 되돌린다
-        h.JudgeCard = firstCardSoul != null && !quiet;
+        h.JudgeCard = firstCardSoul != null && !quiet; h.JudgeNamed = firstCardSoul != null && firstCardSoul.soul.Name != null;
         var cur = guide.Current;
         h.GuideText = quiet || cur == null || h.JudgeCard ? null : guide.TextFor(Ko.TouchUI);
         h.GuideKey = cur != null && !Ko.TouchUI ? cur.Key : null;
@@ -1718,7 +1718,7 @@ public class JudgeSystem : MonoBehaviour
         pNeok = ledger.Neok; pMemory = ledger.Memory; pCoin = ledger.Coin; pKarma = ledger.Karma; pDrop = lo.lastDrop; toastReady = true;
         h.Toasts.Tick(Time.unscaledDeltaTime);
         if (h.StampAge >= 0f) { h.StampAge += Time.unscaledDeltaTime; if (h.StampAge > Balance.RANKUP_STAMP_SEC) h.StampAge = -1f; }
-        ui.Refresh(!inDay && !night.Over && !CharacterPanel.Open && !SettingsPanel.Open);
+        ui.Refresh(!inDay && !night.Over && !CharacterPanel.Open && !SettingsPanel.Open && !TitleScreen.Open);
     }
     int pNeok, pMemory, pCoin, pKarma; string pDrop; bool toastReady;
 

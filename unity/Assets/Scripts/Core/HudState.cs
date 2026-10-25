@@ -49,7 +49,7 @@ namespace Chasa.Core
         // 첫 도술 카드(세 장 중 하나): CardNames 가 null 이면 안 보인다. 눌렀을 때 부를 함수는 게임 쪽이 꽂는다
         public string[] CardNames, CardMarks, CardDescs; public int CardBranch0, CardRound; public string CardReroll;   // CardReroll: 다시 뽑기 버튼 글(없으면 버튼 없음)
         public System.Action<int> CardPick; public System.Action CardRerollNow;
-        public bool JudgeCard;                                   // 첫 처결 카드(천도·파혼 두 장)를 하단에 띄운다
+        public bool JudgeCard, JudgeNamed;                        // 처결 카드를 띄우나 / 그 혼이 이름혼인가(기억 아이콘에 금테)                                   // 첫 처결 카드(천도·파혼 두 장)를 하단에 띄운다
         public readonly ToastStack Toasts = new ToastStack();   // 얻은 것 알림(왼쪽 가운데)
 
         public float HpRatio { get { return MaxHp <= 0 ? 0f : System.Math.Max(0f, System.Math.Min(1f, (float)Hp / MaxHp)); } }

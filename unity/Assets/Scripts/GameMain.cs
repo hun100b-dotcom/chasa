@@ -107,6 +107,8 @@ public class GameMain : MonoBehaviour
         player.onHitLanded = () => judge.guide.Complete("hit");   // 첫 타가 맞으면 '때리기' 안내가 닫힌다
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
         judge.reward = gameObject.AddComponent<RewardFx>(); judge.reward.Target = () => player.Pos;
+        if (TitleScreen.Wanted(FieldRules.On)) gameObject.AddComponent<TitleScreen>();   // 타이틀 화면(이어하기·새로 시작·설정)
+        gameObject.AddComponent<GoalArrow>().judge = judge;   // 화면 밖 이름혼 쪽 가장자리 화살표
         judge.loot = gameObject.AddComponent<LootDrop>(); judge.loot.PlayerPos = () => player.Pos; judge.loot.OnPick = judge.PickLoot;   // 장비는 바닥에 떨어진다   // 처결 보상이 몸으로 들어오는 연출
         if (View3D.On)
         {
@@ -143,6 +145,7 @@ public class GameMain : MonoBehaviour
     void Update()
     {
         if (Input.touchCount > 0) Ko.TouchUI = true;   // 실제로 터치가 들어오면 화면 버튼을 띄운다
+        if (TitleScreen.Open) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 타이틀 화면: 세계 정지
         if (DosulCards.Open) { judge.CardInput(); UpdateCamera(Time.unscaledDeltaTime); return; }   // 도술 카드가 떠 있으면 세계 정지
         if (CharacterPanel.Open || SettingsPanel.Open || MiniMap.BigOpen) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
         if (judge.InDay) { judge.Tick(0f, Mathf.Min(0.05f, Time.unscaledDeltaTime)); return; }   // 낮 화면: 세계는 멈추고 낮 화면만 흐른다

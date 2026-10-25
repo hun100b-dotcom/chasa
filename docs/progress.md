@@ -1387,3 +1387,9 @@
 - 그림 묶음을 `Resources/Sprites/first10/`·`Models/Fx/fx_drop_*`로 들임(`First10.cs` 창고: 이름으로 꺼내기·가로 띠 자르기). 그림이 없으면 예전 코드 도형으로 대신한다.
 - 품계 인: 명부 종이 + `rank_stamp` 12프레임 12fps + 현판에 계급명. 흡수: `absorb_*_fly/spin` + 도착 순간 `absorb_*_burst`. 장비 드롭: `fx_drop_*` 3D 빛줄기 + `drop_tag_*` 이름표 + `tier_mark_*`. 도술 카드: `skill_card_frame` + 갈래 큰 표시 + 삽화. 거센 혼: `elite_ring` 머리 위, 예고 `tele_*_border/fill_red`.
 - 아직 안 쓴 그림: elite_name_band·bind_bar_*(기존 보스 막대로 대신), clear_ring, roar_vignette, craft_flash, rank_dot, reward_*(M5), goal_arrow·goal_dist_plate(M12), menu_btn·title_fog(M1), loading_tip_plate(M14), 노랑 예고(색약 옵션). 예고 채움은 '가운데서/시작에서 차오름'(명세는 바깥→안 마스크, 셰이더 마스크는 PC 확인 뒤).
+
+## 처음 10분 보강 4차 (코드·QA, 10-26)
+- M5: 처결 카드(첫 카드)에 보상 아이콘(천도=혼불+기억, 파혼=엽전+얼룩, 같은 크기), 이름혼이면 천도 아이콘에 금테.
+- M12: `GoalArrow.cs` — 명부 이름혼이 화면 밖이면 가장자리에 금색 화살표 + 거리(m). 6m 안이면 숨김.
+- M1: `TitleScreen.cs` — 켜자마자 밤 서낭당 그림 + 안개 두 층 + 메뉴(이어하기·새로 시작·설정·끝내기(웹은 없음)). 새로 시작은 저장을 지운다. 주소에 `notitle`·검수 옵션(time=, pos=, hk=, debug=, bot, demo, act2=1, act3=1, clock=, cam=)이 있으면 건너뜀. 그림은 `Resources/Sprites/title/`(약 3MB).
+- 안 한 것: M11(거점 안내: 도술 카드가 바로 뜨므로 서낭당 쉬기 줄은 보류), M13 첫 죽음(서낭당에서 깨어남·한 줄), M2 깨어날 때 카메라, M14 로딩 화면, 타이틀 곡, 큰 얼룩/구역 거센 혼, 비교 창 ▲▼.
