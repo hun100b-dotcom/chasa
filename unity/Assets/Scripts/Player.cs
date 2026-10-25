@@ -238,6 +238,7 @@ public class Player : MonoBehaviour
         else if (state == State.Attack && atk != null && atk.phase == "recover" && DodgeRules.CanCancelRecoverToMove(atk.t / atk.cfg.recover)) ConsumeAct();
         float tx = point.x, tz = point.z;
         MapLayout.ClampPoint(ref tx, ref tz);   // 맵 밖을 눌러도 맵 안쪽 끝으로
+        MapLayout.GateClamp(ref tz, 0f);
         moveTarget = new Vector3(tx, 0, tz);
         chaseTarget = null;
         hasBuffered = false; // 이동을 지시하면 눌러둔 다음 타는 취소
@@ -466,6 +467,7 @@ public class Player : MonoBehaviour
         // 맵 경계 + 막힌 곳(집·장승)에서 미끄러지듯 밀려난다
         float x = Pos.x, z = Pos.z;
         Chasa.Core.MapLayout.PushOut(ref x, ref z, Config.PLAYER_RADIUS);
+        Chasa.Core.MapLayout.GateClamp(ref z, Config.PLAYER_RADIUS);   // 2막 금줄이 닫혀 있으면 1막 북쪽 끝에서 멈춘다
         Pos = new Vector3(x, Pos.y, z);   // 높이는 땅 붙이기(GroundSnap)가 맡으니 건드리지 않는다
     }
 

@@ -1166,3 +1166,9 @@
 - CutStep.audio 명령 큐(Core/Cutscene) → CutscenePlayer.RunAudio: 반복 소리(컷이 켠 것만 끄고, 컷이 끝나거나 건너뛰면 0.5초 안에 정리) / BgmPlayer.Command: duck·silence·resume·layer·play(+fallback silence). 시즌1 끝 곡 파일(bgm_s1_*)이 없으면 조용히.
 - 한계: 소리 gain 은 Sfx 가 크기 인자가 없어 무시. 카메라 대상 이름 중 boss_face·boss_hand·arena 는 보스 자리, 나머지 새 이름(flagpole 등)은 아직 주인공 자리로 대신.
 - 흑월 B-12 전투음: B12-KNEEL 컷이 chain.down 을 대신 튼다(전투 쪽에서는 그 소리를 쓰지 않을 것).
+
+## 흑월 1차 + 2막 금줄 진행 연결 (코드·QA, 10-25)
+- 2막 땅은 이제 기본으로 깔린다(`?act2=0` 끔, `?act2=1` 금줄을 처음부터 열어 둠). 금줄이 닫혀 있는 동안 주인공만 z 640 을 넘지 못하고(MapLayout.GateClamp, 혼·NPC·보스는 영향 없음), 다가가면 "명부에 아직 이 관할이 없다". 넋길도 2막 서낭당은 건너뛴다.
+- 흑월 1차(JudgeSystem.TickHeukwol, 규칙 Core/Act2Gate): 1막 보스 셋 처결 다음 첫 밤(또는 검은여울 첫 진입 5일째 밤) 무덤골(110,585 임시)에 흑월 등장. 그날 해질녘 당할미 한 줄. 맺힘 50% 에서 "너는 아직 모른다." 하고 물러남(싸우지 않으면 새벽에 사라짐). 그 밤의 다음 새벽에 두 금줄이 풀리고 "두 금줄이 풀렸다" 알림.
+- 저장: bd:·ad:·ed:·hks:·ga: 로 이어진다. 검사용 `?hk=1` 은 보스 셋을 처결한 것으로 쳐서 흑월을 바로 본다. Balance B04_MAEDHIM 600·B04_DAMAGE 26(임시).
+- 한계: 흑월 모델은 나루 영감 대역, 컷신(C-05 첫 목격)·무덤골 아트 없음. 서낭당 이름·좌표는 임시.

@@ -2156,5 +2156,20 @@ public class CoreTests
         var q = new CutPlayback(d); q.Skip(); Assert.AreEqual(0, q.AudioPending.Count);   // 건너뛰면 소리 명령은 버린다
     }
 
+    [Test]
+    public void Act2Gate_GateClamp_BlocksPlayerOnlyWhileClosed()
+    {
+        bool a = FieldRules.Act2, o = FieldRules.Act2Open;
+        try
+        {
+            FieldRules.Act2 = true; FieldRules.Act2Open = false;
+            float z = 700f; MapLayout.GateClamp(ref z, 0.5f); Assert.AreEqual(639.5f, z, 0.001f);   // 닫힘: 1막 북쪽 끝에서 멈춘다
+            FieldRules.Act2Open = true; z = 700f; MapLayout.GateClamp(ref z, 0.5f); Assert.AreEqual(700f, z, 0.001f);   // 열림: 그대로
+            Assert.AreEqual(4, Act2Gate.OpenDay(3, false, -1));
+            Assert.AreEqual(3, Act2Gate.HeukwolNight(3, false, -1));
+        }
+        finally { FieldRules.Act2 = a; FieldRules.Act2Open = o; }
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

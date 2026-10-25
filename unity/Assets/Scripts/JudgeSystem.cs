@@ -194,6 +194,7 @@ public class JudgeSystem : MonoBehaviour
         {
             if (e.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
             if (e.soul.BossId <= 1) { night.BossDone = true; bossOutcome = 2; }
+            MarkBossDone(e.soul.BossId);
             Say(e.label + "을(를) 깨뜨렸다");
             cuts.Play(BossCut(e.soul, "PAHON")); feel.AddShake(1f);   // 6m 대폭발, 판자가 흩어진다
             // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
@@ -269,6 +270,7 @@ public class JudgeSystem : MonoBehaviour
             night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
             Say(castTarget.label + "을(를) 천도했다!"); if (castTarget.soul.BossId <= 1) bossOutcome = 1;
+            MarkBossDone(castTarget.soul.BossId);
             if (cuts.Play(BossCut(castTarget.soul, "TENDO"))) { player.CommandStop(); enemies.graceT = Mathf.Max(enemies.graceT, 7f); }   // 7초 컷: 입력 잠김·적 멈춤
         }
         else
@@ -556,6 +558,51 @@ public class JudgeSystem : MonoBehaviour
         }
     }
 
+    // ===== 1막 끝: 흑월 1차 → 2막 금줄 해금 (서사 확정 10-25, 규칙은 Core/Act2Gate) =====
+    // 1막 보스 셋(나루 영감·월화·서 의원)을 모두 처결한 다음 첫 밤(또는 ② 검은여울에 처음 들어간 뒤 5일째 밤) 무덤골에 흑월이 나타난다.
+    // 처결은 없다: 맺힘 50% 에서 사슬을 거두고 "너는 아직 모른다." 한 마디를 남기고 물러난다. 그 밤의 다음 새벽에 두 금줄이 함께 풀린다(싸우지 않았어도).
+    readonly HashSet<int> bossDoneIds = new HashSet<int>();   // 처결한 1막 보스 번호(1~3)
+    int allDoneDay = -1; bool allDoneAtNight; int enterDay = -1;
+    bool heukwolSpawned, heukwolRetreated, gateAnnounced, heukwolWarned; Enemy heukwol; float gateToastT;
+    void MarkBossDone(int id)
+    {
+        if (id < 1 || id > 3 || clock == null || !bossDoneIds.Add(id)) return;
+        if (bossDoneIds.Count >= 3 && allDoneDay < 0) { allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }
+    }
+    void TickHeukwol()
+    {
+        if (!FieldRules.On || !FieldRules.Act2 || clock == null) return;
+        if (allDoneDay < 0 && (Application.absoluteURL ?? "").Contains("hk=1")) { bossDoneIds.Add(1); bossDoneIds.Add(2); bossDoneIds.Add(3); allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }   // 검사용 ?hk=1: 1막 보스 셋을 이미 처결한 것으로 친다(흑월 1차를 바로 본다)
+        if (enterDay < 0 && FieldZones.CurrentName == "검은여울") enterDay = clock.Day;   // ② 검은여울 첫 진입(5일 안전장치의 기준)
+        int hn = Act2Gate.HeukwolNight(allDoneDay, allDoneAtNight, enterDay);
+        bool open = FieldRules.Act2Open || clock.Day >= Act2Gate.OpenDay(allDoneDay, allDoneAtNight, enterDay);
+        if (open && !FieldRules.Act2Open) { FieldRules.Act2Open = true; }
+        if (open && !gateAnnounced && hn != int.MaxValue) { gateAnnounced = true; Say("두 금줄이 풀렸다 — 붉은재 고개길 · 쇳골 산길"); }
+        // 금줄 앞: 열리기 전에는 한 줄 안내
+        gateToastT -= Time.deltaTime;
+        if (!open && player.Pos.z > FieldRules.Size - 4f && gateToastT <= 0f) { gateToastT = 8f; Say(Act2Gate.BlockedLine); }
+        // 예고: 흑월이 나타날 날 해질녘 서낭당 당할미의 한 줄(서사 B-04 낮 단서의 혼잣말 — 단서로 세지 않는다)
+        if (hn != int.MaxValue && clock.Day == hn && !heukwolWarned && clock.Phase == ClockPhase.Dusk) { heukwolWarned = true; Say("당할미: “예전 차사님은 갓끈이 붉었는데…”"); }
+        // 등장: 그 밤이 되면 무덤골에
+        if (hn != int.MaxValue && clock.Day == hn && !heukwolSpawned && clock.Phase == ClockPhase.Night)
+        {
+            heukwolSpawned = true;
+            var bd = Bosses.Get(4);
+            heukwol = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), 4);
+            Say("무덤골에 갓끈 검은 차사가 서 있다");
+        }
+        if (heukwol != null)
+        {
+            if (heukwol.soul.MaedhimMax > 0 && heukwol.soul.Maedhim <= heukwol.soul.MaedhimMax * 0.5f)   // 맺힘 50% — 물러난다
+            {
+                Say("흑월 — “너는 아직 모른다.”");
+                RemoveEnemy(heukwol); heukwol = null; heukwolRetreated = true;
+            }
+            else if (clock.Phase == ClockPhase.Dawn && clock.Day > hn) { RemoveEnemy(heukwol); heukwol = null; heukwolRetreated = true; }   // 싸우지 않았으면 새벽에 사라진다
+        }
+    }
+    void RemoveEnemy(Enemy e) { if (e == null) return; enemies.list.Remove(e); Destroy(e.gameObject); }
+
     // ---- 처결 대기 긴장음: 남은 시간 비율에 맞춰 똑딱 간격이 1.0초 → 0.15초로 줄어든다(사운드팀 표) ----
     float waitTickT; Enemy waitFor; bool waitFinalDone;
     void TickWaitTick(float dt)
@@ -817,7 +864,7 @@ public class JudgeSystem : MonoBehaviour
         s.BossOutcome = bossOutcome; s.NamedOutcome = pahonOrTendo; s.OpeningSeen = openingStarted; s.FuneralShown = funeralShown; s.Weapon = lo.weapon; s.Other = lo.other;
         s.WeatherNow = weather.Snapshot(); s.PlagueEased = weather.state.PlagueEased;
         if (npcs != null) foreach (var js in npcs.JesaSeen) s.Picked.Add("jesa:" + js);   // 제사를 지켜본 혼
-        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
+        foreach (var kv in funeralPending) s.Picked.Add("fp:" + kv.Key + ":" + kv.Value); foreach (var fd in funeralDone) s.Picked.Add("fd:" + fd); s.Picked.Add("fday:" + funeralDay); if (parkUnjudged) s.Picked.Add("pu:1"); foreach (var bi in bossDoneIds) s.Picked.Add("bd:" + bi); if (allDoneDay >= 0) s.Picked.Add("ad:" + allDoneDay + ":" + (allDoneAtNight ? 1 : 0)); if (enterDay >= 0) s.Picked.Add("ed:" + enterDay); if (heukwolSpawned) s.Picked.Add("hks:1"); if (gateAnnounced) s.Picked.Add("ga:1"); if (dogHome) s.Picked.Add("dh:1"); foreach (var ns in funeralNoneShown) s.Picked.Add("fn:" + ns); foreach (var kv in funeralBorn) s.Picked.Add("fb:" + kv.Key + ":" + kv.Value);   // 장례 진행
         if (interactables != null) { s.Picked.AddRange(interactables.Picked); foreach (var kv in interactables.HerbTaken) s.HerbTaken.Add(kv.Key + ":" + kv.Value); s.Herbs = interactables.Herbs; }
         return SaveStore.Write(SaveGame.Serialize(s));
     }
@@ -835,11 +882,17 @@ public class JudgeSystem : MonoBehaviour
         ledger.Hp = Mathf.Clamp(s.Hp, 1, ledger.MaxHp);
         clock.Set(s.ClockDay, s.ClockMinutes);
         funeralPending.Clear(); funeralDone.Clear(); funeralNoneShown.Clear(); funeralBorn.Clear(); parkUnjudged = false; dogHome = false; funeralDay = -1;
+        bossDoneIds.Clear(); allDoneDay = -1; allDoneAtNight = false; enterDay = -1; heukwolSpawned = false; heukwolRetreated = false; gateAnnounced = false; heukwolWarned = false; heukwol = null;
         foreach (var pk in s.Picked)
         {
             if (pk.StartsWith("fd:")) funeralDone.Add(pk.Substring(3));
             else if (pk == "pu:1") parkUnjudged = true;
             else if (pk == "dh:1") dogHome = true;
+            else if (pk.StartsWith("bd:")) { int bi; if (int.TryParse(pk.Substring(3), out bi)) bossDoneIds.Add(bi); }
+            else if (pk.StartsWith("ad:")) { var q = pk.Split(':'); int d0; if (q.Length == 3 && int.TryParse(q[1], out d0)) { allDoneDay = d0; allDoneAtNight = q[2] == "1"; } }
+            else if (pk.StartsWith("ed:")) int.TryParse(pk.Substring(3), out enterDay);
+            else if (pk == "hks:1") { heukwolSpawned = true; heukwolRetreated = true; heukwolWarned = true; }   // 이미 나타났던 밤: 다시 나오지 않는다
+            else if (pk == "ga:1") gateAnnounced = true;
             else if (pk.StartsWith("fn:")) funeralNoneShown.Add(pk.Substring(3));
             else if (pk.StartsWith("fb:")) { int c = pk.LastIndexOf(':'); int o; if (c > 3 && int.TryParse(pk.Substring(c + 1), out o)) funeralBorn[pk.Substring(3, c - 3)] = o; }
             else if (pk.StartsWith("fday:")) int.TryParse(pk.Substring(5), out funeralDay);
@@ -1064,6 +1117,8 @@ public class JudgeSystem : MonoBehaviour
         int at = SoulPathStop();
         if (at < 0) return;
         int to = SoulPath.Next(at, FieldRules.Shrines.Length);
+        // 2막 금줄이 닫혀 있으면 2막 서낭당(z 640 이상)은 건너뛰고 1막 처음으로 돌아간다
+        for (int guard = 0; guard < FieldRules.Shrines.Length && FieldRules.Shrines[to][1] >= FieldRules.Size && !FieldRules.Act2Open; guard++) to = SoulPath.Next(to, FieldRules.Shrines.Length);
         var s = FieldRules.Shrines[to];
         var dest = new Vector3(s[0], 0f, s[1] - 3f);   // 서낭당 바로 앞(남쪽)에 선다
         player.CommandStop(); player.Pos = dest;
@@ -1093,6 +1148,7 @@ public class JudgeSystem : MonoBehaviour
         // 처결 대기가 끝까지 지나 일어선 혼 = '처결 못 함'(장례 대상이면 다음 낮 장례로). 읽고 바로 지워 한 번만 센다
         foreach (var e in enemies.list) if (e.soul.TimedOut) { e.soul.TimedOut = false; Sfx.Play("sfx.wait.expire"); MarkUnjudged(e); }
         TickWaitTick(dt);
+        TickHeukwol();
         var ph = clock.Consume();
         if (ph.HasValue)
         {

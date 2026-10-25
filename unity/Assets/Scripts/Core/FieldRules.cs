@@ -52,6 +52,7 @@ namespace Chasa.Core
         /// <summary>청크 (cx, cz)를 하나의 정수 키로</summary>
         // ---- 2막으로 넓힌 땅(직사각): 기본은 1막 정사각(640×640). 2막 땅이 켜지면 Extend 로 동서 768·남북 1280 까지 ----
         public static float WorldX = Size, WorldZ = Size;
+        public static bool Act2Open = true;   // 2막 금줄이 풀렸나(Act2 땅이 있을 때만 뜻이 있다). 닫혀 있으면 걸을 수 있는 땅이 1막(640×640)까지다. JudgeSystem 이 해금 날을 보고 정한다
         public static bool Act2;   // 2막 땅이 열렸다(주소 ?act2=1 검사용 — 2막 입장 조건이 구현되면 그 사건이 켠다)
         public static void Extend(float worldX, float worldZ) { WorldX = Math.Max(Size, worldX); WorldZ = Math.Max(Size, worldZ); }
         public static int ChunksX { get { return (int)Math.Ceiling(WorldX / ChunkSize); } }

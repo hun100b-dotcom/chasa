@@ -24,10 +24,17 @@ namespace Chasa.Core
         /// </summary>
         public static int OpenDay(int allDoneDay, bool allDoneAtNight, int enterDay)
         {
+            int night = HeukwolNight(allDoneDay, allDoneAtNight, enterDay);
+            return night == int.MaxValue ? int.MaxValue : night + 1;                         // 그 밤의 다음 새벽
+        }
+
+        /// <summary>흑월 1차가 나타나는 밤이 속한 하루 번호(없으면 int.MaxValue)</summary>
+        public static int HeukwolNight(int allDoneDay, bool allDoneAtNight, int enterDay)
+        {
             int night = int.MaxValue;
             if (allDoneDay >= 0) night = allDoneAtNight ? allDoneDay + 1 : allDoneDay;      // 처결 뒤 첫 밤
             if (enterDay >= 0) night = Math.Min(night, enterDay + 5);                        // 5번째 새벽이 지난 밤(= 들어간 날로부터 5일째 밤)
-            return night == int.MaxValue ? int.MaxValue : night + 1;                         // 그 밤의 다음 새벽
+            return night;
         }
 
         public static bool IsOpen(int today, int allDoneDay, bool allDoneAtNight, int enterDay) { return today >= OpenDay(allDoneDay, allDoneAtNight, enterDay); }

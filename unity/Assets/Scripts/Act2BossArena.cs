@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class Act2BossArena : MonoBehaviour
 {
-    public static bool Enabled { get { return (Application.absoluteURL ?? "").Contains("act2=1"); } }
+    public static bool Enabled { get { return FieldRules.Act2; } }   // 2막 땅이 깔려 있으면 보스 넷도 선다(금줄이 닫혀 있는 동안은 닿을 수 없다)
 
     enum Shape { Circle, Sector, Bar, Ring }
     class Tele { public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }

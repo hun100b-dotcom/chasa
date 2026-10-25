@@ -120,6 +120,15 @@ namespace Chasa.Core
             }
         }
 
+        /// <summary>
+        /// 2막 금줄: 닫혀 있는 동안 주인공(만)은 1막 땅 북쪽 끝(z 640)을 넘지 못한다. 혼·NPC·보스는 2막 땅에 서 있어야 하니 일반 PushOut 은 그대로 둔다.
+        /// 왜 따로? 맵 경계(MaxZ)를 줄이면 2막에 세운 사람과 보스가 모두 경계선으로 끌려 나온다.
+        /// </summary>
+        public static void GateClamp(ref float z, float radius)
+        {
+            if (FieldRules.Act2 && !FieldRules.Act2Open) z = System.Math.Min(z, FieldRules.Size - radius);
+        }
+
         /// <summary>점 하나를 맵 안으로만 가둔다 (이동 목표점 등, 막힌 곳은 따지지 않음)</summary>
         public static void ClampPoint(ref float x, ref float z)
         {

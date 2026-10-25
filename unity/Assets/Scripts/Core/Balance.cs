@@ -607,4 +607,6 @@ public static class Balance
     public const float WATER_SOUL_CAST_REDUCE_S = 0.5f;  // (3막 QA 채택) 물 혼 천도 캐스팅 단축(초). 하한 WATER_SOUL_CAST_FLOOR_S
     public const float WATER_SOUL_CAST_FLOOR_S = 0.5f;  // 물 혼 캐스팅 하한(초)
     public const float TIDE_SIGNAL_WINDOW_S = 20.0f;  // (3막) 밀물 신호 뒤 물 혼 2~4마리가 떠밀려 가기까지(초). 안에 처결 못 하면 그 밤 사라진다
+    public const float B04_MAEDHIM = 600.0f;  // (1막 끝 흑월 1차·임시) 맺힘 50%에서 사슬을 거두고 물러나므로 실제로 깎이는 건 절반
+    public const float B04_DAMAGE = 26.0f;  // (흑월 1차·임시) 몸으로 부딪는 한 방
 }
