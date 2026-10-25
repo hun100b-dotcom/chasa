@@ -40,7 +40,7 @@ public class RewardFx : MonoBehaviour
     /// <summary>천도 보상: 혼불 1~3개. amount 가 클수록 개수가 많다</summary>
     public void Tendo(Vector3 at, int count)
     {
-        first = true;
+        first = true; hon = 0.45f;   // 혼불이 가슴에 닿기 0.4초 전에 소리
         for (int i = 0; i < Mathf.Clamp(count, 1, 3); i++)
             Add(at + Vector3.up * 0.8f, at + new Vector3(Random.Range(-0.7f, 0.7f), 1.9f + 0.3f * i, Random.Range(-0.7f, 0.7f)), false, i * 0.06f);
     }
@@ -48,7 +48,7 @@ public class RewardFx : MonoBehaviour
     /// <summary>파혼 보상: 엽전 3~5닢</summary>
     public void Pahon(Vector3 at, int count)
     {
-        first = true;
+        first = true; gather = 0.6f; Sfx.Play("sfx.reward.coin.pop");
         for (int i = 0; i < Mathf.Clamp(count, 3, 5); i++)
             Add(at + Vector3.up * 0.8f, at + new Vector3(Random.Range(-1.4f, 1.4f), 0.1f, Random.Range(-1.4f, 1.4f)), true, i * 0.04f);
     }
@@ -69,7 +69,7 @@ public class RewardFx : MonoBehaviour
         list.Add(new P { tr = go.transform, sr = sr, start = start, apex = apex, coin = coin, delay = delay, frames = art, fps = 12f, first = first });
         first = false;
     }
-    bool first;
+    bool first; float hon = -1f, gather = -1f;
 
     /// <summary>흡수되는 순간의 번쩍임(혼불은 가슴에 불티가 모이고, 엽전은 발밑에 파편이 튄다). 128px 6프레임 0.3초</summary>
     void Burst(Vector3 at, bool coin)
@@ -82,6 +82,8 @@ public class RewardFx : MonoBehaviour
 
     void Update()
     {
+        if (hon >= 0f) { hon -= Time.deltaTime; if (hon < 0f) Sfx.Play("sfx.reward.honbul"); }
+        if (gather >= 0f) { gather -= Time.deltaTime; if (gather < 0f) Sfx.Play("sfx.reward.coin.gather"); }
         var cam = Camera.main; var tgt = Target != null ? Target() : Vector3.zero;
         for (int i = list.Count - 1; i >= 0; i--)
         {

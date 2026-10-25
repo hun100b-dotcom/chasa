@@ -1205,7 +1205,7 @@
 - 층 타일·잔무늬 그림을 땅마다 새로 풀던 것을 한 번만 풀어 나눠 쓰게 함(중복 제거). 높이 그림은 값만 뽑고 바로 버림.
 - 서낭당은 GroundSnap 으로 땅이 올라오면 따라 선다.
 - 금줄이 닫힌 땅은 안 읽으므로 금줄 너머는 빈 땅(안개)으로 보인다.
-- 주석 속 금지 이름(디아블로) 2곳(OccluderFade.cs, View3D.cs) 삭제.
+- 주석 속 금지 작품명 2곳(OccluderFade.cs, View3D.cs) 삭제.
 - 미확인: 읽는 순간 끊김(동기 읽기), 메모리 실측 → PC 측정 필요.
 
 ## 3막 산 사람·이름혼·장례 연결 (코드·QA, 2026-10-25)
@@ -1423,3 +1423,8 @@
 - 타이틀 곡 `bgm_title` 임시 대역(반복 64초)을 `bgm_temp_render.py`에 추가했고, Gemini 지시문 63번을 썼다. `data/bgm.json`의 naming에 title 항목을 넣었다.
 - 코드팀용 연결표 `docs/first-10min-sound-hookup.md`: 어느 순간에 어떤 id를 부르는지 정리했다. Sfx.cs는 손대지 않았다.
 - 용량 다시 잼: 새 소리는 모두 공통 묶음(첫 화면)에 들어간다. 결과는 `docs/audio-budget.md`.
+
+## 처음 10분 소리 연결 + IP 문서 정리 (코드·QA, 10-26)
+- 사운드 PR #36(srga8o) 합침. 연결: 품계 인 `sfx.rank.seal`, 보상 `sfx.reward.honbul/coin.pop/coin.gather`, 장비 `sfx.drop.land`+등급 빛줄기 소리·`sfx.pickup.gear`, 카드 `sfx.card.rise/flip/pick/scatter/reroll`, 거센 혼 `sfx.elite.appear/slam(.telegraph)/pounce(.telegraph)/call`·`sfx.mote.spawn`·`cut.jing.crack`, 싸움 끝 `sfx.fight.end.jing/slow`, 새로 시작 `sfx.title.start`.
+- 아직: 타이틀 곡 `bgm_title`·`amb.title.fog` 반복 재생(BgmPlayer 손대야 함), `sfx.repair.first`·`sfx.reward.bar.open`·`sfx.card.hover`, 전투층 한 단계 위·2초 내림, 슬로 중 저역 통과 필터.
+- IP: VISION·ENGINE-COMPARISON·TECH-DESIGN-UI-FEEL·progress 문서의 작품명 정리, check_s1.py 허용 표시, ip-scan.mjs 금지어 확장(검사 통과).

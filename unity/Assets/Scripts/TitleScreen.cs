@@ -31,7 +31,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (fresh) SaveStore.Delete();   // 새로 시작: 옛 저장을 지운다(이어하기 칸은 저장이 있을 때만 있다)
         Open = false; Destroy(this);
-        Sfx.Play("sfx.ui.confirm");
+        Sfx.Play(fresh ? "sfx.title.start" : "sfx.ui.confirm");
     }
 
     void OnGUI()

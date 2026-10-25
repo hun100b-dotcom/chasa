@@ -221,6 +221,7 @@ public class JudgeSystem : MonoBehaviour
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
         float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult * lo.stats.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
         float radius = e.elite ? Balance.ELITE_PAHON_RADIUS : lo.stats.PahonRadius(Balance.PAHON_RADIUS);   // 거센 혼 파혼: 반경 4.5m   // 업 쪽 장비: 파혼 반경 (상한 안)
+        if (e.elite) Sfx.Play("cut.jing.crack");
         if (e.elite)   // 거센 혼 파혼 폭발은 부른 잔넋까지 터뜨린다(마리당 엽전 +2)
             foreach (var o in new List<Enemy>(enemies.list))
             {
@@ -266,7 +267,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>품계가 올랐다: 화면 가운데에 붉은 품계 인이 1초 찍힌다(처음 10분 M6). 글자 알림은 그대로 곁들인다</summary>
     void OnRankUp()
     {
-        Sfx.Play("sfx.ui.rank.up");
+        Sfx.Play("sfx.rank.seal");   // 인이 찍히는 쿵 0.05초·종 0.18초
         if (ui == null) return;
         ui.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank);
         ui.Hud.StampTitle = "품계 " + growth.Rank; ui.Hud.StampSub = Ko.RankTitle(growth.Rank); ui.Hud.StampAge = 0f;
@@ -302,7 +303,7 @@ public class JudgeSystem : MonoBehaviour
             h.CardDescs[i] = SkillTree.BranchName(nd.Branch) + " · " + (nd.Active ? "액티브" : "패시브") + "\n" + nd.Desc;
         }
         h.CardReroll = cardPicks == 0 || cardRerolled ? null : "엽전 " + DosulCards.RerollCoin + " · 다시 뽑기 (R)" + (ledger.Coin < DosulCards.RerollCoin ? " — 엽전이 모자라다" : "");
-        DosulCards.Open = true; Sfx.Play("sfx.ui.tab");
+        DosulCards.Open = true; Sfx.Play("sfx.card.rise"); Sfx.Play("sfx.card.flip");
     }
     /// <summary>카드를 골랐다(1~3번 칸). 고른 도술을 배우고 카드는 닫힌다</summary>
     public void PickCard(int i)
@@ -313,13 +314,13 @@ public class JudgeSystem : MonoBehaviour
         growth.Learn(name); cardPicks++;
         RefreshGrowth();
         ui.Hud.CardNames = null; DosulCards.Open = false; cardDelay = 0.8f;
-        Sfx.Play("sfx.ui.confirm"); ui.Hud.Toasts.Add("도술 — " + name);
+        Sfx.Play("sfx.card.pick"); Sfx.Play("sfx.card.scatter"); ui.Hud.Toasts.Add("도술 — " + name);
     }
     public void RerollCards()
     {
         if (!DosulCards.Open || cardPicks == 0 || cardRerolled) return;
         if (ledger.Coin < DosulCards.RerollCoin) { Sfx.Play("sfx.ui.deny"); return; }
-        ledger.Coin -= DosulCards.RerollCoin; cardRerolled = true;
+        ledger.Coin -= DosulCards.RerollCoin; cardRerolled = true; Sfx.Play("sfx.card.reroll");
         ui.Hud.CardNames = null; OfferCards();
     }
     /// <summary>카드가 떠 있는 동안 세계는 멈춘다. 키 입력만 GameMain 이 여기로 넘긴다</summary>
@@ -369,7 +370,7 @@ public class JudgeSystem : MonoBehaviour
         {
             fightOn = false;
             int dn = ledger.Neok - fStartNeok, dc = ledger.Coin - fStartCoin, dm = ledger.Memory - fStartMem;
-            if (dn > 0 || dc > 0 || dm > 0) { Sfx.Play("sfx.fight.end"); Say("정리 — 넋 +" + dn + " · 엽전 +" + dc + " · 기억 " + dm); }   // 징 한 번(소리는 사운드팀 파일이 오면 난다)
+            if (dn > 0 || dc > 0 || dm > 0) { Sfx.Play("sfx.fight.end.jing"); Say("정리 — 넋 +" + dn + " · 엽전 +" + dc + " · 기억 " + dm); }   // 징 한 번(소리는 사운드팀 파일이 오면 난다)
         }
     }
     /// <summary>방금 처결로 싸움의 마지막 혼이 끝났나? 그렇다면 0.25초 절반 속도로 느리게(천도·파혼 똑같이)</summary>
@@ -377,7 +378,7 @@ public class JudgeSystem : MonoBehaviour
     {
         if (!fightOn) return;
         fJudged++;   // 혼 하나뿐인 작은 싸움엔 느려짐을 쓰지 않는다(둘 이상일 때만)
-        if (fJudged >= 2 && FightLeft(e) == 0) feel.SlowMo(Balance.FIGHT_END_SLOW_SEC, Balance.FIGHT_END_SLOW_SCALE);
+        if (fJudged >= 2 && FightLeft(e) == 0) { Sfx.Play("sfx.fight.end.slow"); feel.SlowMo(Balance.FIGHT_END_SLOW_SEC, Balance.FIGHT_END_SLOW_SCALE); }
     }
 
     int gainedExtra;   // 한 줄 꿰기로 덤으로 간 혼이 준 넋(알림용)
@@ -511,7 +512,7 @@ public class JudgeSystem : MonoBehaviour
         if (it == null) return;
         firstGearGiven = true;
         string nm = Ko.ItemName(it, Ko.FamilyOf(it.Slot, it.Slot == Slot.Weapon ? (WeaponId?)lo.weapon : null));
-        if (loot != null) loot.Add(it, e.Pos, nm);   // 바닥에 떨어진다: 가까이 가면 줍는다
+        if (loot != null) { loot.Add(it, e.Pos, nm); Sfx.Play("sfx.drop.land"); Sfx.Play("sfx.drop.beam." + (it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "fine" : "common")); }   // 바닥에 떨어진다: 가까이 가면 줍는다
         else PickLoot(it, e.Pos);
     }
     bool firstGearGiven; int kneelCount;
@@ -530,7 +531,7 @@ public class JudgeSystem : MonoBehaviour
         }
         else lo.lastDrop = "주웠다 (지금 것이 낫다) " + cmp + txt;
         lo.lastDropT = 5f;
-        Sfx.Play("sfx.ui.confirm");
+        Sfx.Play("sfx.pickup.gear");
         TimedSprite.Spawn("fx/loot_" + (it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common"), at, 1.5f);   // 줍는 순간의 빛
     }
 

@@ -43,7 +43,7 @@ PC + 모바일 크로스 플랫폼 / 화면에 적 다수가 떠도 버티는 �
 
 **② 적 다수 처리** — Unity는 DOTS/ECS(수천 개 개체를 묶어 빠르게 처리하는 구조)가 있다. Godot는 GDScript가 느린 편이라 적이 수백 단위가 되면 MultiMesh(같은 모양을 한 번에 그리기)·서버 API·일부 C++(GDExtension) 최적화가 필요. 웹 엔진은 인스턴싱으로 그리기는 되지만 로직이 JS 단일 스레드에 묶인다.
 
-**③ 쿼터뷰 액션 레퍼런스** — Unity: *Last Epoch*, *V Rising*, *Torchlight III* 등 쿼터뷰 ARPG 다수. Unreal: *Lost Ark*(UE3), *Undecember*. Godot: *Halls of Torment*(2D 디아블로풍), 3D 쿼터뷰 대작 사례는 아직 적음. 웹 엔진: 상업 ARPG 사례 사실상 없음.
+**③ 쿼터뷰 액션 레퍼런스** — 쿼터뷰 ARPG 여러 편(유니티·언리얼 사례 다수, 고도는 3D 대작 사례가 아직 적음). 웹 엔진: 상업 ARPG 사례 사실상 없음.
 
 **④ 라이선스·로열티** — Godot·Three·Babylon: MIT, 완전 무료·로열티 없음. Unity: Personal은 최근 12개월 매출+투자 20만 달러 미만 무료, 초과 시 Pro(1석 연 2,310달러, 2026-01 인상 반영). 2023년 런타임 수수료 사태는 2024-09 철회됐지만 정책 변경 이력이 리스크. Unreal: 매출 100만 달러 초과분 5% 로열티. PlayCanvas: 비공개 프로젝트는 유료 플랜.
 

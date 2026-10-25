@@ -44,12 +44,12 @@ public class EliteArena : MonoBehaviour
         float dist = new Vector2(judge.player.Pos.x - e.Pos.x, judge.player.Pos.z - e.Pos.z).magnitude;
         bool fight = e.alive && dist < 30f && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
         if (!fight) { if (!e.alive) ClearTeles(); return; }
-        if (!engaged) { engaged = true; Met = true; }
+        if (!engaged) { engaged = true; Met = true; Sfx.Play("sfx.elite.appear"); }
         float dt = Time.deltaTime;
         motes.RemoveAll(m => m == null || m.gone);
         TickTeles(dt);
         // 부르기: 맺힘 50% 에서 한 번(0.8초 울부짖음 뒤 잔넋 셋)
-        if (!called && e.soul.Maedhim <= e.soul.MaedhimMax * Balance.ELITE_CALL_AT) { called = true; callT = 0.8f; Sfx.Play("sfx.boss.wangcho.call"); judge.feel.AddShake(0.25f); judge.Say("거센 혼이 울부짖는다"); }
+        if (!called && e.soul.Maedhim <= e.soul.MaedhimMax * Balance.ELITE_CALL_AT) { called = true; callT = 0.8f; Sfx.Play("sfx.elite.call"); judge.feel.AddShake(0.25f); judge.Say("거센 혼이 울부짖는다"); }
         if (callT >= 0f) { callT -= dt; if (callT < 0f) CallMotes(); }
         if (teles.Count > 0 || callT >= 0f) return;
         gapT -= dt;
@@ -77,7 +77,7 @@ public class EliteArena : MonoBehaviour
     void Slam()
     {
         var t = new Tele { c = new Vector3(e.Pos.x, 0f, e.Pos.z), r = Balance.ELITE_SLAM_R, warn = Warn(Balance.ELITE_SLAM_TELE), mult = 1f };
-        e.atk.Interrupt(); Show(t); teles.Add(t);
+        e.atk.Interrupt(); Show(t); teles.Add(t); Sfx.Play("sfx.elite.slam.telegraph");
     }
 
     void Pounce()
@@ -86,7 +86,7 @@ public class EliteArena : MonoBehaviour
         var dir = d.sqrMagnitude > 0.01f ? d.normalized : Vector3.forward;
         var from = new Vector3(e.Pos.x, 0f, e.Pos.z);
         var t = new Tele { bar = true, c = from + dir * (Balance.ELITE_POUNCE_LEN * 0.5f), dir = dir, len = Balance.ELITE_POUNCE_LEN, wid = Balance.ELITE_POUNCE_W, warn = Warn(Balance.ELITE_POUNCE_TELE), mult = (float)Balance.ELITE_POUNCE_DMG / Mathf.Max(1, Balance.ELITE_SLAM_DMG), pounce = true };
-        Show(t); teles.Add(t);
+        Show(t); teles.Add(t); Sfx.Play("sfx.elite.pounce.telegraph");
     }
 
     void CallMotes()
@@ -94,7 +94,7 @@ public class EliteArena : MonoBehaviour
         for (int i = 0; i < Balance.ELITE_MOTES; i++)
         {
             var at = e.Pos + Quaternion.Euler(0f, 360f / Balance.ELITE_MOTES * i + 30f, 0f) * Vector3.forward * 3.2f;   // 주변 4m 안
-            var m = judge.enemies.SpawnEliteMote(at); motes.Add(m);
+            var m = judge.enemies.SpawnEliteMote(at); motes.Add(m); Sfx.Play("sfx.mote.spawn");
         }
         judge.Say("잔넋이 몰려온다");
     }
@@ -184,7 +184,7 @@ public class EliteArena : MonoBehaviour
                 {
                     t.fired = true;
                     if (t.pounce) e.Pos = new Vector3(t.c.x + t.dir.x * t.len * 0.5f, e.Pos.y, t.c.z + t.dir.z * t.len * 0.5f) - t.dir * 1.2f;   // 덮치기: 띠 끝까지 달려든다
-                    judge.feel.AddShake(0.3f); Sfx.Play("sfx.boss.naru.sweep");
+                    judge.feel.AddShake(0.3f); Sfx.Play(t.pounce ? "sfx.elite.pounce" : "sfx.elite.slam");
                     if (Inside(t, judge.player.Pos) && judge.BossAreaHit(e, t.mult) && t.pounce) judge.player.actLock = Mathf.Max(judge.player.actLock, Balance.ELITE_POUNCE_HOLD);   // 맞으면 1초 붙잡힘
                     if (!t.art) t.fill.GetComponent<Renderer>().sharedMaterial.color = new Color(1f, 0.55f, 0.25f, 1f);
                 }

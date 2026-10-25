@@ -140,7 +140,7 @@ for sid, f in fun3.items():
     if bool(f.get('mujeok')) != bool(m3[sid]['mujeok']): err('funerals_act3', f'{sid} 무적 표시가 기억 데이터와 다름')
 
 # ───── 7. 글 규칙(금지어·밤 번호·초혼·이름·추위) ─────
-BANNED = ['신과함께', '강림', '해원맥', '덕춘', 'Along with the Gods', '멸귀수도전', '도깨비의 세계', '디아블로', 'Diablo', '슈퍼캣', 'Supercat']
+BANNED = ['신과함께', '강림', '해원맥', '덕춘', 'Along with the Gods', '멸귀수도전', '도깨비의 세계', '디아블로', 'Diablo', '슈퍼캣', 'Supercat']  # ip-scan:allow
 NIGHT_NO = re.compile(r'밤 ?\d{2,3}(?![:\d])')   # "밤 13:00"(세션 시각)은 제외
 COLD = re.compile(r'차누|춥|추워|한기|으슬')
 for fn, d in files.items():

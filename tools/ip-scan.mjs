@@ -24,6 +24,13 @@ const BANNED = [
   '디아블로', 'Diablo',
   // 슈퍼캣 도트 에셋
   '슈퍼캣', 'Supercat',
+  // 기획 IP 전수 점검(planning/audit/ip_scan.py) 중 어디서든 고치는 낱말과 작품명. 기만·제압처럼 짧은 낱말은 오탐이 많아 뺐다(도술 이름 칸은 별도 확인)
+  '김자홍', '진기한', '묘롱', '신식 개방', '낙화의 전장', '만귀비경', '승천탑', '프로젝트 OQ',
+  '블리자드', 'Blizzard', '트리스트럼', 'Tristram', '호라드림', 'Horadric', '네팔렘', 'Nephalem', '릴리트', 'Lilith',
+  '이나리우스', 'Inarius', '메피스토', 'Mephisto', '정복자 보드', 'Paragon', '케지스탄', 'Kehjistan', '세계석', 'Worldstone',
+  '바람의나라', '로스트아크', 'Lost Ark', '아크라시아', '자그레우스', 'Zagreus', '패스 오브 엑자일', 'Path of Exile', 'PoE2',
+  '레이크라스트', 'Wraeclast', '마비노기', 'Mabinogi', '밀레시안', '티르 코네일', '던바튼', '문게이트',
+  '리니지', '귀멸의 칼날', '스마일게이트', 'Supergiant', 'Grinding Gear',
 ];
 
 const ROOT = process.cwd();
