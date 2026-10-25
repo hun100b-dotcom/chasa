@@ -48,7 +48,7 @@ public partial class CharacterPanel
             if (it == null || !EquipLayout.CanHoldSeal(pos)) continue;
             anyItem = true;
             var row = new VisualElement { pickingMode = PickingMode.Position }; row.style.flexDirection = FlexDirection.Row; row.style.flexWrap = Wrap.Wrap; row.style.alignItems = Align.Center;
-            var nm = VTxt(row, Ko.PosName(pos) + ": " + Ko.ItemName(it) + (it.Sockets == 0 ? "  (홈 없음)" : ""), 15, txt); nm.style.marginRight = 8;
+            var nm = VTxt(row, Ko.PosName(pos) + ": " + Ko.ItemName(it, Ko.FamilyOf(pos, lo)) + (it.Sockets == 0 ? "  (홈 없음)" : ""), 15, txt); nm.style.marginRight = 8;
             var itc = it; var posc = pos;
             for (int si = 0; si < it.Sockets; si++)
             {

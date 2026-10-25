@@ -1356,7 +1356,7 @@ public class JudgeSystem : MonoBehaviour
     string GearName(Slot s)
     {
         var it = lo.gear.Get(s);
-        return it == null ? "-" : Ko.ItemName(it) + "/" + it.Options.Count;
+        return it == null ? "-" : Ko.ItemName(it, Ko.FamilyOf(s, s == Slot.Weapon ? (WeaponId?)lo.weapon : null)) + "/" + it.Options.Count;
     }
 
     // ===== 화면 ====================================================================

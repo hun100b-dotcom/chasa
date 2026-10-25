@@ -96,7 +96,7 @@ public partial class CharacterPanel : MonoBehaviour
             else
             {
                 DrawIcon(slot, it, icon);
-                label += Ko.ItemName(it) + (it.Gradient ? "  [기울기 " + Ko.TiltName(it) + "]" : "");
+                label += Ko.ItemName(it, Ko.FamilyOf(pos, lo)) + (it.Gradient ? "  [기울기 " + Ko.TiltName(it) + "]" : "");
             }
             GUI.Label(new Rect(box.x + 76, y, box.width - 110, 24), label, body);
             if (it != null)

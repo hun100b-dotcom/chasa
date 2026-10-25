@@ -9,9 +9,11 @@ using UnityEngine;
 public static class ItemTexts
 {
     [System.Serializable] class Row { public string name; public string[] text; }
-    [System.Serializable] class Data { public Row[] seals; public Row[] skills; }
+    [System.Serializable] class GearRow { public string slot_or_family, rarity, name; public string[] text; }
+    [System.Serializable] class Data { public Row[] seals; public Row[] skills; public GearRow[] gear; }
 
     static Dictionary<string, string> seals, skills;
+    static Dictionary<string, GearRow> gear;   // 키: 칸(또는 무기 계열) + "|" + 등급(흔한·손본·귀한)
 
     static Dictionary<string, string> Index(Row[] rows)
     {
@@ -23,12 +25,13 @@ public static class ItemTexts
     static void Load()
     {
         if (seals != null) return;
-        seals = new Dictionary<string, string>(); skills = new Dictionary<string, string>();
+        seals = new Dictionary<string, string>(); skills = new Dictionary<string, string>(); gear = new Dictionary<string, GearRow>();
         var ta = Resources.Load<TextAsset>("Data/item_texts");
         if (ta == null) return;
         var d = JsonUtility.FromJson<Data>(ta.text);
         if (d == null) return;
         seals = Index(d.seals); skills = Index(d.skills);
+        if (d.gear != null) foreach (var g in d.gear) if (g != null && g.name != null) gear[g.slot_or_family + "|" + g.rarity] = g;
     }
 
     /// <summary>인 이름(큰 인이면 "큰 " 앞말은 떼고)의 세계관 문장. 없으면 빈 글자</summary>
@@ -37,5 +40,9 @@ public static class ItemTexts
         Load(); string v; if (sealName != null && sealName.StartsWith("큰 ")) sealName = sealName.Substring(2);
         return sealName != null && seals.TryGetValue(sealName, out v) ? v : "";
     }
+    /// <summary>칸(갓·도포·띠·신·노리개) 또는 무기 계열(철삭·육모방망이·요령·삼지창·명부 붓)과 등급 이름(흔한·손본·귀한)으로 고정된 장비 이름. 없으면 빈 글자</summary>
+    public static string GearName(string family, string rarityKo) { Load(); GearRow g; return family != null && gear.TryGetValue(family + "|" + rarityKo, out g) ? g.name : ""; }
+    /// <summary>그 장비의 세계관 문장(두 줄까지). 없으면 빈 글자</summary>
+    public static string GearText(string family, string rarityKo) { Load(); GearRow g; return family != null && gear.TryGetValue(family + "|" + rarityKo, out g) && g.text != null ? string.Join("\n", g.text) : ""; }
     public static string Skill(string skillName) { Load(); string v; return skillName != null && skills.TryGetValue(skillName, out v) ? v : ""; }
 }

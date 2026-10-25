@@ -172,7 +172,7 @@ public class DayScreen
         {
             var pos = Ko.PosOrder[k];
             var it = lo.gear.GetAt(pos);
-            string label = Ko.PosName(pos) + ": " + (!lo.gear.IsOpen(pos) ? "잠김" : it == null ? "(비어 있음)" : Ko.ItemName(it) + " 옵션 " + it.Options.Count + " 홈 " + it.Sockets + "/" + Balance.SOCKET_MAX);
+            string label = Ko.PosName(pos) + ": " + (!lo.gear.IsOpen(pos) ? "잠김" : it == null ? "(비어 있음)" : Ko.ItemName(it, Ko.FamilyOf(pos, lo)) + " 옵션 " + it.Options.Count + " 홈 " + it.Sockets + "/" + Balance.SOCKET_MAX);
             GUI.enabled = it != null;
             if (GUI.Button(new Rect(x + (k % 4) * (w / 4f), y + (k / 4) * 44, w / 4f - 4, 40), (selSlot == (int)pos ? "▶ " : "") + label, btn)) selSlot = (int)pos;
             GUI.enabled = true;

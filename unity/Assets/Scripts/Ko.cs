@@ -75,10 +75,27 @@ public static class Ko
     }
 
     /// <summary>장비 한 줄 이름. 이름 있는 장비는 그 이름, 아니면 등급 이름</summary>
-    public static string ItemName(ItemDef it)
+    public static string ItemName(ItemDef it, string family = null)
     {
-        return it.Named ? it.Name : RarityName(it.Rarity);
+        if (it.Named) return it.Name;
+        // 서사 이름표(칸×등급 → 고정 이름: 녹슨 철삭·헌 갓 …). 계열을 모르거나 표에 없으면 등급 이름
+        string n = ItemTexts.GearName(family ?? FamilyOf(it.Slot, null), RarityName(it.Rarity));
+        return n.Length > 0 ? n : RarityName(it.Rarity);
     }
+
+    /// <summary>장비 이름표의 키: 무기는 손에 든/등에 멘 무기 계열, 나머지는 칸 이름</summary>
+    public static string FamilyOf(Slot s, WeaponId? weapon)
+    {
+        if (s == Slot.Weapon) { if (weapon == null) return null; switch (weapon.Value) { case WeaponId.Chain: return "철삭"; case WeaponId.Mace: return "육모방망이"; case WeaponId.Bell: return "요령"; case WeaponId.Trident: return "삼지창"; default: return "명부 붓"; } }
+        return SlotName(s);
+    }
+    public static string FamilyOf(EquipPos p, Loadout lo)
+    {
+        if (p == EquipPos.Weapon1) return FamilyOf(Slot.Weapon, lo.weapon);
+        if (p == EquipPos.Weapon2) return FamilyOf(Slot.Weapon, lo.other);
+        return FamilyOf(KindOfPos(p), null);
+    }
+    static Slot KindOfPos(EquipPos p) { return Equipment.KindOf(p); }
 
     /// <summary>기울기 이름 (피 묻은 매듭·향 내음 …). 모르면 빈 글자</summary>
     public static string TiltName(ItemDef it)
@@ -90,7 +107,8 @@ public static class Ko
     /// <summary>드롭 알림용 한 줄 설명</summary>
     public static string Describe(ItemDef it)
     {
-        return RarityName(it.Rarity) + " " + SlotName(it.Slot) + (it.Named ? " [" + it.Name + "]" : "") +
+        string nm = ItemName(it); string head = nm == RarityName(it.Rarity) || it.Named ? RarityName(it.Rarity) + " " + SlotName(it.Slot) : nm;   // 이름표가 있으면 그 이름(헌 갓…)
+        return head + (it.Named ? " [" + it.Name + "]" : "") +
                " (옵션 " + it.Options.Count + (it.Gradient ? ", 기울기" : "") + ")";
     }
 }
