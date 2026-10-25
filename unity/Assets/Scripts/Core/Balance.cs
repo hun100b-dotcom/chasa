@@ -382,7 +382,7 @@ public static class Balance
     public const int RANK_A = 180;  // (기획 s1-curve3-check 10-26) 품계 문턱 계수: 처결 셈 = RANK_A × (품계−1)². 품계는 천도·파혼 처결 셈으로 오른다(옛 75는 천도 넋만 셌다)
     public const int RANK_2_TALLY = 75;  // (기획 first-5-minutes v2) 품계 2만 처결 셈 75 — 혼 셋과 박돌쇠(80)를 처결하면 천도든 파혼이든 5분 무렵 품계 2(첫 성장 보장)
     public const float BELL_SLOW = 0.25f;  // (기획 section6·appendix-2) 요령방울 타격 둔화: 적 이동 −25%
-    public const float BELL_SLOW_SEC = 1.0f;  // (appendix-2) 요령 1·2타 둔화 지속(초). 3타는 ×1.5
+    public const float BELL_SLOW_SEC = 2.0f;  // (appendix-2) 요령 1·2타 둔화 지속(초). 3타는 ×1.5
     public const float BELL_CALL_RADIUS = 6.0f;  // (appendix-2) 요령 Q 불러 세우기 반경(m)
     public const float BELL_CALL_PAUSE = 3.0f;  // (appendix-2) 불러 세우기: 무릎 꿇은 혼의 처결 대기가 멈추는 시간(초)
     public const float BELL_CALL_COOLDOWN = 10.0f;  // (appendix-2) 불러 세우기 재사용(초)
@@ -802,4 +802,8 @@ public static class Balance
     public const float ELITE_NIGHT_CHANCE = 0.3f;  // 거센 혼(처음 10분 M10) 첫 만남 뒤 구역마다 밤 출현 확률(아직 미연결)
     public const int ELITE_FIRST_SEC = 420;  // 거센 혼(처음 10분 M10) 첫 거센 혼이 늦어도 나오는 시각(초)
     public const int ELITE_FIRST_AWAY = 60;  // 거센 혼(처음 10분 M10) 첫 거센 혼: 이름혼 자리에서 이만큼 멀어지면 나온다(m)
+    public const float BELL_PAHON_SLOW_PCT = 0.4f;  // (기획 weapon-choice-skew) 요령 파혼 폭발에 맞은 적 둔화 비율. 적 둔화 합계 상한 40% 안
+    public const float BELL_PAHON_SLOW_TIME = 2.0f;  // (기획 weapon-choice-skew) 요령 파혼 둔화 지속(초)
+    public const float BELL_PAHON_SLOW_RADIUS = 4.0f;  // 요령 파혼 둔화 반경(m). 기획서에 반경 지정 없어 붓 파혼 튐(4m)과 같게 둠(임시)
+    public const float BRUSH_NAMED_JUDGE_RANGE = 6.0f;  // (기획 weapon-choice-skew) 이름 쓰기를 한 혼만 처결 거리를 이만큼(m)으로 늘린다
 }

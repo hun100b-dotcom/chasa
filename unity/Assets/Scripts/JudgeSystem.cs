@@ -126,12 +126,28 @@ public class JudgeSystem : MonoBehaviour
         return best;
     }
 
+    /// <summary>
+    /// 처결 대상 찾기. 명부 붓으로 이름을 쓴 혼은 6m 밖에서도 처결할 수 있다
+    /// (왜: 원거리 무기가 붙어서 1.5초를 시전하다 끊기면 무리 속에서 파혼만 정답이 되기 때문 — 기획 weapon-choice-skew)
+    /// </summary>
+    Enemy FindKneeling(System.Func<Enemy, bool> accept = null)
+    {
+        bool brush = lo.weapon == WeaponId.Brush;
+        float far = brush ? Mathf.Max(Balance.JUDGE_RANGE, Balance.BRUSH_NAMED_JUDGE_RANGE) : Balance.JUDGE_RANGE;
+        return enemies.NearestKneeling(player.Pos, far, x =>
+        {
+            float d = new Vector2(x.Pos.x - player.Pos.x, x.Pos.z - player.Pos.z).magnitude;
+            if (d > Balance.JUDGE_RANGE && !(brush && x.nameWritten)) return false;   // 보통 혼은 2.8m, 이름 쓴 혼만 6m
+            return accept == null || accept(x);
+        });
+    }
+
     public void CommandTendo()
     {
         if (Casting || !player.CanActNow()) return;
         // 천도는 보낼 수 있는 혼 중 가장 가까운 것을 고른다 — 곁에 덩어리(천도 불가)가 있어도 막히지 않게(QA)
-        var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE, x => x.soul.CanTendoWith(CluesFor(x.soul)));
-        if (e == null) e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);   // 없으면 가장 가까운 혼으로 이유를 안내
+        var e = FindKneeling(x => x.soul.CanTendoWith(CluesFor(x.soul)));
+        if (e == null) e = FindKneeling();   // 없으면 가장 가까운 혼으로 이유를 안내
         if (e == null) { Say("대상이 없다"); return; }
         if (!e.soul.CanTendo) { Say("보낼 수 없는 혼이다. 파혼만 된다"); return; }
         if (e.soul.Boss && !e.soul.CanTendoWith(CluesFor(e.soul))) cuts.Play(BossCut(e.soul, "NOCLUE"));   // 명부 인이 흐려졌다 꺼진다
@@ -161,7 +177,7 @@ public class JudgeSystem : MonoBehaviour
     public void CommandPahon()
     {
         if (Casting || !player.CanActNow()) return;
-        var e = enemies.NearestKneeling(player.Pos, Balance.JUDGE_RANGE);
+        var e = FindKneeling();
         if (e == null) { Say("대상이 없다"); return; }
         if (!e.soul.TryPahon()) return;
         player.ConsumeAct();   // 후딜·피하기를 끊고 파혼
@@ -191,6 +207,8 @@ public class JudgeSystem : MonoBehaviour
         growth.AddPahon();
         if (lo.weapon == WeaponId.Brush && e.ink > 0)   // 명부 붓 파혼: 표식 있는 혼이 터지면 먹이 튀어 둘레 4m 적에게 표식 +1
             foreach (var o in enemies.list) if (o != null && o != e && o.alive && new Vector2(o.Pos.x - e.Pos.x, o.Pos.z - e.Pos.z).magnitude <= Balance.BRUSH_NAME_SPLASH_RADIUS) { o.ink = Mathf.Min(Balance.BRUSH_MARK_MAX, o.ink + 1); o.inkT = Balance.BRUSH_MARK_SEC + 2f * growth.LevelOf("손에 익음"); }
+        if (lo.weapon == WeaponId.Bell)   // 요령 파혼: 터지는 곳 둘레 적을 −40%로 2초 늦춘다(왜: 무리 속에서 천도만 정답이던 쏠림을 푼다. 둔화 합계 상한 40%)
+            foreach (var o in enemies.list) if (o != null && o != e && o.alive && new Vector2(o.Pos.x - e.Pos.x, o.Pos.z - e.Pos.z).magnitude <= Balance.BELL_PAHON_SLOW_RADIUS) { o.weaponSlowAmt = Mathf.Max(o.weaponSlowAmt, Balance.BELL_PAHON_SLOW_PCT); o.weaponSlowT = Mathf.Max(o.weaponSlowT, Balance.BELL_PAHON_SLOW_TIME); }
         Tally(e);   // 처결 셈: 파혼은 그 혼의 기본 천도 넋(고리 배율 포함, 업 감쇠 전)만큼   // 파혼 15회마다: 파혼 길에도 도술 성장이 열린다
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Bosses.CoinFor(e.soul.BossId) : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3

@@ -295,10 +295,14 @@ public class Player : MonoBehaviour
     void ApplyWeaponTrait(Enemy e, int step)
     {
         if (e == null) return;
-        if (loadout.weapon == WeaponId.Bell && !e.soul.Boss)
+        if (loadout.weapon == WeaponId.Bell)
         {
-            e.weaponSlowAmt = Balance.BELL_SLOW + 0.05f * HandLevel;
-            e.weaponSlowT = Balance.BELL_SLOW_SEC * (step == Steps.Length ? 1.5f : 1f);
+            // 요령 둔화(기획 weapon-traits-3): 모든 타에 −25%·2초, 정예 −15%, 보스 −10%. 시간만 새로 고치고 겹쳐 쌓지 않는다
+            // 합계 상한 40% — 파혼 둔화(−40%)와 겹쳐도 그 이상 안 느려진다
+            float amt = Balance.BELL_SLOW + 0.05f * HandLevel;
+            if (e.soul.Boss) amt = Mathf.Min(amt, 0.10f); else if (e.elite) amt = Mathf.Min(amt, 0.15f);
+            e.weaponSlowAmt = Mathf.Min(0.4f, Mathf.Max(e.weaponSlowAmt, amt));
+            e.weaponSlowT = Balance.BELL_SLOW_SEC;
         }
         else if (loadout.weapon == WeaponId.Brush)
         {

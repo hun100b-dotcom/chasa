@@ -1424,7 +1424,7 @@
   "note": "(기획 section6·appendix-2) 요령방울 타격 둔화: 적 이동 −25%"
  },
  "BELL_SLOW_SEC": {
-  "value": 1.0,
+  "value": 2.0,
   "note": "(appendix-2) 요령 1·2타 둔화 지속(초). 3타는 ×1.5"
  },
  "BELL_CALL_RADIUS": {
@@ -3102,5 +3102,21 @@
  "ELITE_FIRST_AWAY": {
   "value": 60,
   "note": "거센 혼(처음 10분 M10) 첫 거센 혼: 이름혼 자리에서 이만큼 멀어지면 나온다(m)"
+ },
+ "BELL_PAHON_SLOW_PCT": {
+  "value": 0.4,
+  "note": "(기획 weapon-choice-skew) 요령 파혼 폭발에 맞은 적 둔화 비율. 적 둔화 합계 상한 40% 안"
+ },
+ "BELL_PAHON_SLOW_TIME": {
+  "value": 2.0,
+  "note": "(기획 weapon-choice-skew) 요령 파혼 둔화 지속(초)"
+ },
+ "BELL_PAHON_SLOW_RADIUS": {
+  "value": 4.0,
+  "note": "요령 파혼 둔화 반경(m). 기획서에 반경 지정 없어 붓 파혼 튐(4m)과 같게 둠(임시)"
+ },
+ "BRUSH_NAMED_JUDGE_RANGE": {
+  "value": 6.0,
+  "note": "(기획 weapon-choice-skew) 이름 쓰기를 한 혼만 처결 거리를 이만큼(m)으로 늘린다"
  }
 }
