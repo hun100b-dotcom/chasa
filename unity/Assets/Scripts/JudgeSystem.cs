@@ -1008,6 +1008,8 @@ public class JudgeSystem : MonoBehaviour
     void FillBossArea(HudState h)
     {
         h.BossName = null;
+        h.CastRatio = Casting ? Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)) : -1f;   // 시전 막대·짧은 한마디는 UiRoot 가 그린다(예전 IMGUI 는 ui 가 없을 때만)
+        h.SayText = toastT > 0f ? toast : null;
         // 경험치(품계) 막대: 처음 넋을 얻은 뒤에만(하나씩 열기)
         h.ShowExp = revNeok && FieldRules.On; h.Rank = growth.Rank;
         { int lo0 = GrowthState.NeokForRank(growth.Rank), hi0 = GrowthState.NeokForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.TotalNeok - lo0) / (hi0 - lo0); }
@@ -1386,7 +1388,7 @@ public class JudgeSystem : MonoBehaviour
             else if (GUI.Button(new Rect(Screen.width / 2f - 90, Screen.height * 0.25f + 260, 180, 70), "다시 (Space)")) RestartNight();
             return;
         }
-        if (Casting)
+        if (Casting && ui == null)
         {
             var bar = new Rect(Screen.width / 2f - 80, Screen.height * 0.72f, 160, 12);   // 스킬바·처결 카드 위(도술 칸을 가리지 않게)
             GUI.color = new Color(0, 0, 0, 0.7f); GUI.DrawTexture(bar, white);
@@ -1407,7 +1409,7 @@ public class JudgeSystem : MonoBehaviour
                 GUI.color = Color.white;
             }
         }
-        if (toastT > 0f)
+        if (toastT > 0f && ui == null)
         {
             var big = new GUIStyle(GUI.skin.label) { fontSize = 22, alignment = TextAnchor.MiddleCenter };
             big.normal.textColor = Color.white;

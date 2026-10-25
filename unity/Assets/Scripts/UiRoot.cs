@@ -162,7 +162,7 @@ public class UiRoot : MonoBehaviour
     // ---- 처음 5분 안내 띠: 하단 중앙, 스킬바 위. 키 그림 + 글자 22px, 행동하면 초록 체크 ----
     VisualElement guideBox, guideKeyBox; Label guideKey, guideText, guideTick; string lastGuide;
     // ---- 보스 체력바(위 가운데) · 지역 진입 알림 --------------------------------------
-    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill; Label expLabel; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
+    VisualElement bossBox, bossFill, areaBox, questBox, expBox, expFill, castBox, castFill; Label expLabel, sayLabel; Label questTitle, questBody; string lastQuest; Label bossName, areaLabel, areaSub;
     void BuildBossArea()
     {
         bossBox = new VisualElement { name = "boss", pickingMode = PickingMode.Ignore };
@@ -178,6 +178,16 @@ public class UiRoot : MonoBehaviour
         expFill = new VisualElement { pickingMode = PickingMode.Ignore }; expFill.style.height = Length.Percent(100); expFill.style.backgroundColor = new Color(0.45f, 0.78f, 0.82f);
         expBox.Add(expFill); root.Add(expBox);
         expLabel = Line(root, 13); expLabel.style.position = Position.Absolute; expLabel.style.left = U(24); expLabel.style.bottom = U(14); expLabel.style.color = new Color(0.8f, 0.9f, 0.9f); expLabel.style.display = DisplayStyle.None;
+        // 천도 시전 막대: 화면 높이 72% 자리(스킬바·처결 카드 위, 도술 칸을 가리지 않게)
+        castBox = new VisualElement { name = "cast", pickingMode = PickingMode.Ignore };
+        castBox.style.position = Position.Absolute; castBox.style.left = Length.Percent(50); castBox.style.top = Length.Percent(72);
+        castBox.style.width = U(300); castBox.style.height = U(16); castBox.style.marginLeft = -U(150); castBox.style.display = DisplayStyle.None;
+        castBox.style.backgroundColor = new Color(0f, 0f, 0f, 0.7f);
+        castFill = new VisualElement { pickingMode = PickingMode.Ignore }; castFill.style.height = Length.Percent(100); castFill.style.backgroundColor = ChasaPalette.CheondoGlow;
+        castBox.Add(castFill); root.Add(castBox);
+        // 짧은 한마디(예전 IMGUI 화면 가운데 글): 시전이 끊겼다·쓰러졌다 같은 알림
+        sayLabel = Line(root, 24); sayLabel.style.position = Position.Absolute; sayLabel.style.left = 0; sayLabel.style.right = 0; sayLabel.style.top = Length.Percent(28);
+        sayLabel.style.unityTextAlign = TextAnchor.MiddleCenter; sayLabel.style.color = Color.white; sayLabel.style.display = DisplayStyle.None;
         bossName = Line(bossBox, 24); bossName.style.color = new Color(0.95f, 0.9f, 0.8f); bossName.style.marginBottom = U(6);
         var frame = new VisualElement { pickingMode = PickingMode.Ignore };   // 틀: 어두운 판에 붉은 채움
         frame.style.width = U(960); frame.style.height = U(20); frame.style.backgroundColor = new Color(0.05f, 0.04f, 0.05f, 0.85f);
@@ -198,6 +208,9 @@ public class UiRoot : MonoBehaviour
         if (bossBox == null) return;
         expBox.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None; expLabel.style.display = Hud.ShowExp ? DisplayStyle.Flex : DisplayStyle.None;
         if (Hud.ShowExp) { expFill.style.width = Length.Percent(Mathf.Clamp01(Hud.ExpRatio) * 100f); expLabel.text = "품계 " + Hud.Rank; }
+        bool casting = Hud.CastRatio >= 0f; castBox.style.display = casting ? DisplayStyle.Flex : DisplayStyle.None;
+        if (casting) castFill.style.width = Length.Percent(Mathf.Clamp01(Hud.CastRatio) * 100f);
+        bool say = Hud.SayText != null; sayLabel.style.display = say ? DisplayStyle.Flex : DisplayStyle.None; if (say) sayLabel.text = Hud.SayText;
         bool quest = Hud.QuestTitle != null; questBox.style.display = quest ? DisplayStyle.Flex : DisplayStyle.None;
         if (quest) { string qk = Hud.QuestTitle + "|" + string.Join("|", Hud.QuestLines ?? new string[0]); if (qk != lastQuest) { lastQuest = qk; questTitle.text = Hud.QuestTitle; questBody.text = string.Join("\n", Hud.QuestLines ?? new string[0]); } }
         bool boss = Hud.BossName != null; bossBox.style.display = boss ? DisplayStyle.Flex : DisplayStyle.None;
@@ -215,6 +228,13 @@ public class UiRoot : MonoBehaviour
         band.style.flexDirection = FlexDirection.Row; band.style.alignItems = Align.Center; band.style.height = U(56);
         band.style.paddingLeft = U(20); band.style.paddingRight = U(24); band.style.backgroundColor = new Color(0.04f, 0.035f, 0.03f, 0.85f);   // 낮에도 묻히지 않게 먹판을 진하게(아트 hint_plate 9칸 슬라이스는 UI Toolkit 슬라이스 속성이 필요해 다음에)
         band.style.borderTopLeftRadius = 6; band.style.borderTopRightRadius = 6; band.style.borderBottomLeftRadius = 6; band.style.borderBottomRightRadius = 6;
+        var plate = UiTex("hint_plate");   // 아트 안내 글판(64×32, 9칸: 모서리 20,14,20,14 는 늘이지 않고 가운데만 늘인다)
+        if (plate != null)
+        {
+            band.style.backgroundImage = Background.FromTexture2D(plate); band.style.backgroundColor = Color.clear;
+            band.style.unitySliceLeft = 20; band.style.unitySliceRight = 20; band.style.unitySliceTop = 14; band.style.unitySliceBottom = 14;
+            band.style.paddingLeft = U(28); band.style.paddingRight = U(32);
+        }
         guideKeyBox = new VisualElement { pickingMode = PickingMode.Ignore };   // 키 그림: 둥근 밝은 판 + 글자
         guideKeyBox.style.height = U(40); guideKeyBox.style.minWidth = U(40); guideKeyBox.style.marginRight = U(14); guideKeyBox.style.paddingLeft = U(10); guideKeyBox.style.paddingRight = U(10);
         guideKeyBox.style.backgroundColor = new Color(0.92f, 0.9f, 0.82f, 1f); guideKeyBox.style.justifyContent = Justify.Center;
