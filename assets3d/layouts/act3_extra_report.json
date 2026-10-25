@@ -1,0 +1,80 @@
+{
+ "east": 209,
+ "west": 154,
+ "dropped_east": [],
+ "dropped_west": [
+  [
+   "a3g_bare_shrub",
+   -497.7,
+   184.6
+  ],
+  [
+   "a3s_plank_stack",
+   -387.7,
+   393.7
+  ],
+  [
+   "a3s_clay_stove",
+   -369.5,
+   401.0
+  ],
+  [
+   "a3g_bare_shrub",
+   -369.8,
+   287.6
+  ]
+ ],
+ "zone_counts": {
+  "harbor": 27,
+  "salt": 33,
+  "shoal": 39,
+  "cape": 18,
+  "shore": 76,
+  "gate": 37,
+  "shacks": 39,
+  "bridge": 9,
+  "market": 22,
+  "field": 36
+ },
+ "moved": 28,
+ "per_model_east": {
+  "a3c_barnacle_rock": 27,
+  "a3c_crab_pots": 10,
+  "a3c_driftwood": 24,
+  "a3c_hull_ribs": 3,
+  "a3c_seagrass": 83,
+  "a3c_shell_heap": 13,
+  "a3h_boat_upturned": 2,
+  "a3h_brine_trough": 5,
+  "a3h_clam_basket": 5,
+  "a3h_crate_stack": 6,
+  "a3h_firewood_stack": 7,
+  "a3h_fish_rack": 3,
+  "a3h_rope_post": 4,
+  "a3h_salt_sack_stack": 7,
+  "a3h_salt_shed": 1,
+  "a3h_salt_yoke": 6,
+  "a3h_seaweed_line": 2,
+  "a3h_tar_barrel": 1
+ },
+ "per_model_west": {
+  "a3g_abandoned_cart": 2,
+  "a3g_bare_shrub": 42,
+  "a3g_brazier": 2,
+  "a3g_snow_cairn": 9,
+  "a3g_snow_dead_tree": 13,
+  "a3g_snow_fence": 6,
+  "a3g_straw_bundle": 15,
+  "a3k_barrels": 7,
+  "a3k_cloth_rack": 5,
+  "a3k_crates": 8,
+  "a3s_clay_stove": 7,
+  "a3s_hen_coop": 4,
+  "a3s_jar_stand": 7,
+  "a3s_laundry_line": 5,
+  "a3s_plank_stack": 7,
+  "a3s_rag_tent": 8,
+  "shack_a": 4,
+  "shack_b": 3
+ }
+}

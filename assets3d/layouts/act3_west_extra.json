@@ -1,0 +1,1365 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(필드 절대)",
+ "note": "place_act3_life.py가 만든다. 직접 고치지 말고 스크립트를 고친다. act3_west_layout.json 옆에 같이 읽는다. z=땅 높이",
+ "props": [
+  {
+   "prop": "a3g_brazier",
+   "file": "assets3d/act3/a3g_brazier.glb",
+   "x": -541,
+   "y": 244,
+   "rot": 0,
+   "z": 1.0,
+   "note": "문지기 화톳불(Light_ 하나)",
+   "by_design": true
+  },
+  {
+   "prop": "a3g_brazier",
+   "file": "assets3d/act3/a3g_brazier.glb",
+   "x": -478,
+   "y": 262,
+   "rot": 0,
+   "z": 1.0,
+   "note": "주막 앞 화톳불"
+  },
+  {
+   "prop": "a3g_abandoned_cart",
+   "file": "assets3d/act3/a3g_abandoned_cart.glb",
+   "x": -520,
+   "y": 222,
+   "rot": 40,
+   "z": 0.99,
+   "note": "버려진 수레(눈 쌓임)"
+  },
+  {
+   "prop": "a3g_abandoned_cart",
+   "file": "assets3d/act3/a3g_abandoned_cart.glb",
+   "x": -462,
+   "y": 190,
+   "rot": 330,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_fence",
+   "file": "assets3d/act3/a3g_snow_fence.glb",
+   "x": -535,
+   "y": 200,
+   "rot": 90,
+   "z": 1.0,
+   "note": "눈 쌓인 낮은 울타리(성벽 따라)"
+  },
+  {
+   "prop": "a3g_snow_fence",
+   "file": "assets3d/act3/a3g_snow_fence.glb",
+   "x": -535,
+   "y": 210,
+   "rot": 90,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_fence",
+   "file": "assets3d/act3/a3g_snow_fence.glb",
+   "x": -535,
+   "y": 220,
+   "rot": 90,
+   "z": 1.05
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -522.55,
+   "y": 287.21,
+   "rot": 63,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -486.53,
+   "y": 271.9,
+   "rot": 233,
+   "z": 0.96,
+   "walk_snap": {
+    "from": [
+     -485.5344588591913,
+     270.1674283960974
+    ],
+    "to": [
+     -486.53,
+     271.9
+    ]
+   }
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -532.56,
+   "y": 169.47,
+   "rot": 189,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -475.7,
+   "y": 256.04,
+   "rot": 190,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -499.87,
+   "y": 195.99,
+   "rot": 115,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -473.74,
+   "y": 160.66,
+   "rot": 314,
+   "z": 0.96
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -546.6,
+   "y": 286.61,
+   "rot": 328,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -445.05,
+   "y": 209.71,
+   "rot": 114,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -532.88,
+   "y": 227.06,
+   "rot": 66,
+   "z": 2.14,
+   "walk_snap": {
+    "from": [
+     -532.7041813403454,
+     228.0458389008029
+    ],
+    "to": [
+     -532.88,
+     227.06
+    ]
+   }
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -468.72,
+   "y": 158.4,
+   "rot": 190,
+   "z": 0.99
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -543.45,
+   "y": 287.28,
+   "rot": 347,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -552.5,
+   "y": 148.29,
+   "rot": 37,
+   "z": 1.1
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -495.78,
+   "y": 259.22,
+   "rot": 67,
+   "z": 0.98,
+   "walk_snap": {
+    "from": [
+     -494.2500414624974,
+     257.9369463542628
+    ],
+    "to": [
+     -495.78,
+     259.22
+    ]
+   }
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -479.92,
+   "y": 159.35,
+   "rot": 169,
+   "z": 0.48
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -522.42,
+   "y": 145.82,
+   "rot": 70,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -509.92,
+   "y": 158.65,
+   "rot": 250,
+   "z": 1.0,
+   "walk_snap": {
+    "from": [
+     -508.50921818737595,
+     159.1580905407045
+    ],
+    "to": [
+     -509.92,
+     158.65
+    ]
+   }
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -470.7,
+   "y": 256.01,
+   "rot": 224,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -495.68,
+   "y": 218.64,
+   "rot": 170,
+   "z": 0.99
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -551.21,
+   "y": 257.43,
+   "rot": 325,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -481.37,
+   "y": 211.06,
+   "rot": 192,
+   "z": 0.99
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -554.37,
+   "y": 224.92,
+   "rot": 300,
+   "z": 1.09
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -471.41,
+   "y": 188.09,
+   "rot": 295,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -536.07,
+   "y": 257.48,
+   "rot": 187,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -497.45,
+   "y": 167.75,
+   "rot": 134,
+   "z": 0.97
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -494.63,
+   "y": 164.96,
+   "rot": 122,
+   "z": 0.91
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -522.27,
+   "y": 239.92,
+   "rot": 74,
+   "z": 1.64
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -478.98,
+   "y": 159.06,
+   "rot": 154,
+   "z": 0.46,
+   "walk_snap": {
+    "from": [
+     -479.4847275622074,
+     159.0613211192446
+    ],
+    "to": [
+     -478.98,
+     159.06
+    ]
+   }
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -551.31,
+   "y": 151.9,
+   "rot": 352,
+   "z": 1.03
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -540.16,
+   "y": 238.23,
+   "rot": 352,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -551.94,
+   "y": 196.44,
+   "rot": 72,
+   "z": 1.11
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -450.72,
+   "y": 197.91,
+   "rot": 39,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -495.92,
+   "y": 235.63,
+   "rot": 126,
+   "z": 0.99
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -516.46,
+   "y": 201.04,
+   "rot": 11,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -496.43,
+   "y": 278.8,
+   "rot": 46,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_fence",
+   "file": "assets3d/act3/a3g_snow_fence.glb",
+   "x": -450.06,
+   "y": 226.01,
+   "rot": 113,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_fence",
+   "file": "assets3d/act3/a3g_snow_fence.glb",
+   "x": -486.32,
+   "y": 190.55,
+   "rot": 218,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_snow_fence",
+   "file": "assets3d/act3/a3g_snow_fence.glb",
+   "x": -491.05,
+   "y": 164.9,
+   "rot": 137,
+   "z": 0.76,
+   "walk_snap": {
+    "from": [
+     -487.75715944832695,
+     166.0982146516484
+    ],
+    "to": [
+     -491.05,
+     164.9
+    ]
+   }
+  },
+  {
+   "prop": "a3s_laundry_line",
+   "file": "assets3d/act3/a3s_laundry_line.glb",
+   "x": -505,
+   "y": 430,
+   "rot": 0,
+   "z": 2.36,
+   "note": "움막촌 빨래줄"
+  },
+  {
+   "prop": "a3s_laundry_line",
+   "file": "assets3d/act3/a3s_laundry_line.glb",
+   "x": -470,
+   "y": 455,
+   "rot": 180,
+   "z": 1.64
+  },
+  {
+   "prop": "a3s_laundry_line",
+   "file": "assets3d/act3/a3s_laundry_line.glb",
+   "x": -520,
+   "y": 505,
+   "rot": 20,
+   "z": 2.68
+  },
+  {
+   "prop": "a3s_laundry_line",
+   "file": "assets3d/act3/a3s_laundry_line.glb",
+   "x": -478,
+   "y": 500,
+   "rot": 160,
+   "z": 1.8
+  },
+  {
+   "prop": "a3s_clay_stove",
+   "file": "assets3d/act3/a3s_clay_stove.glb",
+   "x": -481.82,
+   "y": 483.85,
+   "rot": 249,
+   "z": 1.88
+  },
+  {
+   "prop": "a3s_clay_stove",
+   "file": "assets3d/act3/a3s_clay_stove.glb",
+   "x": -489.66,
+   "y": 403.63,
+   "rot": 242,
+   "z": 2.04
+  },
+  {
+   "prop": "a3s_clay_stove",
+   "file": "assets3d/act3/a3s_clay_stove.glb",
+   "x": -519.95,
+   "y": 484.09,
+   "rot": 327,
+   "z": 2.68
+  },
+  {
+   "prop": "a3s_clay_stove",
+   "file": "assets3d/act3/a3s_clay_stove.glb",
+   "x": -452.29,
+   "y": 499.3,
+   "rot": 192,
+   "z": 1.26
+  },
+  {
+   "prop": "a3s_clay_stove",
+   "file": "assets3d/act3/a3s_clay_stove.glb",
+   "x": -536.91,
+   "y": 395.59,
+   "rot": 346,
+   "z": 3.03
+  },
+  {
+   "prop": "a3s_jar_stand",
+   "file": "assets3d/act3/a3s_jar_stand.glb",
+   "x": -485.58,
+   "y": 522.25,
+   "rot": 54,
+   "z": 1.97
+  },
+  {
+   "prop": "a3s_jar_stand",
+   "file": "assets3d/act3/a3s_jar_stand.glb",
+   "x": -527.6,
+   "y": 464.26,
+   "rot": 178,
+   "z": 2.84
+  },
+  {
+   "prop": "a3s_jar_stand",
+   "file": "assets3d/act3/a3s_jar_stand.glb",
+   "x": -466.98,
+   "y": 445.94,
+   "rot": 325,
+   "z": 1.55
+  },
+  {
+   "prop": "a3s_jar_stand",
+   "file": "assets3d/act3/a3s_jar_stand.glb",
+   "x": -511.47,
+   "y": 473.18,
+   "rot": 148,
+   "z": 2.5
+  },
+  {
+   "prop": "a3s_rag_tent",
+   "file": "assets3d/act3/a3s_rag_tent.glb",
+   "x": -516.78,
+   "y": 419.73,
+   "rot": 184,
+   "z": 2.61,
+   "walk_snap": {
+    "from": [
+     -519.279582772652,
+     419.73241340174866
+    ],
+    "to": [
+     -516.78,
+     419.73
+    ]
+   }
+  },
+  {
+   "prop": "a3s_rag_tent",
+   "file": "assets3d/act3/a3s_rag_tent.glb",
+   "x": -531.89,
+   "y": 537.47,
+   "rot": 173,
+   "z": 2.94
+  },
+  {
+   "prop": "a3s_rag_tent",
+   "file": "assets3d/act3/a3s_rag_tent.glb",
+   "x": -550.29,
+   "y": 481.03,
+   "rot": 108,
+   "z": 3.32
+  },
+  {
+   "prop": "a3s_rag_tent",
+   "file": "assets3d/act3/a3s_rag_tent.glb",
+   "x": -499.79,
+   "y": 474.66,
+   "rot": 47,
+   "z": 2.26
+  },
+  {
+   "prop": "a3s_rag_tent",
+   "file": "assets3d/act3/a3s_rag_tent.glb",
+   "x": -464.58,
+   "y": 489.22,
+   "rot": 210,
+   "z": 1.52
+  },
+  {
+   "prop": "a3s_plank_stack",
+   "file": "assets3d/act3/a3s_plank_stack.glb",
+   "x": -557.33,
+   "y": 536.75,
+   "rot": 319,
+   "z": 3.47
+  },
+  {
+   "prop": "a3s_plank_stack",
+   "file": "assets3d/act3/a3s_plank_stack.glb",
+   "x": -492.94,
+   "y": 394.1,
+   "rot": 237,
+   "z": 2.12
+  },
+  {
+   "prop": "a3s_plank_stack",
+   "file": "assets3d/act3/a3s_plank_stack.glb",
+   "x": -556.24,
+   "y": 415.42,
+   "rot": 210,
+   "z": 3.43
+  },
+  {
+   "prop": "a3s_plank_stack",
+   "file": "assets3d/act3/a3s_plank_stack.glb",
+   "x": -465.39,
+   "y": 501.4,
+   "rot": 45,
+   "z": 1.54
+  },
+  {
+   "prop": "a3s_plank_stack",
+   "file": "assets3d/act3/a3s_plank_stack.glb",
+   "x": -469.29,
+   "y": 512.24,
+   "rot": 173,
+   "z": 1.62,
+   "walk_snap": {
+    "from": [
+     -470.05231982434503,
+     511.59866259861565
+    ],
+    "to": [
+     -469.29,
+     512.24
+    ]
+   }
+  },
+  {
+   "prop": "a3s_hen_coop",
+   "file": "assets3d/act3/a3s_hen_coop.glb",
+   "x": -459.32,
+   "y": 497.61,
+   "rot": 287,
+   "z": 1.41
+  },
+  {
+   "prop": "a3s_hen_coop",
+   "file": "assets3d/act3/a3s_hen_coop.glb",
+   "x": -546.84,
+   "y": 466.58,
+   "rot": 297,
+   "z": 3.25
+  },
+  {
+   "prop": "a3s_hen_coop",
+   "file": "assets3d/act3/a3s_hen_coop.glb",
+   "x": -491.93,
+   "y": 486.09,
+   "rot": 51,
+   "z": 2.1
+  },
+  {
+   "prop": "a3s_hen_coop",
+   "file": "assets3d/act3/a3s_hen_coop.glb",
+   "x": -526.42,
+   "y": 408.79,
+   "rot": 243,
+   "z": 2.81
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -460.02,
+   "y": 442.66,
+   "rot": 293,
+   "z": 1.28
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -551.16,
+   "y": 386.73,
+   "rot": 201,
+   "z": 3.32
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -556.98,
+   "y": 436.87,
+   "rot": 314,
+   "z": 3.45
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -460.7,
+   "y": 511.49,
+   "rot": 169,
+   "z": 1.44
+  },
+  {
+   "prop": "shack_b",
+   "file": "assets3d/act3/shack_b.glb",
+   "x": -463.12,
+   "y": 401.56,
+   "rot": 206,
+   "z": 1.26
+  },
+  {
+   "prop": "shack_b",
+   "file": "assets3d/act3/shack_b.glb",
+   "x": -478.72,
+   "y": 397.53,
+   "rot": 216,
+   "z": 1.81
+  },
+  {
+   "prop": "shack_b",
+   "file": "assets3d/act3/shack_b.glb",
+   "x": -540.81,
+   "y": 497.88,
+   "rot": 20,
+   "z": 3.12
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -521.54,
+   "y": 482.74,
+   "rot": 347,
+   "z": 2.71
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -546.57,
+   "y": 488.11,
+   "rot": 306,
+   "z": 3.24
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -492.65,
+   "y": 400.77,
+   "rot": 66,
+   "z": 2.1
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -550.61,
+   "y": 457.22,
+   "rot": 41,
+   "z": 3.33
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -510.43,
+   "y": 458.07,
+   "rot": 125,
+   "z": 2.45
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -460.94,
+   "y": 464.37,
+   "rot": 272,
+   "z": 1.42
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -481.28,
+   "y": 412.98,
+   "rot": 78,
+   "z": 1.73
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -496.3,
+   "y": 402.12,
+   "rot": 148,
+   "z": 2.18
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -492.46,
+   "y": 471.31,
+   "rot": 108,
+   "z": 2.11
+  },
+  {
+   "prop": "a3s_rag_tent",
+   "file": "assets3d/act3/a3s_rag_tent.glb",
+   "x": -418.37,
+   "y": 436.21,
+   "rot": 305,
+   "z": 0.54
+  },
+  {
+   "prop": "a3s_rag_tent",
+   "file": "assets3d/act3/a3s_rag_tent.glb",
+   "x": -358.03,
+   "y": 403.96,
+   "rot": 144,
+   "z": 3.66,
+   "walk_snap": {
+    "from": [
+     -360.715734358647,
+     401.71415777191817
+    ],
+    "to": [
+     -358.03,
+     403.96
+    ]
+   }
+  },
+  {
+   "prop": "a3s_rag_tent",
+   "file": "assets3d/act3/a3s_rag_tent.glb",
+   "x": -358.16,
+   "y": 351.15,
+   "rot": 228,
+   "z": 0.75,
+   "walk_snap": {
+    "from": [
+     -362.65550366299703,
+     351.1525177158837
+    ],
+    "to": [
+     -358.16,
+     351.15
+    ]
+   }
+  },
+  {
+   "prop": "a3s_plank_stack",
+   "file": "assets3d/act3/a3s_plank_stack.glb",
+   "x": -358.98,
+   "y": 441.46,
+   "rot": 30,
+   "z": 0.55,
+   "walk_snap": {
+    "from": [
+     -360.9777246074141,
+     441.45751982275266
+    ],
+    "to": [
+     -358.98,
+     441.46
+    ]
+   }
+  },
+  {
+   "prop": "a3s_plank_stack",
+   "file": "assets3d/act3/a3s_plank_stack.glb",
+   "x": -424.08,
+   "y": 410.57,
+   "rot": 173,
+   "z": 0.33
+  },
+  {
+   "prop": "a3s_laundry_line",
+   "file": "assets3d/act3/a3s_laundry_line.glb",
+   "x": -414.17,
+   "y": 388.29,
+   "rot": 244,
+   "z": 0.37
+  },
+  {
+   "prop": "a3s_clay_stove",
+   "file": "assets3d/act3/a3s_clay_stove.glb",
+   "x": -353.97,
+   "y": 354.28,
+   "rot": 111,
+   "z": 0.75
+  },
+  {
+   "prop": "a3s_clay_stove",
+   "file": "assets3d/act3/a3s_clay_stove.glb",
+   "x": -418.81,
+   "y": 401.03,
+   "rot": 161,
+   "z": 1.63
+  },
+  {
+   "prop": "a3s_jar_stand",
+   "file": "assets3d/act3/a3s_jar_stand.glb",
+   "x": -335.64,
+   "y": 361.55,
+   "rot": 249,
+   "z": 0.74
+  },
+  {
+   "prop": "a3k_crates",
+   "file": "assets3d/act3/a3k_crates.glb",
+   "x": -304.99,
+   "y": 379.39,
+   "rot": 169,
+   "z": 0.82
+  },
+  {
+   "prop": "a3k_crates",
+   "file": "assets3d/act3/a3k_crates.glb",
+   "x": -192.44,
+   "y": 455.13,
+   "rot": 281,
+   "z": 1.0
+  },
+  {
+   "prop": "a3k_crates",
+   "file": "assets3d/act3/a3k_crates.glb",
+   "x": -195.32,
+   "y": 499.6,
+   "rot": 349,
+   "z": 1.01
+  },
+  {
+   "prop": "a3k_crates",
+   "file": "assets3d/act3/a3k_crates.glb",
+   "x": -284.29,
+   "y": 510.5,
+   "rot": 95,
+   "z": 1.0
+  },
+  {
+   "prop": "a3k_crates",
+   "file": "assets3d/act3/a3k_crates.glb",
+   "x": -223.73,
+   "y": 401.89,
+   "rot": 306,
+   "z": 1.0
+  },
+  {
+   "prop": "a3k_crates",
+   "file": "assets3d/act3/a3k_crates.glb",
+   "x": -169.03,
+   "y": 396.56,
+   "rot": 15,
+   "z": 1.0
+  },
+  {
+   "prop": "a3k_crates",
+   "file": "assets3d/act3/a3k_crates.glb",
+   "x": -307.53,
+   "y": 477.91,
+   "rot": 105,
+   "z": 0.99
+  },
+  {
+   "prop": "a3k_crates",
+   "file": "assets3d/act3/a3k_crates.glb",
+   "x": -208.94,
+   "y": 430.97,
+   "rot": 237,
+   "z": 1.0
+  },
+  {
+   "prop": "a3k_cloth_rack",
+   "file": "assets3d/act3/a3k_cloth_rack.glb",
+   "x": -236.64,
+   "y": 391.89,
+   "rot": 173,
+   "z": 1.01
+  },
+  {
+   "prop": "a3k_cloth_rack",
+   "file": "assets3d/act3/a3k_cloth_rack.glb",
+   "x": -182.6,
+   "y": 376.55,
+   "rot": 140,
+   "z": 1.0
+  },
+  {
+   "prop": "a3k_cloth_rack",
+   "file": "assets3d/act3/a3k_cloth_rack.glb",
+   "x": -254.11,
+   "y": 435.39,
+   "rot": 142,
+   "z": 1.0
+  },
+  {
+   "prop": "a3k_cloth_rack",
+   "file": "assets3d/act3/a3k_cloth_rack.glb",
+   "x": -246.69,
+   "y": 461.89,
+   "rot": 251,
+   "z": 1.0
+  },
+  {
+   "prop": "a3k_cloth_rack",
+   "file": "assets3d/act3/a3k_cloth_rack.glb",
+   "x": -243.81,
+   "y": 486.11,
+   "rot": 235,
+   "z": 1.01
+  },
+  {
+   "prop": "a3k_barrels",
+   "file": "assets3d/act3/a3k_barrels.glb",
+   "x": -261.12,
+   "y": 500.57,
+   "rot": 45,
+   "z": 1.01
+  },
+  {
+   "prop": "a3k_barrels",
+   "file": "assets3d/act3/a3k_barrels.glb",
+   "x": -183.25,
+   "y": 471.83,
+   "rot": 172,
+   "z": 1.01
+  },
+  {
+   "prop": "a3k_barrels",
+   "file": "assets3d/act3/a3k_barrels.glb",
+   "x": -258.81,
+   "y": 409.68,
+   "rot": 258,
+   "z": 1.01
+  },
+  {
+   "prop": "a3k_barrels",
+   "file": "assets3d/act3/a3k_barrels.glb",
+   "x": -317.63,
+   "y": 373.85,
+   "rot": 85,
+   "z": 0.67
+  },
+  {
+   "prop": "a3k_barrels",
+   "file": "assets3d/act3/a3k_barrels.glb",
+   "x": -323.75,
+   "y": 382.15,
+   "rot": 275,
+   "z": 0.51
+  },
+  {
+   "prop": "a3k_barrels",
+   "file": "assets3d/act3/a3k_barrels.glb",
+   "x": -198.86,
+   "y": 481.26,
+   "rot": 186,
+   "z": 1.01
+  },
+  {
+   "prop": "a3k_barrels",
+   "file": "assets3d/act3/a3k_barrels.glb",
+   "x": -189.4,
+   "y": 425.15,
+   "rot": 190,
+   "z": 1.0
+  },
+  {
+   "prop": "a3s_jar_stand",
+   "file": "assets3d/act3/a3s_jar_stand.glb",
+   "x": -209.19,
+   "y": 404.84,
+   "rot": 333,
+   "z": 1.0
+  },
+  {
+   "prop": "a3s_jar_stand",
+   "file": "assets3d/act3/a3s_jar_stand.glb",
+   "x": -209.77,
+   "y": 496.34,
+   "rot": 198,
+   "z": 1.01
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -514.75,
+   "y": 158.83,
+   "rot": 263,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -80.25,
+   "y": 303.7,
+   "rot": 214,
+   "z": 0.87
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -59.12,
+   "y": 183.34,
+   "rot": 19,
+   "z": 0.88
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -541.62,
+   "y": 207.85,
+   "rot": 53,
+   "z": 1.0
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -490.72,
+   "y": 233.55,
+   "rot": 186,
+   "z": 0.99
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -320.3,
+   "y": 319.12,
+   "rot": 335,
+   "z": 0.96
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -357.54,
+   "y": 188.01,
+   "rot": 261,
+   "z": 1.31
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -242.96,
+   "y": 282.06,
+   "rot": 345,
+   "z": 1.23
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -108.19,
+   "y": 216.96,
+   "rot": 209,
+   "z": 0.92
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -245.17,
+   "y": 71.22,
+   "rot": 81,
+   "z": 1.25
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -233.93,
+   "y": 209.68,
+   "rot": 281,
+   "z": 1.36
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -291.07,
+   "y": 114.87,
+   "rot": 63,
+   "z": 1.29
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -339.34,
+   "y": 78.87,
+   "rot": 16,
+   "z": 1.31
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -299.25,
+   "y": 176.08,
+   "rot": 2,
+   "z": 1.31
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -164.69,
+   "y": 248.29,
+   "rot": 245,
+   "z": 1.09
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -228.41,
+   "y": 166.01,
+   "rot": 205,
+   "z": 1.32
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -233.59,
+   "y": 134.59,
+   "rot": 5,
+   "z": 1.28
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -278.09,
+   "y": 134.75,
+   "rot": 22,
+   "z": 1.33
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -466.38,
+   "y": 35.62,
+   "rot": 343,
+   "z": 1.19
+  },
+  {
+   "prop": "a3g_bare_shrub",
+   "file": "assets3d/act3/a3g_bare_shrub.glb",
+   "x": -53.16,
+   "y": 294.18,
+   "rot": 253,
+   "z": 0.88
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -522.79,
+   "y": 74.4,
+   "rot": 94,
+   "z": 1.12
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -287.27,
+   "y": 292.49,
+   "rot": 9,
+   "z": 1.1
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -324.69,
+   "y": 226.65,
+   "rot": 92,
+   "z": 1.23
+  },
+  {
+   "prop": "a3g_snow_cairn",
+   "file": "assets3d/act3/a3g_snow_cairn.glb",
+   "x": -310.75,
+   "y": 160.2,
+   "rot": 78,
+   "z": 1.33
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -105.34,
+   "y": 124.06,
+   "rot": 252,
+   "z": 1.14
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -226.82,
+   "y": 44.6,
+   "rot": 147,
+   "z": 1.29
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -172.55,
+   "y": 282.94,
+   "rot": 287,
+   "z": 0.97
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -86.65,
+   "y": 251.39,
+   "rot": 263,
+   "z": 0.78
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -35.43,
+   "y": 148.23,
+   "rot": 154,
+   "z": 0.94
+  },
+  {
+   "prop": "a3g_straw_bundle",
+   "file": "assets3d/act3/a3g_straw_bundle.glb",
+   "x": -323.49,
+   "y": 52.2,
+   "rot": 278,
+   "z": 1.34
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -105.08,
+   "y": 182.74,
+   "rot": 109,
+   "z": 1.02
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -441.43,
+   "y": 89.84,
+   "rot": 126,
+   "z": 1.16
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -204.34,
+   "y": 172.94,
+   "rot": 306,
+   "z": 1.34
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -179.3,
+   "y": 67.96,
+   "rot": 204,
+   "z": 1.3
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -281.62,
+   "y": 315.11,
+   "rot": 357,
+   "z": 1.02
+  },
+  {
+   "prop": "a3g_snow_dead_tree",
+   "file": "assets3d/act3/a3g_snow_dead_tree.glb",
+   "x": -400.61,
+   "y": 223.88,
+   "rot": 68,
+   "z": 1.11,
+   "walk_snap": {
+    "from": [
+     -397.60720238480894,
+     223.88270643621436
+    ],
+    "to": [
+     -400.61,
+     223.88
+    ]
+   }
+  }
+ ]
+}

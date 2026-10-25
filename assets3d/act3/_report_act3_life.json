@@ -1,0 +1,376 @@
+[
+ {
+  "name": "a3h_fish_rack",
+  "label": "생선 말림대",
+  "tris": 448,
+  "size_m": [
+   3.96,
+   1.13,
+   1.9
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3h_boat_upturned",
+  "label": "엎어 둔 배",
+  "tris": 168,
+  "size_m": [
+   4.01,
+   2.03,
+   1.05
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3h_rope_post",
+  "label": "밧줄 말뚝",
+  "tris": 164,
+  "size_m": [
+   1.12,
+   0.62,
+   1.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3h_crate_stack",
+  "label": "궤짝 더미",
+  "tris": 60,
+  "size_m": [
+   1.73,
+   0.93,
+   1.04
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3h_seaweed_line",
+  "label": "미역 줄",
+  "tris": 196,
+  "size_m": [
+   4.11,
+   0.11,
+   1.9
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3h_clam_basket",
+  "label": "조개 바구니",
+  "tris": 210,
+  "size_m": [
+   1.53,
+   0.9,
+   0.51
+  ],
+  "min_z": -0.001
+ },
+ {
+  "name": "a3h_firewood_stack",
+  "label": "땔감 더미",
+  "tris": 452,
+  "size_m": [
+   2.16,
+   1.35,
+   1.07
+  ],
+  "min_z": 0.01
+ },
+ {
+  "name": "a3h_tar_barrel",
+  "label": "타르 통",
+  "tris": 116,
+  "size_m": [
+   1.46,
+   1.1,
+   0.78
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3h_salt_sack_stack",
+  "label": "소금 가마니",
+  "tris": 228,
+  "size_m": [
+   1.9,
+   0.98,
+   1.59
+  ],
+  "min_z": -0.004
+ },
+ {
+  "name": "a3h_salt_yoke",
+  "label": "소금 지게",
+  "tris": 132,
+  "size_m": [
+   0.88,
+   1.15,
+   1.21
+  ],
+  "min_z": -0.011
+ },
+ {
+  "name": "a3h_brine_trough",
+  "label": "소금물 구유",
+  "tris": 116,
+  "size_m": [
+   2.86,
+   0.88,
+   0.68
+  ],
+  "min_z": -0.005
+ },
+ {
+  "name": "a3h_salt_shed",
+  "label": "소금막",
+  "tris": 228,
+  "size_m": [
+   4.2,
+   3.0,
+   3.0
+  ],
+  "min_z": -0.005
+ },
+ {
+  "name": "a3c_driftwood",
+  "label": "유목",
+  "tris": 80,
+  "size_m": [
+   2.96,
+   1.1,
+   0.93
+  ],
+  "min_z": -0.02
+ },
+ {
+  "name": "a3c_barnacle_rock",
+  "label": "굴 붙은 갯바위",
+  "tris": 528,
+  "size_m": [
+   2.58,
+   1.9,
+   1.5
+  ],
+  "min_z": -0.15
+ },
+ {
+  "name": "a3c_seagrass",
+  "label": "갯풀",
+  "tris": 272,
+  "size_m": [
+   1.01,
+   1.18,
+   1.09
+  ],
+  "min_z": -0.007
+ },
+ {
+  "name": "a3c_crab_pots",
+  "label": "게통발",
+  "tris": 172,
+  "size_m": [
+   2.03,
+   1.14,
+   1.21
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3c_hull_ribs",
+  "label": "난파선 뼈대",
+  "tris": 216,
+  "size_m": [
+   4.29,
+   2.07,
+   1.66
+  ],
+  "min_z": -0.04
+ },
+ {
+  "name": "a3c_shell_heap",
+  "label": "조개 더미",
+  "tris": 330,
+  "size_m": [
+   1.87,
+   1.53,
+   0.56
+  ],
+  "min_z": -0.18
+ },
+ {
+  "name": "a3g_snow_dead_tree",
+  "label": "눈 덮인 고사목",
+  "tris": 164,
+  "size_m": [
+   2.31,
+   2.5,
+   4.55
+  ],
+  "min_z": -0.13
+ },
+ {
+  "name": "a3g_snow_fence",
+  "label": "눈 울타리",
+  "tris": 108,
+  "size_m": [
+   4.0,
+   0.52,
+   1.06
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3g_abandoned_cart",
+  "label": "버려진 수레",
+  "tris": 136,
+  "size_m": [
+   3.04,
+   1.46,
+   0.91
+  ],
+  "min_z": -0.015
+ },
+ {
+  "name": "a3g_brazier",
+  "label": "화톳불 통",
+  "tris": 156,
+  "size_m": [
+   1.4,
+   1.4,
+   1.34
+  ],
+  "min_z": -0.01
+ },
+ {
+  "name": "a3g_snow_cairn",
+  "label": "눈 돌탑",
+  "tris": 336,
+  "size_m": [
+   0.73,
+   0.84,
+   1.51
+  ],
+  "min_z": -0.073
+ },
+ {
+  "name": "a3g_straw_bundle",
+  "label": "볏짚단",
+  "tris": 84,
+  "size_m": [
+   1.13,
+   0.5,
+   1.18
+  ],
+  "min_z": -0.031
+ },
+ {
+  "name": "a3g_bare_shrub",
+  "label": "마른 떨기나무",
+  "tris": 116,
+  "size_m": [
+   1.05,
+   1.11,
+   0.99
+  ],
+  "min_z": -0.04
+ },
+ {
+  "name": "a3s_laundry_line",
+  "label": "빨래줄",
+  "tris": 100,
+  "size_m": [
+   3.6,
+   0.09,
+   2.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3s_clay_stove",
+  "label": "흙 화덕",
+  "tris": 122,
+  "size_m": [
+   1.0,
+   1.25,
+   1.39
+  ],
+  "min_z": -0.08
+ },
+ {
+  "name": "a3s_jar_stand",
+  "label": "독 받침",
+  "tris": 234,
+  "size_m": [
+   1.76,
+   0.76,
+   1.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3s_rag_tent",
+  "label": "거적 천막",
+  "tris": 72,
+  "size_m": [
+   2.8,
+   2.23,
+   1.73
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3s_plank_stack",
+  "label": "판자 더미",
+  "tris": 120,
+  "size_m": [
+   2.07,
+   0.91,
+   0.34
+  ],
+  "min_z": -0.05
+ },
+ {
+  "name": "a3s_hen_coop",
+  "label": "닭장",
+  "tris": 88,
+  "size_m": [
+   1.3,
+   1.41,
+   1.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3k_crates",
+  "label": "저잣 궤짝",
+  "tris": 60,
+  "size_m": [
+   2.5,
+   0.69,
+   1.25
+  ],
+  "min_z": -0.005
+ },
+ {
+  "name": "a3k_cloth_rack",
+  "label": "옷감 시렁",
+  "tris": 116,
+  "size_m": [
+   2.52,
+   0.09,
+   2.0
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "a3k_barrels",
+  "label": "통 둘",
+  "tris": 132,
+  "size_m": [
+   1.63,
+   0.87,
+   0.8
+  ],
+  "min_z": 0.0
+ }
+]
