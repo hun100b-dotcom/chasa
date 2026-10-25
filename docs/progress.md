@@ -1080,3 +1080,8 @@
 - TideBridge.cs: `tide_water*` 물판은 썰물에 맞춰 최대 1.2m 오르내림 / `bridge_deck*` 소품은 BridgeUnder 사각형 안에서 숨김(알파 재질이 오면 교체). FieldManager.Place 에서 이름으로 붙는다. 모델이 병합(아트 PR #30·다리 분리 모델)되면 바로 동작.
 - 장례 연기 방향: `Tide.SmokeDir(region)` (⑤=동쪽 +x). 연기 연출 자체는 아직 없어 방향 함수만 준비.
 - 남음: 3막 땅(구역별 origin Terrain 추가), 썰물 소리(sfx.weather 계열 확인 후), 3막 보스.
+## 2026-10-25 밤 — [사운드] 3막 보스 4종·3막 장례 효과음 + 소리 크기 믹스 기준표 (기획·사운드)
+- 3막 장례(funerals_act3.json, 9a1ed9b) 요청 10개: `cut.net.shake`·`cut.shovel.dig`·`cut.salt.scatter`·`cut.oar.row`·`cut.lamp.snuff`·`cut.kids.steps`·`amb.market.hush`·`cut.needle.sew`·`cut.charcoal.draw`·`cut.gate.creak`. 나머지(요령·곡소리·상여소리·엽전·장터·포구)는 이미 있음.
+- 3막 보스 16개: 망부석 아낙 `sfx.boss.mangbu.*` 4, 만선호 선장 `sfx.boss.seonjang.*` 4, 다리 밑 왕초 `sfx.boss.wangcho.*` 3, 흑월 2차 `sfx.boss.heukwol.*` 5(줄 위 넋 샘은 반복용).
+- 믹스 기준표: 숫자 원본 `data/audio_mix.json`, 설명 `docs/sound-mix-standard.md`. 1막 BGM 실측(탐험 -20·전투 -16 LUFS)이 커서 BGM 버스 0.5/0.45, 지역음 0.7, 날씨 0.6, UI 0.8, 컷신·천도·명부 때 더킹. 예고음은 절대 안 줄임.
+- 효과음 총 199개. 기존 파일 변화 없음. 미리듣기 v14.
