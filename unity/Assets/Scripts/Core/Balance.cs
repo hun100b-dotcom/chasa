@@ -522,4 +522,6 @@ public static class Balance
     public const int DMG_NUM_MAX = 6;  // 화면 데미지 숫자 최대 개수(겹침 방지)
     public const int DMG_NUM_SCATTER_PX = 24;  // 같은 자리 숫자를 좌우로 흩뿌리는 폭(px)
     public const float INTRO_DAMAGE_MULT = 0.5f;  // 첫 5분(시계 정지 중) 보스 아닌 혼의 피해 배율. 처음 1분 생존용(10-25)
+    public const float SUN_DAY_MULT = 0.7f;  // 낮 햇빛 세기 배율(키프레임 ×). 낮에 땅·지붕이 하얗게 날아가는 노출 과다 보정(PC 캡처 10-25). 밤은 1.0 그대로
+    public const float AMBIENT_DAY_MULT = 0.85f;  // 낮 그늘빛(주변광) 배율
 }

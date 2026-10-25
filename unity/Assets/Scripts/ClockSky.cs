@@ -85,8 +85,8 @@ public static class ClockSky
         {
             // 아트 키프레임이 있으면 빛·그늘 색을 그것으로(해 방향·높이는 위 계산 그대로). 보름밤 ×1.25, 초승밤 ×0.8
             float moon = dl < 0.5f ? (clock.FullMoon ? 1.25f : clock.NewMoon ? 0.8f : 1f) : 1f;
-            if (sun != null) { sun.color = ks.light; sun.intensity = ks.intensity * moon * SkyState.LightMult; }
-            RenderSettings.ambientLight = ks.ambient;
+            if (sun != null) { sun.color = ks.light; sun.intensity = ks.intensity * moon * SkyState.LightMult * Mathf.Lerp(1f, Balance.SUN_DAY_MULT, dl); }   // 낮엔 해를 눌러 땅이 하얗게 날아가지 않게(밤 1.0)
+            RenderSettings.ambientLight = ks.ambient * Mathf.Lerp(1f, Balance.AMBIENT_DAY_MULT, dl);
         }
         else RenderSettings.ambientLight = Color.Lerp(AmbNight, AmbDay, dl);
         var fog = Color.Lerp(FieldZones.NightFog, Color.Lerp(FogDay, new Color(0.85f, 0.55f, 0.45f), red * 0.5f), dl > 0.001f ? Mathf.Clamp01(dl * 1.2f) : 0f);
