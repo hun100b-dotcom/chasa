@@ -52,7 +52,7 @@ lights = [{"x": l["x"], "z": l["y"], "y": l["z"], "color": l["color"], "intensit
 # 보스 바닥 싸움터(2호 월화 굿판·3호 서 의원 마당): 그 안의 나무·바위·무덤을 치워 붉은 칸이 가려지지 않게 한다. 건물(당집·움막)은 남긴다.
 # 좌표는 Core/Boss.cs 의 보스 자리와 같다 — 한쪽을 바꾸면 이쪽도 바꿀 것. (x, z, 반지름 m)
 BOSS_CLEAR = [(580.0, 521.0, 10.0), (46.0, 453.0, 8.0)]
-KEEP = ("prop_ruined_shrine", "prop_quarantine_hut", "prop_mist_bank")
+KEEP = ("prop_ruined_shrine", "prop_quarantine_hut")
 before = len(items)
 items = [i for i in items if i["t"] or i["n"].startswith(KEEP) or not any(((i["x"] - cx) ** 2 + (i["z"] - cz) ** 2) ** 0.5 < r for cx, cz, r in BOSS_CLEAR)]
 print("보스 싸움터에서 치운 물건", before - len(items))
