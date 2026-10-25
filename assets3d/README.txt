@@ -128,3 +128,10 @@ hero_chasa.glb 동작 34개(60fps). 기존 9개(Idle·Walk·Attack/2/3=철삭·D
 고침: 칸과 무관한 연속 물길로 판다(river_field). 단면 = 한가운데 −0.30 → 물가로 얕아져 −0.10 → 물가선(물면 0.18보다 살짝 아래) → 둑 0.30. 물가선은 길이 방향 ±0.5m 구불거리고 남쪽 끝(y=272)은 둥글게 닫힘, 북쪽은 지도 끝까지.
   heightmap.png·splat_a/b.png(강바닥·둑=자갈, 물가선=거품·젖은 땅)·terrain.json(river 항목: 축·물 범위·바닥 깊이)을 새로 냈고, 연속 물판 terrain/river_water.glb(x 76~92, y 272~640, z 0.18, 4m 반복 uv)를 추가했다.
   br_* 조각 모델은 물판·바닥 상자가 칸마다 나뉘어 있어 격자처럼 보이니, 지형 + river_water.glb만 쓰길 권장(돌다리·나루터 같은 구조물은 그대로).
+
+== 첫인상: 로고·타이틀·로딩·아이콘 (tools/art3d/title_assets.py → assets3d/title/) ==
+  logo_chasa.png(밤 화면용 한지색+그림자, 투명 배경) · logo_chasa_ink.png(밝은 바탕용 먹색) · seal_chasa.png(붉은 인 '差使') — 나눔 붓글씨(OFL)로 쓴 '차사'에 마른 붓 질감을 입히고 직접 그린 도장을 얹었다. 상표성 문구·기존 작품 자원 없음.
+  favicon.svg / favicon.ico(16·32·48·64·256) / favicon_{16,32,48,64,192,512}.png / apple-touch-icon.png(180) — 붉은 도장 위 '差' 한 글자.
+  title_screen.png(1920×1080, 로고 합성) · title_bg.png(로고 없음 → 코드가 로고·버튼을 올릴 때) — 밤 서낭당 앞에 선 차사(3D 렌더, field_scene.py의 title 샷).
+  loading_1_solgogae.jpg · loading_2_mulmagi.jpg · loading_3_pyedang.jpg(1920×1080) — 구역별 밤 장면, 아래쪽 25%는 막대 자리라 어둡게. loading_bar_frame.png(1024×64) / loading_bar_fill.png(1024×40, 붉은 붓줄)은 왼쪽부터 잘라 보여 주면 막대가 된다.
+  title_manifest.json: 로고·막대 권장 위치.
