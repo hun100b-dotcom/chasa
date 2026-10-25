@@ -681,10 +681,11 @@ public class JudgeSystem : MonoBehaviour
     // ===== M1: 맞음·체력·쓰러짐 ======================================================
     /// <summary>적 공격이 명중했을 때. 무적 시간이면 무시. 천도 캐스팅 중이면 끊긴다 (무방비의 대가)</summary>
     /// <summary>보스 바닥 무늬(BossArena)에 맞았을 때. 피하기 무적이면 false(안 맞음)</summary>
-    public bool BossAreaHit(Enemy by)
+    float areaMult = 1f;   // 이번 보스 장판 한 번의 피해 배율(약해진 파도 = 0.5)
+    public bool BossAreaHit(Enemy by, float mult = 1f)
     {
         if (ledger.Dead || night.Over) return false;
-        float hp = ledger.Hp; OnPlayerHit(by);
+        float hp = ledger.Hp; areaMult = mult; OnPlayerHit(by); areaMult = 1f;
         return ledger.Hp < hp || godMode;
     }
 
@@ -693,6 +694,7 @@ public class JudgeSystem : MonoBehaviour
         if (ledger.Dead || night.Over || !player.Hurt()) return;
         // 상복 자락: 천도 시전 중에 맞으면 피해가 줄어든다
         int incoming = Casting ? Mathf.Max(1, Mathf.RoundToInt(by.damage * lo.stats.CastDamageTakenMult * weather.Fx.CastHit / Balance.WEATHER_CLEAR_CAST_HIT)) : by.damage;   // 안개: 천도 중 맞는 피해 ×(0.85/0.75)
+        if (areaMult != 1f) incoming = Mathf.Max(1, Mathf.RoundToInt(incoming * areaMult));
         // 첫 5분(시계 정지 중)은 배우는 시간: 보스가 아닌 혼의 피해를 절반으로(처음 1분을 못 버티고 쓰러지던 것 방지)
         if (introFrozen && !by.soul.Boss) incoming = Mathf.Max(1, Mathf.RoundToInt(incoming * Balance.INTRO_DAMAGE_MULT));
         sinceHit = 0f;
