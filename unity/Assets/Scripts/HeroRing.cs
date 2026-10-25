@@ -13,15 +13,19 @@ public class HeroRing : MonoBehaviour
 
     void Start()
     {
-        var tex = new Texture2D(64, 64, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear };
-        for (int y = 0; y < 64; y++) for (int x = 0; x < 64; x++)
+        var tex = Resources.Load<Texture2D>("Sprites/fx/hero_ring");   // 아트 납품 그림(청록 띠·눈금). 없으면 아래에서 코드로 대신 만든다
+        if (tex == null)
         {
-            float d = Vector2.Distance(new Vector2(x, y), new Vector2(31.5f, 31.5f)) / 31.5f;   // 0 중심 ~ 1 가장자리
-            float ring = Mathf.Clamp01(1f - Mathf.Abs(d - 0.86f) / 0.12f);   // 가장자리 안쪽의 가는 띠
-            float glow = Mathf.Clamp01(1f - d) * 0.25f;                      // 안쪽은 아주 옅게
-            tex.SetPixel(x, y, new Color(0.37f, 0.89f, 0.75f, Mathf.Clamp01(ring * 0.9f + glow) * (d <= 1f ? 1f : 0f)));
+            tex = new Texture2D(64, 64, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear };
+            for (int y = 0; y < 64; y++) for (int x = 0; x < 64; x++)
+            {
+                float d = Vector2.Distance(new Vector2(x, y), new Vector2(31.5f, 31.5f)) / 31.5f;   // 0 중심 ~ 1 가장자리
+                float ring = Mathf.Clamp01(1f - Mathf.Abs(d - 0.86f) / 0.12f);   // 가장자리 안쪽의 가는 띠
+                float glow = Mathf.Clamp01(1f - d) * 0.25f;                      // 안쪽은 아주 옅게
+                tex.SetPixel(x, y, new Color(0.37f, 0.89f, 0.75f, Mathf.Clamp01(ring * 0.9f + glow) * (d <= 1f ? 1f : 0f)));
+            }
+            tex.Apply();
         }
-        tex.Apply();
         var sh = Shader.Find("Sprites/Default");
         if (sh == null) { enabled = false; return; }
         mat = new Material(sh) { mainTexture = tex, color = new Color(1, 1, 1, 0.25f) };   // 전체 알파 25%
