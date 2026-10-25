@@ -303,6 +303,9 @@ namespace Chasa.Core
             return true;
         }
 
+        /// <summary>저장 불러오기용: 비교 없이 그 칸에 그대로 넣는다(null 이면 비움)</summary>
+        public void Put(Slot s, ItemDef it) { slots[(int)s] = it; }
+
         /// <summary>그 칸을 비운다 (풀기·분해에 쓴다)</summary>
         public void Remove(Slot s) { slots[(int)s] = null; }
 

@@ -1688,7 +1688,7 @@ public class CoreTests
         spent = 1000 - l.Coin;
         Assert.AreEqual(30 + 60 + 100 + 150 + 220, spent, "한 칸 5단계 = 560");
         Assert.IsFalse(Shrine.Enhance(it, l), "최대 +5");
-        Assert.AreEqual(before * 1.3f, GearStatsOf(it).DamagePct, 0.0001f, "주옵션 +30%");
+        Assert.AreEqual(before * (1f + Balance.ENHANCE_PCT * 5), GearStatsOf(it).DamagePct, 0.0001f, "주옵션 단계마다 +ENHANCE_PCT");
         Assert.AreEqual(0, l.Neok, "넋은 건드리지 않는다");
     }
 

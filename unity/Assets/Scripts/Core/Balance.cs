@@ -435,7 +435,7 @@ public static class Balance
     public const float JOY_DEADZONE_PX = 14.0f;  // (폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다
     public const float JOY_ZONE_WIDTH_FRAC = 0.45f;  // (폰 조작) 조이스틱이 생기는 화면 왼쪽 영역 너비 비율
     public const int ENHANCE_MAX = 5;  // (기획 4-4절 10-25, 임시) 장비 손보기 최대 단계(칸마다 +1~+5)
-    public const float ENHANCE_PCT = 0.06f;  // (기획 4-4절 10-25, 임시) 장비 손보기 한 단계마다 그 칸 주옵션(첫 옵션) +비율
+    public const float ENHANCE_PCT = 0.3f;  // (기획 4-4절 10-25 수정, 임시) 장비 손보기 한 단계마다 그 칸 주옵션(첫 옵션) 수치의 +30% (6%->30%)
     public const int ENHANCE_COST_1 = 30;  // (기획 4-4절 10-25, 임시) 장비 손보기 1단계 엽전
     public const int ENHANCE_COST_2 = 60;  // (기획 4-4절 10-25, 임시) 장비 손보기 2단계 엽전
     public const int ENHANCE_COST_3 = 100;  // (기획 4-4절 10-25, 임시) 장비 손보기 3단계 엽전

@@ -32,6 +32,9 @@ namespace Chasa.Core
     {
         readonly HashSet<string> ids = new HashSet<string>();
 
+        /// <summary>저장용: 지금까지 얻은 단서 이름 전부</summary>
+        public IEnumerable<string> All { get { return ids; } }
+
         public bool Has(string id) { return ids.Contains(id); }
 
         /// <summary>새 단서면 true (이미 있으면 false)</summary>

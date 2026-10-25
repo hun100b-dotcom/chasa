@@ -82,6 +82,9 @@ namespace Chasa.Core
             if (p != Phase) { Phase = p; Changed = p; }
         }
 
+        /// <summary>저장 불러오기용: 날 수와 하루 안의 분을 그대로 맞춘다(단계 알림은 울리지 않는다)</summary>
+        public void Set(int day, float minutes) { Day = Math.Max(0, day); Minutes = Wrap(minutes); Phase = PhaseAt(Minutes); Changed = null; }
+
         public ClockPhase? Consume() { var c = Changed; Changed = null; return c; }
 
         public static string PhaseName(ClockPhase p)
