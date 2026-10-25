@@ -24,7 +24,7 @@ public class Sfx : MonoBehaviour
     AudioSource castLoop, ambLoop;
     AudioLowPassFilter master;                    // 전체 먹먹함 필터(카메라의 귀에 붙인다)
     float cutoff = 20000f;
-    bool muted;
+    bool muted, ambOff;                           // ambOff: BGM 이 들어오면 임시 들판 소리(amb.field)는 끈다
     const string PREF = "chasa_muted";
 
     public static Sfx Create(JudgeSystem j)
@@ -34,6 +34,10 @@ public class Sfx : MonoBehaviour
     }
 
     void Awake() { I = this; }
+
+    public static bool Muted { get { return I != null && I.muted; } }
+    /// <summary>진짜 BGM 이 켜졌으니 임시 배경음(amb.field + 드론)을 끈다</summary>
+    public static void StopAmbient() { if (I != null) { I.ambOff = true; if (I.ambLoop != null) I.ambLoop.Stop(); } }
 
     void Start()
     {
@@ -128,7 +132,7 @@ public class Sfx : MonoBehaviour
     void ApplyMute()
     {
         if (muted) { foreach (var v in voices) v.Stop(); castLoop.Stop(); ambLoop.Stop(); }
-        else if (ambLoop.clip != null && !ambLoop.isPlaying) ambLoop.Play();
+        else if (!ambOff && ambLoop.clip != null && !ambLoop.isPlaying) ambLoop.Play();
     }
 
     /// <summary>화면 왼쪽 위의 작은 소리 켜기/끄기 버튼 (폰에서도 눌러야 하니까)</summary>

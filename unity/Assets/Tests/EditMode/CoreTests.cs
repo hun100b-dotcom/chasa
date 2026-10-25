@@ -1580,4 +1580,31 @@ public class CoreTests
         foreach (var n in new[] { "여럿 끌기", "매듭 걸음", "한 줄 꿰기", "터뜨리기" }) g.Learn(n);
         Assert.AreEqual(SkillTree.ActiveSlots, g.ActiveBar.Count);                       // 칸은 넷까지
     }
+
+    // ---- BGM 층 고르기 (기획·사운드 bgm.json) ----
+    [Test] public void Bgm_CombatEntersAt8mAndExitsAfter4s()
+        {
+            var d = new BgmDirector();
+            d.Update(0.1f, 1f, 20f, false, false); Assert.AreEqual(BgmLayer.Explore, d.Layer);
+            d.Update(0.1f, 1f, 7.9f, false, false); Assert.AreEqual(BgmLayer.Combat, d.Layer); Assert.AreEqual(1f, d.Fade);
+            d.Update(3.9f, 1f, 30f, false, false); Assert.AreEqual(BgmLayer.Combat, d.Layer);   // 4초 전엔 그대로
+            d.Update(0.2f, 1f, 30f, false, false); Assert.AreEqual(BgmLayer.Explore, d.Layer); Assert.AreEqual(3f, d.Fade);
+        }
+    [Test] public void Bgm_NightFlipUsesHysteresisAnd8sFade()
+        {
+            var d = new BgmDirector();
+            d.Update(0.1f, 0.35f, 99f, false, false); Assert.IsFalse(d.Night);   // 문턱 사이: 바뀌지 않는다
+            d.Update(0.1f, 0.2f, 99f, false, false); Assert.IsTrue(d.Night); Assert.AreEqual(8f, d.Fade);
+            d.Update(0.1f, 0.35f, 99f, false, false); Assert.IsTrue(d.Night);
+            d.Update(0.1f, 0.5f, 99f, false, false); Assert.IsFalse(d.Night);
+        }
+    [Test] public void Bgm_KneelPlaysOnceThenSilenceUntilDone()
+        {
+            var d = new BgmDirector();
+            d.Update(0.1f, 1f, 3f, true, true); Assert.AreEqual(BgmLayer.Finish, d.Layer); Assert.AreEqual(0.3f, d.Fade);
+            d.Update(3f, 1f, 3f, false, true); Assert.AreEqual(BgmLayer.Finish, d.Layer);
+            d.Update(4f, 1f, 3f, false, true); Assert.AreEqual(BgmLayer.Silent, d.Layer);   // 곡 끝 → 무음
+            d.Update(5f, 1f, 3f, false, true); Assert.AreEqual(BgmLayer.Silent, d.Layer);   // 아직 처결 중
+            d.Update(0.1f, 1f, 3f, false, false); Assert.AreEqual(BgmLayer.Explore, d.Layer); Assert.AreEqual(2f, d.Fade);
+        }
 }

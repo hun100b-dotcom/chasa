@@ -85,6 +85,7 @@ public class GameMain : MonoBehaviour
         if (World.Enabled) { var zm = gameObject.AddComponent<ZoneManager>(); zm.player = player; }   // 걸어가면 둘레 구역을 켜고 끈다
         if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)
         Sfx.Create(judge);   // 효과음 재생기
+        BgmPlayer.Create(judge);   // BGM 재생기(층 교차). 필드에서만 소리를 낸다
         if (DemoScript.Wanted()) { var ds = gameObject.AddComponent<DemoScript>(); ds.player = player; ds.enemies = enemies; ds.judge = judge; }   // ?demo=1 자동 연출
     }
 

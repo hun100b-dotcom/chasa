@@ -83,6 +83,8 @@ public class JudgeSystem : MonoBehaviour
     }
 
     public bool Casting => castTarget != null;
+    public int KneelEvents;   // 무릎 꿇은 횟수 누계(BGM 용)
+    public bool FieldMode { get { return clock != null; } }   // 필드(흐르는 하루)에서만 BGM 을 쓴다
 
     /// <summary>첫 입력이 있었던 것으로 친다(자동 연출·검증용). 이 전엔 적이 공격하지 않는다</summary>
     public void StartPlaying() { if (!played) { played = true; enemies.graceT = Balance.NIGHT_GRACE; } }
@@ -215,6 +217,7 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>맺힘 0 → 장비 드롭 판정 1회(처결 방식과 무관). 사나운 적은 귀한 확정</summary>
     void OnEnemyKneel(Enemy e)
     {
+        KneelEvents++;   // BGM 재생기가 '무릎 꿇는 순간'을 알아채는 번호표
         Sfx.Play("sfx.kneel");   // 무릎 꿇는 소리 = '지금 고를 때'
         Hint(HintEvent.FirstKneel);
         if (e.soul.Boss) cuts.Play("B01-KNEEL");   // 영감: "아직… 못 건넸소."
@@ -723,6 +726,19 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>싸울 수 있는 혼이나 처결 대기 혼이 이 거리 안에 있나 (평화로운 낮 판정)</summary>
+    /// <summary>BGM 용: 가장 가까운 살아 있는 적 거리와, 무릎 꿇은 채 처결을 기다리는 적 수</summary>
+    public float NearestEnemyDist(out int kneeling)
+    {
+        float best = float.MaxValue; kneeling = 0;
+        foreach (var e in enemies.list)
+        {
+            if (e.gone) continue;
+            float d = (e.Pos - player.Pos).magnitude; if (d < best) best = d;
+            if (e.kneeling) kneeling++;
+        }
+        return best;
+    }
+
     bool AnyEnemyNear(float range)
     {
         float r2 = range * range;
