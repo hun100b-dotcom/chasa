@@ -1541,3 +1541,7 @@
 - 세계·UI: 메뉴 버튼 `sfx.ui.click/back`(`UiSfx`, 닫기·취소·뒤로는 back), 동틀 녘 `sfx.clock.toll`(나머진 bell), 3막 ⑤ 물때 `sfx.tide.flood`/`amb.tide.ebb`, `sfx.repair.first`(손보기 성공), `sfx.reward.bar.open`(넋·엽전 칸 처음 나타날 때). 보류: `sfx.danger.enter`(원념 짙은 구역 개념이 코드에 없음), `amb.weather.rain_light`, `sfx.card.hover`, `cut.cough`(서사 대본), `cut.jing`.
 - 휠 줌: 트랙패드가 한 번에 두세 단계 넘기던 것을 0.18초 간격으로 막고, 미니맵 위에선 줌하지 않게 함.
 - 사운드 PR #39(1막 주변 소리 22개)는 아직 안 합침.
+## 2026-10-26 KST — [기획·사운드] 1막 솔고개 길 · 서낭당 5곳 · 외톨이 야영지 주변 소리
+- 새 소리 22개(tools/sfx_render.py): 서낭당 ①~⑤ 각자 다른 반복음, 넋길 문, 외톨이 야영지(반복·알아챔), 마을·보릿들·물막이 골 밤 바탕, 모닥불·대장간·개울·고목·허수아비 점 소리, 부엉이·먼 개·개구리·돌풍·덧문·보리 물결 한 방 소리.
+- 배치표 data/act1_soundscape.json(구역 바탕 / 좌표 점 소리 / 소품마다 / 가끔 섞기), 연결법 docs/act1-soundscape.md(처음 10분 동선 0:20~9:00 타임라인 포함).
+- 서낭당 ⑤는 코드가 정한 자리(574,552, field.json `prop_seonangdang_pyedang`)에 맞춤. 미리듣기 v25에 70초 밤길 시연 추가.
