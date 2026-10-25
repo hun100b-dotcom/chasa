@@ -1,0 +1,3814 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(필드 절대)",
+ "note": "place_act3_east.py가 만든다. z=땅 높이(terrain_act3_east), 선창 1.5, 물판 -0.5",
+ "props": [
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1108.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "note": "선창(R3-3 끝, 바다 위 널판 높이 1.5)",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1112.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1116.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1120.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1124.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1128.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1132.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1136.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1140.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_pier",
+   "file": "assets3d/act3/harbor_pier.glb",
+   "x": 1144.0,
+   "y": 440,
+   "rot": 0,
+   "z": 0.95,
+   "by_design": true
+  },
+  {
+   "prop": "harbor_gauge_post",
+   "file": "assets3d/act3/harbor_gauge_post.glb",
+   "x": 1128,
+   "y": 443,
+   "rot": 0,
+   "z": 0.95,
+   "note": "물때 눈금 말뚝",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_gauge_post",
+   "file": "assets3d/act3/harbor_gauge_post.glb",
+   "x": 1146,
+   "y": 437,
+   "rot": 0,
+   "z": 0.95,
+   "note": "물때 눈금 말뚝",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_boat",
+   "file": "assets3d/act3/harbor_boat.glb",
+   "x": 1126,
+   "y": 452,
+   "rot": 80,
+   "z": 0.1,
+   "note": "묶인 빈 배(흔들림은 코드, 기준 z=썰물 높이)",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_boat",
+   "file": "assets3d/act3/harbor_boat.glb",
+   "x": 1138,
+   "y": 428,
+   "rot": 100,
+   "z": 0.1,
+   "note": "묶인 빈 배(흔들림은 코드, 기준 z=썰물 높이)",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_boat",
+   "file": "assets3d/act3/harbor_boat.glb",
+   "x": 1152,
+   "y": 450,
+   "rot": 90,
+   "z": 0.1,
+   "note": "묶인 빈 배(흔들림은 코드, 기준 z=썰물 높이)",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_boat",
+   "file": "assets3d/act3/harbor_boat.glb",
+   "x": 1164,
+   "y": 430,
+   "rot": 85,
+   "z": 0.1,
+   "note": "묶인 빈 배(흔들림은 코드, 기준 z=썰물 높이)",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_lamp_hut",
+   "file": "assets3d/act3/harbor_lamp_hut.glb",
+   "x": 1132,
+   "y": 452,
+   "rot": 0,
+   "z": -2.47,
+   "note": "등대지기 막",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_net_frame",
+   "file": "assets3d/act3/harbor_net_frame.glb",
+   "x": 1003.0,
+   "y": 455.0,
+   "rot": 0,
+   "z": 1.25,
+   "note": "그물 너는 마당(B09-D2 엿듣기 자리)",
+   "walk_snap": {
+    "from": [
+     1000,
+     455
+    ],
+    "to": [
+     1003.0,
+     455.0
+    ]
+   }
+  },
+  {
+   "prop": "harbor_net_frame",
+   "file": "assets3d/act3/harbor_net_frame.glb",
+   "x": 1003,
+   "y": 463,
+   "rot": 0,
+   "z": 1.25
+  },
+  {
+   "prop": "harbor_net_frame",
+   "file": "assets3d/act3/harbor_net_frame.glb",
+   "x": 1010,
+   "y": 450,
+   "rot": 0,
+   "z": 1.25
+  },
+  {
+   "prop": "harbor_net_pile",
+   "file": "assets3d/act3/harbor_net_pile.glb",
+   "x": 993,
+   "y": 447,
+   "rot": 289,
+   "z": 1.25
+  },
+  {
+   "prop": "harbor_net_pile",
+   "file": "assets3d/act3/harbor_net_pile.glb",
+   "x": 1019.0,
+   "y": 461.0,
+   "rot": 210,
+   "z": 1.83,
+   "walk_snap": {
+    "from": [
+     1018,
+     461
+    ],
+    "to": [
+     1019.0,
+     461.0
+    ]
+   }
+  },
+  {
+   "prop": "harbor_net_pile",
+   "file": "assets3d/act3/harbor_net_pile.glb",
+   "x": 1021.62,
+   "y": 447.32,
+   "rot": 240,
+   "z": 1.61,
+   "walk_snap": {
+    "from": [
+     1022,
+     447
+    ],
+    "to": [
+     1021.62,
+     447.32
+    ]
+   }
+  },
+  {
+   "prop": "harbor_gaekju_house",
+   "file": "assets3d/act3/harbor_gaekju_house.glb",
+   "x": 1048.55,
+   "y": 480.89,
+   "rot": 180,
+   "z": 1.26,
+   "note": "객주 집(마루 앞 (1048,466), B10-D1 장부)",
+   "walk_snap": {
+    "from": [
+     1052,
+     478
+    ],
+    "to": [
+     1048.55,
+     480.89
+    ]
+   }
+  },
+  {
+   "prop": "harbor_inn",
+   "file": "assets3d/act3/harbor_inn.glb",
+   "x": 1017.32,
+   "y": 405.75,
+   "rot": 180,
+   "z": 1.25,
+   "note": "포구 주막(B10-D2)",
+   "walk_snap": {
+    "from": [
+     1020,
+     408
+    ],
+    "to": [
+     1017.32,
+     405.75
+    ]
+   }
+  },
+  {
+   "prop": "harbor_lamp_hut",
+   "file": "assets3d/act3/harbor_lamp_hut.glb",
+   "x": 985,
+   "y": 475,
+   "rot": 90,
+   "z": 1.24,
+   "note": "갯골댁 집"
+  },
+  {
+   "prop": "harbor_lamp_hut",
+   "file": "assets3d/act3/harbor_lamp_hut.glb",
+   "x": 1070,
+   "y": 405,
+   "rot": 270,
+   "z": 1.24,
+   "note": "순덕 집"
+  },
+  {
+   "prop": "harbor_jar",
+   "file": "assets3d/act3/harbor_jar.glb",
+   "x": 1064,
+   "y": 466,
+   "rot": 352,
+   "z": 1.25
+  },
+  {
+   "prop": "harbor_jar",
+   "file": "assets3d/act3/harbor_jar.glb",
+   "x": 1040,
+   "y": 468,
+   "rot": 43,
+   "z": 1.25
+  },
+  {
+   "prop": "harbor_jar",
+   "file": "assets3d/act3/harbor_jar.glb",
+   "x": 1012,
+   "y": 404,
+   "rot": 26,
+   "z": 1.25
+  },
+  {
+   "prop": "harbor_jar",
+   "file": "assets3d/act3/harbor_jar.glb",
+   "x": 1090,
+   "y": 440,
+   "rot": 123,
+   "z": 1.12
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 294,
+   "rot": 0,
+   "z": 1.27
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 302,
+   "rot": 0,
+   "z": -0.34
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 812,
+   "y": 310,
+   "rot": 0,
+   "z": -0.33
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 190,
+   "rot": 0,
+   "z": 1.39
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 294,
+   "rot": 0,
+   "z": 1.28
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 302,
+   "rot": 0,
+   "z": -0.34
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 820,
+   "y": 310,
+   "rot": 0,
+   "z": -0.33
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 294,
+   "rot": 0,
+   "z": 1.3
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 302,
+   "rot": 0,
+   "z": -0.34
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 828,
+   "y": 310,
+   "rot": 0,
+   "z": 0.2
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 294,
+   "rot": 0,
+   "z": 1.31
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 302,
+   "rot": 0,
+   "z": -0.34
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 836,
+   "y": 310,
+   "rot": 0,
+   "z": 0.2
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 294,
+   "rot": 0,
+   "z": 1.32
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 302,
+   "rot": 0,
+   "z": -0.34
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 844,
+   "y": 310,
+   "rot": 0,
+   "z": -0.01
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 294,
+   "rot": 0,
+   "z": 1.33
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 302,
+   "rot": 0,
+   "z": -0.34
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 852,
+   "y": 310,
+   "rot": 0,
+   "z": -0.18
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 294,
+   "rot": 0,
+   "z": 1.34
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 302,
+   "rot": 0,
+   "z": -0.34
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 860,
+   "y": 310,
+   "rot": 0,
+   "z": -0.3
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 294,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 302,
+   "rot": 0,
+   "z": -0.1
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 868,
+   "y": 310,
+   "rot": 0,
+   "z": -0.35
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 294,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 302,
+   "rot": 0,
+   "z": 0.51
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 876,
+   "y": 310,
+   "rot": 0,
+   "z": -0.35
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 294,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 302,
+   "rot": 0,
+   "z": 1.12
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 884,
+   "y": 310,
+   "rot": 0,
+   "z": -0.35
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 294,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 302,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 892,
+   "y": 310,
+   "rot": 0,
+   "z": -0.24
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 294,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 302,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 900,
+   "y": 310,
+   "rot": 0,
+   "z": 0.28
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 294,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 302,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 908,
+   "y": 310,
+   "rot": 0,
+   "z": 0.44
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 294,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 302,
+   "rot": 0,
+   "z": 0.62
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 916,
+   "y": 310,
+   "rot": 0,
+   "z": 0.35
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 286,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 294,
+   "rot": 0,
+   "z": 0.73
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 302,
+   "rot": 0,
+   "z": 0.35
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 924,
+   "y": 310,
+   "rot": 0,
+   "z": 0.62
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 278,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 286,
+   "rot": 0,
+   "z": 0.86
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 294,
+   "rot": 0,
+   "z": 0.35
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 302,
+   "rot": 0,
+   "z": 0.52
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 932,
+   "y": 310,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 270,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 278,
+   "rot": 0,
+   "z": 0.98
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 286,
+   "rot": 0,
+   "z": 0.35
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 294,
+   "rot": 0,
+   "z": 0.44
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 302,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 940,
+   "y": 310,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 190,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 198,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 206,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 214,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 222,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 230,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 238,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 246,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 254,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 262,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 270,
+   "rot": 0,
+   "z": 1.09
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 278,
+   "rot": 0,
+   "z": 0.35
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 286,
+   "rot": 0,
+   "z": 0.38
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 294,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 302,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pan",
+   "file": "assets3d/act3/salt_pan.glb",
+   "x": 948,
+   "y": 310,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_pile",
+   "file": "assets3d/act3/salt_pile.glb",
+   "x": 842,
+   "y": 246,
+   "rot": 278,
+   "z": 1.4,
+   "note": "소금 더미(달빛에 혼불처럼 보임)"
+  },
+  {
+   "prop": "salt_pile",
+   "file": "assets3d/act3/salt_pile.glb",
+   "x": 870,
+   "y": 258,
+   "rot": 13,
+   "z": 1.4,
+   "note": "소금 더미(달빛에 혼불처럼 보임)"
+  },
+  {
+   "prop": "salt_pile",
+   "file": "assets3d/act3/salt_pile.glb",
+   "x": 905,
+   "y": 262,
+   "rot": 71,
+   "z": 1.4,
+   "note": "소금 더미(달빛에 혼불처럼 보임)"
+  },
+  {
+   "prop": "salt_pile",
+   "file": "assets3d/act3/salt_pile.glb",
+   "x": 930,
+   "y": 292,
+   "rot": 96,
+   "z": 0.35,
+   "note": "소금 더미(달빛에 혼불처럼 보임)"
+  },
+  {
+   "prop": "salt_pile",
+   "file": "assets3d/act3/salt_pile.glb",
+   "x": 820,
+   "y": 290,
+   "rot": 27,
+   "z": 1.4,
+   "note": "소금 더미(달빛에 혼불처럼 보임)"
+  },
+  {
+   "prop": "salt_warehouse",
+   "file": "assets3d/act3/salt_warehouse.glb",
+   "x": 905.0,
+   "y": 300.0,
+   "rot": 0,
+   "z": 1.4,
+   "note": "소금 창고",
+   "walk_snap": {
+    "from": [
+     900,
+     300
+    ],
+    "to": [
+     905.0,
+     300.0
+    ]
+   }
+  },
+  {
+   "prop": "harbor_lamp_hut",
+   "file": "assets3d/act3/harbor_lamp_hut.glb",
+   "x": 911.94,
+   "y": 307.57,
+   "rot": 90,
+   "z": 0.38,
+   "note": "덕보 집",
+   "walk_snap": {
+    "from": [
+     915,
+     305
+    ],
+    "to": [
+     911.94,
+     307.57
+    ]
+   }
+  },
+  {
+   "prop": "salt_dike",
+   "file": "assets3d/act3/salt_dike.glb",
+   "x": 822,
+   "y": 250,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_dike",
+   "file": "assets3d/act3/salt_dike.glb",
+   "x": 839,
+   "y": 250,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_dike",
+   "file": "assets3d/act3/salt_dike.glb",
+   "x": 856,
+   "y": 250,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_dike",
+   "file": "assets3d/act3/salt_dike.glb",
+   "x": 873,
+   "y": 250,
+   "rot": 0,
+   "z": 1.4,
+   "note": "염전 둑(B09-D 염전 둑 880,250 주변)"
+  },
+  {
+   "prop": "salt_dike",
+   "file": "assets3d/act3/salt_dike.glb",
+   "x": 890,
+   "y": 250,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_dike",
+   "file": "assets3d/act3/salt_dike.glb",
+   "x": 907,
+   "y": 250,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_dike",
+   "file": "assets3d/act3/salt_dike.glb",
+   "x": 924,
+   "y": 250,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "salt_dike",
+   "file": "assets3d/act3/salt_dike.glb",
+   "x": 941,
+   "y": 250,
+   "rot": 0,
+   "z": 1.4
+  },
+  {
+   "prop": "cape_waiting_rock",
+   "file": "assets3d/act3/cape_waiting_rock.glb",
+   "x": 1236,
+   "y": 690,
+   "rot": 90,
+   "z": 3.03,
+   "note": "망부석(바다를 향함, 원 바깥 동쪽 끝)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1112.0,
+   "y": 622.0,
+   "rot": 0,
+   "z": 0.68,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1112.0,
+   "y": 625.6,
+   "rot": 358,
+   "z": 1.79,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1112.0,
+   "y": 629.2,
+   "rot": 351,
+   "z": 1.97,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1112.0,
+   "y": 632.8,
+   "rot": 10,
+   "z": 2.03,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1112.0,
+   "y": 636.4,
+   "rot": 358,
+   "z": 2.16,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1112.0,
+   "y": 640.0,
+   "rot": 0,
+   "z": 3.06,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1115.6,
+   "y": 622.0,
+   "rot": 358,
+   "z": 0.31,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1115.6,
+   "y": 625.6,
+   "rot": 11,
+   "z": 1.72,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1115.6,
+   "y": 629.2,
+   "rot": 359,
+   "z": 2.27,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1115.6,
+   "y": 632.8,
+   "rot": 358,
+   "z": 2.1,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1115.6,
+   "y": 636.4,
+   "rot": 8,
+   "z": 2.17,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1115.6,
+   "y": 640.0,
+   "rot": 352,
+   "z": 2.29,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1119.2,
+   "y": 622.0,
+   "rot": 351,
+   "z": 0.88,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1119.2,
+   "y": 625.6,
+   "rot": 2,
+   "z": 2.25,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1119.2,
+   "y": 629.2,
+   "rot": 356,
+   "z": 3.04,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1119.2,
+   "y": 632.8,
+   "rot": 351,
+   "z": 2.61,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1119.2,
+   "y": 636.4,
+   "rot": 356,
+   "z": 2.24,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1119.2,
+   "y": 640.0,
+   "rot": 358,
+   "z": 2.31,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1122.8,
+   "y": 622.0,
+   "rot": 8,
+   "z": 1.69,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1122.8,
+   "y": 625.6,
+   "rot": 10,
+   "z": 2.8,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1122.8,
+   "y": 629.2,
+   "rot": 10,
+   "z": 3.35,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1122.8,
+   "y": 632.8,
+   "rot": 356,
+   "z": 3.45,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1122.8,
+   "y": 636.4,
+   "rot": 353,
+   "z": 2.72,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1122.8,
+   "y": 640.0,
+   "rot": 9,
+   "z": 2.37,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1126.4,
+   "y": 622.0,
+   "rot": 2,
+   "z": 2.36,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1126.4,
+   "y": 625.6,
+   "rot": 1,
+   "z": 3.17,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1126.4,
+   "y": 629.2,
+   "rot": 6,
+   "z": 3.48,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1126.4,
+   "y": 632.8,
+   "rot": 0,
+   "z": 3.49,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1126.4,
+   "y": 636.4,
+   "rot": 3,
+   "z": 3.44,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1126.4,
+   "y": 640.0,
+   "rot": 10,
+   "z": 2.8,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1130.0,
+   "y": 622.0,
+   "rot": 7,
+   "z": 2.86,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1130.0,
+   "y": 625.6,
+   "rot": 353,
+   "z": 3.39,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1130.0,
+   "y": 629.2,
+   "rot": 0,
+   "z": 3.49,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1130.0,
+   "y": 632.8,
+   "rot": 3,
+   "z": 3.49,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1130.0,
+   "y": 636.4,
+   "rot": 351,
+   "z": 3.48,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1130.0,
+   "y": 640.0,
+   "rot": 353,
+   "z": 3.46,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1133.6,
+   "y": 622.0,
+   "rot": 352,
+   "z": 3.19,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1133.6,
+   "y": 625.6,
+   "rot": 2,
+   "z": 3.47,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1133.6,
+   "y": 629.2,
+   "rot": 351,
+   "z": 3.48,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1133.6,
+   "y": 632.8,
+   "rot": 358,
+   "z": 3.48,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1133.6,
+   "y": 636.4,
+   "rot": 350,
+   "z": 3.48,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_hutmyo",
+   "file": "assets3d/act3/cape_hutmyo.glb",
+   "x": 1133.6,
+   "y": 640.0,
+   "rot": 354,
+   "z": 3.48,
+   "note": "헛묘(마흔둘, B09-D1)",
+   "by_design": true
+  },
+  {
+   "prop": "cape_new_grave",
+   "file": "assets3d/act3/cape_new_grave.glb",
+   "x": 1122,
+   "y": 646,
+   "rot": 0,
+   "z": 2.48,
+   "note": "S-086 새 무덤(몸이 든 무덤)",
+   "by_design": true
+  },
+  {
+   "prop": "harbor_lamp_hut",
+   "file": "assets3d/act3/harbor_lamp_hut.glb",
+   "x": 1105,
+   "y": 625,
+   "rot": 0,
+   "z": 1.76,
+   "note": "헛묘지기 집",
+   "by_design": true
+  },
+  {
+   "prop": "shoal_wreck",
+   "file": "assets3d/act3/shoal_wreck.glb",
+   "x": 1135,
+   "y": 100,
+   "rot": 20,
+   "z": 0.0,
+   "note": "B-10 반쯤 가라앉은 배 갑판(썰물 밤에만 걸어 들어감)",
+   "by_design": true
+  },
+  {
+   "prop": "shoal_rock",
+   "file": "assets3d/act3/shoal_rock.glb",
+   "x": 1101.5,
+   "y": 124.0,
+   "rot": 210,
+   "z": 0.0,
+   "note": "여울 바위(B10-D3)",
+   "walk_snap": {
+    "from": [
+     1098,
+     124
+    ],
+    "to": [
+     1101.5,
+     124.0
+    ]
+   }
+  },
+  {
+   "prop": "shoal_rock",
+   "file": "assets3d/act3/shoal_rock.glb",
+   "x": 1113.5,
+   "y": 160.0,
+   "rot": 172,
+   "z": 0.0,
+   "walk_snap": {
+    "from": [
+     1110,
+     160
+    ],
+    "to": [
+     1113.5,
+     160.0
+    ]
+   }
+  },
+  {
+   "prop": "shoal_rock",
+   "file": "assets3d/act3/shoal_rock.glb",
+   "x": 1163.5,
+   "y": 132.0,
+   "rot": 216,
+   "z": 0.0,
+   "walk_snap": {
+    "from": [
+     1160,
+     132
+    ],
+    "to": [
+     1163.5,
+     132.0
+    ]
+   }
+  },
+  {
+   "prop": "shoal_rock",
+   "file": "assets3d/act3/shoal_rock.glb",
+   "x": 1172,
+   "y": 82,
+   "rot": 272,
+   "z": 0.0
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 800,
+   "y": 32,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 800,
+   "y": 288,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 864,
+   "y": 32,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 864,
+   "y": 288,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 928,
+   "y": 32,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 928,
+   "y": 288,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 928,
+   "y": 352,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 992,
+   "y": 32,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 992,
+   "y": 352,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1056,
+   "y": 32,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1056,
+   "y": 352,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 32,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 160,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 224,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 288,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 352,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 416,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 480,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 544,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 608,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 736,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 800,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 864,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 928,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": 992,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 32,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 96,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 160,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 224,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 288,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 352,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 416,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 480,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 544,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 608,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 736,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 800,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 864,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 928,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": 992,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 32,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 96,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 160,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 224,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 288,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 352,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 416,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 480,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 544,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 608,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 672,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 736,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 800,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 864,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 928,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": 992,
+   "rot": 0,
+   "z": -0.5,
+   "note": "물판(코드가 높이를 썰물 -0.5↔밀물 +0.6으로 움직임)"
+  }
+ ]
+}
