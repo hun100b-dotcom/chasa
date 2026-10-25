@@ -35,6 +35,8 @@ namespace Chasa.Core
             }
 
             Cooldown -= dt;
+            // 차례(토큰)를 못 받아 기다리는 혼이 대기 시간(0)이 끝난 채 쌓여 있다가, 자리가 나자마자 한꺼번에 때리는 것을 막는다: 대기를 반 간격으로 다시 건다
+            if (Blocked && Cooldown <= 0f) Cooldown = Interval * 0.5f;
             // 사거리 안에 들어와야 예비동작을 시작한다 (멀리서 헛되이 휘두르지 않게)
             if (Cooldown <= 0f && dist <= Range && !Blocked)
                 Windup = WindupTime;

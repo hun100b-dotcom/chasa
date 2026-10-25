@@ -13,16 +13,15 @@ using UnityEngine;
 public class CoverInstancer : MonoBehaviour
 {
     public Player player;
-    public static float Tier1Range = 70f, Tier2Range = 45f;   // 이 거리 밖은 안 그린다(m)
+    public static float Tier1Range = 48f, Tier2Range = 30f;   // 이 거리 밖은 안 그린다(m)
 
     struct Inst { public Vector3 pos; public Matrix4x4 world; public bool tier2; }
     class Part { public Mesh mesh; public int sub; public Material mat; public Matrix4x4 local; }
-    class Group { public Part[] parts; public Matrix4x4[][] bufs; public int count; }
+    class Group { public Part[] parts; public List<Matrix4x4[]>[] bufs; public int count; }
 
     readonly Dictionary<string, Part[]> partCache = new Dictionary<string, Part[]>();
     readonly Dictionary<Material, Material> matCache = new Dictionary<Material, Material>();
     readonly Dictionary<int, Dictionary<string, List<Inst>>> chunks = new Dictionary<int, Dictionary<string, List<Inst>>>();   // 청크 → 모델 이름 → 놓을 자리들
-    readonly Dictionary<string, Group> visible = new Dictionary<string, Group>();
     float rescan; Vector3 lastScan = new Vector3(1e9f, 0f, 1e9f);
 
     /// <summary>청크가 켜질 때 그 청크의 바닥 채움 소품을 등록한다(오브젝트는 안 만든다)</summary>
@@ -61,55 +60,55 @@ public class CoverInstancer : MonoBehaviour
         ps = list.ToArray(); partCache[name] = ps; return ps;
     }
 
+    public int DrawnCount { get { int n = 0; foreach (var g in groups.Values) n += g.count; return n; } }   // 지금 그리는 개수(검사용)
+    const int Batch = 1023;   // DrawMeshInstanced 한 번에 그릴 수 있는 최대 개수
     void Update()
     {
         if (player == null || chunks.Count == 0) return;
         rescan -= Time.unscaledDeltaTime;
         var p = player.Pos;
         if (rescan <= 0f || (p - lastScan).sqrMagnitude > 4f) { rescan = 0.25f; lastScan = p; Rescan(p); }
-        foreach (var g in visible.Values)
+        foreach (var g in groups.Values)
+        {
+            if (g.count == 0) continue;
             for (int i = 0; i < g.parts.Length; i++)
             {
-                var part = g.parts[i]; var buf = g.bufs[i];
-                for (int off = 0; off < g.count; off += 1023)   // 한 번에 최대 1023개
-                {
-                    int n = Mathf.Min(1023, g.count - off);
-                    if (off == 0) Graphics.DrawMeshInstanced(part.mesh, part.sub, part.mat, buf, n, null, UnityEngine.Rendering.ShadowCastingMode.Off, true);
-                    else { var tmp = new Matrix4x4[n]; System.Array.Copy(buf, off, tmp, 0, n); Graphics.DrawMeshInstanced(part.mesh, part.sub, part.mat, tmp, n, null, UnityEngine.Rendering.ShadowCastingMode.Off, true); }
-                }
+                var part = g.parts[i];
+                for (int b = 0, off = 0; off < g.count; b++, off += Batch)
+                    Graphics.DrawMeshInstanced(part.mesh, part.sub, part.mat, g.bufs[i][b], Mathf.Min(Batch, g.count - off), null, UnityEngine.Rendering.ShadowCastingMode.Off, true);
             }
+        }
     }
 
-    /// <summary>플레이어 둘레의 보일 것만 골라, 모델별·부품별 행렬 목록을 다시 만든다</summary>
+    readonly Dictionary<string, Group> groups = new Dictionary<string, Group>();   // 모델별 그릴 목록(배열을 다시 쓰려고 계속 들고 있는다: 쓰레기(GC) 줄이기)
+
+    /// <summary>플레이어 둘레의 보일 것만 골라, 모델별·부품별 행렬 배열을 다시 채운다(배열은 재사용)</summary>
     void Rescan(Vector3 p)
     {
         float q = QualityTier.DecorSkip > 0f ? 0.7f : 1f;   // 낮은 화질은 거리를 줄인다
         float r1 = Tier1Range * q, r2 = Tier2Range * q; float r1s = r1 * r1, r2s = r2 * r2;
-        var tmp = new Dictionary<string, List<Matrix4x4>>();
+        foreach (var g in groups.Values) g.count = 0;
         foreach (var cd in chunks.Values)
             foreach (var kv in cd)
             {
-                List<Matrix4x4> outL = null;
+                Group g = null;
                 foreach (var it in kv.Value)
                 {
                     float dx = it.pos.x - p.x, dz = it.pos.z - p.z, d2 = dx * dx + dz * dz;
                     if (d2 > (it.tier2 ? r2s : r1s)) continue;
-                    if (outL == null && !tmp.TryGetValue(kv.Key, out outL)) tmp[kv.Key] = outL = new List<Matrix4x4>();
-                    outL.Add(it.world);
+                    if (g == null && !groups.TryGetValue(kv.Key, out g))
+                    {
+                        var parts = PartsOf(kv.Key); if (parts.Length == 0) break;
+                        groups[kv.Key] = g = new Group { parts = parts, bufs = new List<Matrix4x4[]>[parts.Length] };
+                        for (int i = 0; i < parts.Length; i++) g.bufs[i] = new List<Matrix4x4[]>();
+                    }
+                    int k = g.count++, b = k / Batch, o = k % Batch;
+                    for (int i = 0; i < g.parts.Length; i++)
+                    {
+                        while (g.bufs[i].Count <= b) g.bufs[i].Add(new Matrix4x4[Batch]);
+                        g.bufs[i][b][o] = it.world * g.parts[i].local;   // 놓일 자리 × 부품의 모델 안 위치
+                    }
                 }
             }
-        visible.Clear();
-        foreach (var kv in tmp)
-        {
-            var parts = PartsOf(kv.Key); if (parts.Length == 0) continue;
-            var g = new Group { parts = parts, count = kv.Value.Count, bufs = new Matrix4x4[parts.Length][] };
-            for (int i = 0; i < parts.Length; i++)
-            {
-                var arr = new Matrix4x4[g.count];
-                for (int k = 0; k < g.count; k++) arr[k] = kv.Value[k] * parts[i].local;   // 놓일 자리 × 부품의 모델 안 위치
-                g.bufs[i] = arr;
-            }
-            visible[kv.Key] = g;
-        }
     }
 }

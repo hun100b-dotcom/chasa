@@ -38,7 +38,7 @@ public class FieldManager : MonoBehaviour
     float lampScan;
     int curChunk = -1;
 
-    public string Status { get { return "필드 청크 켜짐 " + roots.Count; } }
+    public string Status { get { return "필드 청크 켜짐 " + roots.Count + (cover != null ? " · 바닥 소품 " + cover.DrawnCount : ""); } }
 
     /// <summary>시작 위치·이야기 자리를 마커에서 읽어 FieldRules 에 넣는다. GameMain 이 맨 먼저 부른다</summary>
     public static void ApplyMarkers()

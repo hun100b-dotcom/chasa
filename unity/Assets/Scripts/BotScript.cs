@@ -37,6 +37,7 @@ public class BotScript : MonoBehaviour
     readonly HashSet<string> warnedClue = new HashSet<string>(); readonly Dictionary<string, float> clueNearT = new Dictionary<string, float>();
     readonly List<string> issues = new List<string>();
     float nextAttack, stageT, nextHeal; bool casting;
+    int maxNear; string maxNearAt = "";
     float ledger_HpRatio() { return judge.ledger.MaxHp <= 0 ? 1f : (float)judge.ledger.Hp / judge.ledger.MaxHp; }
     // 길찾기: 아트의 여유 폭 지도(1m 칸)를 A* 로 따라가 바위·물에 걸리지 않게 한다(직선으로만 가면 순간이동이 필요했다)
     GridPath nav; List<float[]> route; int routeIdx; Vector3 routeGoal;
@@ -100,6 +101,9 @@ public class BotScript : MonoBehaviour
         if (judge.BossOutcomeNow != 0) { Finish(judge.BossOutcomeNow == 1 ? "보스 천도 성공" : "보스 파혼"); return; }
         // 체력이 30% 아래면 회복약(실제 사람처럼. 약이 없으면 아무 일도 안 일어난다)
         if (ledger_HpRatio() < 0.3f && t >= nextHeal) { nextHeal = t + 1.5f; judge.CommandHeal(); }
+        // 둘레 25m 안 살아 있는 적 수의 최고치와 그 자리(구역 이름 포함) — 난이도 점검용
+        { int near = 0; foreach (var e in enemies.list) if (e != null && e.alive && Vector3.Distance(e.Pos, player.Pos) <= 25f) near++;
+          if (near > maxNear) { maxNear = near; maxNearAt = player.Pos.ToString("0") + " " + (FieldZones.CurrentName ?? ""); } }
         // ③ 무엇을 할까
         bool night = clk.Phase == ClockPhase.Night || clk.Phase == ClockPhase.Dusk;
         clk.Speed = (night ? 1f : speed);   // 낮 대기는 빨리, 밤 싸움은 실제 속도
@@ -252,7 +256,7 @@ public class BotScript : MonoBehaviour
         var sb = new StringBuilder();
         sb.Append("{\"결과\":\"").Append(why).Append("\",\"실제초\":").Append(t.ToString("0")).Append(",\"게임\":\"").Append(Stamp()).Append("\"");
         sb.Append(",\"단서\":").Append(ClueCount()).Append(",\"넋\":").Append(judge.ledger.Neok).Append(",\"기억\":").Append(judge.ledger.Memory).Append(",\"업\":").Append(judge.ledger.Karma);
-        sb.Append(",\"쓰러짐\":").Append(deaths).Append(",\"막힘순간이동\":").Append(unstucks).Append(",\"컷\":").Append(cutsSeen).Append(",\"문제\":[");
+        sb.Append(",\"쓰러짐\":").Append(deaths).Append(",\"막힘순간이동\":").Append(unstucks).Append(",\"컷\":").Append(cutsSeen).Append(",\"최대동시적25m\":\"").Append(maxNear).Append(" @ ").Append(maxNearAt).Append("\"").Append(",\"문제\":[");
         for (int i = 0; i < issues.Count; i++) { if (i > 0) sb.Append(','); sb.Append('"').Append(issues[i].Replace("\"", "'")).Append('"'); }
         sb.Append("]}");
         Debug.Log("[BOT-REPORT] " + sb);
