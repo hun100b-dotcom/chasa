@@ -84,6 +84,7 @@ public class GameMain : MonoBehaviour
             var atmo = gameObject.AddComponent<Atmosphere>();
             atmo.cam = cam; atmo.judge = judge; atmo.player = player; atmo.enemies = enemies;
         }
+        if (FieldRules.On) { var mm = gameObject.AddComponent<MiniMap>(); mm.judge = judge; mm.player = player; mm.cam = cam; }   // 필드 지도(오른쪽 위 작은 지도 + M 큰 지도)
         { var gfx = cam.gameObject.AddComponent<GradingFx>(); gfx.judge = judge; }   // 화면 분위기 후처리(색보정·블룸·비네트·천도 시야 축소). 카메라에 붙어야 OnRenderImage 가 불린다
         if (FieldRules.On) { var fm = gameObject.AddComponent<FieldManager>(); fm.player = player; }   // 걸어가면 둘레 청크를 켜고 끈다
         if (World.Enabled) { var zm = gameObject.AddComponent<ZoneManager>(); zm.player = player; }   // 걸어가면 둘레 구역을 켜고 끈다
@@ -102,7 +103,7 @@ public class GameMain : MonoBehaviour
     void Update()
     {
         if (Input.touchCount > 0) Ko.TouchUI = true;   // 실제로 터치가 들어오면 화면 버튼을 띄운다
-        if (CharacterPanel.Open || SettingsPanel.Open) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
+        if (CharacterPanel.Open || SettingsPanel.Open || MiniMap.BigOpen) { UpdateCamera(Time.unscaledDeltaTime); return; }   // 캐릭터 창이 열리면 세계 정지
         if (judge.InDay) { judge.Tick(0f, Mathf.Min(0.05f, Time.unscaledDeltaTime)); return; }   // 낮 화면: 세계는 멈추고 낮 화면만 흐른다
         if (!judge.NightOver) HandleInput();   // 결과 화면에서는 조작이 먹지 않는다(QA B4)
         float realDt = Mathf.Min(0.05f, Time.unscaledDeltaTime);

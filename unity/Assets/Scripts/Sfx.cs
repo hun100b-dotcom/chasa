@@ -139,7 +139,7 @@ public class Sfx : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M)) ToggleMute();
+        if (Input.GetKeyDown(KeyCode.N)) ToggleMute();   // 소리 끄기는 N (M 은 지도)
         if (judge == null) return;
         // 천도 캐스팅: 먹먹 필터 + 낮은 드론. CastZoom(0~1)이 올라갈수록 소리가 깎인다
         float cast = judge.CastZoom;

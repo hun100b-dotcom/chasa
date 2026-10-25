@@ -38,6 +38,15 @@ public static class FieldZones
     }
     static ZoneRow[] names;
 
+    /// <summary>구역 이름과 네모(지도 글자용). 없으면 빈 목록</summary>
+    public static List<KeyValuePair<string, Rect>> Labels()
+    {
+        if (!loaded) Load();
+        var l = new List<KeyValuePair<string, Rect>>();
+        if (names != null) foreach (var z in names) l.Add(new KeyValuePair<string, Rect>(z.name, Rect.MinMaxRect(z.x0, z.z0, z.x1, z.z1)));
+        return l;
+    }
+
     /// <summary>그 자리가 속한 구역 이름(없으면 빈 글자). 혼 모양 변형 고르기 같은 곳에 쓴다</summary>
     public static string NameAt(float x, float z)
     {
