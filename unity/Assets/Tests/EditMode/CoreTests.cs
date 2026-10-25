@@ -1540,6 +1540,7 @@ public class CoreTests
         Assert.AreEqual(1, GrowthState.RankFor(GrowthState.NeokForRank(2) - 1));
         Assert.AreEqual(50, GrowthState.RankFor(99999999));                            // 상한
         for (int r = 2; r <= 50; r++) Assert.Greater(GrowthState.NeokForRank(r), GrowthState.NeokForRank(r - 1));
+        Assert.AreEqual(75, GrowthState.NeokForRank(2)); Assert.AreEqual(27075, GrowthState.NeokForRank(20));   // 기획 성장 곡선: 75×(품계−1)², 시즌 1 끝이 약 20품계
     }
 
     [Test]
@@ -1548,7 +1549,7 @@ public class CoreTests
         var g = new GrowthState();
         int ups = g.AddNeok(GrowthState.NeokForRank(4));                                // 한 번에 3단계
         Assert.AreEqual(3, ups); Assert.AreEqual(4, g.Rank);
-        Assert.AreEqual(3, g.SkillPointsFree); Assert.AreEqual(15, g.StatPointsFree);
+        Assert.AreEqual(3, g.SkillPointsFree); Assert.AreEqual(3 * GrowthState.StatPerRank, g.StatPointsFree);
         g.AddBossPoint(); Assert.AreEqual(4, g.SkillPointsFree);                       // 보스 천도 +1
     }
 
@@ -1558,7 +1559,7 @@ public class CoreTests
         var g = new GrowthState();
         Assert.IsFalse(g.AddStat(0));                                                    // 점수 없이는 못 올림
         g.AddNeok(GrowthState.NeokForRank(2));
-        Assert.IsTrue(g.AddStat(0)); Assert.AreEqual(11, g.Stats[0]); Assert.AreEqual(4, g.StatPointsFree);
+        Assert.IsTrue(g.AddStat(0)); Assert.AreEqual(11, g.Stats[0]); Assert.AreEqual(GrowthState.StatPerRank - 1, g.StatPointsFree);
     }
 
     [Test]
@@ -2187,6 +2188,211 @@ public class CoreTests
             Assert.AreEqual(3, Act2Gate.HeukwolNight(3, false, -1));
         }
         finally { FieldRules.ResetRegions(); FieldRules.Act2 = a2; FieldRules.Act3 = a3; FieldRules.Act2Open = o2; FieldRules.Act3Open = o3; FieldRules.On = on0; }
+    }
+
+    // ---- 3막 보스(B-09~B-12) 행동 규칙 ----
+    static System.Collections.Generic.List<BossMove> RunBrain3(Act3Brain b, float sec, float dt = 0.1f)
+    {
+        var l = new System.Collections.Generic.List<BossMove>();
+        for (float t = 0f; t < sec; t += dt) { var m = b.Tick(dt); if (m.Act != BossAct.None) l.Add(m); }
+        return l;
+    }
+
+    [Test]
+    public void Act3Brain_B09_파도와_바다부르기_그리고_50퍼센트_옷던지기는_한번만()
+    {
+        var b = new Act3Brain(9, () => 0.5f);
+        var early = RunBrain3(b, 20f);
+        Assert.IsTrue(early.Exists(m => m.Act == BossAct.WaveRows && m.Count == Balance.B09_WAVE_ROWS));
+        Assert.IsTrue(early.Exists(m => m.Act == BossAct.CallSea));
+        Assert.IsFalse(early.Exists(m => m.Act == BossAct.ClothThrow));
+        b.Maedhim = b.MaedhimMax * 0.5f;
+        var late = RunBrain3(b, 0.2f);                       // 50% 가 되자마자 옷 던지기 장면이 나온다
+        Assert.AreEqual(1, late.FindAll(m => m.Act == BossAct.ClothThrow).Count);
+        float cut = b.OnClothCaught();                       // 창(2초)이 아직 열려 있으니 낚아채기 성공 → 맺힘이 준다
+        Assert.AreEqual(b.MaedhimMax * Balance.B09_CLOTH_CUT_PCT / 100f, cut, 0.01f);
+        Assert.AreEqual(0, RunBrain3(b, 20f).FindAll(m => m.Act == BossAct.ClothThrow).Count);   // 한 번뿐
+    }
+
+    [Test]
+    public void Act3Brain_B09_창이_닫힌_뒤_낚아채기는_효과없다()
+    {
+        var b = new Act3Brain(9, () => 0.5f); b.Maedhim = b.MaedhimMax * 0.4f;
+        RunBrain3(b, 10f);
+        float before = b.Maedhim;
+        Assert.AreEqual(0f, b.OnClothCaught()); Assert.AreEqual(before, b.Maedhim);
+    }
+
+    [Test]
+    public void Act3Brain_B10_50퍼센트_뒤엔_줄끊기가_두줄이다()
+    {
+        var b = new Act3Brain(10, () => 0.5f);
+        Assert.IsTrue(RunBrain3(b, 20f).Exists(m => m.Act == BossAct.RopeCut && m.Count == 1));
+        b.Maedhim = b.MaedhimMax * 0.4f;
+        var late = RunBrain3(b, 20f);
+        Assert.IsTrue(late.Exists(m => m.Act == BossAct.RopeCross && m.Count == 2));
+        Assert.IsFalse(late.Exists(m => m.Act == BossAct.RopeCut));
+    }
+
+    [Test]
+    public void Act3Brain_B12_단계마다_다른_공격_마지막은_공격없음_횃불은_큰물에서만_한번()
+    {
+        var b = new Act3Brain(12, () => 0.5f);
+        Assert.AreEqual(1, b.Stage12);
+        var s1 = RunBrain3(b, 30f);
+        Assert.IsTrue(s1.Exists(m => m.Act == BossAct.MirrorPull)); Assert.IsTrue(s1.Exists(m => m.Act == BossAct.HisPahon));
+        Assert.IsFalse(b.OnTorchPulled());                  // 큰물 단계가 아니면 횃불은 효과 없다
+        b.Maedhim = b.MaedhimMax * 0.6f; Assert.AreEqual(2, b.Stage12);
+        var s2 = RunBrain3(b, 30f);
+        Assert.IsTrue(s2.Exists(m => m.Act == BossAct.NameLines && m.Count == Balance.B12_LINES_ROWS));
+        Assert.IsFalse(s2.Exists(m => m.Act == BossAct.HisPahon));
+        b.Maedhim = b.MaedhimMax * 0.3f; Assert.AreEqual(3, b.Stage12);
+        Assert.IsTrue(b.OnTorchPulled()); Assert.IsFalse(b.OnTorchPulled());   // 1회만
+        Assert.AreEqual(Balance.B12_TORCH_STUN, b.Stun, 0.001f);
+        RunBrain3(b, Balance.B12_TORCH_STUN + 0.5f);
+        Assert.IsTrue(RunBrain3(b, 30f).Exists(m => m.Act == BossAct.Flood));
+        b.Maedhim = b.MaedhimMax * 0.1f; Assert.AreEqual(4, b.Stage12);
+        Assert.AreEqual(0, RunBrain3(b, 30f).Count);        // 사슬을 내려놓고 선다
+    }
+
+    [Test]
+    public void Act3Brain_번호_범위_밖은_예외()
+    {
+        Assert.Throws<System.ArgumentException>(() => new Act3Brain(8, () => 0f));
+        Assert.AreEqual(9, Bosses.Get(9).Id); Assert.AreEqual(12, Bosses.Get(12).Id);
+    }
+
+    // ---- 장비 7칸·고리 드롭·인 (Core/GearPlan.cs) ----
+    [Test]
+    public void EquipLayout_열리는_때와_인_홈()
+    {
+        Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Weapon2, false, false)); Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Robe, false, false)); Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Charm1, false, false));
+        Assert.IsFalse(EquipLayout.IsOpen(EquipPos.Hat, false, false)); Assert.IsFalse(EquipLayout.IsOpen(EquipPos.Belt, false, false));
+        Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Hat, true, false)); Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Belt, true, false));
+        Assert.IsFalse(EquipLayout.IsOpen(EquipPos.Shoes, true, false)); Assert.IsFalse(EquipLayout.IsOpen(EquipPos.Charm2, true, false));
+        Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Shoes, true, true)); Assert.IsTrue(EquipLayout.IsOpen(EquipPos.Charm2, false, true));
+        Assert.AreEqual(0, EquipLayout.SealSlots(EquipPos.Robe, Rarity.Common, false));
+        Assert.AreEqual(1, EquipLayout.SealSlots(EquipPos.Hat, Rarity.Crafted, false));
+        Assert.AreEqual(2, EquipLayout.SealSlots(EquipPos.Weapon1, Rarity.Rare, false));
+        Assert.AreEqual(2, EquipLayout.SealSlots(EquipPos.Weapon2, Rarity.Common, true));      // 이름 있는 물건은 귀한과 같다
+        Assert.AreEqual(0, EquipLayout.SealSlots(EquipPos.Belt, Rarity.Rare, false));          // 띠·신·노리개는 홈 없음
+        Assert.AreEqual(0, EquipLayout.SealSlots(EquipPos.Charm1, Rarity.Rare, true));
+    }
+
+    [Test]
+    public void RingLoot_고리별_확률의_합은_1이고_고리가_오를수록_귀한_쪽이_넓다()
+    {
+        float prevRare = -1f;
+        for (int ring = 1; ring <= 6; ring++)
+        {
+            float sum = RingLoot.Chance(ring, Rarity.Common) + RingLoot.Chance(ring, Rarity.Crafted) + RingLoot.Chance(ring, Rarity.Rare);
+            Assert.AreEqual(1f, sum, 0.001f);
+            Assert.Greater(RingLoot.Chance(ring, Rarity.Rare), prevRare); prevRare = RingLoot.Chance(ring, Rarity.Rare);
+        }
+        Assert.AreEqual(RingLoot.Chance(1, Rarity.Rare), RingLoot.Chance(0, Rarity.Rare), 0.0001f);   // 범위 밖은 가장자리로
+        Assert.AreEqual(RingLoot.Chance(6, Rarity.Rare), RingLoot.Chance(9, Rarity.Rare), 0.0001f);
+        Assert.AreEqual(Rarity.Rare, RingLoot.RarityAt(6, 0.2f));      // 고리 6 은 귀한 25%
+        Assert.AreEqual(Rarity.Crafted, RingLoot.RarityAt(6, 0.3f));
+        Assert.AreEqual(Rarity.Common, RingLoot.RarityAt(6, 0.9f));
+        Assert.AreEqual(Rarity.Common, RingLoot.RarityAt(1, 0.5f));    // 고리 1 은 귀한 2%·손본 18%
+    }
+
+    [Test]
+    public void RingLoot_위치로_고리를_정한다()
+    {
+        Assert.AreEqual(1, RingLoot.RingAt(200f, 100f, false)); Assert.AreEqual(2, RingLoot.RingAt(300f, 500f, true));
+        Assert.AreEqual(3, RingLoot.RingAt(100f, 900f, false)); Assert.AreEqual(4, RingLoot.RingAt(600f, 1000f, false));
+        Assert.AreEqual(5, RingLoot.RingAt(1000f, 400f, false)); Assert.AreEqual(6, RingLoot.RingAt(-300f, 300f, false));
+    }
+
+    [Test]
+    public void Loot_고리를_주면_고리표를_쓰고_안_주면_시연판_확률을_쓴다()
+    {
+        int rare6 = 0, rare0 = 0, n = 4000; var rng = new System.Random(7);
+        for (int i = 0; i < n; i++) { var it = Loot.Roll(() => (float)rng.NextDouble(), false, 6); if (it != null && it.Rarity == Rarity.Rare) rare6++; }
+        rng = new System.Random(7);
+        for (int i = 0; i < n; i++) { var it = Loot.Roll(() => (float)rng.NextDouble(), false, 0); if (it != null && it.Rarity == Rarity.Rare) rare0++; }
+        Assert.Greater(rare6, rare0 * 2);                               // 고리 6(25%)이 시연판(8%)보다 훨씬 자주 귀한 것을 준다
+        Assert.IsTrue(Loot.Roll(() => 0f, true, 3).Rarity == Rarity.Rare);   // 사나운 적은 어느 고리든 귀한 확정
+        var seq = new[] { 0f, 0.5f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f };
+        int k = 0; var a1 = Loot.Roll(() => seq[k++ % seq.Length], false);
+        k = 0; var a2 = Loot.Roll(() => seq[k++ % seq.Length], false, 0);
+        Assert.AreEqual(a1.Rarity, a2.Rarity); Assert.AreEqual(a1.Options.Count, a2.Options.Count);   // 기존 호출은 결과가 그대로
+    }
+
+    [Test]
+    public void Seal_열다섯_종과_비용()
+    {
+        Assert.AreEqual(15, Seal.AllKinds(false).Count);
+        var mono = new Seal(SoulColor.Red, SoulColor.Red, false); var pair = new Seal(SoulColor.Yellow, SoulColor.Blue, false);
+        Assert.AreEqual(Balance.SEAL_SMALL_NEOK, mono.CostOf(SoulColor.Red)); Assert.AreEqual(0, mono.CostOf(SoulColor.Blue));
+        Assert.AreEqual(Balance.SEAL_SMALL_NEOK / 2, pair.CostOf(SoulColor.Blue)); Assert.AreEqual(Balance.SEAL_SMALL_NEOK / 2, pair.CostOf(SoulColor.Yellow));
+        Assert.AreEqual(new Seal(SoulColor.Blue, SoulColor.Yellow, false).Key, pair.Key);   // 순서가 달라도 같은 인
+        Assert.AreEqual(Balance.SEAL_LARGE_NEOK / 2, new Seal(SoulColor.Black, SoulColor.White, true).CostOf(SoulColor.White));
+    }
+
+    [Test]
+    public void SoulWallet_모자라면_만들지_못하고_아무것도_깎지_않는다()
+    {
+        var w = new SoulWallet(); w.Add(SoulColor.Blue, 150); w.Add(SoulColor.Yellow, 149);
+        Assert.IsNull(w.Craft(SoulColor.Blue, SoulColor.Yellow, false));
+        Assert.AreEqual(150, w.Get(SoulColor.Blue)); Assert.AreEqual(149, w.Get(SoulColor.Yellow));
+        w.Add(SoulColor.Yellow, 1);
+        var s = w.Craft(SoulColor.Yellow, SoulColor.Blue, false);
+        Assert.IsNotNull(s); Assert.AreEqual(0, w.Get(SoulColor.Blue)); Assert.AreEqual(0, w.Get(SoulColor.Yellow));
+        Assert.IsNull(w.Craft(SoulColor.Red, SoulColor.Red, true));   // 큰 인은 900
+    }
+
+    [Test]
+    public void SealSet_홈_수를_넘겨_박지_못한다()
+    {
+        var set = new SealSet(EquipLayout.SealSlots(EquipPos.Hat, Rarity.Crafted, false));   // 손본 갓 = 홈 1
+        var s = new Seal(SoulColor.Blue, SoulColor.Blue, false);
+        Assert.IsTrue(set.Insert(s)); Assert.IsFalse(set.Insert(s));
+        Assert.IsTrue(set.Remove(0)); Assert.IsTrue(set.Insert(s)); Assert.IsFalse(set.Insert(null));
+        Assert.IsFalse(new SealSet(0).Insert(s));   // 흔한 등급은 홈이 없다
+    }
+
+    static ItemDef 시험물건(Slot k, Rarity r) { return new ItemDef { Slot = k, Rarity = r, Name = "시험" }; }
+
+    [Test]
+    public void Equipment_무기_노리개는_둘째_자리까지_채우고_갓은_해금_전엔_못_낀다()
+    {
+        var eq = new Equipment();
+        Assert.IsTrue(eq.TryEquip(시험물건(Slot.Weapon, Rarity.Common))); Assert.IsTrue(eq.TryEquip(시험물건(Slot.Weapon, Rarity.Common)));
+        Assert.IsNotNull(eq.GetAt(EquipPos.Weapon1)); Assert.IsNotNull(eq.GetAt(EquipPos.Weapon2));
+        Assert.IsFalse(eq.TryEquip(시험물건(Slot.Hat, Rarity.Rare)), "1막 보스 전엔 갓 자리가 닫혀 있다");
+        eq.FirstRingBossDone = true; Assert.IsTrue(eq.TryEquip(시험물건(Slot.Hat, Rarity.Common)));
+        Assert.IsTrue(eq.TryEquip(시험물건(Slot.Charm, Rarity.Common))); Assert.IsFalse(eq.TryEquip(시험물건(Slot.Charm, Rarity.Common)), "노리개 둘째 자리는 2막 진입 뒤");
+        eq.Act2Entered = true; Assert.IsTrue(eq.TryEquip(시험물건(Slot.Charm, Rarity.Common)));
+        // 가득 찬 뒤에는 더 나은 것만 가장 못한 자리를 대신한다
+        Assert.IsFalse(eq.TryEquip(시험물건(Slot.Weapon, Rarity.Common))); Assert.IsTrue(eq.TryEquip(시험물건(Slot.Weapon, Rarity.Rare)));
+    }
+
+    [Test]
+    public void Equipment_DropKinds_열린_종류만()
+    {
+        var eq = new Equipment();
+        Assert.AreEqual(3, eq.DropKinds().Length);
+        eq.FirstRingBossDone = true; Assert.AreEqual(5, eq.DropKinds().Length);
+        eq.Act2Entered = true; Assert.AreEqual(6, eq.DropKinds().Length);
+    }
+
+    [Test]
+    public void SaveGame_장비_8자리_왕복과_옛_3칸_저장_옮겨담기()
+    {
+        var g = new GrowthState(); var l = new Ledger(); var eq = new Equipment(); var cb = new ClueBook();
+        eq.FirstRingBossDone = true; eq.Act2Entered = true;
+        eq.PutAt(EquipPos.Hat, 시험물건(Slot.Hat, Rarity.Rare)); eq.PutAt(EquipPos.Charm2, 시험물건(Slot.Charm, Rarity.Crafted));
+        var back = SaveGame.Deserialize(SaveGame.Serialize(SaveGame.Capture(g, l, eq, cb)));
+        var eq2 = new Equipment(); SaveGame.Apply(back, new GrowthState(), new Ledger(), eq2, new ClueBook());
+        Assert.AreEqual(Rarity.Rare, eq2.GetAt(EquipPos.Hat).Rarity); Assert.AreEqual(Slot.Charm, eq2.GetAt(EquipPos.Charm2).Slot);
+        Assert.IsTrue(eq2.FirstRingBossDone && eq2.Act2Entered);
+        // 옛 저장: gear0(무기)·gear1(도포)·gear2(노리개) 만 있다
+        var txt = "v=1\nx=1\nz=1\nmin=1\ngear0=1|옛 사슬|0|0||0|0|0|\ngear1=-\ngear2=2|옛 노리개|0|0||0|0|0|\n";
+        var old = SaveGame.Deserialize(txt); Assert.IsNotNull(old);
+        var eq3 = new Equipment(); SaveGame.Apply(old, new GrowthState(), new Ledger(), eq3, new ClueBook());
+        Assert.AreEqual("옛 사슬", eq3.GetAt(EquipPos.Weapon1).Name); Assert.IsNull(eq3.GetAt(EquipPos.Robe)); Assert.AreEqual("옛 노리개", eq3.GetAt(EquipPos.Charm1).Name);
     }
 
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }

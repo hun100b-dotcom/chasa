@@ -15,15 +15,17 @@ public class Act2BossArena : MonoBehaviour
     enum Shape { Circle, Sector, Bar, Ring }
     class Tele { public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
 
-    JudgeSystem judge; Enemy boss; BossDef def; Act2Brain brain;
+    JudgeSystem judge; Enemy boss; BossDef def; Act2Brain brain; Act3Brain brain3;   // 2막(5~8)은 brain, 3막(9~12)은 brain3 — 같은 화면 코드가 둘을 다 그린다
     readonly List<Tele> teles = new List<Tele>();
     readonly List<Enemy> soldiers = new List<Enemy>();
-    float fightArea = 16f;
+    float fightArea = 16f, closedToast;
 
     public void Init(JudgeSystem j, Enemy b, BossDef d)
     {
         judge = j; boss = b; def = d;
-        brain = new Act2Brain(d.Id, () => Random.value);
+        judge.OnJudged += OnJudged;
+        if (d.Id >= 9) brain3 = new Act3Brain(d.Id, () => Random.value); else brain = new Act2Brain(d.Id, () => Random.value);
+        if (d.Id == 9) fightArea = 15f; else if (d.Id == 10 || d.Id == 11) fightArea = 14f; else if (d.Id == 12) fightArea = 18f;   // 기획 act3_map boss_arenas 반경
         if (d.Id == 7) fightArea = Balance.B07_ARENA_START + 2f;
     }
 
@@ -31,22 +33,78 @@ public class Act2BossArena : MonoBehaviour
 
     void Update()
     {
-        if (judge == null || boss == null || brain == null) return;
+        if (judge == null || boss == null || (brain == null && brain3 == null)) return;
         if (boss.soul.State == SoulState.Gone) { Clear(); return; }
         float dist = new Vector2(judge.player.Pos.x - def.X, judge.player.Pos.z - def.Z).magnitude;
-        bool fight = dist < fightArea && boss.alive && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
+        // B-10 난파 여울은 썰물 밤에만 열린다(밀물 밤엔 물에 잠김): 닫혀 있으면 싸움이 시작되지 않고 입구에서 한 줄 안내
+        bool shoalClosed = def.Id == 10 && judge.clock != null && !(judge.clock.Phase == ClockPhase.Night && Tide.IsEbbNight(judge.clock.Day));
+        closedToast -= Time.deltaTime;
+        if (shoalClosed && dist < fightArea + 10f && closedToast <= 0f) { closedToast = 8f; judge.Say("물이 들었다"); }
+        bool fight = !shoalClosed && dist < fightArea && boss.alive && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
         if (!fight) { Clear(); return; }
         float dt = Time.deltaTime;
-        brain.Maedhim = boss.soul.Maedhim; brain.MaedhimMax = boss.soul.MaedhimMax;
         soldiers.RemoveAll(s => s == null || !s.alive);
-        brain.Soldiers = soldiers.Count;
+        if (brain != null) { brain.Maedhim = boss.soul.Maedhim; brain.MaedhimMax = boss.soul.MaedhimMax; brain.Soldiers = soldiers.Count; }
+        else { brain3.Maedhim = boss.soul.Maedhim; brain3.MaedhimMax = boss.soul.MaedhimMax; }
         if (boss.kneeling) { Clear(); return; }   // 처결 대기 중엔 공격하지 않는다
-        var mv = brain.Tick(dt);
+        var mv = brain != null ? brain.Tick(dt) : brain3.Tick(dt);
         if (mv.Act != BossAct.None) Start(mv);
         TickTeles(dt);
+        TickPoints();
     }
 
-    void Clear() { foreach (var t in teles) if (t.view != null) Destroy(t.view); teles.Clear(); }
+    // ---- 약점 점(사슬로 낚아챌 자리): 옷(B-09)·횃불(B-12)·깃발(B-05) ----
+    PullPoint clothPt, torchPt, flagPt; GameObject clothView, torchView, flagView;
+    PullPoint MakePoint(Vector3 at, Color col, float size, System.Action onPull, out GameObject view, string model = null)
+    {
+        GameObject g = null;
+        var prefab = model != null ? Resources.Load<GameObject>("Models/Boss/" + model) : null;   // 아트 소품(옷·횃불·군기). 없으면 색 구슬 대역
+        if (prefab != null)
+        {
+            g = Instantiate(prefab, Flat(at.x, at.z), Quaternion.Euler(0f, 180f, 0f));   // glTFast 가 읽은 GLB 는 앞이 반대라 180(모델 표 yaw 와 같은 이유)
+            foreach (var c in g.GetComponentsInChildren<Collider>()) Destroy(c);
+            var lt = g.transform.Find("Light_grab_torch");   // 횃불: 빈 오브젝트 자리에 주황 점광원(아트 지정: 세기 1.6·범위 7m)
+            if (lt != null && QualityTier.Current != QualityTier.Level.Low) { var l = lt.gameObject.AddComponent<Light>(); l.type = LightType.Point; l.color = new Color(1f, 0.6f, 0.25f); l.intensity = 1.6f; l.range = 7f; l.shadows = LightShadows.None; }
+        }
+        else
+        {
+            g = GameObject.CreatePrimitive(PrimitiveType.Sphere); Destroy(g.GetComponent<Collider>());
+            g.transform.position = Flat(at.x, at.z) + Vector3.up * 1.2f; g.transform.localScale = Vector3.one * size;
+            g.GetComponent<Renderer>().sharedMaterial = U.Unlit(col);
+        }
+        view = g;
+        return PullPoints.Add(at, 2.5f, onPull);
+    }
+    void DropPoint(ref PullPoint p, ref GameObject v) { PullPoints.Remove(p); p = null; if (v != null) Destroy(v); v = null; }
+    void DropPoints() { DropPoint(ref clothPt, ref clothView); DropPoint(ref torchPt, ref torchView); DropPoint(ref flagPt, ref flagView); }
+
+    void Clear() { foreach (var t in teles) if (t.view != null) Destroy(t.view); teles.Clear(); DropPoints(); }
+    void OnDestroy() { DropPoints(); if (judge != null) judge.OnJudged -= OnJudged; }
+
+    /// <summary>처결 신호: B-05 에서 이름으로 불린 병사를 천도하면 대돌이 멈춘다(약점)</summary>
+    void OnJudged(Enemy e, bool tendo)
+    {
+        if (brain == null || def == null || def.Id != 5 || !tendo || !soldiers.Contains(e)) return;
+        brain.OnCalledSoulTendo(); judge.Say("불린 병사를 보냈다 — 대돌이 주춤한다");
+    }
+
+    /// <summary>약점 점의 시간 관리: B-09 옷은 창(2초)이 닫히면 사라지고, B-12 횃불은 큰물 단계에 한 번만 나타난다</summary>
+    void TickPoints()
+    {
+        if (brain3 == null) return;
+        if (clothPt != null && brain3.ClothWindow <= 0f) DropPoint(ref clothPt, ref clothView);
+        if (brain3.BossId == 12 && brain3.Stage12 == 3 && !brain3.TorchDone && torchPt == null)
+        {
+            var at = new Vector3(def.X + (Random.value - 0.5f) * fightArea, 0f, def.Z + (Random.value - 0.5f) * fightArea);   // 물속 어딘가
+            torchPt = MakePoint(at, new Color(1f, 0.6f, 0.2f, 1f), 0.7f, () =>
+            {
+                if (brain3.OnTorchPulled()) judge.Say("물속 횃불을 건졌다 — 흑월이 멈춘다");
+                DropPoint(ref torchPt, ref torchView);
+            }, out torchView, "boss_grab_torch_b12");
+            judge.Say("물속에 횃불이 하나 떠 있다");
+        }
+        if (brain3.Stage12 != 3 && torchPt != null) DropPoint(ref torchPt, ref torchView);
+    }
 
     // ---- 행동 → 예고 바닥 -----------------------------------------------------
     void Start(BossMove m)
@@ -59,7 +117,11 @@ public class Act2BossArena : MonoBehaviour
                 for (int i = 0; i < m.Count; i++)   // 소환 병사: 보스 둘레(상한은 Act2Brain 이 지킨다). 번호 비율(m.Param)은 아직 화면에 안 쓴다
                     soldiers.Add(judge.enemies.SpawnCamp(bp + Quaternion.Euler(0f, 120f * i + 40f, 0f) * Vector3.forward * 3.5f, i % 2 == 0));
                 Sfx.Play("sfx.boss.daedol.call"); break;
-            case BossAct.FlagPlant: Add(new Tele { shape = Shape.Circle, c = bp + dir * 5f, r = m.Radius, warn = 20f, mine = false }, false); break;   // 깃발 반경(병사 공격 +20%는 다음 일). 피해 없이 표식만
+            case BossAct.FlagPlant:
+                Add(new Tele { shape = Shape.Circle, c = bp + dir * 5f, r = m.Radius, warn = 20f, mine = false }, false);
+                DropPoint(ref flagPt, ref flagView);
+                flagPt = MakePoint(bp + dir * 5f, new Color(0.9f, 0.2f, 0.2f, 1f), 0.6f, () => { brain.OnFlagPulled(); judge.Say("깃발을 뽑았다"); DropPoint(ref flagPt, ref flagView); }, out flagView, "boss_grab_flag_b05");   // 견인으로 뽑으면 깃발 효과가 사라진다
+                break;   // 깃발 반경(병사 공격 +20%는 다음 일). 피해 없이 표식만
             case BossAct.FlagSwing: Add(new Tele { shape = Shape.Circle, c = bp, r = m.Radius, warn = m.Warn }); break;
             case BossAct.PoleCharge: Add(new Tele { shape = Shape.Bar, c = bp + dir * (m.Param * 0.5f), dir = dir, len = m.Param, wid = 2f, warn = m.Warn }); break;
             case BossAct.LineForm:
@@ -82,6 +144,44 @@ public class Act2BossArena : MonoBehaviour
                     Sfx.Play("sfx.boss.yeom.land"); break;
                 }
             case BossAct.AbacusSweep: Add(new Tele { shape = Shape.Sector, c = bp, dir = dir, r = m.Radius, deg = m.Param, warn = m.Warn }); break;
+            // ---- 3막(9~12): 예고 장판 ----
+            case BossAct.WaveRows:   // B-09: 가로 띠 여러 줄이 차례로 밀려온다(줄 사이는 안전 띠)
+                for (int i = 0; i < m.Count; i++)
+                    Add(new Tele { shape = Shape.Bar, c = new Vector3(def.X, 0f, def.Z + (i - (m.Count - 1) * 0.5f) * m.Param), dir = Vector3.right, len = fightArea * 2f, wid = m.Radius, warn = m.Warn + i * Balance.B09_WAVE_STEP });
+                Sfx.Play("sfx.boss.mangbu.wave"); break;
+            case BossAct.CallSea: Add(new Tele { shape = Shape.Circle, c = bp, r = m.Radius, warn = m.Warn }); Sfx.Play("sfx.boss.mangbu.call"); break;
+            case BossAct.ClothThrow:   // 2초 안에 사슬로 낚아채면 맺힘 −15%(실패해도 진행). 옷은 보스 손 앞에 구슬로 보인다
+                judge.Say("아낙이 남편의 옷을 바다에 던지려 한다 — 사슬로 낚아채라");
+                Sfx.Play("sfx.boss.mangbu.cloth.throw");
+                DropPoint(ref clothPt, ref clothView);
+                clothPt = MakePoint(bp + dir * 1.5f, new Color(0.8f, 0.9f, 1f, 1f), 0.6f, () =>
+                {
+                    float cut = brain3.OnClothCaught(); boss.soul.Maedhim = Mathf.Max(1, (int)brain3.Maedhim);
+                    if (cut > 0f) { judge.Say("옷을 낚아챘다 — 아낙이 흔들린다"); Sfx.Play("sfx.boss.mangbu.cloth.catch"); }
+                    DropPoint(ref clothPt, ref clothView);
+                }, out clothView, "boss_grab_clothes_b09");
+                break;
+            case BossAct.RopeCut: case BossAct.RopeCross:
+                for (int i = 0; i < m.Count; i++)
+                {
+                    var dd = m.Count == 1 ? dir : Quaternion.Euler(0f, i == 0 ? 35f : -35f, 0f) * dir;   // 두 줄이면 X 자로 엇갈린다
+                    var cc = m.Count == 1 ? bp + dd * (m.Param * 0.5f) : pp;
+                    Add(new Tele { shape = Shape.Bar, c = cc, dir = dd, len = m.Param, wid = m.Radius, warn = m.Warn });
+                }
+                break;
+            case BossAct.RopeWrap: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); break;
+            case BossAct.MatThrow: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); Sfx.Play("sfx.boss.wangcho.call"); break;
+            case BossAct.StaffSwing: Add(new Tele { shape = Shape.Sector, c = bp, dir = dir, r = m.Radius, deg = m.Param, warn = m.Warn }); break;
+            case BossAct.MirrorPull: Add(new Tele { shape = Shape.Bar, c = bp + dir * (m.Param * 0.5f), dir = dir, len = m.Param, wid = m.Radius, warn = m.Warn }); Sfx.Play("sfx.boss.heukwol.line.draw"); break;
+            case BossAct.HisPahon: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); break;
+            case BossAct.NameLines:   // 위(북)에서부터 한 줄씩, 마지막 줄은 비워 둔다(안전 지대)
+                for (int i = 0; i < m.Count - 1; i++)
+                    Add(new Tele { shape = Shape.Bar, c = new Vector3(def.X, 0f, def.Z + fightArea - 3f - i * (m.Radius + 1.5f)), dir = Vector3.right, len = fightArea * 2f, wid = m.Radius, warn = m.Warn + i * 0.5f });
+                Sfx.Play("sfx.boss.heukwol.line.draw"); break;
+            case BossAct.Flood:       // 물살: 가로 띠가 무작위 자리에서 차례로
+                for (int i = 0; i < m.Count; i++)
+                    Add(new Tele { shape = Shape.Bar, c = new Vector3(def.X, 0f, def.Z + (Random.value - 0.5f) * fightArea * 1.6f), dir = Vector3.right, len = fightArea * 2f, wid = m.Radius, warn = m.Warn + i * 0.6f });
+                Sfx.Play("sfx.boss.heukwol.flood"); break;
             case BossAct.LedgerFlip: Sfx.Play("sfx.boss.yeom.backpage"); judge.Say("장부가 넘어간다"); break;   // 이름 종이 위만 안전한 연출은 다음 일
         }
     }

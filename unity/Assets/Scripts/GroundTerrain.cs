@@ -96,6 +96,7 @@ public static class GroundTerrain
             extras.Clear(); Active2 = false;
             // 붙은 땅은 해당 때만 읽는다(1막은 아무것도 안 바뀐다). 색 곱은 아트 TERRAIN-ACT2/ACT3.md 층 뜻 표의 근사값 — PC 캡처로 아트 검수
             if (FieldRules.Act2) Active2 = InitExtra("Terrain2", new[] { new Color(1.2f, 0.7f, 0.5f), new Color(1.3f, 1.1f, 0.55f), new Color(0.9f, 0.9f, 0.95f), new Color(0.35f, 0.35f, 0.5f), new Color(1.3f, 1.05f, 0.6f) });   // 붉은 흙·마른 풀·바위·쇠찌꺼기·황토
+            InitExtra("Terrain3G", new[] { new Color(1.1f, 1.0f, 0.85f), new Color(0.8f, 1.0f, 0.75f), new Color(0.95f, 0.95f, 1.0f), new Color(1.9f, 1.9f, 1.8f), Color.white });   // 1막 동쪽 틈(x 640~768): ⑤와 같은 층 뜻이라 같은 색 곱. 1막에 속하므로 막 스위치와 무관하게 등록(읽기는 가까울 때만)
             if (FieldRules.Act3)
             {
                 InitExtra("Terrain3C", new[] { new Color(1.15f, 1.05f, 0.9f), new Color(0.85f, 0.85f, 0.85f), new Color(0.95f, 0.95f, 1.0f), new Color(1.0f, 1.0f, 1.0f), Color.white });   // 해안 띠: 모랫길·벼랑 바위(층 이름은 terrain.json)

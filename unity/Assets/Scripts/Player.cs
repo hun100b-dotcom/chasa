@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     const float BOLT_SPEED = 22f;     // 먹물 속도(m/s). 6m 를 약 0.27초에 — 피하기 어려운 대신 사거리가 짧다 (임시값)
     const float BOLT_RADIUS = 0.35f;  // 먹물 크기: 적 몸 반경에 더해 닿음을 판정
 
-    class PullRun { public string phase = "throw"; public float t; public Enemy target; public Vector3 aim, from; }
+    class PullRun { public string phase = "throw"; public float t; public Enemy target; public Vector3 aim, from; public PullPoint point; }
 
     public EnemyManager enemies;
     public HitFeel feel;
@@ -631,6 +631,9 @@ public class Player : MonoBehaviour
     {
         atk = null; hasBuffered = false; moveTarget = null; chaseTarget = null; comboTimer = 0f; comboStep = 0;
         var target = e != null && e.alive ? e : null;
+        // 보스 약점 점(옷·횃불·깃발)이 겨눈 자리나 겨눈 적 바로 옆에 있으면 적 대신 그 점을 잡는다(PullPoints)
+        var point = PullPoints.Pick(aim, target != null ? (Vector3?)target.Pos : null, Pos, Config.PULL_RANGE);
+        if (point != null) { target = null; aim = point.pos; }
         var goal = target != null ? target.Pos : aim;
         var d = new Vector2(goal.x - Pos.x, goal.z - Pos.z);
         float dist = d.magnitude;
@@ -638,7 +641,7 @@ public class Player : MonoBehaviour
         facing = Mathf.Atan2(d.y, d.x);
         float reach = Mathf.Min(dist, Config.PULL_RANGE);
         state = State.Pull;
-        pullRun = new PullRun { target = target, aim = Hand + U.Dir(facing) * reach };
+        pullRun = new PullRun { target = target, aim = Hand + U.Dir(facing) * reach, point = point };
         chain.gameObject.SetActive(true);
     }
 
@@ -655,7 +658,7 @@ public class Player : MonoBehaviour
             if (r.t >= Config.PULL_THROW_TIME)
             {
                 if (target != null) { HitPull(target); r.phase = "drag"; }
-                else { r.from = goal; r.phase = "retract"; }
+                else { r.from = goal; r.phase = "retract"; if (r.point != null && r.point.active && r.point.onPull != null) { var cb = r.point.onPull; PullPoints.Remove(r.point); cb(); Sfx.Play("sfx.hit.heavy"); } }   // 약점 점에 닿았다
                 r.t = 0f;
             }
             return;

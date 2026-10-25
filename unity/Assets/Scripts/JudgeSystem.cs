@@ -159,9 +159,13 @@ public class JudgeSystem : MonoBehaviour
         player.PlayPahonAnim();
     }
 
+    /// <summary>혼 하나를 처결했다(두 번째 값: true=천도, false=파혼). 보스 약점(B-05 불린 병사 천도 등)이 듣는다</summary>
+    public System.Action<Enemy, bool> OnJudged;
+
     void DoPahon(Enemy e)
     {
         var at = e.Pos;
+        if (OnJudged != null) OnJudged(e, false);
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
         if (interactables != null) interactables.OnPahon(e.soul.Name);   // 이름혼의 유품은 재가 된다
@@ -256,7 +260,7 @@ public class JudgeSystem : MonoBehaviour
             {
                 t2.soul.BeginSending(); t2.Finish();
                 int nb = ledger.Neok; ledger.CompleteTendo(); gainedExtra = ledger.Neok - nb;
-                if (growth.AddNeok(gainedExtra) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }
+                if (growth.AddNeok(gainedExtra) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank); }
                 night.RecordTendo(gainedExtra);
                 Say("한 줄로 함께 천도했다");
             }
@@ -282,8 +286,9 @@ public class JudgeSystem : MonoBehaviour
             if (castTarget.type == SoulType.Buried) ledger.Neok += Mathf.RoundToInt((ledger.Neok - before) * (Balance.BURIED_TENDO_NEOK_MULT - 1f));
             if (castTarget.type == SoulType.Wail) ledger.Memory += Balance.WAIL_TENDO_MEMORY;
             int gained = ledger.Neok - before;
-            if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +5"); }   // 품계 상승 알림
+            if (growth.AddNeok(gained) > 0) { Sfx.Play("sfx.ui.rank.up"); ui?.Hud.Toasts.Add("품계 " + growth.Rank + "품 — 도술 점수 +1, 능력치 +" + GrowthState.StatPerRank); }   // 품계 상승 알림
             night.RecordTendo(ledger.Neok - before);   // 몫인지 추가 수확분인지 나눠 쌓는다
+            if (OnJudged != null) OnJudged(castTarget, true);
             if (castTarget.soul.Name == "박돌쇠") pahonOrTendo = 1;
             if (castTarget.soul.Name == null) introPlainDone++;
             if (castTarget.soul.Name != null) namedTendoed = true;   // 이름혼을 보냈다 → 다음 낮 장례
@@ -337,7 +342,7 @@ public class JudgeSystem : MonoBehaviour
             e.soul.WaitLeft = e.soul.WaitTotal;
         }
         if (!Demo.Gear) return;   // 시연판 기본 구성: 장비 드롭 없음
-        var it = Loot.Roll(() => Random.value, e.soul.Fierce);
+        var it = Loot.Roll(() => Random.value, e.soul.Fierce, FieldRules.On ? RingLoot.RingAt(e.Pos.x, e.Pos.z, FieldZones.NameAt(e.Pos.x, e.Pos.z) == "검은여울") : 0, lo.gear.DropKinds());   // 필드에선 위치로 고리를 정해 등급 표를 쓴다
         if (it == null) return;
         string txt = Loadout.Describe(it);
         if (lo.Equip(it))
@@ -542,6 +547,13 @@ public class JudgeSystem : MonoBehaviour
                 var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
                 var arena = new GameObject("Act2BossArena" + bid).AddComponent<Act2BossArena>(); arena.Init(this, be, bd);
             }
+        if (FieldRules.On && FieldRules.Act3)   // 3막 보스 넷: 땅이 깔려 있으면 선다(금줄이 열리기 전엔 닿을 수 없다)
+            for (int bid = 9; bid <= 12; bid++)
+            {
+                var bd = Bosses.Get(bid);
+                var be = enemies.SpawnBoss(new Vector3(bd.X, 0, bd.Z), bid);
+                var arena = new GameObject("Act3BossArena" + bid).AddComponent<Act2BossArena>(); arena.Init(this, be, bd);
+            }
         cluePos.Clear();
         foreach (var v in clueViews) Destroy(v);
         clueViews.Clear();
@@ -566,7 +578,8 @@ public class JudgeSystem : MonoBehaviour
     bool heukwolSpawned, heukwolRetreated, gateAnnounced, heukwolWarned; Enemy heukwol; float gateToastT;
     void MarkBossDone(int id)
     {
-        if (id < 1 || id > 8 || id == 4 || clock == null || !bossDoneIds.Add(id)) return;
+        if (id < 1 || id > 12 || id == 4 || clock == null || !bossDoneIds.Add(id)) return;
+        if (id <= 2 && !lo.gear.FirstRingBossDone) { lo.gear.FirstRingBossDone = true; lo.lastDrop = "새 장비 자리가 열렸다: 갓 · 띠"; lo.lastDropT = 6f; }   // 1막 보스 처결 뒤 갓·띠 자리(기획 성장 표)
         if (id <= 3 && bossDoneIds.Contains(1) && bossDoneIds.Contains(2) && bossDoneIds.Contains(3) && allDoneDay < 0) { allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }
         if (id >= 5 && bossDoneIds.Contains(5) && bossDoneIds.Contains(6) && bossDoneIds.Contains(7) && bossDoneIds.Contains(8) && act2DoneDay < 0) act2DoneDay = clock.Day;   // 2막 마지막 일
     }
@@ -574,6 +587,7 @@ public class JudgeSystem : MonoBehaviour
     {
         if (!FieldRules.On || !FieldRules.Act2 || clock == null) return;
         if (allDoneDay < 0 && (Application.absoluteURL ?? "").Contains("hk=")) { bossDoneIds.Add(1); bossDoneIds.Add(2); bossDoneIds.Add(3); allDoneDay = clock.Day; allDoneAtNight = clock.Phase == ClockPhase.Night; }   // 검사용 ?hk=1: 1막 보스 셋을 이미 처결한 것으로 친다(흑월 1차를 바로 본다)
+        if (!lo.gear.Act2Entered && FieldRules.Act2Open && player.Pos.z > FieldRules.Size + 4f) { lo.gear.Act2Entered = true; lo.lastDrop = "새 장비 자리가 열렸다: 신 · 노리개 2"; lo.lastDropT = 6f; }   // 2막 땅에 첫 발 — 신·노리개 둘째 자리
         if (enterDay < 0 && FieldZones.CurrentName == "검은여울") enterDay = clock.Day;   // ② 검은여울 첫 진입(5일 안전장치의 기준)
         int hn = Act2Gate.HeukwolNight(allDoneDay, allDoneAtNight, enterDay);
         bool open = FieldRules.Act2Open || clock.Day >= Act2Gate.OpenDay(allDoneDay, allDoneAtNight, enterDay);
@@ -1287,7 +1301,7 @@ public class JudgeSystem : MonoBehaviour
         GUI.color = new Color(0, 0, 0, 0.45f); GUI.DrawTexture(r, white); GUI.color = Color.white;
         if (it == null) return;
         string rar = it.Named ? "named" : it.Rarity == Rarity.Rare ? "rare" : it.Rarity == Rarity.Crafted ? "crafted" : "common";
-        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + (s == Slot.Weapon ? "weapon" : s == Slot.Robe ? "dopo" : "noriga") + "_" + rar;
+        string icon = it.Named ? "icon_named_wolhwa_bell" : "icon_" + Ko.IconKind(s) + "_" + rar;
         var tex = SpriteLib.Texture("icons/" + icon);
         var frame = SpriteLib.Texture("icons/frame_" + rar);
         if (tex != null) GUI.DrawTexture(r, tex);

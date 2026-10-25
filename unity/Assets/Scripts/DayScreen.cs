@@ -167,16 +167,18 @@ public class DayScreen
         y += 8;
         // 손보기: 장비 칸 고르기
         GUI.Label(new Rect(x, y, w, 26), "손보기 — 고를 장비", body); y += 30;
-        for (int s = 0; s < 3; s++)
+        // 8자리를 4칸씩 두 줄로 늘어놓는다(열리지 않았거나 빈 자리는 눌러지지 않는다)
+        for (int k = 0; k < Ko.PosOrder.Length; k++)
         {
-            var it = lo.gear.Get((Slot)s);
-            string label = Ko.SlotName((Slot)s) + ": " + (it == null ? "(비어 있음)" : Ko.ItemName(it) + " 옵션 " + it.Options.Count + " 홈 " + it.Sockets + "/" + Balance.SOCKET_MAX);
+            var pos = Ko.PosOrder[k];
+            var it = lo.gear.GetAt(pos);
+            string label = Ko.PosName(pos) + ": " + (!lo.gear.IsOpen(pos) ? "잠김" : it == null ? "(비어 있음)" : Ko.ItemName(it) + " 옵션 " + it.Options.Count + " 홈 " + it.Sockets + "/" + Balance.SOCKET_MAX);
             GUI.enabled = it != null;
-            if (GUI.Button(new Rect(x + s * (w / 3f), y, w / 3f - 4, 40), (selSlot == s ? "▶ " : "") + label, btn)) selSlot = s;
+            if (GUI.Button(new Rect(x + (k % 4) * (w / 4f), y + (k / 4) * 44, w / 4f - 4, 40), (selSlot == (int)pos ? "▶ " : "") + label, btn)) selSlot = (int)pos;
             GUI.enabled = true;
         }
-        y += 48;
-        var cur = lo.gear.Get((Slot)selSlot);
+        y += 92;
+        var cur = lo.gear.GetAt((EquipPos)selSlot);
         if (cur != null)
         {
             GUI.enabled = Shrine.CanReroll(cur);
@@ -192,7 +194,7 @@ public class DayScreen
             { msg = Shrine.Upgrade(cur, ledger, () => Random.value) ? "등급이 올랐다" : "엽전이나 광석이 모자라다"; lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); }
             GUI.enabled = true; y += 44;
             if (GUI.Button(new Rect(x, y, w / 2f - 4, 40), "풀기(광석 " + Shrine.OreFor(cur.Rarity) + ")", btn) && Shrine.Dismantle(cur, ledger))
-            { lo.gear.Remove((Slot)selSlot); lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); msg = "장비를 풀었다"; }
+            { lo.gear.RemoveAt((EquipPos)selSlot); lo.Refresh(); ledger.SetMaxHp(lo.stats.MaxHp); msg = "장비를 풀었다"; }
             GUI.enabled = cur.Sockets < Balance.SOCKET_MAX && ledger.Coin >= (cur.Sockets == 0 ? Balance.SOCKET_COST_1 : Balance.SOCKET_COST_2);
             if (GUI.Button(new Rect(x + w / 2f, y, w / 2f, 40), "홈 뚫기  엽전 " + (cur.Sockets == 0 ? Balance.SOCKET_COST_1 : Balance.SOCKET_COST_2), btn))
                 msg = Shrine.Socket(cur, ledger) ? "인 홈을 뚫었다" : "엽전이 모자라다";

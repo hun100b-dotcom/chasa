@@ -20,7 +20,12 @@ namespace Chasa.Core
         // B-07
         PickSwing, RockFall,
         // B-08
-        NumberMines, AbacusSweep, LedgerFlip
+        NumberMines, AbacusSweep, LedgerFlip,
+        // B-09 망부석 아낙 · B-10 만선호 선장 · B-11 다리 밑 왕초 · B-12 흑월 2차 (3막, Core/Act3Boss.cs)
+        WaveRows, CallSea, ClothThrow,
+        RopeCut, RopeWrap, RopeCross,
+        MatThrow, StaffSwing,
+        MirrorPull, HisPahon, NameLines, Flood
     }
 
     /// <summary>보스가 지금 하려는 행동 하나. Warn 초 뒤에 터진다(예고 동안 화면이 붉은 무늬를 그린다)</summary>

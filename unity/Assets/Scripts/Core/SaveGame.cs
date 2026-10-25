@@ -23,7 +23,8 @@ namespace Chasa.Core
         public int[] Stats = new int[4];
         public Dictionary<string, int> Learned = new Dictionary<string, int>();
         public List<string> ActiveBar = new List<string>();
-        public ItemDef[] Gear = new ItemDef[3];
+        public ItemDef[] Gear = new ItemDef[8];          // 자리(EquipPos) 순서 8칸. 옛 저장은 3칸(무기·도포·노리개)이라 불러올 때 옮겨 담는다
+        public bool GearFirstRing, GearAct2;      // 장비 자리 해금(1막 보스 처결 / 2막 진입). 한 번 열리면 닫히지 않는다
         public List<string> Clues = new List<string>();
         public int BossOutcome, NamedOutcome;     // 보스 결과(1 천도·2 파혼) / 이름혼 박돌쇠 결과
         public bool OpeningSeen, FuneralShown;    // 오프닝·장례 컷을 이미 봤나(불러오면 다시 틀지 않는다)
@@ -74,7 +75,8 @@ namespace Chasa.Core
             w("stats", string.Join(",", s.Stats));
             var l = new List<string>(); foreach (var kv in s.Learned) l.Add(Clean(kv.Key) + ":" + kv.Value); w("learned", string.Join(",", l));
             var a = new List<string>(); foreach (var n in s.ActiveBar) a.Add(Clean(n)); w("bar", string.Join(",", a));
-            for (int i = 0; i < s.Gear.Length; i++) w("gear" + i, ItemText(s.Gear[i]));
+            for (int i = 0; i < s.Gear.Length; i++) w("gp" + i, ItemText(s.Gear[i]));   // 8자리 형식(옛 gear0~2 는 읽기만 한다)
+            w("gu1", s.GearFirstRing ? 1 : 0); w("gu2", s.GearAct2 ? 1 : 0);
             var c = new List<string>(); foreach (var n in s.Clues) c.Add(Clean(n)); w("clues", string.Join(",", c));
             w("boss", s.BossOutcome); w("named", s.NamedOutcome); w("opening", s.OpeningSeen ? 1 : 0); w("funeral", s.FuneralShown ? 1 : 0); w("weapon", (int)s.Weapon); w("other", (int)s.Other);
             if (s.WeatherNow != null) w("wx", string.Join(",", s.WeatherNow)); w("plagueEased", s.PlagueEased ? 1 : 0);
@@ -101,7 +103,16 @@ namespace Chasa.Core
                 if (d.ContainsKey("learned") && d["learned"].Length > 0)
                     foreach (var pair in d["learned"].Split(',')) { var kv = pair.Split(':'); if (SkillTree.Find(kv[0]) != null) s.Learned[kv[0]] = int.Parse(kv[1]); }   // 지워진 도술 이름은 건너뛴다(옛 저장 호환)
                 if (d.ContainsKey("bar") && d["bar"].Length > 0) foreach (var n in d["bar"].Split(',')) if (SkillTree.Find(n) != null && s.Learned.ContainsKey(n)) s.ActiveBar.Add(n);
-                for (int i = 0; i < s.Gear.Length; i++) s.Gear[i] = d.ContainsKey("gear" + i) ? ItemFrom(d["gear" + i], (Slot)i) : null;
+                if (d.ContainsKey("gp0"))
+                    for (int i = 0; i < s.Gear.Length; i++) s.Gear[i] = d.ContainsKey("gp" + i) ? ItemFrom(d["gp" + i], Equipment.KindOf((EquipPos)i)) : null;
+                else
+                {
+                    // 옛 저장(3칸): 무기→무기1, 도포→도포, 노리개→노리개1 자리로 옮긴다
+                    var legacy = new[] { EquipPos.Weapon1, EquipPos.Robe, EquipPos.Charm1 };
+                    for (int i = 0; i < 3; i++)
+                        if (d.ContainsKey("gear" + i)) s.Gear[(int)legacy[i]] = ItemFrom(d["gear" + i], Equipment.KindOf(legacy[i]));
+                }
+                s.GearFirstRing = I("gu1") == 1; s.GearAct2 = I("gu2") == 1;
                 if (d.ContainsKey("clues") && d["clues"].Length > 0) s.Clues.AddRange(d["clues"].Split(','));
                 s.PlagueEased = I("plagueEased") == 1;
                 if (d.ContainsKey("picked") && d["picked"].Length > 0) s.Picked.AddRange(d["picked"].Split(','));
@@ -125,7 +136,8 @@ namespace Chasa.Core
             for (int i = 0; i < 4; i++) s.Stats[i] = g.Stats[i];
             foreach (var kv in g.Learned) s.Learned[kv.Key] = kv.Value;
             s.ActiveBar.AddRange(g.ActiveBar);
-            for (int i = 0; i < 3; i++) s.Gear[i] = eq.Get((Slot)i);
+            for (int i = 0; i < 8; i++) s.Gear[i] = eq.GetAt((EquipPos)i);
+            s.GearFirstRing = eq.FirstRingBossDone; s.GearAct2 = eq.Act2Entered;
             s.Clues.AddRange(clues.All);
             return s;
         }
@@ -140,7 +152,8 @@ namespace Chasa.Core
             for (int i = 0; i < 4; i++) g.Stats[i] = s.Stats[i];
             g.Learned.Clear(); foreach (var kv in s.Learned) g.Learned[kv.Key] = kv.Value;
             g.ActiveBar.Clear(); g.ActiveBar.AddRange(s.ActiveBar);
-            for (int i = 0; i < 3; i++) eq.Put((Slot)i, s.Gear[i]);
+            eq.FirstRingBossDone = s.GearFirstRing; eq.Act2Entered = s.GearAct2;
+            for (int i = 0; i < 8; i++) eq.PutAt((EquipPos)i, s.Gear[i]);
             foreach (var c in s.Clues) clues.Add(c);
             // 체력은 최대 체력(장비·몸 능력치)을 다시 계산한 뒤 부르는 쪽이 맞춘다(l.Hp = min(s.Hp, MaxHp))
         }
