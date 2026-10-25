@@ -36,7 +36,7 @@ public static class GroundTerrain
             var px = ht.GetPixels32(); var r = new byte[px.Length]; var g = new byte[px.Length];
             for (int i = 0; i < px.Length; i++) { r[i] = px[i].r; g[i] = px[i].g; }
             height = HeightField.FromRG(ht.width, ht.height, meta.size, r, g, meta.height_min_m, meta.height_max_m);
-            height.CloseWaterGaps(WaterY, 0.8f, 3, -0.1f);   // 강 조각 사이 1~2m 둑을 파서 물길을 잇는다(아트 높이맵은 칸 안쪽만 파여 있음)
+            // (옛 CloseWaterGaps 는 뺐다: 아트가 칸과 무관한 연속 물길로 높이맵을 새로 고쳐서 둑을 따로 팔 필요가 없다)
             // 재질 섞기: 5개 층을 float 로 풀어 규칙 클래스에 넘긴다(걸어 다닐 때 재질 소리·미끄러움에 쓸 수 있게)
             var ta = Decode(sa, true); var tb = Decode(Resources.Load<TextAsset>("Terrain/splat_b"), true);
             if (ta != null)

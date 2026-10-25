@@ -22,7 +22,11 @@ ox, oy = f["village_offset_m"]
 used = set()
 items = []
 
+# 큰 강 조각(물판·바닥 상자가 8m 칸으로 나뉜 것)은 새 연속 높이맵+물로 대체됐다. 다리·나루터 같은 구조물은 그대로 둔다
+RIVER_SKIP = {"br_deep", "br_rapids", "br_shore"}
+
 def add(name, x, y, rot, z=0.0, tile=0):
+    if name in RIVER_SKIP: return
     used.add(name)
     items.append({"n": name, "x": round(x, 2), "z": round(y, 2), "y": round(z, 2), "r": int(rot) % 360, "t": tile})
 
