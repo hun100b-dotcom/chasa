@@ -1329,3 +1329,10 @@
 - 덤으로 3개: 먹방 1초 끊김용 `cut.ink.grind.room`(반복)·`cut.ink.grind.stop`, 멀리서 인 아홉 번 `cut.seal.set.nine`. 효과음은 모두 388개. 다시 잰 전체 용량은 웹 46.0MB(+0.8), 첫 화면 7.7MB.
 - `data/funeral_audio_s3.json` 신설: FUN-B28 먹방 20.0의 끊김 박자, FUN-S-276의 인 아홉 번 바꿔 끼우기. 끊긴 1초는 앞 소리보다 −77dB(사실상 무음)인 것을 쟀다.
 - `audio_budget.py`: 시즌3 장례(FUN-S-181~300)에 쓰는 소리를 관할에 따라 6·7·8막 묶음에 넣도록 고쳤다.
+
+## 2026-10-26 새벽 — [기획·사운드] 처음 10분에 빠진 소리 31개 + 타이틀 곡
+- 기획 `first-10min-benchmark`의 소리 몫(M1·M3·M4·M6·M7·M8·M9·M10)과 서사 요청 `cut.jing`·`cut.jing.crack`을 `sfx_render.py`에 만들었다. 효과음은 모두 419개.
+- 품계 인 `sfx.rank.seal`, 손보기 `sfx.repair.first`, 혼불·엽전 흡수 4개(천도·파혼이 같은 길이·크기), 장비 빛줄기 4등급 + 떨어짐·줍기(등급이 오를수록 음이 하나씩 늘어남), 도술 카드 6개, 거센 혼 8개(등장·내려치기·덮치기·부르기·잔넋), 싸움 끝 징·슬로, 타이틀 환경음·새로 시작.
+- 타이틀 곡 `bgm_title` 임시 대역(반복 64초)을 `bgm_temp_render.py`에 추가했고, Gemini 지시문 63번을 썼다. `data/bgm.json`의 naming에 title 항목을 넣었다.
+- 코드팀용 연결표 `docs/first-10min-sound-hookup.md`: 어느 순간에 어떤 id를 부르는지 정리했다. Sfx.cs는 손대지 않았다.
+- 용량 다시 잼: 새 소리는 모두 공통 묶음(첫 화면)에 들어간다. 결과는 `docs/audio-budget.md`.

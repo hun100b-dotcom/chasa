@@ -903,6 +903,24 @@ def s3_end_c(rng):
 SONGS.update({"bgm_s3_rising": s3_rising, "bgm_s3_knot": s3_knot, "bgm_s3_imyeong": s3_imyeong, "bgm_s3_mybaek": s3_mybaek,
               "bgm_s3_open": s3_open, "bgm_s3_end_a": s3_end_a, "bgm_s3_end_b": s3_end_b, "bgm_s3_end_c": s3_end_c})
 
+
+def title(rng):
+    """타이틀 화면(반복 64초): 밤 서낭당 고개, 안개. 장단 없이 아쟁 드론 위로 대금이 길게 한 가락, 거문고가 드문드문 깊게,
+    한 바퀴에 한 번 먼 요령. 계면조 D — 1막 솔고개 밤과 같은 집안 소리지만 더 느리고 비어 있게"""
+    tn = 50; md = GYEMYEON
+    mx = Mix(64, loop=True)
+    lay_drone(mx, rng, [tn - 12, tn - 5], 64, "ajaeng", gain=0.14, rev=0.6)
+    mel = make_melody(rng, tn, md, tn + 2, tn + 17, 12.0, 4, t0=6.0, cells=[0.45, 0.25, 0.3], rest=0.3)
+    mx.add(phrase(rng, mel, "daegeum"), 0, 0.15, 0.4, 0.6)
+    for k in range(6):
+        mx.add(pluck(rng, tn - 12 + [0, 7, 5, 0, 3, 7][k], 5.0, "geomungo", vib=0.35, bend=(-1 if k == 4 else 0)), 2 + k * 10.3, -0.3, 0.3, 0.55)
+    mx.add(bell(rng, 86, 4.0), 58.0, 0.35, 0.18, 0.7)
+    return mx, -20.0
+
+
+SONGS["bgm_title"] = title
+
+
 def render(sid, preview=None):
     rng = np.random.default_rng(zlib.crc32(sid.encode()))
     mx, target = SONGS[sid](rng)

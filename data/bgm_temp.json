@@ -210,6 +210,11 @@
    "sec": 96.0,
    "loop": true,
    "lufs": -20.0
+  },
+  "bgm_title": {
+   "sec": 64.0,
+   "loop": true,
+   "lufs": -20.0
   }
  }
 }

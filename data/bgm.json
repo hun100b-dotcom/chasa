@@ -132,6 +132,11 @@
    "bgm_s3_end_a": "C-31A",
    "bgm_s3_end_b": "C-31B",
    "bgm_s3_end_c": "C-31C"
+  },
+  "title": {
+   "_설명": "타이틀 화면 곡(M1). 진짜 곡 Audio/BGM/bgm_title → 없으면 Temp/bgm_title. 반복. 밑에 amb.title.fog 를 깔고, '새로 시작'을 누르면 2초에 걸쳐 내리며 sfx.title.start",
+   "id": "bgm_title",
+   "gemini_prompt": 63
   }
  }
 }

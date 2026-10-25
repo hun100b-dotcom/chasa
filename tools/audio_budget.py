@@ -166,6 +166,7 @@ def sfx_pack(s, cut_first):
 
 
 def bgm_pack(sid):
+    if sid == "bgm_title": return "core"                       # 타이틀 곡은 켜자마자 필요
     if "solgogae" in sid: return "act1"
     if "bulgeunjae" in sid or "soegol" in sid: return "act2"
     if "gaetmaeul" in sid or "doseong" in sid or sid.startswith("bgm_s1_"): return "act3"
