@@ -10,7 +10,7 @@
 서사 브랜치 `claude/project-thread-3syw2s`에서 아래 파일만 그대로 덮어쓴다. 코드는 안 바뀐다.
 ```
 git fetch origin claude/project-thread-3syw2s
-git checkout origin/claude/project-thread-3syw2s -- unity/Assets/Resources/Data/memory_flat.json unity/Assets/Resources/Data/npc_flat.json unity/Assets/Resources/Data/overhear_flat.json unity/Assets/Resources/Data/item_texts.json unity/Assets/Resources/Data/pattern_texts.json unity/Assets/Resources/Data/cutscenes_s1.json unity/Assets/Resources/Sprites/first10/loading_tips.json
+git checkout origin/claude/project-thread-3syw2s -- unity/Assets/Resources/Data/memory_flat.json unity/Assets/Resources/Data/npc_flat.json unity/Assets/Resources/Data/overhear_flat.json unity/Assets/Resources/Data/item_texts.json unity/Assets/Resources/Data/pattern_texts.json unity/Assets/Resources/Data/cutscenes_s1.json unity/Assets/Resources/Sprites/first10/loading_tips.json unity/Assets/Resources/Data/tutorial_hints.json
 ```
 | 파일 | 왜 |
 |---|---|
@@ -20,7 +20,8 @@ git checkout origin/claude/project-thread-3syw2s -- unity/Assets/Resources/Data/
 | `item_texts.json` | 도술 설명 10개 옛 글, 「검은 갓의 그림자」 → 「금 간 그림자」, 새 키 3개 |
 | `pattern_texts.json` | 보스 패턴 소리 이름 |
 | `cutscenes_s1.json` | 파혼 마지막 장면 5개, `B12-RISE` 새 컷, C-12A 한 줄 |
-| `first10/loading_tips.json` | 검은여울 두 줄 최신판, "10초 안에 처결" 숫자 뺌 |
+| `first10/loading_tips.json` | 검은여울 두 줄 최신판, "10초 안에 처결" 숫자 뺌, 처음 하는 사람 눈으로 6줄 다듬음 |
+| `tutorial_hints.json` | 처음 5분 안내 8개 다듬음. C 안내 "명부 보기" → "기록 보기"(명세상 C = 인물 창 기록 탭). 키·순서·시간 그대로 |
 
 ---
 
@@ -67,7 +68,10 @@ static string Eul(string w) { if (string.IsNullOrEmpty(w)) return "을"; char c 
 // Say(e.label + Eul(e.label) + " 깨뜨렸다");   Say(castTarget.label + Eul(castTarget.label) + " 보냈다");
 ```
 
-### 1-6. 품계 알림 (T1)
+### 1-6. '명부 밖' 안내가 이름혼에게 뜸
+`JudgeSystem.cs:1903` — `offledger` 안내("명부 밖 혼 — 기억 없이 넋·엽전만")가 `NamedSoulSpawns.OffLedger`(윤 소사·연이 같은 **장례 대상 이름혼**) 곁에서 뜬다. 이 혼들은 천도하면 기억도 장례도 있다 → 안내가 거짓말이 된다. 조건을 **이름 없는 명부 밖 혼**(`e2.soul.Name == null`)으로 바꾼다(기획 first-5-minutes 4:00 "처음 명부 밖 혼을 처결하면"과 같음).
+
+### 1-7. 품계 알림 (T1)
 `JudgeSystem.cs:317` `"품계 " + growth.Rank + "품 — 능력치 +" + ...` → 이 토스트를 지우거나 `"품계 " + growth.Rank + " · 능력치 점수 +" + StatPerRank`로. "2품"은 높은 벼슬로 읽힌다(품계 2 = 종9품).
 
 ---
