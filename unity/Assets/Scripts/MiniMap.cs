@@ -349,6 +349,8 @@ public class MiniMap : MonoBehaviour
                 D2(at, new Color(0.07f, 0.06f, 0.08f, 0.95f), 12f); D2(at, new Color(0.7f, 0.95f, 0.9f, pulse), 6f);
             }
         }
+        // 흩어진 노잣돈: 잿빛 작은 점(넋길·혼 점보다 작게)
+        foreach (var np in judge.NojatShown) D(np.x, np.z, new Color(0.62f, 0.62f, 0.6f), 3.5f, null);
         // 켜진 단서 자리
         if (judge.npcs != null) { tmp.Clear(); judge.npcs.PendingClues(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(1f, 0.85f, 0.2f), s + 2f, "quest"); }
         // 이름혼

@@ -3190,5 +3190,21 @@
  "B01_DRIFT_STOP_R": {
   "value": 4.0,
   "note": "얼룩이 영감 쪽으로 흘러가다 멈추는 거리(m)"
+ },
+ "NOJAT_PER_DAY": {
+  "value": 8,
+  "note": "(기획 r6-scattered-coins) 하루에 남는 흩어진 노잣돈 자리 상한"
+ },
+ "NOJAT_COIN": {
+  "value": 3,
+  "note": "한 자리 엽전"
+ },
+ "NOJAT_MIN_GAP_M": {
+  "value": 25.0,
+  "note": "자리끼리 최소 거리(m)"
+ },
+ "NOJAT_PICK_TIME": {
+  "value": 0.4,
+  "note": "줍기 누름(초). 줍기는 톡이라 지금은 안 씀"
  }
 }

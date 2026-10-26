@@ -824,4 +824,8 @@ public static class Balance
     public const int B01_KNEEL_ADD_COUNT = 2;  // (기획 b01-naru-final-check) 나루 영감이 꿇은 동안 한 물결에 올라오는 물 혼 수
     public const float B01_KNEEL_ADD_SECOND_AT = 5.0f;  // 꿇은 뒤 두 번째 물결까지(초)
     public const float B01_DRIFT_STOP_R = 4.0f;  // 얼룩이 영감 쪽으로 흘러가다 멈추는 거리(m)
+    public const int NOJAT_PER_DAY = 8;  // (기획 r6-scattered-coins) 하루에 남는 흩어진 노잣돈 자리 상한
+    public const int NOJAT_COIN = 3;  // 한 자리 엽전
+    public const float NOJAT_MIN_GAP_M = 25.0f;  // 자리끼리 최소 거리(m)
+    public const float NOJAT_PICK_TIME = 0.4f;  // 줍기 누름(초). 줍기는 톡이라 지금은 안 씀
 }

@@ -204,6 +204,7 @@ public class JudgeSystem : MonoBehaviour
         var at = e.Pos;
         LastJudgeSlow(e);
         if (OnJudged != null) OnJudged(e, false);
+        NojatNote(e.Pos);   // 밤 파혼 자리는 다음 낮 '흩어진 노잣돈'이 된다
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
         chainLeft = Mathf.Max(chainLeft, lo.stats.ChainWindow + lo.Def.ChainWindowAddS);   // FK1(기획): 파혼 뒤 5초 안 천도는 연속 0.8초 — 파혼으로 눕힌 혼들을 곧바로 보내는 손
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
@@ -776,6 +777,7 @@ public class JudgeSystem : MonoBehaviour
         // 거센 혼 흔적(서사 cutscenes_b02 next_day): 폐당집 보스를 파혼한 뒤엔 밤이 올 때마다 얼룩 둥지의 흔적이 한 줄 뜬다
         if (clock != null && clock.Phase == ClockPhase.Night && lastPhase != ClockPhase.Night && bossDoneIds.Contains(2) && !bossTendoIds.Contains(2))
             Say("얼룩 둥지에서 거센 혼 하나가 밤마다 일어선다", 4f);
+        if (clock != null && clock.Phase != lastPhase) NojatPhase(clock.Phase);
         if (clock != null) lastPhase = clock.Phase;
         bool dirty = false;
         if (wrathT > 0f) { wrathT -= dt; if (wrathT <= 0f) { lo.buffDamage = 0f; dirty = true; } }
@@ -1607,7 +1609,7 @@ public class JudgeSystem : MonoBehaviour
 
     // ---- F 상호작용(기획 npc-interaction-spec §2): 줍기 2m · 만져 보기 1.5m(2초 누르기) · 넋길 3m · 쉬기 3m ----
     /// <summary>줍기·만져 보기 자리(Interactables 가 채운다). OnUse 가 true 를 돌려주면 다 쓴 것(Done)</summary>
-    public class InteractSpot { public InteractKind Kind; public Vector3 Pos; public System.Func<bool> OnUse; public System.Func<bool> Active; public bool Done; }
+    public class InteractSpot { public InteractKind Kind; public string Label; public Vector3 Pos; public System.Func<bool> OnUse; public System.Func<bool> Active; public bool Done; }
     public readonly List<InteractSpot> interactSpots = new List<InteractSpot>();
     public Interactables interactables;                    // 1막 물건 배치(필드에서만)
     public InteractKind Target = InteractKind.None;       // 지금 F 가 향하는 대상(안내·폰 버튼 글자가 이것을 따른다)
@@ -1649,7 +1651,7 @@ public class JudgeSystem : MonoBehaviour
             foreach (var x in enemies.list) if (x.alive && (x.Pos - player.Pos).sqrMagnitude < Balance.SHRINE_REST_BLOCK_M * Balance.SHRINE_REST_BLOCK_M) { RestBlocked = true; break; }
         bool nightBoth = Target == InteractKind.SoulPath;   // 밤 서낭당: 톡 = 넋길, 꾹 = 쉬기
         TargetLabel = Target == InteractKind.None ? "" : nightBoth ? (RestBlocked ? "넋길 (혼이 가까이 있다)" : "넋길 · 길게 눌러 쉬기")
-            : Target == InteractKind.Rest && RestBlocked ? "혼이 가까이 있다" : Interact.Label(Target);
+            : Target == InteractKind.Rest && RestBlocked ? "혼이 가까이 있다" : (targetSpot != null && targetSpot.Label != null ? targetSpot.Label : Interact.Label(Target));
 
         // F 상태: 키보드 또는 폰 버튼. 한 번 쓴 뒤에는 뗄 때까지 새 대상으로 이어지지 않는다
         bool fHeld = Input.GetKey(KeyCode.F) || TouchControls.UseHeld;
@@ -1686,6 +1688,71 @@ public class JudgeSystem : MonoBehaviour
                 if (down && npcs != null) npcs.DismissSubtitle();
                 if (down && FieldRules.On) LampLight();   // 다른 상호작용 대상이 없을 때 F = 등잔 켜기(차고 있을 때만)
                 break;
+        }
+    }
+
+    // ---- 흩어진 노잣돈(기획 R6): 지난밤 파혼 자리에 낮 동안 잿빛 땅 틈 엽전. 하루 8개·엽전 3씩·서로 25m 이상 ----
+    // 왜: 업 60+면 낮 소문·엿듣기·제사가 다 닫혀 파혼형은 손보기 뒤 12분 동안 눈에 띄는 보상이 없다. 천도는 장례로, 파혼은 노잣돈으로 낮에 돌아온다
+    readonly List<Vector2> nojatPending = new List<Vector2>();   // 밤에 쌓인 파혼 자리(늦게 쌓인 것이 뒤)
+    public readonly List<Vector3> NojatShown = new List<Vector3>();   // 지금 세워진 자리(미니맵 점)
+    readonly List<InteractSpot> nojatSpots = new List<InteractSpot>(); readonly List<GameObject> nojatViews = new List<GameObject>();
+    void NojatNote(Vector3 at)
+    {
+        if (!FieldRules.On || clock == null || clock.Phase != ClockPhase.Night) return;
+        for (int i = 0; i < nojatPending.Count; i++) if ((nojatPending[i] - new Vector2(at.x, at.z)).magnitude < Balance.NOJAT_MIN_GAP_M) { nojatPending.RemoveAt(i); break; }   // 같은 자리는 하나로(더 늦은 것으로 옮김)
+        nojatPending.Add(new Vector2(at.x, at.z));
+    }
+    void NojatPhase(ClockPhase now)
+    {
+        if (now == ClockPhase.Day) NojatSpawn();
+        else if (now == ClockPhase.Dusk || now == ClockPhase.Night) NojatClear();   // 해질녘이 되면 안 주운 것은 사라진다(쌓이지 않음)
+    }
+    void NojatClear()
+    {
+        foreach (var sp in nojatSpots) { sp.Done = true; interactSpots.Remove(sp); }
+        nojatSpots.Clear(); NojatShown.Clear();
+        foreach (var v in nojatViews) if (v != null) Destroy(v);
+        nojatViews.Clear();
+    }
+    void NojatSpawn()
+    {
+        NojatClear();
+        var picked = new List<Vector2>();
+        for (int i = nojatPending.Count - 1; i >= 0 && picked.Count < Balance.NOJAT_PER_DAY; i--)   // 늦게 쌓인 것부터 25m 넘게 떨어진 것만
+        {
+            bool far = true; foreach (var q in picked) if ((q - nojatPending[i]).magnitude < Balance.NOJAT_MIN_GAP_M) { far = false; break; }
+            if (far) picked.Add(nojatPending[i]);
+        }
+        nojatPending.Clear();   // 목록은 비운다(낮에 한 파혼은 다음 낮 몫이라 낮에는 쌓지 않는다)
+        int total = 0, left = 0;
+        foreach (var p in picked)
+        {
+            float x = p.x, z = p.y; MapLayout.PushOut(ref x, ref z, 0.6f);   // 벽 안이면 밀어낸다(못 밀어도 그대로 둔다 — 임시)
+            var pos = new Vector3(x, 0f, z); total++;
+            // 바닥: 가는 잿빛 금(먹빛·검은색 금지 — 얼룩과 헷갈림). 도형 대역: 납작한 잿빛 상자 + 금빛 점
+            var g = GameObject.CreatePrimitive(PrimitiveType.Cube); Destroy(g.GetComponent<Collider>());
+            g.transform.position = new Vector3(x, GroundTerrain.HeightAt(x, z) + 0.02f, z); g.transform.localScale = new Vector3(0.8f, 0.02f, 0.08f);
+            g.transform.rotation = Quaternion.Euler(0f, Random.value * 180f, 0f);
+            g.GetComponent<Renderer>().sharedMaterial = U.Unlit(new Color(0.52f, 0.52f, 0.5f));
+            var c = GameObject.CreatePrimitive(PrimitiveType.Sphere); Destroy(c.GetComponent<Collider>()); c.transform.SetParent(g.transform, true);
+            c.transform.position = g.transform.position + Vector3.up * 0.05f; c.transform.localScale = new Vector3(0.12f, 0.9f, 0.12f);
+            c.GetComponent<Renderer>().sharedMaterial = U.Unlit(new Color(0.95f, 0.8f, 0.35f));
+            nojatViews.Add(g); NojatShown.Add(pos); left++;
+            InteractSpot sp = null;
+            sp = new InteractSpot
+            {
+                Kind = InteractKind.Pickup, Label = "노잣돈 줍기", Pos = pos,
+                OnUse = () =>
+                {
+                    ledger.Coin += Balance.NOJAT_COIN; night.RecordCoin(Balance.NOJAT_COIN);
+                    Sfx.Play("sfx.clue"); Say("흩어진 노잣돈 +" + Balance.NOJAT_COIN);
+                    int idx = nojatSpots.IndexOf(sp); if (idx >= 0) { if (nojatViews[idx] != null) Destroy(nojatViews[idx]); nojatViews[idx] = null; NojatShown.Remove(NojatShown.Find(v => (v - sp.Pos).sqrMagnitude < 0.01f)); }
+                    bool all = true; foreach (var o in nojatSpots) if (o != sp && !o.Done) { all = false; break; }
+                    if (all) Say("오늘은 더 남은 노잣돈이 없다", 3f);
+                    return true;
+                }
+            };
+            nojatSpots.Add(sp); interactSpots.Add(sp);
         }
     }
 
