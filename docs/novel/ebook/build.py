@@ -32,7 +32,9 @@ PARTS = [
 #   왜: 새 장과 옛 장이 한 책에 섞여 있으니, 오너가 어디까지가 새 원고인지 목차만 보고 알 수 있어야 한다.
 #   장을 하나 다시 쓸 때마다 파일 이름을 더한다. 1부는 14장까지 다 새로 썼고(10-26), 2부 15~22장도
 #   옛 문장이라 이어서 다시 쓴다. 2부까지 다 새로 쓰면 이 표를 비운다.
-REWRITTEN = {"part1": {"00-prologue.md", "01.md", "02.md", "03.md", "04.md", "05.md", "06.md", "07.md", "08.md", "09.md", "10.md", "11.md", "12.md", "13.md", "14.md"}}
+REWRITTEN = {"part1": {"00-prologue.md", "01.md", "02.md", "03.md", "04.md", "05.md", "06.md", "07.md", "08.md", "09.md", "10.md", "11.md", "12.md", "13.md", "14.md"},
+              # 2부는 15장부터 차례로 다시 쓴다(10-26~). 16~22장은 아직 옛 원고.
+              "part2": {"15.md"}}
 NUM_WORD = ["영", "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한", "열두",
             "열세", "열네", "열다섯", "열여섯"]
 
@@ -96,8 +98,11 @@ def main():
         written = len(files)
         side = "다 씀" if written >= planned else f"{planned}장 중 {written}장"
         new_set = REWRITTEN.get(folder, set())
-        if new_set:   # 다시 쓰는 중인 부는 '새로 쓴 장 수 / 전체'를 보여 준다
-            side = f"다시 쓰는 중 · 새로 쓴 장 {sum(1 for f in files if f.name in new_set)}/{written}"
+        n_new = sum(1 for f in files if f.name in new_set)
+        if new_set and n_new < written:   # 다시 쓰는 중인 부는 '새로 쓴 장 수 / 전체'를 보여 준다
+            side = f"다시 쓰는 중 · 새로 쓴 장 {n_new}/{written}"
+        elif new_set:                     # 한 부를 다 새로 썼으면 '다시 쓰는 중'이 아니라 끝난 것으로 보인다
+            side = side + " · 모두 새 판"
         rows.append(
             f'      <li class="toc-part"><span class="tp-num">{esc(num)}</span>'
             f'<span class="tp-name">{esc(name)}</span><span class="tp-side">{esc(side)}</span></li>'
