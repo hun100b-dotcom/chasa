@@ -10,13 +10,13 @@
 | prop_closeup_flagpole | B-05 깃대 조각 | 1.2×0.27×0.13 | 478 |
 | prop_closeup_mokpae | B-07 닳은 목패 | 0.22×0.05×0.44 | 224 |
 | prop_closeup_ledger_back | B-08 타다 남은 장부 뒷장 | 0.35×0.36×0.01 | 1236 |
-| prop_closeup_rope7 | B-10 매듭 일곱 밧줄(七 표지) | 1.59×0.34×0.1 | 1176 |
-| prop_closeup_blank_tag | B-11 새기지 않은 나무 조각 | 0.53×0.12×0.37 | 284 |
+| prop_closeup_rope7 | B-10 매듭 일곱 밧줄(한끝은 칼로 벤 매끈한 비스듬한 단면) | 1.59×0.34×0.1 | 1176 |
+| prop_closeup_blank_tag | B-11 새기지 않은 나무 조각(아랫부분 진흙에 반쯤 묻힘) | 0.53×0.12×0.37 | 284 |
 
 ## 파혼 뒤 낮 흔적 4종(필드 배치용)
 | 모델 | 보스 | 크기 m | 삼각형 |
 |---|---|---|---|
-| prop_trace_banner_up | B-05 깃발이 그대로 휘날림 | 2.0×1.05×3.99 | 264 |
+| prop_trace_banner_up | B-05 성벽에 걸려 반쯤 찢긴 군기(내릴 사람 없음) | 2.0×1.05×3.99 | 264 |
 | prop_trace_armor_empty | B-06 빈 갑옷 | 1.4×0.58×2.2 | 500 |
 | prop_trace_mokpae_gap | B-07 목패 한 칸 빈 자리(`act2_kit.soegol_mokpae_board`에서 6번 패·표식 뺌) | 2.7×0.7×2.11 | 536 |
 | prop_trace_anchor_rope | B-10 밧줄 감긴 닻 드러남 | 3.86×2.23×1.64 | 456 |

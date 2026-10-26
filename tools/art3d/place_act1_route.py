@@ -36,7 +36,7 @@ FARM = [("a1r_sheaf_stack", "props", 2.2, "보릿단 말림"), ("a1r_ridge_marke
         ("a1r_manure_heap", "props", 2.0, "두엄 더미"), ("prop_scarecrow", "props", 2.0, "허수아비"), ("prop_haystack", "props", 2.0, "건초 더미"), ("cover_stones_a", "nature", 2.5, "밭 돌"), ("nature_bush_b", "nature", 2.0, "밭둑 덤불"), ("cover_flower_mix", "nature", 2.5, "둑 들꽃")]
 LIFE = [("a1r_gourd_trellis", "props", 2.0, "박 시렁"), ("a1r_drink_jars", "props", 2.0, "길가 물독"), ("a1r_wayside_rest", "props", 2.5, "길가 쉼터"), ("prop_jangdok", "props", 1.5, "장독"), ("prop_firewood", "props", 1.5, "땔감"), ("prop_log_pile", "props", 1.8, "통나무 더미"),
         ("prop_sacks", "props", 1.5, "가마니"), ("nature_bush_a", "nature", 2.0, "길섶 덤불"), ("cover_stones_b", "nature", 2.5, "길가 돌"), ("prop_stepstones", "props", 1.5, "디딤돌")]
-DENS = {"둑길": (10.0, 24), "보릿들길": (10.0, 28)}      # 24 m 점검: 화면에 담기는 땅이 넓어(반경 약 20 m) 반경 8 m·8개로는 빈 풀밭으로 보임 → 이 두 길은 반경 10 m 안 14~16개
+DENS = {"둑길": (12.0, 40), "보릿들길": (10.0, 28)}      # 24 m 점검: 화면에 담기는 땅이 넓어(반경 약 20 m) 반경 8 m·8개로는 빈 풀밭으로 보임 → 이 두 길은 반경 10 m 안 14~16개
 def pick(x, y):
     # 둑길 동쪽 끝(보릿들)은 농사, 그 밖은 생활 소품
     return FARM if x > 215 and y > 95 else LIFE
