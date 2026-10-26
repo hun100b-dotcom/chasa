@@ -3166,5 +3166,9 @@
  "BOSS_DRAGGABLE": {
   "value": 0,
   "note": "(기획 b01-naru-final-check) 1이면 보스도 철삭으로 끌 수 있다. 0 = 불가(기본)"
+ },
+ "PAHON_KNOCKED_COIN_MULT": {
+  "value": 0.5,
+  "note": "(기획 n1-season-check) N1로 꿇은 혼을 천도하지 않고 파혼하면 엽전 배율"
  }
 }

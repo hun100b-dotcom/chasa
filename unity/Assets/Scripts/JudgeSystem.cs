@@ -224,6 +224,7 @@ public class JudgeSystem : MonoBehaviour
         // 엽전 장비 보너스(엽전 +%)와 향 내음의 마이너스(파혼 엽전 −50%)를 곱해 반영 (음수면 깎인다)
         float baseCoin = e.soul.Boss ? Bosses.CoinFor(e.soul.BossId) : e.elite ? Balance.PAHON_COIN * Balance.ELITE_PAHON_COIN_MULT : Balance.PAHON_COIN;   // 거센 혼: 엽전 x3
         float snatchMult = e.soul.Boss && snatched.Contains(e.soul.BossId) ? 1.2f : 1f;
+        if (e.knockedByBlast) snatchMult *= Balance.PAHON_KNOCKED_COIN_MULT;   // 폭발에 꿇은 혼을 또 깨뜨리면 엽전 절반(기획 n1-season-check)
         if (!e.soul.Boss && e.soul.Ring > 1) snatchMult *= RingLoot.CoinMult(e.soul.Ring);   // 고리 보상 배율(엽전은 증가분의 60%)   // 낚아챈 보스는 파혼 엽전 x1.2
         // 이름 있는 노리개의 파혼 엽전 배수: 뱃삯 ×1.13 · 남은 장부 ×1.2(2막 숫자 혼만) · 아낙의 등잔 ×1.5(켠 둘레 안)
         float keepMult = 1f;
@@ -319,7 +320,7 @@ public class JudgeSystem : MonoBehaviour
             // 왜: 큰 무리에서 '다 눕히고 연속 천도'만 정답이던 쏠림을 풀고, 어느 혼을 깨뜨릴지를 판단거리로 만든다. 보스·거센 혼·이름혼·덩어리는 뺀다
             if (!nowKneel && o.alive && !o.soul.Boss && !o.soul.Fierce && !o.elite && o.soul.Name == null && o.soul.Kind != SoulKind.Lump
                 && o.soul.Maedhim < o.soul.MaedhimMax * Balance.PAHON_KNOCKDOWN_BELOW)
-                o.TakeHit(o.soul.Maedhim, dir, 0f, 0f);   // 남은 맺힘만큼 한 번 더 — 보통 꿇음과 같은 연출·드롭 경로를 탄다
+                { if (o.TakeHit(o.soul.Maedhim, dir, 0f, 0f)) o.knockedByBlast = true; }   // 남은 맺힘만큼 한 번 더 — 보통 꿇음과 같은 연출·드롭 경로를 탄다
             numbers.Spawn(o.HeadPosition, pahonDmg, "heavy");
             // 밀려난 적마다 넉백 소리(사운드팀 표): 폭발 0.05초 뒤부터 0.03초 간격·음높이 +4%씩, 최대 4개. 저음은 폭발 하나만 갖게 따로 얹는다
             if (knockSfx < Balance.PAHON_KNOCK_SFX_MAX)

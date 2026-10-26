@@ -818,4 +818,5 @@ public static class Balance
     public const float PAHON_KNOCKDOWN_BELOW = 0.25f;  // (기획 field-judge-skew N1) 파혼 폭발 뒤 맺힘이 최대의 이 비율 아래로 남은 일반 혼은 그 자리에서 꿇는다
     public const float DAY_STAIN_SEC = 8.0f;  // (기획 field-judge-skew FK3) 낮 얼룩 지속(초). 밤 15초. 낮엔 소환 없음
     public const int BOSS_DRAGGABLE = 0;  // (기획 b01-naru-final-check) 1이면 보스도 철삭으로 끌 수 있다. 0 = 불가(기본)
+    public const float PAHON_KNOCKED_COIN_MULT = 0.5f;  // (기획 n1-season-check) N1로 꿇은 혼을 천도하지 않고 파혼하면 엽전 배율
 }

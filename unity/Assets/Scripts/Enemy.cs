@@ -248,6 +248,7 @@ public class Enemy : MonoBehaviour
         mat.color = baseColor;
     }
 
+    public bool knockedByBlast;             // 파혼 폭발(N1)로 꿇은 혼 — 이 혼을 또 파혼하면 엽전 ×0.5(깨뜨려 꿇린 혼은 천도로 보내는 손을 밀어 준다)
     public bool elite;                      // 거센 혼(첫 강적): 맺힘 300, 패턴 셋, 이름 띠. EliteArena 가 움직임을 맡는다
     public string eliteAnim = "";           // 거센 혼 예고 동작 꼬리표("", "attack", "strike")
     public bool eliteMote;                  // 거센 혼이 부른 잔넋(천도하면 조용히 흩어지고, 파혼 폭발에 함께 터진다)
