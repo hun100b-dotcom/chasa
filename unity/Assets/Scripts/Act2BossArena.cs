@@ -79,6 +79,7 @@ public class Act2BossArena : MonoBehaviour
                 for (int i = list.Count - 1; i >= keep; i--) if (list[i] != null && list[i].alive) { list[i].Finish(); }
                 if (def.Id == 5) soldiers.Clear();
             }
+            if (def.Id == 11) foreach (var kv in helpers) if (kv.Key != null && kv.Value == 3) kv.Key.passive = true;   // 왕초가 꿇으면 별명 혼들이 협공을 멈추고 앉는다
             // 평소 예고는 거두되, 염씨의 숫자 지뢰는 그대로 둔다
             for (int i = teles.Count - 1; i >= 0; i--) { if (def.Id == 8 && teles[i].mine) continue; if (teles[i].view != null) Destroy(teles[i].view); teles.RemoveAt(i); }
             DropPoints();
@@ -146,7 +147,7 @@ public class Act2BossArena : MonoBehaviour
 
     // ---- 3막 보스 곁의 혼(약점): 1 물 혼(B-09) · 2 선원(B-10) · 3 별명 혼(B-11) · 4 물 혼(B-12) ----
     readonly Dictionary<Enemy, int> helpers = new Dictionary<Enemy, int>(); int weakWaves; float nickT; bool sailorsSpawned;
-    void SpawnHelper(int kind, Vector3 at) { var h = judge.enemies.SpawnCamp(at, kind % 2 == 0); if (h != null) helpers[h] = kind; }
+    void SpawnHelper(int kind, Vector3 at) { var h = judge.enemies.SpawnCamp(at, kind % 2 == 0); if (h != null) { helpers[h] = kind; if (kind == 2) h.passive = true; } }   // 선원(2)은 처음부터 공격하지 않는다 — 칠성 광부처럼 처결만 받는다(기획 B10_SAILORS_ATTACK false)
     Vector3 ArenaPoint(float radFrac)
     {
         float a = Random.value * 360f;

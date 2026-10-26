@@ -3178,5 +3178,17 @@
  "GROWTH_SKILLCD_PER_MIND": {
   "value": 0.003,
   "note": "(기획 C) 마음 1점당 도술 재사용 −0.3%(상한 35% 안)"
+ },
+ "B01_KNEEL_ADD_COUNT": {
+  "value": 2,
+  "note": "(기획 b01-naru-final-check) 나루 영감이 꿇은 동안 한 물결에 올라오는 물 혼 수"
+ },
+ "B01_KNEEL_ADD_SECOND_AT": {
+  "value": 5.0,
+  "note": "꿇은 뒤 두 번째 물결까지(초)"
+ },
+ "B01_DRIFT_STOP_R": {
+  "value": 4.0,
+  "note": "얼룩이 영감 쪽으로 흘러가다 멈추는 거리(m)"
  }
 }

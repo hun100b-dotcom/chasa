@@ -821,4 +821,7 @@ public static class Balance
     public const float PAHON_KNOCKED_COIN_MULT = 0.5f;  // (기획 n1-season-check) N1로 꿇은 혼을 천도하지 않고 파혼하면 엽전 배율
     public const float GROWTH_SKILLPOWER_PER_MIND = 0.01f;  // (기획 code-plan-diff C) 마음 1점당 도술 위력 +1%
     public const float GROWTH_SKILLCD_PER_MIND = 0.003f;  // (기획 C) 마음 1점당 도술 재사용 −0.3%(상한 35% 안)
+    public const int B01_KNEEL_ADD_COUNT = 2;  // (기획 b01-naru-final-check) 나루 영감이 꿇은 동안 한 물결에 올라오는 물 혼 수
+    public const float B01_KNEEL_ADD_SECOND_AT = 5.0f;  // 꿇은 뒤 두 번째 물결까지(초)
+    public const float B01_DRIFT_STOP_R = 4.0f;  // 얼룩이 영감 쪽으로 흘러가다 멈추는 거리(m)
 }

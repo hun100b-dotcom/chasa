@@ -55,12 +55,12 @@ namespace Chasa.Core
         }
 
         /// <summary>얼룩이 물에 떠서 (cx,cz) 쪽으로 흘러간다(나루 영감 ② 큰물). maxDist 안의 얼룩만, 도착하면 멈춘다</summary>
-        public void DriftToward(float cx, float cz, float speed, float dt, float maxDist)
+        public void DriftToward(float cx, float cz, float speed, float dt, float maxDist, float stopR = 1.5f)
         {
             foreach (var it in _items)
             {
                 float dx = cx - it.X, dz = cz - it.Z, d = (float)System.Math.Sqrt(dx * dx + dz * dz);
-                if (d > maxDist || d < 1.5f) continue;
+                if (d > maxDist || d < stopR) continue;   // 영감 4m 앞에서 멈춘다(기획 B01_DRIFT_STOP_R): 얼룩이 영감 발밑까지 몰리지 않게
                 it.X += dx / d * speed * dt; it.Z += dz / d * speed * dt;
             }
         }

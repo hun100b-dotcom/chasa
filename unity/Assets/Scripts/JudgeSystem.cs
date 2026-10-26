@@ -340,7 +340,7 @@ public class JudgeSystem : MonoBehaviour
         flashColor = new Color(0.55f, 0.05f, 0.08f); flashA = 0.55f;   // 붉은 번쩍임(깨뜨림)
         // 원념 얼룩: 3개가 겹치면 그 자리에서 사나운 적이 솟는다
         float cx, cz;
-        if (stains.Add(at.x, at.z, out cx, out cz, e.elite ? Balance.ELITE_STAIN_SCALE : 1f, !(clock != null && clock.Phase == ClockPhase.Day)))   // 낮엔 소환 없음(FK3)   // 거센 혼 파혼: 큰 얼룩(1.5배)
+        if (stains.Add(at.x, at.z, out cx, out cz, e.elite ? Balance.ELITE_STAIN_SCALE : 1f, !(clock != null && clock.Phase == ClockPhase.Day) && !naruKneelWave1 && naruHoldT <= 0f))   // 낮엔 소환 없음(FK3). 나루 영감이 꿇은 동안과 처결 2초 뒤까지도 소환을 미룬다(B01_SUMMON_HOLD)   // 거센 혼 파혼: 큰 얼룩(1.5배)
         {
             enemies.SpawnFierce(new Vector3(cx, 0, cz));
             if (naruBig) PatternEvent("B-01.stain_merge", null, false);   // 나루 큰물 중 얼룩 셋이 모여 거센 혼이 일어선다
@@ -560,12 +560,38 @@ public class JudgeSystem : MonoBehaviour
     }
 
     // ---- B-01 나루 영감 ① 무방비 · ② 큰물(맺힘 50%: 바닥 18 m → 11 m, 얼룩이 영감 쪽으로 흘러감) ----
-    bool naruBig, naruWeakSeen; float naruShrink, naruPushCool;
+    bool naruBig, naruWeakSeen, naruKneelWave1, naruKneelWave2; float naruShrink, naruPushCool, naruKneelT, naruHoldT;
+    /// <summary>꿇은 나루 영감 뱃전 양옆 3m에 물 혼 둘(무명, 고리 ①)</summary>
+    void SpawnNaruWater(Enemy k)
+    {
+        for (int i = 0; i < Balance.B01_KNEEL_ADD_COUNT; i++)
+        {
+            float side = i % 2 == 0 ? 1f : -1f;
+            var at = k.Pos + new Vector3(side * 3f, 0f, (i / 2) * 1.2f);
+            var w = enemies.SpawnCamp(at, i % 2 == 0);
+            if (w != null) w.extra = true;   // 처결·소멸하면 다시 안 나온다
+        }
+        Say("물 혼이 올라온다");
+    }
     void TickNaru(float dt)
     {
         if (!FieldRules.On) return;
         Enemy b = null; foreach (var e in enemies.list) if (e != null && e.alive && !e.gone && e.soul.Boss && e.soul.BossId == 1) { b = e; break; }
-        if (b == null) { naruBig = false; naruShrink = 0f; return; }
+        if (b == null)
+        {
+            // 나루 영감이 꿇은 동안(기획 b01-naru-final-check): 물 혼 두 물결이 계속 올라온다 — 꿇는 순간 뱃전 양옆 3m에 2마리, 5초 뒤 2마리 더
+            // 왜: 꿇으면 둘레가 텅 비어 천도 2초가 위험 0이라 천도로 쏠리고, 앞선 파혼이 마지막 선택을 대신 정해 버렸다. 처결이 끝나면 멈춘다
+            Enemy k = null; foreach (var e in enemies.list) if (e != null && !e.gone && e.soul.Boss && e.soul.BossId == 1 && (e.kneeling || e.sending)) { k = e; break; }
+            if (k != null && new Vector2(player.Pos.x - k.Pos.x, player.Pos.z - k.Pos.z).magnitude < 40f)
+            {
+                naruKneelT += dt;
+                if (!naruKneelWave1) { naruKneelWave1 = true; SpawnNaruWater(k); }
+                else if (!naruKneelWave2 && naruKneelT >= Balance.B01_KNEEL_ADD_SECOND_AT) { naruKneelWave2 = true; SpawnNaruWater(k); }
+            }
+            else { if (naruKneelWave1) naruHoldT = 2f; naruKneelT = 0f; naruKneelWave1 = naruKneelWave2 = false; }
+            if (naruHoldT > 0f) naruHoldT -= dt;
+            naruBig = false; naruShrink = 0f; return;
+        }
         float dist = new Vector2(player.Pos.x - b.Pos.x, player.Pos.z - b.Pos.z).magnitude;
         if (dist > 40f) return;   // 마당 근처에서만
         // 무방비: 휩쓸기 직후 1.5초 동안 맺힘 피해 ×1.5(약점)
@@ -577,7 +603,7 @@ public class JudgeSystem : MonoBehaviour
         if (!naruBig) return;
         naruShrink = Mathf.MoveTowards(naruShrink, 1f, dt / 3f);   // 3초에 걸쳐 좁아진다
         float R = Mathf.Lerp(18f, 11f, naruShrink);
-        stains.DriftToward(b.Pos.x, b.Pos.z, 0.8f, dt, 25f);       // 파혼 얼룩이 영감 쪽으로 흘러간다
+        stains.DriftToward(b.Pos.x, b.Pos.z, 0.8f, dt, 25f, Balance.B01_DRIFT_STOP_R);       // 파혼 얼룩이 영감 쪽으로 흘러간다
         naruPushCool -= dt;
         if (dist > R && dist < R + 8f && !Casting)   // 바닥 밖이면 물살이 안쪽으로 민다
         {

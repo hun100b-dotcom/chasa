@@ -248,6 +248,7 @@ public class Enemy : MonoBehaviour
         mat.color = baseColor;
     }
 
+    public bool passive;                    // 공격하지 않는 혼(B-10 선원 7, 꿇은 왕초 곁 별명 혼)
     bool heavySet, flashLeadDone;
     public static bool CastVisionLimited;   // 천도 시전 중(시야 60%로 좁아진 동안) — JudgeSystem 이 켠다
     /// <summary>화면 밖이거나 좁아진 시야(60%) 밖인가. 시야 원은 화면 가운데 기준 근사값</summary>
@@ -342,7 +343,7 @@ public class Enemy : MonoBehaviour
             Pos += vel * dt;                                   // 넉백 이동
             vel *= Mathf.Exp(-Config.ENEMY_KNOCKBACK_FRICTION * dt); // 지수 감속 (프레임레이트 무관)
             stun -= dt;
-            bool canAct = stun <= 0f;
+            bool canAct = stun <= 0f && !passive;   // passive: 선원·앉은 별명 혼처럼 처결만 받고 공격하지 않는다
             float dist = new Vector2(playerPos.x - Pos.x, playerPos.z - Pos.z).magnitude;
             if (type == SoulType.Wail) TickWail(dt, playerPos, canAct && !IntroCalm, dist);
             else if (type == SoulType.Buried) { if (!IntroCalm) TickBuried(dt, canAct, dist); }
