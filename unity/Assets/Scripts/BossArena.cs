@@ -21,7 +21,7 @@ public class BossArena : MonoBehaviour
     float waveT = 2f;                          // 다음 파동까지(전투 시작 직후 잠깐 여유)
     bool waveBurstSnd, frenzySnd; int seoStreak;   // 파동마다 터짐 소리 1번 / 월화 몰아침 소리 1번 / 서 의원 연속 피함
     bool waveHit; Tele lastOfWave;             // 이번 파동에서 맞았나 / 파동의 마지막 칸(끝났는지 보려고)
-    bool built;
+    bool built, wasKneel;   // wasKneel: 꿇은 압박 타이머를 한 번만 맞추려고
 
     ArenaDecor decor;
     public void Init(JudgeSystem j, Enemy b, BossDef d) { judge = j; boss = b; def = d; decor = ArenaDecor.Make(j, b, d.Id); }
@@ -73,6 +73,19 @@ public class BossArena : MonoBehaviour
         if (!built) return;
         SetCupsActive(dist < 60f);
         bool fight = dist < 16f && boss.alive && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
+        // 꿇은 동안의 압박(기획 boss-final-moment-act1-2): 서 의원은 꿇어도 4초마다 12칸 파동을 보낸다
+        // 왜: 압박이 없으면 천도(1.5초 시전)가 늘 안전해 파혼 쪽으로 쏠리지 않고 천도로 쏠린다. 시전 중에도 계속 돈다
+        bool kneelFight = def.Id == 3 && (boss.kneeling || boss.sending) && dist < 16f && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
+        if (kneelFight)
+        {
+            if (!wasKneel) { wasKneel = true; waveT = Balance.B03_KNEEL_WAVE_GAP; }   // 꿇는 순간 첫 파동까지 4초
+            boss.damageTakenMult = 1f; if (weakMark != null) weakMark.SetActive(false);
+            TickTeles(Time.deltaTime);
+            waveT -= Time.deltaTime;
+            if (waveT <= 0f && lastOfWave == null) StartWave(true);
+            return;
+        }
+        wasKneel = false;
         if (!fight) { ClearTeles(); boss.damageTakenMult = 1f; if (weakMark != null) weakMark.SetActive(false); return; }
 
         float dt = Time.deltaTime;
@@ -83,7 +96,7 @@ public class BossArena : MonoBehaviour
             StartWave();
     }
 
-    void StartWave()
+    void StartWave(bool kneel = false)
     {
         waveHit = false; waveBurstSnd = false;
         if (def.Id == 2)
@@ -99,10 +112,10 @@ public class BossArena : MonoBehaviour
         else
         {
             int n = Balance.B03_GRID;
-            var bad = NumberGrid.Pick(() => Random.value, n * n, Balance.B03_CELLS_PER_WAVE);
+            var bad = NumberGrid.Pick(() => Random.value, n * n, kneel ? Balance.B03_KNEEL_CELLS : Balance.B03_CELLS_PER_WAVE);   // 꿇은 동안은 12칸(평소 16)
             for (int k = 0; k < bad.Length; k++) if (bad[k]) Add(CellPos(k / n, k % n), Balance.B03_CELL_M * 0.5f, Balance.B03_WARN_TIME, true);
             Sfx.Play("cut.floor.flash");
-            waveT = Balance.B03_WARN_TIME + Balance.B03_WAVE_GAP;
+            waveT = kneel ? Balance.B03_KNEEL_WAVE_GAP : Balance.B03_WARN_TIME + Balance.B03_WAVE_GAP;
         }
         lastOfWave = teles[teles.Count - 1];
     }

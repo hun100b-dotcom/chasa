@@ -40,13 +40,14 @@ public class Act2BossArena : MonoBehaviour
         bool shoalClosed = def.Id == 10 && judge.clock != null && !(judge.clock.Phase == ClockPhase.Night && Tide.IsEbbNight(judge.clock.Day));
         closedToast -= Time.deltaTime;
         if (shoalClosed && dist < fightArea + 10f && closedToast <= 0f) { closedToast = 8f; judge.Say("물이 들었다"); }
-        bool fight = !shoalClosed && dist < fightArea && boss.alive && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
+        bool fight = !shoalClosed && dist < fightArea && (boss.alive || boss.kneeling || boss.sending) && !judge.cuts.Active && !judge.NightOver && !CharacterPanel.Open && !SettingsPanel.Open;
         if (!fight) { Clear(); return; }
         float dt = Time.deltaTime;
         soldiers.RemoveAll(s => s == null || !s.alive);
         if (brain != null) { brain.Maedhim = boss.soul.Maedhim; brain.MaedhimMax = boss.soul.MaedhimMax; brain.Soldiers = soldiers.Count; }
         else { brain3.Maedhim = boss.soul.Maedhim; brain3.MaedhimMax = boss.soul.MaedhimMax; }
-        if (boss.kneeling) { Clear(); return; }   // 처결 대기 중엔 공격하지 않는다
+        if (boss.kneeling || boss.sending) { KneelTick(dt); return; }   // 천도 시전 중에도 압박은 이어진다   // 처결 대기 중엔 평소 공격은 멈추고, 보스별 약한 압박 하나만 돈다
+        kneelBegun = false;
         var mv = brain != null ? brain.Tick(dt) : brain3.Tick(dt);
         if (mv.Act != BossAct.None) Start(mv);
         TickTeles(dt);
@@ -56,6 +57,47 @@ public class Act2BossArena : MonoBehaviour
         if (brain3 != null) TickHelpers(dt);
         if (brain3 != null && def.Id == 10) { TickTilt(dt); TickRope(dt); }
         if (brain != null && def.Id == 6) boss.damageTakenMult = brain.DamageMultAt(PlayerInFormGap());
+    }
+
+    // ---- 꿇은 동안의 약한 압박(기획 boss-final-moment-act1-2·act3) ----
+    // 왜: 압박이 없으면 천도 1.5초가 늘 안전해 천도로 쏠리고, 이미 나온 병사·혼이 계속 때리면 앞선 판에 따라 운으로 갈린다.
+    //     그래서 보스가 꿇은 동안 4.5초마다 보스별 압박 하나만 보내고(천도는 때를 맞춰야 하고 파혼은 즉시), 평소 공격은 멈춘다.
+    bool kneelBegun; float kneelT;
+    void KneelTick(float dt)
+    {
+        var bp = new Vector3(boss.Pos.x, 0f, boss.Pos.z); var pp = new Vector3(judge.player.Pos.x, 0f, judge.player.Pos.z);
+        var to = pp - bp; var dir = to.sqrMagnitude > 0.01f ? to.normalized : Vector3.forward;
+        if (!kneelBegun)
+        {
+            kneelBegun = true;
+            kneelT = def.Id == 6 ? 1.0f : Balance.KNEEL_PRESS_GAP;   // 장수는 꿇은 뒤 1초에 첫 대형, 나머지는 한 간격 뒤
+            // 보스 곁의 혼 정리: 대돌(번호 병사 최대 2), 흑월 2차(남은 물 혼 모두), 아낙(물 혼 1)
+            int keep = def.Id == 5 ? Balance.B05_KNEEL_KEEP_NUMBERED : def.Id == 9 ? 1 : def.Id == 12 ? 0 : -1;
+            if (keep >= 0)
+            {
+                var list = def.Id == 5 ? soldiers : new List<Enemy>(helpers.Keys);
+                for (int i = list.Count - 1; i >= keep; i--) if (list[i] != null && list[i].alive) { list[i].Finish(); }
+                if (def.Id == 5) soldiers.Clear();
+            }
+            // 평소 예고는 거두되, 염씨의 숫자 지뢰는 그대로 둔다
+            for (int i = teles.Count - 1; i >= 0; i--) { if (def.Id == 8 && teles[i].mine) continue; if (teles[i].view != null) Destroy(teles[i].view); teles.RemoveAt(i); }
+            DropPoints();
+        }
+        TickTeles(dt);
+        if (brain3 != null && def.Id == 10) TickTilt(dt);   // 선장: 갑판 기울기는 꿇은 동안에도 돈다(미끄러지면 처결 거리를 벗어나 천도가 끊긴다)
+        if (def.Id == 12 || def.Id == 1) return;   // 흑월 2차는 압박 없음
+        kneelT -= dt;
+        if (kneelT > 0f) return;
+        kneelT = Balance.KNEEL_PRESS_GAP;
+        switch (def.Id)
+        {
+            case 5: return;   // 대돌: 남은 번호 병사가 곧 압박이라 따로 안 보낸다
+            case 6: Add(new Tele { shape = Shape.Ring, c = bp, r = Balance.B06_CIRCLE_START, len = 2.8f, warn = Balance.KNEEL_PRESS_WARN }); Sfx.Play("sfx.boss.general.command"); break;   // 빈칸은 장수 2.8m 안
+            case 7: Start(new BossMove { Act = BossAct.RockFall, Warn = Balance.KNEEL_PRESS_WARN, Radius = Balance.B07_ROCK_RADIUS, Count = 3 }); break;   // 낙석 3곳, 하나는 내 발밑
+            case 8: Start(new BossMove { Act = BossAct.NumberMines, Warn = Balance.KNEEL_PRESS_WARN, Count = 4, Param = Balance.B08_MINE_MULT }); break;   // 숫자 4장
+            case 9: Start(new BossMove { Act = BossAct.WaveRows, Warn = Balance.KNEEL_PRESS_WARN, Count = 1, Radius = Balance.B09_WAVE_WIDTH, Param = Balance.B09_WAVE_STRIDE }); break;   // 파도 1줄
+            case 11: Start(new BossMove { Act = BossAct.MatThrow, Warn = Balance.KNEEL_PRESS_WARN, Radius = Balance.B11_MAT_RADIUS }); break;   // 거적 던지기
+        }
     }
 
     // ---- B-10 약점: 줄 끊기 직후 늘어진 밧줄 끝을 2초 동안 사슬로 끌면 선장이 넘어진다(멈칫 1.5초 + 맺힘 피해 ×1.5 2초) ----
@@ -81,7 +123,7 @@ public class Act2BossArena : MonoBehaviour
     float tiltT = 3f, tiltSlide, tiltSide = 1f; bool stormSaid;
     void TickTilt(float dt)
     {
-        if (boss == null || !boss.alive) return;
+        if (boss == null || !(boss.alive || boss.kneeling || boss.sending)) return;
         float dist = new Vector2(judge.player.Pos.x - def.X, judge.player.Pos.z - def.Z).magnitude;
         if (dist > fightArea + 6f) return;   // 싸움터 근처에서만
         bool storm = brain3.Phase2;

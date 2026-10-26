@@ -1214,7 +1214,7 @@ public class CoreTests
         h.Hp = -5; Assert.AreEqual(0f, h.HpRatio);
         h.Hp = 999; Assert.AreEqual(1f, h.HpRatio);
         h.Hp = 10; Assert.IsTrue(h.HpLow);
-        h.Warning = true; StringAssert.Contains("동이 튼다", h.NightLine());
+        h.Warning = true; StringAssert.Contains("날이 밝는다", h.NightLine());
     }
 
     // ---------- 화면 가장자리 경고 (2단계) ----------

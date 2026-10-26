@@ -810,4 +810,9 @@ public static class Balance
     public const float NIGHT_RIM_INTENSITY = 1.2f;  // (아트) 밤 주인공 청록 테두리빛 세기. 임시값, PC에서 보고 조절
     public const float NIGHT_RIM_RANGE = 4.0f;  // 밤 주인공 청록 테두리빛 반경(m)
     public const int KARMA_MAX = 99;  // (기획 10-26) 업 상한. 넘친 몫은 버린다. 60+「빛 없는 길」에서 천도로 돌아올 길을 남기려고
+    public const float B03_KNEEL_WAVE_GAP = 4.0f;  // (기획 boss-final-moment-act1-2) 서 의원이 꿇은 동안 파동 간격(초). 평소 1.2
+    public const int B03_KNEEL_CELLS = 12;  // (기획) 서 의원이 꿇은 동안 한 파동 칸 수. 평소 16
+    public const float KNEEL_PRESS_GAP = 4.5f;  // (기획 boss-final-moment) 보스가 꿇은 동안 약한 압박 하나를 보내는 간격(초). 4~5초
+    public const float KNEEL_PRESS_WARN = 1.2f;  // 꿇은 동안 압박의 예고 시간(초). 임시값
+    public const int B05_KNEEL_KEEP_NUMBERED = 2;  // (기획) 대돌이 꿇을 때 남기는 번호 병사 수(이름 불린 병사 구분은 아직 없어 앞에서부터 남김)
 }

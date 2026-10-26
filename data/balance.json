@@ -3134,5 +3134,25 @@
  "KARMA_MAX": {
   "value": 99,
   "note": "(기획 10-26) 업 상한. 넘친 몫은 버린다. 60+「빛 없는 길」에서 천도로 돌아올 길을 남기려고"
+ },
+ "B03_KNEEL_WAVE_GAP": {
+  "value": 4.0,
+  "note": "(기획 boss-final-moment-act1-2) 서 의원이 꿇은 동안 파동 간격(초). 평소 1.2"
+ },
+ "B03_KNEEL_CELLS": {
+  "value": 12,
+  "note": "(기획) 서 의원이 꿇은 동안 한 파동 칸 수. 평소 16"
+ },
+ "KNEEL_PRESS_GAP": {
+  "value": 4.5,
+  "note": "(기획 boss-final-moment) 보스가 꿇은 동안 약한 압박 하나를 보내는 간격(초). 4~5초"
+ },
+ "KNEEL_PRESS_WARN": {
+  "value": 1.2,
+  "note": "꿇은 동안 압박의 예고 시간(초). 임시값"
+ },
+ "B05_KNEEL_KEEP_NUMBERED": {
+  "value": 2,
+  "note": "(기획) 대돌이 꿇을 때 남기는 번호 병사 수(이름 불린 병사 구분은 아직 없어 앞에서부터 남김)"
  }
 }
