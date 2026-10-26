@@ -195,6 +195,7 @@ public class JudgeSystem : MonoBehaviour
         LastJudgeSlow(e);
         if (OnJudged != null) OnJudged(e, false);
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
+        chainLeft = Mathf.Max(chainLeft, lo.stats.ChainWindow + lo.Def.ChainWindowAddS);   // FK1(기획): 파혼 뒤 5초 안 천도는 연속 0.8초 — 파혼으로 눕힌 혼들을 곧바로 보내는 손
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
         if (interactables != null) interactables.OnPahon(e.soul.Name);   // 이름혼의 유품은 재가 된다
         if (e.soul.Name != null && funeralCut.ContainsKey(e.soul.Name)) { funeralPending[e.soul.Name] = 2; funeralBorn[e.soul.Name] = clock != null && clock.Phase == ClockPhase.Day ? clock.Day : -1; }   // 파혼: 조등만(장면 없음)
@@ -303,7 +304,12 @@ public class JudgeSystem : MonoBehaviour
             var d = new Vector3(o.Pos.x - at.x, 0, o.Pos.z - at.z);
             if (d.magnitude > radius + o.radius) continue;
             var dir = d.magnitude > 0.01f ? d.normalized : Vector3.right;
-            o.TakeHit(pahonDmg, dir, kb, 0.3f);
+            bool nowKneel = o.TakeHit(pahonDmg, dir, kb, 0.3f);
+            // N1(기획 field-judge-skew-check): 폭발 뒤 맺힘이 25% 아래로 남은 일반 혼은 그 자리에서 꿇는다
+            // 왜: 큰 무리에서 '다 눕히고 연속 천도'만 정답이던 쏠림을 풀고, 어느 혼을 깨뜨릴지를 판단거리로 만든다. 보스·거센 혼·이름혼·덩어리는 뺀다
+            if (!nowKneel && o.alive && !o.soul.Boss && !o.soul.Fierce && !o.elite && o.soul.Name == null && o.soul.Kind != SoulKind.Lump
+                && o.soul.Maedhim < o.soul.MaedhimMax * Balance.PAHON_KNOCKDOWN_BELOW)
+                o.TakeHit(o.soul.Maedhim, dir, 0f, 0f);   // 남은 맺힘만큼 한 번 더 — 보통 꿇음과 같은 연출·드롭 경로를 탄다
             numbers.Spawn(o.HeadPosition, pahonDmg, "heavy");
             // 밀려난 적마다 넉백 소리(사운드팀 표): 폭발 0.05초 뒤부터 0.03초 간격·음높이 +4%씩, 최대 4개. 저음은 폭발 하나만 갖게 따로 얹는다
             if (knockSfx < Balance.PAHON_KNOCK_SFX_MAX)

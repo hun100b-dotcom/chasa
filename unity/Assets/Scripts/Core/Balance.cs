@@ -815,4 +815,5 @@ public static class Balance
     public const float KNEEL_PRESS_GAP = 4.5f;  // (기획 boss-final-moment) 보스가 꿇은 동안 약한 압박 하나를 보내는 간격(초). 4~5초
     public const float KNEEL_PRESS_WARN = 1.2f;  // 꿇은 동안 압박의 예고 시간(초). 임시값
     public const int B05_KNEEL_KEEP_NUMBERED = 2;  // (기획) 대돌이 꿇을 때 남기는 번호 병사 수(이름 불린 병사 구분은 아직 없어 앞에서부터 남김)
+    public const float PAHON_KNOCKDOWN_BELOW = 0.25f;  // (기획 field-judge-skew N1) 파혼 폭발 뒤 맺힘이 최대의 이 비율 아래로 남은 일반 혼은 그 자리에서 꿇는다
 }
