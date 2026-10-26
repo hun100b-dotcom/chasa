@@ -21,7 +21,7 @@ git checkout origin/claude/project-thread-3syw2s -- unity/Assets/Resources/Data/
 | `pattern_texts.json` | 보스 패턴 소리 이름 |
 | `cutscenes_s1.json` | 파혼 마지막 장면 5개, `B12-RISE` 새 컷, C-12A 한 줄 |
 | `first10/loading_tips.json` | 검은여울 두 줄 최신판, "10초 안에 처결" 숫자 뺌, 처음 하는 사람 눈으로 6줄 다듬음 |
-| `tutorial_hints.json` | 처음 5분 안내 8개 다듬음. C 안내 "명부 보기" → "기록 보기"(명세상 C = 인물 창 기록 탭). 키·순서·시간 그대로 |
+| `tutorial_hints.json` | 처음 5분 안내 8개 다듬음. C 안내 "명부 보기" → "기록 보기"(명세상 C = 인물 창 기록 탭). `offledger` = "명부에 없는 혼도 보낼 수 있다"(1-6). 키·순서·시간 그대로 |
 
 ---
 
@@ -42,6 +42,7 @@ git checkout origin/claude/project-thread-3syw2s -- unity/Assets/Resources/Data/
 | `Core/Growth.cs:246` | `case "검은 갓의 그림자":` | `case "금 간 그림자":` |
 | `JudgeSystem.cs:850` | `case "검은 갓의 그림자":` | `case "금 간 그림자":` |
 | 주석 `JudgeSystem.cs:269 · 690`, `Core/Balance.cs:455 · 473` | 검은 갓의 그림자 | 금 간 그림자 |
+> **주의 — 0번과 같이 넣을 것:** `ItemTexts.Skill()`은 도술 **이름**으로 설명을 찾는다. 코드만 바꾸고 `item_texts.json`을 안 가져오면(또는 그 반대면) 이 도술 설명이 빈칸이 된다. 둘을 한 번에 넣거나, `ItemTexts.Index`가 `old_name`도 같은 설명으로 등록하게(Row에 `public string old_name;` 한 칸) 하면 어느 순서든 안전.
 > 저장 데이터에 옛 이름이 들어 있으면 불러올 때 옛 이름 → 새 이름으로 바꿔 읽는다(`item_texts.json`에 `old_name` 칸이 있다).
 
 ### 1-3. 화면에 '동이'(주인공 이름과 겹침) → '날이 밝다'
@@ -68,8 +69,10 @@ static string Eul(string w) { if (string.IsNullOrEmpty(w)) return "을"; char c 
 // Say(e.label + Eul(e.label) + " 깨뜨렸다");   Say(castTarget.label + Eul(castTarget.label) + " 보냈다");
 ```
 
-### 1-6. '명부 밖' 안내가 이름혼에게 뜸
-`JudgeSystem.cs:1903` — `offledger` 안내("명부 밖 혼 — 기억 없이 넋·엽전만")가 `NamedSoulSpawns.OffLedger`(윤 소사·연이 같은 **장례 대상 이름혼**) 곁에서 뜬다. 이 혼들은 천도하면 기억도 장례도 있다 → 안내가 거짓말이 된다. 조건을 **이름 없는 명부 밖 혼**(`e2.soul.Name == null`)으로 바꾼다(기획 first-5-minutes 4:00 "처음 명부 밖 혼을 처결하면"과 같음).
+### 1-6. '명부 밖' 안내가 이름혼에게 뜸 → **데이터로 해결(코드 손 안 대도 됨)**
+`JudgeSystem.cs:1903` 안내는 `NamedSoulSpawns.OffLedger` 곁에서 뜨는데, 2·3막 장례 대상 이름혼(기억·장례 있음)도 전부 OffLedger에 들어간다(`NamedSoulSpawns.cs:39 · 45`). 옛 글 "기억 없이 넋·엽전만"이 그들에겐 거짓이었다.
+→ 안내 글을 둘 다에 맞게 바꿈: `tutorial_hints.json` `offledger` = **`명부에 없는 혼도 보낼 수 있다`**. 0번으로 파일만 가져오면 끝.
+(10-26 앞판에 적었던 "조건을 `Name == null`로" 제안은 **취소** — OffLedger는 이름 모음이라 그 조건이면 안내가 아예 안 뜬다.)
 
 ### 1-7. 품계 알림 (T1)
 `JudgeSystem.cs:317` `"품계 " + growth.Rank + "품 — 능력치 +" + ...` → 이 토스트를 지우거나 `"품계 " + growth.Rank + " · 능력치 점수 +" + StatPerRank`로. "2품"은 높은 벼슬로 읽힌다(품계 2 = 종9품).
@@ -115,3 +118,19 @@ static string Eul(string w) { if (string.IsNullOrEmpty(w)) return "을"; char c 
 
 ### 3-5. ▲ · ✕ 글꼴 (K3)
 - `NotoSansKR-Subset.ttf`에 ▲ · ✕가 없다. 지금처럼 ↑ · ×를 쓰거나 서브셋에 두 글자를 더한다.
+
+---
+
+## 4. 반영 확인 (10-26 12:3x KST, GitHub 기준)
+코드팀 반영분은 아직 GitHub에 안 올라와(PC 로컬) **글자로는 확인 못 함**. `claude/project-thread-ozfksa`(코드 기준 가지) 지금 상태:
+| 항목 | 옛 글 남음 | 새 글 |
+|---|---|---|
+| 1-1 갑자기 춥네 | 2곳 | 0 |
+| 1-2 검은 갓의 그림자 | 7곳 | 0 |
+| 1-3 동이 튼 | 3곳 | 0 |
+| 1-4 아직 보낼 이름이 | 1곳 | 0 |
+| 1-5 을(를) | 2곳 | Eul 없음 |
+| 1-6 명부 밖 안내 | 데이터로 해결(위) | — |
+| 1-7 "품" 토스트 | 1곳 | 0 |
+| 0번 데이터 8개 | 8개 모두 서사판과 다름(아직 안 가져감) | — |
+코드팀이 올리면 위 표를 그대로 다시 돌려 확인한다(`git grep -c "갑자기 춥네" <가지> -- unity/Assets/Scripts`).
