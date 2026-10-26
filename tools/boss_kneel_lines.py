@@ -74,6 +74,21 @@ SKIP_S2 = {
  "B-14": "돌아선 혼들의 덩어리는 천도 불가 — 천도 때를 알릴 말이 필요 없다",
 }
 
+# ---- 시즌 3 (제안) — 백은 말하지 않는다(season3_outline baek · 보스 lines 0) ----------------
+# 그래서 틈을 알리는 것은 말풍선이 아니라 몸짓 하나 + 압박 소리의 끝. 화면 글 0줄.
+# 압박은 기획 s3-act6-rules-skim Y3(10-26).
+KNEEL_S3 = [
+ dict(boss="B-21", name="윤 영감의 백", line=None,
+      signal="뱃전을 쥔 손가락 하나가 풀렸다가 다시 쥔다",
+      when="배가 쓸고 간 띠 한 줄이 지나간 직후(다음 띠까지 4.5초, B21_KNEEL_SWEEP_GAP)",
+      why="'손을 놓으면 못 건넌다'는 한(han)이 잠깐 느슨해지는 틈 = 지금 부르면 손을 놓는다(3단계 '손을 놓다'와 같은 몸짓의 앞마디)"),
+ dict(boss="B-22", name="줄에 묶인 일곱", line=None,
+      signal="당겨졌던 줄이 한 번 늘어지고, 일곱이 고개를 같이 숙인다",
+      when="줄 당김 직후(다음 당김까지 4.5초, B22_KNEEL_ROPE_GAP)",
+      why="하나가 끌려가면 여섯이 당기는 줄 — 당김이 끝나 늘어진 때가 함께 부를 때. 줄을 끊지 않고 눕히는 결말(lay)과 같은 그림"),
+]
+SKIP_S3 = {"B-23": "물 밑 매듭은 3단계 배 받치기(버티기)가 압박 몫이라 따로 없음(기획 Y3)"}
+
 RULE = {
  "show": "보스 머리 위 말풍선 1.5초(JudgeSystem.BossBubble). 화면 위 경고 글은 띄우지 않는다 — 말이 곧 신호",
  "count": "한 번 꿇을 때 최대 두 번(꿇는 순간 · 첫 압박 뒤). 같은 싸움에서 두 번째로 꿇으면 첫 압박 뒤 한 번만",
@@ -109,5 +124,6 @@ if __name__ == "__main__":
     out = os.path.join(os.path.dirname(__file__), "..", "docs", "narrative", "boss_kneel_lines.json")
     json.dump({"_설명": "보스가 꿇은 동안 압박 사이 한마디(천도할 때 신호). tools/boss_kneel_lines.py로 생성. 서사 2026-10-26 (기획 boss-final-moment-act1-2 · act3)",
                "rule": RULE, "kneel": KNEEL, "skip": SKIP,
-               "kneel_s2": {"status": "제안 — 시즌 2 코드 전. 압박은 기획 s2-bosses-openworld 꿇은 동안의 약한 압박(10-26)", "lines": KNEEL_S2, "skip": SKIP_S2}}, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+               "kneel_s2": {"status": "제안 — 시즌 2 코드 전. 압박은 기획 s2-bosses-openworld 꿇은 동안의 약한 압박(10-26)", "lines": KNEEL_S2, "skip": SKIP_S2},
+               "kneel_s3": {"status": "제안 — 시즌 3 코드 전. 백은 말하지 않아 말풍선 대신 몸짓(signal) + 압박 소리의 끝", "lines": KNEEL_S3, "skip": SKIP_S3}}, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("시즌2 제안", len(KNEEL_S2), "명 /", "보스", len(KNEEL), "명 (새 줄", sum(1 for k in KNEEL if not k.get("reuse")), ", 다시 씀", sum(1 for k in KNEEL if k.get("reuse")), ") → boss_kneel_lines.json, 검사 통과")
