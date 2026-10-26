@@ -1706,3 +1706,6 @@
 ## 글꼴·문구 수정(기획 text-glyph-fix-1026)
 - 「사나운 적·덩어리」→「거센 혼·덩어리」(GearPlan·item_texts), 인 문구 − → -, 길 이름 ↔ → -, 거센 혼(elite)에도 보스·덩어리 피해 옵션 적용(Enemy.TakeHit). '얬'은 서사 데이터로 이미 해결.
 - N1 짝 규칙: 폭발에 꿇은 혼을 파혼하면 엽전 ×0.5(PAHON_KNOCKED_COIN_MULT, Enemy.knockedByBlast).
+
+## 보스 곡선(기획 s1-boss-curve-check)
+- 맺힘: 대돌 1040·염씨 1440·장수 1600·칠성 1440·아낙 1600·선장 2000·흑월 2차 2400. 왕초 지팡이 예고 1.0초·거적 간격 7초. PC 확인 BC1~BC4.

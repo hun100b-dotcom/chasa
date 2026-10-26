@@ -600,7 +600,7 @@ public static class Balance
     public const float SHRINE_REST_TIME = 2.0f;  // 서낭당 쉬기 앉는 시간(초)
     public const float SHRINE_REST_BLOCK_M = 10.0f;  // 이 거리 안에 깨어 있는 혼이 있으면 못 쉼(m)
     public const int CLUE_TOUCH_KARMA_LOCK = 30;  // 이 업 이상이면 단서 물건을 못 만짐
-    public const int B05_MAEDHIM = 960;  // (2막 보스 임시·기획 act2-souls §4) B-05 맺힘
+    public const int B05_MAEDHIM = 1040;  // (2막 보스 임시·기획 act2-souls §4) B-05 맺힘
     public const int B05_DAMAGE = 26;  // (2막 보스 임시·기획 act2-souls §4) B-05 공격
     public const float B05_CALL_INTERVAL = 8.0f;  // (2막 보스 임시·기획 act2-souls §4) 이름 부르기 간격(초)
     public const int B05_CALL_COUNT = 2;  // (2막 보스 임시·기획 act2-souls §4) 한 번에 부르는 병사 수
@@ -618,7 +618,7 @@ public static class Balance
     public const float B05_CHARGE_WARN = 0.9f;  // (2막 보스 임시·기획 act2-souls §4) 깃대 돌진 예고(초)
     public const float B05_CHARGE_GAP = 9.0f;  // (2막 보스 임시·기획 act2-souls §4) 깃대 돌진 간격(초, 임시)
     public const int B05_SOLDIER_CAP = 4;  // (2막 보스 임시·기획 act2-souls §4) 소환 병사 상한(보스 자리 잡몹 상한)
-    public const int B06_MAEDHIM = 1120;  // (2막 보스 임시·기획 act2-souls §4) B-06 맺힘
+    public const int B06_MAEDHIM = 1600;  // (2막 보스 임시·기획 act2-souls §4) B-06 맺힘
     public const int B06_DAMAGE = 26;  // (2막 보스 임시·기획 act2-souls §4) B-06 공격
     public const float B06_LINE_WIDTH = 12.0f;  // (2막 보스 임시·기획 act2-souls §4) 일자진 폭(m)
     public const float B06_LINE_GAP = 3.0f;  // (2막 보스 임시·기획 act2-souls §4) 일자진 빈칸 폭(m)
@@ -629,7 +629,7 @@ public static class Balance
     public const float B06_FAST_WARN = 0.9f;  // (2막 보스 임시·기획 act2-souls §4) 50% 빠른 호령 예고(초)
     public const float B06_FORM_GAP = 6.0f;  // (2막 보스 임시·기획 act2-souls §4) 진법 간격(초, 임시)
     public const float B06_GAP_DMG_MULT = 1.5f;  // (2막 보스 임시·기획 act2-souls §4) 빈 자리에서 때리면 피해 배율
-    public const int B07_MAEDHIM = 1120;  // (2막 보스 임시·기획 act2-souls §4) B-07 맺힘
+    public const int B07_MAEDHIM = 1440;  // (2막 보스 임시·기획 act2-souls §4) B-07 맺힘
     public const int B07_DAMAGE = 30;  // (2막 보스 임시·기획 act2-souls §4) B-07 공격
     public const float B07_ARENA_START = 14.0f;  // (2막 보스 임시·기획 act2-souls §4) 막장 시작 반경(m)
     public const float B07_ARENA_END = 10.0f;  // (2막 보스 임시·기획 act2-souls §4) 막장 끝 반경(m)
@@ -645,7 +645,7 @@ public static class Balance
     public const int B07_ROCK_COUNT_P2 = 5;  // (2막 보스 임시·기획 act2-souls §4) 50% 이후 낙석 수
     public const float B07_ROCK_WARN = 1.0f;  // (2막 보스 임시·기획 act2-souls §4) 낙석 예고(초)
     public const float B07_ROCK_GAP = 7.0f;  // (2막 보스 임시·기획 act2-souls §4) 낙석 간격(초, 임시)
-    public const int B08_MAEDHIM = 1120;  // (2막 보스 임시·기획 act2-souls §4) B-08 맺힘
+    public const int B08_MAEDHIM = 1440;  // (2막 보스 임시·기획 act2-souls §4) B-08 맺힘
     public const int B08_DAMAGE = 30;  // (2막 보스 임시·기획 act2-souls §4) B-08 공격
     public const int B08_MINES = 4;  // (2막 보스 임시·기획 act2-souls §4) 숫자 지뢰 수(넷 중 하나는 이름 종이)
     public const int B08_MINE_MULT = 4;  // (2막 보스 임시·기획 act2-souls §4) 지뢰 숫자 × 피해 배율
@@ -666,7 +666,7 @@ public static class Balance
     public const float TIDE_SIGNAL_WINDOW_S = 20.0f;  // (3막) 밀물 신호 뒤 물 혼 2~4마리가 떠밀려 가기까지(초). 안에 처결 못 하면 그 밤 사라진다
     public const float B04_MAEDHIM = 600.0f;  // (1막 끝 흑월 1차·임시) 맺힘 50%에서 사슬을 거두고 물러나므로 실제로 깎이는 건 절반
     public const float B04_DAMAGE = 26.0f;  // (흑월 1차·임시) 몸으로 부딪는 한 방
-    public const int B09_MAEDHIM = 1280;  // (3막 보스 임시·기획 부록 E) B-09 맺힘
+    public const int B09_MAEDHIM = 1600;  // (3막 보스 임시·기획 부록 E) B-09 맺힘
     public const int B09_DAMAGE = 28;  // (3막 보스 임시·기획 부록 E) B-09 공격(파도 줄 16, 바다 부르기 18은 같은 값으로 단순화)
     public const int B09_WAVE_ROWS = 4;  // (3막 보스 임시·기획 부록 E) 파도 줄 수
     public const float B09_WAVE_WIDTH = 3.0f;  // (3막 보스 임시·기획 부록 E) 파도 띠 폭(m)
@@ -679,7 +679,7 @@ public static class Balance
     public const float B09_CALL_GAP = 5.0f;  // (3막 보스 임시·기획 부록 E) 바다 부르기 간격(초)
     public const float B09_CLOTH_WINDOW = 2.0f;  // (3막 보스 임시·기획 부록 E) 옷 낚아채기 창(초)
     public const float B09_CLOTH_CUT_PCT = 15.0f;  // (3막 보스 임시·기획 부록 E) 낚아채면 줄어드는 맺힘(%)
-    public const int B10_MAEDHIM = 1440;  // (3막 보스 임시·기획 부록 E) B-10 맺힘
+    public const int B10_MAEDHIM = 2000;  // (3막 보스 임시·기획 부록 E) B-10 맺힘
     public const int B10_DAMAGE = 34;  // (3막 보스 임시·기획 부록 E) B-10 공격
     public const float B10_ROPE_WARN = 0.9f;  // (3막 보스 임시·기획 부록 E) 줄 끊기 예고(초)
     public const float B10_ROPE_LEN = 10.0f;  // (3막 보스 임시·기획 부록 E) 줄 끊기 길이(m)
@@ -693,12 +693,12 @@ public static class Balance
     public const int B11_DAMAGE = 38;  // (3막 보스 임시·기획 부록 E) B-11 공격
     public const float B11_MAT_WARN = 0.8f;  // (3막 보스 임시·기획 부록 E) 거적 던지기 예고(초)
     public const float B11_MAT_RADIUS = 3.0f;  // (3막 보스 임시·기획 부록 E) 거적 던지기 반경(m)
-    public const float B11_MAT_GAP = 5.0f;  // (3막 보스 임시·기획 부록 E) 거적 던지기 간격(초)
-    public const float B11_STAFF_WARN = 0.6f;  // (3막 보스 임시·기획 부록 E) 지팡이 예고(초)
+    public const float B11_MAT_GAP = 7.0f;  // (3막 보스 임시·기획 부록 E) 거적 던지기 간격(초)
+    public const float B11_STAFF_WARN = 1.0f;  // (3막 보스 임시·기획 부록 E) 지팡이 예고(초)
     public const float B11_STAFF_RADIUS = 3.5f;  // (3막 보스 임시·기획 부록 E) 지팡이 반경(m)
     public const float B11_STAFF_ANGLE = 140.0f;  // (3막 보스 임시·기획 부록 E) 지팡이 각도(도)
     public const float B11_STAFF_GAP = 6.0f;  // (3막 보스 임시·기획 부록 E) 지팡이 간격(초)
-    public const int B12_MAEDHIM = 1800;  // (3막 보스 임시·기획 부록 E) B-12 맺힘
+    public const int B12_MAEDHIM = 2400;  // (3막 보스 임시·기획 부록 E) B-12 맺힘
     public const int B12_DAMAGE = 38;  // (3막 보스 임시·기획 부록 E) B-12 공격
     public const float B12_PULL_WARN = 0.6f;  // (3막 보스 임시·기획 부록 E) 거울 견인 예고(초)
     public const float B12_PULL_LEN = 13.0f;  // (3막 보스 임시·기획 부록 E) 거울 견인 길이(m)
