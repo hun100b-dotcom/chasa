@@ -323,6 +323,7 @@ public class MiniMap : MonoBehaviour
             if (ic != null && Icon(ic, v, sz * 1.6f)) return;   // 아트 아이콘은 먹 테두리 때문에 조금 키워야 같은 크기로 읽힌다
             var o = GUI.color; GUI.color = col; GUI.DrawTexture(new Rect(v.x - sz * 0.5f, v.y - sz * 0.5f, sz, sz), dot); GUI.color = o;
         };
+        Action<Vector2, Color, float> D2 = (pt, col, sz) => { var o = GUI.color; GUI.color = col; GUI.DrawTexture(new Rect(pt.x - sz * 0.5f, pt.y - sz * 0.5f, sz, sz), dot); GUI.color = o; };
         float s = big ? 7f : 6f;
         // 서낭당·다리·나루터·의원집·마을(고정 표식): 작은 네모 + 글자(큰 지도)
         foreach (var m in marks)
@@ -332,10 +333,22 @@ public class MiniMap : MonoBehaviour
             var v = p.Value; if (!big && (Mathf.Abs(v.x - cen.x) > half - 4f || Mathf.Abs(v.y - cen.y) > half - 4f)) continue;
             string mi = m.kind == "seonang" ? (Sfx.NightNow ? "seonang" : "soulpath_off") :   /* 넋길(서낭당)은 낮에 닫혀 있다: 낮엔 닫힌 아이콘(명세 v1.5) */ m.kind == "bridge" ? "bridge" : m.kind == "ferry" ? "ferry" : (m.kind == "village" || m.kind == "doctor") ? "npc" : null;
             if (mi == null || !Icon(mi, v, 17f)) { Box(new Rect(v.x - 5, v.y - 5, 10, 10), new Color(0.05f, 0.06f, 0.08f, 0.9f)); Box(new Rect(v.x - 3.5f, v.y - 3.5f, 7, 7), col); }
+            if (m.kind == "seonang" && judge.EnhanceReady) D2(v + new Vector2(7f, -7f), new Color(0.9f, 0.15f, 0.12f), big ? 8f : 7f);   // R2: 손볼 엽전이 모였다는 붉은 점
             if (big && (m.kind == "seonang" || m.kind == "village" || m.kind == "ferry" || m.kind == "doctor") && !ZoneHasName(m.name)) { var nm = m.name; int i = nm.IndexOf('('); if (i > 0) nm = nm.Substring(0, i); i = nm.IndexOf('·'); GUI.color = new Color(0.12f, 0.06f, 0.02f, 1f); GUI.Label(new Rect(v.x - 80, v.y + 6, 160, 20), nm, small); GUI.color = Color.white; /* 밝은 지도 위에서도 읽히게 짙은 글자 + 연한 그림자 */ }
         }
         // 보스(붉은 마름모) — 아직 안 나타났어도 자리를 표시한다
         for (int id = 1; id <= Bosses.Count; id++) { var bd = Bosses.Get(id); D(bd.X, bd.Z, new Color(0.95f, 0.15f, 0.12f), s + 6f, "boss"); }
+        // R1: 아직 안 만난 이름혼 쪽 먹 점 하나(작은 지도 가장자리에 붙임). 하루 한 번 30초
+        if (!big && judge.NamedGuide.HasValue)
+        {
+            var gp = toScreen(judge.NamedGuide.Value.x, judge.NamedGuide.Value.z);
+            if (gp.HasValue)
+            {
+                var gv = gp.Value - cen; float m = Mathf.Max(Mathf.Abs(gv.x), Mathf.Abs(gv.y), 0.01f); float k = Mathf.Min(1f, (half - 8f) / m);
+                var at = cen + gv * k; float pulse = 0.65f + 0.35f * Mathf.Sin(Time.unscaledTime * 4f);
+                D2(at, new Color(0.07f, 0.06f, 0.08f, 0.95f), 12f); D2(at, new Color(0.7f, 0.95f, 0.9f, pulse), 6f);
+            }
+        }
         // 켜진 단서 자리
         if (judge.npcs != null) { tmp.Clear(); judge.npcs.PendingClues(tmp); foreach (var c in tmp) D(c.Key.x, c.Key.z, new Color(1f, 0.85f, 0.2f), s + 2f, "quest"); }
         // 이름혼

@@ -1259,6 +1259,7 @@ public class JudgeSystem : MonoBehaviour
         weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
         stains.Tick(dt * weather.Fx.StainMult * (clock != null && clock.Phase == ClockPhase.Day ? Balance.STAIN_DURATION / Balance.DAY_STAIN_SEC : 1f));   // 낮 얼룩은 8초면 마른다(FK3)   // 비 오는 밤: 얼룩이 절반만 오래간다
         if (wxDrain > 0 && !ledger.Dead) { ledger.TakeDamage(wxDrain); if (ledger.Dead) OnPlayerDown(); }   // 역병 안개: 서 있으면 체력이 준다
+        TickRewardHints(realDt);
         flashA = Mathf.Max(0f, flashA - realDt * 2.2f);
         vignetteT = Mathf.Max(0f, vignetteT - realDt);
         sinceHit += dt;
@@ -1363,6 +1364,39 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>장례 컷의 조건 글자(서사 condition). 지금은 1호 결과만 안다(3호 결과는 아직 따로 세지 않아 false)</summary>
     bool FuneralCond(string c) { return c == "B-01 천도함" ? bossOutcome == 1 : false; }
     /// <summary>제사를 지켜보기 전에는 장례 대상 이름혼의 지도 표식을 숨긴다(기획: 지켜보면 그 혼의 오늘 밤 자리가 명부에 표시된다). 윤 소사·연이는 첫 세션 흐름이라 처음부터 보인다</summary>
+    // ---- 처음 30분 보상 흐름 보강(기획 first-30min-reward-flow R1·R2) ----
+    /// <summary>R1: 밤 18분 무렵 한 번, 아직 안 만난 이름혼이 있는 쪽을 미니맵 가장자리 먹 점 하나로(이름은 안 보임). 하루 한 번</summary>
+    public Vector3? NamedGuide; float namedGuideT; int namedGuideDay = -1;
+    /// <summary>R2: 엽전이 다음 손보기 값 이상이면 서낭당 표식에 붉은 점</summary>
+    public bool EnhanceReady;
+    float enhanceCheckT;
+    void TickRewardHints(float dt)
+    {
+        if (clock == null || named == null) return;
+        if (namedGuideT > 0f) { namedGuideT -= dt; if (namedGuideT <= 0f) NamedGuide = null; }
+        float lightSpan = Balance.CLOCK_DAWN_MIN + Balance.CLOCK_DAY_MIN + Balance.CLOCK_DUSK_MIN;
+        if (clock.Phase == ClockPhase.Night && clock.Minutes - lightSpan >= 18f && namedGuideDay != clock.Day)
+        {
+            namedGuideDay = clock.Day;   // 보여 주든 못 보여 주든 그날은 한 번만 시도한다
+            var list = new List<KeyValuePair<Vector3, string>>(); named.PendingPositions(list);
+            float best = float.MaxValue; Vector3? pick = null;
+            foreach (var c in list)
+            {
+                if (NamedMarkerHidden(c.Value, c.Key.x, c.Key.z)) continue;   // 숨기는 혼(장례 대상 등)은 길을 알려 주지 않는다
+                float d = new Vector2(c.Key.x - player.Pos.x, c.Key.z - player.Pos.z).magnitude;
+                if (d < best) { best = d; pick = c.Key; }
+            }
+            if (pick.HasValue) { NamedGuide = pick; namedGuideT = 30f; }
+        }
+        enhanceCheckT -= dt;
+        if (enhanceCheckT <= 0f)
+        {
+            enhanceCheckT = 1f; bool ready = false;
+            for (int i = 0; i < 8 && !ready; i++) { var it = lo.gear.GetAt((EquipPos)i); if (it != null && Shrine.CanEnhance(it) && ledger.Coin >= Shrine.EnhanceCost(it.Plus)) ready = true; }
+            EnhanceReady = ready;
+        }
+    }
+
     public bool NamedMarkerHidden(string name, float x, float z) { if (x > 764f && z < 200f && Sfx.NightNow && !CapeSeen(x, z)) return true; /* 기획 9절: ⑤ 바닷가 띠(밤 해무)에서만 숨긴다. 목표 화살표는 이 겹침을 안 써서 늘 보인다 */ return NamedMarkerHidden(name); }
     public bool NamedMarkerHidden(string name) { return name != null && name != "윤 소사" && name != "연이" && funeralCut.ContainsKey(name) && (npcs == null || !npcs.JesaSeen.Contains(name)) && (npcs == null || npcs.HasHome(name)); }   // 제사 자리 데이터가 없는 이름혼(2막)은 숨기지 않는다
     public const float FuneralX = 214f, FuneralZ = 62f;   // 박돌쇠 대장간 문 앞(아트 확정: 이름혼 자리 215.6, 62.2)
