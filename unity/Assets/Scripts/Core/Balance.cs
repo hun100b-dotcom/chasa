@@ -816,4 +816,5 @@ public static class Balance
     public const float KNEEL_PRESS_WARN = 1.2f;  // 꿇은 동안 압박의 예고 시간(초). 임시값
     public const int B05_KNEEL_KEEP_NUMBERED = 2;  // (기획) 대돌이 꿇을 때 남기는 번호 병사 수(이름 불린 병사 구분은 아직 없어 앞에서부터 남김)
     public const float PAHON_KNOCKDOWN_BELOW = 0.25f;  // (기획 field-judge-skew N1) 파혼 폭발 뒤 맺힘이 최대의 이 비율 아래로 남은 일반 혼은 그 자리에서 꿇는다
+    public const float DAY_STAIN_SEC = 8.0f;  // (기획 field-judge-skew FK3) 낮 얼룩 지속(초). 밤 15초. 낮엔 소환 없음
 }

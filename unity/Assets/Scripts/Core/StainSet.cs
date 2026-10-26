@@ -26,10 +26,11 @@ namespace Chasa.Core
         /// 얼룩 하나 추가. 겹친 얼룩(중심 거리 < 반경×2)이 3개 이상이 되면 그것들을 지우고 가운데 지점을 돌려준다.
         /// 소환이 아니면 false.
         /// </summary>
-        public bool Add(float x, float z, out float centerX, out float centerZ, float scale = 1f)
+        public bool Add(float x, float z, out float centerX, out float centerZ, float scale = 1f, bool allowSummon = true)
         {
             var s = new Stain { X = x, Z = z, Scale = scale };
             _items.Add(s);
+            if (!allowSummon) { centerX = centerZ = 0f; return false; }   // 낮: 얼룩은 남지만 겹쳐도 사나운 적이 소환되지 않는다(FK3)
             float limit = Balance.STAIN_RADIUS * 2f;
             var group = new List<Stain>();
             foreach (var it in _items)

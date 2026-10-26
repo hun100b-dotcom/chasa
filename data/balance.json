@@ -3158,5 +3158,9 @@
  "PAHON_KNOCKDOWN_BELOW": {
   "value": 0.25,
   "note": "(기획 field-judge-skew N1) 파혼 폭발 뒤 맺힘이 최대의 이 비율 아래로 남은 일반 혼은 그 자리에서 꿇는다"
+ },
+ "DAY_STAIN_SEC": {
+  "value": 8.0,
+  "note": "(기획 field-judge-skew FK3) 낮 얼룩 지속(초). 밤 15초. 낮엔 소환 없음"
  }
 }

@@ -36,6 +36,7 @@ public class JudgeSystem : MonoBehaviour
     readonly List<Vector3> cluePos = new List<Vector3>();   // 아직 안 주운 단서 위치
     readonly List<GameObject> clueViews = new List<GameObject>();
     float castT, castTotal, chainLeft;
+    bool castGrit;   // castGrit: 이번 시전에서 오래된 혼의 '한 대 버팀'을 이미 썼나
     /// <summary>약점 점(깃발·옷·횃불)을 낚아챈 보스 번호. 그 보스는 천도 시전 -0.5초(하한 0.5), 파혼 엽전 x1.2 (기획 감사 보강)</summary>
     public readonly System.Collections.Generic.HashSet<int> snatched = new System.Collections.Generic.HashSet<int>();
     public float CastZoom { get { return visionP; } }   // 카메라가 캐스팅 중 다가가는 정도(0~1)
@@ -156,6 +157,7 @@ public class JudgeSystem : MonoBehaviour
         player.ConsumeAct();   // 후딜·피하기를 끊고 천도 시작
         castTarget = e;
         castT = 0f;
+        castGrit = false;   // 새 시전마다 버팀 한 번이 다시 생긴다
         castTotal = e.soul.Boss ? Mathf.Max(0.5f, Balance.BOSS_TENDO_CAST_TIME - (snatched.Contains(e.soul.BossId) ? 0.5f : 0f)) : CoreRules.CastTimeScaled(chainLeft > 0f, lo.stats.CastMult) * lo.Def.CastTimeMult;
         if (e.nameWritten) castTotal = Mathf.Max(Balance.CAST_MIN_TIME, castTotal - Balance.BRUSH_NAME_CAST_CUT);   // 붓으로 이름을 써 둔 혼: 천도 시전 −0.4초
         if (e.soul.Water) castTotal = Mathf.Max(Balance.WATER_SOUL_CAST_FLOOR_S, castTotal - Balance.WATER_SOUL_CAST_REDUCE_S);   // 물 혼: 천도 시전 −0.5초(하한 0.5초)
@@ -329,7 +331,7 @@ public class JudgeSystem : MonoBehaviour
         flashColor = new Color(0.55f, 0.05f, 0.08f); flashA = 0.55f;   // 붉은 번쩍임(깨뜨림)
         // 원념 얼룩: 3개가 겹치면 그 자리에서 사나운 적이 솟는다
         float cx, cz;
-        if (stains.Add(at.x, at.z, out cx, out cz, e.elite ? Balance.ELITE_STAIN_SCALE : 1f))   // 거센 혼 파혼: 큰 얼룩(1.5배)
+        if (stains.Add(at.x, at.z, out cx, out cz, e.elite ? Balance.ELITE_STAIN_SCALE : 1f, !(clock != null && clock.Phase == ClockPhase.Day)))   // 낮엔 소환 없음(FK3)   // 거센 혼 파혼: 큰 얼룩(1.5배)
         {
             enemies.SpawnFierce(new Vector3(cx, 0, cz));
             if (naruBig) PatternEvent("B-01.stain_merge", null, false);   // 나루 큰물 중 얼룩 셋이 모여 거센 혼이 일어선다
@@ -1109,7 +1111,9 @@ public class JudgeSystem : MonoBehaviour
         feel.AddShake(Balance.TRAUMA_PLAYER_HIT);
         vignetteT = 0.15f;
         feel.HitStop(3);
-        if (Casting)
+        if (Casting && castTarget.soul.Kind == SoulKind.Old && !castTarget.soul.Boss && !castGrit)
+            castGrit = true;   // FK2(기획): 오래된 혼(대기 4초)은 천도 중 한 대를 버틴다 — 둘러싸인 곳에서 천도만 무너지던 것을 푼다. 피해는 그대로 받는다
+        else if (Casting)
         {
             castTarget.soul.CancelSending();   // 혼은 무릎 꿇은 상태로 돌아간다(대기 시간은 그대로 흐름)
             EndCast();
@@ -1242,7 +1246,7 @@ public class JudgeSystem : MonoBehaviour
         weather.state.Override = WeatherRules.Parse(cuts.SceneWeather);   // 서사 컷이 정한 날씨가 무작위보다 우선
         float wxSlow; int wxDrain;
         weather.Tick(clock, player.Pos, enemies, dt, godMode, out wxSlow, out wxDrain, t => ui?.Hud.Toasts.Add(t));
-        stains.Tick(dt * weather.Fx.StainMult);   // 비 오는 밤: 얼룩이 절반만 오래간다
+        stains.Tick(dt * weather.Fx.StainMult * (clock != null && clock.Phase == ClockPhase.Day ? Balance.STAIN_DURATION / Balance.DAY_STAIN_SEC : 1f));   // 낮 얼룩은 8초면 마른다(FK3)   // 비 오는 밤: 얼룩이 절반만 오래간다
         if (wxDrain > 0 && !ledger.Dead) { ledger.TakeDamage(wxDrain); if (ledger.Dead) OnPlayerDown(); }   // 역병 안개: 서 있으면 체력이 준다
         flashA = Mathf.Max(0f, flashA - realDt * 2.2f);
         vignetteT = Mathf.Max(0f, vignetteT - realDt);
