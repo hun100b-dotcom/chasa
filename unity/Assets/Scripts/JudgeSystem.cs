@@ -954,6 +954,7 @@ public class JudgeSystem : MonoBehaviour
     readonly HashSet<int> bossDoneIds = new HashSet<int>();   // 처결한 1막 보스 번호(1~3)
     int allDoneDay = -1; bool allDoneAtNight; int enterDay = -1; int act2DoneDay = -1; bool gate3Announced;   // act2DoneDay: 2막 보스 넷을 모두 처결한 하루(3막 금줄은 그 다음 새벽에 풀린다)
     bool heukwolSpawned, heukwolRetreated, gateAnnounced, heukwolWarned; Enemy heukwol; float gateToastT;
+    public int Act1BossesDone { get { int n = 0; for (int i = 1; i <= 3; i++) if (bossDoneIds.Contains(i)) n++; return n; } }   // 1막 보스 중 처결한 수(미스터리 혼 등장 조건)
     public bool BossTendoed(int id) { return bossTendoIds.Contains(id); }   // 소리 연결 같은 곳에서 '그 보스를 천도했나' 만 묻는다
     readonly HashSet<int> bossTendoIds = new HashSet<int>();   // 천도로 처결한 보스 번호(넋길 추가 도착점)
     /// <summary>넋길 정류장: 서낭당들 + 천도로 보낸 보스의 마당 가장자리(반경 + 4m, 가까운 서낭당 쪽 = 들어오는 방향). 밤에만 쓴다</summary>

@@ -1692,3 +1692,8 @@
 - 아직: FK2(오래된 혼 천도 한 대 버팀), FK3(낮 얼룩 8초·소환 없음) — 수정 큐 2번 나머지.
 - FK2: 오래된 혼 천도 중 첫 피격은 시전이 안 끊김(castGrit, 시전마다 한 번). FK3: 낮 얼룩 8초(DAY_STAIN_SEC)·낮엔 사나운 적 소환 없음.
 - 보스 철삭 불가(BOSS_DRAGGABLE=0): 약점 점(옷·횃불·깃발)은 그대로 잡힘.
+
+## 미스터리 혼 63명 (기획 mystery-souls-handoff)
+- named_souls(1막 +22)·act2(+20)·act3(+21)에 줄을 붙임(이름 중복 없음). Row에 label·after_boss·water·mujeok 칸 추가.
+- M5: 머리 위 이름표=label, 기억·장례 찾기=soul.Name로 분리(MakeNamed 4번째 인자). M6: after_boss(김 영감)=1막 보스 N마리 처결 뒤(Act1BossesDone). M7 일부: water=썰물 때만 선다.
+- 아직: mujeok(무적 혼) 7명은 일반 이름혼으로 서 있음(별명 해금은 soul_labels_s1·PR #50 필요), 파혼한 혼 기록 칸 "먹이 번져 읽을 수 없다", 흐린 단서 규칙(단서판 코드 없음).

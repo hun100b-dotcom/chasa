@@ -11,7 +11,7 @@ using Chasa.Core;
 
 public class NamedSoulSpawns
 {
-    [System.Serializable] class Row { public string name; public float x, z, wait; public int age; public bool ledger; }
+    [System.Serializable] class Row { public string name, label; public float x, z, wait; public int age, after_boss; public bool ledger, water, mujeok; }   // name=기억 찾는 열쇠, label=머리 위 이름표(단서를 미리 안 새게 따로), after_boss=보스 N마리 처결 뒤에 나타남, water=썰물 때만 보이는 갯벌 자리
     [System.Serializable] class Group { public string id; public float x, z, trigger; public int n; public bool frozen; }
     [System.Serializable] class FileData { public Row[] souls; public Group[] groups; }
     readonly List<Group> groups = new List<Group>();
@@ -57,6 +57,8 @@ public class NamedSoulSpawns
         foreach (var e in entries) if (!e.done) into.Add(new KeyValuePair<Vector3, string>(new Vector3(e.row.x, 0f, e.row.z), e.row.name));
     }
 
+    public System.Func<int> BossesDone;   // 1막 보스를 몇 마리 처결했나(김 영감 같은 '보스 둘 뒤에 나타남' 조건용). 안 걸어 두면 늘 0
+    public System.Func<bool> IsEbb;       // 지금 썰물인가(갯벌 자리 water 혼용). 안 걸어 두면 늘 보임
     public float AppearMult = 1f;   // 안개 +50%: 나타나는 거리 배율
 
     public void Tick(Vector3 playerPos, float daylight)
@@ -74,12 +76,14 @@ public class NamedSoulSpawns
                 continue;
             }
             if (!night) continue;
+            if (e.row.after_boss > 0 && (BossesDone == null ? 0 : BossesDone()) < e.row.after_boss) continue;   // M6: 보스를 충분히 처결한 뒤에야 선다
+            if (e.row.water && IsEbb != null && !IsEbb()) continue;   // M7: 갯벌 혼은 썰물 때만 보인다
             float d = new Vector2(e.row.x - playerPos.x, e.row.z - playerPos.z).magnitude;
             if (d > SpawnDist * AppearMult) continue;   // 안개 낀 밤: 이름혼이 더 멀리서부터 나타난다(+50%)
             float x = e.row.x, z = e.row.z;
             MapLayout.PushOut(ref x, ref z, Config.ENEMY_RADIUS + 1f);
             var en = enemies.SpawnCamp(new Vector3(x, 0f, z), true);
-            en.MakeNamed(e.row.name, (SoulKind)Mathf.Clamp(e.row.age, 0, 2), e.row.wait);
+            en.MakeNamed(e.row.name, (SoulKind)Mathf.Clamp(e.row.age, 0, 2), e.row.wait, string.IsNullOrEmpty(e.row.label) ? null : e.row.label);   // M5: 이름표(label)와 기억 키(name) 분리
             en.extra = false;
             e.live = en;
         }

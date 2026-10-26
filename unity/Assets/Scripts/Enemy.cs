@@ -206,9 +206,9 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>이름혼으로 만든다(박돌쇠 등): 이름표·고유 혼 상태. 나이에 맞는 색을 입는다</summary>
-    public void MakeNamed(string name, SoulKind kind, float waitBonus)
+    public void MakeNamed(string name, SoulKind kind, float waitBonus, string labelText = null)
     {
-        label = name;
+        label = labelText ?? name;   // 머리 위 이름표는 label, 기억·장례 찾기는 soul.Name — 단서를 이름표가 미리 새지 않게 갈랐다
         soul = Soul.Named(name, kind, Balance.MAEDHIM_NORMAL);
         soul.WaitBonus = waitBonus;
         baseColor = KindColor(kind); mat.color = baseColor;

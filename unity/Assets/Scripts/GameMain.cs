@@ -68,6 +68,8 @@ public class GameMain : MonoBehaviour
         {
             judge.camps = new FieldCamps(enemies);
             judge.named = new NamedSoulSpawns(enemies);
+            judge.named.BossesDone = () => judge.Act1BossesDone;   // 김 영감: 보스 둘 뒤에 나타남
+            judge.named.IsEbb = () => Tide.IsEbb(TideWater.WorldMinutes);   // 3막 갯벌 혼: 썰물 때만
             judge.clock = new WorldClock();
             judge.clock.Minutes = WorldClock.DayLength - Balance.CLOCK_NIGHT_MIN + 3f;   // 첫 5분: 밤이 막 깊어진 때(밤 9시 무렵)에서 시작해 박돌쇠 처결까지 멈춘다
             judge.introFrozen = true;
