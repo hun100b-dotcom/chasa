@@ -137,6 +137,8 @@ for act, rng in ACT.items():
         facts.append({'id': k, 'act': act, 'text': SM['facts'][k], 'planted_in': src, 'decisive': dec or None,
                       'pahon_risk': '출처가 하나뿐 — 그 혼을 파혼하면 이 단서는 시즌 1 다시 하기로만' if len(src) == 1 else None,
                       'payoff': PAYOFF[k]})
+        # F14는 번호로는 1막 묶음이지만 출처(S-039~S-041)가 모두 시즌 2 ⑦ 줄이라 시즌 1 추리판에는 켜지지 않는다(서사 10-26 점검)
+        if k == 'F14': facts[-1]['lights_in'] = '시즌 2 ⑦ 삼도천 줄(S-039~S-041) — 시즌 1에서는 켜지지 않음. 시즌 1 문턱 셈에 넣지 않는다'
 
 BOARD = {
  'note': '추리판 문턱(MYSTERY-3ACT §4)은 켜진 단서 수로 세계가 바뀐다. 3차 문서의 "9 → 결말 A 해금"은 낡았다(결말은 시즌 3, 조건은 F9) → 10-25 교체(기획 채택)',
