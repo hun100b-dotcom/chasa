@@ -573,12 +573,14 @@ def _boss_extra(mx, rng, R, t, cyc, k, hot):
 
 
 def song_boss(rng, R):
-    """보스 1단계: 약 150초 반복. 구간(장단 바퀴 수 비율) = 시작 1 · 차오름 3 · 절정 4 · 숨 1 · 몰아침 3"""
+    """보스 1단계: 약 120초 반복. 구간(12등분 비율) = 시작 0.5 · 차오름 3 · 절정 4.5 · 숨 1 · 몰아침 3
+    10-26 보스 목표 길이 확정(1막 1.5~2분 · 2막 2~2.5분 · 3막 2.5~3분, 맺힘 50%에서 2단계) → 1단계는 싸움 앞 절반(45~90초)만 들린다.
+    그래서 150→120초로 줄이고 북만 치는 시작을 5초로 당겨, 절정(35~80초)이 1단계 안에서 들리게 했다. 3막은 숨(80~90초) 즈음에 2단계로 넘어간다"""
     bpm = _boss_bpm(R) - 4                      # 필드 전투보다 조금 무겁게(느리게)
     cyc = 4 * 60 / bpm
-    cycles = int(round(fit(150, cyc) / cyc)); sec = cycles * cyc
+    cycles = int(round(fit(120, cyc) / cyc)); sec = cycles * cyc
     unit = cycles / 12.0
-    cut = [round(unit * a) for a in (1, 4, 8, 9)]   # 구간 경계(바퀴 번호)
+    cut = [max(1, round(unit * a)) for a in (0.5, 3.5, 8, 9)]   # 구간 경계(바퀴 번호)
     mx = Mix(sec)
     tn, md = R["tonic"], R["mode"]
     lay_drone(mx, rng, [tn - 24, tn - 12, tn - 5], sec, "ajaeng", gain=0.18, rev=0.35)
@@ -612,10 +614,10 @@ def song_boss(rng, R):
 
 
 def song_boss_p2(rng, R):
-    """보스 2단계: 약 90초 반복. 처음부터 거세게, 앞뒤 절반 가락을 달리해 되풀이가 덜 들리게"""
+    """보스 2단계: 약 120초 반복(10-26 90→120: 싸움 뒤 절반 45~90초가 한 바퀴 안에 들어가게). 처음부터 거세게, 앞뒤 절반 가락을 달리해 되풀이가 덜 들리게"""
     bpm = _boss_bpm(R) + 6
     cyc = 4 * 60 / bpm
-    cycles = int(round(fit(90, cyc) / cyc)); sec = cycles * cyc
+    cycles = int(round(fit(120, cyc) / cyc)); sec = cycles * cyc
     mx = Mix(sec)
     tn, md = R["tonic"], R["mode"]
     lay_drone(mx, rng, [tn - 24, tn - 12, tn - 5], sec, "ajaeng", gain=0.22, rev=0.3)

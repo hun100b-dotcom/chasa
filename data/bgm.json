@@ -38,43 +38,50 @@
     "bgm_<지역>_boss"
    ],
    "loop": true,
-   "when": "보스와 싸우는 동안(가장 가까운 보스가 30m 안). 보스 맺힘 50% 이하면 phase2_clip 으로 3초 교차. 보스 곡이 없는 지역은 combat 그대로",
-   "phase2_clip": "bgm_<지역>_boss_p2 (없으면 bgm_<지역>_combat)",
+   "when": "보스와 싸우는 동안(가장 가까운 보스가 30m 안). 보스 맺힘 50% 이하면 2단계로 넘어감(아래 phase2_*). 보스 곡이 없는 지역은 combat 그대로. B-04 흑월 1차(절반에서 물러나는 짧은 만남)는 보스 층을 쓰지 않고 combat",
+   "phase2_clip": "bgm_<지역>_boss_p2. 지역에 phase2_seek_sec 가 있으면 다른 곡으로 바꾸지 않고 같은 곡의 그 초로 건너뜀",
    "phase2_at_maedhim_frac": 0.5,
-   "phase2_crossfade_sec": 3.0,
-   "_왜": "보스 맺힘이 800~1440이라 싸움이 3~5분. 44초 전투 곡만 쓰면 5~7번 되풀이됨. 1단계 150초 곡 1바퀴 이하 + 2단계 90초 곡 1~2바퀴로 줄인다(docs/boss-pattern-sound.md 4·6절)",
+   "phase2_crossfade_sec": 2.0,
+   "_왜": "10-26 보스 목표 길이 확정: 1막 1.5~2분 · 2막 2~2.5분 · 3막 2.5~3분 · 흑월 3~4분. 맺힘 50%에서 2단계 → 단계마다 45~90초. 그래서 1·2단계 곡을 모두 약 2분 반복으로 맞춰, 어느 단계도 한 바퀴를 넘지 않게 했다. 2단계는 맺힘이 빨리 깎여도 싸움 시작 20초 뒤에 넘어간다(1단계 곡의 차오름을 듣게). 처결(무릎)이 오면 지금 규칙대로 0.3초에 finish(docs/boss-short-fight-music.md)",
    "by_region": {
     "solgogae": {
-     "bosses": "B-01~B-04(맺힘 800, B-04 960은 50%에서 물러남)",
-     "fight_min": "3~4 (B-04 약 2)",
-     "p1": "bgm_solgogae_boss 142.65초(오너 곡)",
-     "p2": "bgm_solgogae_combat 41.85초(같은 곡 절정)"
+     "bosses": "B-01~B-03(B-04는 combat)",
+     "fight_sec": "90~120",
+     "p1": "bgm_solgogae_boss 142.65초(오너 곡) 0초부터",
+     "p2": "같은 곡 60.8초로 건너뜀(phase2_seek_sec). 60.8초 = 절정 들머리(4초 뒤 64.6초에 큰 북). 이미 60.8초를 지났으면 건너뛰지 않음",
+     "phase2_seek_sec": 60.8,
+     "phase2_loop_sec": [
+      60.8,
+      142.65
+     ],
+     "_왜": "단계마다 45~60초라, 옛 안(2단계 = 41.85초 combat 곡)이면 오너 곡의 절정(64.6~115초)을 한 번도 못 듣는다. 절반의 순간에 절정으로 들어가면 2단계 50초가 절정과 거의 같은 길이"
     },
     "bulgeunjae": {
-     "bosses": "B-05·B-06(960·1120)",
-     "fight_min": "3~4",
-     "p1": "bgm_bulgeunjae_boss 150초(임시)",
-     "p2": "bgm_bulgeunjae_boss_p2 90.5초(임시)"
+     "bosses": "B-05·B-06",
+     "fight_sec": "120~150",
+     "p1": "bgm_bulgeunjae_boss 120초(임시, 시작 5초 · 차오름 · 절정 35~80초 · 숨 80~90초 · 몰아침)",
+     "p2": "bgm_bulgeunjae_boss_p2 120초(임시)"
     },
     "soegol": {
-     "bosses": "B-07·B-08(1120·960)",
-     "fight_min": "3~4",
-     "p1": "bgm_soegol_boss 149초(임시)",
-     "p2": "bgm_soegol_boss_p2 89.5초(임시)"
+     "bosses": "B-07·B-08",
+     "fight_sec": "120~150",
+     "p1": "bgm_soegol_boss 120초(임시, 시작 5초 · 차오름 · 절정 35~80초 · 숨 80~90초 · 몰아침)",
+     "p2": "bgm_soegol_boss_p2 120초(임시)"
     },
     "gaetmaeul": {
-     "bosses": "B-09·B-10(1280·1440)",
-     "fight_min": "3~4 · B-10 4~5",
-     "p1": "bgm_gaetmaeul_boss 151초(임시)",
-     "p2": "bgm_gaetmaeul_boss_p2 89.5초(임시)"
+     "bosses": "B-09·B-10",
+     "fight_sec": "150~180",
+     "p1": "bgm_gaetmaeul_boss 120초(임시, 시작 5초 · 차오름 · 절정 35~80초 · 숨 80~90초 · 몰아침)",
+     "p2": "bgm_gaetmaeul_boss_p2 120초(임시)"
     },
     "doseong": {
-     "bosses": "B-11(1280)",
-     "fight_min": "3~4",
-     "p1": "bgm_doseong_boss 150초(임시)",
-     "p2": "bgm_doseong_boss_p2 90.4초(임시)"
+     "bosses": "B-11",
+     "fight_sec": "150~180",
+     "p1": "bgm_doseong_boss 120초(임시, 시작 5초 · 차오름 · 절정 35~80초 · 숨 80~90초 · 몰아침)",
+     "p2": "bgm_doseong_boss_p2 120초(임시)"
     }
-   }
+   },
+   "phase2_min_after_start_sec": 20.0
   },
   "finish": {
    "clips": [
@@ -192,9 +199,9 @@
   }
  },
  "heukwol_2": {
-  "_설명": "B-12 흑월 2차(맺힘 1800, 6~8분). 지역 층이 아니라 컷이 곡을 지정한다(data/cutscene_audio_s1.json)",
-  "B12-INTRO 끝": "bgm_s1_heukwol_fight 180초 반복(1·2단계, 약 4분 = 1.3바퀴)",
-  "B12-P3(큰물)": "bgm_s1_heukwol_flood 120초 반복(3단계, 2~4분 = 1~2바퀴)",
+  "_설명": "B-12 흑월 2차(맺힘 2,400, 목표 3~4분). 지역 층이 아니라 컷이 곡을 지정한다(data/cutscene_audio_s1.json)",
+  "B12-INTRO 끝": "bgm_s1_heukwol_fight 180초(1·2단계 = 맺힘 100→40%, 약 110~145초: 누름 0~43 · 밀어붙임 43~86 · 숨 86~108 · 몰아침 108~180초까지 들림, 한 바퀴 안)",
+  "B12-P3(큰물)": "bgm_s1_heukwol_flood 120초(3단계 40→15%, 약 45~60초, 반 바퀴)",
   "B12-KNEEL": "op end(결전 곡을 내림) → 2.8초 silence",
   "주의": "지금 코드는 컷이 끝날 때 resume 이 지정 곡을 지워 결전 곡이 싸움 중에 살아남지 못한다 → BgmPlayer 고침 필요(docs/boss-pattern-sound.md 6절)"
  }

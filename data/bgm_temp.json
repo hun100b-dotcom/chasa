@@ -47,12 +47,12 @@
    "lufs": -20.0
   },
   "bgm_bulgeunjae_boss": {
-   "sec": 150.0,
+   "sec": 120.0,
    "loop": true,
    "lufs": -16.0
   },
   "bgm_bulgeunjae_boss_p2": {
-   "sec": 90.53,
+   "sec": 120.0,
    "loop": true,
    "lufs": -16.0
   },
@@ -77,12 +77,12 @@
    "lufs": -20.0
   },
   "bgm_doseong_boss": {
-   "sec": 150.0,
+   "sec": 120.0,
    "loop": true,
    "lufs": -16.0
   },
   "bgm_doseong_boss_p2": {
-   "sec": 90.43,
+   "sec": 120.0,
    "loop": true,
    "lufs": -16.0
   },
@@ -107,12 +107,12 @@
    "lufs": -20.0
   },
   "bgm_gaetmaeul_boss": {
-   "sec": 151.11,
+   "sec": 120.0,
    "loop": true,
    "lufs": -16.0
   },
   "bgm_gaetmaeul_boss_p2": {
-   "sec": 89.49,
+   "sec": 120.0,
    "loop": true,
    "lufs": -16.0
   },
@@ -232,12 +232,12 @@
    "lufs": -18.0
   },
   "bgm_soegol_boss": {
-   "sec": 148.97,
+   "sec": 120.0,
    "loop": true,
    "lufs": -16.0
   },
   "bgm_soegol_boss_p2": {
-   "sec": 89.52,
+   "sec": 120.0,
    "loop": true,
    "lufs": -16.0
   },
