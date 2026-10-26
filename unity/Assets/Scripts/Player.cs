@@ -727,7 +727,7 @@ public class Player : MonoBehaviour
     void StartPull(Enemy e, Vector3 aim)
     {
         atk = null; hasBuffered = false; moveTarget = null; chaseTarget = null; comboTimer = 0f; comboStep = 0;
-        var target = e != null && e.alive ? e : null;
+        var target = e != null && e.alive && !(e.soul.Boss && Balance.BOSS_DRAGGABLE == 0) ? e : null;   // 보스는 철삭으로 끌 수 없다(기획 나루 점검). 약점 점(옷·횃불·깃발)은 그대로 잡힌다
         // 보스 약점 점(옷·횃불·깃발)이 겨눈 자리나 겨눈 적 바로 옆에 있으면 적 대신 그 점을 잡는다(PullPoints)
         var point = PullPoints.Pick(aim, target != null ? (Vector3?)target.Pos : null, Pos, Config.PULL_RANGE);
         if (point != null) { target = null; aim = point.pos; }
