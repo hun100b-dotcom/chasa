@@ -155,7 +155,7 @@ public class Enemy : MonoBehaviour
     {
         barT = 3f;
         if (!alive || !Targetable) return false;
-        if (FierceMult != 1f && (soul.Boss || soul.Fierce || soul.Kind == SoulKind.Lump)) damage = Mathf.Max(1, Mathf.RoundToInt(damage * FierceMult));   // 거센 혼·덩어리·보스 피해 옵션(상한 +50%)
+        if (FierceMult != 1f && (soul.Boss || soul.Fierce || elite || soul.Kind == SoulKind.Lump)) damage = Mathf.Max(1, Mathf.RoundToInt(damage * FierceMult));   // 거센 혼·덩어리·보스 피해 옵션(상한 +50%)
         if (boundT > 0f && BoundBonus > 0f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * (1f + BoundBonus)));
         if (Time.time < cageUntil) damage = Mathf.Max(1, Mathf.RoundToInt(damage * Balance.CAGE_DAMAGE_MULT));   // 쇠사슬 울 안: 받는 피해 +50%
         if (damageTakenMult != 1f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * damageTakenMult));   // 보스 전용: 약점 창 규칙

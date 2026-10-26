@@ -157,7 +157,7 @@ namespace Chasa.Core
                 case "04": return "무기 기술 재사용 -" + 10 * m + "%";
                 case "02": return "천도 시전 -" + 6 * m + "% · 천도 넋 +" + 4 * m + "%";
                 case "13": return "파혼 피해 +" + 15 * m + "% · 파혼 엽전 +" + 2 * m + "%";
-                case "34": return "사나운 적·덩어리 피해 +" + 12 * m + "%";
+                case "34": return "거센 혼·덩어리 피해 +" + 12 * m + "%";
                 case "23": return "얼룩 지속 -" + 20 * m + "% · 파혼 엽전 +" + 3 * m + "%";
                 case "14": return "천도 중 받는 피해 -" + 15 * m + "% · 천도 넋 +" + 4 * m + "%";
                 case "12": return "처결 대기 시간 +" + m + "초";

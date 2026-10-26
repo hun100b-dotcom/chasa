@@ -1702,3 +1702,6 @@
 - 0번: 서사 브랜치에서 데이터 7개 가져옴(memory_flat·npc_flat·overhear_flat·item_texts·pattern_texts·cutscenes_s1·loading_tips). 3막 기억 40개·나루 영감 기억 복구.
 - 1-2 옛 저장의 「검은 갓의 그림자」→「금 간 그림자」 읽을 때 변환. 1-3 "동이 터"→"날이 밝아". 1-5 을/를 조사(Eul). 3-2 선장 폭풍 중복 → PatternEvent 한 줄. 
 - 남음: 2-3 당할미의 꿈, 2-4 흐린 칸, 2-5 기록 칸 문구, 3-1 B12-RISE, 3-3 보스 한마디, 3-4 파혼 자국, 3-5 ▲✕ 글꼴(지금 코드엔 쓰는 곳 없음).
+
+## 글꼴·문구 수정(기획 text-glyph-fix-1026)
+- 「사나운 적·덩어리」→「거센 혼·덩어리」(GearPlan·item_texts), 인 문구 − → -, 길 이름 ↔ → -, 거센 혼(elite)에도 보스·덩어리 피해 옵션 적용(Enemy.TakeHit). '얬'은 서사 데이터로 이미 해결.
