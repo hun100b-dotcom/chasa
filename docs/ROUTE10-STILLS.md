@@ -24,3 +24,10 @@
 4. **밤 조명**: 길 25 m 간격 등롱(night_lantern_pole)·넋불 받침(night_soulfire_pedestal) 하나씩, 3~5장 달빛 1.3 → 1.6, 주인공에 청록 테두리빛(밤에만)을 줘 어두운 풀 위에서 몸 윤곽이 뜨게. 6·7장 왼쪽 숲은 달빛이 닿게 나무 간격을 한두 곳 비움.
 5. 엔진 안개는 밤 3·4·5장처럼 무늬 없는 곳에서 더 판처럼 보이므로 안개 농도를 낮 0 · 밤 0.1 이하로 시작해 점검.
 한계: 렌더는 엔진 색보정·안개·그림자 설정과 다름. 위 수치(소품 수)는 배치표 기준 반경 22 m·앞쪽 38 m 상자 개수.
+
+## 배치 후(아트, 길·소품 넣은 뒤 다시 찍음)
+그림: `route10_after_day.png`·`route10_after_night.png`(3·4·5장 전/후 나란히), 장별 `f10_*_after.png`.
+- **흙길 굵게**: `tools/art3d/route_road_paint.py`가 `splat_a.png`(R=흙)의 가는 길만 폭 3 m로 넓힘(새 길을 긋지 않음 → 숲 가로지름 방지). 여러 번 돌려도 같은 결과, 원본은 `assets3d/terrain/splat_a_orig.png`. Unity용 `Resources/Terrain/splat_a.bytes`는 같은 PNG.
+- **소품 묶음**: `place_act1_route.py`(구역표 DENS, 길 "보릿들길", 짝꿍 소품, 시도 횟수 상향) → `assets3d/layouts/act1_route.json`(약 190개) → `python3 tools/build_field_data.py assets3d`로 `field.json`·`field_camps.json` 갱신(이미 해 둠).
+- 결과: 3장 장독대·볏가리 더해짐, 5장 허수아비 4·바위·덤불 더해짐. **4장 오른쪽 절반은 아직 성김**(둑 위 풀밭, 다음 배치 때 보강).
+- 한계: Blender 땅 판은 스플랫 길을 안 그려서 렌더에서는 길 굵기가 안 보임(Unity에서 확인 필요). 엔진 안개·색보정 미적용.

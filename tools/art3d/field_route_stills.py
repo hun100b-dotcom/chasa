@@ -37,6 +37,8 @@ def metrics(path):
 
 if __name__ == "__main__":
     out = os.path.join(F.A3, "previews", "route10"); os.makedirs(out, exist_ok=True); res = {}; tag = "day" if mode == "day" else "night"
+    only = sys.argv[2:]
     for n, x, y, ttl in STOPS:
-        k = "f10_" + n; path = F.run(k); dst = os.path.join(out, f"{k}_{tag}.png"); os.replace(path, dst); res[f"{n}_{tag}"] = {"title": ttl, **metrics(dst)}; print(n, res[f"{n}_{tag}"], flush=True)
+        if only and n.split("_")[0] not in only: continue
+        k = "f10_" + n; path = F.run(k); dst = os.path.join(out, f"{k}_{tag}{os.environ.get('FS_OUT', '')}.png"); os.replace(path, dst); res[f"{n}_{tag}"] = {"title": ttl, **metrics(dst)}; print(n, res[f"{n}_{tag}"], flush=True)
     jp = os.path.join(out, "_route10.json"); old = json.load(open(jp)) if os.path.exists(jp) else {}; old.update(res); json.dump(old, open(jp, "w"), ensure_ascii=False, indent=1)

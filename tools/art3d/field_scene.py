@@ -9,7 +9,7 @@ import bpy
 from mathutils import Vector, Euler
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 A3 = os.path.join(REPO, "assets3d")
-DIRS = [("terrain_", "terrain"), ("chunk_", "terrain"), ("nature_", "nature"), ("cover_", "nature"), ("br_", "blackrapids"), ("prop_", "props"), ("hanok_", "hanok"), ("night_", "night"), ("fx_", "fx"), ("weapon_", "weapons"), ("boss_", "boss"), ("soul_", "souls"), ("hero_", "characters")]
+DIRS = [("a1r_", "props"), ("terrain_", "terrain"), ("chunk_", "terrain"), ("nature_", "nature"), ("cover_", "nature"), ("br_", "blackrapids"), ("prop_", "props"), ("hanok_", "hanok"), ("night_", "night"), ("fx_", "fx"), ("weapon_", "weapons"), ("boss_", "boss"), ("soul_", "souls"), ("hero_", "characters")]
 FIELD = json.load(open(os.path.join(A3, "layouts", "field_5x5.json"), encoding="utf-8"))
 VIL = json.load(open(os.path.join(A3, "layouts", "solgogae_village.json"), encoding="utf-8"))
 VX, VY = FIELD["village_offset_m"]
@@ -66,6 +66,9 @@ COVER = json.load(open(os.path.join(A3, "layouts", "field_cover.json"), encoding
 LIFE_ON = os.environ.get("FS_LIFE", "1") == "1"
 LIFE = json.load(open(os.path.join(A3, "layouts", "act1_life.json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", "act1_life.json")) else []
 
+ROUTE_ON = os.environ.get("FS_ROUTE", "1") == "1"   # 처음 10분 길 소품(act1_route.json)·1막 추가 소품(act1_extra.json). 게임에는 build_field_data.py가 field.json에 합쳐 넣는다
+ROUTE = [p for n in ("act1_route", "act1_extra") for p in (json.load(open(os.path.join(A3, "layouts", n + ".json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", n + ".json")) else [])]
+
 def build(win):
     """win=(x0,y0,x1,y1) m. 창 안 타일·장식·구조물·마을·밤 소품을 조립한다."""
     x0, y0, x1, y1 = win
@@ -85,6 +88,9 @@ def build(win):
     if LIFE_ON:   # 1막 생활 소품(act1_life.json): 전후 비교용으로 FS_LIFE=0 이면 끈다
         for p in LIFE:
             if inwin(p["x"], p["y"], win, 1): put(p["prop"], p["x"], p["y"], 0.3, p["rot"], lights=False)
+    if ROUTE_ON:
+        for p in ROUTE:
+            if inwin(p["x"], p["y"], win, 1): put(p["prop"], p["x"], p["y"], 0.3 + p.get("z", 0.0), p.get("rot", 0), lights=False)
     for s in FIELD.get("structures", []):
         if "pieces" in s:
             for q in s["pieces"]:

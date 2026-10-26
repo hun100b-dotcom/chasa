@@ -1,0 +1,92 @@
+[
+ {
+  "name": "prop_closeup_flagpole",
+  "tris": 478,
+  "size_m": [
+   1.2,
+   0.27,
+   0.13
+  ],
+  "min_z": 0.005
+ },
+ {
+  "name": "prop_closeup_mokpae",
+  "tris": 224,
+  "size_m": [
+   0.22,
+   0.05,
+   0.44
+  ],
+  "min_z": 0.01
+ },
+ {
+  "name": "prop_closeup_ledger_back",
+  "tris": 1236,
+  "size_m": [
+   0.35,
+   0.36,
+   0.01
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_closeup_rope7",
+  "tris": 1176,
+  "size_m": [
+   1.59,
+   0.34,
+   0.1
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_closeup_blank_tag",
+  "tris": 284,
+  "size_m": [
+   0.53,
+   0.12,
+   0.37
+  ],
+  "min_z": 0.001
+ },
+ {
+  "name": "prop_trace_banner_up",
+  "tris": 264,
+  "size_m": [
+   2.0,
+   1.05,
+   3.99
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_trace_armor_empty",
+  "tris": 500,
+  "size_m": [
+   1.4,
+   0.58,
+   2.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_trace_mokpae_gap",
+  "tris": 536,
+  "size_m": [
+   2.7,
+   0.7,
+   2.11
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_trace_anchor_rope",
+  "tris": 456,
+  "size_m": [
+   3.86,
+   2.23,
+   1.64
+  ],
+  "min_z": -0.02
+ }
+]
