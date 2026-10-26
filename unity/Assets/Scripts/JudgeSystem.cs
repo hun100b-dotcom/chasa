@@ -288,7 +288,7 @@ public class JudgeSystem : MonoBehaviour
                 o.PlayFinishAnim(false); o.Finish(); ledger.Coin += Balance.ELITE_MOTE_COIN; night.RecordCoin(Balance.ELITE_MOTE_COIN);
             }
         int pahonDmg = Mathf.RoundToInt(Balance.PAHON_DAMAGE * lo.Def.PahonDamageMult * lo.stats.PahonDamageMult);
-        if (shadowT > 0f)   // 검은 갓의 그림자: 폭발이 주변 무릎 꿇은 혼까지 깨뜨린다(깨진 혼마다 업 +1 — DoPahon 이 쌓는다)
+        if (shadowT > 0f)   // 금 간 그림자: 폭발이 주변 무릎 꿇은 혼까지 깨뜨린다(깨진 혼마다 업 +1 — DoPahon 이 쌓는다)
             foreach (var o in new List<Enemy>(enemies.list))
             {
                 if (o == e || !o.kneeling || o.soul.Boss) continue;
@@ -718,7 +718,7 @@ public class JudgeSystem : MonoBehaviour
     //          // 다음 천도에 걸리는 것(이름 비추기·배웅길·일곱 이름)
     Vector3 escortAt; float escortMult = 1f;   // 배웅길: 천도 끝난 자리와 효과 배율
     float rideMult = 1f;
-    float escortT, wrathT, rideT, shadowT;                  // 배웅길 느림·원념 두르기·얼룩 타기·검은 갓의 그림자 남은 시간
+    float escortT, wrathT, rideT, shadowT;                  // 배웅길 느림·원념 두르기·얼룩 타기·금 간 그림자 남은 시간
     float lastPahonAt = -99f;                               // 마지막 파혼 시각(깨진 이름 던지기)
     int tendoToday;                                         // 오늘 천도한 혼 수(혼불 발 수)
     ClockPhase lastPhase;
@@ -884,7 +884,7 @@ public class JudgeSystem : MonoBehaviour
                 ledger.AddKarma(1);   // 대가: 던진 혼은 업이 1 더 쌓인다(파혼 +1과 합쳐 +2). 엽전은 그대로
                 Say(name + " (업 +1 더)"); return true;
             }
-            case "검은 갓의 그림자": shadowT = Balance.AC_SHADOW_SEC * em; Say("파혼 폭발이 무릎 꿇은 혼까지 깨뜨린다"); return true;
+            case "금 간 그림자": shadowT = Balance.AC_SHADOW_SEC * em; Say("파혼 폭발이 무릎 꿇은 혼까지 깨뜨린다"); return true;
         }
         return false;
     }
@@ -1127,7 +1127,7 @@ public class JudgeSystem : MonoBehaviour
         enemies.graceT = Mathf.Max(enemies.graceT, 4f);   // 깨어난 직후 4초는 적이 덤비지 않는다
         if (deaths > 1) { int lost = Mathf.Min(ledger.Coin, ledger.Coin / 10); ledger.Coin -= lost; }   // 둘째부터: 엽전 10% 를 잃는다(임시)
         feel.AddShake(0.4f); flashColor = Color.black; flashA = 1f;
-        Say(deaths == 1 ? "아직 보낼 이름이 남았다" : "서낭당에서 눈을 떴다" + (deaths > 1 ? " — 엽전을 조금 잃었다" : ""));
+        Say(deaths == 1 ? "아직 명부에 이름이 남았다" : "서낭당에서 눈을 떴다" + (deaths > 1 ? " — 엽전을 조금 잃었다" : ""));
         if (onTeleport != null) onTeleport(player.Pos);
     }
 

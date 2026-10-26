@@ -58,7 +58,7 @@ namespace Chasa.Core
             new SkillNode("세찬 넉백", Branch.Stain, false, "파혼 넉백 +20/+40%"),
             new SkillNode("노잣돈", Branch.Stain, false, "파혼 엽전 +7/+14%"),
             new SkillNode("마른 얼룩", Branch.Stain, false, "얼룩 지속 -15/-30%"),
-            new SkillNode("검은 갓의 그림자", Branch.Stain, true, "10초 동안 파혼이 곁의 무릎 꿇은 혼까지 깨뜨린다 · 깨진 혼마다 엽전, 업 +1", true),
+            new SkillNode("금 간 그림자", Branch.Stain, true, "10초 동안 파혼이 곁의 무릎 꿇은 혼까지 깨뜨린다 · 깨진 혼마다 엽전, 업 +1", true),
         };
 
         public static SkillNode Find(string name) { foreach (var s in All) if (s.Name == name) return s; return null; }
@@ -248,7 +248,7 @@ namespace Chasa.Core
                 case "원념 두르기": return Balance.ACD_WRATH;
                 case "얼룩 타기": return Balance.ACD_STAINRIDE;
                 case "깨진 이름 던지기": return Balance.ACD_THROWNAME;
-                case "검은 갓의 그림자": return Balance.ACD_SHADOW;
+                case "금 간 그림자": return Balance.ACD_SHADOW;
                 default: return 10f;
             }
         }

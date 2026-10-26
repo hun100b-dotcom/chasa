@@ -477,7 +477,7 @@ public static class Balance
     public const float ACD_WRATH = 10.0f;  // (액티브 도술 임시) 원념 두르기 재사용
     public const float ACD_STAINRIDE = 12.0f;  // (액티브 도술 임시) 얼룩 타기 재사용
     public const float ACD_THROWNAME = 8.0f;  // (액티브 도술 임시) 깨진 이름 던지기 재사용
-    public const float ACD_SHADOW = 45.0f;  // (액티브 도술 임시) 검은 갓의 그림자 재사용(깊은 도술)
+    public const float ACD_SHADOW = 45.0f;  // (액티브 도술 임시) 금 간 그림자 재사용(깊은 도술)
     public const int AC_SOULFIRE_DMG = 8;  // (액티브 도술 임시) 혼불 한 발 맺힘 피해
     public const int AC_SOULFIRE_MAX = 5;  // (액티브 도술 임시) 혼불 최대 발 수(기본 1 + 그날 천도한 혼 수)
     public const float AC_SOULFIRE_RANGE = 14.0f;  // (액티브 도술 임시) 혼불이 닿는 거리(m)
@@ -495,7 +495,7 @@ public static class Balance
     public const float AC_STAINRIDE_MOVE = 0.15f;  // (액티브 도술 임시) 얼룩 타기 이동 +%
     public const int AC_THROWNAME_DMG = 30;  // (액티브 도술 임시) 깨진 이름 던지기 피해
     public const float AC_THROWNAME_WINDOW = 5.0f;  // (액티브 도술 임시) 깨진 이름 던지기: 방금 파혼했다고 칠 시간(초)
-    public const float AC_SHADOW_SEC = 10.0f;  // (액티브 도술 임시) 검은 갓의 그림자 지속(초)
+    public const float AC_SHADOW_SEC = 10.0f;  // (액티브 도술 임시) 금 간 그림자 지속(초)
     public const float MOVE_TURN_RADPS = 30.0f;  // (기획 조작감) 이동·몸 회전 최대 속도(rad/s). 값은 30(0.1초에 180°. 14 로 낮췄다가 클립 실측에 맞춰 30 으로 되돌림) | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_LEAN_DEG = 3.0f;  // (기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float MOVE_BANK_DEG = 3.0f;  // (기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도) | 기획 표준 명세 hud-controls-spec v1(10-25)
