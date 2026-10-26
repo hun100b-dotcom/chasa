@@ -153,7 +153,7 @@ namespace Chasa.Core
         /// <summary>저장 묶음을 게임 상태에 되돌린다(위치·시각·무기는 부르는 쪽이 따로)</summary>
         public static void Apply(SaveSnapshot s, GrowthState g, Ledger l, Equipment eq, ClueBook clues)
         {
-            l.Neok = s.Neok; l.Memory = s.Memory; l.Coin = s.Coin; l.Ore = s.Ore; l.Karma = s.Karma; l.TendoTotal = s.TendoTotal;
+            l.Neok = s.Neok; l.Memory = s.Memory; l.Coin = s.Coin; l.Ore = s.Ore; l.Karma = System.Math.Min(Balance.KARMA_MAX, s.Karma);   /* 옛 저장의 업이 상한을 넘으면 99로 내린다 */ l.TendoTotal = s.TendoTotal;
             g.TotalNeok = s.TotalNeok; g.Rank = GrowthState.RankFor(s.JudgeTally);   // 품계는 처결 셈에서(옛 저장은 JudgeTally 가 totalneok 로 채워진다)
             g.SkillPointsEarned = s.SkillPointsEarned; g.SkillPointsSpent = s.SkillPointsSpent; g.StatPointsEarned = s.StatPointsEarned;
             g.JudgeTally = s.JudgeTally; g.PahonCount = s.PahonCount; g.StainPointsEarned = s.StainPointsEarned; g.StainPointsSpent = s.StainPointsSpent;

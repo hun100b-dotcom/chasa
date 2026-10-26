@@ -10,6 +10,18 @@ public class CoreTests
 {
     // ---------- 업 단계 [14-2] ----------
     [Test]
+    public void Ledger_KarmaStopsAtMax()
+    {
+        // 업 상한 99: 파혼을 아무리 해도 99에서 멈춘다(넘친 몫은 버림)
+        var l = new Ledger();
+        l.Karma = 98;
+        l.DoPahon(false, 0);
+        l.DoPahon(false, 0);
+        l.AddKarma(50f);
+        Assert.AreEqual(Balance.KARMA_MAX, l.Karma);
+    }
+
+    [Test]
     public void KarmaTiers_Boundaries()
     {
         Assert.AreEqual(0, CoreRules.KarmaTier(9));    // K-001
@@ -296,8 +308,8 @@ public class CoreTests
     public void EndingA_ClosedForPahonHeavy()
     {
         var l = new Ledger();
-        for (int i = 0; i < 600; i++) l.DoPahon();
-        for (int i = 0; i < 200; i++) l.CompleteTendo();
+        for (int i = 0; i < 600; i++) l.DoPahon();   // 업은 99에서 멈춘다(상한)
+        for (int i = 0; i < 60; i++) l.CompleteTendo();
         Assert.GreaterOrEqual(l.Karma, Balance.ENDING_A_KARMA_MAX, "파혼 위주는 C로 간다");
     }
 

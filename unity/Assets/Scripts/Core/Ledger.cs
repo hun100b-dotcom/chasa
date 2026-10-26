@@ -98,12 +98,12 @@ namespace Chasa.Core
 
         /// <summary>파혼 하나가 끝났을 때. 엽전을 얻고 업이 쌓이며 연속 천도가 끊긴다</summary>
         float karmaFrac;   // 업의 소수 부분(잔넋 연쇄 파혼 +0.5 를 모았다가 1이 되면 반영)
-        public void AddKarma(float v) { karmaFrac += v; int w = (int)karmaFrac; if (w > 0) { Karma += w; karmaFrac -= w; } }
+        public void AddKarma(float v) { karmaFrac += v; int w = (int)karmaFrac; if (w > 0) { Karma = System.Math.Min(Balance.KARMA_MAX, Karma + w); karmaFrac -= w; } }
 
         public void DoPahon(bool boss = false, int bossId = 1)
         {
             Coin += boss ? Bosses.CoinFor(bossId) : Balance.PAHON_COIN;
-            Karma += boss ? Balance.BOSS_PAHON_KARMA : Balance.PAHON_KARMA;
+            Karma = System.Math.Min(Balance.KARMA_MAX, Karma + (boss ? Balance.BOSS_PAHON_KARMA : Balance.PAHON_KARMA));   // 업 상한 99: 넘친 몫은 버린다
             TendoStreak = 0;
         }
     }
