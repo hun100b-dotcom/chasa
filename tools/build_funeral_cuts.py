@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-build_funeral_cuts.py — 서사 1막 장례 대본 8개(docs/narrative/funerals_act1.json)를 유니티 컷 표(Resources/Data/cutscenes_funerals.json)로 옮긴다.
-컷 이름: FUN-S002_TENDO(천도 48초) / FUN-S002_NONE(처결 못 함 12초). 파혼은 조등만이라 컷이 없다. 박돌쇠 장례는 기본형(build_first_session_cuts.py)을 쓴다.
+build_funeral_cuts.py — 서사 1~3막 장례 대본 27개(docs/narrative/funerals_act1~3.json)를 유니티 컷 표(Resources/Data/cutscenes_funerals.json)로 옮긴다.
+컷 이름: FUN-S002_TENDO(천도 48초) / FUN-S002_NONE(처결 못 함 20초). 파혼은 조등만이라 컷이 없다. 박돌쇠 장례는 기본형(build_first_session_cuts.py)을 쓴다.
 카메라는 모두 그 집 마당('funeral' 대상, 코드가 혼마다 좌표를 바꿔 준다). condition 이 붙은 박자는 cond 로 옮겨, 그 조건일 때만 적용된다.
 사용: python3 tools/build_funeral_cuts.py
 """
