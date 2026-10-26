@@ -68,6 +68,12 @@ if os.path.exists(rp):
     for p in json.load(open(rp, encoding="utf-8"))["props"]:
         add(p["prop"], p["x"], p["y"], p.get("rot", 0), p.get("z", 0.0))
 
+# 폐당집 서낭당 둘레 꾸미기(아트 act1_pyedang.json: 장승·금줄·돌탑·상사화, 터 높이 z=2.0)
+pp = os.path.join(art, "layouts", "act1_pyedang.json")
+if os.path.exists(pp):
+    for p in json.load(open(pp, encoding="utf-8"))["props"]:
+        add(p["prop"], p["x"], p["y"], p.get("rot", 0), p.get("z", 0.0))
+
 # 바닥 채움 소품(아트 field_cover.json: 풀·꽃·보리 이랑·돌·강변 소품). 기본은 tier 1(밭·강변·길가 소품, 약 5천)만 넣는다.
 # 풀·꽃(tier 2, 약 2만)은 코드가 GPU 인스턴싱·거리 컬링을 갖췄으므로 기본으로 넣는다(FIELD_COVER_TIER=1 이면 tier 1 만, 0 이면 전부 뺀다).
 cover_tier = int(os.environ.get("FIELD_COVER_TIER", "2"))   # 10-25: 코드가 GPU 인스턴싱·거리 컬링(CoverInstancer)을 갖춰 기본 2(풀·꽃 포함)

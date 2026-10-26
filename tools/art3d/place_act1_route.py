@@ -15,7 +15,7 @@ splat = np.array(Image.open(os.path.join(ROOT, "assets3d", "terrain", "splat_a.p
 def road(x, y): return splat[min(639, max(0, int(y))), min(639, max(0, int(x)))] > 150
 def clear(x, y):
     j, i = G.idx(x, y); return G.cl[j, i] if 0 <= j < G.h and 0 <= i < G.w else -1
-ROUTES = {"우물": [(193, 28.5), (198, 47.5), (198, 59)], "둑길": [(193, 28), (163, 36), (190, 112), (297, 108)], "대장간": [(193, 28.5), (220, 45), (217, 57.5)]}
+ROUTES = {"우물": [(193, 28.5), (198, 47.5), (198, 59)], "둑길": [(193, 28), (163, 36), (190, 112), (288, 152)], "보릿들길": [(288, 152), (355, 250), (362, 286), (399, 283)], "대장간": [(193, 28.5), (220, 45), (217, 57.5)]}
 def sample(poly, step):
     pts = []
     for a, b in zip(poly[:-1], poly[1:]):
@@ -36,6 +36,7 @@ FARM = [("a1r_sheaf_stack", "props", 2.2, "보릿단 말림"), ("a1r_ridge_marke
         ("a1r_manure_heap", "props", 2.0, "두엄 더미"), ("prop_scarecrow", "props", 2.0, "허수아비"), ("prop_haystack", "props", 2.0, "건초 더미"), ("cover_stones_a", "nature", 2.5, "밭 돌"), ("nature_bush_b", "nature", 2.0, "밭둑 덤불"), ("cover_flower_mix", "nature", 2.5, "둑 들꽃")]
 LIFE = [("a1r_gourd_trellis", "props", 2.0, "박 시렁"), ("a1r_drink_jars", "props", 2.0, "길가 물독"), ("a1r_wayside_rest", "props", 2.5, "길가 쉼터"), ("prop_jangdok", "props", 1.5, "장독"), ("prop_firewood", "props", 1.5, "땔감"), ("prop_log_pile", "props", 1.8, "통나무 더미"),
         ("prop_sacks", "props", 1.5, "가마니"), ("nature_bush_a", "nature", 2.0, "길섶 덤불"), ("cover_stones_b", "nature", 2.5, "길가 돌"), ("prop_stepstones", "props", 1.5, "디딤돌")]
+DENS = {"둑길": (12.0, 40), "보릿들길": (10.0, 28)}      # 24 m 점검: 화면에 담기는 땅이 넓어(반경 약 20 m) 반경 8 m·8개로는 빈 풀밭으로 보임 → 이 두 길은 반경 10 m 안 14~16개
 def pick(x, y):
     # 둑길 동쪽 끝(보릿들)은 농사, 그 밖은 생활 소품
     return FARM if x > 215 and y > 95 else LIFE
@@ -47,13 +48,17 @@ for cx, cy in ((262, 122), (270, 124), (255, 121), (275, 120), (262, 98), (270, 
     if clear(cx, cy) >= 2.0 and not road(cx, cy) and dist_route(cx, cy) >= 6.0: put("a1r_lean_to", cx, cy, 0, "props", 4.0, "처음 10분 길 보강: 원두막(둑길 표지)"); break
 for name, poly in ROUTES.items():
     for x, y in sample(poly, 10):
-        need = 8 - count(x, y, extra=placed); tries = 0
-        while need > 0 and tries < 400:
-            tries += 1; a = rnd.uniform(0, math.tau); d = rnd.uniform(3.5, 9.0); px, py = x + math.cos(a) * d, y + math.sin(a) * d
+        R_, T_ = DENS.get(name, (8.0, 8)); need = T_ - count(x, y, r=R_, extra=placed); tries = 0
+        while need > 0 and tries < 1500:
+            tries += 1; a = rnd.uniform(0, math.tau); d = rnd.uniform(3.5, 12.0); px, py = x + math.cos(a) * d, y + math.sin(a) * d
             nm, folder, gap, note = rnd.choice(pick(px, py))
             if not (4 < px < 636 and 4 < py < 636) or clear(px, py) < 1.0 or road(px, py) or dist_route(px, py) < 3.0 or not free(px, py, gap): continue
-            if sum(1 for p in props if p["prop"] == nm) >= {"a1r_lean_to": 3, "a1r_bird_line": 4, "prop_scarecrow": 3, "a1r_wayside_rest": 4, "a1r_manure_heap": 3, "prop_haystack": 6, "a1r_water_gate": 4}.get(nm, 999): continue
+            if sum(1 for p in props if p["prop"] == nm) >= {"a1r_lean_to": 3, "a1r_bird_line": 4, "prop_scarecrow": 3, "a1r_wayside_rest": 4, "a1r_manure_heap": 3, "prop_haystack": 6, "a1r_water_gate": 4}.get(nm, 999) * 6: continue
             put(nm, px, py, rnd.choice([0, 90, 180, 270]) if nm not in ("a1r_bird_line", "a1r_water_gate") else rnd.choice([0, 180]), folder, gap, "처음 10분 길 보강: " + note); need -= 1
+            if name in DENS and rnd.random() < 0.6:      # 한 덩어리로 읽히게 곁에 풀꽃·돌·덤불 1~2개를 붙인다(홀로 떨어진 소품은 점처럼 보임)
+                for _ in range(rnd.choice([1, 2])):
+                    cn, cf, cg = rnd.choice([("cover_flower_mix", "nature", 1.0), ("cover_stones_a", "nature", 1.2), ("nature_bush_a", "nature", 1.6)]); a2 = rnd.uniform(0, math.tau); d2 = rnd.uniform(1.8, 3.2); qx, qy = px + math.cos(a2) * d2, py + math.sin(a2) * d2
+                    if 4 < qx < 636 and 4 < qy < 636 and clear(qx, qy) >= 1.0 and not road(qx, qy) and dist_route(qx, qy) >= 3.0 and free(qx, qy, cg): put(cn, qx, qy, rnd.choice([0, 90, 180, 270]), cf, cg, "처음 10분 길 보강: 곁붙임"); need -= 1
 for name, poly in ROUTES.items():
     for x, y in sample(poly, 10): rep["after"].setdefault(name, []).append([round(x), round(y), count(x, y, extra=placed)])
 from collections import Counter

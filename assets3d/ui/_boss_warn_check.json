@@ -1,0 +1,14 @@
+{
+ "kneel_a": {
+  "px_per_m": 71.4,
+  "border_mm_phone": 0.54
+ },
+ "kneel_b": {
+  "px_per_m": 71.4,
+  "border_mm_phone": 0.54
+ },
+ "kneel_c": {
+  "px_per_m": 71.4,
+  "border_mm_phone": 0.54
+ }
+}

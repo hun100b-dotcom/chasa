@@ -1,0 +1,26 @@
+{
+ "24m_업0": {
+  "changed_px_ratio_in_520box": 0.0
+ },
+ "24m_업10": {
+  "changed_px_ratio_in_520box": 0.01
+ },
+ "24m_업30": {
+  "changed_px_ratio_in_520box": 0.03
+ },
+ "24m_업60": {
+  "changed_px_ratio_in_520box": 0.055
+ },
+ "13m_업0": {
+  "changed_px_ratio_in_520box": 0.0
+ },
+ "13m_업10": {
+  "changed_px_ratio_in_520box": 0.031
+ },
+ "13m_업30": {
+  "changed_px_ratio_in_520box": 0.096
+ },
+ "13m_업60": {
+  "changed_px_ratio_in_520box": 0.17
+ }
+}

@@ -55,7 +55,7 @@ def circle_mask(inner):
     can = inner + 40; S2 = can * 2; m = Image.new("RGBA", (S2, S2), (0, 0, 0, 0)); c = S2 / 2; ImageDraw.Draw(m).ellipse([c - inner, c - inner, c + inner, c + inner], fill=(255, 255, 255, 255)); return m
 
 # ── 아이콘(2배 128px 칸에 그림) ─────────────────────────────────────────────
-OUT = (16, 20, 38, 255)
+OUT = (26, 20, 16, 204)   # 기획 명세 v1.5 §2: 모든 미니맵 아이콘에 어두운 테두리 #1A1410 80%(보리 점·집 그림자와 섞이지 않게)
 def icon_canvas(): im = Image.new("RGBA", (128, 128), (0, 0, 0, 0)); return im, ImageDraw.Draw(im)
 
 def ic_me():
@@ -83,8 +83,11 @@ def ic_soul(col, named=False):
     if named: d.ellipse([20, 28, 108, 116], outline=GOLD + (255,), width=7); d.polygon([(64, 4), (70, 16), (58, 16)], fill=GOLD + (255,))
     return im
 def ic_npc():
+    """NPC: 노란 마름모 ◆(명세 v1.5). 점(적·혼)과 모양이 달라 흑백에서도 갈린다. 가운데 어두운 점 하나를 비워 보리 점(금빛 작은 점)과도 구분."""
     im, d = icon_canvas(); g = (255, 214, 96, 255)
-    d.ellipse([14, 68, 114, 98], fill=OUT); d.ellipse([34, 18, 94, 88], fill=OUT); d.ellipse([20, 72, 108, 94], fill=g); d.ellipse([40, 24, 88, 82], fill=g); d.rectangle([40, 70, 88, 80], fill=(150, 108, 30, 255)); d.ellipse([54, 94, 74, 112], fill=OUT); return im
+    d.polygon([(64, 2), (126, 64), (64, 126), (2, 64)], fill=OUT); d.polygon([(64, 16), (112, 64), (64, 112), (16, 64)], fill=g)
+    d.polygon([(64, 30), (98, 64), (64, 98), (30, 64)], outline=(170, 122, 34, 255), width=5)   # 안쪽 가는 금 테두리
+    return im
 def ic_quest(gold=True):
     im, d = icon_canvas(); d.ellipse([8, 8, 120, 120], fill=OUT); d.ellipse([18, 18, 110, 110], fill=GOLD + (255,)); d.rounded_rectangle([57, 32, 71, 72], radius=6, fill=OUT); d.ellipse([56, 82, 72, 98], fill=OUT); return im
 def ic_arrow(col, double=False):
@@ -121,7 +124,7 @@ def ic_soulpath():
 
 ICONS = [("me", ic_me(), "플레이어(차사). 화살표만 돌아간다", 14), ("enemy", ic_dot((214, 48, 52)), "일반 적(붉은 점)", 6), ("elite", ic_dot((200, 40, 40), 30, True, True), "정예 적(붉은 점 + 둘레 가시). 주황은 파혼 전용이라 쓰지 않음", 8), ("boss", ic_boss(), "보스(붉은 도장 魁). 해골 대신 도장", 16),
          ("soul_fresh", ic_soul((191, 232, 255)), "혼: 갓 죽은", 8), ("soul_day", ic_soul((255, 204, 85)), "혼: 해 넘긴", 8), ("soul_old", ic_soul((140, 106, 90)), "혼: 오래된(갈회색)", 8), ("soul_lump", ic_soul((154, 92, 255)), "혼: 덩어리", 8),
-         ("soul_named", ic_soul((191, 232, 255), True), "이름혼(금 고리·별)", 14), ("npc", ic_npc(), "NPC(갓 쓴 노란 점)", 8), ("quest", ic_quest(), "퀘스트 목표 !", 14), ("quest_arrow", ic_arrow(GOLD), "범위 밖 퀘스트 방향(테두리에 붙임)", 14),
+         ("soul_named", ic_soul((191, 232, 255), True), "이름혼(금 고리·별)", 14), ("npc", ic_npc(), "NPC(노란 마름모 ◆, v1.5)", 10), ("quest", ic_quest(), "퀘스트 목표 !", 14), ("quest_arrow", ic_arrow(GOLD), "범위 밖 퀘스트 방향(테두리에 붙임)", 14),
          ("seonang", ic_seonang(), "서낭당·쉼터", 14), ("exit", ic_arrow(TEAL, True), "지역 출입구 화살표", 14), ("cave", ic_cave(), "굴 입구", 14), ("bridge", ic_bridge(), "다리", 14),
          ("ferry", ic_ferry(), "나루터", 14), ("herb", ic_herb(), "의원·약방", 14), ("soulpath", ic_soulpath(), "넋길 표식", 14)]
 
