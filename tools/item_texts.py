@@ -192,7 +192,13 @@ assert sorted(seal_names) == sorted(SEAL), set(seal_names) ^ set(SEAL)
 assert sorted(s['id'] for s in G['skills']) == sorted(SKILL)
 seals = [dict(name=s['name'], colors=[s['a'], s['b']], effect_ref=s['effect'], text=SEAL[s['name']]) for s in G['seals']]
 seals3 = [dict(name=k, **v) for k, v in SEAL3.items()]
-skills = [dict(id=s['id'], name=s['name'], school=G['schools'][s['school']]['name'], text=SKILL[s['id']]) for s in G['skills']]
+# 기획이 이름을 바꿨는데 growth.json이 아직 옛 이름인 도술: 화면 이름은 새 이름, old_name으로 옛 이름도 남겨 코드가 어느 쪽으로든 찾게(서사 10-26)
+SKILL_RENAME = {'eol_shadow': '금 간 그림자'}   # 옛 '검은 갓의 그림자' — '검은 갓'은 나루 기억 M-B01의 결정 낱말이라 미리 새면 안 됨
+skills = []
+for s in G['skills']:
+    x = dict(id=s['id'], name=SKILL_RENAME.get(s['id'], s['name']), school=G['schools'][s['school']]['name'], text=SKILL[s['id']])
+    if x['name'] != s['name']: x['old_name'] = s['name']
+    skills.append(x)
 gear = []
 RN = {r['id']: r['name'] for r in G['rarities']}
 for k, v in GEAR.items():
