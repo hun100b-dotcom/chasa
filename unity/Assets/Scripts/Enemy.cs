@@ -248,6 +248,17 @@ public class Enemy : MonoBehaviour
         mat.color = baseColor;
     }
 
+    bool heavySet, flashLeadDone;
+    public static bool CastVisionLimited;   // 천도 시전 중(시야 60%로 좁아진 동안) — JudgeSystem 이 켠다
+    /// <summary>화면 밖이거나 좁아진 시야(60%) 밖인가. 시야 원은 화면 가운데 기준 근사값</summary>
+    bool OutOfVision()
+    {
+        var c = Camera.main; if (c == null) return false;
+        var v = c.WorldToViewportPoint(Pos);
+        if (v.z < 0f) return true;
+        float nx = (v.x - 0.5f) / 0.5f, ny = (v.y - 0.5f) / 0.5f;
+        return Mathf.Sqrt(nx * nx + ny * ny) > 0.6f * 1.2f;   // 가운데~화면 가장자리를 1로 두고 0.72 밖
+    }
     public bool knockedByBlast;             // 파혼 폭발(N1)로 꿇은 혼 — 이 혼을 또 파혼하면 엽전 ×0.5(깨뜨려 꿇린 혼은 천도로 보내는 손을 밀어 준다)
     public bool elite;                      // 거센 혼(첫 강적): 맺힘 300, 패턴 셋, 이름 띠. EliteArena 가 움직임을 맡는다
     public string eliteAnim = "";           // 거센 혼 예고 동작 꼬리표("", "attack", "strike")
@@ -351,9 +362,15 @@ public class Enemy : MonoBehaviour
                 else if (soul.Boss && FieldRules.On && dist > BossLeashM) ReturnHome(dt);   // 보스는 마당 근처에서만 쫓는다
                 else Chase(dt, playerPos);
             }
+            // 예고 보정(기획 field-telegraph-check): 무거운 한 방(덩어리·사나운 적)은 1.0초, 천도 중 시야 밖 +0.15초, 터치 +0.08초
+            // 왜: 짧은 예고가 천도(1.5초)를 '운'으로 만들고, 무거운 한 방이 보통 혼과 같으면 덩어리 곁 천도가 늘 오답이 되기 때문
+            if (!heavySet && !soul.Boss && !elite && type != SoulType.Mote && (soul.Kind == SoulKind.Lump || soul.Fierce)) { heavySet = true; atk.WindupTime = Mathf.Max(atk.WindupTime, Balance.WINDUP_HEAVY); }
+            atk.WindupAdd = (Ko.TouchUI ? Balance.WINDUP_TOUCH_ADD : 0f) + (CastVisionLimited && OutOfVision() ? Balance.WINDUP_OUT_OF_VISION_ADD : 0f);
             bool wasWind = atk.Winding;
             if (atk.Tick(dt, dist, canAct)) { if (soul.Boss && soul.BossId == 1) { Sfx.Play("sfx.boss.naru.sweep"); tiltWeak = 1.5f; } onHitPlayer?.Invoke(); }   // 나루 영감: 휩쓸기 판정 순간
             if (gated) { if (atk.Winding) tokenHolders.Add(this); else tokenHolders.Remove(this); }
+            if (atk.Winding && atk.Windup <= Balance.WINDUP_FLASH_LEAD && !flashLeadDone) { flashLeadDone = true; flash = 1f; }   // 맞기 0.12초 전 하얀 번쩍(마지막 신호). 붉게 물듦은 그대로
+            if (!atk.Winding) flashLeadDone = false;
             if (atk.Winding && !wasWind) Sfx.Play(type == SoulType.Mote ? "sfx.enemy.mote.telegraph" : soul.Boss && soul.BossId == 1 ? "sfx.boss.naru.sweep.telegraph" : "sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
             mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)

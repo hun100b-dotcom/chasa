@@ -2020,7 +2020,7 @@
   "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 피해"
  },
  "SOULTYPE_MOTE_WINDUP": {
-  "value": 0.4,
+  "value": 0.45,
   "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 선딜(초)"
  },
  "SOULTYPE_MOTE_INTERVAL": {

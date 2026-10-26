@@ -1241,6 +1241,7 @@ public class JudgeSystem : MonoBehaviour
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
         if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
+        Enemy.CastVisionLimited = Casting;   // 천도 시전 중 시야 밖 적의 예고를 늘린다
         Sfx.NightNow = clock != null && clock.Phase == ClockPhase.Night;
         if (clock != null) Sfx.PhaseNow = (int)clock.Phase;
         if (clock != null) TideWater.WorldMinutes = Tide.TotalMinutes(clock.Day, clock.Minutes);   // 썰물·밀물 시계
@@ -1947,7 +1948,7 @@ public class JudgeSystem : MonoBehaviour
                         winding = true;
                         if (!firstTeleDone)   // 첫 혼의 첫 공격 예고: 1.5배 길게 + 화면 0.5초 30% 느리게(이번 한 번만)
                         {
-                            firstTeleDone = true; e.atk.WindupTime *= 1.5f; e.atk.Windup = e.atk.WindupTime; feel.SlowMo(0.5f, 0.3f);
+                            firstTeleDone = true; e.atk.WindupTime *= 1.5f; e.atk.WindupTotal = e.atk.WindupTime + e.atk.WindupAdd; e.atk.Windup = e.atk.WindupTotal; feel.SlowMo(0.5f, 0.3f);
                         }
                     }
                     if (d > 10f && d < 20f) far = true;

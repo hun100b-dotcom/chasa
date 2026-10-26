@@ -531,7 +531,7 @@ public static class Balance
     public const int SOULTYPE_WAIL_MAX_ZONE = 2;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 한 구역에서 동시에 살아 있는 넋두리 최대 수
     public const float SOULTYPE_MOTE_HP = 0.25f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 맺힘 배율
     public const int SOULTYPE_MOTE_DAMAGE = 3;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 피해
-    public const float SOULTYPE_MOTE_WINDUP = 0.4f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 선딜(초)
+    public const float SOULTYPE_MOTE_WINDUP = 0.45f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 선딜(초)
     public const float SOULTYPE_MOTE_INTERVAL = 1.4f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 공격 간격(초)
     public const float SOULTYPE_MOTE_SPEED = 1.29f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 속도 배율(기본 적 2.8 → 3.6)
     public const float SOULTYPE_MOTE_RANGE = 1.6f;  // (필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 공격 사거리(m)
