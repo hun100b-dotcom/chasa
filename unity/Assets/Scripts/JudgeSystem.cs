@@ -143,6 +143,14 @@ public class JudgeSystem : MonoBehaviour
         });
     }
 
+    /// <summary>목적격 조사: 받침이 있으면 "을", 없으면 "를"(한글이 아니면 "을"). 왜: "을(를)" 같은 괄호 표기는 첫 이름혼부터 보여 어색하다</summary>
+    static string Eul(string w)
+    {
+        if (string.IsNullOrEmpty(w)) return "을";
+        char c = w[w.Length - 1];
+        return (c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 == 0) ? "를" : "을";
+    }
+
     public void CommandTendo()
     {
         if (Casting || !player.CanActNow()) return;
@@ -272,7 +280,7 @@ public class JudgeSystem : MonoBehaviour
             if (e.soul.BossId == 3) weather.state.PlagueEased = true;   // 3호 처결: 검은여울 역병 안개 35→5
             if (e.soul.BossId <= 1) { night.BossDone = true; bossOutcome = 2; }
             MarkBossDone(e.soul.BossId);
-            Say(e.label + "을(를) 깨뜨렸다");
+            Say(e.label + Eul(e.label) + " 깨뜨렸다");
             cuts.Play(BossCut(e.soul, "PAHON")); feel.AddShake(1f);   // 6m 대폭발, 판자가 흩어진다
             // 보스 파혼 보상: 이름 있는 물건 (즉시 강해진다 vs 천도의 기억/넋) — 기획서 6-1
             { var ks = ItemDef.BossKeepsake(e.soul.BossId); if (ks != null && lo.Equip(ks)) { lo.lastDrop = "이름 있는 장비: " + ks.Name; lo.lastDropT = 6f; } }   // 서사 확정 노리개(뱃삯·장부·등잔·바가지)
@@ -500,7 +508,7 @@ public class JudgeSystem : MonoBehaviour
             ui?.Hud.Toasts.Add("도술 점수 +1");
             CreditSoulColor(castTarget.Pos, g); night.RecordBoss(g);                    // 보스 보상은 '추가 수확분' — 동이 트면 잃는다
             enemySpawnPause = Balance.BOSS_CAST_ADD_PAUSE;
-            Say(castTarget.label + "을(를) 보냈다"); if (castTarget.soul.BossId <= 1) bossOutcome = 1;
+            Say(castTarget.label + Eul(castTarget.label) + " 보냈다"); if (castTarget.soul.BossId <= 1) bossOutcome = 1;
             bossTendoIds.Add(castTarget.soul.BossId);   // 천도로 보낸 보스: 넋길에 그 마당 가장자리 도착점이 생긴다
             MarkBossDone(castTarget.soul.BossId);
             if (cuts.Play(BossCut(castTarget.soul, "TENDO"))) { player.CommandStop(); enemies.graceT = Mathf.Max(enemies.graceT, 7f); }   // 7초 컷: 입력 잠김·적 멈춤
@@ -1717,7 +1725,7 @@ public class JudgeSystem : MonoBehaviour
             string n = WorldClock.PhaseName(ph.Value);
             if (ph.Value == ClockPhase.Dawn && funeralDone.Contains("칠복") && funeralDay >= 0) dogHome = true;
             if (ph.Value == ClockPhase.Dawn)
-                foreach (var e in enemies.list) if (e.kneeling) { MarkUnjudged(e); e.soul.Finish(); Say("동이 터 무릎 꿇은 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
+                foreach (var e in enemies.list) if (e.kneeling) { MarkUnjudged(e); e.soul.Finish(); Say("날이 밝아 무릎 꿇은 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
             Say(ph.Value == ClockPhase.Dusk ? "인정 — 해가 진다" : ph.Value == ClockPhase.Dawn ? "파루 — 날이 밝는다" : n + "이 되었다");
         }
         // 검사용: ] 로 배속 순환(1→10→60→1)

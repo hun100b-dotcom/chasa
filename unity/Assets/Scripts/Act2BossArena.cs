@@ -127,7 +127,7 @@ public class Act2BossArena : MonoBehaviour
         float dist = new Vector2(judge.player.Pos.x - def.X, judge.player.Pos.z - def.Z).magnitude;
         if (dist > fightArea + 6f) return;   // 싸움터 근처에서만
         bool storm = brain3.Phase2;
-        if (storm && !stormSaid) { stormSaid = true; judge.Say("폭풍 — 갑판이 더 자주 기운다!", 2f); judge.BossBubble(boss, "붙들어라… 다 붙들어."); }   // 전용 소리 없음 → 기울기 소리를 두 번 겹쳐 쓴다(서사)
+        if (storm && !stormSaid) { stormSaid = true; judge.PatternEvent("B-10.storm", boss, true, 2); }   // 알림 한 줄과 말풍선이 같은 글이라 한 번에(서사 C10) // 전용 소리 없음 → 기울기 소리를 두 번 겹쳐 쓴다(서사)
         tiltT -= dt;
         if (tiltT <= 0f)
         {

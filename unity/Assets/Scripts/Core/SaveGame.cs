@@ -107,8 +107,8 @@ namespace Chasa.Core
                 var st = d.ContainsKey("stats") ? d["stats"].Split(',') : new string[0];
                 for (int i = 0; i < s.Stats.Length; i++) s.Stats[i] = i < st.Length ? int.Parse(st[i]) : GrowthState.StatBase;
                 if (d.ContainsKey("learned") && d["learned"].Length > 0)
-                    foreach (var pair in d["learned"].Split(',')) { var kv = pair.Split(':'); if (SkillTree.Find(kv[0]) != null) s.Learned[kv[0]] = int.Parse(kv[1]); }   // 지워진 도술 이름은 건너뛴다(옛 저장 호환)
-                if (d.ContainsKey("bar") && d["bar"].Length > 0) foreach (var n in d["bar"].Split(',')) if (SkillTree.Find(n) != null && s.Learned.ContainsKey(n)) s.ActiveBar.Add(n);
+                    foreach (var pair in d["learned"].Replace("검은 갓의 그림자", "금 간 그림자").Split(',')) { var kv = pair.Split(':');   /* 옛 도술 이름은 새 이름으로 바꿔 읽는다 */ if (SkillTree.Find(kv[0]) != null) s.Learned[kv[0]] = int.Parse(kv[1]); }   // 지워진 도술 이름은 건너뛴다(옛 저장 호환)
+                if (d.ContainsKey("bar") && d["bar"].Length > 0) foreach (var n in d["bar"].Replace("검은 갓의 그림자", "금 간 그림자").Split(',')) if (SkillTree.Find(n) != null && s.Learned.ContainsKey(n)) s.ActiveBar.Add(n);
                 if (d.ContainsKey("gp0"))
                     for (int i = 0; i < s.Gear.Length; i++) s.Gear[i] = d.ContainsKey("gp" + i) ? ItemFrom(d["gp" + i], Equipment.KindOf((EquipPos)i)) : null;
                 else

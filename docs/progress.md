@@ -1697,3 +1697,8 @@
 - named_souls(1막 +22)·act2(+20)·act3(+21)에 줄을 붙임(이름 중복 없음). Row에 label·after_boss·water·mujeok 칸 추가.
 - M5: 머리 위 이름표=label, 기억·장례 찾기=soul.Name로 분리(MakeNamed 4번째 인자). M6: after_boss(김 영감)=1막 보스 N마리 처결 뒤(Act1BossesDone). M7 일부: water=썰물 때만 선다.
 - 아직: mujeok(무적 혼) 7명은 일반 이름혼으로 서 있음(별명 해금은 soul_labels_s1·PR #50 필요), 파혼한 혼 기록 칸 "먹이 번져 읽을 수 없다", 흐린 단서 규칙(단서판 코드 없음).
+
+## 서사 CODE-HANDOFF-1026 처리
+- 0번: 서사 브랜치에서 데이터 7개 가져옴(memory_flat·npc_flat·overhear_flat·item_texts·pattern_texts·cutscenes_s1·loading_tips). 3막 기억 40개·나루 영감 기억 복구.
+- 1-2 옛 저장의 「검은 갓의 그림자」→「금 간 그림자」 읽을 때 변환. 1-3 "동이 터"→"날이 밝아". 1-5 을/를 조사(Eul). 3-2 선장 폭풍 중복 → PatternEvent 한 줄. 
+- 남음: 2-3 당할미의 꿈, 2-4 흐린 칸, 2-5 기록 칸 문구, 3-1 B12-RISE, 3-3 보스 한마디, 3-4 파혼 자국, 3-5 ▲✕ 글꼴(지금 코드엔 쓰는 곳 없음).
