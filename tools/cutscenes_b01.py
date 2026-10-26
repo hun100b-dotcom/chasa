@@ -41,7 +41,7 @@ cutscenes = [
  {'id': 'B01-NOCLUE', 'branch': '처결 대기(천도 불가)', 'trigger': '단서 2개 이하에서 천도 입력',
   'duration': 1.0, 'input_lock': False, 'world': 'run', 'skippable': False,
   'steps': [
-   st(0.0, act='영감 머리 위 명부 인이 흐릿하게 떨리다 꺼진다', ui={'toast': '이름이 들리지 않는다.', 'toast_time': 1.0}, note='실패 연출이 아니라 안내(BOSS-01 §6). 캐스팅은 시작되지 않는다. 대기 시간은 계속 흐른다')]},
+   st(0.0, act='영감 머리 위 명부 인이 흐릿하게 떨리다 꺼진다', ui={'toast': '이름이 들리지 않는다', 'toast_time': 1.0}, note='실패 연출이 아니라 안내(BOSS-01 §6). 캐스팅은 시작되지 않는다. 대기 시간은 계속 흐른다')]},
 
  {'id': 'B01-TENDO', 'branch': '천도', 'trigger': '천도 캐스팅 2.0초 완료',
   'duration': 7.0, 'input_lock': True, 'world': 'pause_enemies', 'skippable': True,

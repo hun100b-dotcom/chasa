@@ -28,7 +28,7 @@ JESA_EXTRA = {
     'S-051': '정은 제자한테 물려줬다. 돌결 읽는 눈은 아직 서툴러도.',
     'S-052': '낫은 해마다 정월에 갈았다. 아들놈이 그걸 봐 두었으면.',
     'S-067': '주먹밥엔 늘 짠지 한 쪽. 아내가 그것만은 안 빠뜨렸다.',
-    'S-068': '딸 손톱은 하얬으면 했다. 그래서 평상엔 못 앉게 했지.',
+    'S-068': '딸 손톱은 하얗기를 바랐다. 그래서 평상엔 못 앉게 했지.',
     'S-069': '국물은 첫 갱 들기 전 새벽에 우렸다. 식으면 맛이 없으니까.',
     'S-070': '노새 이름은 먹보. 내 몫 보리까지 다 먹어 치웠다.',
     'S-071': '아들 놈 첫 품삯으로 짚신을 사 왔더라. 아까워서 못 신었다.',
@@ -52,6 +52,21 @@ for s in d['souls']:
         'jesa_extra': JESA_EXTRA.get(s['id']),  # 제사 집 지켜보기 덤(조각 수에 안 셈). 없으면 null
     })
 rows.sort(key=lambda r: (r['region'], r['boss'], r['id']))
+# 숫자 혼 기억(기획 act2-entry-10min 10-26): 2막 첫 10분은 대개 낮이고 이름혼(장례 대상 9)은 밤에만 선다.
+# 그래서 첫 천도는 군집의 이름 없는 혼이고, 지금은 1막과 같은 generic 줄이 나온다 → 2막 첫 기억이 밤(진입 뒤 12~22분)까지 늦다.
+# 숫자 혼(numbered)을 처음 천도하면 generic 대신 이 풀에서 한 줄(그 땅 풀에서, 한 판에 한 줄 한 번).
+# 단서(F) 없음 · 조각 수에는 generic과 같이 1로 센다. 2막 보스 단서 낱말 금지.
+NUMBERED = {
+    '③': ['스물둘. 그 앞에 붙던 말이 있었는데.',
+          '번호를 부르면 손을 들었다. 그게 대답이었다.',
+          '깃발만 보고 뛰었다. 옆에 누가 있었는지 모른다.'],
+    '④': ['목에 건 나무패가 무거웠다. 글씨는 못 읽었다.',
+          '부르는 소리가 났다. 내 번호는 아니었다.',
+          '교대 종이 울리면 번호부터 댔다.'],
+}
+_BAN = ('서른일곱', '일곱', '위패', '열셋', '열넷', '반장', '앞장', '뒷장', '머릿수', '술 붓', '동이')
+for _k, _v in NUMBERED.items():
+    for _ln in _v: assert len(_ln) <= 40 and not any(w in _ln for w in _BAN), _ln
 out = {
     '_설명': '2막(③ 붉은재 · ④ 쇳골) 천도 기억 조각. 원본 soul_memories.json에서 tools/memories_act2.py로 생성. 손으로 고치지 말 것.',
     'source_version': d.get('_version'),
@@ -60,10 +75,12 @@ out = {
         'mystery': 'mystery=true인 혼을 천도하면 그 fact가 추리판에 켜진다. decisive(★)는 보스 천도로만',
         'axis': {'main': '저승이 고장 났다(숫자 명부)', 'mirror': '이승도 사람을 숫자로 적었다'},
         'generic': '이름 없는 무작위 혼은 generic 줄에서 뽑는다(미스터리 없음, 한 판에 한 줄 한 번)',
+        'numbered': '숫자 혼을 천도하면 generic 대신 numbered[그 땅]에서 한 줄(한 판에 한 줄 한 번, 다 쓰면 generic). 단서 없음, 조각 1',
         'jesa_extra': '낮에 그 집 제사를 지켜본 뒤 천도하면 기억 끝에 덧붙는 한 줄. 기억 조각 수에 세지 않는다. 장례 대상 이름혼만 있다',
         'pahon': '파혼하면 기억 조각 없음, 그 혼의 fact 출처 하나를 잃는다(추리판에 번진 먹 자국)'},
     'souls': rows,
     'generic': {k: v for k, v in d['generic_pool'].items() if not k.startswith('_')},
+    'numbered': NUMBERED,
     'facts': {k: d['facts'][k] for k in ['F%d' % i for i in range(16, 23)]},
 }
 json.dump(out, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

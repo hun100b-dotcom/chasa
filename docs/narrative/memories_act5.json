@@ -1,6 +1,6 @@
 {
  "_설명": "5막(⑨ 빈 관할 · ⑩ 열째 관할) 천도 기억 조각. 원본 soul_memories.json에서 tools/memories_act5.py로 생성. 손으로 고치지 말 것.",
- "source_version": 9,
+ "source_version": 10,
  "rules": {
   "count": "천도 1회 = 기억 조각 1(결말 기준 150에 셈). 같은 혼은 한 번만. 이은 이름(⑩)도 천도 1회로 센다",
   "mystery": "mystery=true인 혼을 천도하면 그 fact가 추리판에 켜진다. decisive(★)는 보스 천도로만",
