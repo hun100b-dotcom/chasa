@@ -67,7 +67,7 @@ LIFE_ON = os.environ.get("FS_LIFE", "1") == "1"
 LIFE = json.load(open(os.path.join(A3, "layouts", "act1_life.json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", "act1_life.json")) else []
 
 ROUTE_ON = os.environ.get("FS_ROUTE", "1") == "1"   # 처음 10분 길 소품(act1_route.json)·1막 추가 소품(act1_extra.json). 게임에는 build_field_data.py가 field.json에 합쳐 넣는다
-ROUTE = [p for n in ("act1_route", "act1_extra") for p in (json.load(open(os.path.join(A3, "layouts", n + ".json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", n + ".json")) else [])]
+ROUTE = [p for n in ("act1_route", "act1_extra", "act1_pyedang") for p in (json.load(open(os.path.join(A3, "layouts", n + ".json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", n + ".json")) else [])]
 
 def build(win):
     """win=(x0,y0,x1,y1) m. 창 안 타일·장식·구조물·마을·밤 소품을 조립한다."""

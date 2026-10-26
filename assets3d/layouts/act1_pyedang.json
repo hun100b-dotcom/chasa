@@ -1,0 +1,385 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(필드 절대)",
+ "note": "place_act1_pyedang.py가 만든다. 직접 고치지 말고 스크립트를 고친다. 폐당집 터 z=2.0",
+ "props": [
+  {
+   "prop": "prop_jangseung",
+   "file": "assets3d/props/prop_jangseung.glb",
+   "x": 570.8,
+   "y": 549.0,
+   "rot": 10,
+   "z": 2.0,
+   "note": "폐당집 서낭당 앞 장승(왼)"
+  },
+  {
+   "prop": "prop_jangseung",
+   "file": "assets3d/props/prop_jangseung.glb",
+   "x": 577.2,
+   "y": 549.0,
+   "rot": -10,
+   "z": 2.0,
+   "note": "폐당집 서낭당 앞 장승(오른)"
+  },
+  {
+   "prop": "prop_geumjul",
+   "file": "assets3d/props/prop_geumjul.glb",
+   "x": 574.0,
+   "y": 549.0,
+   "rot": 0,
+   "z": 2.0,
+   "note": "폐당집 서낭당 금줄(낡음)"
+  },
+  {
+   "prop": "prop_soulfire_lantern",
+   "file": "assets3d/props/prop_soulfire_lantern.glb",
+   "x": 571.4,
+   "y": 552.8,
+   "rot": 0,
+   "z": 2.0,
+   "note": "폐당집 서낭당 넋불(왼)"
+  },
+  {
+   "prop": "prop_soulfire_lantern",
+   "file": "assets3d/props/prop_soulfire_lantern.glb",
+   "x": 576.6,
+   "y": 552.8,
+   "rot": 0,
+   "z": 2.0,
+   "note": "폐당집 서낭당 넋불(오른)"
+  },
+  {
+   "prop": "prop_cairn",
+   "file": "assets3d/props/prop_cairn.glb",
+   "x": 569.8,
+   "y": 553.5,
+   "rot": 267.33037507730427,
+   "z": 2.0,
+   "note": "폐당집 길손 돌탑"
+  },
+  {
+   "prop": "prop_cairn",
+   "file": "assets3d/props/prop_cairn.glb",
+   "x": 577.8,
+   "y": 555.2,
+   "rot": 218.84380728257406,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_wayside_cairn",
+   "file": "assets3d/nature/cover_wayside_cairn.glb",
+   "x": 568.5,
+   "y": 551.0,
+   "rot": 185.88093719405816,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 577.85,
+   "y": 558.3,
+   "rot": 247.6415415866336,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 568.53,
+   "y": 555.86,
+   "rot": 155.66799522597694,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 572.85,
+   "y": 557.21,
+   "rot": 116.5408027783677,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 575.4,
+   "y": 555.98,
+   "rot": 56.831878112094685,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 566.52,
+   "y": 549.98,
+   "rot": 51.67590906889069,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 576.69,
+   "y": 559.24,
+   "rot": 89.08339550455786,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 569.94,
+   "y": 549.97,
+   "rot": 313.86175530116077,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 569.89,
+   "y": 547.72,
+   "rot": 297.07597869532157,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 574.47,
+   "y": 557.44,
+   "rot": 241.46579067967963,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 575.11,
+   "y": 560.29,
+   "rot": 128.54396921827646,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 577.54,
+   "y": 556.53,
+   "rot": 332.69468130513593,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 579.97,
+   "y": 556.23,
+   "rot": 234.76380862625638,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 576.24,
+   "y": 554.75,
+   "rot": 323.5397380313485,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_lily_red",
+   "file": "assets3d/nature/cover_lily_red.glb",
+   "x": 566.43,
+   "y": 551.46,
+   "rot": 344.1883849084697,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 571.5,
+   "y": 548.02,
+   "rot": 60.327240225137515,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 571.86,
+   "y": 545.08,
+   "rot": 141.9537894344284,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 571.39,
+   "y": 546.75,
+   "rot": 43.63384771491622,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 573.56,
+   "y": 546.25,
+   "rot": 354.59417038194437,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 579.73,
+   "y": 552.91,
+   "rot": 274.457966342556,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 567.42,
+   "y": 548.86,
+   "rot": 178.17549787510004,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 570.75,
+   "y": 551.33,
+   "rot": 300.25462874895703,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 571.93,
+   "y": 556.14,
+   "rot": 358.4625643458483,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_moss_patch",
+   "file": "assets3d/nature/cover_moss_patch.glb",
+   "x": 573.86,
+   "y": 555.14,
+   "rot": 343.85711302604227,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 568.55,
+   "y": 557.32,
+   "rot": 135.65011281651923,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 569.71,
+   "y": 559.22,
+   "rot": 161.83633782234486,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 571.8,
+   "y": 557.89,
+   "rot": 126.42445879885348,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 573.49,
+   "y": 559.22,
+   "rot": 277.61440597219683,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 568.86,
+   "y": 552.29,
+   "rot": 20.64581213123274,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 581.64,
+   "y": 554.34,
+   "rot": 177.40602310720493,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 570.25,
+   "y": 556.66,
+   "rot": 250.42262376956964,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 568.86,
+   "y": 546.16,
+   "rot": 270.5903493129835,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 564.78,
+   "y": 553.77,
+   "rot": 217.36631620210494,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 566.55,
+   "y": 556.13,
+   "rot": 234.655181142357,
+   "z": 2.0,
+   "note": ""
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 580.55,
+   "y": 558.76,
+   "rot": 253.73670116460855,
+   "z": 2.0,
+   "note": ""
+  }
+ ]
+}
