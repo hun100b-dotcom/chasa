@@ -77,6 +77,9 @@ public class Sfx : MonoBehaviour
     }
 
     /// <summary>구역 환경음용 반복 음원 하나를 만든다(소리 0으로 시작, 호출한 쪽이 서서히 키운다). 소리 파일이 없으면 null 대신 빈 음원</summary>
+    /// <summary>소리 id 의 클립(없으면 null). 3D 반복음처럼 따로 음원을 만드는 쪽이 쓴다</summary>
+    public static AudioClip ClipFor(string id) { return I != null ? I.Clip(id) : null; }
+
     public static AudioSource MakeLoop(string id)
     {
         var host = I != null ? I.gameObject : new GameObject("SfxLoop");
@@ -106,9 +109,11 @@ public class Sfx : MonoBehaviour
     /// <summary>더킹(ducking, 중요한 소리 때 배경을 잠깐 줄이기): 1=그대로, 0.5=절반. 컷신·천도 시전·명부 열림 때 BGM·환경음에 곱한다. 예고음·타격음은 줄이지 않는다</summary>
     public static float Duck = 1f;
     public static void TickDuck(bool on, float dt) { Duck = Mathf.MoveTowards(Duck, on ? 0.5f : 1f, dt / (on ? 0.4f : 1.2f) * 0.5f); }   // 줄일 땐 0.4초, 돌아올 땐 1.2초(갑자기 커지지 않게)
+    public static int PhaseNow = 1;   // 지금 시각대(0 새벽 1 낮 2 저녁 3 밤 — 엿듣기 time 과 같은 순서). 2·3막 주변 소리가 본다
     public static bool NightNow;   // 지금이 밤인가(JudgeSystem 이 시계를 보고 매 프레임 알려 준다 — 날씨 소리 고르기용)
     public static void SetWeatherAmbient(Weather w) { if (I != null) I.SetWeatherInternal(w); }
 
+    bool rainWas;
     void SetWeatherInternal(Weather w)
     {
         if (wxLoop == null) { wxLoop = gameObject.AddComponent<AudioSource>(); wxLoop.loop = true; wxLoop.playOnAwake = false; wxLoop.volume = 0f; }
@@ -118,6 +123,8 @@ public class Sfx : MonoBehaviour
             : w == Weather.Fog ? (NightNow ? "amb.weather.fog_night" : "amb.weather.fog")
             : w == Weather.Plague ? "amb.weather.plague" : null;
         float target = id == null || muted ? 0f : 0.6f * SaveStore.Settings.Sfx * Duck;   // 믹스 기준표: 날씨 0.6
+        bool rainNow = id == "amb.weather.rain";
+        if (rainNow != rainWas) { rainWas = rainNow; PlayInternal("amb.weather.rain_light"); }   // 비가 오기 시작하거나 그칠 때 가는 빗소리 한 번
         if (id != null && id != wxId) { var c = Clip(id); if (c != null) { wxLoop.clip = c; wxId = id; if (!wxLoop.isPlaying) wxLoop.Play(); } }
         wxLoop.volume = Mathf.MoveTowards(wxLoop.volume, target, Time.unscaledDeltaTime * 2f);
         if (id == null && wxLoop.volume <= 0f && wxLoop.isPlaying) { wxLoop.Stop(); wxId = null; }

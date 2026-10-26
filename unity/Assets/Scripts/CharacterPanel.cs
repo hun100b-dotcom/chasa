@@ -60,9 +60,9 @@ public partial class CharacterPanel : MonoBehaviour
         {
             if (i < 3 && !Demo.Panel) continue;
             var r = new Rect(box.x + 12 + slot0++ * 120, box.y + 10, 112, 36);
-            if (GUI.Button(r, TabNames[i] + (tab == i ? " *" : ""))) tab = i;
+            if (UiSfx.Btn(r, TabNames[i] + (tab == i ? " *" : ""))) tab = i;
         }
-        if (GUI.Button(new Rect(box.xMax - 100, box.y + 6, 88, 30), "닫기")) Open = false;
+        if (UiSfx.Btn(new Rect(box.xMax - 100, box.y + 6, 88, 30), "닫기")) Open = false;
 
         float y = box.y + 60;
         var st = lo.stats;
@@ -128,6 +128,10 @@ public partial class CharacterPanel : MonoBehaviour
             case Opt.PahonKnockbackPct: return "파혼 넉백 " + Pct(o.Value);
             case Opt.VisionShift: return "천도 중 시야 " + (o.Value >= 0 ? "+" : "") + Mathf.RoundToInt(o.Value * 100f) + "%p";
             case Opt.CastDamageReducePct: return "시전 중 받는 피해 " + Pct(-o.Value);
+            case Opt.DefensePct: return "받는 피해 " + Pct(-o.Value);
+            case Opt.SkillCdReduce: return "도술 재사용 " + Pct(-o.Value);
+            case Opt.WeaponCdReduce: return "무기 기술 재사용 " + Pct(-o.Value);
+            case Opt.FiercePct: return "거센 혼·덩어리 피해 " + Pct(o.Value);
             default: return "파혼 반경 +" + o.Value.ToString("0.0") + "m";
         }
     }
@@ -235,7 +239,7 @@ public partial class CharacterPanel : MonoBehaviour
         {
             float x = box.x + 16 + i * 220;
             GUI.Label(new Rect(x, y, 150, 26), GrowthState.StatNames[i] + " " + g.Stats[i], body);
-            if (g.StatPointsFree > 0 && GUI.Button(new Rect(x + 120, y, 36, 28), "+", bookMode ? bookBtn : GUI.skin.button)) { g.AddStat(i); judge.RefreshGrowth(); }   // 점수를 쓰면 전투 수치를 다시 계산
+            if (g.StatPointsFree > 0 && UiSfx.Btn(new Rect(x + 120, y, 36, 28), "+", bookMode ? bookBtn : GUI.skin.button)) { g.AddStat(i); judge.RefreshGrowth(); }   // 점수를 쓰면 전투 수치를 다시 계산
         }
         y += 40;
 
@@ -258,7 +262,7 @@ public partial class CharacterPanel : MonoBehaviour
                 string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[쓰는] ") : "[늘] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
                 var r = new Rect(x, yy, colW, 26);
                 GUI.color = lv > 0 ? Color.white : (can ? new Color(1f, 1f, 1f, 0.9f) : new Color(1f, 1f, 1f, 0.45f));
-                if (GUI.Button(r, label, bookMode ? bookBtn : GUI.skin.button))
+                if (UiSfx.Btn(r, label, bookMode ? bookBtn : GUI.skin.button))
                 {
                     if (n.Active && lv > 0) g.ToggleBar(n.Name);   // 배운 액티브는 누르면 칸에 올렸다 내렸다
                     else { g.Learn(n.Name); judge.RefreshGrowth(); }
@@ -289,7 +293,7 @@ public partial class CharacterPanel : MonoBehaviour
                 var wid = Loadout.AllWeapons[i];
                 bool held = (hand ? lo.weapon : lo.other) == wid;
                 var wr = new Rect(box.x + 90 + i * 128, y, 124, 26);
-                if (GUI.Button(wr, (held ? "● " : "") + WeaponDef.Get(wid).Name, bst)) { if (hand) lo.SetHand(wid); else lo.SetBack(wid); }
+                if (UiSfx.Btn(wr, (held ? "● " : "") + WeaponDef.Get(wid).Name, bst)) { if (hand) lo.SetHand(wid); else lo.SetBack(wid); }
             }
             y += 28;
         }

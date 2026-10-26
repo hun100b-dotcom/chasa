@@ -140,6 +140,24 @@ public class NpcWorld
         builtPhase = -1;
     }
 
+    /// <summary>첫 밤 솔고개 엿듣기(서사 seonang_texts first_night_overhear). 두 사람의 두 줄이 차례로 뜬다. 단서 아님(들은 말 기록만, 업 10 반쪽·60 닫힘)</summary>
+    public void AddFirstNight(SeonangTexts.Overhear o, System.Func<bool> gate)
+    {
+        string text = o.lines.Length > 1 ? o.lines[0] + "\n" + o.speakers[1] + ": " + o.lines[1] : o.lines[0];
+        all.Add(new Spot { row = new Row { npc = "fn", name = o.speakers[0], zone = "Village", place = "첫 밤 " + o.id, time = 3, unlock = 1, region = 1, verb = "엿듣기" }, clue = "", line = text, half = o.half, verb = "엿듣기", label = o.speakers[0], pos = new Vector3(o.x, 0f, o.z), gate = gate });
+        builtPhase = -1;
+    }
+
+    /// <summary>2·3막 소문 엿듣기(서사 overhear_act2/3). 두 사람의 두 줄. 단서 아님. time: 0 새벽 1 낮 2 저녁 3 밤. 그 집 혼의 장례를 봤으면(echo 혼 처결) 닫는다</summary>
+    public void AddRumor(string id, string place, Vector3 pos, string[] speakers, string[] lines, string half, int time, string echo)
+    {
+        string text = lines.Length > 1 ? lines[0] + "\n" + speakers[1] + ": " + lines[1] : lines[0];
+        System.Func<bool> gate = null;
+        if (!string.IsNullOrEmpty(echo)) gate = () => !(soulDone != null && soulDone(echo));
+        all.Add(new Spot { row = new Row { npc = "rm", name = speakers[0], zone = "Field", place = id + " " + place, time = time, unlock = 1, region = 1, verb = "엿듣기" }, clue = "", line = text, half = half, verb = "엿듣기", label = speakers[0], pos = pos, gate = gate });
+        builtPhase = -1;
+    }
+
     /// <summary>처결 결과로 바뀐 풍경 한 곳을 더한다(예: 보스를 천도하면 나루에 배가 묶여 있다). 다가서면 글이 뜬다. timeSlot: 0 동틀녘 1 낮 2 해질녘 3 밤</summary>
     public void AddScenery(Vector3 pos, string text, int timeSlot)
     {
@@ -205,6 +223,22 @@ public class NpcWorld
             else if (d <= NoticeRadius) Notice(s);
         }
         if (!dwelling) DwellRatio = 0f;
+    }
+
+    /// <summary>
+    /// 2·3막 소문 엿듣기 자리(R2-01 …)가 지금 열려 있나(그 시각대이고 장례·업으로 닫히지 않았나). 열려 있으면 자리 좌표를 준다.
+    /// 자리 소리(주변 소리 PR #44)가 이걸로 켜고 끈다.
+    /// </summary>
+    public bool RumorOpen(string id, out Vector3 pos)
+    {
+        pos = Vector3.zero;
+        foreach (var s in spots)
+        {
+            if (s.row.npc != "rm" || s.row.place == null || !s.row.place.StartsWith(id + " ")) continue;
+            if (s.gate != null && !s.gate()) return false;
+            pos = s.pos; return true;
+        }
+        return false;
     }
 
     /// <summary>자동 플레이 테스트용: 지금 켜진 자리 중 아직 못 얻은 단서가 달린 곳의 좌표·이름을 모은다</summary>

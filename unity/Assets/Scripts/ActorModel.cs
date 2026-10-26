@@ -82,7 +82,7 @@ public class ActorModel : MonoBehaviour
             {
                 // 색 지도가 없는 모델(아트팀 GLB): 재질 칸마다 원래 색을 따서 번쩍 가능한 재질로 바꾼다
                 var src = r.sharedMaterials; var dst = new Material[src.Length];
-                for (int i = 0; i < src.Length; i++) { var c = Props3D.MatColor(src[i]); dst[i] = U.Flashable(c); rl.Add(dst[i]); cl.Add(c); }
+                for (int i = 0; i < src.Length; i++) { if (src[i] != null && src[i].name.StartsWith("M_hat")) hatRend = r; if (src[i] != null && src[i].name.StartsWith("M_robe")) robeRend = r; var c = Props3D.MatColor(src[i]); dst[i] = U.Flashable(c); rl.Add(dst[i]); cl.Add(c); }
                 r.sharedMaterials = dst;
             }
             r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On; r.receiveShadows = true;
@@ -121,6 +121,47 @@ public class ActorModel : MonoBehaviour
     }
 
     Dictionary<string, AnimationClip> clipsByName; Pose[] heroOrder;
+
+    // ---- 장비 외형(⑦): 갓 등급(1 흔한 ~ 5 한 벌)에 맞는 조각을 머리 뼈에 얹고 기본 갓을 숨긴다 ----
+    // 왜 뼈를 따라가게 하나? 아트의 장비 조각은 뼈대 없는 정지 모양이라, 처음 자세에서의 머리 뼈 위치를 기억해 두었다가 매 프레임 머리가 움직인 만큼 같이 옮긴다.
+    /// <summary>입은 갓·도포·띠의 등급(0=없음→기본 모양). JudgeSystem 이 장비가 바뀔 때 알려 준다</summary>
+    public static int HeroHatTier = 0, HeroRobeTier = 0, HeroBeltTier = 0, HeroCharmTier = 0;
+    Renderer hatRend, robeRend; GameObject hatGear, robeGear, beltGear, charmL, charmR; int hatApplied, robeApplied, beltApplied, charmApplied;
+
+    void ApplyHat()
+    {
+        hatApplied = HeroHatTier; robeApplied = HeroRobeTier; beltApplied = HeroBeltTier; charmApplied = HeroCharmTier;
+        // 왜 조각마다 따라갈 뼈를 따로 두나? 갓은 머리, 도포는 가슴, 띠는 엉덩이가 가장 많이 움직이는 뼈라서(소매·치맛자락은 가슴 뼈 하나로 근사 — 팔이 크게 흔들리면 어긋날 수 있어 PC 확인 필요)
+        hatGear = SwapGear(hatGear, hatRend, hatApplied, "gat", "Head", true);
+        robeGear = SwapGear(robeGear, robeRend, robeApplied, "dopo", "Chest", true);
+        charmL = SwapGear(charmL, null, charmApplied, "norigae", "Hips", false, "_L");   // 노리개는 왼·오른 조각이 따로 있다
+        charmR = SwapGear(charmR, null, charmApplied, "norigae", "Hips", false, "_R");
+        beltGear = SwapGear(beltGear, null, beltApplied, "tti", "Hips", false);   // 띠는 기본 모양에 따로 숨길 부분이 없어 위에 얹기만 한다
+    }
+
+    /// <summary>한 칸의 외형을 갈아 끼운다. 조각이 없거나 뼈를 못 찾으면 기본 모양을 그대로 둔다(안전하게 실패)</summary>
+    GameObject SwapGear(GameObject old, Renderer baseRend, int tier, string slot, string boneName, bool hideBase, string suffix = "")
+    {
+        if (old != null) Destroy(old);
+        if (baseRend != null) baseRend.enabled = true;
+        if (tier <= 0) return null;
+        var prefab = Resources.Load<GameObject>("Models/Gear/gear_" + slot + "_t" + Mathf.Clamp(tier, 1, 5) + suffix);
+        Transform bone = null;
+        foreach (var t in hero.GetComponentsInChildren<Transform>(true)) if (t.name == boneName) { bone = t; break; }
+        if (prefab == null || bone == null) return null;
+        if (hideBase && baseRend != null) baseRend.enabled = false;
+        var go = Instantiate(prefab, hero.transform);
+        go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity; go.transform.localScale = Vector3.one;
+        foreach (var r in go.GetComponentsInChildren<Renderer>())
+        {
+            var src = r.sharedMaterials; var dst = new Material[src.Length];
+            for (int i = 0; i < src.Length; i++) dst[i] = U.Flashable(Props3D.MatColor(src[i]));
+            r.sharedMaterials = dst;
+            r.shadowCastingMode = HeroShadowOn ? UnityEngine.Rendering.ShadowCastingMode.On : UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+        go.AddComponent<BoneFollow>().Setup(bone);
+        return go;
+    }
 
     static string WeaponClipPrefix(WeaponId w)
     {
@@ -275,7 +316,7 @@ public class ActorModel : MonoBehaviour
     static Spec SpecFor(string name)
     {
         var s = SpecBase(name);
-        foreach (var suf in new[] { "_yeoksa", "_bungjae", "_soegol" })
+        foreach (var suf in new[] { "_yeoksa", "_bungjae", "_soegol", "_number_named", "_number" }   /* 숫자 혼: _number_named 를 _number 보다 먼저 봐야 한다(앞쪽이 뒤쪽을 품고 있어서) */)
             if (name.Contains(suf) && ModelCatalog.Actor(s.key + suf) != null) { s.key += suf; break; }   // 변형 모델 줄이 있을 때만(없으면 기본 모양)
         return s;
     }
@@ -461,6 +502,7 @@ public class ActorModel : MonoBehaviour
             foreach (var r in hero.GetComponentsInChildren<Renderer>()) r.shadowCastingMode = mode;
             if (weaponGo != null) foreach (var r in weaponGo.GetComponentsInChildren<Renderer>()) r.shadowCastingMode = mode;
         }
+        if (hero != null && key == "dongi" && (hatApplied != HeroHatTier || robeApplied != HeroRobeTier || beltApplied != HeroBeltTier || charmApplied != HeroCharmTier)) ApplyHat();
         float dt = Time.deltaTime;
         poseT += dt;
         // 이동 속도 = 위치 변화 (걷기 판정). 슬로모·히트스톱 중엔 dt 가 달라 값이 흔들릴 수 있어 부드럽게

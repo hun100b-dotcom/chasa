@@ -73,7 +73,13 @@ public class GameMain : MonoBehaviour
             judge.introFrozen = true;
             judge.npcs = new NpcWorld(judge.clueBook, () => judge.ledger.Karma, () => judge.clock.Day + 1);
             judge.npcs.onClue = () => judge.HintClue();
-            if (judge.camps != null) judge.camps.LonerOverhears(judge.npcs.AddOverhear);   // 외톨이 야영지 엿듣기
+            if (judge.camps != null) judge.camps.LonerOverhears(judge.npcs.AddOverhear);
+            RumorData.Load(judge.npcs);   // 2·3막 소문 엿듣기(땅이 열린 막만)
+            foreach (var o in SeonangTexts.Overhears)   // 첫 밤 솔고개 엿듣기 15자리: 깨어남부터 그 밤 새벽까지, 박돌쇠 처결 전/후에 맞는 줄만
+            {
+                var oc = o;
+                judge.npcs.AddFirstNight(oc, () => judge.clock.Day == 0 && (oc.cond == "any" || (oc.cond == "before:S-001" && judge.PahonOrTendo == 0) || (oc.cond == "tendo:S-001" && judge.PahonOrTendo == 1) || (oc.cond == "pahon:S-001" && judge.PahonOrTendo == 2) || (oc.cond == "first_judge" && (judge.ledger.Neok > 0 || judge.ledger.Coin > 0))));
+            }   // 외톨이 야영지 엿듣기
             // 제사 지켜보기(기획 jesa_watch_act1): 처결하면 닫히고, 박돌쇠는 천도했을 때만 열린다. 끝까지 본 혼은 천도할 때 기억 끝에 한 줄이 붙는다
             judge.npcs.dayFrac = () => Mathf.Clamp01((judge.clock.Minutes - Balance.CLOCK_DAWN_MIN) / Balance.CLOCK_DAY_MIN);
             judge.npcs.soulDone = n => judge.named != null && judge.named.IsDone(n);
@@ -133,6 +139,8 @@ public class GameMain : MonoBehaviour
         if (UiRoot.Enabled) judge.ui = gameObject.AddComponent<UiRoot>();   // 새 화면(UI Toolkit)
         var settingsPanel = gameObject.AddComponent<SettingsPanel>(); settingsPanel.judge = judge; settingsPanel.white = Texture2D.whiteTexture;   // 설정 화면(O)
         Sfx.Create(judge);   // 효과음 재생기
+        if (FieldRules.On) Act1Soundscape.Create(judge, () => player.Pos);   // 1막 주변 소리(구역 바탕·서낭당·소품·외톨이·흩뿌림)
+        if (FieldRules.On && (FieldRules.Act2 || FieldRules.Act3)) RegionSoundscape.Create(judge, () => player.Pos);   // 2·3막 주변 소리(구역 바탕·서낭당·엿듣기 자리·흩뿌림·갱 징)
         ZoneAmbient.Create(() => player.Pos);   // 2막 구역별 환경음(붉은재·쇳골)
         BgmPlayer.Create(judge);   // BGM 재생기(층 교차). 필드에서만 소리를 낸다
         if (BotScript.Wanted()) { var bs = gameObject.AddComponent<BotScript>(); bs.player = player; bs.enemies = enemies; bs.judge = judge; }   // ?bot=1 첫 세션 자동 플레이 테스트
@@ -331,11 +339,13 @@ public class GameMain : MonoBehaviour
     int zoomStep = 1;   // 0=가깝게 1=기본 2=멀리
     float StepDist(int i) { return i <= 0 ? Balance.CAMERA_DIST_NEAR : i == 1 ? Balance.CAMERA_DIST_MID : Balance.CAMERA_DIST_FAR; }
     void SetZoomStep(int i) { if (i != zoomStep && judge != null) judge.guide.Complete("zoom"); zoomStep = Mathf.Clamp(i, 0, 2); wheelTarget = StepDist(zoomStep) / Mathf.Max(0.1f, camDist); }   // 배율 = 목표 거리 / 기준 거리
+    float lastZoomT = -1f;
     void HandleZoom()
     {
         // 휠 한 칸 = 한 단계(앞으로 굴리면 가깝게). 연속 값이 아니라 단계라서 '딱 3번'만 멈춘다
         float scroll = Input.mouseScrollDelta.y;
-        if (Mathf.Abs(scroll) > 0.01f) SetZoomStep(zoomStep - (scroll > 0f ? 1 : -1));
+        // 트랙패드·부드러운 휠은 한 번 굴림에 이벤트가 여러 개 와서 한꺼번에 두세 단계가 넘어가므로, 0.18초 안에 온 것은 무시한다
+        if (Mathf.Abs(scroll) > 0.01f && Time.unscaledTime - lastZoomT > 0.18f && !MiniMap.OverMini(Input.mousePosition)) { lastZoomT = Time.unscaledTime; SetZoomStep(zoomStep - (scroll > 0f ? 1 : -1)); }
         if (Input.touchCount == 2)
         {
             float dist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);

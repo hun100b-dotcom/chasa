@@ -35,8 +35,13 @@ def gat(t):
         pts = [(sx * 0.12, -0.04, 1.665), (sx * 0.105, -0.1, 1.54), (sx * 0.095, -0.14, 1.42), (sx * 0.075, -0.19, 1.28), (sx * 0.07, -0.205, 1.12)] + ([(sx * 0.07, -0.21, 0.98), (sx * 0.07, -0.215, 0.86)] if t >= 4 else [])
         parts += chain_pts("strap" + ("L" if sx > 0 else "R"), pts, 0.011 if t < 4 else 0.014, 0.009, strapc, 4)
         if bead: parts += [sphere(f"bead{sx}{i}", 0.02 + (0.004 if t >= 4 else 0), (sx * (0.105 - i * 0.012), -0.1 - i * 0.045, 1.54 - i * 0.14), bead, 5, 4) for i in range(L)]
-    if t == 4: parts += [box(f"plume{i}", (0.015, 0.03, 0.2 - 0.03 * i), (0.15 + 0.02 * i, 0.0, 1.78 + 0.015 * i), "#E85C41", rot=(0, 0.5 + 0.1 * i, 0)) for i in range(3)]     # 깃 장식
-    if t == 5: parts += [sphere(f"mote{i}", 0.014, (0.06 * math.cos(a), 0.06 * math.sin(a) - 0.0, 1.98 + 0.03 * i), glow(5, 3.0), 4, 3) for i, a in enumerate((0.3, 2.4, 4.4))]
+    if t == 4:   # 이름 있는 갓: 뒤로 크게 휘어 올라가는 주홍 깃 둘 + 챙 끝에 늘어진 이름 쪽지 넷(멀리서도 '갓 뒤가 솟은' 실루엣)
+        for sx in (1, -1): parts += ribbon(f"plume{sx}", [(sx * 0.07, 0.06, 1.8), (sx * 0.14, 0.16, 1.93), (sx * 0.16, 0.28, 2.04), (sx * 0.12, 0.38, 2.1)], 0.075, "#E85C41", 0.02)
+        for i, (x, y) in enumerate(((0.36, -0.16), (-0.36, -0.16), (0.3, 0.26), (-0.3, 0.26))): parts += [limb(f"tagcord{i}", (x, y, 1.69), (x, y, 1.52), 0.008, 0.008, tc(4), 3), box(f"tag{i}", (0.07, 0.012, 0.13), (x, y, 1.45), "#E4E0D4")]
+    if t == 5:   # 한 벌 갓: 정수리 위에 떠 있는 혼불 고리(◎) + 고리를 도는 혼불 여섯. 고리는 갓과 이어지지 않아 '떠 있는 빛'으로 읽힘
+        from fx import annulus
+        parts.append(annulus("halo_hat", 0.17, 0.215, 0.02, 2.2, glow(5, 2.8), 18)); parts.append(annulus("halo_hat2", 0.08, 0.1, 0.02, 2.2, glow(5, 2.8), 12))
+        parts += [sphere(f"mote{i}", 0.018, (0.26 * math.cos(a), 0.26 * math.sin(a), 2.2 + 0.03 * math.sin(a * 2)), glow(5, 3.2), 4, 3) for i, a in enumerate([k * math.tau / 6 for k in range(6)])]
     return grp(parts, "Head")
 
 # ───────── 도포 → Hips(자락) · Spine/Chest(몸통) · UpperArm(소매) ─────────
@@ -60,6 +65,18 @@ def dopo(t):
     col += ribbon("lapR", [(-0.07, -0.15, 1.44), (-0.01, -0.2, 1.25), (0.05, -0.218, 1.06)], 0.085, cloth) + ribbon("lapR_edge", [(-0.095, -0.158, 1.44), (-0.03, -0.205, 1.25), (0.025, -0.222, 1.06)], 0.016, trim, 0.016)
     if t == 5: col += [sphere(f"sparkle{i}", 0.014, (-0.12 + i * 0.12, -0.18, 1.47), glow(5, 3.0), 4, 3) for i in range(3)]      # 어깨 불티
     parts += grp(col, "Chest")
+    extra = []
+    if t == 4:   # 이름 있는: 어깨 망토(주홍 가장자리) + 가장자리에 늘어진 이름 쪽지 여덟 — 어깨선이 넓고 술이 달려 먼 실루엣이 둥글게 커진다
+        extra.append(lathe("mantle", [(1.43, 0.2), (1.34, 0.33), (1.2, 0.37)], 12, "#24242C", scale=(1.14, 0.8, 1.0), caps=(False, False)))
+        extra.append(lathe("mantle_edge", [(1.215, 0.372), (1.19, 0.378)], 12, tc(4), scale=(1.14, 0.8, 1.0), caps=(False, False)))
+        extra += [box(f"mtag{i}", (0.06, 0.012, 0.15), (math.cos(i / 8 * math.tau) * 0.42, math.sin(i / 8 * math.tau) * 0.3, 1.1), "#E4E0D4", rot=(0, 0, i / 8 * math.tau + 1.57)) for i in range(8)]
+    if t == 5:   # 한 벌: 등 뒤 혼불 후광(세운 겹 고리) + 어깨에서 바깥으로 흐르는 혼불 자락 둘 — 먹빛 몸에서 빛이 뻗는 실루엣
+        from fx import annulus
+        h1 = annulus("halo_back", 0.44, 0.5, 0.025, 0.0, glow(5, 2.4), 22); h1.rotation_euler = (math.pi / 2, 0, 0); h1.location = (0, 0.3, 1.5)
+        h2 = annulus("halo_back2", 0.3, 0.33, 0.02, 0.0, glow(5, 2.4), 18); h2.rotation_euler = (math.pi / 2, 0, 0); h2.location = (0, 0.3, 1.5)
+        extra += [h1, h2]
+        for sx in (1, -1): extra += ribbon(f"flow{sx}", [(sx * 0.2, 0.17, 1.36), (sx * 0.38, 0.3, 1.12), (sx * 0.52, 0.42, 0.88), (sx * 0.6, 0.55, 0.7)], 0.11, glow(5, 1.5), 0.02)
+    parts += grp(extra, "Chest")
     A = 0.5
     for sx, side in ((1, "L"), (-1, "R")):
         sh = (sx * 0.23, 0, 1.4); d = Vector((sx * math.sin(A), 0, -math.cos(A))); theta = math.pi - sx * A
@@ -96,8 +113,19 @@ def sin_(t):
         p = [box(f"shoe_{side}", (0.12, 0.2, th), (sx * 0.13, -0.06, th / 2), body), box(f"toe_{side}", (0.09, 0.09, 0.06), (sx * 0.13, -0.19, th + 0.005 + 0.012 * lift), toe if t != 5 else body, rot=(lift, 0, 0))]
         if t == 1: p += [box(f"strawcord{i}", (0.13, 0.015, 0.02), (sx * 0.13, -0.02 - i * 0.08, 0.045), "#8A7A5A") for i in range(2)]
         if t >= 2: p.append(box(f"trim_{side}", (0.125, 0.02, 0.02), (sx * 0.13, 0.03, th + 0.005), toe))
-        if t == 4: p.append(box(f"heel_tuft_{side}", (0.03, 0.03, 0.07), (sx * 0.13, 0.05, 0.08), tc(4)))
+        if t == 4:   # 이름 있는: 코가 뿔처럼 위로 말려 오르고(실루엣), 발목에 이름 쪽지 둘, 뒤꿈치에서 주홍 술이 뒤로 길게 끌린다
+            p += [limb(f"horn_toe_{side}", (sx * 0.13, -0.17, th), (sx * 0.13, -0.27, 0.2), 0.05, 0.008, tc(4), 5), box(f"heel_tuft_{side}", (0.03, 0.03, 0.07), (sx * 0.13, 0.05, 0.08), tc(4))]
+            p += ribbon(f"heel_tail_{side}", [(sx * 0.13, 0.07, 0.07), (sx * 0.13, 0.17, 0.05), (sx * 0.14, 0.3, 0.1)], 0.04, tc(4))
+            p += [box(f"ankle_tag{i}_{side}", (0.035, 0.01, 0.07), (sx * (0.13 + (i - 0.5) * 0.07), 0.0, 0.13), "#F3E7D3") for i in range(2)]
         if t == 5: p += [box(f"sole_glow_{side}", (0.125, 0.205, 0.012), (sx * 0.13, -0.06, 0.003), glow(5, 2.2))]
+        if t == 5:   # 한 벌: 발목에 둘린 혼불 고리 + 뒤꿈치에서 흩날리는 혼불 자락(투명) — 신만 봐도 ◎ 계열
+            from fx import annulus as _an
+            ar = _an(f"ankle_ring_{side}", 0.075, 0.1, 0.012, 0.12, glow(5, 2.4), 12); ar.location = (sx * 0.13, -0.04, 0)
+            p += [ar] + ribbon(f"wisp_{side}", [(sx * 0.13, 0.06, 0.1), (sx * 0.16, 0.2, 0.18), (sx * 0.12, 0.34, 0.3)], 0.05, mat_alpha("#5FE3C0", 0.45, 1.6))
+        if t == 5 and side == "L":   # 발밑에 번지는 혼불 겹 고리(◎): 바닥에 평평히 깔려 쿼터뷰에서 발을 둘러 빛난다
+            from fx import annulus
+            p += [annulus("foot_ring", 0.42, 0.47, 0.012, 0.004, glow(5, 2.2), 20), annulus("foot_ring2", 0.3, 0.33, 0.012, 0.004, glow(5, 2.2), 16)]
+            for q in p[-2:]: q.location = (-0.0, -0.05, 0)
         parts += grp(p, f"Foot.{side}")
     return parts
 
@@ -110,9 +138,18 @@ def norigae(t, side="R"):
     if t == 1: parts += [sphere("bead", 0.03, (x0, y0, 0.83), "#A8987A", 5, 4)]
     if t == 2: parts += [sphere("jade", 0.045, (x0, y0, 0.82), mat("teal", 0.4), 6, 4)]
     if t == 3: parts += [box("plate", (0.07, 0.02, 0.09), (x0, y0, 0.82), tc(3)), sphere("jade", 0.03, (x0, y0 - 0.02, 0.82), mat("teal", 0.5), 5, 4)]
-    if t == 4: parts += [sphere("bell", 0.055, (x0, y0, 0.81), tc(3), 7, 5), box("bell_slit", (0.05, 0.012, 0.01), (x0, y0 - 0.05, 0.8), "#6A4A1A")]
-    if t == 5: parts += [sphere("orb_core", 0.035, (x0, y0, 0.82), glow(5, 3.0), 6, 4), sphere("orb_shell", 0.06, (x0, y0, 0.82), mat_alpha("#5FE3C0", 0.3, 1.0), 7, 5)]
-    tl = {1: 0.14, 2: 0.2, 3: 0.3, 4: 0.3, 5: 0.28}[t]; tw = 0.035 if t < 4 else 0.04
+    if t == 4:   # 이름 있는: 방울 위에 세 뿔 관(빛줄기 꼭대기와 같은 말) + 방울 밑에 이름 쪽지가 매달린다
+        parts += [sphere("bell", 0.06, (x0, y0, 0.8), tc(3), 7, 5), box("bell_slit", (0.05, 0.012, 0.01), (x0, y0 - 0.055, 0.79), "#6A4A1A")]
+        parts += [limb(f"crown{k}", (x0, y0, 0.855), (x0 + (k - 1) * 0.035, y0, 0.855 + (0.075 if k == 1 else 0.05)), 0.014, 0.003, tc(4), 4) for k in range(3)]
+        parts += [limb("tag_thread", (x0, y0, 0.74), (x0, y0, 0.69), 0.004, 0.004, "#F3E7D3", 3), box("name_tag", (0.04, 0.01, 0.08), (x0, y0, 0.65), "#F3E7D3")]
+    if t == 5:   # 한 벌: 혼불 구슬을 두 겹 고리(◎)가 감싸고 불티 셋이 돈다 + 아래로 흐르는 투명 혼불 자락
+        from fx import annulus as _an
+        parts += [sphere("orb_core", 0.04, (x0, y0, 0.82), glow(5, 3.0), 6, 4), sphere("orb_shell", 0.07, (x0, y0, 0.82), mat_alpha("#5FE3C0", 0.3, 1.0), 7, 5)]
+        for k, (ri, ro) in enumerate(((0.085, 0.1), (0.12, 0.13))):
+            ar = _an(f"orb_ring{k}", ri, ro, 0.008, 0.0, glow(5, 2.2), 14); ar.location = (x0, y0, 0.82); ar.rotation_euler = (0.5 * (k + 1), 0, 0.4); parts.append(ar)
+        parts += [sphere(f"orb_mote{k}", 0.012, (x0 + math.cos(k * 2.1) * 0.15, y0 + math.sin(k * 2.1) * 0.15, 0.82 + 0.04 * k), glow(5, 3.0), 4, 3) for k in range(3)]
+        parts += ribbon("orb_wisp", [(x0, y0, 0.76), (x0 + 0.03 * sx, y0 - 0.02, 0.6), (x0 - 0.02 * sx, y0 - 0.04, 0.44)], 0.06, mat_alpha("#5FE3C0", 0.4, 1.4))
+    tl = {1: 0.14, 2: 0.2, 3: 0.3, 4: 0.36, 5: 0.28}[t]; tw = 0.035 if t < 4 else 0.04
     parts += ribbon("tassel", [(x0, y0, 0.78), (x0 + 0.01 * sx, y0 - 0.01, 0.78 - tl * 0.5), (x0, y0 - 0.015, 0.78 - tl)], tw, ink)
     if t == 4: parts += ribbon("tassel2", [(x0 + 0.03 * sx, y0, 0.78), (x0 + 0.05 * sx, y0 - 0.01, 0.78 - tl * 0.7)], 0.03, tc(4))
     return grp(parts, "Hips")

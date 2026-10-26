@@ -32,6 +32,11 @@ TIPS = {
     "jeoseung": ("저승판(시즌 2)", "loading_6_jeoseung", ["새벽 틈에 줄 가운데를 들어 보자", "배웅하는 혼은 서두르지 않는다", "파혼 뒤 이름 쪽지를 잡아 보자", "돌아선 혼은 둘째부터 쪽지가 떨어진다", "가루는 바람 방향으로 흩어진다", "나룻불이 켜지면 한 칸 나아간 것"]),
     "areucheung": ("아래층(시즌 3)", "loading_7_areucheung", ["물이 빠지면 둑 계단이 열린다", "물이 차서 떠밀려도 잃는 건 없다", "원념의 실을 끊으면 백이 꿇는다", "[E] 눕히기 [R] 깨뜨리기", "빈 이름 칸은 낮에 단서를 찾자", "눕힌 업은 물에 씻겨 나간다"]),
 }
+# 서사·기획 쪽이 고친 팁이 loading_tips.json에 있으면 그 문구를 우선한다(이 스크립트는 그림·미리보기만 다시 뽑고, 사람이 고친 문구를 덮어쓰지 않는다)
+_J = os.path.join(OUT, "loading_tips.json")
+if os.path.exists(_J):
+    for _z, _v in json.load(open(_J)).get("zones", {}).items():
+        if _z in TIPS: TIPS[_z] = (_v.get("title", TIPS[_z][0]), TIPS[_z][1], _v["tips"])
 for z, (_, _, ls) in TIPS.items():
     for t in ls: assert len(t) <= 22, f"{z}: {t} ({len(t)}자)"
 

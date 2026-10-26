@@ -9,6 +9,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int damage = Balance.ENEMY_ATTACK_DAMAGE;   // 공격력 (보스는 더 아프다)
+    public float tiltWeak;                              // 나루 영감: 휩쓸기 뒤 배가 기울어 무방비인 남은 시간(초)
+    public bool loner;                                 // 외톨이 야영지의 혼(소리: amb.loner)
     public string label;                               // 이름혼·보스 이름표 (없으면 null)
     public float radius = Config.ENEMY_RADIUS;
     public float height = Config.ENEMY_HEIGHT;
@@ -146,10 +148,12 @@ public class Enemy : MonoBehaviour
 
     /// <summary>한 대 맞음. 맺힘이 깎이고, 0이 되면 죽는 게 아니라 무릎을 꿇는다(true)</summary>
     public float barT;   // 맺힘 막대를 보이는 남은 시간(맞았을 때 3초). 보스는 늘 보인다
+    public static float FierceMult = 1f;   // JudgeSystem 이 장비 합계에서 매 프레임 채운다
     public bool TakeHit(int damage, Vector3 dir, float knockback, float stunTime)
     {
         barT = 3f;
         if (!alive || !Targetable) return false;
+        if (FierceMult != 1f && (soul.Boss || soul.Fierce || soul.Kind == SoulKind.Lump)) damage = Mathf.Max(1, Mathf.RoundToInt(damage * FierceMult));   // 거센 혼·덩어리·보스 피해 옵션(상한 +50%)
         if (boundT > 0f && BoundBonus > 0f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * (1f + BoundBonus)));
         if (Time.time < cageUntil) damage = Mathf.Max(1, Mathf.RoundToInt(damage * Balance.CAGE_DAMAGE_MULT));   // 쇠사슬 울 안: 받는 피해 +50%
         if (damageTakenMult != 1f) damage = Mathf.Max(1, Mathf.RoundToInt(damage * damageTakenMult));   // 보스 전용: 약점 창 규칙
@@ -206,6 +210,15 @@ public class Enemy : MonoBehaviour
         soul = Soul.Named(name, kind, Balance.MAEDHIM_NORMAL);
         soul.WaitBonus = waitBonus;
         baseColor = KindColor(kind); mat.color = baseColor;
+    }
+
+    /// <summary>고리 배율을 입힌다: 맺힘·공격이 고리를 따라 오른다(힘을 상한 밖으로 뺀 화력과 짝, 기획 act1-enemy-check)</summary>
+    public void ApplyRing(int ring)
+    {
+        if (soul == null || ring <= 1) return;
+        soul.Ring = ring;
+        soul.MaedhimMax = Mathf.Max(1, Mathf.RoundToInt(soul.MaedhimMax * RingLoot.MaedhimMult(ring))); soul.Maedhim = soul.MaedhimMax;
+        damage = Mathf.Max(1, Mathf.RoundToInt(damage * RingLoot.DamageMult(ring)));
     }
 
     /// <summary>S1 보스 나루 영감: 크고 느리고 한 방이 아프다</summary>
@@ -336,7 +349,7 @@ public class Enemy : MonoBehaviour
                 else Chase(dt, playerPos);
             }
             bool wasWind = atk.Winding;
-            if (atk.Tick(dt, dist, canAct)) { if (soul.Boss && soul.BossId == 1) Sfx.Play("sfx.boss.naru.sweep"); onHitPlayer?.Invoke(); }   // 나루 영감: 휩쓸기 판정 순간
+            if (atk.Tick(dt, dist, canAct)) { if (soul.Boss && soul.BossId == 1) { Sfx.Play("sfx.boss.naru.sweep"); tiltWeak = 1.5f; } onHitPlayer?.Invoke(); }   // 나루 영감: 휩쓸기 판정 순간
             if (gated) { if (atk.Winding) tokenHolders.Add(this); else tokenHolders.Remove(this); }
             if (atk.Winding && !wasWind) Sfx.Play(type == SoulType.Mote ? "sfx.enemy.mote.telegraph" : soul.Boss && soul.BossId == 1 ? "sfx.boss.naru.sweep.telegraph" : "sfx.enemy.telegraph");   // 예비동작이 막 시작: 숨 들이켜는 소리
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
@@ -477,7 +490,10 @@ public class Enemy : MonoBehaviour
         if (View3D.On && !soul.Boss && !soul.Fierce && type == SoulType.Plain)
         {
             if (variant == null) variant = VariantOf(FieldZones.NameAt(Pos.x, Pos.z));
-            if (variant.Length > 0) n += variant;
+            /* 숫자 혼(인 없음)은 구역 모양 대신 번호 목패 모양을 쓴다. B-08 천도 뒤엔 이름 쪽지가 달린 모양으로 바뀌므로
+               구역 이름표처럼 한 번에 굳히지 않고 매번 본다(Numbered 표식은 맺힌 뒤에 붙을 수 있어서이기도 하다) */
+            if (soul.Numbered) n += Soul.NumberedBlurred ? "_number_named" : "_number";
+            else if (variant.Length > 0) n += variant;
         }
         var look = lastPlayerPos - Pos;
         // 예비동작이면 붉게, 맞은 순간이면 하얗게 번쩍 (색 도형의 flash 와 같은 신호)
@@ -591,10 +607,11 @@ public class EnemyManager
     }
 
     /// <summary>필드 군집의 혼 하나를 세운다 (처결되면 그냥 사라진다: Respawn 하지 않음)</summary>
-    public Enemy SpawnCamp(Vector3 at, bool a, SoulType type = SoulType.Plain)
+    public Enemy SpawnCamp(Vector3 at, bool a, SoulType type = SoulType.Plain, int ring = 1)
     {
         var e = Enemy.Create(a, at);
         if (type != SoulType.Plain) e.SetType(type);
+        e.ApplyRing(ring);   // 고리 배율(맺힘·공격)
         e.camp = true;
         e.onHitPlayer = () => onPlayerHit?.Invoke(e);
         e.onKneel = () => onEnemyKneel?.Invoke(e);

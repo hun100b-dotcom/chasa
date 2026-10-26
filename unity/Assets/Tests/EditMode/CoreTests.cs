@@ -449,7 +449,7 @@ public class CoreTests
         // 기획 표: 고리 1.5/1.75/2.0/2.25 → 넋 60/70/80/90, 엽전 36/42/48/54. 1막 보스는 60/30 그대로
         Assert.AreEqual(60, Bosses.NeokFor(5)); Assert.AreEqual(70, Bosses.NeokFor(6)); Assert.AreEqual(80, Bosses.NeokFor(9)); Assert.AreEqual(90, Bosses.NeokFor(12));
         Assert.AreEqual(36, Bosses.CoinFor(8)); Assert.AreEqual(42, Bosses.CoinFor(7)); Assert.AreEqual(48, Bosses.CoinFor(11)); Assert.AreEqual(54, Bosses.CoinFor(10));
-        Assert.AreEqual(Balance.BOSS_S1_NEOK, Bosses.NeokFor(2)); Assert.AreEqual(Balance.BOSS_PAHON_COIN, Bosses.CoinFor(3));
+        Assert.AreEqual(50, Bosses.NeokFor(2)); Assert.AreEqual(Balance.BOSS_PAHON_COIN, Bosses.CoinFor(3));
         var l = new Ledger(); l.DoPahon(true, 12); Assert.AreEqual(54, l.Coin);
     }
 
@@ -652,7 +652,7 @@ public class CoreTests
         night.Tick(Balance.NIGHT_DURATION + 1f);
         Assert.AreEqual(NightPhase.Dawn, night.Phase);
         Assert.AreEqual(night.KeptNeok, night.FinalNeok, "몫은 보존");
-        Assert.AreEqual(Balance.BOSS_S1_NEOK, night.LostNeok, "보스 보상은 흩어진다");
+        Assert.AreEqual(Bosses.NeokFor(1), night.LostNeok, "보스 보상은 흩어진다");
         Assert.Greater(ledger.Neok, night.FinalNeok, "장부엔 쌓였지만 확정 수확은 줄어든다(결과 화면 표시 기준)");
     }
 
@@ -1559,7 +1559,8 @@ public class CoreTests
         var g = new GrowthState();
         int ups = g.AddNeok(GrowthState.NeokForRank(4));                                // 한 번에 3단계
         Assert.AreEqual(3, ups); Assert.AreEqual(4, g.Rank);
-        Assert.AreEqual(3, g.SkillPointsFree); Assert.AreEqual(3 * GrowthState.StatPerRank, g.StatPointsFree);
+        Assert.AreEqual(0, g.SkillPointsFree); Assert.AreEqual(3 * GrowthState.StatPerRank, g.StatPointsFree);   // 품계는 능력치만, 도술 점수는 처결 셈
+        Assert.AreEqual(3, g.AddJudge(GrowthState.NeokForRank(4))); Assert.AreEqual(3, g.SkillPointsFree);
         g.AddBossPoint(); Assert.AreEqual(4, g.SkillPointsFree);                       // 보스 천도 +1
     }
 
@@ -1585,9 +1586,9 @@ public class CoreTests
     [Test]
     public void Growth_PassiveMaxTwoLevelsActiveOnce_AndBarHoldsFour()
     {
-        var g = new GrowthState { SkillPointsEarned = 20 }; g.Learned.Clear(); g.ActiveBar.Clear();
-        Assert.IsTrue(g.Learn("휘감기")); Assert.IsFalse(g.Learn("휘감기"));            // 액티브는 한 번
-        Assert.IsTrue(g.Learn("단단한 손")); Assert.IsTrue(g.Learn("단단한 손")); Assert.IsFalse(g.Learn("단단한 손"));   // 패시브는 두 단계
+        var g = new GrowthState { SkillPointsEarned = 40 }; g.Learned.Clear(); g.ActiveBar.Clear();
+        for (int i = 0; i < 5; i++) Assert.IsTrue(g.Learn("휘감기")); Assert.IsFalse(g.Learn("휘감기"));   // 액티브는 다섯 단계
+        for (int i = 0; i < 3; i++) Assert.IsTrue(g.Learn("단단한 손")); Assert.IsFalse(g.Learn("단단한 손"));   // 패시브는 세 단계
         foreach (var n in new[] { "여럿 끌기", "매듭 걸음", "한 줄 꿰기", "터뜨리기" }) g.Learn(n);
         Assert.AreEqual(SkillTree.ActiveSlots, g.ActiveBar.Count);                       // 칸은 넷까지
     }
@@ -1638,11 +1639,60 @@ public class CoreTests
         g.Learn("고마운 넋"); g.Learn("고마운 넋"); g.Learn("노잣돈");
         var s = new GearStats();
         GrowthEffects.Apply(g, s);
-        Assert.AreEqual(0.10f, s.DamagePct, 0.0001f);                                    // 힘 10점 × 1%
-        Assert.AreEqual(20, s.HpFlat);                                                   // 몸 4점 × 5
-        Assert.AreEqual(0.12f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계
-        Assert.AreEqual(0.07f, s.PahonCoinPct, 0.0001f);
+        Assert.AreEqual(0.10f, s.StatDamagePct, 0.0001f);                                // 힘 10점 × 1% (장비 상한 밖)
+        Assert.AreEqual(16, s.HpFlat);                                                   // 몸 4점 × 4
+        Assert.AreEqual(0.08f, s.TendoNeokPct, 0.0001f);                                 // 고마운 넋 2단계 = +8% (3단계 4/8/12)
+        Assert.AreEqual(0.05f, s.PahonCoinPct, 0.0001f);                                 // 노잣돈 1단계 +5%
         GrowthEffects.Apply(null, s);                                                    // 성장이 없어도 안전
+    }
+
+    [Test] public void GearCheck_StrengthIsOutsideCapAndMinusesAreCapped()
+    {
+        var s = new GearStats { DamagePct = 0.9f, StatDamagePct = 0.4f };
+        Assert.AreEqual(1.4f * 1.4f, s.DamageMult, 0.0001f);                              // 장비 상한 +40% 에 힘 +40% 가 따로 곱해진다
+        var m = new GearStats { CastReducePct = -0.9f, DamagePct = -0.9f, CoinPct = -0.9f, PahonCoinPct = -0.9f };
+        Assert.AreEqual(1.3f, m.CastMult, 0.0001f);                                       // 느려짐 +30% 까지
+        Assert.AreEqual(0.8f, m.DamageMult, 0.0001f);                                     // 피해 −20% 까지
+        Assert.AreEqual(0.5f, m.CoinMult, 0.0001f);
+        Assert.AreEqual(0.5f, m.PahonCoinMult, 0.0001f);
+        Assert.AreEqual(1.3f, new GearStats { TendoNeokPct = 2f }.TendoNeokMult, 0.0001f); // 천도 넋 합계 상한 +30%
+        Assert.AreEqual(0.4f, new GearStats { DefensePct = 2f }.DefenseMult, 0.0001f);     // 방어 상한 60%
+    }
+
+    [Test] public void GearCheck_SameTiltCountsOnceAndBackWeaponIgnored()
+    {
+        var eq = new Equipment { FirstRingBossDone = true, Act2Entered = true };
+        var a = new ItemDef { Slot = Slot.Charm, Rarity = Rarity.Rare, Gradient = true, TiltId = "tilt_dmg_cast" };
+        a.Options.Add(new OptionRoll(Opt.DamagePct, 0.2f)); a.Options.Add(new OptionRoll(Opt.CastReducePct, -0.1f));
+        var b = new ItemDef { Slot = Slot.Hat, Rarity = Rarity.Rare, Gradient = true, TiltId = "tilt_dmg_cast" };
+        b.Options.Add(new OptionRoll(Opt.DamagePct, 0.2f)); b.Options.Add(new OptionRoll(Opt.CastReducePct, -0.1f));
+        eq.PutAt(EquipPos.Charm1, a); eq.PutAt(EquipPos.Hat, b);
+        var st = eq.Stats();
+        Assert.AreEqual(0.2f, st.DamagePct, 0.0001f);                                      // 같은 기울기는 하나만
+        var w = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Common }; w.Options.Add(new OptionRoll(Opt.DamagePct, 0.05f));
+        eq.PutAt(EquipPos.Weapon2, w);
+        Assert.AreEqual(0.2f, eq.Stats().DamagePct, 0.0001f);                              // 등에 멘 무기는 안 센다
+    }
+
+    [Test] public void GearCheck_OptionsFollowSlotAndRarityRange()
+    {
+        var rng = new System.Random(3);
+        for (int i = 0; i < 400; i++)
+        {
+            var it = Loot.Roll(() => (float)rng.NextDouble(), true, 0, new[] { Slot.Shoes });
+            foreach (var o in it.Options.GetRange(2, it.Options.Count - 2))                 // 앞 두 줄은 기울기
+            {
+                CollectionAssert.Contains(Loot.PoolFor(Slot.Shoes), o.Kind);                   // 신은 생명·이동만
+                if (o.Kind == Opt.MoveSpeedPct) Assert.That(o.Value, Is.InRange(0.05f, 0.08f)); // 귀한 이동 +5~8%
+            }
+        }
+    }
+
+    [Test] public void RingMultipliers_MatchSimTable()
+    {
+        Assert.AreEqual(1.2f, RingLoot.MaedhimMult(2), 0.0001f); Assert.AreEqual(1.15f, RingLoot.DamageMult(2), 0.0001f); Assert.AreEqual(1.25f, RingLoot.RewardMult(2), 0.0001f);
+        Assert.AreEqual(1.15f, RingLoot.CoinMult(2), 0.0001f);   // 엽전은 증가분 0.25 의 60% = +0.15
+        Assert.AreEqual(1f, RingLoot.MaedhimMult(1), 0.0001f); Assert.AreEqual(2.3f, RingLoot.RewardMult(6), 0.0001f);
     }
 
     // ---- 보스 목록·바닥 무늬 ----
@@ -1706,20 +1756,14 @@ public class CoreTests
     static GearStats GearStatsOf(ItemDef it) { var st = new GearStats(); st.Add(it); return st; }
 
     [Test]
-    public void Pahon15_GivesStainPoint_UsableOnlyOnStainSkill()
+    public void JudgeTally_PahonAndTendoEarnSkillPointsAtSameThresholds()
     {
-        var g = new GrowthState();
-        g.Learned.Clear(); g.ActiveBar.Clear();
-        int got = 0;
-        for (int i = 0; i < 15; i++) if (g.AddPahon()) got++;
-        Assert.AreEqual(1, got);
-        Assert.AreEqual(1, g.StainPointsFree);
-        string stain = null, other = null;
-        foreach (var n in SkillTree.All) { if (n.Deep) continue; if (n.Branch == Branch.Stain && stain == null) stain = n.Name; if (n.Branch != Branch.Stain && other == null) other = n.Name; }
-        Assert.IsFalse(g.CanLearn(other), "다른 갈래에는 못 쓴다");
-        Assert.IsTrue(g.Learn(stain));
+        var g = new GrowthState(); var h = new GrowthState();
+        for (int i = 0; i < 100; i++) { g.AddJudge(50); h.AddJudge(50); }               // 파혼만·천도만 같은 양을 셈에 더하면 같은 점수
+        Assert.AreEqual(g.SkillPointsEarned, h.SkillPointsEarned);
+        Assert.Greater(g.SkillPointsEarned, 0);
+        for (int i = 0; i < 1000; i++) Assert.IsFalse(g.AddPahon());                      // 파혼 15번마다 얼룩 점수는 사라졌다
         Assert.AreEqual(0, g.StainPointsFree);
-        Assert.AreEqual(0, g.SkillPointsSpent, "일반 점수는 쓰지 않았다");
     }
 
     [Test]
@@ -2311,7 +2355,7 @@ public class CoreTests
     public void RingLoot_위치로_고리를_정한다()
     {
         Assert.AreEqual(1, RingLoot.RingAt(200f, 100f, false)); Assert.AreEqual(2, RingLoot.RingAt(300f, 500f, true));
-        Assert.AreEqual(3, RingLoot.RingAt(100f, 900f, false)); Assert.AreEqual(4, RingLoot.RingAt(600f, 1000f, false));
+        Assert.AreEqual(3, RingLoot.RingAt(100f, 900f, false)); Assert.AreEqual(3, RingLoot.RingAt(600f, 1000f, false));   // 2막은 구역 단위라 군집·혼의 ring 을 쓴다(기획 act2-field-camps). 기본은 3
         Assert.AreEqual(5, RingLoot.RingAt(1000f, 400f, false)); Assert.AreEqual(6, RingLoot.RingAt(-300f, 300f, false));
     }
 

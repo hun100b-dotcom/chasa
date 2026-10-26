@@ -62,7 +62,7 @@ public class ZoneAmbient : MonoBehaviour
     void Update()
     {
         if (playerPos == null) return;
-        var want = Wanted(playerPos());
+        var want = RegionSoundscape.BedActive ? new string[0] : Wanted(playerPos());   // 새 바탕 소리가 있는 구역·시각이면 옛 구역 소리는 끈다(겹침 방지)
         foreach (var id in want) if (!src.ContainsKey(id)) src[id] = Sfx.MakeLoop(id);
         var dead = new System.Collections.Generic.List<string>();
         foreach (var kv in src)

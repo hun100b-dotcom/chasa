@@ -21,6 +21,9 @@ mdir = os.path.join(res, "Models", "Field")
 props = []
 for n in ("east", "west", "coast"):
     props += json.load(open(os.path.join(art, "layouts", "act3_%s_layout.json" % n), encoding="utf-8"))["props"]
+for n in ("east", "west"):   # 아트 PR #45: 생활 소품 배치표를 기존 배치표 옆에 같이 읽는다(형식 같음)
+    ex = os.path.join(art, "layouts", "act3_%s_extra.json" % n)
+    if os.path.exists(ex): props += json.load(open(ex, encoding="utf-8"))["props"]
 props += json.load(open(os.path.join(art, "layouts", "gap_layout.json"), encoding="utf-8"))["props"]   # 1막 동쪽 틈 땅(x 640~768) 소품
 copied = 0
 for n in sorted({p["prop"] for p in props}):

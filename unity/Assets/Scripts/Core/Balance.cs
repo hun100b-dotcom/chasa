@@ -221,7 +221,7 @@ public static class Balance
     public const float NIGHT_WARN_TIME = 30.0f;  // 동트기 경고 시작(초 전). 서사 확정, 6막 물 차오름 경고와 같은 값
     public const int NIGHT_QUOTA = 3;  // 명부 몫 = 천도만 센다(파혼 제외). 첫 밤: 무명 혼 2 + 이름혼 박돌쇠 1. 서사 확정
     public const float SHRINE_RADIUS = 4.0f;  // 서낭당 귀환 반경(m, 서낭나무 중심). 장승 한 쌍을 가장자리에 세운다. 서사 확정
-    public const int BOSS_S1_MAEDHIM = 1200;  // (시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)
+    public const int BOSS_S1_MAEDHIM = 800;  // (시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)
     public const float BOSS_S1_WAIT = 8.0f;  // (시연판 임시) S1 보스 처결 대기(초)
     public const int BOSS_S1_DAMAGE = 20;  // (시연판 임시) S1 보스 공격력(일반 12)
     public const float BOSS_S1_SPEED_MULT = 0.6f;  // (시연판 임시) S1 보스 이동속도 배율(느리지만 한 방이 아프다)
@@ -229,6 +229,15 @@ public static class Balance
     public const int BOSS_S1_MEMORY = 3;  // (시연판 임시) S1 보스 천도 기억 조각
     public const int BOSS_ACT_NEOK_BASE = 50;  // (기획 act2-3-boss-reward-check 10-26) 2·3막 보스 천도 넋 = 50 × 고리 ÷ BOSS_RING_REF
     public const int BOSS_ACT_COIN_BASE = 30;  // 2·3막 보스 파혼 엽전 = 30 × 고리 ÷ BOSS_RING_REF
+    public const float BAETSAK_PAHON_COIN_MULT = 1.13f;  // (기획 act2-3-boss-reward-check 8절) 도한수의 뱃삯: 파혼 엽전 배수
+    public const float BAETSAK_WATER_PAHON_RADIUS = 0.5f;  // 뱃삯: 물가·얼룩 위 파혼 반경 +m
+    public const float BAETSAK_TENDO_CAST_ADD = 0.1f;  // 뱃삯: 천도 시전 +초(기울기)
+    public const float JANGBU_NUM_PAHON_COIN_MULT = 1.2f;  // 남은 장부: ④(2막) 숫자 혼 파혼 엽전 배수(④ 밖 효과 없음)
+    public const int DEUNGJAN_DURATION = 60;  // 아낙의 등잔: 켜 두는 시간(초)
+    public const int DEUNGJAN_RADIUS = 6;  // 등잔 둘레(m)
+    public const float DEUNGJAN_PAHON_COIN_MULT = 1.5f;  // 등잔 둘레 안 파혼 엽전 배수
+    public const int DEUNGJAN_PER_NIGHT = 1;  // 밤마다 켤 수 있는 횟수
+    public const int GOT_LIGHT_SWEEP_SEC = 20;  // 곶 불빛 한 바퀴(초): ⑤ 바닷가에서 불빛 띠가 지나간 이름혼만 미니맵에 뜬다
     public const float BOSS_RING_REF = 1.25f;  // 기준 고리 배율(1막 보스)
     public const int BOSS_PAHON_COIN = 30;  // (시연판 임시) 보스 파혼 엽전(일반 5의 6배. 천도 쏠림 방지: BALANCE-NARRATIVE-CHECK 엽전×30 권고)
     public const int NAMED_MAEDHIM = 150;  // (시연판 임시) 이름혼(박돌쇠) 맺힘
@@ -257,6 +266,22 @@ public static class Balance
     public const float CAP_PAHON_AREA_PCT = 0.4f;  // (시연판 임시) 기획서 6절 초안: 합계 상한: 파혼 반경 면적 +40%
     public const float CAP_PAHON_DAMAGE_PCT = 0.5f;  // (시연판 임시) 기획서 6절 초안: 합계 상한: 파혼 피해 +50%
     public const float CAP_MOVE_SPEED_PCT = 0.2f;  // (시연판 임시) 기획서 6절 초안: 합계 상한: 이동 속도 +20%
+    public const float CAP_DAMAGE_MINUS_PCT = 0.2f;  // (기획 장비 점검 B-2) 피해 마이너스 상한 −20%
+    public const float CAP_CAST_SLOW_PCT = 0.3f;  // 천도 시전 느려짐 상한 +30%
+    public const float CAP_COIN_MINUS_PCT = 0.5f;  // 엽전 마이너스 상한 −50%
+    public const float CAP_TENDO_NEOK_PCT = 0.3f;  // 천도 넋 합계 상한 +30% (B-7)
+    public const float CAP_DEFENSE_PCT = 0.6f;  // 방어(받는 피해 −%) 합계 상한 60% (인 점검 1)
+    public const float CAP_SKILL_CD_PCT = 0.35f;  // 도술 재사용 단축 상한 35%
+    public const float CAP_WEAPON_CD_PCT = 0.4f;  // 무기 기술 재사용 단축 상한 40%
+    public const float CAP_FIERCE_PCT = 0.5f;  // 거센 혼·덩어리·보스 피해 상한 +50%
+    public const float SEAL_COLOR_SHARE = 0.25f;  // (인 점검 2) 천도 넋 중 빛깔 주머니로 가는 몫
+    public const bool SEAL_PAHON_COLOR = true;  // (인 점검 3, 서사 확정) 파혼한 혼도 빛깔 가루를 남김(그 혼 기본 천도 넋 × SEAL_COLOR_SHARE)
+    public const float NUMBERED_WAIT_ADD = 0.5f;  // (기획 act2-souls 2절) 숫자 혼: 처결 대기 +초(인 없음)
+    public const float NUMBERED_BLUR_WAIT_ADD = 0.25f;  // B-08 천도 뒤 숫자 혼이 흐림이 되어 대기 +초
+    public const float NUMBERED_NEOK_MULT = 1.3f;  // 숫자 혼 천도 넋 배수
+    public const float RING_COIN_SHARE = 0.6f;  // (기획 act1-enemy-check) 필드 혼 엽전은 고리 보상 배율 증가분의 60%만 받는다
+    public const int AC_ESCORT_RADIUS = 3;  // (기획 dosul-check 1) 배웅길: 천도 끝난 자리 반경 m 안의 적만 느려진다
+    public const int AC_CAGE_BOSS_STUN = 1;  // 쇠사슬 울: 보스도 이만큼(초) 묶인다
     public const float CAP_COIN_PCT = 0.5f;  // (시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%
     public const float DROP_RARITY_RARE = 0.08f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 귀한 확률
     public const float DROP_RARITY_CRAFTED = 0.3f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 손본 확률(귀한 제외). 나머지는 흔한
@@ -399,10 +424,10 @@ public static class Balance
     public const float GROWTH_DAMAGE_PER_STR = 0.01f;  // (성장 1차 임시) 힘 1점(시작 10 초과분)당 맺힘 피해 +1%
     public const float GROWTH_ATKSPD_PER_AGI = 0.005f;  // (성장 1차 임시) 날램 1점당 공격 속도 +0.5%
     public const float GROWTH_MOVE_PER_AGI = 0.003f;  // (성장 1차 임시) 날램 1점당 이동 속도 +0.3%
-    public const int GROWTH_HP_PER_BODY = 5;  // (성장 1차 임시) 몸 1점당 최대 체력 +5
+    public const int GROWTH_HP_PER_BODY = 4;  // 몸 1점당 최대 체력 +4 (기획 growth.json stats, 장비 점검 B-7)
     public const float GROWTH_CAST_PER_MIND = 0.005f;  // (성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%
-    public const float GROWTH_NEOK_PER_MIND = 0.005f;  // (성장 1차 임시) 마음 1점당 천도 넋 +0.5%
-    public const int BOSS_S2_MAEDHIM = 1000;  // (2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전
+    public const float GROWTH_NEOK_PER_MIND = 0.0f;  // 마음의 천도 넋 보너스는 기획에 없는 값이라 0 (장비 점검 B-7)
+    public const int BOSS_S2_MAEDHIM = 800;  // (2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전
     public const int B02_CUPS = 12;  // (2호 보스 임시) 월화 열두 거리: 굿판 가장자리 잔 수. 열두째(번호 11) 잔은 엎어져 있어 늘 안전
     public const float B02_RING_RADIUS_M = 7.0f;  // (2호 보스 임시) 잔을 둘러놓은 원 반지름(m)
     public const float B02_CUP_RADIUS_M = 2.2f;  // (2호 보스 임시) 잔 앞 바닥이 열려 피해를 주는 반지름(m)
@@ -534,7 +559,7 @@ public static class Balance
     public const int ATTACK_TOKENS_INTRO = 2;  // 첫 5분(시계 정지 중) 공격 차례 수
     public const float TOKEN_WAIT_RING_M = 4.5f;  // 차례를 못 받은 혼이 플레이어 둘레에서 기다리는 거리(m)
     public const float CAMP_DENSITY_RING1 = 0.5f;  // 고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)
-    public const float CAMP_DENSITY_RING2 = 0.7f;  // 고리2(물막이 골·폐당집)
+    public const float CAMP_DENSITY_RING2 = 0.8f;  // 고리2(검은여울 — 기획 act1-enemy-check: 고리는 RingAt 하나로)
     public const float CAMP_DENSITY_RING3 = 0.8f;  // 검은여울
     public const float NAMED_NEAR_M = 40.0f;  // 이름혼 자리 둘레(m): 이 안 군집은 인원 ×0.5, 최대 NAMED_NEAR_CAP 마리
     public const int NAMED_NEAR_CAP = 3;  // 이름혼 둘레 군집 인원 상한
@@ -551,7 +576,7 @@ public static class Balance
     public const float SHRINE_REST_BLOCK_M = 10.0f;  // 이 거리 안에 깨어 있는 혼이 있으면 못 쉼(m)
     public const int CLUE_TOUCH_KARMA_LOCK = 30;  // 이 업 이상이면 단서 물건을 못 만짐
     public const int B05_MAEDHIM = 960;  // (2막 보스 임시·기획 act2-souls §4) B-05 맺힘
-    public const int B05_DAMAGE = 22;  // (2막 보스 임시·기획 act2-souls §4) B-05 공격
+    public const int B05_DAMAGE = 26;  // (2막 보스 임시·기획 act2-souls §4) B-05 공격
     public const float B05_CALL_INTERVAL = 8.0f;  // (2막 보스 임시·기획 act2-souls §4) 이름 부르기 간격(초)
     public const int B05_CALL_COUNT = 2;  // (2막 보스 임시·기획 act2-souls §4) 한 번에 부르는 병사 수
     public const int B05_NUM_START_PCT = 30;  // (2막 보스 임시·기획 act2-souls §4) 처음 번호 병사 비율(%) — 시작값은 임시
@@ -569,7 +594,7 @@ public static class Balance
     public const float B05_CHARGE_GAP = 9.0f;  // (2막 보스 임시·기획 act2-souls §4) 깃대 돌진 간격(초, 임시)
     public const int B05_SOLDIER_CAP = 4;  // (2막 보스 임시·기획 act2-souls §4) 소환 병사 상한(보스 자리 잡몹 상한)
     public const int B06_MAEDHIM = 1120;  // (2막 보스 임시·기획 act2-souls §4) B-06 맺힘
-    public const int B06_DAMAGE = 24;  // (2막 보스 임시·기획 act2-souls §4) B-06 공격
+    public const int B06_DAMAGE = 26;  // (2막 보스 임시·기획 act2-souls §4) B-06 공격
     public const float B06_LINE_WIDTH = 12.0f;  // (2막 보스 임시·기획 act2-souls §4) 일자진 폭(m)
     public const float B06_LINE_GAP = 3.0f;  // (2막 보스 임시·기획 act2-souls §4) 일자진 빈칸 폭(m)
     public const float B06_CRANE_RADIUS = 7.0f;  // (2막 보스 임시·기획 act2-souls §4) 학익진 반경(m)
@@ -580,7 +605,7 @@ public static class Balance
     public const float B06_FORM_GAP = 6.0f;  // (2막 보스 임시·기획 act2-souls §4) 진법 간격(초, 임시)
     public const float B06_GAP_DMG_MULT = 1.5f;  // (2막 보스 임시·기획 act2-souls §4) 빈 자리에서 때리면 피해 배율
     public const int B07_MAEDHIM = 1120;  // (2막 보스 임시·기획 act2-souls §4) B-07 맺힘
-    public const int B07_DAMAGE = 24;  // (2막 보스 임시·기획 act2-souls §4) B-07 공격
+    public const int B07_DAMAGE = 30;  // (2막 보스 임시·기획 act2-souls §4) B-07 공격
     public const float B07_ARENA_START = 14.0f;  // (2막 보스 임시·기획 act2-souls §4) 막장 시작 반경(m)
     public const float B07_ARENA_END = 10.0f;  // (2막 보스 임시·기획 act2-souls §4) 막장 끝 반경(m)
     public const int B07_MINERS = 5;  // (2막 보스 임시·기획 act2-souls §4) 광부 혼 수
@@ -595,8 +620,8 @@ public static class Balance
     public const int B07_ROCK_COUNT_P2 = 5;  // (2막 보스 임시·기획 act2-souls §4) 50% 이후 낙석 수
     public const float B07_ROCK_WARN = 1.0f;  // (2막 보스 임시·기획 act2-souls §4) 낙석 예고(초)
     public const float B07_ROCK_GAP = 7.0f;  // (2막 보스 임시·기획 act2-souls §4) 낙석 간격(초, 임시)
-    public const int B08_MAEDHIM = 960;  // (2막 보스 임시·기획 act2-souls §4) B-08 맺힘
-    public const int B08_DAMAGE = 22;  // (2막 보스 임시·기획 act2-souls §4) B-08 공격
+    public const int B08_MAEDHIM = 1120;  // (2막 보스 임시·기획 act2-souls §4) B-08 맺힘
+    public const int B08_DAMAGE = 30;  // (2막 보스 임시·기획 act2-souls §4) B-08 공격
     public const int B08_MINES = 4;  // (2막 보스 임시·기획 act2-souls §4) 숫자 지뢰 수(넷 중 하나는 이름 종이)
     public const int B08_MINE_MULT = 4;  // (2막 보스 임시·기획 act2-souls §4) 지뢰 숫자 × 피해 배율
     public const float B08_MINE_GAP = 8.0f;  // (2막 보스 임시·기획 act2-souls §4) 숫자 지뢰 간격(초, 임시)
@@ -617,7 +642,7 @@ public static class Balance
     public const float B04_MAEDHIM = 600.0f;  // (1막 끝 흑월 1차·임시) 맺힘 50%에서 사슬을 거두고 물러나므로 실제로 깎이는 건 절반
     public const float B04_DAMAGE = 26.0f;  // (흑월 1차·임시) 몸으로 부딪는 한 방
     public const int B09_MAEDHIM = 1280;  // (3막 보스 임시·기획 부록 E) B-09 맺힘
-    public const int B09_DAMAGE = 16;  // (3막 보스 임시·기획 부록 E) B-09 공격(파도 줄 16, 바다 부르기 18은 같은 값으로 단순화)
+    public const int B09_DAMAGE = 28;  // (3막 보스 임시·기획 부록 E) B-09 공격(파도 줄 16, 바다 부르기 18은 같은 값으로 단순화)
     public const int B09_WAVE_ROWS = 4;  // (3막 보스 임시·기획 부록 E) 파도 줄 수
     public const float B09_WAVE_WIDTH = 3.0f;  // (3막 보스 임시·기획 부록 E) 파도 띠 폭(m)
     public const float B09_WAVE_STRIDE = 5.0f;  // (3막 보스 임시·기획 부록 E) 줄 사이 간격(m, 폭 3 + 안전 띠 2)
@@ -630,7 +655,7 @@ public static class Balance
     public const float B09_CLOTH_WINDOW = 2.0f;  // (3막 보스 임시·기획 부록 E) 옷 낚아채기 창(초)
     public const float B09_CLOTH_CUT_PCT = 15.0f;  // (3막 보스 임시·기획 부록 E) 낚아채면 줄어드는 맺힘(%)
     public const int B10_MAEDHIM = 1440;  // (3막 보스 임시·기획 부록 E) B-10 맺힘
-    public const int B10_DAMAGE = 20;  // (3막 보스 임시·기획 부록 E) B-10 공격
+    public const int B10_DAMAGE = 34;  // (3막 보스 임시·기획 부록 E) B-10 공격
     public const float B10_ROPE_WARN = 0.9f;  // (3막 보스 임시·기획 부록 E) 줄 끊기 예고(초)
     public const float B10_ROPE_LEN = 10.0f;  // (3막 보스 임시·기획 부록 E) 줄 끊기 길이(m)
     public const float B10_ROPE_WID = 1.5f;  // (3막 보스 임시·기획 부록 E) 줄 끊기 폭(m)
@@ -639,8 +664,8 @@ public static class Balance
     public const float B10_WRAP_RADIUS = 3.0f;  // (3막 보스 임시·기획 부록 E) 밧줄 휘감기 반경(m)
     public const float B10_WRAP_GAP = 7.0f;  // (3막 보스 임시·기획 부록 E) 밧줄 휘감기 간격(초)
     public const float B10_CROSS_WARN = 1.0f;  // (3막 보스 임시·기획 부록 E) 줄 끊기 두 줄(50% 뒤) 예고(초)
-    public const int B11_MAEDHIM = 1280;  // (3막 보스 임시·기획 부록 E) B-11 맺힘
-    public const int B11_DAMAGE = 16;  // (3막 보스 임시·기획 부록 E) B-11 공격
+    public const int B11_MAEDHIM = 1480;  // (3막 보스 임시·기획 부록 E) B-11 맺힘
+    public const int B11_DAMAGE = 38;  // (3막 보스 임시·기획 부록 E) B-11 공격
     public const float B11_MAT_WARN = 0.8f;  // (3막 보스 임시·기획 부록 E) 거적 던지기 예고(초)
     public const float B11_MAT_RADIUS = 3.0f;  // (3막 보스 임시·기획 부록 E) 거적 던지기 반경(m)
     public const float B11_MAT_GAP = 5.0f;  // (3막 보스 임시·기획 부록 E) 거적 던지기 간격(초)
@@ -649,7 +674,7 @@ public static class Balance
     public const float B11_STAFF_ANGLE = 140.0f;  // (3막 보스 임시·기획 부록 E) 지팡이 각도(도)
     public const float B11_STAFF_GAP = 6.0f;  // (3막 보스 임시·기획 부록 E) 지팡이 간격(초)
     public const int B12_MAEDHIM = 1800;  // (3막 보스 임시·기획 부록 E) B-12 맺힘
-    public const int B12_DAMAGE = 22;  // (3막 보스 임시·기획 부록 E) B-12 공격
+    public const int B12_DAMAGE = 38;  // (3막 보스 임시·기획 부록 E) B-12 공격
     public const float B12_PULL_WARN = 0.6f;  // (3막 보스 임시·기획 부록 E) 거울 견인 예고(초)
     public const float B12_PULL_LEN = 13.0f;  // (3막 보스 임시·기획 부록 E) 거울 견인 길이(m)
     public const float B12_PULL_WID = 1.0f;  // (3막 보스 임시·기획 부록 E) 거울 견인 폭(m)

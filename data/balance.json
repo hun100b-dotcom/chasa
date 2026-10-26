@@ -864,7 +864,7 @@
   "note": "서낭당 귀환 반경(m, 서낭나무 중심). 장승 한 쌍을 가장자리에 세운다. 서사 확정"
  },
  "BOSS_S1_MAEDHIM": {
-  "value": 1200,
+  "value": 800,
   "note": "(시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)"
  },
  "BOSS_S1_WAIT": {
@@ -889,6 +889,15 @@
  },
  "BOSS_ACT_NEOK_BASE": {"value": 50, "note": "(기획 act2-3-boss-reward-check 10-26) 2·3막 보스 천도 넋 = 50 × 고리 ÷ BOSS_RING_REF"},
  "BOSS_ACT_COIN_BASE": {"value": 30, "note": "2·3막 보스 파혼 엽전 = 30 × 고리 ÷ BOSS_RING_REF"},
+ "BAETSAK_PAHON_COIN_MULT": {"value": 1.13, "note": "(기획 act2-3-boss-reward-check 8절) 도한수의 뱃삯: 파혼 엽전 배수"},
+ "BAETSAK_WATER_PAHON_RADIUS": {"value": 0.5, "note": "뱃삯: 물가·얼룩 위 파혼 반경 +m"},
+ "BAETSAK_TENDO_CAST_ADD": {"value": 0.1, "note": "뱃삯: 천도 시전 +초(기울기)"},
+ "JANGBU_NUM_PAHON_COIN_MULT": {"value": 1.2, "note": "남은 장부: ④(2막) 숫자 혼 파혼 엽전 배수(④ 밖 효과 없음)"},
+ "DEUNGJAN_DURATION": {"value": 60, "note": "아낙의 등잔: 켜 두는 시간(초)"},
+ "DEUNGJAN_RADIUS": {"value": 6, "note": "등잔 둘레(m)"},
+ "DEUNGJAN_PAHON_COIN_MULT": {"value": 1.5, "note": "등잔 둘레 안 파혼 엽전 배수"},
+ "DEUNGJAN_PER_NIGHT": {"value": 1, "note": "밤마다 켤 수 있는 횟수"},
+ "GOT_LIGHT_SWEEP_SEC": {"value": 20, "note": "곶 불빛 한 바퀴(초): ⑤ 바닷가에서 불빛 띠가 지나간 이름혼만 미니맵에 뜬다"},
  "BOSS_RING_REF": {"value": 1.25, "note": "기준 고리 배율(1막 보스)"},
  "BOSS_PAHON_COIN": {
   "value": 30,
@@ -998,6 +1007,22 @@
   "value": 0.2,
   "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 이동 속도 +20%"
  },
+ "CAP_DAMAGE_MINUS_PCT": {"value": 0.2, "note": "(기획 장비 점검 B-2) 피해 마이너스 상한 −20%"},
+ "CAP_CAST_SLOW_PCT": {"value": 0.3, "note": "천도 시전 느려짐 상한 +30%"},
+ "CAP_COIN_MINUS_PCT": {"value": 0.5, "note": "엽전 마이너스 상한 −50%"},
+ "CAP_TENDO_NEOK_PCT": {"value": 0.3, "note": "천도 넋 합계 상한 +30% (B-7)"},
+ "CAP_DEFENSE_PCT": {"value": 0.6, "note": "방어(받는 피해 −%) 합계 상한 60% (인 점검 1)"},
+ "CAP_SKILL_CD_PCT": {"value": 0.35, "note": "도술 재사용 단축 상한 35%"},
+ "CAP_WEAPON_CD_PCT": {"value": 0.4, "note": "무기 기술 재사용 단축 상한 40%"},
+ "CAP_FIERCE_PCT": {"value": 0.5, "note": "거센 혼·덩어리·보스 피해 상한 +50%"},
+ "SEAL_COLOR_SHARE": {"value": 0.25, "note": "(인 점검 2) 천도 넋 중 빛깔 주머니로 가는 몫"},
+ "SEAL_PAHON_COLOR": {"value": true, "note": "(인 점검 3, 서사 확정) 파혼한 혼도 빛깔 가루를 남김(그 혼 기본 천도 넋 × SEAL_COLOR_SHARE)"},
+ "NUMBERED_WAIT_ADD": {"value": 0.5, "note": "(기획 act2-souls 2절) 숫자 혼: 처결 대기 +초(인 없음)"},
+ "NUMBERED_BLUR_WAIT_ADD": {"value": 0.25, "note": "B-08 천도 뒤 숫자 혼이 흐림이 되어 대기 +초"},
+ "NUMBERED_NEOK_MULT": {"value": 1.3, "note": "숫자 혼 천도 넋 배수"},
+ "RING_COIN_SHARE": {"value": 0.6, "note": "(기획 act1-enemy-check) 필드 혼 엽전은 고리 보상 배율 증가분의 60%만 받는다"},
+ "AC_ESCORT_RADIUS": {"value": 3, "note": "(기획 dosul-check 1) 배웅길: 천도 끝난 자리 반경 m 안의 적만 느려진다"},
+ "AC_CAGE_BOSS_STUN": {"value": 1, "note": "쇠사슬 울: 보스도 이만큼(초) 묶인다"},
  "CAP_COIN_PCT": {
   "value": 0.5,
   "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%"
@@ -1567,19 +1592,19 @@
   "note": "(성장 1차 임시) 날램 1점당 이동 속도 +0.3%"
  },
  "GROWTH_HP_PER_BODY": {
-  "value": 5,
-  "note": "(성장 1차 임시) 몸 1점당 최대 체력 +5"
+  "value": 4,
+  "note": "몸 1점당 최대 체력 +4 (기획 growth.json stats, 장비 점검 B-7)"
  },
  "GROWTH_CAST_PER_MIND": {
   "value": 0.005,
   "note": "(성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%"
  },
  "GROWTH_NEOK_PER_MIND": {
-  "value": 0.005,
-  "note": "(성장 1차 임시) 마음 1점당 천도 넋 +0.5%"
+  "value": 0.0,
+  "note": "마음의 천도 넋 보너스는 기획에 없는 값이라 0 (장비 점검 B-7)"
  },
  "BOSS_S2_MAEDHIM": {
-  "value": 1000,
+  "value": 800,
   "note": "(2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전"
  },
  "B02_CUPS": {
@@ -2107,8 +2132,8 @@
   "note": "고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)"
  },
  "CAMP_DENSITY_RING2": {
-  "value": 0.7,
-  "note": "고리2(물막이 골·폐당집)"
+  "value": 0.8,
+  "note": "고리2(검은여울 — 기획 act1-enemy-check: 고리는 RingAt 하나로)"
  },
  "CAMP_DENSITY_RING3": {
   "value": 0.8,
@@ -2175,7 +2200,7 @@
   "note": "(2막 보스 임시·기획 act2-souls §4) B-05 맺힘"
  },
  "B05_DAMAGE": {
-  "value": 22,
+  "value": 26,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-05 공격"
  },
  "B05_CALL_INTERVAL": {
@@ -2247,7 +2272,7 @@
   "note": "(2막 보스 임시·기획 act2-souls §4) B-06 맺힘"
  },
  "B06_DAMAGE": {
-  "value": 24,
+  "value": 26,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-06 공격"
  },
  "B06_LINE_WIDTH": {
@@ -2291,7 +2316,7 @@
   "note": "(2막 보스 임시·기획 act2-souls §4) B-07 맺힘"
  },
  "B07_DAMAGE": {
-  "value": 24,
+  "value": 30,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-07 공격"
  },
  "B07_ARENA_START": {
@@ -2351,11 +2376,11 @@
   "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 간격(초, 임시)"
  },
  "B08_MAEDHIM": {
-  "value": 960,
+  "value": 1120,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-08 맺힘"
  },
  "B08_DAMAGE": {
-  "value": 22,
+  "value": 30,
   "note": "(2막 보스 임시·기획 act2-souls §4) B-08 공격"
  },
  "B08_MINES": {
@@ -2439,7 +2464,7 @@
   "note": "(3막 보스 임시·기획 부록 E) B-09 맺힘"
  },
  "B09_DAMAGE": {
-  "value": 16,
+  "value": 28,
   "note": "(3막 보스 임시·기획 부록 E) B-09 공격(파도 줄 16, 바다 부르기 18은 같은 값으로 단순화)"
  },
  "B09_WAVE_ROWS": {
@@ -2491,7 +2516,7 @@
   "note": "(3막 보스 임시·기획 부록 E) B-10 맺힘"
  },
  "B10_DAMAGE": {
-  "value": 20,
+  "value": 34,
   "note": "(3막 보스 임시·기획 부록 E) B-10 공격"
  },
  "B10_ROPE_WARN": {
@@ -2527,11 +2552,11 @@
   "note": "(3막 보스 임시·기획 부록 E) 줄 끊기 두 줄(50% 뒤) 예고(초)"
  },
  "B11_MAEDHIM": {
-  "value": 1280,
+  "value": 1480,
   "note": "(3막 보스 임시·기획 부록 E) B-11 맺힘"
  },
  "B11_DAMAGE": {
-  "value": 16,
+  "value": 38,
   "note": "(3막 보스 임시·기획 부록 E) B-11 공격"
  },
  "B11_MAT_WARN": {
@@ -2567,7 +2592,7 @@
   "note": "(3막 보스 임시·기획 부록 E) B-12 맺힘"
  },
  "B12_DAMAGE": {
-  "value": 22,
+  "value": 38,
   "note": "(3막 보스 임시·기획 부록 E) B-12 공격"
  },
  "B12_PULL_WARN": {

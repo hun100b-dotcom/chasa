@@ -167,7 +167,7 @@ public class SettingsPanel : MonoBehaviour
             // 닫혀 있을 땐 오른쪽 위 작은 버튼(소리 버튼 아래). 낮 화면·캐릭터 창·컷신 중엔 숨긴다
             if (judge.InDay || CharacterPanel.Open || judge.cuts.Active) return;
             bool t = Ko.TouchUI;
-            if (GUI.Button(new Rect(Mathf.Min(Screen.width, MiniMap.LeftPx > 0f ? MiniMap.LeftPx : Screen.width) - (t ? 104 : 78), t ? 62 : 38, t ? 96 : 70, t ? 48 : 26), "설정")) Toggle();
+            if (UiSfx.Btn(new Rect(Mathf.Min(Screen.width, MiniMap.LeftPx > 0f ? MiniMap.LeftPx : Screen.width) - (t ? 104 : 78), t ? 62 : 38, t ? 96 : 70, t ? 48 : 26), "설정")) Toggle();
             return;
         }
         if (UseView) return;   // 열린 화면은 UI Toolkit 판이 그린다
@@ -179,7 +179,7 @@ public class SettingsPanel : MonoBehaviour
         var mono = new GUIStyle(body) { fontSize = 14 };
         float x = box.x + 20, y = box.y + 14;
         GUI.Label(new Rect(x, y, 300, 30), "설정", title);
-        if (GUI.Button(new Rect(box.xMax - 100, y, 80, 32), "닫기")) Close();
+        if (UiSfx.Btn(new Rect(box.xMax - 100, y, 80, 32), "닫기")) Close();
         y += 46;
         if (!showKeys)
         {
@@ -189,20 +189,20 @@ public class SettingsPanel : MonoBehaviour
             y = Slider(x, y, box.width - 40, "화면 흔들림", ref s.Shake, 1.5f, body);
             GUI.Label(new Rect(x, y, box.width - 40, 22), "0 = 흔들림 없음 · 1 = 기본 (멀미가 나면 줄이기)", new GUIStyle(mono) { fontSize = 13 });
             y += 34;
-            if (GUI.Button(new Rect(x, y, 190, 40), "조작 키 보기")) showKeys = true;
+            if (UiSfx.Btn(new Rect(x, y, 190, 40), "조작 키 보기")) showKeys = true;
             bool field = judge.FieldMode;
             GUI.enabled = field;
-            if (GUI.Button(new Rect(x + 200, y, 130, 40), "지금 저장")) note = judge.SaveGameNow() ? "저장했다" : "저장하지 못했다";
+            if (UiSfx.Btn(new Rect(x + 200, y, 130, 40), "지금 저장")) note = judge.SaveGameNow() ? "저장했다" : "저장하지 못했다";
             GUI.enabled = field && SaveStore.Exists;
-            if (GUI.Button(new Rect(x + 340, y, 130, 40), "불러오기")) { if (judge.LoadGameNow()) { note = "불러왔다"; Close(); } else note = "저장이 없거나 읽지 못했다"; }
+            if (UiSfx.Btn(new Rect(x + 340, y, 130, 40), "불러오기")) { if (judge.LoadGameNow()) { note = "불러왔다"; Close(); } else note = "저장이 없거나 읽지 못했다"; }
             GUI.enabled = true;
             y += 52;
-            if (!confirmReset) { if (GUI.Button(new Rect(x, y, 190, 36), "처음부터 (저장 지우기)")) confirmReset = true; }
+            if (!confirmReset) { if (UiSfx.Btn(new Rect(x, y, 190, 36), "처음부터 (저장 지우기)")) confirmReset = true; }
             else
             {
                 GUI.Label(new Rect(x, y, 300, 30), "저장을 지우고 처음부터 할까요?", body);
-                if (GUI.Button(new Rect(x + 320, y, 70, 32), "지움")) { SaveStore.Delete(); note = "저장을 지웠다. 다시 켜면 처음부터"; confirmReset = false; }
-                if (GUI.Button(new Rect(x + 400, y, 70, 32), "취소")) confirmReset = false;
+                if (UiSfx.Btn(new Rect(x + 320, y, 70, 32), "지움")) { SaveStore.Delete(); note = "저장을 지웠다. 다시 켜면 처음부터"; confirmReset = false; }
+                if (UiSfx.Btn(new Rect(x + 400, y, 70, 32), "취소")) confirmReset = false;
             }
             y += 44;
             GUI.Label(new Rect(x, y, box.width - 40, 26), note.Length > 0 ? note : "싸움이 없을 때 45초마다 저장한다", mono);
@@ -211,7 +211,7 @@ public class SettingsPanel : MonoBehaviour
         {
             foreach (var k in Keys) { GUI.Label(new Rect(x, y, box.width - 40, 26), k, mono); y += 30; }
             y += 6;
-            if (GUI.Button(new Rect(x, y, 140, 38), "뒤로")) showKeys = false;
+            if (UiSfx.Btn(new Rect(x, y, 140, 38), "뒤로")) showKeys = false;
         }
     }
 

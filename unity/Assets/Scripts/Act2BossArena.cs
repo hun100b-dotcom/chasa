@@ -13,7 +13,7 @@ public class Act2BossArena : MonoBehaviour
     public static bool Enabled { get { return FieldRules.Act2; } }   // 2막 땅이 깔려 있으면 보스 넷도 선다(금줄이 닫혀 있는 동안은 닿을 수 없다)
 
     enum Shape { Circle, Sector, Bar, Ring }
-    class Tele { public bool drain; public float drainT; public bool weak; public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
+    class Tele { public Vector3 ropeEnd; public bool rope; public string fireSfx; public bool drain; public float drainT; public bool weak; public Shape shape; public Vector3 c; public Vector3 dir; public float r, len, wid, gap, gapAt, deg, t, warn; public bool fired, paper, mine; public GameObject view; }
 
     JudgeSystem judge; Enemy boss; BossDef def; Act2Brain brain; Act3Brain brain3;   // 2막(5~8)은 brain, 3막(9~12)은 brain3 — 같은 화면 코드가 둘을 다 그린다
     readonly List<Tele> teles = new List<Tele>();
@@ -54,7 +54,52 @@ public class Act2BossArena : MonoBehaviour
         // B-06 약점: 일자진의 빈칸(안전 자리)에 서서 때리면 피해가 커진다(Balance.B06_GAP_DMG_MULT). 대형이 떠 있는 동안만
         if (brain != null && def.Id == 7) TickMiners(dt);
         if (brain3 != null) TickHelpers(dt);
+        if (brain3 != null && def.Id == 10) { TickTilt(dt); TickRope(dt); }
         if (brain != null && def.Id == 6) boss.damageTakenMult = brain.DamageMultAt(PlayerInFormGap());
+    }
+
+    // ---- B-10 약점: 줄 끊기 직후 늘어진 밧줄 끝을 2초 동안 사슬로 끌면 선장이 넘어진다(멈칫 1.5초 + 맺힘 피해 ×1.5 2초) ----
+    void SpawnRopeEnd(Vector3 at)
+    {
+        DropPoint(ref ropePt, ref ropeView);
+        ropePt = MakePoint(at, new Color(0.75f, 0.6f, 0.35f, 1f), 0.55f, () =>
+        {
+            brain3.Stun = Mathf.Max(brain3.Stun, 1.5f); ropeWeakT = 2f;
+            judge.PatternEvent("B-10.weak_rope", boss, true);   // 처음 넘어질 때만 말풍선 "…무겁다."
+            DropPoint(ref ropePt, ref ropeView);
+        }, out ropeView);
+        ropeT = 2f; judge.Say("밧줄 끝 — 끌어당겨라", 2f);
+    }
+    void TickRope(float dt)
+    {
+        if (ropePt != null) { ropeT -= dt; if (ropeT <= 0f) DropPoint(ref ropePt, ref ropeView); }
+        if (ropeWeakT > 0f) ropeWeakT -= dt;
+        if (boss != null) boss.damageTakenMult = ropeWeakT > 0f ? 1.5f : 1f;
+    }
+
+    // ---- B-10 기운 갑판: 6초마다(맺힘 50% 뒤 4초) 갑판이 좌우로 기울어 1.5초 동안 1.5 m/s 로 미끄러진다 ----
+    float tiltT = 3f, tiltSlide, tiltSide = 1f; bool stormSaid;
+    void TickTilt(float dt)
+    {
+        if (boss == null || !boss.alive) return;
+        float dist = new Vector2(judge.player.Pos.x - def.X, judge.player.Pos.z - def.Z).magnitude;
+        if (dist > fightArea + 6f) return;   // 싸움터 근처에서만
+        bool storm = brain3.Phase2;
+        if (storm && !stormSaid) { stormSaid = true; judge.Say("폭풍 — 갑판이 더 자주 기운다!", 2f); judge.BossBubble(boss, "붙들어라… 다 붙들어."); }   // 전용 소리 없음 → 기울기 소리를 두 번 겹쳐 쓴다(서사)
+        tiltT -= dt;
+        if (tiltT <= 0f)
+        {
+            tiltT = storm ? 4f : 6f; tiltSlide = 1.5f; tiltSide = -tiltSide;
+            judge.PatternEvent("B-10.tilt", boss, true, storm ? 2 : 1);
+        }
+        if (tiltSlide > 0f)
+        {
+            tiltSlide -= dt;
+            var push = new Vector3(tiltSide, 0f, 0f) * 1.5f * dt;
+            float px = judge.player.Pos.x + push.x, pz = judge.player.Pos.z + push.z;
+            MapLayout.PushOut(ref px, ref pz, 0.5f);
+            judge.player.Pos = new Vector3(px, judge.player.Pos.y, pz);
+        }
     }
 
     // ---- 3막 보스 곁의 혼(약점): 1 물 혼(B-09) · 2 선원(B-10) · 3 별명 혼(B-11) · 4 물 혼(B-12) ----
@@ -78,7 +123,7 @@ public class Act2BossArena : MonoBehaviour
         if (def.Id == 11)   // 별명 부르기: 10초마다 두 혼이 그 이름으로 일어난다
         {
             nickT -= dt;
-            if (nickT <= 0f) { nickT = 10f; SpawnHelper(3, ArenaPoint(0.6f)); SpawnHelper(3, ArenaPoint(0.6f)); judge.Say("왕초가 별명을 부른다"); }
+            if (nickT <= 0f) { nickT = 10f; SpawnHelper(3, ArenaPoint(0.6f)); SpawnHelper(3, ArenaPoint(0.6f)); judge.Say("왕초가 별명을 부른다"); Sfx.Play("sfx.boss.wangcho.rise"); }
         }
     }
 
@@ -94,7 +139,7 @@ public class Act2BossArena : MonoBehaviour
         var c = new Vector3(def.X, 0f, def.Z);
         for (int i = 0; i < Balance.B07_MINERS; i++)
             miners.Add(judge.enemies.SpawnCamp(c + Quaternion.Euler(0f, 72f * i + 18f, 0f) * Vector3.forward * (brain.ArenaRadius > 1f ? brain.ArenaRadius * 0.6f : 8f), i % 2 == 0));
-        judge.Say("광부 혼이 나타났다 — 출구로 보내라");
+        judge.Say("광부 혼이 나타났다 — 출구로 보내라"); Sfx.Play("sfx.boss.chilsung.count");
     }
 
     /// <summary>플레이어가 지금 떠 있는 일자진 예고의 빈칸 안에 서 있나</summary>
@@ -112,7 +157,7 @@ public class Act2BossArena : MonoBehaviour
     }
 
     // ---- 약점 점(사슬로 낚아챌 자리): 옷(B-09)·횃불(B-12)·깃발(B-05) ----
-    PullPoint clothPt, torchPt, flagPt; GameObject clothView, torchView, flagView;
+    PullPoint clothPt, torchPt, flagPt, ropePt; GameObject clothView, torchView, flagView, ropeView; float ropeT, ropeWeakT;   // 선장 줄 끝(B-10)
     PullPoint MakePoint(Vector3 at, Color col, float size, System.Action onPull, out GameObject view, string model = null)
     {
         GameObject g = null;
@@ -134,7 +179,7 @@ public class Act2BossArena : MonoBehaviour
         return PullPoints.Add(at, 2.5f, onPull);
     }
     void DropPoint(ref PullPoint p, ref GameObject v) { PullPoints.Remove(p); p = null; if (v != null) Destroy(v); v = null; }
-    void DropPoints() { DropPoint(ref clothPt, ref clothView); DropPoint(ref torchPt, ref torchView); DropPoint(ref flagPt, ref flagView); }
+    void DropPoints() { DropPoint(ref ropePt, ref ropeView); DropPoint(ref clothPt, ref clothView); DropPoint(ref torchPt, ref torchView); DropPoint(ref flagPt, ref flagView); }
 
     void Clear() { foreach (var t in teles) if (t.view != null) Destroy(t.view); teles.Clear(); DropPoints(); if (boss != null) boss.damageTakenMult = 1f; }
     void OnDestroy() { DropPoints(); if (judge != null) judge.OnJudged -= OnJudged; }
@@ -161,7 +206,7 @@ public class Act2BossArena : MonoBehaviour
             // B-07 광부 혼: 천도 = 출구로 보냄(다섯마다 칠성이 멈춤), 파혼 = 보스 맺힘 +10% · 10초 광폭
             miners.Remove(e);
             if (tendo) { brain.OnMinerExit(); judge.Say("광부 " + brain.MinersOut + "명을 내보냈다"); if (brain.Stun > 0f) judge.Say("칠성이 멈칫한다"); }
-            else { brain.OnMinerPahon(); boss.soul.Maedhim = Mathf.Min(boss.soul.MaedhimMax, (int)brain.Maedhim); judge.Say("광부를 깨뜨렸다 — 칠성이 날뛴다!"); }
+            else { brain.OnMinerPahon(); boss.soul.Maedhim = Mathf.Min(boss.soul.MaedhimMax, (int)brain.Maedhim); judge.Say("광부를 깨뜨렸다 — 칠성이 날뛴다!"); Sfx.Play("sfx.boss.chilsung.rage"); }
             return;
         }
         if (brain == null || def == null || def.Id != 5 || !tendo || !soldiers.Contains(e)) return;
@@ -196,7 +241,7 @@ public class Act2BossArena : MonoBehaviour
             case BossAct.CallNames:
                 for (int i = 0; i < m.Count; i++)   // 소환 병사: 보스 둘레(상한은 Act2Brain 이 지킨다). 번호 비율(m.Param)은 아직 화면에 안 쓴다
                     soldiers.Add(judge.enemies.SpawnCamp(bp + Quaternion.Euler(0f, 120f * i + 40f, 0f) * Vector3.forward * 3.5f, i % 2 == 0));
-                Sfx.Play("sfx.boss.daedol.call"); break;
+                Sfx.Play("sfx.boss.daedol.call"); Sfx.PlayLater("sfx.boss.daedol.number", 0.6f); break;   // 이름을 잊어 번호로 부르는 소리
             case BossAct.FlagPlant:
                 Add(new Tele { shape = Shape.Circle, c = bp + dir * 5f, r = m.Radius, warn = 20f, mine = false }, false);
                 DropPoint(ref flagPt, ref flagView);
@@ -221,7 +266,7 @@ public class Act2BossArena : MonoBehaviour
                     int paper = brain.PickNamePaper();
                     for (int i = 0; i < m.Count; i++)
                         Add(new Tele { shape = Shape.Circle, c = bp + Quaternion.Euler(0f, 360f / m.Count * i + Random.value * 40f, 0f) * Vector3.forward * (4f + Random.value * 4f), r = 1.2f, warn = m.Warn, paper = i == paper, mine = true });
-                    Sfx.Play("sfx.boss.yeom.land"); break;
+                    Sfx.Play("sfx.boss.yeom.land"); Sfx.Play("sfx.boss.yeom.throw"); break;   // 숫자 지뢰를 날리는 순간
                 }
             case BossAct.AbacusSweep: Add(new Tele { shape = Shape.Sector, c = bp, dir = dir, r = m.Radius, deg = m.Param, warn = m.Warn }); break;
             // ---- 3막(9~12): 예고 장판 ----
@@ -248,7 +293,7 @@ public class Act2BossArena : MonoBehaviour
                 {
                     var dd = m.Count == 1 ? dir : Quaternion.Euler(0f, i == 0 ? 35f : -35f, 0f) * dir;   // 두 줄이면 X 자로 엇갈린다
                     var cc = m.Count == 1 ? bp + dd * (m.Param * 0.5f) : pp;
-                    Add(new Tele { shape = Shape.Bar, c = cc, dir = dd, len = m.Param, wid = m.Radius, warn = m.Warn });
+                    Add(new Tele { shape = Shape.Bar, c = cc, dir = dd, len = m.Param, wid = m.Radius, warn = m.Warn, fireSfx = "sfx.boss.seonjang.rope.cut", rope = true, ropeEnd = cc + dd * (m.Param * 0.5f) });   // 판정이 나갈 때 줄 끊는 소리
                 }
                 break;
             case BossAct.RopeWrap: Add(new Tele { shape = Shape.Circle, c = pp, r = m.Radius, warn = m.Warn }); break;
@@ -318,9 +363,11 @@ public class Act2BossArena : MonoBehaviour
             if (!t.fired && t.t >= t.warn)
             {
                 t.fired = true;
+                if (t.fireSfx != null) Sfx.Play(t.fireSfx);
+                if (t.rope && def.Id == 10) SpawnRopeEnd(t.ropeEnd);
                 bool inside = Inside(t, judge.player.Pos);
                 if (inside && t.paper) { brain.OnNamePaperStepped(); boss.soul.Maedhim = Mathf.Max(1, (int)brain.Maedhim); }   // 이름 종이: 무해, 보스 맺힘 −2%
-                else if (inside) judge.BossAreaHit(boss, t.weak ? 0.5f : 1f);   // 약해진 파도는 피해 절반
+                else if (inside) { judge.BossAreaHit(boss, t.weak ? 0.5f : 1f); if (t.mine) Sfx.Play("sfx.boss.yeom.burst"); }   // 숫자 칸을 밟아 피해   // 약해진 파도는 피해 절반
                 if (t.view != null) t.view.GetComponent<Renderer>().sharedMaterial.color = new Color(1f, 0.55f, 0.25f, 1f);
             }
             else if (!t.fired && t.view != null)
@@ -329,7 +376,7 @@ public class Act2BossArena : MonoBehaviour
             if (t.drain && t.fired)
             {
                 t.drainT += dt;
-                if (t.drainT >= 1f) { t.drainT -= 1f; if (Inside(t, judge.player.Pos)) { judge.ledger.Neok = Mathf.Max(0, judge.ledger.Neok - 2); judge.BossAreaHit(boss, 8f / Mathf.Max(1, boss.damage)); } }
+                if (t.drainT >= 1f) { t.drainT -= 1f; if (Inside(t, judge.player.Pos)) { Sfx.Play("sfx.boss.heukwol.line.drain"); judge.ledger.Neok = Mathf.Max(0, judge.ledger.Neok - 2); judge.BossAreaHit(boss, 8f / Mathf.Max(1, boss.damage)); } }
             }
             if (t.t >= (t.drain ? t.warn + 6f : t.warn < 19f ? t.warn + 0.25f : t.warn)) { if (t.view != null) Destroy(t.view); teles.RemoveAt(i); }
         }

@@ -34,8 +34,8 @@ namespace Chasa.Core
                 default: return Balance.BOSS_RING_REF;
             }
         }
-        /// <summary>보스 천도 넋: 1막은 BOSS_S1_NEOK(60) 그대로, 2·3막은 50 × 고리 ÷ 1.25 (60·70·80·90)</summary>
-        public static int NeokFor(int id) { return id >= 5 && id <= 12 ? (int)System.Math.Round(Balance.BOSS_ACT_NEOK_BASE * Ring(id) / Balance.BOSS_RING_REF) : Balance.BOSS_S1_NEOK; }
+        /// <summary>보스 천도 넋 = 50 × 고리 ÷ 1.25. 1막 셋은 50, 2·3막은 60·70·80·90 (서사 확정 10-26: B-01 넋 50)</summary>
+        public static int NeokFor(int id) { return id >= 1 && id <= 12 && id != 4 ? (int)System.Math.Round(Balance.BOSS_ACT_NEOK_BASE * Ring(id) / Balance.BOSS_RING_REF) : Balance.BOSS_S1_NEOK; }
         /// <summary>보스 파혼 엽전: 1막은 BOSS_PAHON_COIN(30) 그대로, 2·3막은 30 × 고리 ÷ 1.25 (36·42·48·54)</summary>
         public static int CoinFor(int id) { return id >= 5 && id <= 12 ? (int)System.Math.Round(Balance.BOSS_ACT_COIN_BASE * Ring(id) / Balance.BOSS_RING_REF) : Balance.BOSS_PAHON_COIN; }
 
@@ -43,8 +43,8 @@ namespace Chasa.Core
         {
             switch (id)
             {
-                case 2: return new BossDef { Id = 2, Name = "월화", Cut = "B02", CluePrefix = "B02-", X = 580f, Z = 521f, Maedhim = Balance.BOSS_S2_MAEDHIM, Speed = 0.5f, Damage = 22, Model = "boss_b02" };
-                case 3: return new BossDef { Id = 3, Name = "서 의원", Cut = "B03", CluePrefix = "B03-", X = 46f, Z = 453f, Maedhim = Balance.B03_BOSS_MAEDHIM, Speed = 0.15f, Damage = 24, Model = "boss_b03" };
+                case 2: return new BossDef { Id = 2, Name = "월화", Cut = "B02", CluePrefix = "B02-", X = 580f, Z = 521f, Maedhim = Balance.BOSS_S2_MAEDHIM, Speed = 0.5f, Damage = 20, Model = "boss_b02" };
+                case 3: return new BossDef { Id = 3, Name = "서 의원", Cut = "B03", CluePrefix = "B03-", X = 46f, Z = 453f, Maedhim = Balance.B03_BOSS_MAEDHIM, Speed = 0.15f, Damage = 23, Model = "boss_b03" };
                 // 2막 보스(기획 act2_map boss_arenas 좌표 · 맺힘 임시값은 balance B05~B08). 전투 규칙은 Core/Act2Boss.cs
                 // 4호 흑월 차사 1차(1막 끝, 기획 확정 자리 (140,500) = 시즌 3 B-26 자리): 처결이 없다. 맺힘 50%에서 사슬을 거두고 물러난다(JudgeSystem.TickHeukwol)
                 case 4: return new BossDef { Id = 4, Name = "흑월", Cut = "B04", CluePrefix = "B04-", X = 140f, Z = 500f, Maedhim = Balance.B04_MAEDHIM, Speed = 0.5f, Damage = (int)Balance.B04_DAMAGE, Model = "boss_b12_heugwol_b04" };

@@ -3,7 +3,7 @@
 build_act2_assets.py — 아트의 2막 산출물(assets3d/)을 유니티 Resources 에 넣는다. 몇 번을 돌려도 같은 결과(다시 돌려도 안전).
  1) assets3d/terrain_act2/*  → Resources/Terrain2/*.bytes   (직사각 768×640m 땅: terrain.json·heightmap·splat_a·splat_b. 층 그림·잔무늬는 1막 것을 쓴다)
  2) assets3d/act2/*.glb       → Resources/Models/Field/*.glb (2막 소품 모델)
- 3) assets3d/layouts/act2_layout.json → Resources/Data/field.json 에 합침(z>=640 인 옛 항목은 먼저 지우고 다시 넣는다 = 멱등)
+ 3) assets3d/layouts/act2_layout.json + act2_extra.json → Resources/Data/field.json 에 합침(z>=640 인 옛 항목은 먼저 지우고 다시 넣는다 = 멱등)
 사용: python3 tools/build_act2_assets.py [assets3d 폴더, 기본 assets3d]
 """
 import json, os, shutil, sys
@@ -18,6 +18,9 @@ for n, dst in (("terrain.json", "terrain.json"), ("heightmap.png", "heightmap.by
 # 2) 모델
 mdir = os.path.join(res, "Models", "Field")
 lay = json.load(open(os.path.join(art, "layouts", "act2_layout.json"), encoding="utf-8"))
+# 아트 PR #43: 생활 소품 배치표(act2_extra.json)를 act2_layout.json 옆에 같이 읽는다(형식 같음). 없으면 건너뛴다
+ex = os.path.join(art, "layouts", "act2_extra.json")
+if os.path.exists(ex): lay["props"] = lay["props"] + json.load(open(ex, encoding="utf-8"))["props"]
 names = sorted({p["prop"] for p in lay["props"]})
 copied = 0
 for n in names:

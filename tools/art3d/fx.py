@@ -58,9 +58,11 @@ def decal():
     return [base, _obj("stain_core", bm2, mat("night", 0.0))]
 
 def wait_ring(color):
-    m = mat(color, 1.2); p = [annulus("rim", 0.82, 0.9, 0.04, 0.0, m, 16)]
+    """처결 대기 고리. 50° 카메라 점검(밝은 낮 풀밭·어두운 밤)에서 오래된 혼(갈회색) 고리가 풀색과 밝기가 비슷해 약했다 → 고리 바로 밑에 어두운 먹 받침(발광 없음)을 깔아 어떤 땅에서도 윤곽이 서게 했다."""
+    m = mat(color, 1.2); p = [annulus("rim_ink", 0.78, 0.95, 0.01, -0.005, mat("ink", 0.0), 16), annulus("rim", 0.82, 0.9, 0.04, 0.0, m, 16)]
     for i in range(12):
         a = i / 12 * math.tau
+        p.append(box(f"tick_ink{i:02d}", (0.08, 0.16, 0.012), (math.cos(a) * 1.0, math.sin(a) * 1.0, 0.004), mat("ink", 0.0), rot=(0, 0, a - math.pi / 2)))
         p.append(box(f"tick{i:02d}", (0.04, 0.12, 0.04), (math.cos(a) * 1.0, math.sin(a) * 1.0, 0.02), m, rot=(0, 0, a - math.pi / 2)))
     return p
 

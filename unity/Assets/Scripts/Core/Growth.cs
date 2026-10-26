@@ -17,7 +17,8 @@ namespace Chasa.Core
     public class SkillNode
     {
         public string Name; public Branch Branch; public bool Active, Deep; public string Desc;
-        public int MaxLevel { get { return Active ? 1 : 2; } }
+        /// <summary>기획 A-1: 액티브 5단계 · 패시브 3단계 · 깊은 도술 1단계(다 배우려면 99점, 얻는 최대 79점)</summary>
+        public int MaxLevel { get { return Deep ? 1 : Active ? 5 : 3; } }
         public SkillNode(string name, Branch b, bool active, string desc, bool deep = false) { Name = name; Branch = b; Active = active; Desc = desc; Deep = deep; }
     }
 
@@ -75,7 +76,8 @@ namespace Chasa.Core
         public int TotalNeok;                              // 지금까지 쌓은 넋(잃지 않는다)
         public int SkillPointsEarned, SkillPointsSpent;
         public int StatPointsEarned;
-        public int PahonCount, StainPointsEarned, StainPointsSpent;   // 파혼 횟수 / 얼룩 갈래 전용 도술 점수(파혼 15회마다 1)
+        public int PahonCount, StainPointsEarned, StainPointsSpent;   // 파혼 횟수 / (옛) 얼룩 전용 점수 — 처결 셈으로 바뀌어 더는 안 쌓인다(옛 저장 호환용으로만 남김)
+        public int JudgeTally;                              // 처결 셈: 천도는 받은 넋, 파혼은 그 혼의 기본 천도 넋만큼 쌓인다. 품계 문턱을 넘을 때마다 도술 점수 1(기획 dosul-check 1)
         public readonly int[] Stats = { StatBase, StatBase, StatBase, StatBase };
         public readonly Dictionary<string, int> Learned = new Dictionary<string, int>();
         public readonly List<string> ActiveBar = new List<string>();   // 배운 액티브 중 칸에 올린 것(최대 4)
@@ -116,20 +118,25 @@ namespace Chasa.Core
             if (amount <= 0) return 0;
             TotalNeok += amount;
             int newRank = RankFor(TotalNeok), ups = newRank - Rank;
-            if (ups > 0) { Rank = newRank; SkillPointsEarned += ups; StatPointsEarned += ups * StatPerRank; }
+            if (ups > 0) { Rank = newRank; StatPointsEarned += ups * StatPerRank; }   // 품계는 능력치 점수만 준다. 도술 점수는 처결 셈(AddJudge)으로
+            return Math.Max(0, ups);
+        }
+
+        /// <summary>처결 셈에 더한다(천도 = 받은 넋, 파혼 = 그 혼의 기본 천도 넋). 같은 문턱(75×n²)을 넘을 때마다 도술 점수 1. 얻은 점수를 돌려준다</summary>
+        public int AddJudge(int amount)
+        {
+            if (amount <= 0) return 0;
+            int before = RankFor(JudgeTally); JudgeTally += amount;
+            int ups = RankFor(JudgeTally) - before;
+            if (ups > 0) SkillPointsEarned += ups;
             return Math.Max(0, ups);
         }
 
         /// <summary>보스를 천도하면 도술 점수 1</summary>
         public void AddBossPoint() { SkillPointsEarned++; }
 
-        /// <summary>파혼 한 번. PAHON_STAIN_POINT_EVERY 번째마다 얼룩 갈래 전용 점수 1을 주고 true (파혼만 해도 성장 길이 열리게)</summary>
-        public bool AddPahon()
-        {
-            PahonCount++;
-            if (PahonCount % Balance.PAHON_STAIN_POINT_EVERY != 0) return false;
-            StainPointsEarned++; return true;
-        }
+        /// <summary>파혼 횟수만 센다. (옛 15회마다 얼룩 점수는 없어졌다 — 파혼의 도술 점수는 처결 셈이 준다)</summary>
+        public bool AddPahon() { PahonCount++; return false; }
 
         public int StainPointsFree { get { return StainPointsEarned - StainPointsSpent; } }
 
@@ -159,7 +166,7 @@ namespace Chasa.Core
         {
             var s = SkillTree.Find(name);
             if (s == null || LevelOf(name) >= s.MaxLevel) return false;
-            if (SkillPointsFree <= 0 && !(s.Branch == Branch.Stain && StainPointsFree > 0)) return false;   // 얼룩 도술은 전용 점수로도 배운다
+            if (SkillPointsFree <= 0) return false;
             if (s.Deep && BranchPoints(s.Branch) < SkillTree.DeepNeeds) return false;
             return true;
         }
@@ -169,7 +176,7 @@ namespace Chasa.Core
             if (!CanLearn(name)) return false;
             var s = SkillTree.Find(name);
             Learned[name] = LevelOf(name) + 1;
-            if (s.Branch == Branch.Stain && StainPointsFree > 0) StainPointsSpent++; else SkillPointsSpent++;   // 전용 점수를 먼저 쓴다
+            SkillPointsSpent++;
             if (s.Active && ActiveBar.Count < SkillTree.ActiveSlots) ActiveBar.Add(name);   // 칸이 비어 있으면 바로 올린다
             return true;
         }
@@ -186,25 +193,28 @@ namespace Chasa.Core
             if (g == null) return;
             int str = g.Stats[0] - GrowthState.StatBase, agi = g.Stats[1] - GrowthState.StatBase,
                 body = g.Stats[2] - GrowthState.StatBase, mind = g.Stats[3] - GrowthState.StatBase;
-            s.DamagePct += str * Balance.GROWTH_DAMAGE_PER_STR;
+            s.StatDamagePct += str * Balance.GROWTH_DAMAGE_PER_STR;   // 힘은 장비 상한(+40%) 밖에서 따로 곱한다(기획 장비 점검 B-1)
             s.AttackSpeedPct += agi * Balance.GROWTH_ATKSPD_PER_AGI;
             s.MoveSpeedPct += agi * Balance.GROWTH_MOVE_PER_AGI;
             s.HpFlat += body * Balance.GROWTH_HP_PER_BODY;
             s.CastReducePct += mind * Balance.GROWTH_CAST_PER_MIND;
             s.TendoNeokPct += mind * Balance.GROWTH_NEOK_PER_MIND;
-            // 패시브(단계 1/2): 도술 설명문의 수치 그대로
-            s.ChainWindowAddS += 1f * g.LevelOf("오래 부르기");
-            s.TendoNeokPct += 0.06f * g.LevelOf("고마운 넋");
-            s.CastDamageReducePct += 0.10f * g.LevelOf("곁을 지킴");
-            s.AttackSpeedPct += 0.08f * g.LevelOf("단단한 손");
-            s.PahonRadiusM += 0.2f * g.LevelOf("큰 폭발");
-            s.PahonKnockbackPct += 0.2f * g.LevelOf("세찬 넉백");
-            s.PahonCoinPct += 0.07f * g.LevelOf("노잣돈");
-            s.ReachAdd += 0.4f * g.LevelOf("긴 사슬");
-            s.BoundBonus += 0.30f * g.LevelOf("묶인 자");
-            s.StainShorten += 0.15f * g.LevelOf("마른 얼룩");
-            s.DamagePct += 0.05f * g.LevelOf("손에 익음");   // 근사: '무기 계열 특성 하나 강화'가 정해지기 전까지 피해 +5%/+10%
+            // 패시브 3단계(기획 dosul-check 3): 3단계 = 옛 2단계 값, 그것을 셋으로 나눈다(고마운 넋 +4/+8/+12%). 같은 점수에서 힘이 옛 값과 같아 빌드 표가 그대로 산다
+            s.ChainWindowAddS += Third(1f, g.LevelOf("오래 부르기"));
+            s.TendoNeokPct += Third(0.06f, g.LevelOf("고마운 넋"));
+            s.CastDamageReducePct += Third(0.10f, g.LevelOf("곁을 지킴"));
+            s.AttackSpeedPct += Third(0.08f, g.LevelOf("단단한 손"));
+            s.PahonRadiusM += Third(0.2f, g.LevelOf("큰 폭발"));
+            s.PahonKnockbackPct += Third(0.2f, g.LevelOf("세찬 넉백"));
+            { int l = g.LevelOf("노잣돈"); s.PahonCoinPct += l <= 0 ? 0f : l == 1 ? 0.05f : l == 2 ? 0.09f : 0.14f; }   // 기획 표: +5/+9/+14%
+            s.ReachAdd += Third(0.4f, g.LevelOf("긴 사슬"));
+            s.BoundBonus += Third(0.30f, g.LevelOf("묶인 자"));
+            s.StainShorten += Third(0.15f, g.LevelOf("마른 얼룩"));
+            // 손에 익음(든 무기 특성 강화)은 무기별 값이라 JudgeSystem/Player 가 단계를 읽어 쓴다(피해 +5% 근사는 없앴다)
         }
+
+        /// <summary>옛 단계당 값(perOld)을 3단계 표로: 단계 × perOld × 2/3 (3단계 합 = 옛 2단계 합)</summary>
+        static float Third(float perOld, int level) { return perOld * 2f / 3f * level; }
     }
 }
 
@@ -241,7 +251,10 @@ namespace Chasa.Core
         public float Left(string name) { float v; return left.TryGetValue(name, out v) ? v : 0f; }
         public bool Ready(string name) { return Left(name) <= 0f; }
         public float Ratio(string name) { float l = Left(name); return l <= 0f ? 0f : l / Cooldown(name); }
-        public bool Start(string name) { if (!Ready(name)) return false; left[name] = Cooldown(name); return true; }
+        /// <summary>쓴다. 액티브 단계(1~5)마다 재사용 −5%(기획 dosul-check 2)</summary>
+        public bool Start(string name, int level = 1) { if (!Ready(name)) return false; left[name] = Cooldown(name) * (1f - 0.05f * Math.Max(0, level - 1)); return true; }
+        /// <summary>액티브 단계 효과 배율: 1 + 0.1 × (단계 − 1)</summary>
+        public static float EffectMult(int level) { return 1f + 0.1f * Math.Max(0, level - 1); }
 
         public void Tick(float dt)
         {

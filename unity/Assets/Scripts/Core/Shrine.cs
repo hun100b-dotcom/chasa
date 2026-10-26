@@ -65,7 +65,7 @@ namespace Chasa.Core
             var keep = new List<Opt>();
             for (int i = 0; i < it.Options.Count; i++) keep.Add(it.Options[i].Kind);   // 이미 있는 종류는 피한다(중복 방지)
             l.Coin -= cost;
-            it.Options[index] = Loot.RollOption(rand, it.Rarity, keep);
+            it.Options[index] = Loot.RollOption(rand, it.Rarity, keep, it.Slot);
             it.Rerolls++;
             return true;
         }
@@ -91,7 +91,7 @@ namespace Chasa.Core
                 it.Options[i] = new OptionRoll(o.Kind, o.Kind == Opt.HpFlat ? (float)Math.Round(v) : v);
             }
             it.Rarity = next;
-            it.Options.Add(Loot.RollOption(rand, next, keep));   // 옵션 칸이 하나 늘어난다
+            it.Options.Add(Loot.RollOption(rand, next, keep, it.Slot));   // 옵션 칸이 하나 늘어난다
             return true;
         }
 

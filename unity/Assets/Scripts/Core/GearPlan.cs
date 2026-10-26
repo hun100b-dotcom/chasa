@@ -69,13 +69,23 @@ namespace Chasa.Core
 
         /// <summary>
         /// 위치로 본 고리. ① 솔고개·보릿들·물막이 골·폐당집=1, ② 검은여울=2, ③ 붉은재=3, ④ 쇳골=4, ⑤ 갯마을=5, ⑥ 도성=6.
-        /// 2막 ③④는 x 360 을 경계로 가른다(BgmPlayer.RegionKeyAt 과 같은 선). blackRiver: 지금 있는 구역이 검은여울인가.
+        /// 2막(z 640 이상)은 구역마다 고리가 달라 여기선 기본 3 만 준다 — 구역별 값은 FieldZones.RingAt(act2_map.json 의 ring). blackRiver: 지금 있는 구역이 검은여울인가.
         /// </summary>
+        /// <summary>필드 혼 고리 배율(기획 act1-enemy-check, 시뮬 Sim.cs 와 같은 표). 고리 1~6</summary>
+        static readonly float[] RingMaedhim = { 1f, 1.2f, 1.4f, 1.7f, 2.0f, 2.3f, 2.6f, 2.9f }, RingDamage = { 1f, 1.15f, 1.3f, 1.5f, 1.7f, 1.9f, 2.1f, 2.3f }, RingReward = { 1f, 1.25f, 1.5f, 1.75f, 2.0f, 2.3f, 2.6f, 2.9f };
+        static int Ix(int ring) { return System.Math.Max(0, System.Math.Min(7, ring - 1)); }
+        public static float MaedhimMult(int ring) { return RingMaedhim[Ix(ring)]; }
+        public static float DamageMult(int ring) { return RingDamage[Ix(ring)]; }
+        /// <summary>넋 보상 배율</summary>
+        public static float RewardMult(int ring) { return RingReward[Ix(ring)]; }
+        /// <summary>엽전 보상 배율: 보상 배율 증가분의 RING_COIN_SHARE(60%)만</summary>
+        public static float CoinMult(int ring) { return 1f + (RingReward[Ix(ring)] - 1f) * Balance.RING_COIN_SHARE; }
+
         public static int RingAt(float x, float z, bool blackRiver)
         {
             if (x >= FieldRules.Size + 128f) return 5;
             if (x < 0f) return 6;
-            if (z >= FieldRules.Size) return x < 360f ? 3 : 4;
+            if (z >= FieldRules.Size) return 3;   // 2막 고리는 구역 단위라 군집·혼이 가진 값(Soul.Ring)을 쓴다. 이 값은 정보 없는 자리의 기본
             return blackRiver ? 2 : 1;
         }
     }
@@ -142,16 +152,16 @@ namespace Chasa.Core
                 case "11": return "생명 +" + 30 * m;
                 case "44": return "방어 +" + 6 * m + "%";
                 case "22": return "도술 재사용 -" + 8 * m + "%";
-                case "03": return "연속 천도 창 +" + m + "초";
+                case "03": return "연속 천도 창 +" + m + "초 · 천도 넋 +" + 4 * m + "%";
                 case "01": return "이동 속도 +" + 5 * m + "%";
                 case "04": return "무기 기술 재사용 -" + 10 * m + "%";
-                case "02": return "천도 시전 -" + 6 * m + "%";
-                case "13": return "파혼 피해 +" + 15 * m + "%";
+                case "02": return "천도 시전 -" + 6 * m + "% · 천도 넋 +" + 4 * m + "%";
+                case "13": return "파혼 피해 +" + 15 * m + "% · 파혼 엽전 +" + 2 * m + "%";
                 case "34": return "사나운 적·덩어리 피해 +" + 12 * m + "%";
-                case "23": return "얼룩 지속 -" + 20 * m + "%";
-                case "14": return "천도 중 받는 피해 -" + 15 * m + "%";
+                case "23": return "얼룩 지속 -" + 20 * m + "% · 파혼 엽전 +" + 3 * m + "%";
+                case "14": return "천도 중 받는 피해 -" + 15 * m + "% · 천도 넋 +" + 4 * m + "%";
                 case "12": return "처결 대기 시간 +" + m + "초";
-                default: return "파혼 넉백 +" + 30 * m + "%";
+                default: return "파혼 넉백 +" + 30 * m + "% · 파혼 엽전 +" + 3.5f * m + "%";
             }
         }
         public static void Apply(Seal s, GearStats g)
@@ -164,16 +174,16 @@ namespace Chasa.Core
                 case "11": g.HpFlat += (int)(30 * m); break;
                 case "44": g.DefensePct += 0.06f * m; break;
                 case "22": g.SkillCdReduce += 0.08f * m; break;
-                case "03": g.ChainWindowAddS += 1f * m; break;
+                case "03": g.ChainWindowAddS += 1f * m; g.TendoNeokPct += 0.04f * m; break;   // 기울기 인은 덧줄(기획 인 점검 4): 천도 셋 합 11.2% · 파혼 셋 합 11.0%
                 case "01": g.MoveSpeedPct += 0.05f * m; break;
                 case "04": g.WeaponCdReduce += 0.10f * m; break;
-                case "02": g.CastReducePct += 0.06f * m; break;
-                case "13": g.PahonDamagePct += 0.15f * m; break;
+                case "02": g.CastReducePct += 0.06f * m; g.TendoNeokPct += 0.04f * m; break;
+                case "13": g.PahonDamagePct += 0.15f * m; g.PahonCoinPct += 0.02f * m; break;
                 case "34": g.FiercePct += 0.12f * m; break;
-                case "23": g.StainShorten += 0.20f * m; break;
-                case "14": g.CastDamageReducePct += 0.15f * m; break;
+                case "23": g.StainShorten += 0.20f * m; g.PahonCoinPct += 0.03f * m; break;
+                case "14": g.CastDamageReducePct += 0.15f * m; g.TendoNeokPct += 0.04f * m; break;
                 case "12": g.WaitAddS += 1f * m; break;
-                default: g.PahonKnockbackPct += 0.30f * m; break;
+                default: g.PahonKnockbackPct += 0.30f * m; g.PahonCoinPct += 0.035f * m; break;
             }
         }
         /// <summary>인을 장비 홈에 끼운다(홈이 비어 있고 그 자리가 인을 받을 수 있을 때)</summary>
