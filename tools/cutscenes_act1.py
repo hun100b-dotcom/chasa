@@ -32,7 +32,7 @@ RULES = {
 def noclue(bid, what):
     return {'id': f'{bid}-NOCLUE', 'branch': '처결 대기(천도 불가)', 'trigger': '단서 2개 이하에서 천도 입력',
             'duration': 1.0, 'input_lock': False, 'world': 'run', 'skippable': False,
-            'steps': [st(0.0, act=what, ui={'toast': '이름이 들리지 않는다.', 'toast_time': 1.0}, note='안내일 뿐. 캐스팅은 시작되지 않고 대기 시간은 계속 흐른다')]}
+            'steps': [st(0.0, act=what, ui={'toast': '이름이 들리지 않는다', 'toast_time': 1.0}, note='안내일 뿐. 캐스팅은 시작되지 않고 대기 시간은 계속 흐른다')]}
 
 # ───────── B-02 월화 (① 폐당집 굿판) ─────────
 W = 'B-02'

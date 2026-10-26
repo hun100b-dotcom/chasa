@@ -49,7 +49,7 @@ def kneel(bid, act, extra=None):
 def noclue(bid, act):
     return {'id': f"{bid.replace('-', '')}-NOCLUE", 'branch': '처결 대기(천도 불가)', 'trigger': '단서 2개 이하에서 천도 입력', 'duration': 1.0,
             'input_lock': False, 'world': 'run', 'skippable': False,
-            'steps': [st(0.0, act=act, ui={'toast': '이름이 들리지 않는다.', 'toast_time': 1.0}, sfx=['cut.seal.fade'],
+            'steps': [st(0.0, act=act, ui={'toast': '이름이 들리지 않는다', 'toast_time': 1.0}, sfx=['cut.seal.fade'],
                          note='안내일 뿐. 캐스팅은 시작되지 않고 대기 시간은 계속 흐른다')]}
 
 def tendo(bid, ledger, beats, reward, dur=7.5, note=None, first=None, mem_t=1.0):
@@ -236,6 +236,7 @@ B12 = [
    st(2.0, cam={'mode': 'return', 'to': 'player', 'time': 0.4}, act='물 혼들이 떠밀려 온다. 흑월이 보이는 대로 깨뜨리기 시작한다', note='내가 먼저 천도하면 그의 맺힘 −3%씩')]},
  {'id': 'B12-KNEEL', 'branch': '단계 4 사슬을 내려놓다(처결 대기)', 'trigger': '맺힘 15%', 'duration': 6.0, 'input_lock': False, 'world': 'run', 'skippable': False,
   'note': '흑월은 무릎 꿇지 않고 선다. 처결 대기 7초는 대사가 끝난 뒤부터 센다. 이 게임에서 흑월의 마지막 대사',
+  'timeout': '7초 안에 처결하지 않으면 B12-RISE(사슬을 다시 감아 쥔다) 뒤 15%부터 싸움이 이어진다. 다시 맺힘 0이면 이 컷을 대사 없이(t=2.8 줄을 건너뛰고) 다시 — 한마디는 한 번만(boss_kneel_lines count 규칙과 같음). 업 60+로 단서가 모자란 사람도 같은 길: 기다려 주는 흑월 앞에서 결국 파혼을 고르게 된다',
   'steps': [
    st(0.0, cam={'mode': 'pull', 'zoom': 1.0, 'time': 1.2}, act='물이 빠진다. 새벽빛이 눈밭에 든다', req=['cut.water.recede(물 빠지는 소리)']),
    st(1.5, cam={'mode': 'two_shot', 'a': 'player', 'b': 'boss', 'time': 0.8, 'zoom': 1.15, 'framing': '둘을 같은 높이로, 사이에 사슬'}, act='흑월이 사슬을 눈밭에 내려놓는다. 더 공격하지 않는다', sfx=['cut.chain.wrap']),
@@ -243,6 +244,11 @@ B12 = [
    st(5.6, ui={'kneel_timer': 7.0, 'seal_over_boss': 'clue>=3 ? steady : flicker'}),
    st(6.0, cam={'mode': 'return', 'to': 'player_and_boss', 'time': 0.3})]},
  noclue('B-12', '흑월 머리 위 명부 인 자리가 비어 있다. 흑월은 기다린다'),
+ {'id': 'B12-RISE', 'branch': '처결 대기 끝(아무것도 고르지 않음)', 'trigger': 'B12-KNEEL 처결 대기 7초가 다 흐름', 'duration': 1.5, 'input_lock': False, 'world': 'run', 'skippable': False,
+  'note': '대사 0. 서사 10-26: 대기 끝 장면이 없어 흑월이 말없이 다시 싸우던 구멍을 메움. 대기 수치(7초)는 그대로',
+  'steps': [
+   st(0.0, act='새벽빛이 걷히고 눈이 다시 내린다. 흑월이 눈밭의 사슬을 천천히 다시 감아 쥔다', sfx=['cut.chain.wrap']),
+   st(1.5, cam={'mode': 'return', 'to': 'player', 'time': 0.3})]},
 ]
 CUTS += B12
 
@@ -270,7 +276,7 @@ C12A = {'id': 'C-12A', 'branch': '천도(시즌 1 끝 A판)', 'trigger': 'B-12 �
   st(60.0, beat='기억 한 줄', line=say(mem['B-12']['memory'], 'B-12', 'memory', 5.0), note='기억 M-B12(★F9). 그림이 먼저, 글은 뒤에 — 확인으로만'),
   st(66.0, beat='같은 색', cam={'mode': 'cut', 'to': 'arena', 'framing': '눈밭, 나와 흑월'}, act='눈밭으로 돌아온다. 화면 가장자리 기억 색이 천천히 내 혼불 색으로 바뀐다',
      ui={'vignette_to': 'player_soul_color', 'fact_on': 'F9', 'board_center': '나'}, note='추리판 가운데 빈칸에 "나". 이름 칸은 비어 있다'),
-  st(74.0, beat='떠남', cam={'mode': 'crane', 'dir': 'up', 'time': 6.0, 'framing': '흑월 혼불과 강 하류를 한 화면에'}, act='흑월이 흩어지지 않는다. 혼불이 되어 삼도천 쪽으로 천천히 떠간다', sfx=['cut.dissolve'],
+  st(74.0, beat='떠남', cam={'mode': 'crane', 'dir': 'up', 'time': 6.0, 'framing': '흑월 혼불과 강 하류를 한 화면에'}, act='흑월이 흩어지지 않는다. 혼불이 되어 삼도천 쪽으로 천천히 떠간다. 눈밭을 떠돌던 혼 열둘이 그 뒤를 따라간다', sfx=['cut.dissolve'],
      note='시즌 2 ⑦ 줄에서 다시 만난다'),
   st(82.0, beat='붓', cam={'mode': 'push', 'to': 'snow_brush', 'time': 2.0, 'zoom': 1.5}, act='사슬은 남지 않았다. 눈밭에 붓 한 자루가 남아 있다', req=['cut.snow.settle(눈 위에 가벼운 것이 놓이는 소리)']),
   st(90.0, cam={'mode': 'fade_out', 'time': 1.0}, ui={'reward': {'memory': 'M-B12', 'item': '흑월의 붓(이름 있는 노리개 · 시즌 2로 가져감)'}}, note='다음: C-13(A판)'),

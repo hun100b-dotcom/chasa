@@ -53,7 +53,7 @@ def kneel(bid, act, extra=None, tendo_ok=True):
 def noclue(bid, act):
     return {'id': cid(bid, 'NOCLUE'), 'branch': '처결 대기(천도 불가)', 'trigger': '단서 2개 이하에서 천도 입력', 'duration': 1.0,
             'input_lock': False, 'world': 'run', 'skippable': False,
-            'steps': [st(0.0, act=act, ui={'toast': '이름이 들리지 않는다.', 'toast_time': 1.0}, sfx=['cut.seal.fade'],
+            'steps': [st(0.0, act=act, ui={'toast': '이름이 들리지 않는다', 'toast_time': 1.0}, sfx=['cut.seal.fade'],
                          note='안내일 뿐. 캐스팅은 시작되지 않고 대기 시간은 계속 흐른다')]}
 
 def tendo(bid, beats, dur=7.5, first=None, fx='strokes_join_unreadable', note=None, extra_ui=None, mem_t=1.0):
@@ -371,7 +371,7 @@ B20 = [
             st(0.4, ui={'kneel_timer': 7.0, 'unravel_ready': 'R/S >= 0.6 ? steady : flicker'}),
             st(1.5, cam={'mode': 'return', 'to': 'player_and_boss', 'time': 0.3})]},
  {'id': 'B20-NOCLUE', 'branch': '처결 대기(풀어내기 불가)', 'trigger': 'R/S < 0.6에서 풀어내기 입력', 'duration': 1.0, 'input_lock': False, 'world': 'run', 'skippable': False,
-  'steps': [st(0.0, ui={'toast': '부를 이름이 모자란다.', 'toast_time': 1.0}, sfx=['cut.seal.fade'], note='안내일 뿐. 대기 시간은 계속 흐른다')]},
+  'steps': [st(0.0, ui={'toast': '부를 이름이 모자란다', 'toast_time': 1.0}, sfx=['cut.seal.fade'], note='안내일 뿐. 대기 시간은 계속 흐른다')]},
 ]
 CUTS += B20
 
