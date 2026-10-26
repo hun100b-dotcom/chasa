@@ -217,6 +217,7 @@ namespace Chasa.Core
         public float TendoNeokPct, PahonCoinPct, WaitAddS, ChainWindowAddS, PahonKnockbackPct, VisionShift, CastDamageReducePct;
         public float ReachAdd, BoundBonus, StainShorten;   // 도술 패시브: 무기 사거리 +m / 묶인 적 받는 피해 +% / 얼룩 지속 단축 비율
         public float StatDamagePct;   // 힘(능력치) 피해: 장비 상한 밖에서 따로 곱한다(기획 점검 B-1: 힘이 장비 상한을 다 먹지 않게)
+        public float SkillPowerPct;   // 마음 능력치의 도술 위력 +%(액티브 효과 배율에 곱한다)
         public float DefensePct, SkillCdReduce, WeaponCdReduce, FiercePct;   // 인 전용: 방어 / 도술 재사용 단축 / 무기 기술 재사용 단축 / 사나운 적 피해 (쓰는 쪽 연결은 순서대로)
         public int HpFlat;
 
@@ -524,9 +525,9 @@ namespace Chasa.Core
         }
 
         // 옵션별 [흔한, 손본, 귀한] 범위(% 는 소수로). 값은 growth.json affixes ranges 와 같다
-        static readonly Dictionary<Opt, float[]> Ranges = new Dictionary<Opt, float[]>
+        static readonly Dictionary<Opt, float[]> Ranges = ScaleRanges(new Dictionary<Opt, float[]>
         {
-            { Opt.DamagePct,          new[] { .03f, .05f, .05f, .09f, .09f, .14f } },
+            { Opt.DamagePct,          new[] { .03f, .04f, .05f, .07f, .08f, .11f } },   // 기획 gear-grade-check: 흔한 3~4 · 손본 5~7 · 귀한 8~11%(옛 9~14%는 3막 끝에 상한 40%를 일찍 채웠다)
             { Opt.AttackSpeedPct,     new[] { .02f, .03f, .03f, .06f, .06f, .09f } },
             { Opt.CastReducePct,      new[] { .02f, .03f, .03f, .05f, .05f, .08f } },
             { Opt.PahonDamagePct,     new[] { .04f, .06f, .06f, .10f, .10f, .16f } },
@@ -543,7 +544,19 @@ namespace Chasa.Core
             { Opt.SkillCdReduce,      new[] { .03f, .05f, .05f, .08f, .08f, .12f } },
             { Opt.WeaponCdReduce,     new[] { .04f, .06f, .06f, .10f, .10f, .15f } },
             { Opt.FiercePct,          new[] { .05f, .08f, .08f, .14f, .14f, .20f } },
-        };
+        });
+
+        /// <summary>피해 줄과 같은 비율로 다른 옵션 범위도 줄인다(기획 B: 칸마다 {1, .8, 1, .78, .89, .79}). 방어·생명은 이미 맞아서 뺀다</summary>
+        static Dictionary<Opt, float[]> ScaleRanges(Dictionary<Opt, float[]> d)
+        {
+            float[] k = { 1f, .8f, 1f, .78f, .89f, .79f };
+            foreach (var key in new List<Opt>(d.Keys))
+            {
+                if (key == Opt.DamagePct || key == Opt.DefensePct || key == Opt.HpFlat) continue;
+                var a = d[key]; for (int n = 0; n < a.Length; n++) a[n] = (float)Math.Round(a[n] * k[n], 3);
+            }
+            return d;
+        }
         static void Range(Opt k, Rarity r, out float lo, out float hi)
         {
             float[] a; int i = r == Rarity.Common ? 0 : r == Rarity.Crafted ? 2 : 4;

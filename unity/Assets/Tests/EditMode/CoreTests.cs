@@ -1695,7 +1695,7 @@ public class CoreTests
             foreach (var o in it.Options.GetRange(2, it.Options.Count - 2))                 // 앞 두 줄은 기울기
             {
                 CollectionAssert.Contains(Loot.PoolFor(Slot.Shoes), o.Kind);                   // 신은 생명·이동만
-                if (o.Kind == Opt.MoveSpeedPct) Assert.That(o.Value, Is.InRange(0.05f, 0.08f)); // 귀한 이동 +5~8%
+                if (o.Kind == Opt.MoveSpeedPct) Assert.That(o.Value, Is.InRange(0.044f, 0.064f)); // 귀한 이동 +4.5~6.3%(기획 B: 피해 줄과 같은 비율로 줄임)
             }
         }
     }

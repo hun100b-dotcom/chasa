@@ -203,6 +203,8 @@ namespace Chasa.Core
             s.MoveSpeedPct += agi * Balance.GROWTH_MOVE_PER_AGI;
             s.HpFlat += body * Balance.GROWTH_HP_PER_BODY;
             s.CastReducePct += mind * Balance.GROWTH_CAST_PER_MIND;
+            s.SkillCdReduce += mind * Balance.GROWTH_SKILLCD_PER_MIND;   // 마음 = 도술 쪽 능력치(기획 C): 재사용 −0.3%/점
+            s.SkillPowerPct += mind * Balance.GROWTH_SKILLPOWER_PER_MIND;   // 도술 위력 +1%/점
             s.TendoNeokPct += mind * Balance.GROWTH_NEOK_PER_MIND;
             // 패시브 3단계(기획 dosul-check 3): 3단계 = 옛 2단계 값, 그것을 셋으로 나눈다(고마운 넋 +4/+8/+12%). 같은 점수에서 힘이 옛 값과 같아 빌드 표가 그대로 산다
             s.ChainWindowAddS += Third(1f, g.LevelOf("오래 부르기"));

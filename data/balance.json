@@ -1684,11 +1684,11 @@
   "note": "(성장 1차 임시) 힘 1점(시작 10 초과분)당 맺힘 피해 +1%"
  },
  "GROWTH_ATKSPD_PER_AGI": {
-  "value": 0.005,
+  "value": 0.004,
   "note": "(성장 1차 임시) 날램 1점당 공격 속도 +0.5%"
  },
  "GROWTH_MOVE_PER_AGI": {
-  "value": 0.003,
+  "value": 0.002,
   "note": "(성장 1차 임시) 날램 1점당 이동 속도 +0.3%"
  },
  "GROWTH_HP_PER_BODY": {
@@ -1696,7 +1696,7 @@
   "note": "몸 1점당 최대 체력 +4 (기획 growth.json stats, 장비 점검 B-7)"
  },
  "GROWTH_CAST_PER_MIND": {
-  "value": 0.005,
+  "value": 0.0015,
   "note": "(성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%"
  },
  "GROWTH_NEOK_PER_MIND": {
@@ -3170,5 +3170,13 @@
  "PAHON_KNOCKED_COIN_MULT": {
   "value": 0.5,
   "note": "(기획 n1-season-check) N1로 꿇은 혼을 천도하지 않고 파혼하면 엽전 배율"
+ },
+ "GROWTH_SKILLPOWER_PER_MIND": {
+  "value": 0.01,
+  "note": "(기획 code-plan-diff C) 마음 1점당 도술 위력 +1%"
+ },
+ "GROWTH_SKILLCD_PER_MIND": {
+  "value": 0.003,
+  "note": "(기획 C) 마음 1점당 도술 재사용 −0.3%(상한 35% 안)"
  }
 }

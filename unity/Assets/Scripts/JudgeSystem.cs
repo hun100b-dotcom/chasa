@@ -793,7 +793,7 @@ public class JudgeSystem : MonoBehaviour
 
     bool CastActive(string name)
     {
-        float em = ActiveCooldowns.EffectMult(growth.LevelOf(name));   // 액티브 단계마다 효과 +10%(기획 dosul-check 2)
+        float em = ActiveCooldowns.EffectMult(growth.LevelOf(name)) * (1f + lo.stats.SkillPowerPct);   // 액티브 단계마다 효과 +10%(기획 dosul-check 2)
         switch (name)
         {
             case "붙잡아 부르기": // 무릎 꿇은 혼 대기 +3초, 서 있는 적 0.8초 멈칫

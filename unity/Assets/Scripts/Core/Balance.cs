@@ -447,10 +447,10 @@ public static class Balance
     public const float MOON_NEW_LUMP = 0.2f;  // 그믐 밤: 덩어리가 나올 확률 가산(파혼이 유리)
     public const float DAY_CAMP_MIN_FRAC = 0.4f;  // 한낮에 적 군집 인원이 줄어드는 최소 비율(밤=1.0)
     public const float GROWTH_DAMAGE_PER_STR = 0.01f;  // (성장 1차 임시) 힘 1점(시작 10 초과분)당 맺힘 피해 +1%
-    public const float GROWTH_ATKSPD_PER_AGI = 0.005f;  // (성장 1차 임시) 날램 1점당 공격 속도 +0.5%
-    public const float GROWTH_MOVE_PER_AGI = 0.003f;  // (성장 1차 임시) 날램 1점당 이동 속도 +0.3%
+    public const float GROWTH_ATKSPD_PER_AGI = 0.004f;  // (성장 1차 임시) 날램 1점당 공격 속도 +0.5%
+    public const float GROWTH_MOVE_PER_AGI = 0.002f;  // (성장 1차 임시) 날램 1점당 이동 속도 +0.3%
     public const int GROWTH_HP_PER_BODY = 4;  // 몸 1점당 최대 체력 +4 (기획 growth.json stats, 장비 점검 B-7)
-    public const float GROWTH_CAST_PER_MIND = 0.005f;  // (성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%
+    public const float GROWTH_CAST_PER_MIND = 0.0015f;  // (성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%
     public const float GROWTH_NEOK_PER_MIND = 0.0f;  // 마음의 천도 넋 보너스는 기획에 없는 값이라 0 (장비 점검 B-7)
     public const int BOSS_S2_MAEDHIM = 800;  // (2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전
     public const int B02_CUPS = 12;  // (2호 보스 임시) 월화 열두 거리: 굿판 가장자리 잔 수. 열두째(번호 11) 잔은 엎어져 있어 늘 안전
@@ -819,4 +819,6 @@ public static class Balance
     public const float DAY_STAIN_SEC = 8.0f;  // (기획 field-judge-skew FK3) 낮 얼룩 지속(초). 밤 15초. 낮엔 소환 없음
     public const int BOSS_DRAGGABLE = 0;  // (기획 b01-naru-final-check) 1이면 보스도 철삭으로 끌 수 있다. 0 = 불가(기본)
     public const float PAHON_KNOCKED_COIN_MULT = 0.5f;  // (기획 n1-season-check) N1로 꿇은 혼을 천도하지 않고 파혼하면 엽전 배율
+    public const float GROWTH_SKILLPOWER_PER_MIND = 0.01f;  // (기획 code-plan-diff C) 마음 1점당 도술 위력 +1%
+    public const float GROWTH_SKILLCD_PER_MIND = 0.003f;  // (기획 C) 마음 1점당 도술 재사용 −0.3%(상한 35% 안)
 }
