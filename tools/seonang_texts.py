@@ -97,6 +97,32 @@ SEONANG_RULE = {
 }
 DEATH_WAKE = '아직 명부에 이름이 남았다'   # '보낼'은 천도 카드 말(보내기)이라 한쪽을 권하게 됨 → 명부로(2026-10-26 2차)
 
+# ── 1-4) 시즌 2 나룻불 쉼터(저승판 서낭당, 기획 R6 "나룻불 쉬기 = 서낭당 쉬기") ──
+# 이승 서낭당과 다른 점(세계 이치): 저승의 것은 죽은 이들이 만든 것이라 손에 다 닿는다.
+#   이승에선 산 사람의 것이 손을 지나갔다 → 저승에선 지나가는 것이 없다. 그 낯섦을 첫 만짐 줄로.
+# 이승 촛불은 그의 찬 기운에 이쪽으로 누웠다 → 저승 불은 눕지 않는다(여기선 모두가 죽은 이라서).
+# 좌표·이름은 기획 r7_map.json · r8_r10_map.json. 시즌 2 코드는 시즌 1 PC 확인 뒤(그때 그대로 쓴다)
+NARU_REST = '나룻불 아래 이름을 걸어 두었다'   # 서낭당 "서낭당에 이름을 걸어 두었다"와 같은 틀
+NARU_S2 = [
+ {'id': 'NB7-1', 'zone': '⑦ 저승 어귀 나룻불(70,250)',
+  'first_touch': ['나룻불 기둥이 손바닥에 닿는다', '여기서는 무엇이든 손에 닿는다'],
+  'rest_day': ['강 건너가 희게 비어 있다', '줄 끝이 안개 속으로 사라진다'],
+  'rest_night': ['나룻불이 이쪽으로 눕지 않는다', '물소리가 먹처럼 무겁다'],
+  'note': '시즌 1 서낭당 촛불은 이쪽으로 누웠다(그의 찬 기운). 저승 불은 눕지 않는다 — 풀어 말하지 않는다'},
+ {'id': 'NB7-2', 'zone': '⑦ 나루 마을 주막 터 나룻불(280,290)',
+  'first_touch': ['빈 술독 뚜껑이 손에 닿는다', '간판 걸던 자리에 못만 남았다'],
+  'rest_day': ['줄 선 혼 하나가 이쪽을 보다 만다', '주막 터 마당에 빈 평상이 있다'],
+  'rest_night': ['멀리서 노 젓는 소리가 난다', '나룻불 심지가 한 마디 짧아졌다'],
+  'after_boss': {'boss': 'B-13', 'tendo': '줄이 한 걸음 앞으로 당겨졌다', 'pahon': '나루 말뚝에 칼금이 하나 늘었다'},
+  'note': '칼금은 B13-D2(말뚝의 칼금) 맺음 — 보스 처결 뒤라 단서가 아니다'},
+ {'id': 'NB8-1', 'zone': '⑧ 숙사 어귀 나룻불(640,600)',
+  'first_touch': ['행랑 기둥 결이 손에 닿는다', '붓 말리는 줄이 머리를 스친다'],
+  'rest_day': ['행랑에서 먹 가는 소리가 난다', '서리들이 이쪽을 보고 지나간다'],
+  'rest_night': ['행랑 등불 아래 손들이 바쁘다', '부엌 쪽에서 누룽지 냄새가 난다'],
+  'after_boss': {'boss': 'B-15', 'tendo': '행랑 서리 하나가 이름을 소리 내 읽는다', 'pahon': '행랑에서 번호 읽는 소리가 빨라졌다'},
+  'note': '누룽지 냄새는 S-139(숙사 부엌 할미) 복선. "이쪽을 보고 지나간다"는 F34의 그림만(말은 안 함)'},
+]
+
 # ── 2) 첫 밤 엿듣기(솔고개, 처음 10분) ──
 # near = npc_places_act1.json 자리 이름, off = 그 자리에서 (동, 북) m. through = 담·창호지 너머(사람 모델 없이 소리만 — 아트 추가 없음).
 # cond: any = 첫 밤 내내 / first_judge = 첫 처결 뒤 / before:S-001 = 박돌쇠 처결 전 / tendo:S-001 · pahon:S-001 = 처결 뒤 그 갈래만.
@@ -175,7 +201,7 @@ def chk(t, n, toast=False):
 seen = set()
 ACT2_BAN = ('서른일곱', '일곱', '위패', '열셋', '열넷', '반장', '앞장', '뒷장', '머릿수', '술 붓')
 ACT3_BAN = ('만선호', '선장', '헛묘', '장부', '빗', '왕초', '서생', '방', '붓', '마흔', '일곱')
-for s in SEONANG + SEONANG_ACT2 + SEONANG_ACT3:
+for s in SEONANG + SEONANG_ACT2 + SEONANG_ACT3 + NARU_S2:
     assert len(s['first_touch']) <= 2
     toasts = s['first_touch'] + s['rest_day'] + s['rest_night'] + ([s['rest_halmi']] if 'rest_halmi' in s else [])
     if 'after_boss' in s: toasts += [s['after_boss']['tendo'], s['after_boss']['pahon']]
@@ -184,6 +210,7 @@ for s in SEONANG + SEONANG_ACT2 + SEONANG_ACT3:
         if s in SEONANG_ACT2: assert not any(w in t for w in ACT2_BAN), t
         if s in SEONANG_ACT3: assert not any(w in t for w in ACT3_BAN), t
 chk(DEATH_WAKE, 22, True)
+chk(NARU_REST, 22, True)
 ids = set()
 for o in FIRST_NIGHT:
     assert o['near'] in PLACES and PLACES[o['near']]['zone'] in ('Hub', 'Village', 'Field'), o['id']
@@ -198,7 +225,7 @@ def pos(o):
 
 data = {
     '_설명': '서낭당 5곳 문구(처음 만져 볼 때 · 쉬기) + 첫 밤 솔고개 엿듣기 보강. tools/seonang_texts.py로 생성. 서사 2026-10-26',
-    'seonang': {'rule': SEONANG_RULE, 'death_wake': DEATH_WAKE, 'shrines': SEONANG, 'shrines_act2': SEONANG_ACT2, 'shrines_act3': SEONANG_ACT3},
+    'seonang': {'rule': SEONANG_RULE, 'death_wake': DEATH_WAKE, 'shrines': SEONANG, 'shrines_act2': SEONANG_ACT2, 'shrines_act3': SEONANG_ACT3, 'naru_s2': {'rest': NARU_REST, 'status': '시즌 2 코드 때(나룻불 쉬기 = 서낭당 쉬기, 기획 R6). rule은 서낭당과 같다', 'points': NARU_S2}},
     'first_night_overhear': {'rule': FIRST_NIGHT_RULE, 'spots': [
         dict({'id': o['id'], 'near': o['near'], 'pos': pos(o), 'through_wall': o['through'], 'cond': o['cond'],
               'lines': [{'speaker': sp, 'text': ln} for sp, ln in o['lines']], 'line_half': o['half'], 'clue': None},

@@ -148,7 +148,7 @@ RITES = [
    st(12.0, beat='#6 다시 움직이는 것', cam={'mode': 'two_shot', 'a': 'rite_soul', 'b': 'queue', 'time': 2.0}, act='{moving}'),
    st(22.0, beat='#7 나룻불', cam={'mode': 'crane', 'dir': 'up', 'time': 4.0, 'framing': '강 하류, 꺼진 나룻불들'}, act='배가 떠난다. 강가 나룻불 하나가 켜진다', sfx=['cut.lantern.light']),
    st(30.0, cam={'mode': 'return', 'to': 'player', 'time': 0.5})]},
- {'id': 'RITE-JEONGSEO', 'branch': '⑧ 정서(장례 변주)', 'trigger': '숫자 마당 혼을 천도한 다음 새벽 틈(마당 책상 서리 N-803)',
+ {'id': 'RITE-JEONGSEO', 'branch': '⑧ 정서(장례 변주)', 'trigger': '정서 혼(rite kind=정서: S-127·S-133·S-142 숫자 마당, S-139 숙사 부엌)을 천도한 다음 새벽 틈(마당 책상 서리 N-803)',
   'duration': 30.0, 'input_lock': True, 'world': 'pause_enemies', 'skippable': True, 'lines': 0, 'data': 'memories_act4.json souls[].rite(kind=정서)',
   'steps': [
    st(0.0, beat='#1 마당', cam={'mode': 'fade_in', 'time': 1.0, 'framing': '숫자 마당 한쪽 책상, 번호순으로 선 혼들이 배경'}, act='서리가 책상에 명부를 펴고 붓에 먹을 묻힌다', sfx=['cut.ink.grind']),
@@ -242,7 +242,7 @@ CUTS += [
  pahon('B-16', ['대폭발. 벼루 하나가 갈라진다', '먹물이 바닥에 번진다. 기억 줄들이 먹에 잠긴다', '갈라진 벼루 조각이 굴러 멈춘다'], '벼루(넋 대량)'),
 ]
 
-C16 = {'id': 'C-16', 'branch': '4막 끝 — 먹지기의 빈 책상', 'trigger': 'B-15·B-16 둘 다 처결한 다음 새벽 틈(먹방 가장 안쪽 작은 방)', 'duration': 70.0, 'input_lock': True,
+C16 = {'id': 'C-16', 'branch': '4막 끝 — 먹지기의 빈 책상', 'trigger': 'B-15·B-16 둘 다 처결한 다음 새벽 틈(먹방 가장 안쪽 작은 방). 못 채우면 ⑧ 첫 진입 뒤 7번째 새벽(강제 개방 날) 새벽 틈 시작에 같은 컷 — 먹지기 쪽지를 넘겨받는 장면이라 빠지면 안 된다. ⑨ 금줄은 이 컷 끝에 풀린다', 'duration': 70.0, 'input_lock': True,
  'world': 'pause_enemies', 'skippable': True, 'lines': 0,
  'note': '대사 0. 주인 없는 방. 먹지기의 얼굴·이름은 나오지 않는다(시즌 4 고리). 쪽지 글은 1막부터 실제로 받은 것 그대로',
  'steps': [
