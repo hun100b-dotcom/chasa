@@ -310,7 +310,7 @@ public class NpcWorld
         var mode = Eavesdrop.Mode(karma(), Eavesdrop.IsEavesVerb(s.verb), bossClue);
         if (mode == EavesMode.Closed)
         {
-            Say("…갑자기 춥네.", s.isObject ? null : s.label);                                           // 귀가 닫혔다: 사람이 말을 접고 떠난다
+            Say("…그만 들어가세.", s.isObject ? null : s.label);                                           // 귀가 닫혔다: 사람이 말을 접고 떠난다
             return;
         }
         string text = mode == EavesMode.Half && !string.IsNullOrEmpty(s.half) ? s.half : s.line;

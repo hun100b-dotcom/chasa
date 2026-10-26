@@ -88,7 +88,7 @@ namespace Chasa.Core
               .Append("   단서 ").Append(Clues).Append('/').Append(CluesNeeded);
             if (BossDone) sb.Append("   나루 영감 끝");
             if (QuotaDone) sb.Append("  (당집으로 돌아가라!)");
-            if (Warning) sb.Append("   동이 튼다!");
+            if (Warning) sb.Append("   날이 밝는다!");
             return sb.ToString();
         }
 

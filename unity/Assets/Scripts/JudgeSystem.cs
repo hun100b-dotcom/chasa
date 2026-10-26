@@ -1707,7 +1707,7 @@ public class JudgeSystem : MonoBehaviour
             if (ph.Value == ClockPhase.Dawn && funeralDone.Contains("칠복") && funeralDay >= 0) dogHome = true;
             if (ph.Value == ClockPhase.Dawn)
                 foreach (var e in enemies.list) if (e.kneeling) { MarkUnjudged(e); e.soul.Finish(); Say("동이 터 무릎 꿇은 혼이 흩어졌다"); }   // 동틀녘: 대기 중 혼은 잃는 것 없이 흩어질 뿐(벌칙 없음)
-            Say(ph.Value == ClockPhase.Dusk ? "인정 — 해가 진다" : ph.Value == ClockPhase.Dawn ? "파루 — 동이 튼다" : n + "이 되었다");
+            Say(ph.Value == ClockPhase.Dusk ? "인정 — 해가 진다" : ph.Value == ClockPhase.Dawn ? "파루 — 날이 밝는다" : n + "이 되었다");
         }
         // 검사용: ] 로 배속 순환(1→10→60→1)
         if (debugKeys && Input.GetKeyDown(KeyCode.RightBracket)) clock.Speed = clock.Speed < 5f ? 10f : clock.Speed < 30f ? 60f : 1f;
@@ -2277,7 +2277,7 @@ public class JudgeSystem : MonoBehaviour
             var h = new GUIStyle(GUI.skin.label) { fontSize = 34, alignment = TextAnchor.MiddleCenter }; h.normal.textColor = Color.white;
             var m = new GUIStyle(h) { fontSize = 22 };
             bool ok = night.Phase == NightPhase.Returned;
-            GUI.Label(new Rect(0, Screen.height * 0.25f, Screen.width, 50), ok ? "밤을 넘겼다" : "동이 트고 말았다", h);
+            GUI.Label(new Rect(0, Screen.height * 0.25f, Screen.width, 50), ok ? "밤을 넘겼다" : "날이 밝고 말았다", h);
             GUI.Label(new Rect(0, Screen.height * 0.25f + 60, Screen.width, 190),
                 "천도 " + night.Sent + "   지킨 넋 " + night.FinalNeok + (night.LostNeok > 0 ? "   잃은 넋 " + night.LostNeok : "") + (night.LostCoin > 0 ? "   잃은 엽전 " + night.LostCoin : "") +
                 "\n엽전 " + ledger.Coin + "   업 " + ledger.Karma + "   기억 " + ledger.Memory +
