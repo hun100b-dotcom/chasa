@@ -3118,5 +3118,17 @@
  "BRUSH_NAMED_JUDGE_RANGE": {
   "value": 6.0,
   "note": "(기획 weapon-choice-skew) 이름 쓰기를 한 혼만 처결 거리를 이만큼(m)으로 늘린다"
+ },
+ "NIGHT_MOON_MULT": {
+  "value": 1.23,
+  "note": "(아트 ROUTE10-STILLS) 밤 달빛 보강 배율. 달빛 1.3→1.6"
+ },
+ "NIGHT_RIM_INTENSITY": {
+  "value": 1.2,
+  "note": "(아트) 밤 주인공 청록 테두리빛 세기. 임시값, PC에서 보고 조절"
+ },
+ "NIGHT_RIM_RANGE": {
+  "value": 4.0,
+  "note": "밤 주인공 청록 테두리빛 반경(m)"
  }
 }

@@ -806,4 +806,7 @@ public static class Balance
     public const float BELL_PAHON_SLOW_TIME = 2.0f;  // (기획 weapon-choice-skew) 요령 파혼 둔화 지속(초)
     public const float BELL_PAHON_SLOW_RADIUS = 4.0f;  // 요령 파혼 둔화 반경(m). 기획서에 반경 지정 없어 붓 파혼 튐(4m)과 같게 둠(임시)
     public const float BRUSH_NAMED_JUDGE_RANGE = 6.0f;  // (기획 weapon-choice-skew) 이름 쓰기를 한 혼만 처결 거리를 이만큼(m)으로 늘린다
+    public const float NIGHT_MOON_MULT = 1.23f;  // (아트 ROUTE10-STILLS) 밤 달빛 보강 배율. 달빛 1.3→1.6
+    public const float NIGHT_RIM_INTENSITY = 1.2f;  // (아트) 밤 주인공 청록 테두리빛 세기. 임시값, PC에서 보고 조절
+    public const float NIGHT_RIM_RANGE = 4.0f;  // 밤 주인공 청록 테두리빛 반경(m)
 }

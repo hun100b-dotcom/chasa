@@ -21,6 +21,7 @@ public class NightLights : MonoBehaviour
     public EnemyManager enemies;
 
     Light lantern;                                   // 플레이어 등불
+    Light rim;                                       // 밤 주인공 청록 테두리빛(어두운 풀밭에 몸이 묻히지 않게)
     readonly List<Light> lamps = new List<Light>();  // 마을 등불
     readonly List<float> lampBase = new List<float>(), lampSeed = new List<float>();
     readonly Dictionary<Enemy, Light> glow = new Dictionary<Enemy, Light>();   // 적마다 하나(필요할 때만 켬)
@@ -56,6 +57,12 @@ public class NightLights : MonoBehaviour
         lantern = go.AddComponent<Light>();
         lantern.type = LightType.Point; lantern.color = Warm; lantern.range = 12f; lantern.intensity = 2.0f;
         lantern.shadows = LightShadows.None;
+        // 밤 테두리빛: 주인공 뒤쪽(카메라 맞은편) 아래에서 청록 점 광원이 윤곽을 살린다
+        // 왜: 처음 10분 길 스틸 점검에서 3·4·5장 밤 풀밭이 짙은 초록 판이라 주인공 몸이 묻혔다(아트 ROUTE10-STILLS)
+        var rg = new GameObject("HeroRim");
+        rg.transform.SetParent(transform, false);
+        rim = rg.AddComponent<Light>();
+        rim.type = LightType.Point; rim.color = new Color(0.35f, 0.9f, 0.85f); rim.range = Balance.NIGHT_RIM_RANGE; rim.shadows = LightShadows.None;
         // 마을 소품에서 등불 자리를 뽑는다 (Atmosphere 와 같은 규칙: 집은 창가, 장승은 약하게, 서낭나무는 크게)
         foreach (var p in FieldRules.On ? new PropDef[0] : MapData.Props)   // 필드 모드는 불빛을 FieldManager 가 따로 켠다
         {
@@ -88,6 +95,13 @@ public class NightLights : MonoBehaviour
             lantern.color = Color.Lerp(Warm, Violet, cast);
             lantern.range = Mathf.Lerp(9f, 6f, cast);   // 주인공 둘레 광원: 반경을 줄이고 세기를 25% 낮춤(아트 검수: 중심이 하얗게 탐)
             lantern.intensity = Mathf.Lerp(1.5f, 1.05f, cast) * (1f - 0.8f * Chasa.Core.SkyState.Daylight);
+        }
+        if (player != null && rim != null)
+        {
+            var cf = Camera.main != null ? Camera.main.transform.forward : Vector3.forward;
+            cf.y = 0f; cf = cf.sqrMagnitude > 0.001f ? cf.normalized : Vector3.forward;
+            rim.transform.position = player.Pos + cf * 1.1f + Vector3.up * 1.1f;   // 카메라가 보는 쪽 = 주인공 뒤
+            rim.intensity = Balance.NIGHT_RIM_INTENSITY * (1f - Chasa.Core.SkyState.Daylight);   // 낮엔 꺼진다
         }
         // 불꽃 깜빡임: 느린 숨결 + 빠른 떨림을 섞는다
         for (int i = 0; i < lamps.Count; i++)
