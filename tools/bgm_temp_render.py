@@ -551,6 +551,93 @@ def song_finish(rng, R):
     return mx, -16.0
 
 
+# ---- 보스전 곡(2026-10-26, 기획·사운드) ----
+# 왜: 보스 맺힘이 커져 싸움이 3~5분인데 지역 전투 곡(44초)만 쓰면 5~7번 되풀이돼 귀에 걸린다.
+#     1단계는 긴 곡 하나가 "조용히 시작 → 차오름 → 절정 → 한 번 숨 → 다시 몰아침" 흐름을 만들고,
+#     2단계(맺힘 50% 아래)는 처음부터 끝까지 거센 곡으로 바꾼다(BgmPlayer 쪽 규칙은 data/bgm.json layers.boss).
+def _boss_bpm(R):
+    return R.get("combat_bpm") or {"bulgeunjae": 108, "soegol": 120, "gaetmaeul": 112, "doseong": 132}[next(k for k, v in REGIONS.items() if v is R)]
+
+
+def _boss_extra(mx, rng, R, t, cyc, k, hot):
+    """지역마다 다른 특이 악기(전투 곡과 같은 규칙). hot=True 면 더 자주"""
+    tn = R["tonic"]
+    if R["extra"] == "kkwaeng":
+        for s in range(12):
+            if s in (0, 3, 6, 9) or rng.random() < (0.5 if hot else 0.25):
+                mx.add(kkwaeng(rng, s % 3 != 0), t + s * cyc / 12, 0.35, 0.22 if s % 3 == 0 else 0.13, 0.2)
+    if R["extra"] == "jing" and k % (2 if hot else 4) == 0: mx.add(jing(rng, tn - 12), t, 0.0, 0.35, 0.3)
+    if R["extra"] == "nagak" and k % (4 if hot else 8) == 2:
+        mx.add(phrase(rng, [(0, 1.6, tn - 12, ""), (1.7, 1.4, tn - 5, "")], "nagak"), t, -0.5, 0.25, 0.4)
+    if R["extra"] == "bak" and k % (4 if hot else 8) == 0: mx.add(bak(rng), t, 0.2, 0.4, 0.3)
+
+
+def song_boss(rng, R):
+    """보스 1단계: 약 120초 반복. 구간(12등분 비율) = 시작 0.5 · 차오름 3 · 절정 4.5 · 숨 1 · 몰아침 3
+    10-26 보스 목표 길이 확정(1막 1.5~2분 · 2막 2~2.5분 · 3막 2.5~3분, 맺힘 50%에서 2단계) → 1단계는 싸움 앞 절반(45~90초)만 들린다.
+    그래서 150→120초로 줄이고 북만 치는 시작을 5초로 당겨, 절정(35~80초)이 1단계 안에서 들리게 했다. 3막은 숨(80~90초) 즈음에 2단계로 넘어간다"""
+    bpm = _boss_bpm(R) - 4                      # 필드 전투보다 조금 무겁게(느리게)
+    cyc = 4 * 60 / bpm
+    cycles = int(round(fit(120, cyc) / cyc)); sec = cycles * cyc
+    unit = cycles / 12.0
+    cut = [max(1, round(unit * a)) for a in (0.5, 3.5, 8, 9)]   # 구간 경계(바퀴 번호)
+    mx = Mix(sec)
+    tn, md = R["tonic"], R["mode"]
+    lay_drone(mx, rng, [tn - 24, tn - 12, tn - 5], sec, "ajaeng", gain=0.18, rev=0.35)
+    b = [buk(rng, 1.4) for _ in range(2)]
+    lead = R["lead"] if R["lead"] != "danso" else "piri"
+    for k in range(cycles):
+        t = k * cyc
+        sect = sum(k >= c for c in cut)         # 0 시작 · 1 차오름 · 2 절정 · 3 숨 · 4 몰아침
+        if sect == 0:
+            if k % 1 == 0: mx.add(b[0], t, 0.0, 0.55, 0.3)
+            continue
+        if sect == 3:                           # 숨: 북과 아쟁만 남긴다
+            mx.add(b[0], t, 0.0, 0.7, 0.25); mx.add(b[1], t + cyc * 0.5, 0.0, 0.45, 0.25)
+            continue
+        hot = sect in (2, 4)
+        play_jangdan(mx, rng, "jajinmori", bpm, t, cyc, gain=0.4 + 0.1 * (sect >= 2) + 0.05 * (sect == 4), rev=0.15, accent_first=1.2)
+        mx.add(b[k % 2], t, 0.0, 0.8, 0.15)
+        if hot or k % 2: mx.add(b[0], t + cyc * 0.75, 0.0, 0.5, 0.15)
+        if sect == 4: mx.add(b[1], t + cyc * 0.5, 0.0, 0.55, 0.15)
+        mx.add(pluck(rng, tn - 12, 1.2, "geomungo"), t, -0.3, 0.42, 0.2)
+        if sect >= 2: _boss_extra(mx, rng, R, t, cyc, k, hot)
+        if k % 4 == 0 and sect >= 2: mx.add(jing(rng, tn - 12, 4.0), t, 0.0, 0.3, 0.35)
+    # 가락: 차오름은 낮게, 절정·몰아침은 높게
+    m1 = make_melody(rng, tn, md, tn - 2, tn + 12, cyc, cut[1] - cut[0], t0=cut[0] * cyc, cells=[0.25] * 4, rest=0.3)
+    m2 = make_melody(rng, tn, md, tn + 5, tn + 22, cyc, cut[2] - cut[1], t0=cut[1] * cyc, cells=[1 / 6, 1 / 6, 1 / 6, 1 / 4, 1 / 4], rest=0.2)
+    m3 = make_melody(rng, tn, md, tn + 7, tn + 24, cyc, cycles - cut[3], t0=cut[3] * cyc, cells=[1 / 6] * 3 + [1 / 4, 1 / 4], rest=0.15)
+    mx.add(phrase(rng, m1, "haegeum" if lead != "haegeum" else "daegeum"), 0, -0.15, 0.4, 0.3)
+    mx.add(phrase(rng, m2, lead), 0, 0.15, 0.45, 0.25)
+    mx.add(phrase(rng, m3, lead), 0, 0.15, 0.48, 0.25)
+    return mx, -16.0
+
+
+def song_boss_p2(rng, R):
+    """보스 2단계: 약 120초 반복(10-26 90→120: 싸움 뒤 절반 45~90초가 한 바퀴 안에 들어가게). 처음부터 거세게, 앞뒤 절반 가락을 달리해 되풀이가 덜 들리게"""
+    bpm = _boss_bpm(R) + 6
+    cyc = 4 * 60 / bpm
+    cycles = int(round(fit(120, cyc) / cyc)); sec = cycles * cyc
+    mx = Mix(sec)
+    tn, md = R["tonic"], R["mode"]
+    lay_drone(mx, rng, [tn - 24, tn - 12, tn - 5], sec, "ajaeng", gain=0.22, rev=0.3)
+    play_jangdan(mx, rng, "jajinmori", bpm, 0, sec, gain=0.58, rev=0.15, accent_first=1.3)
+    b = [buk(rng, 1.5) for _ in range(2)]
+    for k in range(cycles):
+        t = k * cyc
+        for q in range(2): mx.add(b[(k + q) % 2], t + q * cyc / 2, 0.0, 0.85 - 0.25 * q, 0.15)
+        mx.add(pluck(rng, tn - 12, 1.0, "geomungo"), t, -0.3, 0.45, 0.2)
+        _boss_extra(mx, rng, R, t, cyc, k, True)
+        if k % 4 == 0: mx.add(jing(rng, tn - 12, 4.0), t, 0.0, 0.36, 0.35)
+    lead = R["lead"] if R["lead"] != "danso" else "piri"
+    h = cycles // 2
+    ma = make_melody(rng, tn, md, tn + 5, tn + 22, cyc, h, t0=0, cells=[1 / 6] * 3 + [1 / 4, 1 / 4], rest=0.15)
+    mb = make_melody(rng, tn, md, tn + 9, tn + 26, cyc, cycles - h, t0=h * cyc, cells=[1 / 6] * 6, rest=0.12)
+    mx.add(phrase(rng, ma, lead), 0, 0.15, 0.5, 0.25)
+    mx.add(phrase(rng, mb, "ajaeng"), 0, -0.15, 0.45, 0.3)
+    return mx, -16.0
+
+
 # ---- 시즌1 끝 컷신 곡(지시문 21~25) ----
 def s1_heukwol(rng):
     """흑월 결전: 느린 진양에서 점점 빨라짐(60→100). 큰 북이 끌고, 아쟁이 울고, 징 세 번마다 거세진다. D음"""
@@ -575,6 +662,52 @@ def s1_heukwol(rng):
             mx.add(phrase(rng, [(t + cyc * 1.5, cyc * 1.8, tn + 19, "v")], "daegeum"), 0, 0.3, 0.3, 0.6)
         t += cyc * cyc_n; stage += 1
     mx.add(jing(rng, tn - 12, 5.0), t, 0, 0.6, 0.5); mx.add(b, t, 0, 0.9, 0.3)
+    return mx, -16.0
+
+
+def s1_heukwol_fight(rng):
+    """B-12 흑월 2차 1·2단계(싸움 6~8분 중 앞 4분쯤): 100 빠르기 자진모리로 고정한 약 180초 반복.
+    왜: bgm_s1_heukwol(66초)은 60→100으로 빨라지다 끝에서 닫히는 1회용이라, 반복하면 66초마다 끊기고 느린 처음으로 돌아간다"""
+    tn = 50; md = GYEMYEON; bpm = 100
+    cyc = 4 * 60 / bpm; cycles = int(round(fit(180, cyc) / cyc)); sec = cycles * cyc
+    mx = Mix(sec)
+    lay_drone(mx, rng, [tn - 24, tn - 12, tn - 5], sec, "ajaeng", gain=0.2, rev=0.35)
+    b = buk(rng, 1.5)
+    q4 = cycles // 4
+    for k in range(cycles):
+        t = k * cyc; sect = min(3, k // q4)     # 4구간: 누름 · 밀어붙임 · 숨(북만) · 다시 몰아침
+        if sect == 2 and k < 2 * q4 + q4 // 2:
+            mx.add(b, t, 0.0, 0.8, 0.25); mx.add(b, t + cyc / 2, 0.0, 0.5, 0.25); continue
+        play_jangdan(mx, rng, "jajinmori", bpm, t, cyc, gain=0.45 + 0.06 * (sect != 0), rev=0.18, accent_first=1.2)
+        for q in range(1 + (sect != 0)): mx.add(b, t + q * cyc / (1 + (sect != 0)), 0.0, 0.8, 0.25)
+        if k % 4 == 0: mx.add(jing(rng, tn - 12, 4.0), t, 0.0, 0.34, 0.45)
+    for s0, s1, lo, hi, ins in ((0, q4, tn - 2, tn + 12, "ajaeng"), (q4, 2 * q4, tn + 3, tn + 17, "ajaeng"),
+                                (2 * q4 + q4 // 2, cycles, tn + 5, tn + 19, "ajaeng")):
+        mel = make_melody(rng, tn, md, lo, hi, cyc, s1 - s0, t0=s0 * cyc, cells=[0.25] * 4 if s0 == 0 else [1 / 6] * 3 + [0.25, 0.25], rest=0.2)
+        mx.add(phrase(rng, mel, ins), 0, -0.1, 0.48, 0.35)
+    for k in range(q4, cycles, 6):
+        mx.add(phrase(rng, [(k * cyc + cyc * 1.5, cyc * 1.8, tn + 19, "v")], "daegeum"), 0, 0.3, 0.3, 0.6)
+    return mx, -16.0
+
+
+def s1_heukwol_flood(rng):
+    """B-12 흑월 2차 3단계(큰물): 약 120초 반복. 더 낮고 무겁게, 큰 북을 셋잇단으로 몰고 징을 자주. 물이 차오르는 느낌은 저음 드론을 넓게"""
+    tn = 50; md = GYEMYEON; bpm = 108
+    cyc = 4 * 60 / bpm; cycles = int(round(fit(120, cyc) / cyc)); sec = cycles * cyc
+    mx = Mix(sec)
+    lay_drone(mx, rng, [tn - 24, tn - 17, tn - 12], sec, "ajaeng", gain=0.26, rev=0.45)
+    play_jangdan(mx, rng, "jajinmori", bpm, 0, sec, gain=0.55, rev=0.2, accent_first=1.3)
+    b = buk(rng, 1.7)
+    for k in range(cycles):
+        t = k * cyc
+        for q in range(3): mx.add(b, t + q * cyc / 3, 0.0, 0.9 - 0.2 * q, 0.25)
+        if k % 2 == 0: mx.add(jing(rng, tn - 12, 4.5), t, 0.0, 0.4, 0.45)
+    h = cycles // 2
+    ma = make_melody(rng, tn, md, tn - 5, tn + 12, cyc, h, cells=[1 / 6] * 3 + [0.25, 0.25], rest=0.15)
+    mb = make_melody(rng, tn, md, tn + 2, tn + 17, cyc, cycles - h, t0=h * cyc, cells=[1 / 6] * 6, rest=0.12)
+    mx.add(phrase(rng, ma, "ajaeng"), 0, -0.1, 0.5, 0.35)
+    mx.add(phrase(rng, mb, "ajaeng"), 0, -0.1, 0.5, 0.35)
+    mx.add(phrase(rng, [(n[0], n[1], n[2] + 12, n[3]) for n in mb[::3]], "piri"), 0, 0.3, 0.3, 0.4)
     return mx, -16.0
 
 
@@ -666,7 +799,9 @@ for rk, R in REGIONS.items():
     SONGS[f"bgm_{rk}_night"] = (lambda R: lambda rng: song_night(rng, R))(R)
     SONGS[f"bgm_{rk}_combat"] = (lambda R: lambda rng: song_combat(rng, R))(R)
     SONGS[f"bgm_{rk}_finish"] = (lambda R: lambda rng: song_finish(rng, R))(R)
-SONGS.update({"bgm_s1_heukwol": s1_heukwol, "bgm_s1_finale_a": s1_finale_a, "bgm_s1_finale_b": s1_finale_b,
+    SONGS[f"bgm_{rk}_boss"] = (lambda R: lambda rng: song_boss(rng, R))(R)
+    SONGS[f"bgm_{rk}_boss_p2"] = (lambda R: lambda rng: song_boss_p2(rng, R))(R)
+SONGS.update({"bgm_s1_heukwol": s1_heukwol, "bgm_s1_heukwol_fight": s1_heukwol_fight, "bgm_s1_heukwol_flood": s1_heukwol_flood, "bgm_s1_finale_a": s1_finale_a, "bgm_s1_finale_b": s1_finale_b,
               "bgm_s1_dawn": s1_dawn, "bgm_s1_credits": s1_credits})
 
 
@@ -924,7 +1059,7 @@ SONGS["bgm_title"] = title
 def render(sid, preview=None):
     rng = np.random.default_rng(zlib.crc32(sid.encode()))
     mx, target = SONGS[sid](rng)
-    x = mx.render(rt=3.2 if any(k in sid for k in ("combat", "heukwol", "knot", "imyeong")) else 4.2)
+    x = mx.render(rt=3.2 if any(k in sid for k in ("combat", "boss", "heukwol", "knot", "imyeong")) else 4.2)
     x = circ(hp, x, mx.loop, 35)
     if not mx.loop:   # 반복하지 않는 곡은 끝을 3초에 걸쳐 닫는다
         f = int(3.0 * SR); x[:, -f:] *= np.linspace(1, 0, f) ** 2

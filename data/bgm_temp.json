@@ -46,6 +46,16 @@
    "loop": true,
    "lufs": -20.0
   },
+  "bgm_bulgeunjae_boss": {
+   "sec": 120.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_bulgeunjae_boss_p2": {
+   "sec": 120.0,
+   "loop": true,
+   "lufs": -16.0
+  },
   "bgm_bulgeunjae_combat": {
    "sec": 44.44,
    "loop": true,
@@ -66,6 +76,16 @@
    "loop": true,
    "lufs": -20.0
   },
+  "bgm_doseong_boss": {
+   "sec": 120.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_doseong_boss_p2": {
+   "sec": 120.0,
+   "loop": true,
+   "lufs": -16.0
+  },
   "bgm_doseong_combat": {
    "sec": 43.64,
    "loop": true,
@@ -85,6 +105,16 @@
    "sec": 83.48,
    "loop": true,
    "lufs": -20.0
+  },
+  "bgm_gaetmaeul_boss": {
+   "sec": 120.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_gaetmaeul_boss_p2": {
+   "sec": 120.0,
+   "loop": true,
+   "lufs": -16.0
   },
   "bgm_gaetmaeul_combat": {
    "sec": 45.0,
@@ -129,6 +159,16 @@
   "bgm_s1_heukwol": {
    "sec": 65.9,
    "loop": false,
+   "lufs": -16.0
+  },
+  "bgm_s1_heukwol_fight": {
+   "sec": 180.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_s1_heukwol_flood": {
+   "sec": 120.0,
+   "loop": true,
    "lufs": -16.0
   },
   "bgm_s2_bigdam": {
@@ -190,6 +230,16 @@
    "sec": 32.0,
    "loop": true,
    "lufs": -18.0
+  },
+  "bgm_soegol_boss": {
+   "sec": 120.0,
+   "loop": true,
+   "lufs": -16.0
+  },
+  "bgm_soegol_boss_p2": {
+   "sec": 120.0,
+   "loop": true,
+   "lufs": -16.0
   },
   "bgm_soegol_combat": {
    "sec": 44.0,

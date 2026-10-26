@@ -253,7 +253,27 @@ def _(r):
     return thud + puff * .5
 
 
-@sfx("sfx.dodge", -12, "전투", "회피: 옷자락이 바람을 가르는 쉭", use="회피")
+def _tail_fit(x, sec, fade=.03):
+    """소리를 sec초로 자르고 끝 fade초를 부드럽게 줄인다(빨리 되풀이되는 소리가 서로 번지지 않게)"""
+    y = np.array(x[:int(sec * SR)], dtype=float); m = min(len(y), int(fade * SR))
+    if m > 0: y[-m:] *= np.linspace(1, 0, m) ** 2
+    return y
+
+
+@sfx("sfx.dodge", -12, "전투", "구르기: 옷자락이 바람을 가르는 쉭(0.05초에 가장 큼) → 어깨가 땅에 닿는 낮은 툭·옷 쓸림(0.13초) — 0.32초 구르기에 맞춤", use="구르기(Space). 끝나는 발 디딤은 땅 재질 발소리가 따로 낸다(docs/move-sound-sync.md)")
+def _(r):
+    # 10-26 조작 수정: 구르기 동작이 0.033초 만에 섞여 들어가 몸이 바로 움직인다 → 쉭의 가장 큰 곳을 0.072→0.05초로 당김.
+    # 구르기인데 땅 닿는 소리가 없어 '공중 회피'처럼 들렸다 → 어깨 닿는 툭과 옷이 땅을 쓰는 소리를 더함
+    n = int(.32 * SR)
+    whoosh = sweep_filt(noise(n, r), "band", 420, 1900, 1.4) * env(n, .045, .11, 4)
+    cloth = filt(noise(n, r) * (r.random(n) > .7), "band", 3000, 2) * env(n, .04, .1) * .15
+    b = whoosh + cloth
+    place(b, _thump(r, .1, 120, 500) * .2, .13)                                   # 어깨가 땅에 닿음
+    m = int(.12 * SR); place(b, filt(noise(m, r), "band", 1100, 1.0) * env(m, .02, .08, 3) * .18, .14)   # 옷이 땅을 쓸며 구름
+    return b[:n]
+
+
+@sfx("sfx.dodge.dash", -12, "전투", "매듭 걸음(사슬 돌진): 옷자락이 바람을 가르는 쉭 — 땅에 닿지 않는 옛 회피 소리", use="CommandKnotDash(구르지 않고 사슬로 끌려가듯 돌진)")
 def _(r):
     n = int(.32 * SR)
     whoosh = sweep_filt(noise(n, r), "band", 380, 1900, 1.4) * env(n, .07, .12, 4)
@@ -394,7 +414,7 @@ def _(r):
     return reverb(buf, 1.0, .25)
 
 
-@sfx("sfx.ui.rank.up", -12, "UI", "품계 오름: 먹물 한 방울 똑 → 물에 번지는 쏴아(부풂) → 편경 세 음 차례로 + 작은 북 둥(2.4초)", use="넋이 차서 품계가 오를 때(한 번에 여러 품이 올라도 한 번만)")
+@sfx("sfx.ui.rank.up", -12, "UI", "품계 오름: 먹물 한 방울 똑 → 물에 번지는 쏴아(부풂) → 편경 세 음 차례로 + 작은 북 둥(2.4초)", use="처결이 쌓여 품계가 오를 때(한 번에 여러 품이 올라도 한 번만)")
 def _(r):
     sec = 2.6; n = int(sec * SR); buf = np.zeros(n)
     place(buf, bubble(.08, 900, 1.9, .018) * .6, 0)                                  # 먹물이 물에 똑
@@ -1761,28 +1781,35 @@ def _(r):
 # ===== 처결 대기 긴장음 (무릎 꿇은 혼의 남은 시간: 갓 죽은 10초 · 해 넘긴 7초 · 오래된 4초, balance WAIT_*) =====
 # 방식: 혼 나이별 '똑딱' 한 개를 코드가 남은 시간에 맞춰 점점 빨리 친다(간격 1.0초 → 0.15초).
 # 왜 긴 파일 하나가 아니라 똑딱인가? 대기 시간은 장비·도술(TILT_WAIT_ADD, SKILL_HOLD_WAIT_BONUS 등)로 늘거나 줄기 때문.
-@sfx("sfx.wait.tick.fresh", -16, "처결", "대기 똑딱(갓 죽은 혼): 아직 사람 같은 낮은 심장 소리 '두근'", bypass_cast=True, use="갓 죽은 혼이 무릎 꿇고 기다리는 동안 반복(남은 시간에 따라 간격을 줄임)")
+@sfx("sfx.wait.tick.fresh", -11, "처결", "대기 똑딱(갓 죽은 혼): 아직 사람 같은 심장 소리 '두근' — 가슴을 안에서 두드리는 둔한 톡 두 번", bypass_cast=True, use="갓 죽은 혼이 무릎 꿇고 기다리는 동안 반복(남은 시간에 따라 간격을 줄임)")
 def _(r):
-    buf = np.zeros(int(.4 * SR))
-    for at, a in ((0, 1), (.14, .7)):                              # 두-근
-        place(buf, tone(.15, 62, 48) * env(int(.15 * SR), .004, .05, 4) * a + filt(noise(int(.15 * SR), r), "band", 450, 1.2) * env(int(.15 * SR), .002, .03, 4) * .6 * a, at)   # 폰 스피커에도 들리게 400Hz대 '툭'을 섞음
+    # 10-26 믹스 점검: 옛 소리는 힘이 60Hz 밑에 몰려, 전투 곡·마을 밤 바탕 아래에서 쓸 만한 대역(250Hz~)이 18~21dB 묻혔다.
+    #   폰 스피커에서는 아예 안 들림 → 몸통을 500~900Hz '둔한 톡'으로 옮기고, 낮은 둥은 받침으로만 남김. 길이는 0.29초 그대로
+    buf = np.zeros(int(.32 * SR))
+    for at, a in ((0, 1), (.14, .75)):                              # 두-근
+        m = int(.15 * SR)
+        low = tone(.15, 70, 52) * env(m, .004, .05, 4) * .5
+        knock = filt(noise(m, r), "band", 650, 1.6) * env(m, .002, .035, 4) * 1.4 + tone(.15, 520, 430) * env(m, .002, .03, 4) * .5
+        place(buf, (low + knock) * a, at)
     return buf
 
 
-@sfx("sfx.wait.tick.year", -16, "처결", "대기 똑딱(해 넘긴 혼): 마른 나무를 치는 '똑'(목탁 비슷하게 속이 빈 소리)", bypass_cast=True, use="해 넘긴 혼이 기다리는 동안 반복")
+@sfx("sfx.wait.tick.year", -14, "처결", "대기 똑딱(해 넘긴 혼): 마른 나무를 치는 '똑'(목탁 비슷하게 속이 빈 소리)", bypass_cast=True, use="해 넘긴 혼이 기다리는 동안 반복")
 def _(r):
-    return modal(.25, [(r.uniform(560, 600), .05, 1), (r.uniform(1450, 1550), .025, .4), (2900, .01, .15)], r)
+    # 10-26: 남은 1.5초 쪽에서는 똑딱 간격이 0.18초까지 줄어든다 → 꼬리를 0.18초 안에 끝내 서로 번지지 않게(옛 0.25초)
+    return _tail_fit(modal(.18, [(r.uniform(560, 600), .04, 1), (r.uniform(1450, 1550), .02, .4), (2900, .01, .15)], r), .18)
 
 
-@sfx("sfx.wait.tick.old", -15, "처결", "대기 똑딱(오래된 혼): 녹슨 쇠를 긁듯 '칙' + 낮은 금 간 쇳소리 — 가장 거칠고 불안하다", bypass_cast=True, use="오래된 혼·덩어리가 기다리는 동안 반복")
+@sfx("sfx.wait.tick.old", -13, "처결", "대기 똑딱(오래된 혼): 녹슨 쇠를 긁듯 '칙' + 낮은 금 간 쇳소리 — 가장 거칠고 불안하다", bypass_cast=True, use="오래된 혼·덩어리가 기다리는 동안 반복")
 def _(r):
-    n = int(.3 * SR)
-    rust = modal(.3, [(410, .06, 1), (437, .06, .9), (1210, .03, .5)], r)   # 가까운 두 음이 부딪혀 거칠게 떪
+    # 10-26: 오래된 혼(4초)은 처음부터 간격이 짧다 → 0.3초 꼬리가 다음 똑딱과 겹쳐 뭉개졌다. 0.18초로 줄이고 거친 떨림은 앞쪽에 모음
+    n = int(.18 * SR)
+    rust = modal(.18, [(410, .04, 1), (437, .04, .9), (1210, .02, .5)], r)   # 가까운 두 음이 부딪혀 거칠게 떪
     grit = filt(noise(n, r), "band", 2500, 2) * env(n, .001, .02, 4)
-    return rust + grit * .6
+    return _tail_fit(rust + grit * .6, .18)
 
 
-@sfx("sfx.wait.final", -14, "처결", "대기 마지막 1.5초: 숨을 들이켜듯 올라가는 소리 + 고리가 조여드는 떨림 — 지금 고르지 않으면 일어선다", bypass_cast=True, use="남은 시간 1.5초에 한 번(혼 나이 상관없이 같음)")
+@sfx("sfx.wait.final", -10, "처결", "대기 마지막 1.5초: 숨을 들이켜듯 올라가는 소리 + 고리가 조여드는 떨림 — 지금 고르지 않으면 일어선다", bypass_cast=True, use="남은 시간 1.5초에 한 번(혼 나이 상관없이 같음)")
 def _(r):
     sec = 1.5; n = int(sec * SR); t = T(sec)
     breath = sweep_filt(noise(n, r), "band", 500, 2200, 2) * curve(sec, [(0, .1), (1.4, 1), (1.5, 0)])
@@ -4669,15 +4696,22 @@ def _(r):
     return loopify(reverb(b, 3.0, .5, tone_hz=1500)[:n], 1.0)
 
 
-@sfx("amb.karma.3", -18, "세계", "업 60 이상: 공기가 탁함 — 바닥에서 지글지글 끓는 잡음 + 느린 맥박 같은 울렁임 + 아주 먼 곳의 깨지는 소리 메아리(반복용 28초)", loop=True, use="업 60 이상. 1·2 위에 겹침. 같이 구역 환경음 전체에 저역 통과 6kHz(맑은 높은 소리가 사라짐)")
+@sfx("amb.karma.3", -24, "세계", "업 60 이상 「빛 없는 길」: 아주 낮은 D-A 5도가 7초 숨으로 천천히 부풀고 + 긴 굴 속을 지나는 어두운 바람 + 9초마다 먼 징이 웅 + 아주 가끔 먼 사슬 고리 하나(반복용 28초) — 탁함·잡음 없이 '어둡지만 넓은 다른 길'", loop=True, use="업 60 이상. amb.karma.1 위에 겹치고 amb.karma.2 는 8초에 걸쳐 뺀다(반음 비빔이 5도와 부딪힘). 구역 환경음 저역 통과 6kHz(귀 닫힘 벌)는 그대로")
 def _(r):
+    # 10-26 다시 만듦: 옛 판은 지글거리는 잡음 + 먼 파혼 메아리라 '벌·오염'으로 들렸다.
+    # 업 칸은 '다른 길'이라는 코디 요청 → 잡음·깨지는 소리를 빼고, 들어섬 소리(sfx.karma.tier.60.enter)와 같은 D-A 5도로 이어 깐다.
+    # 맑은 높은 소리가 사라지는 벌(환경음 6kHz 저역 통과)은 따로 있으니, 이 층은 '어둡지만 넓게'만 맡는다.
     sec = 28.4; n = int(sec * SR); t = T(sec)
-    grit = grains(sec, r, 900, lambda r, k: filt(noise(int(.003 * SR), r), "band", r.uniform(400, 1500), 2) * env(int(.003 * SR), .0002, .0015) * r.uniform(.05, .3))
-    throb = filt(noise(n, r), "low", 120) * (.5 + .5 * np.sin(2 * np.pi * .4 * t)) ** 3 * 1.2   # 2.5초마다 울렁
-    b = grit * .6 + throb
-    for at in (9.0, 21.0):
-        place(b, filt(_chain_burst(r, 0), "low", 1800) * .12, at)              # 아주 먼 파혼의 메아리
-    return loopify(reverb(b, 2.5, .4, tone_hz=1800)[:n], 1.0)
+    breath = .55 + .45 * np.sin(2 * np.pi * t / 7.1 - np.pi / 2) ** 2     # 7.1초에 한 번 부푸는 숨(28.4초에 딱 4번 → 이음매 없음)
+    drone = (np.sin(2 * np.pi * 73.4 * t) + .7 * np.sin(2 * np.pi * 110.0 * t + 1) + .25 * np.sin(2 * np.pi * 146.8 * t + 2)
+             + .2 * np.sin(2 * np.pi * 110.35 * t)) * breath                      # D2-A2-D3 + A2 맥놀이(0.35Hz, 아주 느린 울음)
+    wind = sweep_filt(noise(n, r), "band", 250, 520, 1.5) * (.5 + .5 * np.sin(2 * np.pi * t / 9.47) ** 2) * .5   # 굴 바람: 띠가 천천히 오르내림
+    b = drone * .45 + wind
+    for at in (2.0, 11.5, 21.0):
+        place(b, _jing(r, 73.4, 5.0, .6) * .18, at)                       # 먼 징
+    for at in (7.3, 17.6):
+        place(b, filt(_chain_links(r, .2, 1), "low", 1600) * .5, at)        # 먼 사슬 고리 하나(잇단 사슬과 이어짐)
+    return loopify(filt(reverb(b, 3.0, .45, tone_hz=1600)[:n], "low", 2000), 1.0)
 
 
 # ── 원념 얼룩 ──
@@ -6055,6 +6089,609 @@ def _(r):
     place(b, _thump(r, .15, 100, 400) * .6 + 0, .38)
     return reverb(b, .9, .25)
 
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 새 보스 패턴·숫자 혼 소리 점검에서 빠진 것 (10-26)
+#   B-01 나루: 큰물 중 물살이 안쪽으로 미는 소리 · 큰물 동안 깔리는 물 · 무방비(약점) 열림
+#   B-10 선장: 폭풍(2단계) 시작·깔림 · 밧줄 끝 떨어짐(끌어라 신호) · 끌어당김 · 넘어짐
+#   공통: 약점 창 동안 때릴 때 얹는 '잘 들어간다' 소리
+#   숫자 혼(2막): 번호패 딸깍 표시 · 대기 똑딱(주판알) · 천도 때 번호패가 끊겨 떨어짐 · 남은 장부 파혼 엽전
+# ═══════════════════════════════════════════════════════════════════════════
+@sfx("sfx.boss.naru.current", -12, "보스", "큰물 물살이 밀어냄: 발목을 휘감는 물살이 쏴— 하고 안쪽으로 밀어붙임(1초)", bypass_cast=True, use="B-01 ② 큰물: 바닥 밖에서 물살이 안쪽으로 밀 때(4초에 한 번, pattern_texts B-01.flood). 지금 flood 3초짜리 대신")
+def _(r):
+    m = int(1.0 * SR)
+    rush = sweep_filt(noise(m, r), "band", 400, 1400, .8) * env(m, .15, .35, 3, hold=.2)
+    return reverb(_sum(rush * .7, _lap(1.0, r, 12, .4)), .8, .2)
+
+
+@sfx("amb.boss.naru.highwater", -20, "보스", "큰물 동안: 불어난 강물이 좁아진 바닥 가장자리를 쉴 새 없이 찰박이며 핥고, 낮은 물살이 웅— (반복용 10초)", loop=True, use="B-01 ② 큰물이 시작되고(맺힘 50%) 싸움이 끝날 때까지 2D 반복. 시작 3초 페이드인(바닥이 좁아지는 3초와 같게)")
+def _(r):
+    sec = 10.3; n = int(sec * SR)
+    x = filt(noise(n, r), "band", 350, .8) * (.7 + .3 * np.sin(2 * np.pi * .3 * T(sec)[:n])) * .35 + _lap(sec, r, 70, .35)[:n]
+    return loopify(reverb(x, 1.0, .25)[:n], .5)
+
+
+@sfx("sfx.boss.naru.weak", -11, "보스", "나루 영감 무방비: 휩쓸기 뒤 배가 크게 기울며 나무가 끄응 — 그 틈에 맑은 '팅'(지금 때려라, 0.8초)", bypass_cast=True, use="B-01 무방비 1.5초 창이 열릴 때마다(pattern_texts B-01.weak_tilt. 지금은 처음 한 번 글만 나오고 소리 없음 → 매번 소리, 글은 처음만)")
+def _(r):
+    b = _buf(1.2)
+    place(b, _creak(r, .5, 110, 16, 450) * .6, 0)
+    place(b, _chime(r, 1760, .3, .7), .32)
+    return reverb(b, .9, .25)
+
+
+@sfx("sfx.boss.weak.hit", -13, "보스", "약점 창에 때림: 평소 타격음 위에 얹는 짧고 맑은 '쨍' — 더 깊이 들어간다(0.25초)", use="보스 damageTakenMult > 1 인 동안(B-01 무방비·B-03 서랍·B-10 넘어짐) 맞힐 때마다 타격음과 함께. 높이 ±3%")
+def _(r):
+    b = _buf(.4)
+    place(b, modal(.35, [(r.uniform(2900, 3100), .06, 1), (r.uniform(6200, 6600), .025, .4), (r.uniform(1450, 1550), .05, .4)], r), 0)
+    return reverb(b, .35, .12)
+
+
+@sfx("sfx.boss.seonjang.storm", -9, "보스", "폭풍이 몰려옴(선장 2단계): 먼 천둥 우르릉 — 돌풍이 돛을 쾅 부풀리고, 굵은 빗줄기가 갑판을 촤아(3초)", bypass_cast=True, use="B-10 2단계(폭풍) 시작 한 번(pattern_texts B-10.storm, 지금 소리 없음). 뒤이어 amb.boss.seonjang.storm")
+def _(r):
+    b = _buf(3.6)
+    m = int(2.2 * SR); place(b, filt(noise(m, r), "low", 250) * env(m, .3, .9, 3) * .8, 0)                 # 천둥
+    place(b, _thump(r, .3, 60, 200) * .5, .9)                                                            # 돛이 쾅
+    m2 = int(2.4 * SR); place(b, filt(noise(m2, r), "band", 3000, .6) * env(m2, .6, .8, 3, hold=.6) * .5, 1.0)   # 빗줄기
+    return reverb(b, 1.6, .35)
+
+
+@sfx("amb.boss.seonjang.storm", -18, "보스", "폭풍 속 갑판: 비가 갑판을 두드리고, 돛줄 사이로 바람이 휘이— 울고, 배가 파도에 꿍— 오르내림(반복용 12초)", loop=True, use="B-10 2단계 동안 2D 반복(싸움 끝까지). 지금 '기울기 소리 두 번 겹침' 대신 이 바탕을 깔면 기울기는 한 번만 내도 된다")
+def _(r):
+    sec = 12.3; n = int(sec * SR)
+    rain = filt(filt(noise(n, r), "high", 1200), "low", 9000) * .35
+    w, gg = _bed_wind(sec, r, 1800, 5, .25, 4)
+    swell = _buf(sec)
+    for at in (1.0, 5.5, 9.5): place(swell, _thump(r, .5, 50, 180) * .4, at)
+    return loopify(reverb(rain + w + swell[:n], 1.0, .25)[:n], .6)
+
+
+@sfx("sfx.boss.seonjang.rope.slack", -10, "보스", "끊긴 밧줄 끝이 갑판에 철썩 떨어져 꿈틀(0.6초) — 지금 사슬로 끌어라", bypass_cast=True, use="B-10 줄 끊기 직후 밧줄 끝 점이 생길 때(SpawnRopeEnd). '밧줄 끝 — 끌어당겨라' 글과 같은 순간")
+def _(r):
+    b = _buf(.9)
+    place(b, _sum(filt(noise(int(.12 * SR), r), "band", 900, 1.2) * env(int(.12 * SR), .002, .04, 3), _thump(r, .1, 150, 500) * .6), 0)
+    place(b, _paper(r, .3, 600, 2500) * .3, .1)
+    place(b, _chime(r, 1320, .2, .3), .12)
+    return reverb(b, .6, .2)
+
+
+@sfx("sfx.boss.seonjang.rope.pull", -10, "보스", "사슬이 밧줄 끝을 낚아 끌어당김: 철삭이 차르륵 감기고 젖은 밧줄이 끼이익 팽팽 — 묵직하게 버팀(0.8초)", use="B-10 밧줄 끝을 끌어당기는 데 성공한 순간(넘어짐 직전). sfx.boss.seonjang.fall 0.35초 앞")
+def _(r):
+    b = _buf(1.1)
+    place(b, _chain_links(r, .3, 6) * .5, 0)
+    place(b, _rope_taut(r, .6, 90) * .7, .15)
+    return reverb(b, .7, .2)
+
+
+@sfx("sfx.boss.seonjang.fall", -8, "보스", "선장이 넘어짐: 젖은 갑판에 커다란 몸이 쿵 — 물이 촤악 튀고 배 나무가 깊게 끄응(1.4초)", bypass_cast=True, use="B-10 약점 성공: 선장이 넘어져 멈칫 1.5초가 시작될 때(pattern_texts B-10.weak_rope 와 같은 순간, 소리는 매번)")
+def _(r):
+    b = _buf(2.0)
+    place(b, _thump(r, .4, 55, 220) * 1.0, 0); place(b, _splash(r, .7, 1.0) * .5, .04)
+    place(b, _creak(r, .9, 85, 12, 380) * .4, .2)
+    return reverb(b, 1.2, .3)
+
+
+# ── 숫자 혼(2막 ③④, 인 대신 번호로 불리는 혼) ──
+@sfx("sfx.soul.numbered.mark", -16, "처결", "숫자 혼 표시: 목에 건 나무 번호패가 딸깍 — 붓으로 숫자를 긋는 짧은 쓱(0.5초)", use="숫자 혼이 무릎 꿇는 순간(처결 대기 시작) 한 번. 일반 혼의 대기 시작 소리 위에 얹음")
+def _(r):
+    b = _buf(.7)
+    place(b, _wood_tap(r, 1500, .02, .7), 0); place(b, _wood_tap(r, 1380, .018, .4), .05)
+    m = int(.18 * SR); place(b, filt(noise(m, r), "band", 2600, 2) * env(m, .03, .06, 3) * .3, .16)
+    return reverb(b, .4, .12)
+
+
+@sfx("sfx.wait.tick.numbered", -14, "처결", "대기 똑딱(숫자 혼): 주판알을 하나씩 튕기는 딱 — 세고 또 센다(가장 메마른 소리)", bypass_cast=True, use="숫자 혼의 처결 대기 똑딱(fresh·year·old 대신). 대기가 0.5초 길어서 한 번 더 울린다")
+def _(r):
+    return _wood_tap(r, 2100, .012, .8)[:int(.12 * SR)]
+
+
+@sfx("sfx.soul.numbered.release", -13, "처결", "숫자 혼 천도: 번호패 끈이 툭 끊어지고 패가 땅에 탁 떨어짐 — 그 뒤로 낮고 따뜻한 한 음(이름이 돌아온 듯, 1.4초)", use="숫자 혼 천도가 끝날 때 sfx.tendo.done.* 위에 얹음(0.15초 뒤)")
+def _(r):
+    b = _buf(2.0)
+    m = int(.06 * SR); place(b, filt(noise(m, r), "band", 1800, 2) * env(m, .001, .015, 3) * .5, 0)    # 끈 툭
+    place(b, _wood_tap(r, 900, .04, .7), .2); place(b, _wood_tap(r, 950, .03, .3), .34)                 # 패가 떨어져 한 번 튐
+    place(b, _chime(r, 523, .8, .45), .5)
+    return reverb(b, 1.2, .3)
+
+
+@sfx("sfx.pahon.ledger", -15, "처결", "남은 장부가 셈을 더함: 주판알 세 번 차르륵 + 엽전 하나 더 짤랑(0.6초)", use="이름 있는 노리개 '남은 장부'로 ④ 숫자 혼 파혼 엽전이 늘어날 때. 엽전 소리 0.1초 뒤")
+def _(r):
+    b = _buf(.9)
+    for k in range(3): place(b, _wood_tap(r, 2000 + 80 * k, .01, .5), k * .06)
+    place(b, modal(.4, [(r.uniform(3300, 3600), .08, 1), (r.uniform(5600, 6100), .04, .4)], r) * .4, .25)
+    return reverb(b, .5, .15)
+
+
+
+# ── 처음 10분 화면 요소 소리(2026-10-26, 아트 PR #47 처결 카드·맺힘 막대·넋길 안내에 맞춤) ──
+@sfx("sfx.exec.card.open", -17, "UI", "첫 처결 카드 두 장이 나란히 뜸: 한지 두 장이 양쪽에서 같은 크기로 스윽·스윽 + 아주 낮은 나무 한 번 톡(0.45초). 천도·파혼 어느 쪽으로도 기울지 않게 같은 높이", use="처음 10분 1:20 첫 처결 카드(exec_card_tendo·pahon) 뜰 때 한 번. 무릎 소리(sfx.kneel) 0.25초 뒤. 고르면 기존 천도·파혼 소리")
+def _(r):
+    # 왜 두 장을 같은 크기로: 처결은 옳고 그름이 아니라 선택이라, 소리도 한쪽이 더 반짝이면 안 된다
+    b = _buf(.6)
+    place(b, _paper(r, .15, 1300, 5200) * .65, 0.0)
+    place(b, _paper(r, .15, 1300, 5200) * .65, .06)
+    place(b, _wood_tap(r, 520, .05, .5), .17)
+    return reverb(b, .5, .14)
+
+
+@sfx("sfx.bind.row.break", -15, "처결", "덩어리 맺힘 한 줄이 다 깎임: 꼬인 새끼줄 한 가닥이 툭 끊기는 소리 + 낮은 둥(0.45초) — 아직 한 줄 남았다는 뜻", use="덩어리 혼 머리 위 두 줄 막대(bind_world_frame2)에서 첫 줄이 0이 되는 순간 한 번. 둘째 줄이 0이면 평소 무릎 소리")
+def _(r):
+    b = _buf(.6)
+    snap = _sum(_creak(r, .08, 260, 60, 1400) * .5, _paper(r, .05, 2500, 8000) * .8)
+    place(b, snap, 0.0)
+    place(b, _thump(r, .2, 95, 400) * .7, .03)
+    place(b, _rope_taut(r, .25, 82) * .25, .05)
+    return reverb(b, .6, .16)
+
+
+@sfx("sfx.soulpath.light", -20, "세계", "넋길 혼불이 켜짐(해 질 때): 새끼줄 혼불 다섯이 하나씩 후— 후— 피어남, 낮은 음에서 차례로 올라감(1.6초)", use="밤이 되어 넋길이 열리는 순간, 서낭당 40m 안에 있을 때만 3D로 한 번(미니맵 아이콘이 icon_soulpath_off → 열림으로 바뀌는 때). 최대 25m")
+def _(r):
+    b = _buf(2.0)
+    for k, f in enumerate((174.6, 196.0, 220.0, 233.1, 261.6)):
+        m = int(.7 * SR)
+        puff = filt(noise(m, r), "band", 900 + 250 * k, 1.2) * env(m, .05, .45, 3) * .35
+        hum = np.sin(2 * np.pi * f * T(.7)) * env(m, .12, .5, 2) * .25
+        place(b, puff + hum, k * .22)
+    return reverb(b, 1.4, .3)
+
+
+@sfx("sfx.soulpath.travel", -14, "세계", "넋길을 탐: 혼불 줄을 따라 몸이 쑥 빨려 감 — 낮은 바람이 휘익 높아졌다 내려앉고, 끝에 새끼줄 삐걱 + 혼불 하나 후(1.4초)", use="JudgeSystem.CommandSoulPath 에서 지금 쓰는 sfx.tendo.done 대신(천도 소리를 쓰면 '처결했다'로 들림)")
+def _(r):
+    sec = 1.5; n = int(sec * SR)
+    w = sweep_filt(noise(n, r), "band", 300, 1800, 1.5) * env(n, .5, .9, 2.5)
+    w = w * np.concatenate([np.linspace(.2, 1, n // 2), np.linspace(1, .3, n - n // 2)])
+    b = _buf(1.9)
+    place(b, w * .8, 0.0)
+    place(b, _creak(r, .35, 200, 22, 700) * .3, 1.05)
+    m = int(.5 * SR)
+    place(b, np.sin(2 * np.pi * 220 * T(.5)) * env(m, .05, .4, 2) * .25, 1.15)
+    return reverb(b, 1.1, .25)
+
+
+
+# ── 무기 기본 특성 세 가지(2026-10-26, planning/growth/weapon-traits-3.md) ──
+# 원칙: 무기 타격음(sfx.hit.*) 위에 "한 겹 더" 얹는 소리다. 같은 무기의 타격음과 겹쳐도 귀에 갈리게
+#   고정 = 땅(아래쪽 낮은 툭 + 잠기는 딸깍), 둔화 = 물결(쇳소리 없는 낮은 울렁임), 표식 = 물방울(높이로 개수를 셈)
+@sfx("sfx.trait.pin", -11, "전투", "삼지창 고정: 쇠 갈래가 땅에 쿵 박히고 → 빗장이 잠기듯 딸깍·딸깍(0.45초). 쇠 떨림 없이 '바닥에 묶였다'", use="삼지창 3타가 일반·정예 혼을 고정할 때(맞은 적 여럿이어도 한 번). 3타 타격음 0.04초 뒤. 보스·면역 중엔 안 냄")
+def _(r):
+    b = _buf(.6)
+    place(b, _thump(r, .18, 70, 300) * .9, 0.0)                          # 땅에 박힘(가장 낮게 — 삼지창 타격음보다 아래)
+    m = int(.12 * SR); place(b, filt(noise(m, r), "band", 900, 1.0) * env(m, .002, .05, 3) * .35, .005)   # 흙이 눌림
+    place(b, _wood_tap(r, 1650, .015, .55), .16)                         # 딸깍(잠김) 둘 — 쇠가 아니라 마른 빗장
+    place(b, _wood_tap(r, 1400, .015, .45), .23)
+    return reverb(b, .5, .12)
+
+
+@sfx("sfx.trait.pin.release", -18, "전투", "고정이 풀림: 땅에서 갈래가 쑥 빠지는 작은 흙 부스럭 + 마른 틱(0.25초)", use="고정 1.0초(정예 0.5초)가 끝날 때. 여럿이 같이 풀리면 한 번")
+def _(r):
+    b = _buf(.35)
+    m = int(.2 * SR); place(b, sweep_filt(noise(m, r), "band", 1600, 700, 1.2) * env(m, .03, .1, 3) * .5, 0)
+    place(b, _wood_tap(r, 1200, .01, .4), .12)
+    return b
+
+
+@sfx("sfx.trait.slow", -13, "전투", "요령 둔화: 공기가 무거워지듯 낮은 '우웅—' 이 울렁이며 아래로 처짐(0.7초). 방울 쇳소리 없음 — 요령 짤랑 뒤에 남는 물결", use="요령 타격이 적을 둔화시킬 때 휘두름 한 번에 한 번(맞은 적 수와 무관). 타격음 0.06초 뒤. 이미 둔화된 적만 맞으면 0.5배")
+def _(r):
+    sec = .75; n = int(sec * SR); t = T(sec)
+    wob = 1 + .45 * np.sin(2 * np.pi * 7 * t)                            # 울렁임(빠른 떨림)이 '느려짐'을 들려준다
+    body = (tone(sec, 240, 150) * .6 + tone(sec, 120, 75) * .5) * wob * env(n, .04, .4, 2.5, hold=.08)
+    air = sweep_filt(noise(n, r), "band", 900, 350, 1.5) * env(n, .03, .35, 3) * .2
+    return reverb(body + air, .9, .2)
+
+
+def _ink_drop(r, f, a=1.0):
+    """먹물 방울 '똑': 높이가 위로 휙 올라가는 짧은 물방울 + 종이 톡"""
+    m = int(.14 * SR)
+    d = tone(.14, f, f * 1.9) * env(m, .001, .04, 4) * a
+    p = filt(noise(m, r), "band", 3500, 2) * env(m, .001, .01, 4) * .25 * a
+    return d + p
+
+
+@sfx("sfx.trait.mark.1", -15, "전투", "붓 표식 1: 먹물 한 방울 똑(낮게) — 붓 '촥' 뒤에 따로 들리는 맑은 점", use="표식이 1개가 될 때. 붓 타격음 0.05초 뒤. 개수가 올라갈수록 높은 방울(mark.2·mark.3)")
+def _(r):
+    b = _buf(.3); place(b, _ink_drop(r, 620), 0); return reverb(b, .4, .15)
+
+
+@sfx("sfx.trait.mark.2", -15, "전투", "붓 표식 2: 먹물 방울 두 번 똑똑(조금 높게)", use="표식이 2개가 될 때")
+def _(r):
+    b = _buf(.4); place(b, _ink_drop(r, 780, .8), 0); place(b, _ink_drop(r, 780), .08); return reverb(b, .4, .15)
+
+
+@sfx("sfx.trait.mark.3", -14, "전투", "붓 표식 3(가득): 방울 세 번 똑똑똑(가장 높게) + 종이에 먹이 스미는 짧은 사각 — '이름 쓸 수 있다'", use="표식이 3개(최대)가 될 때. 이미 3개면 소리 없음")
+def _(r):
+    b = _buf(.6)
+    for k in range(3): place(b, _ink_drop(r, 980, .7 + .15 * k), k * .07)
+    place(b, _paper(r, .12, 1800, 6000) * .35, .24)
+    return reverb(b, .5, .18)
+
+
+@sfx("sfx.trait.name", -11, "전투", "붓 Q 이름 쓰기: 붓이 길게 한 획 스으윽 → 먹이 낮게 번지는 둥 → 작은 인 꾹(1.1초). 표식 셋이 이름이 됨", use="붓 무기 기술 「이름 쓰기」가 걸릴 때(표식 3개를 써 버림)")
+def _(r):
+    b = _buf(1.4)
+    m = int(.5 * SR)
+    stroke = sweep_filt(noise(m, r), "band", 1500, 4200, 1.8) * env(m, .08, .25, 2, hold=.15) * .55
+    place(b, stroke, 0)
+    place(b, tone(.6, 180, 140) * env(int(.6 * SR), .05, .35, 3) * .4, .42)   # 먹이 번짐
+    place(b, _thump(r, .12, 160, 700) * .6, .72); place(b, _wood_tap(r, 700, .03, .5), .73)   # 인 꾹
+    return reverb(b, 1.0, .25)
+
+
+@sfx("sfx.trait.mark.splash", -12, "처결", "표식 있는 혼을 파혼: 먹물이 사방으로 파사삭 튀고 → 둘레에 방울이 톡톡 떨어짐(옮겨 붙은 표식, 0.7초)", use="파혼 소리 0.12초 뒤. 옮긴 표식 수(1~3)와 상관없이 하나. 이름 있는 혼을 파혼하면 안 냄")
+def _(r):
+    b = _buf(.9)
+    m = int(.25 * SR); place(b, filt(noise(m, r), "band", 2800, 1.2) * env(m, .002, .09, 3) * .6, 0)
+    for k, f in enumerate((700, 880, 1040, 820)): place(b, _ink_drop(r, f, .5), .15 + k * .09 + r.uniform(0, .03))
+    return reverb(b, .6, .2)
+
+
+# ── 천도 시야 축소(2026-10-26 점검): 지금은 먹먹해지기만 해서 '안전한 방'처럼 들린다 → 닫히는 순간과 바깥 위험을 귀로 ──
+@sfx("sfx.tendo.vision.close", -15, "처결", "천도 시야가 좁아짐: 귀 둘레 공기가 안쪽으로 훕 빨려 들고 낮은 맥 한 번 둥(0.4초) — 바깥이 안 보이게 됐다", bypass_cast=True, use="천도 시전 시작(시야 0.2초에 걸쳐 60%로). 먹먹 필터를 건너뛴다. 같은 천도 연속(5초 안)엔 0.6배")
+def _(r):
+    sec = .45; n = int(sec * SR)
+    suck = sweep_filt(noise(n, r), "band", 2400, 500, 1.6) * env(n, .2, .12, 4) * .5     # 좁아지는 0.2초에 맞춰 커짐
+    b = _buf(.7); place(b, suck, 0)
+    place(b, _thump(r, .2, 55, 250) * .8, .2)                                           # 다 닫힌 순간 낮은 맥
+    return reverb(b, .7, .2)
+
+
+@sfx("sfx.tendo.vision.open", -19, "처결", "천도 시야가 돌아옴(끊기거나 피했을 때): 막혔던 귀가 트이듯 바깥 소리가 휙 돌아오는 짧은 숨(0.3초)", bypass_cast=True, use="천도가 피하기·맞음으로 끊겨 시야가 돌아올 때. 천도 성공은 sfx.tendo.done 이 대신함")
+def _(r):
+    sec = .35; n = int(sec * SR)
+    return sweep_filt(noise(n, r), "band", 500, 3000, 1.4) * env(n, .03, .15, 3) * .5
+
+
+@sfx("sfx.tendo.cast.danger", -16, "처결", "천도 중 바깥 위험 맥박: 낮은 심장 '둥…둥…' 이 귀 안에서(반복 2초, 1초에 한 번). 크기는 시야 밖 적이 가까울수록 커짐", loop=True, bypass_cast=True, use="천도 시전 중 반복. 볼륨 = 시야 밖 가장 가까운 적 거리 8 m→0, 3 m→1(없으면 0). 소리 높이·빠르기는 그대로, 크기만")
+def _(r):
+    sec = 2.0; b = _buf(sec)
+    for at in (0.0, 1.0):
+        place(b, _thump(r, .16, 52, 220) * 1.0, at); place(b, _thump(r, .12, 60, 260) * .55, at + .17)   # 두-근
+    return loopify(b, .05)
+
+
+
+# ── 보스가 꿇은 동안의 약한 압박 예고음(2026-10-26, planning/combat/boss-final-moment-act1-2.md·act3.md) ──
+# 규칙(모든 보스 같음): 압박이 닿기 정확히 1.0초 전에 튼다. 소리는 1.0초 동안 커지다가 닿는 순간 뚝 끊긴다.
+#   → "차오르는 소리가 끊기면 그때 천도를 시작"이 귀에 붙는다(압박 간격 4~6초 − 2초 시전 = 여유 2~4초).
+#   바탕 한 겹(낮게 차오르는 숨)은 모두 같고, 그 위의 빛깔만 보스마다 다르다 → 처음 듣는 보스도 "예고"인 줄 안다.
+def _kneel_warn_base(r, sec=1.0):
+    """모든 보스 공통 바탕: 낮게 차오르는 숨(0→1초 동안 커지고 높아짐), 끝에서 뚝"""
+    n = int(sec * SR)
+    x = sweep_filt(noise(n, r), "band", 260, 900, 1.3) * np.linspace(0, 1, n) ** 2 * .35
+    x[-int(.015 * SR):] *= np.linspace(1, 0, int(.015 * SR))
+    return x
+
+
+def _kneel_warn(r, color, sec=1.0):
+    """바탕 + 보스 빛깔. 빛깔은 같은 길이(sec초)로 만들어 넘긴다"""
+    b = _buf(sec + .05); place(b, _kneel_warn_base(r, sec), 0); place(b, color[:int(sec * SR)], 0)
+    return b
+
+
+@sfx("sfx.boss.naru.kneel.warn", -14, "보스", "나루 영감 꿇은 동안 물 혼 예고: 뱃전 아래에서 물이 보글보글 차오름 → 1초에 뚝(물 혼이 올라오는 순간)", bypass_cast=True, use="B-01 꿇은 뒤 5초 물 혼 두 번째 물결 1.0초 전(4.0초)")
+def _(r):
+    n = int(1.0 * SR); c = _buf(1.0)
+    for k in range(14):
+        at = .05 + .9 * (k / 14) ** .7; place(c, bubble(.12, r.uniform(180, 380), 1.8, .03) * (.25 + .5 * k / 14), at)
+    c += filt(noise(n, r), "low", 300) * np.linspace(0, 1, n) ** 1.5 * .3
+    return _kneel_warn(r, c)
+
+
+@sfx("sfx.boss.seo.kneel.warn", -14, "보스", "서 의원 꿇은 동안 낙인 예고: 쇠 낙인이 달궈지며 치이익 커짐 → 1초에 뚝(낙인 파동)", bypass_cast=True, use="B-03 꿇은 동안 낙인 파동(4.0초마다) 1.0초 전")
+def _(r):
+    n = int(1.0 * SR)
+    hiss = filt(noise(n, r), "high", 3500) * (1 + .3 * np.sin(2 * np.pi * 23 * T(1.0))) * np.linspace(.1, 1, n) ** 2 * .35
+    ring = modal(1.0, [(1180, .6, .25), (2950, .4, .12)], r) * np.linspace(0, 1, n)
+    return _kneel_warn(r, hiss + ring)
+
+
+@sfx("sfx.boss.general.kneel.warn", -13, "보스", "이름 없는 장수 마지막 호령 예고: 진고(큰 북)가 둥…둥.둥둥 점점 빨라짐 → 1초에 뚝(대형이 선다)", bypass_cast=True, use="B-06 꿇은 뒤 1초부터 4.5초마다 대형 하나. 대형 1.0초 전(그림 예고 1.2초보다 0.2초 늦게)")
+def _(r):
+    c = _buf(1.0)
+    for k, at in enumerate((0.0, .38, .62, .78, .9)): place(c, _drum(r, 68, .18, .35 + .13 * k), at)
+    return _kneel_warn(r, c)
+
+
+@sfx("sfx.boss.chilseong.kneel.warn", -13, "보스", "반장 칠성 낙석 예고: 갱도 천장 나무가 끼이익 휘고 흙이 사르르 흘러내림 → 1초에 뚝(돌이 떨어진다)", bypass_cast=True, use="B-07 꿇은 뒤 4.5초마다 낙석 그림자 3곳. 그림자(예고 1.0초)와 같이")
+def _(r):
+    n = int(1.0 * SR); c = _buf(1.0)
+    place(c, _creak(r, .7, 140, 18, 600) * .5, .15)
+    dust = filt(noise(n, r) * (r.random(n) > .85), "band", 2600, 1.2) * np.linspace(0, 1, n) ** 1.5 * .5
+    for k in range(6): place(c, _stone_hit(r, .3)[:int(.08 * SR)] * .15, .5 + k * .08)
+    return _kneel_warn(r, c + dust)
+
+
+@sfx("sfx.boss.yeom.kneel.warn", -14, "보스", "장부꾼 염씨 숫자 예고: 장부 장이 촤르르 빠르게 넘어가다 → 1초에 뚝(숫자 넉 장이 날아온다)", bypass_cast=True, use="B-08 꿇은 동안 4.5초마다 숫자 4장. 던지기 1.0초 전")
+def _(r):
+    c = _buf(1.0)
+    k = 0; at = .05
+    while at < .95:
+        place(c, _paper(r, .05, 1800, 6500) * (.25 + .6 * at), at); k += 1; at += max(.035, .14 - .012 * k)
+    return _kneel_warn(r, c)
+
+
+@sfx("sfx.boss.mangbu.kneel.warn", -13, "보스", "망부석 아낙 파도 예고: 바닷물이 쏴아 뒤로 빠지며 자갈이 끌려감 → 1초에 뚝(한 줄 파도가 친다)", bypass_cast=True, use="B-09 꿇은 동안 4.5초마다 파도 한 줄. 파도 1.0초 전")
+def _(r):
+    n = int(1.0 * SR)
+    draw = sweep_filt(noise(n, r), "band", 2200, 500, .9) * np.linspace(.15, 1, n) ** 1.5 * .5   # 물이 빠지는 쏴(높→낮), 끝까지 커짐
+    peb = filt(noise(n, r) * (r.random(n) > .9), "band", 3500, 1.5) * np.linspace(1, .2, n) * .3
+    return _kneel_warn(r, draw + peb)
+
+
+@sfx("sfx.boss.seonjang.kneel.warn", -13, "보스", "만선호 선장 기울기 예고: 배 밑창이 끄으응 낮게 신음하며 높아짐 → 1초에 뚝(갑판이 기운다)", bypass_cast=True, use="B-10 꿇은 동안 6초마다 기울기. 기울기 1.0초 전. 이 소리가 끊긴 뒤 바로 시작하면 다음 기울기 전에 2초 시전이 끝난다")
+def _(r):
+    c = _buf(1.0)
+    place(c, _creak(r, .95, 85, 14, 400) * .7, 0)
+    place(c, _rope_taut(r, .9, 110) * .25, .05)
+    c = c * np.linspace(.15, 1, len(c)) ** 1.5                 # 끝으로 갈수록 커져야 '곧'으로 들린다
+    return _kneel_warn(r, c)
+
+
+@sfx("sfx.boss.wangcho.kneel.warn", -13, "보스", "다리 밑 왕초 거적 예고: 거적을 머리 위로 휘휘 돌리는 바람 소리가 빨라짐 → 1초에 뚝(던짐)", bypass_cast=True, use="B-11 꿇은 동안 4.5초마다 거적 던지기. 던지기 1.0초 전(그림 예고 0.8초보다 0.2초 먼저)")
+def _(r):
+    c = _buf(1.0); at = 0.0; k = 0
+    while at < .9:
+        m = int(.16 * SR); place(c, filt(noise(m, r), "band", 700 + 120 * k, 1.1) * env(m, .06, .07, 3) * (.3 + .1 * k), at)
+        k += 1; at += max(.11, .3 - .045 * k)
+    return _kneel_warn(r, c)
+
+
+# ===== 업 칸 들어섬·나옴 (코디 요청 10-26, 연결법 docs/karma-tier-sound.md) =====
+# 바람: 업 칸은 '벌'이 아니라 '다른 길'이다. 그래서 실패·거절 소리(내려가는 반음, 버저, 둔탁한 막힘)를 하나도 쓰지 않는다.
+# 소리 말(규칙):
+#  - 들어섬 = 열림: 낮은 숨이 차오르고, 바탕음 위에 '완전5도'(도-솔처럼 비어 있고 넓은 음정)가 피어난다 → "길이 하나 더 열렸다"
+#  - 나옴 = 닫힘이지만 평온: 5도가 먼저 사라지고 바탕음 하나만 남아 가라앉는다(내쉬는 숨) → "원래 길로 돌아왔다". 떨어지는 음은 쓰지 않는다
+#  - 칸이 깊어질수록 바탕음이 낮아진다(물든 눈 D4 → 잇단 사슬 A3 → 빛 없는 길 D3·징 D2). '더 나쁜'이 아니라 '더 깊은' 길
+#  - 칸마다 무엇이 열리는지 소리로 말한다: 물든 눈 = 보임(먹물이 번지며 반짝), 잇단 사슬 = 이어짐(고리가 차례로 울림), 빛 없는 길 = 어둠 속 넓음(징)
+KT_ROOT = {10: 293.66, 30: 220.0, 60: 146.83}    # 칸마다 바탕음(Hz): D4 · A3 · D3
+
+
+def _karma_gate(r, root, sec, opening=True):
+    """업 칸 공통 바탕 한 겹: 낮은 숨 + 바탕음 + 그 위 완전5도.
+    opening=True(들어섬): 숨이 차오르고 5도가 0.35초 늦게 피어남 / False(나옴): 5도가 먼저 꺼지고 바탕음만 남아 가라앉음"""
+    n = int(sec * SR); t = T(sec)
+    if opening:
+        breath = sweep_filt(noise(n, r), "band", 260, 900, 1.2) * env(n, sec * .35, sec * .4, 3, hold=.1) * .35   # 들이쉬는 숨: 띠가 위로 열림
+        body = np.clip(t / .25, 0, 1) * np.exp(-np.clip(t - .4, 0, None) / (sec * .45))
+        fifth = np.clip((t - .35) / .4, 0, 1) * np.exp(-np.clip(t - .9, 0, None) / (sec * .35))
+    else:
+        breath = sweep_filt(noise(n, r), "band", 900, 300, 1.2) * env(n, .12, sec * .45, 3) * .3   # 내쉬는 숨: 띠가 아래로 닫힘(음은 안 떨어짐)
+        body = np.clip(t / .08, 0, 1) * np.exp(-t / (sec * .4))
+        fifth = np.clip(t / .05, 0, 1) * np.exp(-t / .22)                 # 5도가 먼저 사라짐 → 바탕음 하나만 남음
+    # 바탕음: 기본음 + 옥타브 아래(살짝 어긋나 천천히 우는 맥놀이 0.6Hz — 놋 그릇 같은 따뜻한 울음)
+    base = (np.sin(2 * np.pi * root * t) + .5 * np.sin(2 * np.pi * (root / 2 + .3) * t) + .15 * np.sin(2 * np.pi * root * 2 * t)) * body
+    five = (np.sin(2 * np.pi * root * 1.5 * t) + .3 * np.sin(2 * np.pi * root * 3 * t)) * fifth * .55
+    return breath + base * .5 + five
+
+
+def _kt_glint(r, freqs, at0, gap, dec=.6, a=.35):
+    """맑은 놋 방울이 차례로 반짝(정해진 음들). 음은 5음계 안에서만 움직여 어긋남이 없다"""
+    b = _buf(at0 + gap * len(freqs) + dec * 3)
+    for i, f in enumerate(freqs):
+        place(b, _chime(r, f, dec, a * (1 - .12 * i)), at0 + i * gap)
+    return b
+
+
+@sfx("sfx.karma.tier.10.enter", -13, "세계", "업 칸 「물든 눈」 들어섬: 먹물 한 방울이 물에 똑 떨어져 번지고 → 낮은 숨이 차오르며 D-A 5도가 열림 → 높은 방울 셋이 위로 반짝(눈이 뜨임, 1.8초) — 벌이 아니라 '보이는 것이 늘었다'", use="업이 10 이상이 되는 순간(그 파혼 소리 0.5초 뒤). 업 칸 글(karma_tier_texts.json)이 뜰 때")
+def _(r):
+    b = _buf(2.6)
+    place(b, _ink_drop(r, 520, .8), 0)                                    # 먹물 '똑' — 붓 표식 방울과 같은 집안
+    m = int(.9 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 700, 2400, 3) * env(m, .05, .5, 3) * .18, .05)   # 물에 번지는 '스' (위로 퍼짐)
+    place(b, _karma_gate(r, KT_ROOT[10], 1.9, True), .08)
+    place(b, _kt_glint(r, [880, 1174.7, 1318.5], .62, .12, .5, .3), 0)     # A5-D6-E6: 눈이 뜨이며 반짝
+    return reverb(b, 1.6, .3, tone_hz=6000)
+
+
+@sfx("sfx.karma.tier.10.exit", -17, "세계", "업 칸 「물든 눈」 나옴: 방울 하나 맑게 톡 → D-A 5도가 먼저 사그라지고 D 한 음이 내쉬는 숨과 함께 가라앉음(1.3초) — 눈을 감고 원래 길로", use="업이 10 아래로 내려가는 순간(그 천도 끝 소리 1.2초 뒤, 천도 보상 소리와 안 겹치게)")
+def _(r):
+    b = _buf(2.0)
+    place(b, _chime(r, 1174.7, .45, .28), 0)                              # 위 들어섬의 가운데 방울(D6) 하나만
+    place(b, _karma_gate(r, KT_ROOT[10], 1.3, False), .04)
+    return reverb(b, 1.4, .3, tone_hz=5000)
+
+
+@sfx("sfx.karma.tier.30.enter", -12, "세계", "업 칸 「잇단 사슬」 들어섬: 사슬 고리가 차르륵 차례로 이어지며 고리마다 한 음씩 A-E-A-B로 올라감 → 마지막 고리가 팽팽히 당겨져 A-E 5도가 열림(2.0초) — '하나 깨면 옆까지 닿는다'", use="업이 30 이상이 되는 순간(그 파혼 소리 0.5초 뒤)")
+def _(r):
+    b = _buf(2.8)
+    links = lambda k, r: .02 + k * .085 + r.uniform(0, .01)               # 고리들이 일정한 박자로 '이어짐'
+    place(b, _chain_links(r, .7, 8, spread=links, muffle=5000) * .7, 0)
+    place(b, _kt_glint(r, [440, 659.3, 880, 987.8], .03, .17, .55, .32), 0)   # A4-E5-A5-B5: 고리마다 한 음(5음계 안)
+    place(b, _rope_taut(r, .5, 110) * .25, .66)                          # 사슬이 팽팽해짐(A2)
+    place(b, _karma_gate(r, KT_ROOT[30], 2.0, True), .55)
+    return reverb(b, 1.8, .3, tone_hz=5500)
+
+
+@sfx("sfx.karma.tier.30.exit", -17, "세계", "업 칸 「잇단 사슬」 나옴: 사슬이 느슨해지며 고리 몇 개가 사르르 내려앉음 → A-E 5도가 먼저 꺼지고 A 한 음이 가라앉음(1.4초)", use="업이 30 아래로 내려가는 순간(천도 끝 소리 1.2초 뒤)")
+def _(r):
+    b = _buf(2.1)
+    slack = lambda k, r: k * .07 * (1 + k * .15) + r.uniform(0, .01)      # 간격이 점점 벌어짐 = 느슨해짐
+    place(b, _chain_links(r, .6, 5, spread=slack, muffle=3500) * .5, 0)
+    place(b, _chime(r, 659.3, .45, .22), .02)                             # E5 하나(위 들어섬의 둘째 고리 음)
+    place(b, _karma_gate(r, KT_ROOT[30], 1.4, False), .05)
+    return reverb(b, 1.5, .3, tone_hz=4500)
+
+
+@sfx("sfx.karma.tier.60.enter", -11, "세계", "업 칸 「빛 없는 길」 들어섬: 아주 낮은 징이 웅— 부풀고 → 어둠 속 바람이 넓게 열리며 D-A 5도가 깔림 → 멀리서 어두운 방울 둘이 아래로 내려앉지 않고 '그 자리에' 울림(2.6초) — 빛은 없지만 길은 넓다", use="업이 60 이상이 되는 순간(그 파혼 소리 0.6초 뒤). 이어서 바탕 소리 amb.karma.3 이 8초에 걸쳐 들어옴")
+def _(r):
+    b = _buf(3.6)
+    place(b, _jing(r, 73.4, 3.4, .35) * .55, 0)                          # D2 징: 깊고 넓다(꽉 막힌 소리가 아니라 '부푸는' 소리)
+    m = int(2.4 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 180, 700, .9) * env(m, 1.0, .9, 3, hold=.3) * .35, .1)   # 긴 굴 속 바람이 넓어짐
+    place(b, _karma_gate(r, KT_ROOT[60], 2.6, True), .3)
+    place(b, filt(_kt_glint(r, [587.3, 440], 1.15, .38, .9, .22), "low", 2200), 0)   # D5-A4: 빛 없는 방울(높은 반짝임을 걷어 어둡게)
+    return reverb(b, 2.6, .4, tone_hz=2500)
+
+
+@sfx("sfx.karma.tier.60.exit", -16, "세계", "업 칸 「빛 없는 길」 나옴: 징 가장자리를 손으로 쓸 듯 작게 웅 → 굴 바람이 닫히고 D 한 음이 길게 가라앉음(1.8초) — 어둠에서 나와 원래 길로", use="업이 60 아래로 내려가는 순간(천도 끝 소리 1.2초 뒤). 바탕 소리 amb.karma.3 은 같이 8초에 걸쳐 빠짐")
+def _(r):
+    b = _buf(2.6)
+    place(b, _jing(r, 73.4, 2.2, .5) * .3, 0)                            # 세게 치지 않고 부풀기만
+    m = int(1.2 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 600, 200, .9) * env(m, .1, .6, 3) * .25, 0)
+    place(b, _karma_gate(r, KT_ROOT[60], 1.8, False), .1)
+    return reverb(b, 2.0, .35, tone_hz=2500)
+
+# ===== 2막 들어섬(금줄 끊김 · 고개 넘음) + 장비 새 칸 열림 (코디 요청 10-26, 연결법 docs/act2-entry-sound.md) =====
+# 흐름(planning/controls/act2-entry-10min.md): 0:00 금줄 끊김 → 1막 바탕이 고개 100 m에 걸쳐 빠짐 → 0:07 금줄 넘음, 구역 이름 띠 + 2막 곡
+#  → 0:31 첫 서낭당 쉬기 → 장비 새 칸 둘(신·노리개) 1초 연출.
+# 끊김은 '막혔던 것이 풀림'이라 시원하게, 넘음은 '새 땅의 첫 숨'이라 넓게. 둘 다 무섭지 않게 둔다(2막 첫 10분은 낮, 산 사람의 때).
+@sfx("sfx.geumjul.snap", -9, "세계", "금줄이 끊김: 새끼줄이 끼이익 팽팽해지다 '툭!' 끊어지고 → 끼워 둔 한지 조각들이 확 부는 바람에 사락사락 위로 흩날려 멀어짐 → 고개 너머로 트인 바람(2.8초)", use="2막 금줄(R2-1 · R2-2)이 풀린 뒤 처음 금줄 앞 8 m에 섰을 때 한 번. 금줄 자리 3D(최소 3m·최대 30m). 한지가 날아가는 그림과 같이")
+def _(r):
+    b = _buf(3.4)
+    place(b, _rope_taut(r, .55, 82) * .8, 0)                             # 짚 새끼줄이 버티다
+    place(b, _creak(r, .45, 150, 26, 800) * .5, .05)
+    m = int(.12 * SR)                                                     # '툭!' — 짚 섬유가 한꺼번에 끊김(높은 바삭 + 낮은 탁)
+    place(b, (filt(noise(m, r), "band", 2600, 1.2) * env(m, .0008, .03, 4) + tone(.12, 210, 90) * env(m, .001, .04) * .6), .55)
+    place(b, _crinkle(r, .25, 18, (1800, 5000), (.2, .7)), .56)   # 짚 올이 바스스
+    sec = 2.4; n = int(sec * SR); t = T(sec)
+    gust = np.clip(t / .3, 0, 1) * np.exp(-np.clip(t - .5, 0, None) / 1.0)   # 끊긴 순간 확 부는 바람
+    place(b, sweep_filt(noise(n, r), "band", 350, 1300, .7) * gust * .55, .55)
+    strips = grains(1.8, r, 70, lambda r, k: _paper(r, r.uniform(.04, .1), 2500, 7500) * r.uniform(.15, .5) * (1 - k / 80))   # 한지 조각이 흩날림
+    place(b, sweep_filt(strips, "low", 9000, 2500, .7), .6)               # 멀어질수록 높은 사각임이 사라짐
+    place(b, filt(noise(int(1.6 * SR), r), "low", 260) * env(int(1.6 * SR), .5, .7, 3) * .35, 1.2)   # 고개 너머로 트인 낮은 바람
+    return reverb(b, 1.4, .22, tone_hz=6000)
+
+
+@sfx("amb.geumjul.cut", -28, "세계", "끊긴 금줄: 장승에 남은 새끼줄 끝이 바람에 가끔 톡 부딪히고, 남은 한지 한두 장이 사락(반복용 14초) — 이제 열린 문", loop=True, use="금줄이 풀린 뒤 두 금줄 자리(102,660)·(445,640) 3D. 최소 2m·최대 12m. 끊김 소리가 끝난 3초 뒤부터")
+def _(r):
+    sec = 14.4; n = int(sec * SR); g = _gust_curve(sec, r, 2, .2)
+    wind = filt(noise(n, r), "band", 380, .6) * (.4 + .6 * g) * .5
+    paper = grains(sec, r, 16, lambda r, k: _paper(r, r.uniform(.05, .12), 2500, 6500) * r.uniform(.1, .35)) * (.3 + .7 * g)
+    taps = np.zeros(n)
+    for at in (2.2, 6.9, 7.3, 11.6):                                     # 줄 끝이 장승에 톡(나무)
+        place(taps, _wood_tap(r, 520, .025, .35), at)
+    return loopify(reverb(wind + paper + taps, 1.0, .2)[:n], .6)
+
+
+def _pass_open(r, sec):
+    """고개를 넘는 순간 공통 한 겹: 막혔던 바람이 확 트이며 넓어짐(낮은 쪽에서 위로 열리는 숨) + 산 아래로 퍼지는 울림"""
+    n = int(sec * SR)
+    air = sweep_filt(noise(n, r), "band", 220, 1100, .8) * env(n, sec * .25, sec * .45, 3, hold=sec * .1) * .5
+    low = filt(noise(n, r), "low", 180) * env(n, sec * .3, sec * .5, 3) * .35
+    return air + low
+
+
+def _pipe(r, sec, f0, f1, vib=.012):
+    """짧은 피리 숨 한 마디: 숨소리 섞인 겹리드 음(배음 많고 코 먹은 소리)"""
+    n = int(sec * SR); t = T(sec)
+    ff = f0 * (f1 / f0) ** np.clip(t / (sec * .35), 0, 1) * (1 + vib * np.sin(2 * np.pi * 5.2 * t) * np.clip(t / .3, 0, 1))
+    ph = 2 * np.pi * np.cumsum(ff) / SR
+    reed = sum(a * np.sin(k * ph) for k, a in ((1, 1), (2, .55), (3, .45), (4, .25), (5, .15)))
+    breath = filt(noise(n, r), "band", f1 * 2, 2) * .2
+    return filt(reed + breath, "low", 3500) * env(n, .08, sec * .3, 3, hold=sec * .4)
+
+
+@sfx("sfx.region.enter.bulgeunjae", -11, "세계", "붉은재 싸움터 들어섬: 고갯마루 바람이 확 트이고 → 먼 진고(큰 북) 둥…둥 두 번 → 피리 한 마디가 4도 위로 올라가 길게(2.6초) — 옛 싸움터, 그러나 지금은 아침", use="구역 이름 띠 '붉은재 싸움터'가 펼쳐질 때(띠 0.5초 펼침과 같이, 2막 처음 한 번). 이 소리 1.0초 뒤 2막 필드 곡이 들어옴")
+def _(r):
+    b = _buf(3.4)
+    place(b, _pass_open(r, 2.4), 0)
+    place(b, reverb(_drum(r, 62, .45, .7), 2.0, .5, tone_hz=1800), .35)    # 먼 진고: 산에 울려 멀게
+    place(b, reverb(_drum(r, 62, .45, .5), 2.0, .5, tone_hz=1800), .85)
+    place(b, _pipe(r, 1.8, 392, 523.3) * .35, .7)                          # G4 → C5(완전4도 위) 피리
+    return reverb(b, 1.8, .3, tone_hz=5000)
+
+
+@sfx("sfx.region.enter.soegol", -11, "세계", "쇳골 광산 들어섬: 산길 바람이 트이고 → 먼 곡괭이 쇳소리 땅·땅·땅이 골짜기에 메아리 → 낮은 피리 한 마디(2.6초) — 사람이 일하는 산", use="구역 이름 띠 '쇳골 광산'이 펼쳐질 때(2막 처음 한 번). 1.0초 뒤 2막 필드 곡")
+def _(r):
+    b = _buf(3.4)
+    place(b, _pass_open(r, 2.4), 0)
+    pick = lambda: modal(.4, [(1900 * r.uniform(.98, 1.02), .05, 1), (2750, .03, .5), (620, .06, .4)], r)
+    for i, at in enumerate((.35, .62, .89)):                              # 곡괭이 셋, 멀수록 작게
+        place(b, reverb(filt(pick(), "low", 3500) * (.5 - i * .1), 1.6, .55, tone_hz=2500), at)
+    place(b, _pipe(r, 1.8, 293.7, 392) * .33, .85)                         # D4 → G4(완전4도 위), 붉은재보다 낮게
+    return reverb(b, 1.8, .3, tone_hz=4500)
+
+
+@sfx("sfx.equip.slot.open", -8, "UI", "장비 새 칸 둘이 열림(1초 연출): 봉한 한지가 '사악' 찢기며 칸 하나 툭 → 0.35초 뒤 둘째 칸 툭 → 옥 편경 두 음이 화음으로 맑게 울리고 길게(1.0초 + 꼬리 1.5초) — 품계 인과 같은 크기", use="새 장비 자리가 열릴 때 한 번: 2막 첫 서낭당 쉬기(신·노리개 2), 1막 보스 처결 뒤(갓·띠). 화면 가운데 칸 두 개가 차례로 열리는 그림과 같이. 다른 소리 0.6배(품계 인과 같은 규칙)")
+def _(r):
+    b = _buf(2.8)
+    for i, at in enumerate((0.0, .35)):                                    # 칸 하나마다: 봉한 종이 찢김 + 빗장 툭
+        place(b, _paper(r, .18, 1800, 7000, .01) * .6, at)
+        place(b, _wood_tap(r, 700 + i * 120, .035, .9), at + .12)
+        place(b, _thump(r, .1, 140, 500) * .4, at + .12)
+    place(b, _chime(r, 784, .9, .55), .5)                                  # G5
+    place(b, _chime(r, 1174.7, .9, .4), .52)                               # D6 — 5도 화음(짝이 맞음)
+    m = int(1.2 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 600, 2200, 1.5) * env(m, .3, .5, 3) * .15, .4)   # 몸을 감싸는 짧은 바람
+    return reverb(b, 1.5, .28, tone_hz=7000)
+
+# ===== 3막 들어섬(고개 넘음 · 바다가 처음 보임) + 별명을 들어 무적 혼 천도가 열림 (코디 요청 10-26, 연결법 docs/act3-entry-sound.md) =====
+# 흐름: planning/controls/act3-entry-10min.md. 금줄 끊김은 2막과 같은 sfx.geumjul.snap · amb.geumjul.cut 을 쓴다(같은 금줄, 같은 소리 = 귀가 "또 한 관할이 열렸다"를 안다).
+# 들어섬은 2막과 같은 틀(_pass_open 바람 + 땅 빛깔 + 피리 4도 위로)이고, 피리 음이 막마다 한 단씩 올라간다(2막 G·D → 3막 A·E): 길이 이어진다.
+@sfx("sfx.region.enter.gaetmaeul", -11, "세계", "갯마을 포구 들어섬: 강바람이 짠 바닷바람으로 확 트이고 → 파도 하나가 쏴아 밀려와 부서짐 → 먼 갈매기 끼룩 → 피리 한 마디 A4에서 D5로(2.8초)", use="구역 이름 띠 '갯마을 포구'가 펼쳐질 때(3막 처음 한 번, A 강둑길). 1초 뒤 3막 필드 곡. C 내리막으로 왔으면 이 소리 대신 sfx.sea.reveal 이 먼저 났으니 이름 띠 때는 피리만(.pipe 쪽)")
+def _(r):
+    b = _buf(3.6)
+    place(b, _pass_open(r, 2.4), 0)
+    place(b, filt(_wave(r, 2.2, .8), "low", 3500) * .55, .2)
+    place(b, reverb(filt(_gull(r, 1550), "low", 4000) * .35, 1.5, .4), .9)
+    place(b, _pipe(r, 1.8, 440, 587.3) * .35, .75)                         # A4 → D5
+    return reverb(b, 1.8, .3, tone_hz=5000)
+
+
+@sfx("sfx.region.enter.gaetmaeul.pipe", -14, "세계", "갯마을 포구 이름 띠(내리막으로 온 경우): 피리 한 마디 A4→D5만(1.8초) — 바다는 이미 들었으니", use="C 갱도 출구 내리막으로 와서 sfx.sea.reveal 을 이미 들은 뒤, 구역 이름 띠 '갯마을 포구'가 펼쳐질 때")
+def _(r):
+    b = _buf(2.4); place(b, _pipe(r, 1.8, 440, 587.3) * .4, 0); return reverb(b, 1.6, .3, tone_hz=5000)
+
+
+@sfx("sfx.region.enter.doseong", -11, "세계", "도성 아랫마을 들어섬: 큰길 바람이 트이고 → 멀리 도성 쪽 사람 소리가 한 번 크게 일렁였다 가라앉음 → 성 안 종루 큰 종 한 번 멀리 웅 → 피리 E4에서 A4로(2.8초)", use="구역 이름 띠 '도성 아랫마을'이 펼쳐질 때(3막 처음 한 번, B 큰길). 1초 뒤 3막 필드 곡")
+def _(r):
+    b = _buf(3.8)
+    place(b, _pass_open(r, 2.4), 0)
+    m = int(2.2 * SR)
+    place(b, filt(_murmur(r, 2.2, 14, lp=1100), "band", 600, .7) * env(m, .7, .8, 3, hold=.2) * .5, .15)   # 먼 웅성임이 일렁
+    bell = modal(3.0, [(110, 1.6, 1), (110.6, 1.6, .7), (264, .9, .45), (402, .6, .25), (561, .4, .12)], r)   # 종루 큰 종(A2), 멀어서 높은 쪽이 적음
+    place(b, reverb(filt(bell, "low", 1800) * .5, 2.5, .55, tone_hz=1500), .45)
+    place(b, _pipe(r, 1.8, 329.6, 440) * .33, .8)                          # E4 → A4
+    return reverb(b, 1.8, .3, tone_hz=4500)
+
+
+@sfx("sfx.sea.reveal", -10, "세계", "바다가 처음 보임(갱도 출구 내리막): 갱 안의 낮은 울림이 뚝 걷히고 → 귀가 확 트이며 넓은 바닷바람이 사방에서 쏴아 → 아래쪽 먼 파도 둘이 길게 → 낮게 깔리는 D-A-E 열린 화음이 숨처럼 부풀다 사라짐 → 먼 갈매기(4.8초)", use="C 길(B-07 천도한 경우만) 금줄 (790,1080)을 넘어 갱도 바깥 끝이 열리는 순간 한 번. 이어서 내리막 300 m 동안 갱 바탕 → 바다 바탕을 거리로 넘김(docs/act3-entry-sound.md)")
+def _(r):
+    b = _buf(6.0)
+    m = int(.6 * SR)                                                       # 갱 안 울림이 걷힘(낮은 웅이 0.4초에 빠짐)
+    place(b, filt(noise(m, r), "low", 160) * env(m, .02, .25, 4) * .6 + tone(.6, 62, 58) * env(m, .02, .25, 4) * .3, 0)
+    n = int(4.4 * SR); t = T(4.4)
+    air = sweep_filt(noise(n, r), "band", 300, 1500, .6) * np.clip((t - .1) / .6, 0, 1) * np.exp(-np.clip(t - 1.6, 0, None) / 1.6)
+    place(b, air * .6, .25)                                                # 귀가 트이는 넓은 바람
+    place(b, filt(_wave(r, 3.0, .9), "low", 2800) * .45, .7)
+    place(b, filt(_wave(r, 3.2, .7), "low", 2200) * .35, 2.2)
+    cs = 4.2; k = int(cs * SR); tc = T(cs)
+    swell = np.clip(tc / 1.4, 0, 1) ** 1.5 * np.exp(-np.clip(tc - 1.8, 0, None) / 1.0)
+    chord = sum(a * np.sin(2 * np.pi * f * tc + i) for i, (f, a) in enumerate(((146.8, 1), (220, .8), (329.6, .55), (440, .3))))   # D3-A3-E4-A4: 열린 화음(3음 없음 → 슬프지도 들뜨지도 않게, 넓기만)
+    place(b, filt(chord * swell, "low", 1600) * .28, .9)
+    place(b, reverb(filt(_gull(r, 1450), "low", 3800) * .3, 1.6, .45), 3.2)
+    return reverb(b, 2.2, .35, tone_hz=5000)
+
+
+# ── 별명 엿듣기 → 무적 혼 천도가 열림 ──
+# 규칙: ⑥ 무적 혼은 별명을 들어야 천도(▲)가 열린다. 소리는 세 단계로 이어진다 — 잠김(카드) → 들음(엿듣기) → 열림(카드).
+# 잠김은 '거절'이 아니라 '아직 모름'(부드러운 나무 막힘), 들음과 열림은 같은 방울 두 음을 써서 "아까 그 이름"을 귀가 잇는다.
+@sfx("sfx.nickname.locked", -19, "처결", "별명 모르는 무적 혼의 천도 칸: 나무 빗장이 닫힌 채 '톡' 한 번 + 아주 짧은 낮은 숨(0.35초) — 거절이 아니라 '아직 이름을 모른다'", use="⑥ 무적 혼 처결 카드가 뜰 때 ▲ 칸이 잠겨 있으면 카드 소리 0.15초 뒤 한 번. ▲를 눌러도 같은 소리(sfx.ui.deny 대신)")
+def _(r):
+    b = _buf(.5)
+    place(b, _wood_tap(r, 430, .03, .9), 0)
+    m = int(.3 * SR); place(b, filt(noise(m, r), "band", 500, 1.5) * env(m, .03, .12, 3) * .2, .02)
+    return reverb(b, .5, .15)
+
+
+@sfx("sfx.nickname.learn", -14, "처결", "별명을 엿들음: 붓 한 획 스윽 → 접힌 쪽지가 펴지듯 사락 → 나무 빗장이 '딸깍' 풀림 → 방울 두 음 E5·A5가 위로(1.2초) — 이 이름의 혼은 이제 보낼 수 있다", use="⑥ 상인·움막촌 엿듣기에서 별명(곰·키다리·끗발 등)을 들어 명부에 적힐 때. 그 줄의 sfx.ui.heard.clue 대신 이것 하나(둘을 겹치지 않는다)")
+def _(r):
+    b = _buf(1.9); m = int(.35 * SR)
+    place(b, sweep_filt(noise(m, r), "band", 1200, 3500, 2) * env(m, .05, .2, 3, hold=.05) * .35, 0)   # 붓 한 획
+    place(b, _paper(r, .2, 1800, 6500, .01) * .3, .3)
+    place(b, _wood_tap(r, 760, .03, .8), .5)                               # 빗장 딸깍 — 잠김(430 Hz 톡)보다 높고 밝게
+    place(b, _wood_tap(r, 980, .02, .45), .56)
+    place(b, _chime(r, 659.3, .6, .5), .62)                                # E5
+    place(b, _chime(r, 880, .7, .45), .78)                                 # A5 — 4도 위로(들어섬 피리와 같은 오름)
+    return reverb(b, 1.3, .25, tone_hz=7000)
+
+
+@sfx("sfx.nickname.unlock", -16, "처결", "별명을 들은 무적 혼의 천도 칸이 열려 있음: 빗장 딸깍 + 같은 방울 E5·A5가 짧게(0.6초) — '아까 들은 그 이름'", use="⑥ 별명을 들은 무적 혼의 처결 카드가 뜰 때, 그 별명으로 처음 한 번(카드 소리 0.15초 뒤). 두 번째부터는 내지 않음")
+def _(r):
+    b = _buf(1.4)
+    place(b, _wood_tap(r, 760, .03, .7), 0)
+    place(b, _chime(r, 659.3, .4, .45), .06)
+    place(b, _chime(r, 880, .5, .4), .16)
+    return reverb(b, 1.0, .22, tone_hz=7000)
 
 # ---------------------------------------------------------------------------
 def main():
