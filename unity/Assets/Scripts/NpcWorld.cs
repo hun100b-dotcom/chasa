@@ -304,6 +304,8 @@ public class NpcWorld
             string jt = k >= 30 ? "(말이 없다)" : k >= 10 && !string.IsNullOrEmpty(s.half) ? s.half : s.line;
             if (!string.IsNullOrEmpty(jt)) { Say(jt, s.label); Log.Add(s.label, s.row.place, jt, null, s.row.time); }
             JesaSeen.Add(jsoul);
+            // 제사 자리가 보스 단서(B01-D1 윤 소사네 제사상)도 겸하면 단서는 따로 붙인다 — 이름이 같아 제사로만 처리돼 단서가 안 붙던 버그(기획 R5)
+            if (!string.IsNullOrEmpty(s.clue) && k < 30 && book.Add(s.clue)) { Sfx.Play("sfx.clue"); Sfx.Play("sfx.ui.heard.clue"); if (onClue != null) onClue(); }
             return;
         }
         bool bossClue = !string.IsNullOrEmpty(s.clue) && s.clue.StartsWith("B");
