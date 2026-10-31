@@ -1,0 +1,3210 @@
+{
+ "CAMERA_PITCH_DEG": {
+  "value": 45.0,
+  "note": "내려다보는 각도"
+ },
+ "CAMERA_YAW_DEG": {
+  "value": 45.0,
+  "note": "좌우 회전각 (45 = 마름모 쿼터뷰)"
+ },
+ "CAMERA_VIEW_HEIGHT": {
+  "value": 16.0,
+  "note": "화면 세로로 보이는 월드 길이 (작을수록 확대)"
+ },
+ "CAMERA_FOLLOW_SMOOTHNESS": {
+  "value": 8.0,
+  "note": "카메라가 따라가는 부드러움"
+ },
+ "ARENA_HALF_SIZE": {
+  "value": 14.0,
+  "note": "28 x 28 정사각형 바닥"
+ },
+ "PLAYER_MOVE_SPEED": {
+  "value": 5.5,
+  "note": " | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "PLAYER_RADIUS": {
+  "value": 0.5,
+  "note": ""
+ },
+ "PLAYER_TURN_SPEED": {
+  "value": 30.0,
+  "note": "몸 돌리는 속도(라디안/초) | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "PLAYER_HAND_HEIGHT": {
+  "value": 1.0,
+  "note": "사슬이 시작되는 손 높이"
+ },
+ "PLAYER_ARRIVE_DISTANCE": {
+  "value": 0.15,
+  "note": ""
+ },
+ "COMBO_RESET_TIME": {
+  "value": 0.6,
+  "note": "콤보 이음 허용 시간"
+ },
+ "ATTACK_START_RANGE": {
+  "value": 3.6,
+  "note": "이 거리 안이면 휘두르기 시작(멀면 달려감)"
+ },
+ "DAMAGE_VARIANCE": {
+  "value": 0.1,
+  "note": "데미지 ±10%"
+ },
+ "HIT_PADDING": {
+  "value": 0.25,
+  "note": "판정 후함"
+ },
+ "PULL_RANGE": {
+  "value": 13.0,
+  "note": ""
+ },
+ "PULL_THROW_TIME": {
+  "value": 0.12,
+  "note": ""
+ },
+ "PULL_DRAG_SPEED": {
+  "value": 42.0,
+  "note": ""
+ },
+ "PULL_STOP_DISTANCE": {
+  "value": 2.0,
+  "note": ""
+ },
+ "PULL_RETRACT_TIME": {
+  "value": 0.14,
+  "note": ""
+ },
+ "PULL_DAMAGE": {
+  "value": 8,
+  "note": ""
+ },
+ "PULL_HITSTOP_FRAMES": {
+  "value": 4,
+  "note": "(기획 타격감 분석 10-24, 임시) 견인 명중 정지 [3→4]"
+ },
+ "PULL_SHAKE": {
+  "value": 0.25,
+  "note": "(기획 타격감 분석 10-24, 임시) 견인 충격값(trauma) [0.5→0.25]"
+ },
+ "PULL_ARRIVE_SHAKE": {
+  "value": 0.4,
+  "note": ""
+ },
+ "PULL_STUN": {
+  "value": 0.8,
+  "note": ""
+ },
+ "PULL_COOLDOWN": {
+  "value": 0.5,
+  "note": ""
+ },
+ "PULL_PICK_RADIUS": {
+  "value": 3.0,
+  "note": ""
+ },
+ "FEEL_SHAKE_MAX_OFFSET": {
+  "value": 0.28,
+  "note": "PD 피드백(10-24) \"흔들림이 너무 심함\" → 0.55에서 절반으로"
+ },
+ "FEEL_SHAKE_DECAY": {
+  "value": 1.6,
+  "note": "(기획 타격감 분석 10-24, 임시) 충격값이 초당 줄어드는 양. 제곱 모델이라 체감은 0.3초 안팎 [5.0→1.6]"
+ },
+ "FEEL_KILL_BONUS_FRAMES": {
+  "value": 2,
+  "note": ""
+ },
+ "FEEL_KILL_BONUS_SHAKE": {
+  "value": 0.3,
+  "note": ""
+ },
+ "FEEL_KNOCKBACK_TANGENT_MIX": {
+  "value": 0.35,
+  "note": ""
+ },
+ "CHAIN_SEGMENTS": {
+  "value": 18,
+  "note": ""
+ },
+ "TRAIL_LIFETIME": {
+  "value": 0.26,
+  "note": ""
+ },
+ "TRAIL_ALPHA": {
+  "value": 0.85,
+  "note": ""
+ },
+ "TRAIL_FADE_POWER": {
+  "value": 1.6,
+  "note": ""
+ },
+ "TRAIL_SUBSTEPS": {
+  "value": 4,
+  "note": ""
+ },
+ "TRAIL_INNER_RATIO": {
+  "value": 0.45,
+  "note": ""
+ },
+ "TRAIL_MAX_SAMPLES": {
+  "value": 120,
+  "note": ""
+ },
+ "NUMBER_LIFETIME": {
+  "value": 0.85,
+  "note": ""
+ },
+ "NUMBER_FADE_TIME": {
+  "value": 0.3,
+  "note": ""
+ },
+ "NUMBER_POP_SPEED_MIN": {
+  "value": 300.0,
+  "note": ""
+ },
+ "NUMBER_POP_SPEED_MAX": {
+  "value": 420.0,
+  "note": ""
+ },
+ "NUMBER_SPREAD_SPEED": {
+  "value": 110.0,
+  "note": ""
+ },
+ "NUMBER_GRAVITY": {
+  "value": 1100.0,
+  "note": ""
+ },
+ "NUMBER_POP_SCALE": {
+  "value": 1.9,
+  "note": ""
+ },
+ "NUMBER_POP_TIME": {
+  "value": 0.14,
+  "note": ""
+ },
+ "NUMBER_FONT_BASE": {
+  "value": 22.0,
+  "note": ""
+ },
+ "NUMBER_FONT_PER_DAMAGE": {
+  "value": 0.9,
+  "note": ""
+ },
+ "NUMBER_FONT_MAX": {
+  "value": 60.0,
+  "note": ""
+ },
+ "ENEMY_COUNT": {
+  "value": 3,
+  "note": "(QA M6 조정) 5→3: 첫 밤 처음 하는 사람이 보스까지 갈 수 있게(Unity는 Config 가 이 값을 씀). 죽이면 1.6초 뒤 다시 나온다"
+ },
+ "ENEMY_RADIUS": {
+  "value": 0.6,
+  "note": ""
+ },
+ "ENEMY_HEIGHT": {
+  "value": 1.8,
+  "note": ""
+ },
+ "ENEMY_SPEED": {
+  "value": 2.8,
+  "note": ""
+ },
+ "ENEMY_SPEED_VARIANCE": {
+  "value": 0.2,
+  "note": ""
+ },
+ "ENEMY_STOP_DISTANCE": {
+  "value": 1.7,
+  "note": ""
+ },
+ "ENEMY_KNOCKBACK_FRICTION": {
+  "value": 5.5,
+  "note": ""
+ },
+ "ENEMY_FLASH_TIME": {
+  "value": 0.09,
+  "note": "(기획 타격감 분석 10-24, 임시) 맞은 적 하얀 번쩍(초) [0.14→0.09]"
+ },
+ "ENEMY_SQUASH": {
+  "value": 0.25,
+  "note": ""
+ },
+ "ENEMY_KILL_KNOCKBACK_MULT": {
+  "value": 1.5,
+  "note": ""
+ },
+ "ENEMY_DEATH_HOLD": {
+  "value": 0.25,
+  "note": ""
+ },
+ "ENEMY_DEATH_SHRINK": {
+  "value": 0.3,
+  "note": ""
+ },
+ "ENEMY_RESPAWN_DELAY": {
+  "value": 1.6,
+  "note": ""
+ },
+ "ENEMY_SPAWN_DISTANCE": {
+  "value": 11.0,
+  "note": ""
+ },
+ "ENEMY_SPAWN_POP_TIME": {
+  "value": 0.3,
+  "note": ""
+ },
+ "ENEMY_PICK_RADIUS": {
+  "value": 1.0,
+  "note": ""
+ },
+ "CLICK_MARKER_LIFETIME": {
+  "value": 0.45,
+  "note": ""
+ },
+ "MAEDHIM_NORMAL": {
+  "value": 100,
+  "note": "E-001 맺힘(일반 적). 체력 대신 깎이고 0이면 처결 대기"
+ },
+ "MAEDHIM_LUMP": {
+  "value": 400,
+  "note": "E-002 맺힘(덩어리)"
+ },
+ "ENEMY_ATTACK_DAMAGE": {
+  "value": 10,
+  "note": "(QA M6 조정) 12→10: E-003 적 공격력, 최대 체력 100 기준 10번 맞으면 쓰러짐"
+ },
+ "ENEMY_ATTACK_INTERVAL": {
+  "value": 2.6,
+  "note": "(QA M6 조정) 2.0→2.6: E-004 적 공격 주기. 천도 캐스팅(1.5초) 한 번에 적 하나가 많아야 한 번 때리도록"
+ },
+ "ENEMY_ATTACK_WINDUP": {
+  "value": 0.55,
+  "note": "(기획 타격감 분석 10-24, 임시) 적 일반 근접 예고(초). 사람 반응 0.25+판단 0.2+여유 [0.4→0.55]"
+ },
+ "ENEMY_HIT_STAGGER": {
+  "value": 0.15,
+  "note": "E-006 적 피격 경직 (콤보 stun 값이 더 크면 그쪽이 적용)"
+ },
+ "PLAYER_HIT_STAGGER": {
+  "value": 0.3,
+  "note": "E-007 플레이어 피격 경직"
+ },
+ "ENEMY_ATTACK_RANGE": {
+  "value": 2.2,
+  "note": "(임시 해석) 공격 거리. 다가와 멈추는 거리(1.7)보다 살짝 길게"
+ },
+ "ENEMY_ATTACK_DODGE_MARGIN": {
+  "value": 0.3,
+  "note": "(임시 해석) 예비동작 끝에 이만큼 더 멀어지면 피한 것"
+ },
+ "PLAYER_MAX_HP": {
+  "value": 100,
+  "note": "(임시 해석) 스펙에 없음. 적 공격력 12 기준 9번 맞으면 쓰러짐"
+ },
+ "LUMP_SPAWN_CHANCE": {
+  "value": 0.15,
+  "note": "(임시 해석) 새 적이 덩어리일 확률"
+ },
+ "WAIT_FRESH": {
+  "value": 10.0,
+  "note": "W-001 갓 죽은 혼"
+ },
+ "WAIT_YEAR": {
+  "value": 7.0,
+  "note": "W-002 해 넘긴 혼"
+ },
+ "WAIT_OLD": {
+  "value": 4.0,
+  "note": "W-003 오래된 혼"
+ },
+ "WAIT_LUMP": {
+  "value": 4.0,
+  "note": "W-004 덩어리: 스펙상 \"대기 없음·천도 불가\". (임시 해석) 4초 동안 파혼만 받는다"
+ },
+ "WAIT_TIMEOUT_RECOVER": {
+  "value": 0.5,
+  "note": "W-005 🔴공백. (임시 해석) 시간 초과 시 맺힘 50%로 다시 일어선다"
+ },
+ "TENDO_CAST_TIME": {
+  "value": 1.5,
+  "note": "T-001"
+ },
+ "TENDO_CHAIN_CAST_TIME": {
+  "value": 0.8,
+  "note": "T-002 연속 천도 캐스팅"
+ },
+ "TENDO_CHAIN_WINDOW": {
+  "value": 5.0,
+  "note": "T-003 이 안에 다음 천도를 시작하면 단축 유지"
+ },
+ "TENDO_VISION_RATIO": {
+  "value": 0.6,
+  "note": "T-004 시야 반경 60%"
+ },
+ "TENDO_VISION_BLEND": {
+  "value": 0.2,
+  "note": "T-005 시야 전환 시간"
+ },
+ "TENDO_NEOK": {
+  "value": 10,
+  "note": "T-006 넋"
+ },
+ "TENDO_MEMORY": {
+  "value": 1,
+  "note": "T-007 기억 조각"
+ },
+ "TENDO_CANCEL_ON_HIT": {
+  "value": true,
+  "note": "T-008 🔴공백. (임시 해석) 캐스팅 중 맞으면 중단(대상은 계속 대기)"
+ },
+ "TENDO_HOLD_TIME": {
+  "value": 0.3,
+  "note": "(임시 해석) 이만큼 누르고 있으면 '길게 누름' = 천도"
+ },
+ "JUDGE_RANGE": {
+  "value": 2.8,
+  "note": "(임시 해석) 처결하려면 이 거리 안. 멀면 먼저 걸어간다"
+ },
+ "PAHON_RADIUS": {
+  "value": 3.0,
+  "note": "P-002 폭발 반경"
+ },
+ "PAHON_DAMAGE": {
+  "value": 35,
+  "note": "P-003 주변 적 맺힘 피해"
+ },
+ "PAHON_KNOCKBACK_DIST": {
+  "value": 3.0,
+  "note": "(기획 타격감 분석 10-24, 임시) 파혼 넉백 거리(m) [2.5→3.0]"
+ },
+ "PAHON_COIN": {
+  "value": 7,
+  "note": "P-005 엽전 (기획 4-4절 10-25: 5→8→7 시뮬 재판정, 임시)"
+ },
+ "PAHON_KARMA": {
+  "value": 1,
+  "note": "P-006 업 누적"
+ },
+ "STAIN_RADIUS": {
+  "value": 2.0,
+  "note": "P-007 원념 얼룩 반경"
+ },
+ "STAIN_DURATION": {
+  "value": 15.0,
+  "note": "P-008 지속"
+ },
+ "STAIN_SLOW": {
+  "value": 0.2,
+  "note": "P-009 위를 밟으면 이동속도 -20%"
+ },
+ "STAIN_SUMMON_COUNT": {
+  "value": 3,
+  "note": "P-010 3개가 겹치면 사나운 적 소환"
+ },
+ "FIERCE_MULT": {
+  "value": 1.5,
+  "note": "P-011 사나운 적: 맺힘·공격력 +50%"
+ },
+ "PAHON_HITSTOP_FRAMES": {
+  "value": 8,
+  "note": "(기획 타격감 분석 10-24, 임시) 파혼 정지: 게임에서 가장 큰 정지 [4→8]"
+ },
+ "PAHON_KNOCK_SFX_MAX": {"value": 4, "note": "(사운드 설계 10-26) 파혼 한 번에 넉백 소리를 내는 적 수 상한"},
+ "PAHON_KNOCK_SFX_GAP": {"value": 0.03, "note": "넉백 소리 간격(초)"},
+ "PAHON_KNOCK_PITCH_STEP": {"value": 0.04, "note": "넉백 소리 하나마다 음높이 +4%"},
+ "PAHON_CASCADE_MIN": {"value": 3, "note": "셋 이상 함께 깨지면 cascade 소리"},
+ "PAHON_SHAKE": {
+  "value": 0.65,
+  "note": "(기획 타격감 분석 10-24, 임시) 파혼 충격값 [0.8→0.65]"
+ },
+ "KARMA_TIER_1": {
+  "value": 10,
+  "note": "K-002 시작 (10~29): 마을 주민 반응 변화. 🔴수치 미정 → 지금은 단계 표시만"
+ },
+ "KARMA_TIER_2": {
+  "value": 30,
+  "note": "K-003 시작 (30~59): 명부(=넋) 보상 -10%"
+ },
+ "KARMA_TIER_3": {
+  "value": 60,
+  "note": "K-004 시작 (60+): 🔴설계 공백. 지금은 효과 없음(미구현)"
+ },
+ "KARMA_REWARD_PENALTY": {
+  "value": 0.1,
+  "note": "K-003 🔴수치 미정(스펙은 -10%만 적혀 있음)"
+ },
+ "VISION_BASE_RATIO": {
+  "value": 0.62,
+  "note": "(임시) 평소 시야 반경 = 화면 세로 × 이 값 (밤이라 가장자리가 어둡다)"
+ },
+ "VISION_EDGE_SOFT": {
+  "value": 0.35,
+  "note": "(임시) 시야 경계 번짐 정도"
+ },
+ "MAP_ZONE_RADIUS": {
+  "value": 18.0,
+  "note": "구역 하나의 반경(m)"
+ },
+ "MAP_REWARD_PER_RING": {
+  "value": 0.25,
+  "note": "한 고리 멀어질 때마다 보상 +25%"
+ },
+ "MAP_LUMP_BASE": {
+  "value": 0.05,
+  "note": "덩어리 혼 확률 기본. 바깥 고리일수록 +5%"
+ },
+ "MAP_LUMP_PER_RING": {
+  "value": 0.05,
+  "note": ""
+ },
+ "MAP_MIN_SOUL_GAP": {
+  "value": 3.0,
+  "note": "혼끼리 최소 간격(m)"
+ },
+ "SEAL_FADED_CAST_BONUS": {
+  "value": 0.25,
+  "note": "명부 인이 흐린 이름의 혼: 천도 캐스팅 +0.25초"
+ },
+ "SEAL_MISSING_CAST_BONUS": {
+  "value": 0.5,
+  "note": "인이 없는 이름의 혼: +0.5초"
+ },
+ "BOSS_TENDO_CAST_TIME": {
+  "value": 2.0,
+  "note": "보스 천도 캐스팅. 서사 제안 2.5초는 잡몹 2마리면 항상 지는 선택이라 2.0으로 낮춤"
+ },
+ "BOSS_CAST_ADD_PAUSE": {
+  "value": 2.0,
+  "note": "보스 천도 캐스팅 시작 후 이 시간 동안 잡몹 스폰 정지 (캐스팅이 '고행'만 되지 않게)"
+ },
+ "BOSS_PAHON_KARMA": {
+  "value": 3,
+  "note": "보스 파혼 업 (일반 파혼 3회분). 업 단계 경계(10, 30)를 넘길 땐 경고 필요"
+ },
+ "SHORTCUT_RETURN_CUT": {
+  "value": 0.175,
+  "note": "1호 보스 천도 보상: 귀환 거리 단축. 서사 제안 -40%는 과함 → 중간값 -17.5%"
+ },
+ "BOSS_CLUES_REQUIRED": {
+  "value": 3,
+  "note": "N-005 보스 천도에 필요한 낮 단서 수. B-1 확정: 2개 이하면 천도 불가(파혼만). 4초 캐스팅 완화안(b)은 플레이테스트 후 재검토"
+ },
+ "CAST_MIN_TIME": {
+  "value": 0.5,
+  "note": "어떤 보정을 받아도 천도 캐스팅은 이보다 짧아지지 않는다(연쇄 악용 방지)"
+ },
+ "WATER_SOUL_CAST_BONUS": {
+  "value": -0.5,
+  "note": "물 혼: 천도 캐스팅 -0.5초 (서사 제안 -1초는 물 혼을 무조건 천도로 만들어 완화)"
+ },
+ "WATER_TIDE_WINDOW": {
+  "value": 20.0,
+  "note": "밀물 신호 뒤 이 시간 안에 못 붙잡으면 그 밤엔 가라앉아 사라진다"
+ },
+ "NAMED_SOUL_CAST_BONUS": {
+  "value": -0.5,
+  "note": "낮에 별명을 들은 무적 혼: 천도 캐스팅 -0.5초 (하한 CAST_MIN_TIME)"
+ },
+ "B10_CREW_TENDO_BOSS_CUT": {
+  "value": 0.05,
+  "note": "B-10 선원 천도 1명당 선장 맺힘 -5% (서사 제안 -10%는 천도 정답화)"
+ },
+ "B12_WATER_TENDO_BOSS_CUT": {
+  "value": 0.03,
+  "note": "B-12 3페이즈 물 혼 천도 1마리당 흑월 맺힘 -3%"
+ },
+ "BOSS_ADD_PAUSE_ALL_BOSSES": {
+  "value": true,
+  "note": "천도 직후 2초 스폰 정지(BOSS_CAST_ADD_PAUSE)를 B-09~B-12 포함 모든 보스에 적용"
+ },
+ "RELEASE_RATIO_MIN": {
+  "value": 0.6,
+  "note": "B-20 풀어내기 조건: 기억한 이름 / 물막이 크기 ≥ 이 값 (모자라면 파혼만)"
+ },
+ "DAM_TICK_PAHON": {
+  "value": 1.0,
+  "note": "물막이 눈금: 4막~ 일반 파혼 1회당 증가"
+ },
+ "DAM_TICK_BOSS_PAHON": {
+  "value": 10.0,
+  "note": "물막이 눈금: 보스 파혼 1회당 증가 (\"+큼\")"
+ },
+ "DAM_TICK_PICKUP_FACTOR": {
+  "value": 0.5,
+  "note": "이름 줍기 성공 시 눈금 증가 배율 (절반)"
+ },
+ "NAME_PICKUP_WINDOW": {
+  "value": 2.0,
+  "note": "파혼 가루 속 이름 쪽지가 떠 있는 시간(초) (서사 제안 1.5초는 터치로 빠듯)"
+ },
+ "TURNED_SOUL_NEOK_RATIO": {
+  "value": 0.4,
+  "note": "⑦ 돌아선 혼 천도 시 넋 = 일반의 40%"
+ },
+ "NAME_JOIN_REWARD_MULT": {
+  "value": 3.0,
+  "note": "⑩ 이은 이름 천도 보상 = 일반 천도의 3배 (조각 3개 잇는 시간 보상)"
+ },
+ "MEMORY_MAP_RADIUS": {
+  "value": 8.0,
+  "note": "⑨ 천도 1회당 기억 지도가 그려지는 반경(m)"
+ },
+ "B13_DOCK_WINDOW": {
+  "value": 3.5,
+  "note": "B-13 배 정박 시간(초) (서사 제안 3초는 빠듯)"
+ },
+ "B13_BOARD_BOSS_CUT": {
+  "value": 0.2,
+  "note": "B-13 줄 선 혼을 배에 태우면 노인 맺힘 -20% (1회)"
+ },
+ "B15_STAMP_CAST_BONUS": {
+  "value": 0.5,
+  "note": "B-15 번호 낙인: 천도 캐스팅 +0.5초 (서사 제안 +1초는 일반 천도까지 막음) [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]"
+ },
+ "B15_STAMP_DURATION": {
+  "value": 8.0,
+  "note": "번호 낙인 지속(초) [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]"
+ },
+ "B15_SAFE_CELL_PER_TENDO": {
+  "value": 25,
+  "note": "천도 이 수마다 이름 안전 칸 1칸 [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]"
+ },
+ "B15_SAFE_CELL_MAX": {
+  "value": 6,
+  "note": "안전 칸 상한 (천도 800이면 32칸이 되는 폭주 방지) [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]"
+ },
+ "B15_BRUSH_NO_KARMA_CHANCE": {
+  "value": 0.2,
+  "note": "서리의 붓: 파혼 시 업 +0이 될 확률 [기획 확인: 원래 B14_ 이름, B-15(숫자를 처음 쓴 서리) 소속]"
+ },
+ "MEMORY_PIECE_MAX": {
+  "value": 6,
+  "note": "B-15·16 화면 기억 조각 상한"
+ },
+ "MEMORY_PIECE_STOP": {
+  "value": 1.0,
+  "note": "조각을 잡으면 보스 멈춤(초)"
+ },
+ "MEMORY_PIECE_RESTOP_COOLDOWN": {
+  "value": 3.0,
+  "note": "재멈춤 대기(초). 조각이 많아도 경직 무한 연쇄 방지"
+ },
+ "INK_PUDDLE_MAX": {
+  "value": 8,
+  "note": "B-16 먹물 웅덩이 상한 (이동 -20%는 원념 얼룩과 같은 값)"
+ },
+ "B17_DOZE_WINDOW": {
+  "value": 2.0,
+  "note": "B-17 졸음 창(초) (서사 제안 1.5초는 짧음)"
+ },
+ "B17_PASS_BOSS_CUT": {
+  "value": 0.08,
+  "note": "B-17 혼을 문으로 통과시키면 문지기 맺힘 -8%"
+ },
+ "B17_RAGE_HEAL": {
+  "value": 0.1,
+  "note": "B-17 졸 때 때리면 광폭: 맺힘 +10% (1회)"
+ },
+ "B18_STAMP_CAST_BONUS": {
+  "value": -1.0,
+  "note": "B-18 인 자국 안 천도 캐스팅 -1초 (하한 CAST_MIN_TIME 적용)"
+ },
+ "B19_HOLD_TIME": {
+  "value": 3.0,
+  "note": "B-19 그림자 버티기 시간(초)"
+ },
+ "B19_HOLD_BOSS_CUT": {
+  "value": 0.1,
+  "note": "B-19 버티기 성공 1회당 첫 차사 맺힘 -10% (서사 제안 -12%는 천도 정답화)"
+ },
+ "B19_PAHON_HEAL": {
+  "value": 0.08,
+  "note": "B-19 그림자를 파혼하면 첫 차사 맺힘 +8% (버티기 이득보다 작아야 쉬운 길이 성립)"
+ },
+ "B20_CALL_TIME": {
+  "value": 1.0,
+  "note": "B-20 아는 이름 \"부르기\"(초)"
+ },
+ "ENDING_NAME_CLEAR_TENDO": {
+  "value": 300,
+  "note": "먹지기 이름이 또렷이 적히는 천도 수 (천도만 센다)"
+ },
+ "NAME_NOTES_PER_ZONE": {
+  "value": 5,
+  "note": "⑨ 먹지기가 주워 둔 이름 쪽지 구역당(총 18장 안팎)"
+ },
+ "FLOOD_LOSS_RATIO": {
+  "value": 0.5,
+  "note": "물 차오름 때 아래층에 남으면 그날 얻은 넋·엽전의 이 비율을 잃는다 (보스 단서·장례 해금·도감 기억은 보존)"
+ },
+ "FLOOD_WARNING_TIME": {
+  "value": 30.0,
+  "note": "물 차오름 신호 몇 초 전에 경고하는가"
+ },
+ "BAEK_KNOWN_CAST_BONUS": {
+  "value": -0.5,
+  "note": "눕히기: 이미 그 사람의 혼을 천도했으면 캐스팅 -0.5초 (하한 CAST_MIN_TIME)"
+ },
+ "BAEK_BROKEN_CAST_BONUS": {
+  "value": 0.5,
+  "note": "눕히기: 그 사람의 혼을 파혼했으면 캐스팅 +0.5초"
+ },
+ "BAEK_TIDE_WINDOW": {
+  "value": 20.0,
+  "note": "⑤ 백 물때: 밀물 신호 뒤 이 시간 안에 못 눕히면 그 밤엔 묻힌다 (물 혼과 같은 값)"
+ },
+ "B21_FLOOD_LIMIT": {
+  "value": 90.0,
+  "note": "B-21 2단계 물 차오름 실패 시한(초). 서사 제안 60초는 빡빡해 90초"
+ },
+ "B22_SYNC_KNEEL_WINDOW": {
+  "value": 15.0,
+  "note": "B-22 일곱을 모두 무릎 꿇려야 하는 시간(초). 서사 제안 10초는 터치에서 빠듯"
+ },
+ "B22_ROPE_REACH_BONUS": {
+  "value": 0.8,
+  "note": "선원의 밧줄: 사슬 사거리 +0.8m (서사 제안 +1.5m는 3타 면적 +61%로 과함)"
+ },
+ "B21_SHORTCUT_CUT": {
+  "value": 0.15,
+  "note": "B-21 천도 보상: 소 밑 지름길 -15%"
+ },
+ "B21_PLANK_FLOOD_BONUS": {
+  "value": 10.0,
+  "note": "나룻배 판자(파혼 보상): 물 차오름 신호 +10초"
+ },
+ "BAEK_PAHON_KARMA": {
+  "value": 1,
+  "note": "백 깨뜨리기 업 (보스 백은 BOSS_PAHON_KARMA 3)"
+ },
+ "B23_RELEASE_BAEK_MIN": {
+  "value": 20,
+  "note": "B-23 풀기 조건: 이번 막 눕힌 백 수 이상 (백 36마리의 55%)"
+ },
+ "B23_RELEASE_TENDO_MIN": {
+  "value": 300,
+  "note": "또는 시즌 1·2 누적 천도 수 이상"
+ },
+ "SEASON3_START_TENDO": {
+  "value": 120,
+  "note": "시즌 3부터 시작하는 사람의 누적 천도 기본값"
+ },
+ "BAEK_SKIP_RATIO_DEFAULT": {
+  "value": 0.5,
+  "note": "시즌 3부터 시작한 기본 상태에서 7막 백이 비켜서는 비율"
+ },
+ "BAEK_NUMBER_CAST_BONUS": {
+  "value": 0.5,
+  "note": "이름 대신 목패 번호로 눕히기: 캐스팅 +0.5초"
+ },
+ "CHAIN_BREAK_ATTACK_BONUS": {
+  "value": 0.1,
+  "note": "6막 끊기판(B판): 7막 적 공격력만 +10% (얼룩·소환에는 적용 안 함)"
+ },
+ "CHAIN_BREAK_LUMP_EXTRA": {
+  "value": 1,
+  "note": "6막 끊기판: 덩어리 백 +1몸"
+ },
+ "LUMP_VISIBLE_BODIES_MAX": {
+  "value": 12,
+  "note": "덩어리 백 화면 동시 표시 상한 (나머지는 덩어리 안에)"
+ },
+ "LUMP_PAHON_KARMA_PER_BODY": {
+  "value": 0.1,
+  "note": "덩어리 백 파혼 업: 몸당 (일반 덩어리 포함)"
+ },
+ "LUMP_PAHON_KARMA_CAP": {
+  "value": 3.0,
+  "note": "덩어리 하나당 업 상한 (몸당 +1이면 40몸에 업 +40 폭주)"
+ },
+ "B25_BAEK_PAHON_HEAL": {
+  "value": 0.03,
+  "note": "B-25 백 1몸 깨뜨릴 때 칠성 맺힘 회복"
+ },
+ "B25_BAEK_PAHON_HEAL_CAP": {
+  "value": 0.25,
+  "note": "B-25 칠성 회복 총량 상한"
+ },
+ "FOG_SLOW": {
+  "value": 0.2,
+  "note": "B-26 역병 안개 이동 둔화 (원념 얼룩과 같은 값)"
+ },
+ "B27_COLD_DPS_RATIO": {
+  "value": 0.02,
+  "note": "B-27 추위: 서 있을 때만 초당 최대 체력 비율"
+ },
+ "B27_SHADOW_SHRINK_TIME": {
+  "value": 120.0,
+  "note": "B-27 성문 그림자가 무대 반경 100%→50%로 줄어드는 시간(초)"
+ },
+ "B27_SHADOW_SLOW_MULT": {
+  "value": 0.6,
+  "note": "시즌 1 ⑥ 장례를 본 경우 그림자 속도 배율 (더 느림)"
+ },
+ "B27_KNEEL_WAIT": {
+  "value": 10.0,
+  "note": "B-27 처결 대기(초). 다른 보스 7초"
+ },
+ "REWARD_FLAG_SCARE_TIME": {
+  "value": 1.5,
+  "note": "두 편의 깃대 조각: 주변 잡몹 겁먹음(초)"
+ },
+ "REWARD_FLAG_SCARE_COOLDOWN": {
+  "value": 12.0,
+  "note": "깃대 조각 재발동 대기(초)"
+ },
+ "REWARD_ORE_MULT": {
+  "value": 3.0,
+  "note": "광맥 한 줄: 일반 보스 재료의 배수"
+ },
+ "REWARD_LIME_SLOW": {
+  "value": 0.3,
+  "note": "석회 주머니: 폭발 뒤 잡몹 둔화 비율 (2초)"
+ },
+ "REWARD_LIME_SLOW_TIME": {
+  "value": 2.0,
+  "note": ""
+ },
+ "REWARD_INK_RADIUS_BONUS": {
+  "value": 0.5,
+  "note": "번진 먹: 파혼 폭발 반경 +0.5m (서사 제안 +1m는 면적 +78%). 6막 매듭 조각과는 큰 쪽만"
+ },
+ "REWARD_AREA_GAIN_MAX": {
+  "value": 0.4,
+  "note": "장비 보상 공통 기준: 타격·폭발 면적 증가 ≤ +40%"
+ },
+ "KARMA_DECAY_TENDO_INTERVAL": {
+  "value": 2,
+  "note": "천도(눕히기 포함) 이 횟수마다 업 -1 (최저 0). 업이 오르기만 하면 결말 A(업 60 미만)가 아무도 못 열린다"
+ },
+ "ENDING_A_MEMORY_MIN": {
+  "value": 150,
+  "note": "최종 눕히기(결말 A) 조건: 기억 이 값 이상 (서사 제안 200은 시즌 3 기본 상태가 못 닿음)"
+ },
+ "ENDING_A_KARMA_MAX": {
+  "value": 60,
+  "note": "업이 이 값 미만이어야 최종 눕히기 가능"
+ },
+ "B31_CHAIN_RADIUS": {
+  "value": 8.0,
+  "note": "B-31 나의 백에 묶여 움직일 수 있는 반경(m). 3타 사거리 5.6m보다 넉넉히"
+ },
+ "B31_LIGHT_PER_SENT": {
+  "value": 40,
+  "note": "보낸 사람(천도·눕히기) 이 수마다 일곱의 빛 1개 (최소 1, 최대 7)"
+ },
+ "B31_LIGHT_MAX": {
+  "value": 7,
+  "note": ""
+ },
+ "B31_LIGHT_PUSH_CUT": {
+  "value": 0.12,
+  "note": "빛 1개당 밀침 -12%"
+ },
+ "B31_KNEEL_WAIT": {
+  "value": 15.0,
+  "note": "B-31 처결 대기(초). 게임 전체에서 가장 긴 망설임"
+ },
+ "COMPASS_BACK_SLOW_MAX": {
+  "value": 0.1,
+  "note": "사슬 나침반: 가장 깊은 곳에서 되돌아갈 때 이동 최대 -10% (깊이에 비례)"
+ },
+ "INK_SILT_SLOW": {
+  "value": 0.15,
+  "note": "먹 앙금 이동 둔화"
+ },
+ "SLOW_STACK_MAX": {
+  "value": 0.35,
+  "note": "이동 둔화 합산 상한 (앙금·웅덩이·안개가 겹쳐도 속도 65% 아래로 안 내려감)"
+ },
+ "B29_STAND_TIME": {
+  "value": 3.0,
+  "note": "B-29 밥상 앞 서 있기(초)"
+ },
+ "B29_REGEN_STOP_TIME": {
+  "value": 15.0,
+  "note": "서 있기 완료 시 할미 맺힘 회복 정지(초)"
+ },
+ "B29_HOT_CELL_DPS_RATIO": {
+  "value": 0.04,
+  "note": "뜨거운 칸에 닿을 때 초당 최대 체력 비율"
+ },
+ "B29_HOT_CELL_AREA_MAX": {
+  "value": 0.25,
+  "note": "뜨거운 칸이 무대에서 차지하는 비율 상한 (2단계 0.35)"
+ },
+ "B30_WAVE_PERIOD": {
+  "value": 8.0,
+  "note": "B-30 우물 물 오르내림 주기(초)"
+ },
+ "B30_WAVE_RISE_TIME": {
+  "value": 3.0,
+  "note": "그중 물이 오르는 시간. 버티기는 내림(나머지 5초) 구간에서만 진행"
+ },
+ "REWARD_ROPE_PULL_BONUS": {
+  "value": 0.2,
+  "note": "첫 우물의 두레박줄: 사슬 당기기 속도 +20%"
+ },
+ "NIGHT_DURATION": {
+  "value": 480.0,
+  "note": "솔고개 첫 밤(튜토리얼) 길이(초). 서사 확정(SCENARIO-ACT1). 정규 밤은 900~1200초"
+ },
+ "NIGHT_WARN_TIME": {
+  "value": 30.0,
+  "note": "동트기 경고 시작(초 전). 서사 확정, 6막 물 차오름 경고와 같은 값"
+ },
+ "NIGHT_QUOTA": {
+  "value": 3,
+  "note": "명부 몫 = 천도만 센다(파혼 제외). 첫 밤: 무명 혼 2 + 이름혼 박돌쇠 1. 서사 확정"
+ },
+ "SHRINE_RADIUS": {
+  "value": 4.0,
+  "note": "서낭당 귀환 반경(m, 서낭나무 중심). 장승 한 쌍을 가장자리에 세운다. 서사 확정"
+ },
+ "BOSS_S1_MAEDHIM": {
+  "value": 800,
+  "note": "(시연판 임시) S1 나루 영감 맺힘(일반 100의 12배)"
+ },
+ "BOSS_S1_WAIT": {
+  "value": 8.0,
+  "note": "(시연판 임시) S1 보스 처결 대기(초)"
+ },
+ "BOSS_S1_DAMAGE": {
+  "value": 20,
+  "note": "(시연판 임시) S1 보스 공격력(일반 12)"
+ },
+ "BOSS_S1_SPEED_MULT": {
+  "value": 0.6,
+  "note": "(시연판 임시) S1 보스 이동속도 배율(느리지만 한 방이 아프다)"
+ },
+ "BOSS_S1_NEOK": {
+  "value": 60,
+  "note": "(시연판 임시) S1 보스 천도 넋(일반 10의 6배)"
+ },
+ "BOSS_S1_MEMORY": {
+  "value": 3,
+  "note": "(시연판 임시) S1 보스 천도 기억 조각"
+ },
+ "BOSS_ACT_NEOK_BASE": {"value": 50, "note": "(기획 act2-3-boss-reward-check 10-26) 2·3막 보스 천도 넋 = 50 × 고리 ÷ BOSS_RING_REF"},
+ "BOSS_ACT_COIN_BASE": {"value": 30, "note": "2·3막 보스 파혼 엽전 = 30 × 고리 ÷ BOSS_RING_REF"},
+ "BAETSAK_PAHON_COIN_MULT": {"value": 1.13, "note": "(기획 act2-3-boss-reward-check 8절) 도한수의 뱃삯: 파혼 엽전 배수"},
+ "BAETSAK_WATER_PAHON_RADIUS": {"value": 0.5, "note": "뱃삯: 물가·얼룩 위 파혼 반경 +m"},
+ "BAETSAK_TENDO_CAST_ADD": {"value": 0.1, "note": "뱃삯: 천도 시전 +초(기울기)"},
+ "JANGBU_NUM_PAHON_COIN_MULT": {"value": 1.2, "note": "남은 장부: ④(2막) 숫자 혼 파혼 엽전 배수(④ 밖 효과 없음)"},
+ "DEUNGJAN_DURATION": {"value": 60, "note": "아낙의 등잔: 켜 두는 시간(초)"},
+ "DEUNGJAN_RADIUS": {"value": 6, "note": "등잔 둘레(m)"},
+ "DEUNGJAN_PAHON_COIN_MULT": {"value": 1.5, "note": "등잔 둘레 안 파혼 엽전 배수"},
+ "DEUNGJAN_PER_NIGHT": {"value": 1, "note": "밤마다 켤 수 있는 횟수"},
+ "GOT_LIGHT_SWEEP_SEC": {"value": 20, "note": "곶 불빛 한 바퀴(초): ⑤ 바닷가에서 불빛 띠가 지나간 이름혼만 미니맵에 뜬다"},
+ "BOSS_RING_REF": {"value": 1.25, "note": "기준 고리 배율(1막 보스)"},
+ "BOSS_PAHON_COIN": {
+  "value": 30,
+  "note": "(시연판 임시) 보스 파혼 엽전(일반 5의 6배. 천도 쏠림 방지: BALANCE-NARRATIVE-CHECK 엽전×30 권고)"
+ },
+ "NAMED_MAEDHIM": {
+  "value": 150,
+  "note": "(시연판 임시) 이름혼(박돌쇠) 맺힘"
+ },
+ "CLUE_PICK_RADIUS": {
+  "value": 1.6,
+  "note": "(시연판 임시) 낮 단서를 줍는 거리(m). 시연판은 마을에 놓인 3개를 걸어가 줍는다"
+ },
+ "WEAPON_SWAP_TIME": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 무기 바꿔 들기 시간(초)"
+ },
+ "MACE_PAHON_KNOCKBACK_MULT": {
+  "value": 1.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 육모방망이: 파혼 넉백 +50%"
+ },
+ "MACE_PAHON_DAMAGE_MULT": {
+  "value": 0.9,
+  "note": "(시연판 임시) 기획서 6절 초안: 육모방망이: 파혼 피해 +20% (10-25 시뮬: 땅울림 넣고도 파혼만이 앞서 1.2→0.9로 낮춤, 넉백 1.5는 그대로)"
+ },
+ "MACE_QUAKE_RADIUS": {
+  "value": 4.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 육모방망이 Q 땅울림 반경(m)"
+ },
+ "MACE_QUAKE_DAMAGE": {
+  "value": 20,
+  "note": "(시연판 임시) 기획서 6절 초안: 땅울림 맺힘 피해"
+ },
+ "MACE_QUAKE_STUN": {
+  "value": 0.8,
+  "note": "(시연판 임시) 기획서 6절 초안: 땅울림 기절(초). 서 있는 적에게만, 무릎 꿇은 혼의 대기 시간과 무관"
+ },
+ "MACE_QUAKE_COOLDOWN": {
+  "value": 6.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 땅울림 재사용(초)"
+ },
+ "SKILL_HOLD_RADIUS": {
+  "value": 6.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 붙잡아 부르기 반경(m)"
+ },
+ "SKILL_HOLD_WAIT_BONUS": {
+  "value": 3.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 붙잡아 부르기: 무릎 꿇은 혼 대기 시간 +초"
+ },
+ "SKILL_HOLD_STUN": {
+  "value": 0.8,
+  "note": "(시연판 임시) 기획서 6절 초안: 붙잡아 부르기: 서 있는 적 멈칫(초)"
+ },
+ "SKILL_HOLD_COOLDOWN": {
+  "value": 12.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 붙잡아 부르기 재사용(초)"
+ },
+ "SKILL_BIND_RADIUS": {
+  "value": 4.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 휘감기 반경(m)"
+ },
+ "SKILL_BIND_STUN": {
+  "value": 1.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 휘감기: 적 묶는 시간(초)"
+ },
+ "SKILL_BIND_COOLDOWN": {
+  "value": 8.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 휘감기 재사용(초)"
+ },
+ "SKILL_BURST_RADIUS": {
+  "value": 2.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기 반경(m)"
+ },
+ "SKILL_BURST_DAMAGE": {
+  "value": 30,
+  "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기 맺힘 피해. 업은 그대로"
+ },
+ "SKILL_BURST_COOLDOWN": {
+  "value": 9.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기 재사용(초)"
+ },
+ "SKILL_BURST_FIND_RANGE": {
+  "value": 8.0,
+  "note": "(시연판 임시) 기획서 6절 초안: 터뜨리기가 고를 수 있는 얼룩 거리(m)"
+ },
+ "CAP_DAMAGE_PCT": {
+  "value": 0.4,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 맺힘 피해 +40% (기획서 6-3)"
+ },
+ "CAP_ATTACK_SPEED_PCT": {
+  "value": 0.25,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 공격 속도 +25%"
+ },
+ "CAP_CAST_REDUCE_PCT": {
+  "value": 0.3,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 천도 캐스팅 단축 -30% (하한 CAST_MIN_TIME)"
+ },
+ "CAP_PAHON_AREA_PCT": {
+  "value": 0.4,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 파혼 반경 면적 +40%"
+ },
+ "CAP_PAHON_DAMAGE_PCT": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 파혼 피해 +50%"
+ },
+ "CAP_MOVE_SPEED_PCT": {
+  "value": 0.2,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 이동 속도 +20%"
+ },
+ "CAP_DAMAGE_MINUS_PCT": {"value": 0.2, "note": "(기획 장비 점검 B-2) 피해 마이너스 상한 −20%"},
+ "CAP_CAST_SLOW_PCT": {"value": 0.3, "note": "천도 시전 느려짐 상한 +30%"},
+ "CAP_COIN_MINUS_PCT": {"value": 0.5, "note": "엽전 마이너스 상한 −50%"},
+ "CAP_TENDO_NEOK_PCT": {"value": 0.3, "note": "천도 넋 합계 상한 +30% (B-7)"},
+ "CAP_DEFENSE_PCT": {"value": 0.6, "note": "방어(받는 피해 −%) 합계 상한 60% (인 점검 1)"},
+ "CAP_SKILL_CD_PCT": {"value": 0.35, "note": "도술 재사용 단축 상한 35%"},
+ "CAP_WEAPON_CD_PCT": {"value": 0.4, "note": "무기 기술 재사용 단축 상한 40%"},
+ "CAP_FIERCE_PCT": {"value": 0.5, "note": "거센 혼·덩어리·보스 피해 상한 +50%"},
+ "SEAL_COLOR_SHARE": {"value": 0.25, "note": "(인 점검 2) 천도 넋 중 빛깔 주머니로 가는 몫"},
+ "SEAL_PAHON_COLOR": {"value": true, "note": "(인 점검 3, 서사 확정) 파혼한 혼도 빛깔 가루를 남김(그 혼 기본 천도 넋 × SEAL_COLOR_SHARE)"},
+ "NUMBERED_WAIT_ADD": {"value": 0.5, "note": "(기획 act2-souls 2절) 숫자 혼: 처결 대기 +초(인 없음)"},
+ "NUMBERED_BLUR_WAIT_ADD": {"value": 0.25, "note": "B-08 천도 뒤 숫자 혼이 흐림이 되어 대기 +초"},
+ "NUMBERED_NEOK_MULT": {"value": 1.3, "note": "숫자 혼 천도 넋 배수"},
+ "RING_COIN_SHARE": {"value": 0.6, "note": "(기획 act1-enemy-check) 필드 혼 엽전은 고리 보상 배율 증가분의 60%만 받는다"},
+ "AC_ESCORT_RADIUS": {"value": 3, "note": "(기획 dosul-check 1) 배웅길: 천도 끝난 자리 반경 m 안의 적만 느려진다"},
+ "AC_CAGE_BOSS_STUN": {"value": 1, "note": "쇠사슬 울: 보스도 이만큼(초) 묶인다"},
+ "CAP_COIN_PCT": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%"
+ },
+ "DROP_RARITY_RARE": {
+  "value": 0.08,
+  "note": "(시연판 임시) 기획서 6절 초안: 장비 드롭 귀한 확률"
+ },
+ "DROP_RARITY_CRAFTED": {
+  "value": 0.3,
+  "note": "(시연판 임시) 기획서 6절 초안: 장비 드롭 손본 확률(귀한 제외). 나머지는 흔한"
+ },
+ "DROP_CHANCE": {
+  "value": 0.35,
+  "note": "(시연판 임시) 기획서 6절 초안: 맺힘 0 때 장비가 떨어질 확률(처결과 무관)"
+ },
+ "MOONFLOWER_BELL_PAHON_RADIUS": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획서 6절 초안: 월화의 방울: 파혼 반경 +m. 정본은 +1m, 업 상한 초과라 QA 확인 전 임시 0.5"
+ },
+ "STAT_POINT_PER_NEOK": {
+  "value": 30,
+  "note": "(시연판 임시) 기획서 6절 초안: 능력치 점수 1점당 넋(시연판은 표시 전용)"
+ },
+ "B03_WARN_TIME": {
+  "value": 0.8,
+  "note": "(QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 바닥 칸 예고(초). 반응 0.25초여도 4.95m 이동 가능"
+ },
+ "B03_GRID": {
+  "value": 5,
+  "note": "(QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 칸 수 한 변(5×5)"
+ },
+ "B03_CELLS_PER_WAVE": {
+  "value": 16,
+  "note": "(QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 한 번에 터지는 칸 수. 10칸 이하는 항상 피해져 위협이 없고 20칸이면 97%만 피해져 불공정에 가까움 → 15~18"
+ },
+ "B03_WAVE_GAP": {
+  "value": 1.2,
+  "note": "(QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 연속 파동 간격(초). 안전 칸이 파동마다 바뀌어 이동을 강제"
+ },
+ "B03_WEAK_TIME": {
+  "value": 3.0,
+  "note": "(QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 약점 노출(초). 철삭 초당 36 기준 창 1번에 108 피해"
+ },
+ "B03_BOSS_MAEDHIM": {
+  "value": 800,
+  "note": "(QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 보스 맺힘. 약점 창 약 8번 필요(철삭·방망이 동일). S1 시연 보스는 1200으로 12번이라 B-03이 더 짧게 느껴지도록 낮춤"
+ },
+ "MAP_CELL_SIZE": {
+  "value": 2.0,
+  "note": "(시연판 임시) 아트 배치표 한 칸의 실제 길이(m). 1이면 아트 비율 그대로 18×14m로 너무 좁아 2로 키움"
+ },
+ "TILT_NEOK_PCT": {
+  "value": 0.25,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 향 내음 +: 천도 넋 +25%"
+ },
+ "TILT_PAHON_COIN_PCT": {
+  "value": -0.5,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 향 내음 −: 파혼 엽전 −50%"
+ },
+ "TILT_RADIUS_M": {
+  "value": 0.3,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 검은 술 +: 파혼 반경 +0.3m"
+ },
+ "TILT_WAIT_ADD": {
+  "value": -0.5,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 검은 술 −: 처결 대기 시간 −0.5초(덩어리 외)"
+ },
+ "TILT_WINDOW_ADD": {
+  "value": 1.5,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 젖은 소매 +: 연속 천도 창 +1.5초"
+ },
+ "TILT_WINDOW_DMG_PCT": {
+  "value": -0.1,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 젖은 소매 −: 맺힘 피해 −10%"
+ },
+ "TILT_KNOCKBACK_PCT": {
+  "value": 0.3,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 깨진 거울 +: 파혼 넉백 +30%"
+ },
+ "TILT_VISION_SHIFT": {
+  "value": -0.05,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 깨진 거울 −: 천도 중 시야 비율 −5%p (0.6→0.55)"
+ },
+ "VISION_RATIO_FLOOR": {
+  "value": 0.55,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 시야 비율 하한(QA 확인 전 임시): 깨진 거울을 여러 개 껴도 이 밑으로 안 줄어듦"
+ },
+ "TILT_CAST_DR_PCT": {
+  "value": 0.2,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 상복 자락 +: 천도 중 받는 피해 −20%"
+ },
+ "TILT_ASPD_PCT": {
+  "value": -0.08,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 상복 자락 −: 공격 속도 −8%"
+ },
+ "WAIT_FLOOR": {
+  "value": 0.5,
+  "note": "(시연판 임시) 기획 growth.json 기울기: 처결 대기 시간 최소(초). 검은 술을 겹쳐도 이 밑으로 안 줄어듦(QA 제안)"
+ },
+ "DAY_TICKS": {
+  "value": 3,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 해 그림자 눈금 개수. 단서 동사 한 번 성공마다 1 줄어듦"
+ },
+ "EAVESDROP_RADIUS": {
+  "value": 3.0,
+  "note": "기획 확정(부록 B): 엿듣기 3m"
+ },
+ "EAVESDROP_RADIUS_EAR": {
+  "value": 2.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 업 10 이상일 때 엿듣기 원 반경(m)"
+ },
+ "EAVESDROP_TIME": {
+  "value": 6.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 엿듣기: 원 안에 머무는 시간(초)"
+ },
+ "WATCH_TIME": {
+  "value": 15.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 지켜보기: 장면 길이(초, 기획 10~20 가운데)"
+ },
+ "WATCH_RADIUS": {
+  "value": 6.0,
+  "note": "기획 확정(부록 B): 지켜보기 6m"
+ },
+ "TOUCH_TIME": {
+  "value": 2.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 만져 보기: 유품 길게 누르는 시간(초)"
+ },
+ "TOUCH_RADIUS": {
+  "value": 1.5,
+  "note": "기획 확정(부록 B): 만져 보기 1.5m"
+ },
+ "FUNERAL_TIME": {
+  "value": 70.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 장례 목격 길이(초, 건너뛸 수 있음)"
+ },
+ "EMPTY_DAY_TIME": {
+  "value": 5.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 할 것이 없는 낮: '들을 것이 없다' 표시 후 해 질 녘으로 넘어가는 시간(초)"
+ },
+ "KARMA_EAR_HALF": {
+  "value": 10,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 업 이상이면 사람 말 단서가 반쪽 문장으로 기록되고 엿듣기 원이 좁아짐"
+ },
+ "KARMA_EAR_BOSS_CLOSED": {
+  "value": 30,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 업 이상이면 보스 엿듣기 단서 닫힘"
+ },
+ "KARMA_EAR_ALL_CLOSED": {
+  "value": 60,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 업 이상이면 보스와 상관없는 마을 소문까지 닫힘"
+ },
+ "SHOP_HEAL_PRICE": {
+  "value": 15,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 공물상 회복약 엽전"
+ },
+ "SHOP_HEAL_MAX": {
+  "value": 5,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 회복약 한 밤 소지 한도"
+ },
+ "SHOP_HEAL_RATIO": {
+  "value": 0.4,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 회복약 생명 회복 비율"
+ },
+ "SHOP_DAWN_PRICE": {
+  "value": 40,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 새벽 부적 엽전(동트기 경고가 일찍 옴)"
+ },
+ "SHOP_DAWN_EARLY": {
+  "value": 30.0,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 새벽 부적: 경고가 일찍 오는 시간(초)"
+ },
+ "SHOP_CLEANSE_PRICE": {
+  "value": 30,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 씻김 부적 엽전(얼룩 하나 지움, 업은 그대로)"
+ },
+ "REROLL_BASE": {
+  "value": 40,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 다시 굴리기 첫 비용(엽전) (기획 4-4절 10-25: 20→40, 기울기 다시 매기기)"
+ },
+ "REROLL_STEP": {
+  "value": 20,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 다시 굴리기: 같은 물건에 할 때마다 늘어나는 비용"
+ },
+ "REROLL_MAX": {
+  "value": 200,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 다시 굴리기 비용 상한"
+ },
+ "UPGRADE_COIN_1": {
+  "value": 60,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 흔한→손본 엽전"
+ },
+ "UPGRADE_ORE_1": {
+  "value": 3,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 흔한→손본 광석"
+ },
+ "UPGRADE_COIN_2": {
+  "value": 180,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 손본→귀한 엽전"
+ },
+ "UPGRADE_ORE_2": {
+  "value": 10,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 손본→귀한 광석"
+ },
+ "DISMANTLE_ORE_COMMON": {
+  "value": 1,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 풀기: 흔한 장비가 주는 광석"
+ },
+ "DISMANTLE_ORE_CRAFTED": {
+  "value": 3,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 풀기: 손본 장비가 주는 광석"
+ },
+ "DISMANTLE_ORE_RARE": {
+  "value": 8,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 풀기: 귀한 장비가 주는 광석"
+ },
+ "SOCKET_COST_1": {
+  "value": 80,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 홈 뚫기 첫째 엽전"
+ },
+ "SOCKET_COST_2": {
+  "value": 240,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 홈 뚫기 둘째 엽전"
+ },
+ "SOCKET_MAX": {
+  "value": 2,
+  "note": "(시연판 임시) 기획서 부록 B 낮: 장비 한 개의 인 홈 최대 수"
+ },
+ "NIGHT_GRACE": {
+  "value": 4.0,
+  "note": "(QA 버그 B1) 밤 시작·첫 입력 뒤 이 시간 동안 적이 공격 준비를 시작하지 않는다(그 뒤 첫 공격은 ENEMY_ATTACK_INTERVAL 뒤). 서낭당에서 가만히 서 있다 죽는 것 방지"
+ },
+ "REGEN_DELAY": {
+  "value": 3.0,
+  "note": "(QA M6 조정) 첫 밤 생존: 마지막으로 맞고 이 시간(초)이 지나면 체력이 천천히 찬다"
+ },
+ "REGEN_PER_SEC": {
+  "value": 2.0,
+  "note": "(QA M6 조정) 첫 밤 생존: 맞지 않는 동안 초당 체력 회복"
+ },
+ "SHRINE_HEAL_PER_SEC": {
+  "value": 12.0,
+  "note": "(QA M6 조정) 첫 밤 생존: 서낭당 원 안에서 초당 체력 회복(맞은 직후에도). 서낭당 = 안전한 쉼터"
+ },
+ "FIRST_NIGHT_HEAL": {
+  "value": 2,
+  "note": "(QA M6 조정) 첫 밤 생존: 첫 밤 시작 때 당할미가 쥐여 주는 회복약 수(H 키)"
+ },
+ "DEMO_WEAPONS": {
+  "value": true,
+  "note": "(코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: Tab 무기 교체(육모방망이 등) 켜기 true (10-25 오너 지시로 켬: 무기 5계열 실사용)"
+ },
+ "DEMO_SKILLS": {
+  "value": false,
+  "note": "(코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 도술 1/2/3 켜기 true"
+ },
+ "DEMO_GEAR": {
+  "value": false,
+  "note": "(코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 장비 드롭·장착·월화 방울 켜기 true"
+ },
+ "DEMO_DAY": {
+  "value": false,
+  "note": "(코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: 낮 화면·서낭당 켜기 true"
+ },
+ "DEMO_PANEL": {
+  "value": false,
+  "note": "(코디네이터 지시, 격차 분석) 시연판 기본 구성 = 철삭 하나 + 천도/파혼 선택. 코드는 남기고 끄기만: C 캐릭터 창 켜기 true"
+ },
+ "WORLD_ZONES": {
+  "value": false,
+  "note": "(시연판 임시) 구역 이어 붙인 넓은 필드 켜기. false 면 마을 한 곳만(기존 동작). 주소에 ?zones 를 붙여도 켜진다"
+ },
+ "ZONE_SIZE_M": {
+  "value": 128.0,
+  "note": "구역 한 칸 한 변(m). 기획 확정(10-24): 128×128m, 3×3 로딩. 마을(28×36m)은 0번 구역 안쪽에 들어간다"
+ },
+ "ZONE_HYSTERESIS_M": {
+  "value": 6.0,
+  "note": "구역 경계에서 '현재 구역'이 바뀌기 전 여유(m). 경계에서 켜졌다 꺼졌다 반복하지 않게"
+ },
+ "ZONE_LOAD_PROPS_PER_FRAME": {
+  "value": 6,
+  "note": "구역을 불러올 때 한 프레임에 세우는 소품 수(웹은 쓰레드가 없어 나눠서 해야 끊기지 않음)"
+ },
+ "CAMERA_LOOKAHEAD_M": {
+  "value": 1.5,
+  "note": "(시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게 | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "CAMERA_DEADZONE_M": {
+  "value": 0.3,
+  "note": "(시연판 임시) 카메라 중심에서 이 반경(m) 안에서는 카메라가 안 움직임. 0이면 끔. 잔떨림·멀미 감소 | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "SHAKE_MAX_ROLL_DEG": {
+  "value": 1.2,
+  "note": "(기획 타격감 분석 10-24, 임시) 흔들림 최대 화면 기울기(도). 위치보다 덜 어지럽고 묵직함"
+ },
+ "SHAKE_NOISE_FREQ": {
+  "value": 22.0,
+  "note": "(기획 타격감 분석 10-24, 임시) 흔들림 빈도(Hz). 매 프레임 무작위 대신 펄린 노이즈 → 지글거림 제거"
+ },
+ "SHAKE_MOBILE_MULT": {
+  "value": 0.7,
+  "note": "(기획 타격감 분석 10-24, 임시) 폰 화면은 흔들림 70%"
+ },
+ "HITSTOP_CAP_FRAMES": {
+  "value": 10,
+  "note": "(기획 타격감 분석 10-24, 임시) 어떤 경우에도 이 이상 멈추지 않음"
+ },
+ "TRAUMA_PLAYER_HIT": {
+  "value": 0.3,
+  "note": "(기획 타격감 분석 10-24, 임시) 차사가 맞았을 때 충격값 [0.35→0.3]"
+ },
+ "COMBO1_KNOCKBACK_DIST": {
+  "value": 1.0,
+  "note": "(기획 타격감 분석 10-24, 임시) 철삭 1타 넉백 거리(m). 다음 타 사거리 안에 남게 짧게. 속도 = 거리 × 마찰로 환산"
+ },
+ "COMBO2_KNOCKBACK_DIST": {
+  "value": 1.3,
+  "note": "(기획 타격감 분석 10-24, 임시) 2타 넉백 거리(m)"
+ },
+ "COMBO3_KNOCKBACK_DIST": {
+  "value": 3.5,
+  "note": "(기획 타격감 분석 10-24, 임시) 3타 마무리 넉백 거리(m). 멀리 날려 숨 돌릴 틈"
+ },
+ "WEIGHT_FIERCE": {
+  "value": 0.6,
+  "note": "(기획 타격감 분석 10-24, 임시) 넉백 배율: 사나운 적"
+ },
+ "WEIGHT_LUMP": {
+  "value": 0.3,
+  "note": "(기획 타격감 분석 10-24, 임시) 넉백 배율: 덩어리"
+ },
+ "WEIGHT_BOSS": {
+  "value": 0.0,
+  "note": "(기획 타격감 분석 10-24, 임시) 넉백 배율: 보스는 밀리지 않음"
+ },
+ "TENDO_COMPLETE_SLOWMO": {
+  "value": 0.35,
+  "note": "(기획 타격감 분석 10-24, 임시) 천도 완료 순간 정지 대신 이 시간(초) 동안 시간이 느려짐(멈춤=폭력, 느림=보냄)"
+ },
+ "TENDO_COMPLETE_SLOWMO_SCALE": {
+  "value": 0.5,
+  "note": "(기획 타격감 분석 10-24, 임시) 위 느린 시간의 속도 배율"
+ },
+ "PLAYER_HIT_INVULN": {
+  "value": 0.5,
+  "note": "(기획 타격감 분석 10-24, 임시) 피격 직후 무적(초) [0.6→0.5]"
+ },
+ "DODGE_ENABLED": {
+  "value": true,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하기(구르기) 켜기. PC Space, 폰 오른쪽 아래 버튼"
+ },
+ "DODGE_DISTANCE": {
+  "value": 4.0,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하는 거리(m) | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "ANIM_BLEND_DODGE": {
+  "value": 0.033,
+  "note": "(기획 조작 점검 10-26) 구르기 동작으로 섞는 시간(초). Run→Roll 2프레임. 지금까지 0.12 일괄이라 구르기가 눈에 늦게 시작했다"
+ },
+ "ANIM_BLEND_RUNSTARTSTOP": {
+  "value": 0.017,
+  "note": "(기획 조작 점검 10-26) 달리기 출발·멈춤 동작으로 섞는 시간(초). Idle↔Start/Stop 0~1프레임"
+ },
+ "ANIM_BLEND_ATTACK": {
+  "value": 0.05,
+  "note": "(기획 조작 점검 10-26) 공격 1·2·3타로 섞는 시간(초). 1타 선딜 0.09초보다 짧아야 팔이 바로 움직인다"
+ },
+ "ANIM_BLEND_DEFAULT": {
+  "value": 0.12,
+  "note": "(기획 조작 점검 10-26) 그 밖의 동작 섞는 시간(초)"
+ },
+ "MOVE_STOP_SLIDE_M": {
+  "value": 0.18,
+  "note": "(기획 조작 점검 10-26) WASD·조이스틱을 떼면 걷던 방향으로 이만큼 미끄러지며 멈춘다(m). Run_Stop 클립 실측 0.18 m"
+ },
+ "DODGE_ANIM_SPEED": {
+  "value": 0.9375,
+  "note": "(기획 조작 점검 10-26) 구르기 클립 재생 배율 = 클립 0.30초 ÷ DODGE_TIME 0.32. 무적 0.03~0.25초가 클립 2~14프레임과 겹친다"
+ },
+ "RUN_START_SEC": {
+  "value": 0.167,
+  "note": "(기획 조작 점검 10-26) Run_Start 동작 시간(초). 클립 10프레임"
+ },
+ "RUN_STOP_SEC": {
+  "value": 0.25,
+  "note": "(기획 조작 점검 10-26) Run_Stop 동작 시간(초)"
+ },
+ "RANK_A": {
+  "value": 180,
+  "note": "(기획 s1-curve3-check 10-26) 품계 문턱 계수: 처결 셈 = RANK_A × (품계−1)². 품계는 천도·파혼 처결 셈으로 오른다(옛 75는 천도 넋만 셌다)"
+ },
+ "RANK_2_TALLY": {
+  "value": 75,
+  "note": "(기획 first-5-minutes v2) 품계 2만 처결 셈 75 — 혼 셋과 박돌쇠(80)를 처결하면 천도든 파혼이든 5분 무렵 품계 2(첫 성장 보장)"
+ },
+ "BELL_SLOW": {
+  "value": 0.25,
+  "note": "(기획 section6·appendix-2) 요령방울 타격 둔화: 적 이동 −25%"
+ },
+ "BELL_SLOW_SEC": {
+  "value": 2.0,
+  "note": "(appendix-2) 요령 1·2타 둔화 지속(초). 3타는 ×1.5"
+ },
+ "BELL_CALL_RADIUS": {
+  "value": 6.0,
+  "note": "(appendix-2) 요령 Q 불러 세우기 반경(m)"
+ },
+ "BELL_CALL_PAUSE": {
+  "value": 3.0,
+  "note": "(appendix-2) 불러 세우기: 무릎 꿇은 혼의 처결 대기가 멈추는 시간(초)"
+ },
+ "BELL_CALL_COOLDOWN": {
+  "value": 10.0,
+  "note": "(appendix-2) 불러 세우기 재사용(초)"
+ },
+ "TRIDENT_HOLD_SEC": {
+  "value": 1.0,
+  "note": "(appendix-2) 삼지창 3타 꿰찌르기: 꽂힌 적이 못 움직이는 시간(초)"
+ },
+ "TRIDENT_FENCE_SEC": {
+  "value": 4.0,
+  "note": "(appendix-2) 삼지창 Q 꽂아 버티기: 울타리가 서 있는 시간(초)"
+ },
+ "TRIDENT_FENCE_RADIUS": {
+  "value": 2.5,
+  "note": "(appendix-2) 꽂아 버티기 울타리 반경(m): 일반 적이 못 들어온다"
+ },
+ "TRIDENT_FENCE_COOLDOWN": {
+  "value": 14.0,
+  "note": "(appendix-2) 꽂아 버티기 재사용(초)"
+ },
+ "BRUSH_MARK_MAX": {
+  "value": 3,
+  "note": "(appendix-2) 명부 붓 먹 표식 최대 수"
+ },
+ "BRUSH_MARK_SEC": {
+  "value": 2.0,
+  "note": "(section6 손에 익음) 먹 표식이 남는 시간(초). 손에 익음 +2/4/6초"
+ },
+ "BRUSH_NAME_CAST_CUT": {
+  "value": 0.4,
+  "note": "(appendix-2) 이름을 써 둔 혼의 천도 시전 단축(초, 하한 CAST_MIN_TIME)"
+ },
+ "BRUSH_NAME_COOLDOWN": {
+  "value": 6.0,
+  "note": "(appendix-2) 이름 쓰기 재사용(초)"
+ },
+ "BRUSH_NAME_SPLASH_RADIUS": {
+  "value": 4.0,
+  "note": "(appendix-2) 표식 있는 혼을 파혼하면 먹이 튀어 표식 +1 이 가는 반경(m)"
+ },
+ "BRUSH_NAME_RANGE": {
+  "value": 12.0,
+  "note": "(appendix-2) 이름 쓰기가 닿는 거리(m)"
+ },
+ "DODGE_TIME": {
+  "value": 0.32,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하기 전체 시간(초)"
+ },
+ "DODGE_IFRAME_START": {
+  "value": 0.03,
+  "note": "(기획 타격감 분석 10-24, 임시) 무적 시작(초)"
+ },
+ "DODGE_IFRAME_END": {
+  "value": 0.25,
+  "note": "(기획 타격감 분석 10-24, 임시) 무적 끝(초) → 무적 0.22초(60fps 13프레임)"
+ },
+ "DODGE_CHARGES": {
+  "value": 2,
+  "note": "(기획 타격감 분석 10-24, 임시) 연속으로 피할 수 있는 횟수"
+ },
+ "DODGE_RECHARGE": {
+  "value": 1.1,
+  "note": "(기획 타격감 분석 10-24, 임시) 한 번 충전 시간(초) | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "DODGE_CANCEL_TO_ATTACK": {
+  "value": 0.22,
+  "note": "(기획 타격감 분석 10-24, 임시) 피하기 시작 후 이 시점부터 공격·처결로 끊을 수 있음(초)"
+ },
+ "DODGE_CANCELS_TENDO": {
+  "value": true,
+  "note": "(기획 타격감 분석 10-24, 임시) 천도 캐스팅 중 피하면 캐스팅만 취소, 혼은 계속 무릎 꿇고 대기(다시 천도 가능)"
+ },
+ "COMBO3_RECOVER_DODGE_LOCK": {
+  "value": 0.5,
+  "note": "(기획 타격감 분석 10-24, 임시) 3타 후딜 앞쪽 이 비율은 피하기도 불가(마무리의 대가)"
+ },
+ "BUFFER_WINDOW": {
+  "value": 0.2,
+  "note": "(기획 타격감 분석 10-24, 임시) 끊기 창(후딜 시작)이 열리기 전 이 시간(초) 안에 누른 입력만 저장했다가 실행"
+ },
+ "BUFFER_LIFETIME": {
+  "value": 0.15,
+  "note": "(기획 타격감 분석 10-24, 임시) 저장된 입력의 유효 시간(초). 너무 오래 기억하면 의도와 다른 동작이 나간다"
+ },
+ "BUFFER_TOUCH_ADD": {
+  "value": 0.05,
+  "note": "(기획 타격감 분석 10-24, 임시) 폰은 창·유효 시간 +0.05초(터치 지연)"
+ },
+ "ZONE_LOAD_ROWS_PER_FRAME": {
+  "value": 8,
+  "note": "구역을 불러올 때 한 프레임에 까는 땅 줄 수(64줄 → 8프레임). 경계에서 프레임이 튀지 않게 나눈다"
+ },
+ "UI_TOOLKIT": {
+  "value": true,
+  "note": "새 HUD(UI Toolkit)가 본 화면(기획 총정리 0단계, 10-25). false 면 예전 IMGUI(정리 대상). 주소 ?ui 로도 켠다"
+ },
+ "MOVE_CANCEL_RECOVER": {
+  "value": 0.6,
+  "note": "(기획 1단계) 공격 후딜이 이 비율(60%)만큼 지나면 이동 입력으로 끝동작을 끊고 걸어갈 수 있다"
+ },
+ "PAHON_RECOVER": {
+  "value": 0.25,
+  "note": "(기획 1단계) 파혼 직후 끝동작 잠금(초). 천도보다 짧게 끊어 손맛 유지"
+ },
+ "VIEW_3D_DEFAULT": {
+  "value": true,
+  "note": "오너 결정(10-24): 차사 전체를 3D 로 전면 교체. true 면 주소에 아무것도 없을 때 새 3D 화면. 옛 2D 화면은 ?v=2d 로만(정리 대상, 오너 확인 뒤 삭제)"
+ },
+ "TRICK_SPAWN_CHANCE": {
+  "value": 0.12,
+  "note": "속임수 혼: 새 보통 혼이 무릎 꿇은 척하는 종류일 확률"
+ },
+ "TRICK_TRIGGER_DIST": {
+  "value": 3.0,
+  "note": "속임수 혼: 플레이어가 이 거리(m) 안에 있으면 도화선이 탄다"
+ },
+ "TRICK_FUSE": {
+  "value": 0.7,
+  "note": "속임수 혼: 가까이 선 채로 이 시간(초)이 지나면 덮친다. 그 전에 파혼하면 안전(천도는 캐스팅이 길어 걸림)"
+ },
+ "TRICK_REVIVE": {
+  "value": 0.5,
+  "note": "속임수 혼: 덮치며 되찾는 맺힘 비율"
+ },
+ "CAMERA_WHEEL_SMOOTH": {
+  "value": 12.0,
+  "note": "휠 줌이 따라가는 부드러움(클수록 빠름) | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "MOVE_ACCEL": {
+  "value": 70.0,
+  "note": "걷기 가속(m/s²). 기획 권장 가속시간 0.10초 = 최고속도/0.1 | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "MOVE_START_FRAC": {
+  "value": 0.5,
+  "note": "걷기 시작 때 처음 속도 비율(0이면 완전히 멈춰서 출발) | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "MOVE_BRAKE_TIME": {
+  "value": 0.06,
+  "note": "도착 전 이 시간(초)만큼 미리 감속(6m/s 기준 약 0.6m 앞부터) | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "MOVE_SLOPE_SLOW": {
+  "value": 0.5,
+  "note": "오르막 기울기(오른 높이÷간 거리)가 이 값을 넘으면 걸음이 느려지기 시작(0.5 = 약 27도)"
+ },
+ "MOVE_SLOPE_BLOCK": {
+  "value": 1.1,
+  "note": "오르막 기울기가 이 값 이상이면 못 오른다(1.1 = 약 48도). 그 사이는 선형으로 느려짐"
+ },
+ "FOOTSTEP_STRIDE_M": {
+  "value": 1.375,
+  "note": "발소리 한 번이 나는 걸음 거리(m)"
+ },
+ "WEATHER_NIGHT_MID_REROLL": {
+  "value": 0.25,
+  "note": "밤 중간(약 11분)에 날씨를 한 번 더 굴릴 확률 (기획서 8절, 임시)"
+ },
+ "WEATHER_CLOUDY_GHOST_MULT": {
+  "value": 1.15,
+  "note": "흐림: 혼 나오는 수 배율"
+ },
+ "WEATHER_RAIN_STAIN_MULT": {
+  "value": 0.5,
+  "note": "비: 원념 얼룩 지속 배율"
+ },
+ "WEATHER_FOG_VISION_M": {
+  "value": 11.0,
+  "note": "안개: 보이는 거리(m). 맑을 때 18"
+ },
+ "WEATHER_CLEAR_CAST_HIT": {
+  "value": 0.75,
+  "note": "맑을 때 천도 중 피격 확률(기획 가정). 실제 게임에서는 CastHit/이 값을 시전 중 받는 피해 배율로 쓴다"
+ },
+ "WEATHER_CLEAR_VISION_M": {
+  "value": 18.0,
+  "note": "맑을 때 보이는 거리(m)"
+ },
+ "WEATHER_FOG_CAST_HIT": {
+  "value": 0.85,
+  "note": "안개: 천도 중 피격 확률(맑을 때 0.75)"
+ },
+ "WEATHER_FOG_NAMED_MULT": {
+  "value": 1.5,
+  "note": "안개: 이름혼 출현 배율"
+ },
+ "WEATHER_PLAGUE_MOVE_SLOW": {
+  "value": 0.2,
+  "note": "역병 안개: 이동 둔화(얼룩과 겹쳐도 합쳐서 최대 WEATHER_MOVE_SLOW_MAX)"
+ },
+ "WEATHER_MOVE_SLOW_MAX": {
+  "value": 0.3,
+  "note": "둔화 겹침 상한"
+ },
+ "WEATHER_PLAGUE_STAND_DRAIN": {
+  "value": 1.0,
+  "note": "역병 안개: 서 있을 때 초당 체력 감소"
+ },
+ "WEATHER_PLAGUE_CLEAR_R": {
+  "value": 4.0,
+  "note": "천도하면 그 자리 안개가 걷히는 반경(m)"
+ },
+ "WEATHER_PLAGUE_CLEAR_SEC": {
+  "value": 15.0,
+  "note": "안개가 걷혀 있는 시간(초)"
+ },
+ "CLOCK_DAWN_MIN": {
+  "value": 2.0,
+  "note": "(기획 3단계) 하루 40분 중 동틀녘 길이(분). 출발값, QA 시뮬레이션으로 확정"
+ },
+ "CLOCK_DAY_MIN": {
+  "value": 14.0,
+  "note": "낮 길이(분)"
+ },
+ "CLOCK_DUSK_MIN": {
+  "value": 2.0,
+  "note": "해질녘 길이(분)"
+ },
+ "CLOCK_NIGHT_MIN": {
+  "value": 22.0,
+  "note": "밤 길이(분)"
+ },
+ "CLOCK_START_MIN": {
+  "value": 16.0,
+  "note": "게임 시작 시각(하루 안의 분). 16 = 해질녘 시작"
+ },
+ "MOON_DAYS": {
+  "value": 7.0,
+  "note": "달 주기(일). 보름=가운데 날, 그믐=첫날"
+ },
+ "MOON_FULL_MAEDHIM": {
+  "value": 1.25,
+  "note": "보름 밤: 새로 태어나는 혼의 맺힘 배율(혼이 강하다)"
+ },
+ "MOON_FULL_MEMORY": {
+  "value": 1.5,
+  "note": "보름 밤: 천도로 얻는 기억 배율(기억이 길게)"
+ },
+ "MOON_NEW_LUMP": {
+  "value": 0.2,
+  "note": "그믐 밤: 덩어리가 나올 확률 가산(파혼이 유리)"
+ },
+ "DAY_CAMP_MIN_FRAC": {
+  "value": 0.4,
+  "note": "한낮에 적 군집 인원이 줄어드는 최소 비율(밤=1.0)"
+ },
+ "GROWTH_DAMAGE_PER_STR": {
+  "value": 0.01,
+  "note": "(성장 1차 임시) 힘 1점(시작 10 초과분)당 맺힘 피해 +1%"
+ },
+ "GROWTH_ATKSPD_PER_AGI": {
+  "value": 0.004,
+  "note": "(성장 1차 임시) 날램 1점당 공격 속도 +0.5%"
+ },
+ "GROWTH_MOVE_PER_AGI": {
+  "value": 0.002,
+  "note": "(성장 1차 임시) 날램 1점당 이동 속도 +0.3%"
+ },
+ "GROWTH_HP_PER_BODY": {
+  "value": 4,
+  "note": "몸 1점당 최대 체력 +4 (기획 growth.json stats, 장비 점검 B-7)"
+ },
+ "GROWTH_CAST_PER_MIND": {
+  "value": 0.0015,
+  "note": "(성장 1차 임시) 마음 1점당 천도 시전 시간 -0.5%"
+ },
+ "GROWTH_NEOK_PER_MIND": {
+  "value": 0.0,
+  "note": "마음의 천도 넋 보너스는 기획에 없는 값이라 0 (장비 점검 B-7)"
+ },
+ "BOSS_S2_MAEDHIM": {
+  "value": 800,
+  "note": "(2호 보스 임시) B-02 월화 맺힘. 나루 영감 1200 < 월화 1000 < 의원 800 순으로 짧아지게 — QA 검증 전"
+ },
+ "B02_CUPS": {
+  "value": 12,
+  "note": "(2호 보스 임시) 월화 열두 거리: 굿판 가장자리 잔 수. 열두째(번호 11) 잔은 엎어져 있어 늘 안전"
+ },
+ "B02_RING_RADIUS_M": {
+  "value": 7.0,
+  "note": "(2호 보스 임시) 잔을 둘러놓은 원 반지름(m)"
+ },
+ "B02_CUP_RADIUS_M": {
+  "value": 2.2,
+  "note": "(2호 보스 임시) 잔 앞 바닥이 열려 피해를 주는 반지름(m)"
+ },
+ "B02_SECTOR_DEG": {
+  "value": 30.0,
+  "note": "(2호 보스 임시) 잔이 열릴 때 보스(굿판 한가운데)에서 그 잔 방향으로 펼쳐지는 부채꼴의 각도. 아트 예고 그림(tele_sector30)과 같다"
+ },
+ "B02_SECTOR_R_M": {
+  "value": 8.0,
+  "note": "(2호 보스 임시) 위 부채꼴의 반지름(m). 잔 줄(7m)보다 조금 길다"
+ },
+ "B02_WARN_TIME": {
+  "value": 1.0,
+  "note": "(2호 보스 임시) 열린 바닥 예고(초). 붉게 번졌다가 터진다"
+ },
+ "B02_WAVE_GAP": {
+  "value": 4.5,
+  "note": "(2호 보스 임시) 방울 한 번(파동)과 다음 파동 사이(초)"
+ },
+ "B02_CUPS_PER_WAVE": {
+  "value": 3,
+  "note": "(2호 보스 임시) 1국면: 한 번에 열리는 잔 수"
+ },
+ "B02_CUPS_PER_WAVE_P2": {
+  "value": 5,
+  "note": "(2호 보스 임시) 2국면(맺힘 50% 이하): 한 번에 열리는 잔 수"
+ },
+ "B03_CELL_M": {
+  "value": 2.0,
+  "note": "(2호 보스 임시) 서 의원 번호 칸 한 칸 한 변(m). 5×5 = 10m 마당"
+ },
+ "B03_WEAK_STREAK": {
+  "value": 3,
+  "note": "(2호 보스 임시) 연속으로 이만큼 피하면 약장 서랍이 열려 약점이 드러난다(서사: 낙인 세 번)"
+ },
+ "B03_WEAK_DMG_MULT": {
+  "value": 1.5,
+  "note": "(2호 보스 임시) 약점이 열렸을 때 보스가 받는 피해 배율"
+ },
+ "B03_CLOSED_DMG_MULT": {
+  "value": 0.25,
+  "note": "(2호 보스 임시) 약점이 닫혀 있을 때 보스가 받는 피해 배율(그냥 때려서는 잘 안 닳는다)"
+ },
+ "ACD_SOULFIRE": {
+  "value": 6.0,
+  "note": "(액티브 도술 임시) 혼불 날리기 재사용(초)"
+ },
+ "ACD_NAMELIGHT": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 이름 비추기 재사용"
+ },
+ "ACD_ESCORT": {
+  "value": 10.0,
+  "note": "(액티브 도술 임시) 배웅길 재사용"
+ },
+ "ACD_SEVEN": {
+  "value": 30.0,
+  "note": "(액티브 도술 임시) 일곱 이름 재사용(깊은 도술)"
+ },
+ "ACD_MULTIPULL": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 여럿 끌기 재사용"
+ },
+ "ACD_KNOTDASH": {
+  "value": 7.0,
+  "note": "(액티브 도술 임시) 매듭 걸음 재사용"
+ },
+ "ACD_TIE": {
+  "value": 15.0,
+  "note": "(액티브 도술 임시) 한 줄 꿰기 재사용"
+ },
+ "ACD_CAGE": {
+  "value": 20.0,
+  "note": "(액티브 도술 임시) 쇠사슬 울 재사용(깊은 도술)"
+ },
+ "ACD_WRATH": {
+  "value": 10.0,
+  "note": "(액티브 도술 임시) 원념 두르기 재사용"
+ },
+ "ACD_STAINRIDE": {
+  "value": 12.0,
+  "note": "(액티브 도술 임시) 얼룩 타기 재사용"
+ },
+ "ACD_THROWNAME": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 깨진 이름 던지기 재사용"
+ },
+ "ACD_SHADOW": {
+  "value": 45.0,
+  "note": "(액티브 도술 임시) 검은 갓의 그림자 재사용(깊은 도술)"
+ },
+ "AC_SOULFIRE_DMG": {
+  "value": 8,
+  "note": "(액티브 도술 임시) 혼불 한 발 맺힘 피해"
+ },
+ "AC_SOULFIRE_MAX": {
+  "value": 5,
+  "note": "(액티브 도술 임시) 혼불 최대 발 수(기본 1 + 그날 천도한 혼 수)"
+ },
+ "AC_SOULFIRE_RANGE": {
+  "value": 14.0,
+  "note": "(액티브 도술 임시) 혼불이 닿는 거리(m)"
+ },
+ "AC_NAMELIGHT_SEC": {
+  "value": 0.25,
+  "note": "(액티브 도술 임시) 다음 천도 캐스팅 단축(초)"
+ },
+ "AC_ESCORT_SEC": {
+  "value": 3.0,
+  "note": "(액티브 도술 임시) 배웅길 지속(초): 천도 직후 적 이동 감소"
+ },
+ "AC_ESCORT_SLOW": {
+  "value": 0.3,
+  "note": "(액티브 도술 임시) 배웅길 적 이동 감소 비율"
+ },
+ "AC_MULTIPULL_N": {
+  "value": 3,
+  "note": "(액티브 도술 임시) 여럿 끌기: 끌어오는 적 수"
+ },
+ "AC_MULTIPULL_RANGE": {
+  "value": 12.0,
+  "note": "(액티브 도술 임시) 여럿 끌기 거리(m)"
+ },
+ "AC_DASH_DIST": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 매듭 걸음 돌진 거리(m, 지나는 동안 무적)"
+ },
+ "AC_TIE_RANGE": {
+  "value": 8.0,
+  "note": "(액티브 도술 임시) 한 줄 꿰기: 묶을 둘째 혼을 찾는 거리(m)"
+ },
+ "AC_CAGE_RADIUS": {
+  "value": 5.0,
+  "note": "(액티브 도술 임시) 쇠사슬 울 반경(m)"
+ },
+ "AC_CAGE_STUN": {
+  "value": 3.0,
+  "note": "(액티브 도술 임시) 쇠사슬 울 고정 시간(초)"
+ },
+ "AC_WRATH_SEC": {
+  "value": 5.0,
+  "note": "(액티브 도술 임시) 원념 두르기 지속(초)"
+ },
+ "AC_STAINRIDE_SEC": {
+  "value": 6.0,
+  "note": "(액티브 도술 임시) 얼룩 타기 지속(초)"
+ },
+ "AC_STAINRIDE_MOVE": {
+  "value": 0.15,
+  "note": "(액티브 도술 임시) 얼룩 타기 이동 +%"
+ },
+ "AC_THROWNAME_DMG": {
+  "value": 30,
+  "note": "(액티브 도술 임시) 깨진 이름 던지기 피해"
+ },
+ "AC_THROWNAME_WINDOW": {
+  "value": 5.0,
+  "note": "(액티브 도술 임시) 깨진 이름 던지기: 방금 파혼했다고 칠 시간(초)"
+ },
+ "AC_SHADOW_SEC": {
+  "value": 10.0,
+  "note": "(액티브 도술 임시) 검은 갓의 그림자 지속(초)"
+ },
+ "MOVE_TURN_RADPS": {
+  "value": 30.0,
+  "note": "(기획 조작감) 이동·몸 회전 최대 속도(rad/s). 값은 30(0.1초에 180°. 14 로 낮췄다가 클립 실측에 맞춰 30 으로 되돌림) | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "MOVE_LEAN_DEG": {
+  "value": 3.0,
+  "note": "(기획 조작감) 걸을 때 몸이 앞으로 기우는 최대 각도(도). 최고 속도에서 | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "MOVE_BANK_DEG": {
+  "value": 3.0,
+  "note": "(기획 조작감) 급하게 방향을 틀 때 몸이 안쪽으로 기우는 최대 각도(도) | 기획 표준 명세 hud-controls-spec v1(10-25)"
+ },
+ "MOVE_LEAN_SMOOTH": {
+  "value": 12.0,
+  "note": "(기획 조작감) 기울임이 따라가는 부드러움(클수록 빠름)"
+ },
+ "JOY_RADIUS_PX": {
+  "value": 120,
+  "note": "(폰 조작) 떠다니는 조이스틱: 손잡이가 움직이는 최대 반지름(화면 픽셀)"
+ },
+ "JOY_DEADZONE_PX": {
+  "value": 14,
+  "note": "(폰 조작) 떠다니는 조이스틱: 이 안에서는 움직이지 않는다"
+ },
+ "JOY_ZONE_WIDTH_FRAC": {
+  "value": 0.45,
+  "note": "(폰 조작) 조이스틱이 생기는 화면 왼쪽 영역 너비 비율"
+ },
+ "ENHANCE_MAX": {
+  "value": 5,
+  "note": "(기획 4-4절 10-25, 임시) 장비 손보기 최대 단계(칸마다 +1~+5)"
+ },
+ "ENHANCE_PCT": {
+  "value": 0.3,
+  "note": "(기획 4-4절 10-25 수정, 임시) 장비 손보기 한 단계마다 그 칸 주옵션(첫 옵션) 수치의 +30% (6%->30%)"
+ },
+ "ENHANCE_COST_1": {
+  "value": 30,
+  "note": "(기획 4-4절 10-25, 임시) 장비 손보기 1단계 엽전"
+ },
+ "ENHANCE_COST_2": {
+  "value": 60,
+  "note": "(기획 4-4절 10-25, 임시) 장비 손보기 2단계 엽전"
+ },
+ "ENHANCE_COST_3": {
+  "value": 100,
+  "note": "(기획 4-4절 10-25, 임시) 장비 손보기 3단계 엽전"
+ },
+ "ENHANCE_COST_4": {
+  "value": 150,
+  "note": "(기획 4-4절 10-25, 임시) 장비 손보기 4단계 엽전"
+ },
+ "ENHANCE_COST_5": {
+  "value": 220,
+  "note": "(기획 4-4절 10-25, 임시) 장비 손보기 5단계 엽전"
+ },
+ "PAHON_STAIN_POINT_EVERY": {
+  "value": 15,
+  "note": "(기획 4-4절 10-25, 임시) 파혼 이만큼마다 얼룩 갈래 전용 도술 점수 1"
+ },
+ "CHAIN_CHAIN_WINDOW_ADD": {
+  "value": 0.5,
+  "note": "(무기 5계열 맛, 임시) 철삭: 연속 천도 창 +초 (이어 가는 맛)"
+ },
+ "BELL_CAST_MULT": {
+  "value": 0.9,
+  "note": "(무기 5계열 맛, 임시) 요령방울: 천도 시전 시간 배율 (소리가 넋을 달랜다)"
+ },
+ "BELL_PAHON_DAMAGE_MULT": {
+  "value": 0.85,
+  "note": "(무기 5계열 맛, 임시) 요령방울: 파혼 피해 배율"
+ },
+ "TRIDENT_PAHON_KNOCKBACK_MULT": {
+  "value": 1.25,
+  "note": "(무기 5계열 맛, 임시) 삼지창: 파혼 넉백 배율 (꿰어 날린다)"
+ },
+ "TRIDENT_PAHON_DAMAGE_MULT": {
+  "value": 1.1,
+  "note": "(무기 5계열 맛, 임시) 삼지창: 파혼 피해 배율"
+ },
+ "BRUSH_NEOK_PCT": {
+  "value": 0.05,
+  "note": "(무기 5계열 맛, 임시) 명부 붓: 천도 넋 +% (기록하는 맛)"
+ },
+ "BRUSH_PAHON_DAMAGE_MULT": {
+  "value": 1.0,
+  "note": "(무기 5계열 맛, 임시) 명부 붓: 파혼 피해 배율 (먹이 번져 약하다)"
+ },
+ "SOULTYPE_WAIL_HP": {
+  "value": 0.7,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리 맺힘 배율"
+ },
+ "SOULTYPE_WAIL_DAMAGE": {
+  "value": 8,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리 원념 탄 피해"
+ },
+ "SOULTYPE_WAIL_KEEP_MIN_M": {
+  "value": 7.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리가 지키려는 거리 하한(m). 이보다 가까우면 천천히 물러난다"
+ },
+ "SOULTYPE_WAIL_KEEP_MAX_M": {
+  "value": 9.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리가 지키려는 거리 상한(m). 이보다 멀면 다가온다"
+ },
+ "SOULTYPE_WAIL_BACKOFF_M": {
+  "value": 3.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 플레이어가 이 거리 안이면 뒷걸음(m)"
+ },
+ "SOULTYPE_WAIL_SIGHT_M": {
+  "value": 10.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리가 던지기 시작하는 시야 거리(m)"
+ },
+ "SOULTYPE_WAIL_WINDUP": {
+  "value": 0.7,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리 던지기 선딜(초). 바닥에 궤적 예고선이 보인다"
+ },
+ "SOULTYPE_WAIL_INTERVAL": {
+  "value": 3.5,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 넋두리 던지기 간격(초)"
+ },
+ "SOULTYPE_WAIL_ORB_SPEED": {
+  "value": 9.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 원념 탄 속도(m/s). 직선"
+ },
+ "SOULTYPE_WAIL_ORB_RANGE_M": {
+  "value": 14.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 원념 탄이 날아가는 최대 거리(m)"
+ },
+ "SOULTYPE_WAIL_MAX_ZONE": {
+  "value": 2,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 한 구역에서 동시에 살아 있는 넋두리 최대 수"
+ },
+ "SOULTYPE_MOTE_HP": {
+  "value": 0.25,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 맺힘 배율"
+ },
+ "SOULTYPE_MOTE_DAMAGE": {
+  "value": 3,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 피해"
+ },
+ "SOULTYPE_MOTE_WINDUP": {
+  "value": 0.45,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 선딜(초)"
+ },
+ "SOULTYPE_MOTE_INTERVAL": {
+  "value": 1.4,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 공격 간격(초)"
+ },
+ "SOULTYPE_MOTE_SPEED": {
+  "value": 1.29,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 속도 배율(기본 적 2.8 → 3.6)"
+ },
+ "SOULTYPE_MOTE_RANGE": {
+  "value": 1.6,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 잔넋 공격 사거리(m)"
+ },
+ "SOULTYPE_MOTE_RATTLE_S": {
+  "value": 2.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 무리 대장을 처결하면 나머지가 혼란(기절)하는 시간(초)"
+ },
+ "SOULTYPE_BURIED_TRIGGER_M": {
+  "value": 4.5,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 묻힌 혼이 솟기 시작하는 거리(m)"
+ },
+ "SOULTYPE_BURIED_WINDUP": {
+  "value": 0.73,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 땅이 갈라지는 예고(초) = 회피 창"
+ },
+ "SOULTYPE_BURIED_DAMAGE": {
+  "value": 14,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 묻힌 혼 붙잡기 피해"
+ },
+ "SOULTYPE_BURIED_RADIUS_M": {
+  "value": 2.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 묻힌 혼 공격 범위(m)"
+ },
+ "SOULTYPE_BURIED_STRIKE_S": {
+  "value": 0.33,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 솟은 뒤 공격 동작 길이(초)"
+ },
+ "SOULTYPE_BURIED_REBURY_S": {
+  "value": 6.0,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 공격 후 묻히고 다시 매복까지(초)"
+ },
+ "SOULGRADE_YEAR_MULT": {
+  "value": 1.0,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 한나절 혼 맺힘·피해 배율(기획: 나이 배율은 쓰지 않음 → 1.0)"
+ },
+ "SOULGRADE_OLD_HP": {
+  "value": 1.0,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 묵은 혼 맺힘 배율(기획: 쓰지 않음 → 1.0)"
+ },
+ "SOULGRADE_OLD_SPEED": {
+  "value": 0.8,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 묵은 혼 속도 배율"
+ },
+ "SOULGRADE_LUMP_DAMAGE": {
+  "value": 1.3,
+  "note": "(필드 혼 3유형 임시, 아트 제안 SOUL-TYPES.md) 뭉친(덩어리) 혼 피해 배율"
+ },
+ "SOULTYPE_SOLGOGAE_MOTE_PCT": {
+  "value": 35,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 솔고개 군집에서 잔넋이 될 비율(%)"
+ },
+ "SOULTYPE_SOLGOGAE_WAIL_PCT": {
+  "value": 15,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 솔고개 군집에서 넋두리가 될 비율(%)"
+ },
+ "SOULTYPE_SOLGOGAE_BURIED_PCT": {
+  "value": 0,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 솔고개 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼"
+ },
+ "SOULTYPE_BORIT_MOTE_PCT": {
+  "value": 30,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 보릿들 군집에서 잔넋이 될 비율(%)"
+ },
+ "SOULTYPE_BORIT_WAIL_PCT": {
+  "value": 15,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 보릿들 군집에서 넋두리가 될 비율(%)"
+ },
+ "SOULTYPE_BORIT_BURIED_PCT": {
+  "value": 10,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 보릿들 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼"
+ },
+ "SOULTYPE_MULMAGI_MOTE_PCT": {
+  "value": 20,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 물막이 골 군집에서 잔넋이 될 비율(%)"
+ },
+ "SOULTYPE_MULMAGI_WAIL_PCT": {
+  "value": 25,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 물막이 골 군집에서 넋두리가 될 비율(%)"
+ },
+ "SOULTYPE_MULMAGI_BURIED_PCT": {
+  "value": 10,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 물막이 골 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼"
+ },
+ "SOULTYPE_PYEDANG_MOTE_PCT": {
+  "value": 15,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 폐당집 군집에서 잔넋이 될 비율(%)"
+ },
+ "SOULTYPE_PYEDANG_WAIL_PCT": {
+  "value": 20,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 폐당집 군집에서 넋두리가 될 비율(%)"
+ },
+ "SOULTYPE_PYEDANG_BURIED_PCT": {
+  "value": 30,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 폐당집 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼"
+ },
+ "SOULTYPE_RAPIDS_MOTE_PCT": {
+  "value": 10,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 잔넋이 될 비율(%)"
+ },
+ "SOULTYPE_RAPIDS_WAIL_PCT": {
+  "value": 25,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 넋두리가 될 비율(%)"
+ },
+ "SOULTYPE_RAPIDS_BURIED_PCT": {
+  "value": 35,
+  "note": "(필드 혼 3유형, 기획서 부록 F-1b 임시) 검은여울 군집에서 묻힌 혼이 될 비율(%). 나머지는 보통 혼"
+ },
+ "CAMERA_DIST_NEAR": {
+  "value": 13.0,
+  "note": "휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계 카메라 거리(m): 가깝게 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_DIST_MID": {
+  "value": 19.0,
+  "note": "휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 기본 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_DIST_FAR": {
+  "value": 24.0,
+  "note": "휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25)) | 휠 3단계: 멀리 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_PITCH_NEAR": {
+  "value": 46.0,
+  "note": "가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 가까울 때 내려다보는 각도 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_PITCH_MID": {
+  "value": 52.0,
+  "note": "기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 기본 각도 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMERA_PITCH_FAR": {
+  "value": 58.0,
+  "note": "멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25)) | 멀 때 각도 (기획 표준 명세 hud-controls-spec v1(10-25))"
+ },
+ "CAMP_DENSITY_MULT": {
+  "value": 1.0,
+  "note": "군집 인원 전체 배율. 10-25 기획: 구역 고리별 배율(CAMP_DENSITY_RING1~3)로 대체돼 1.0"
+ },
+ "FOG_DENSITY_MULT": {
+  "value": 0.6,
+  "note": "안개 농도 전체 배율(아트 검수 10-25: 1920 화면이 뿌옇다 → -40%)"
+ },
+ "CLOUD_SHADOW_MULT": {
+  "value": 0.5,
+  "note": "땅 구름 그림자 세기 배율(아트 검수: 대비 -50%)"
+ },
+ "DMG_NUM_MAX": {
+  "value": 6,
+  "note": "화면 데미지 숫자 최대 개수(겹침 방지)"
+ },
+ "DMG_NUM_SCATTER_PX": {
+  "value": 24,
+  "note": "같은 자리 숫자를 좌우로 흩뿌리는 폭(px)"
+ },
+ "INTRO_DAMAGE_MULT": {
+  "value": 0.5,
+  "note": "첫 5분(시계 정지 중) 보스 아닌 혼의 피해 배율. 처음 1분 생존용(10-25)"
+ },
+ "SUN_DAY_MULT": {
+  "value": 0.9,
+  "note": "낮 햇빛 세기 배율(키프레임 ×). 낮에 땅·지붕이 하얗게 날아가는 노출 과다 보정(PC 캡처 10-25). 밤은 1.0 그대로 | 아트가 키프레임 한낮을 1.05 로 낮춘 뒤(10-25) 0.7→0.9"
+ },
+ "AMBIENT_DAY_MULT": {
+  "value": 0.95,
+  "note": "낮 그늘빛(주변광) 배율"
+ },
+ "MOTE_CHAIN_PAHON_M": {
+  "value": 4.0,
+  "note": "잔넋 대장을 파혼하면 이 반경(m) 안 같은 무리 잔넋이 함께 깨진다(기획 부록 F-1b, 10-25)"
+ },
+ "MOTE_CHAIN_COIN_MULT": {
+  "value": 0.6,
+  "note": "함께 깨진 잔넋 한 마리당 엽전 배율(파혼 1순위가 되지 않게)"
+ },
+ "MOTE_CHAIN_KARMA": {
+  "value": 0.5,
+  "note": "함께 깨진 잔넋 한 마리당 업(소수는 모았다가 1이 되면 반영)"
+ },
+ "WAIL_TENDO_MEMORY": {
+  "value": 1,
+  "note": "넋두리를 천도하면 기억 조각 추가"
+ },
+ "BURIED_TENDO_NEOK_MULT": {
+  "value": 1.25,
+  "note": "묻힌 혼을 천도하면 넋 배율"
+ },
+ "ATTACK_TOKENS": {
+  "value": 2,
+  "note": "동시에 예고·공격 중일 수 있는 보통 혼 수(기획 10-25). 나머지는 둘레를 돌며 기다린다. 넋두리·묻힌 혼·보스는 따로(제한 없음) [10-25 PC 봇 쓰러짐 3회>2 → 3에서 2로]"
+ },
+ "ATTACK_TOKENS_INTRO": {
+  "value": 2,
+  "note": "첫 5분(시계 정지 중) 공격 차례 수"
+ },
+ "TOKEN_WAIT_RING_M": {
+  "value": 4.5,
+  "note": "차례를 못 받은 혼이 플레이어 둘레에서 기다리는 거리(m)"
+ },
+ "CAMP_DENSITY_RING1": {
+  "value": 0.5,
+  "note": "고리1(솔고개·보릿들) 군집 인원 배율(기획 10-25)"
+ },
+ "CAMP_DENSITY_RING2": {
+  "value": 0.8,
+  "note": "고리2(검은여울 — 기획 act1-enemy-check: 고리는 RingAt 하나로)"
+ },
+ "CAMP_DENSITY_RING3": {
+  "value": 0.8,
+  "note": "검은여울"
+ },
+ "NAMED_NEAR_M": {
+  "value": 40.0,
+  "note": "이름혼 자리 둘레(m): 이 안 군집은 인원 ×0.5, 최대 NAMED_NEAR_CAP 마리"
+ },
+ "NAMED_NEAR_CAP": {
+  "value": 3,
+  "note": "이름혼 둘레 군집 인원 상한"
+ },
+ "MOTE_GROUP_MIN_RING1": {
+  "value": 3,
+  "note": "고리1 잔넋 무리 크기 최소"
+ },
+ "MOTE_GROUP_MAX_RING1": {
+  "value": 4,
+  "note": "고리1 잔넋 무리 크기 최대(3~4). 그 밖은 3~5"
+ },
+ "FOG_NIGHT_MULT": {
+  "value": 0.75,
+  "note": "밤 안개 짙기 추가 배율(FOG_DENSITY_MULT 위에). 밤 숲이 회색 판이 되던 것 완화(PC 10-25)"
+ },
+ "FOG_DAY_MULT": {
+  "value": 0.55,
+  "note": "낮 안개 짙기 추가 배율. 보릿들 낮이 희뿌옇던 것 완화"
+ },
+ "KEEPSAKE_CAST_CUT": {
+  "value": 0.5,
+  "note": "유품을 만진 혼의 천도 시전 단축(초)"
+ },
+ "KEEPSAKE_SHOW_M": {
+  "value": 6.0,
+  "note": "유품이 보이는 거리(밤만, m)"
+ },
+ "PICKUP_RADIUS": {
+  "value": 2.0,
+  "note": "줍기 거리(m)"
+ },
+ "COIN_BUNDLE": {
+  "value": 20,
+  "note": "엽전 꾸러미 하나"
+ },
+ "HERB_PER_POTION": {
+  "value": 3,
+  "note": "쑥 몇 개에 회복약 하나"
+ },
+ "SHRINE_REST_TIME": {
+  "value": 2.0,
+  "note": "서낭당 쉬기 앉는 시간(초)"
+ },
+ "SHRINE_REST_BLOCK_M": {
+  "value": 10.0,
+  "note": "이 거리 안에 깨어 있는 혼이 있으면 못 쉼(m)"
+ },
+ "CLUE_TOUCH_KARMA_LOCK": {
+  "value": 30,
+  "note": "이 업 이상이면 단서 물건을 못 만짐"
+ },
+ "B05_MAEDHIM": {
+  "value": 1040,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-05 맺힘"
+ },
+ "B05_DAMAGE": {
+  "value": 26,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-05 공격"
+ },
+ "B05_CALL_INTERVAL": {
+  "value": 8.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 이름 부르기 간격(초)"
+ },
+ "B05_CALL_COUNT": {
+  "value": 2,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 한 번에 부르는 병사 수"
+ },
+ "B05_NUM_START_PCT": {
+  "value": 30,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 처음 번호 병사 비율(%) — 시작값은 임시"
+ },
+ "B05_NUM_STEP_SEC": {
+  "value": 30.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 번호 비율이 오르는 간격(초)"
+ },
+ "B05_NUM_STEP_PCT": {
+  "value": 10,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 한 번에 오르는 %p"
+ },
+ "B05_NUM_CAP_PCT": {
+  "value": 70,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 번호 비율 상한(%)"
+ },
+ "B05_CALLED_STUN": {
+  "value": 2.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 이름으로 불린 병사를 천도하면 보스가 멈추는 시간(초)"
+ },
+ "B05_FLAG_RADIUS": {
+  "value": 6.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 50% 깃발 꽂기: 병사 공격 +20% 반경(m)"
+ },
+ "B05_FLAG_ATK_PCT": {
+  "value": 20,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃발 반경 안 병사 공격 증가(%)"
+ },
+ "B05_SWING_RADIUS": {
+  "value": 3.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃발 휘두르기 반경(m)"
+ },
+ "B05_SWING_WARN": {
+  "value": 0.8,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃발 휘두르기 예고(초)"
+ },
+ "B05_SWING_GAP": {
+  "value": 5.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃발 휘두르기 간격(초, 임시)"
+ },
+ "B05_CHARGE_DIST": {
+  "value": 8.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃대 돌진 거리(m)"
+ },
+ "B05_CHARGE_WARN": {
+  "value": 0.9,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃대 돌진 예고(초)"
+ },
+ "B05_CHARGE_GAP": {
+  "value": 9.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 깃대 돌진 간격(초, 임시)"
+ },
+ "B05_SOLDIER_CAP": {
+  "value": 4,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 소환 병사 상한(보스 자리 잡몹 상한)"
+ },
+ "B06_MAEDHIM": {
+  "value": 1600,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-06 맺힘"
+ },
+ "B06_DAMAGE": {
+  "value": 26,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-06 공격"
+ },
+ "B06_LINE_WIDTH": {
+  "value": 12.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 일자진 폭(m)"
+ },
+ "B06_LINE_GAP": {
+  "value": 3.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 일자진 빈칸 폭(m)"
+ },
+ "B06_CRANE_RADIUS": {
+  "value": 7.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 학익진 반경(m)"
+ },
+ "B06_CIRCLE_START": {
+  "value": 6.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 원진 시작 반경(m)"
+ },
+ "B06_CIRCLE_END": {
+  "value": 2.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 원진 끝 반경(m)"
+ },
+ "B06_WARN": {
+  "value": 1.2,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 진법 예고(초)"
+ },
+ "B06_FAST_WARN": {
+  "value": 0.9,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 50% 빠른 호령 예고(초)"
+ },
+ "B06_FORM_GAP": {
+  "value": 6.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 진법 간격(초, 임시)"
+ },
+ "B06_GAP_DMG_MULT": {
+  "value": 1.5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 빈 자리에서 때리면 피해 배율"
+ },
+ "B07_MAEDHIM": {
+  "value": 1440,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-07 맺힘"
+ },
+ "B07_DAMAGE": {
+  "value": 30,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-07 공격"
+ },
+ "B07_ARENA_START": {
+  "value": 14.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 막장 시작 반경(m)"
+ },
+ "B07_ARENA_END": {
+  "value": 10.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 막장 끝 반경(m)"
+ },
+ "B07_MINERS": {
+  "value": 5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 광부 혼 수"
+ },
+ "B07_MINER_STUN": {
+  "value": 2.5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 광부 다섯이 나갈 때마다 보스가 멈추는 시간(초)"
+ },
+ "B07_PAHON_LUMP_PCT": {
+  "value": 10,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 광부를 파혼하면 보스 맺힘 증가(%)"
+ },
+ "B07_FRENZY_SEC": {
+  "value": 10.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 광부를 파혼하면 광폭 시간(초)"
+ },
+ "B07_PICK_RADIUS": {
+  "value": 2.5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 곡괭이 반경(m)"
+ },
+ "B07_PICK_WARN": {
+  "value": 0.7,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 곡괭이 예고(초)"
+ },
+ "B07_PICK_GAP": {
+  "value": 4.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 곡괭이 간격(초, 임시)"
+ },
+ "B07_ROCK_RADIUS": {
+  "value": 2.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 반경(m)"
+ },
+ "B07_ROCK_COUNT": {
+  "value": 3,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 수"
+ },
+ "B07_ROCK_COUNT_P2": {
+  "value": 5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 50% 이후 낙석 수"
+ },
+ "B07_ROCK_WARN": {
+  "value": 1.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 예고(초)"
+ },
+ "B07_ROCK_GAP": {
+  "value": 7.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 낙석 간격(초, 임시)"
+ },
+ "B08_MAEDHIM": {
+  "value": 1440,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-08 맺힘"
+ },
+ "B08_DAMAGE": {
+  "value": 30,
+  "note": "(2막 보스 임시·기획 act2-souls §4) B-08 공격"
+ },
+ "B08_MINES": {
+  "value": 4,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 숫자 지뢰 수(넷 중 하나는 이름 종이)"
+ },
+ "B08_MINE_MULT": {
+  "value": 4,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 지뢰 숫자 × 피해 배율"
+ },
+ "B08_MINE_GAP": {
+  "value": 8.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 숫자 지뢰 간격(초, 임시)"
+ },
+ "B08_NAME_SHARE_PCT": {
+  "value": -2,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 이름 종이를 밟으면 보스 맺힘 변화(%)"
+ },
+ "B08_SWEEP_RADIUS": {
+  "value": 5.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 주판 쓸기 반경(m)"
+ },
+ "B08_SWEEP_ANGLE": {
+  "value": 90.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 주판 쓸기 각도(도)"
+ },
+ "B08_SWEEP_WARN": {
+  "value": 0.9,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 주판 쓸기 예고(초, 임시)"
+ },
+ "B08_SWEEP_GAP": {
+  "value": 5.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 주판 쓸기 간격(초, 임시)"
+ },
+ "B08_LEDGER_GAP": {
+  "value": 12.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 장부 넘기기 간격(초, 50% 이후, 임시)"
+ },
+ "B08_LEDGER_WARN": {
+  "value": 1.5,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 장부 넘기기 예고(초, 임시)"
+ },
+ "B08_PAPERS_FOR_CROUCH": {
+  "value": 3,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 이름 종이 몇 장을 밟으면 웅크리나"
+ },
+ "B08_CROUCH_SEC": {
+  "value": 3.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 웅크림 시간(초)"
+ },
+ "ACT2_KNEEL_WAIT": {
+  "value": 7.0,
+  "note": "(2막 보스 임시·기획 act2-souls §4) 2막 보스 넷 처결 대기(초)"
+ },
+ "RING_COIN_SHARE_ACT3": {
+  "value": 0.6,
+  "note": "(기획 성장 곡선 10-25) 고리 엽전 몫: 막 구분 없이 0.6 하나. 장비가 강해질수록 파혼이 앞서던 것을 막는다(2막 2%·3막 3%·시즌2 2% 차이)"
+ },
+ "WATER_SOUL_CAST_REDUCE_S": {
+  "value": 0.5,
+  "note": "(3막 QA 채택) 물 혼 천도 캐스팅 단축(초). 하한 WATER_SOUL_CAST_FLOOR_S"
+ },
+ "WATER_SOUL_CAST_FLOOR_S": {
+  "value": 0.5,
+  "note": "물 혼 캐스팅 하한(초)"
+ },
+ "TIDE_SIGNAL_WINDOW_S": {
+  "value": 20.0,
+  "note": "(3막) 밀물 신호 뒤 물 혼 2~4마리가 떠밀려 가기까지(초). 안에 처결 못 하면 그 밤 사라진다"
+ },
+ "B04_MAEDHIM": {
+  "value": 600.0,
+  "note": "(1막 끝 흑월 1차·임시) 맺힘 50%에서 사슬을 거두고 물러나므로 실제로 깎이는 건 절반"
+ },
+ "B04_DAMAGE": {
+  "value": 26.0,
+  "note": "(흑월 1차·임시) 몸으로 부딪는 한 방"
+ },
+ "B09_MAEDHIM": {
+  "value": 1600,
+  "note": "(3막 보스 임시·기획 부록 E) B-09 맺힘"
+ },
+ "B09_DAMAGE": {
+  "value": 28,
+  "note": "(3막 보스 임시·기획 부록 E) B-09 공격(파도 줄 16, 바다 부르기 18은 같은 값으로 단순화)"
+ },
+ "B09_WAVE_ROWS": {
+  "value": 4,
+  "note": "(3막 보스 임시·기획 부록 E) 파도 줄 수"
+ },
+ "B09_WAVE_WIDTH": {
+  "value": 3.0,
+  "note": "(3막 보스 임시·기획 부록 E) 파도 띠 폭(m)"
+ },
+ "B09_WAVE_STRIDE": {
+  "value": 5.0,
+  "note": "(3막 보스 임시·기획 부록 E) 줄 사이 간격(m, 폭 3 + 안전 띠 2)"
+ },
+ "B09_WAVE_STEP": {
+  "value": 0.6,
+  "note": "(3막 보스 임시·기획 부록 E) 줄과 줄 사이 시간 간격(초)"
+ },
+ "B09_WAVE_WARN": {
+  "value": 1.0,
+  "note": "(3막 보스 임시·기획 부록 E) 파도 예고(초)"
+ },
+ "B09_WAVE_GAP": {
+  "value": 7.0,
+  "note": "(3막 보스 임시·기획 부록 E) 파도 줄 간격(초)"
+ },
+ "B09_CALL_WARN": {
+  "value": 0.9,
+  "note": "(3막 보스 임시·기획 부록 E) 바다 부르기 예고(초)"
+ },
+ "B09_CALL_RADIUS": {
+  "value": 4.0,
+  "note": "(3막 보스 임시·기획 부록 E) 바다 부르기 반경(m)"
+ },
+ "B09_CALL_GAP": {
+  "value": 5.0,
+  "note": "(3막 보스 임시·기획 부록 E) 바다 부르기 간격(초)"
+ },
+ "B09_CLOTH_WINDOW": {
+  "value": 2.0,
+  "note": "(3막 보스 임시·기획 부록 E) 옷 낚아채기 창(초)"
+ },
+ "B09_CLOTH_CUT_PCT": {
+  "value": 15.0,
+  "note": "(3막 보스 임시·기획 부록 E) 낚아채면 줄어드는 맺힘(%)"
+ },
+ "B10_MAEDHIM": {
+  "value": 2000,
+  "note": "(3막 보스 임시·기획 부록 E) B-10 맺힘"
+ },
+ "B10_DAMAGE": {
+  "value": 34,
+  "note": "(3막 보스 임시·기획 부록 E) B-10 공격"
+ },
+ "B10_ROPE_WARN": {
+  "value": 0.9,
+  "note": "(3막 보스 임시·기획 부록 E) 줄 끊기 예고(초)"
+ },
+ "B10_ROPE_LEN": {
+  "value": 10.0,
+  "note": "(3막 보스 임시·기획 부록 E) 줄 끊기 길이(m)"
+ },
+ "B10_ROPE_WID": {
+  "value": 1.5,
+  "note": "(3막 보스 임시·기획 부록 E) 줄 끊기 폭(m)"
+ },
+ "B10_ROPE_GAP": {
+  "value": 6.0,
+  "note": "(3막 보스 임시·기획 부록 E) 줄 끊기 간격(초)"
+ },
+ "B10_WRAP_WARN": {
+  "value": 0.8,
+  "note": "(3막 보스 임시·기획 부록 E) 밧줄 휘감기 예고(초)"
+ },
+ "B10_WRAP_RADIUS": {
+  "value": 3.0,
+  "note": "(3막 보스 임시·기획 부록 E) 밧줄 휘감기 반경(m)"
+ },
+ "B10_WRAP_GAP": {
+  "value": 7.0,
+  "note": "(3막 보스 임시·기획 부록 E) 밧줄 휘감기 간격(초)"
+ },
+ "B10_CROSS_WARN": {
+  "value": 1.0,
+  "note": "(3막 보스 임시·기획 부록 E) 줄 끊기 두 줄(50% 뒤) 예고(초)"
+ },
+ "B11_MAEDHIM": {
+  "value": 1480,
+  "note": "(3막 보스 임시·기획 부록 E) B-11 맺힘"
+ },
+ "B11_DAMAGE": {
+  "value": 38,
+  "note": "(3막 보스 임시·기획 부록 E) B-11 공격"
+ },
+ "B11_MAT_WARN": {
+  "value": 0.8,
+  "note": "(3막 보스 임시·기획 부록 E) 거적 던지기 예고(초)"
+ },
+ "B11_MAT_RADIUS": {
+  "value": 3.0,
+  "note": "(3막 보스 임시·기획 부록 E) 거적 던지기 반경(m)"
+ },
+ "B11_MAT_GAP": {
+  "value": 7.0,
+  "note": "(3막 보스 임시·기획 부록 E) 거적 던지기 간격(초)"
+ },
+ "B11_STAFF_WARN": {
+  "value": 1.0,
+  "note": "(3막 보스 임시·기획 부록 E) 지팡이 예고(초)"
+ },
+ "B11_STAFF_RADIUS": {
+  "value": 3.5,
+  "note": "(3막 보스 임시·기획 부록 E) 지팡이 반경(m)"
+ },
+ "B11_STAFF_ANGLE": {
+  "value": 140.0,
+  "note": "(3막 보스 임시·기획 부록 E) 지팡이 각도(도)"
+ },
+ "B11_STAFF_GAP": {
+  "value": 6.0,
+  "note": "(3막 보스 임시·기획 부록 E) 지팡이 간격(초)"
+ },
+ "B12_MAEDHIM": {
+  "value": 2400,
+  "note": "(3막 보스 임시·기획 부록 E) B-12 맺힘"
+ },
+ "B12_DAMAGE": {
+  "value": 38,
+  "note": "(3막 보스 임시·기획 부록 E) B-12 공격"
+ },
+ "B12_PULL_WARN": {
+  "value": 0.6,
+  "note": "(3막 보스 임시·기획 부록 E) 거울 견인 예고(초)"
+ },
+ "B12_PULL_LEN": {
+  "value": 13.0,
+  "note": "(3막 보스 임시·기획 부록 E) 거울 견인 길이(m)"
+ },
+ "B12_PULL_WID": {
+  "value": 1.0,
+  "note": "(3막 보스 임시·기획 부록 E) 거울 견인 폭(m)"
+ },
+ "B12_PULL_GAP": {
+  "value": 6.0,
+  "note": "(3막 보스 임시·기획 부록 E) 거울 견인 간격(초)"
+ },
+ "B12_PAHON_WARN": {
+  "value": 1.0,
+  "note": "(3막 보스 임시·기획 부록 E) 그의 파혼 예고(초)"
+ },
+ "B12_PAHON_RADIUS": {
+  "value": 3.0,
+  "note": "(3막 보스 임시·기획 부록 E) 그의 파혼 반경(m)"
+ },
+ "B12_PAHON_GAP": {
+  "value": 8.0,
+  "note": "(3막 보스 임시·기획 부록 E) 그의 파혼 간격(초)"
+ },
+ "B12_LINES_WARN": {
+  "value": 1.0,
+  "note": "(3막 보스 임시·기획 부록 E) 명단 줄 예고(초)"
+ },
+ "B12_LINES_WID": {
+  "value": 2.5,
+  "note": "(3막 보스 임시·기획 부록 E) 명단 줄 폭(m)"
+ },
+ "B12_LINES_ROWS": {
+  "value": 5,
+  "note": "(3막 보스 임시·기획 부록 E) 명단 줄 수(마지막 줄은 안전)"
+ },
+ "B12_LINES_GAP": {
+  "value": 10.0,
+  "note": "(3막 보스 임시·기획 부록 E) 명단 줄 간격(초)"
+ },
+ "B12_FLOOD_WARN": {
+  "value": 1.0,
+  "note": "(3막 보스 임시·기획 부록 E) 물살 예고(초)"
+ },
+ "B12_FLOOD_WID": {
+  "value": 3.0,
+  "note": "(3막 보스 임시·기획 부록 E) 물살 띠 폭(m)"
+ },
+ "B12_FLOOD_GAP": {
+  "value": 6.0,
+  "note": "(3막 보스 임시·기획 부록 E) 물살 간격(초)"
+ },
+ "B12_TORCH_STUN": {
+  "value": 3.0,
+  "note": "(3막 보스 임시·기획 부록 E) 큰물 단계에서 횃불을 건지면 흑월이 멈추는 시간(초)"
+ },
+ "RING1_DROP_COMMON_PCT": {
+  "value": 80,
+  "note": "(기획 성장 곡선 10-25) 고리 1 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100"
+ },
+ "RING1_DROP_CRAFTED_PCT": {
+  "value": 18,
+  "note": "(기획 성장 곡선 10-25) 고리 1 장비 드롭 중 손본 등급 확률(%). 고리별 합 100"
+ },
+ "RING1_DROP_RARE_PCT": {
+  "value": 2,
+  "note": "(기획 성장 곡선 10-25) 고리 1 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100"
+ },
+ "RING2_DROP_COMMON_PCT": {
+  "value": 70,
+  "note": "(기획 성장 곡선 10-25) 고리 2 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100"
+ },
+ "RING2_DROP_CRAFTED_PCT": {
+  "value": 26,
+  "note": "(기획 성장 곡선 10-25) 고리 2 장비 드롭 중 손본 등급 확률(%). 고리별 합 100"
+ },
+ "RING2_DROP_RARE_PCT": {
+  "value": 4,
+  "note": "(기획 성장 곡선 10-25) 고리 2 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100"
+ },
+ "RING3_DROP_COMMON_PCT": {
+  "value": 55,
+  "note": "(기획 성장 곡선 10-25) 고리 3 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100"
+ },
+ "RING3_DROP_CRAFTED_PCT": {
+  "value": 37,
+  "note": "(기획 성장 곡선 10-25) 고리 3 장비 드롭 중 손본 등급 확률(%). 고리별 합 100"
+ },
+ "RING3_DROP_RARE_PCT": {
+  "value": 8,
+  "note": "(기획 성장 곡선 10-25) 고리 3 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100"
+ },
+ "RING4_DROP_COMMON_PCT": {
+  "value": 45,
+  "note": "(기획 성장 곡선 10-25) 고리 4 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100"
+ },
+ "RING4_DROP_CRAFTED_PCT": {
+  "value": 43,
+  "note": "(기획 성장 곡선 10-25) 고리 4 장비 드롭 중 손본 등급 확률(%). 고리별 합 100"
+ },
+ "RING4_DROP_RARE_PCT": {
+  "value": 12,
+  "note": "(기획 성장 곡선 10-25) 고리 4 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100"
+ },
+ "RING5_DROP_COMMON_PCT": {
+  "value": 35,
+  "note": "(기획 성장 곡선 10-25) 고리 5 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100"
+ },
+ "RING5_DROP_CRAFTED_PCT": {
+  "value": 47,
+  "note": "(기획 성장 곡선 10-25) 고리 5 장비 드롭 중 손본 등급 확률(%). 고리별 합 100"
+ },
+ "RING5_DROP_RARE_PCT": {
+  "value": 18,
+  "note": "(기획 성장 곡선 10-25) 고리 5 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100"
+ },
+ "RING6_DROP_COMMON_PCT": {
+  "value": 25,
+  "note": "(기획 성장 곡선 10-25) 고리 6 장비 드롭 중 흔한 등급 확률(%). 고리별 합 100"
+ },
+ "RING6_DROP_CRAFTED_PCT": {
+  "value": 50,
+  "note": "(기획 성장 곡선 10-25) 고리 6 장비 드롭 중 손본 등급 확률(%). 고리별 합 100"
+ },
+ "RING6_DROP_RARE_PCT": {
+  "value": 25,
+  "note": "(기획 성장 곡선 10-25) 고리 6 장비 드롭 중 귀한 등급 확률(%). 고리별 합 100"
+ },
+ "SEAL_SMALL_NEOK": {
+  "value": 300,
+  "note": "(기획 성장 곡선 10-25) 작은 인 만드는 넋(같은 두 빛깔이면 빛깔당 150, 한 빛깔이면 300)"
+ },
+ "SEAL_LARGE_NEOK": {
+  "value": 900,
+  "note": "(기획 성장 곡선 10-25) 큰 인 만드는 넋(두 빛깔 450씩, 한 빛깔 900)"
+ },
+ "SEAL_SLOTS_CRAFTED": {
+  "value": 1,
+  "note": "(기획 성장 곡선 10-25) 손본 등급 인 홈(무기·갓·도포만)"
+ },
+ "SEAL_SLOTS_RARE": {
+  "value": 2,
+  "note": "(기획 성장 곡선 10-25) 귀한 등급 인 홈(무기·갓·도포만). 이름 있는 물건도 같다"
+ },
+ "COMBO1_HITSTOP_FRAMES": {
+  "value": 3,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 1타 히트스톱. 다수 적 게임은 1:1 격투보다 짧게(3~4f) [현재 2]"
+ },
+ "COMBO2_HITSTOP_FRAMES": {
+  "value": 3,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 2타 히트스톱 [현재 2]"
+ },
+ "COMBO3_HITSTOP_FRAMES": {
+  "value": 6,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 3타 회전 마무리. 강한 타는 1타의 2배 길이가 기준 [현재 4]"
+ },
+ "HITSTOP_MULTI_ADD": {
+  "value": 1,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 한 번에 3마리 이상 맞히면 +1f (합산 금지, 가장 긴 것 하나에 더함) [신규]"
+ },
+ "HITSTOP_VICTIM_SHAKE": {
+  "value": 0.06,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 정지 중 맞은 적만 좌우로 떨림(m). 정지 동안 점점 줄어듦. 판정 위치는 그대로 [신규]"
+ },
+ "HITSTOP_ATTACKER_SHAKE": {
+  "value": 0.02,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 정지 중 차사도 살짝 떨림(m) [신규]"
+ },
+ "SHAKE_MODEL_TRAUMA": {
+  "value": true,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 흔들림 = 충격값의 제곱. 작은 타는 거의 안 흔들리고 큰 타만 확 흔들림 → 오너 지적 '너무 심함' 해결의 핵심 [신규]"
+ },
+ "TRAUMA_COMBO1": {
+  "value": 0.18,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 1타 충격값 → 실제 흔들림 0.03(거의 없음) [현재 shake 0.35]"
+ },
+ "TRAUMA_COMBO2": {
+  "value": 0.22,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 2타 [현재 shake 0.45]"
+ },
+ "TRAUMA_COMBO3": {
+  "value": 0.45,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 3타 → 실제 흔들림 0.2 [현재 shake 1.0]"
+ },
+ "TRAUMA_PULL": {
+  "value": 0.25,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 견인 명중 [현재 0.5]"
+ },
+ "TRAUMA_PAHON": {
+  "value": 0.65,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 파혼 → 실제 0.42. 화면이 확 흔들리는 건 파혼뿐 [현재 0.8]"
+ },
+ "TRAUMA_MAX": {
+  "value": 1.0,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 충격값 상한 [신규]"
+ },
+ "KICK_COMBO3": {
+  "value": 0.12,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 3타 때린 방향으로 카메라 툭 밀림(m). 무작위 흔들림보다 방향 있는 충격을 우선 [신규]"
+ },
+ "KICK_PAHON": {
+  "value": 0.18,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 파혼 방향 밀림(m) [신규]"
+ },
+ "KNOCKBACK_TIME": {
+  "value": 0.2,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 넉백이 끝나는 시간(초). 처음 빠르고 끝에 감속 [신규]"
+ },
+ "WEIGHT_NORMAL": {
+  "value": 1.0,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 넉백 배율: 일반 혼 [신규]"
+ },
+ "WALL_SLAM_HITSTOP_FRAMES": {
+  "value": 3,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 넉백된 적이 벽·나무에 부딪히면 추가 정지+맺힘 5 [신규]"
+ },
+ "WALL_SLAM_DAMAGE": {
+  "value": 5,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 벽 충돌 맺힘 피해 [신규]"
+ },
+ "WINDUP_FAST_MIN": {
+  "value": 0.45,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 빠른 혼의 하한. 이보다 짧은 공격은 만들지 않음 [신규]"
+ },
+ "WINDUP_HEAVY": {
+  "value": 1.0,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 무거운 한 방(덩어리·사나운 적) [신규]"
+ },
+ "WINDUP_BOSS_BIG": {
+  "value": 1.2,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 보스 큰 기술. 바닥 범위 예고는 기존 B03 0.8 유지 [신규]"
+ },
+ "WINDUP_OUT_OF_VISION_ADD": {
+  "value": 0.15,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 천도 중 시야 밖 적의 공격은 예고 +0.15초+소리 예고 필수(위험하되 불공정하지 않게) [신규]"
+ },
+ "WINDUP_TOUCH_ADD": {
+  "value": 0.08,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 폰 조작일 때 예고 +0.08초(터치 지연 보정) [신규]"
+ },
+ "WINDUP_FLASH_LEAD": {
+  "value": 0.12,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 공격 판정 0.12초 전 하얀 번쩍 + 짧은 소리(마지막 신호) [신규]"
+ },
+ "BUFFER_REPLACE_NEWEST": {
+  "value": true,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 새 입력이 들어오면 이전 저장 입력을 바꿔치기 [신규]"
+ },
+ "MOVE_CANCEL_HOLD": {
+  "value": 0.1,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 이동 클릭으로 천도를 끊으려면 0.1초 이상(실수로 끊기 방지) [신규]"
+ },
+ "CANCEL_WINDUP_TO_DODGE": {
+  "value": true,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 선딜 중 피하기로 끊기 허용(반응성) [신규]"
+ },
+ "CANCEL_ACTIVE": {
+  "value": false,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 휘두르는 중(판정 중)은 아무것도 못 끊음 = 휘두르면 책임진다 [신규]"
+ },
+ "CANCEL_RECOVER_START": {
+  "value": 0.0,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 후딜 시작부터 다음 타·견인·피하기·도술·처결로 끊기 허용(후딜 비율) [신규]"
+ },
+ "CANCEL_RECOVER_MOVE": {
+  "value": 0.6,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24) 이동으로 끊기는 후딜 60% 지난 뒤부터 [신규]"
+ },
+ "PAHON_RECOVER_DODGE_FROM": {
+  "value": 0.1,
+  "note": "(타격감 권장값 10-25, 기획) (타격감 분석 10-24)  [신규]"
+ },
+ "CAGE_DAMAGE_MULT": {
+  "value": 1.5,
+  "note": "(균형 2차 10-25) 쇠사슬 울 안 적이 받는 피해 배율"
+ },
+ "SEAL_CRAFT_HOLD_S": {
+  "value": 0.6,
+  "note": "(기획 명세 §8) 인 만들기 버튼 누르고 있기(초)"
+ },
+ "NAMED_FIRST_NEOK_MULT": {
+  "value": 5,
+  "note": "처음 10분 M6: 첫 이름혼(박돌쇠) 천도 넋 배수 → 50(5분 안 품계 2)"
+ },
+ "NAMED_FIRST_PAHON_COIN": {
+  "value": 35,
+  "note": "처음 10분 M6: 첫 이름혼 파혼 추가 엽전(기본 5 + 35 = 40, 첫 손보기가 바로 열림)"
+ },
+ "RANKUP_STAMP_SEC": {
+  "value": 1.0,
+  "note": "처음 10분 M6: 품계 승급 인 연출 길이(초)"
+ },
+ "FIGHT_END_SLOW_SEC": {
+  "value": 0.25,
+  "note": "처음 10분 M8: 싸움 마지막 처결 느리게 시간(초)"
+ },
+ "FIGHT_END_SLOW_SCALE": {
+  "value": 0.5,
+  "note": "처음 10분 M8: 느리게 배율"
+ },
+ "ELITE_MAEDHIM": {
+  "value": 300,
+  "note": "거센 혼(처음 10분 M10) 맺힘(보통 혼의 3배)"
+ },
+ "ELITE_SCALE": {
+  "value": 1.3,
+  "note": "거센 혼(처음 10분 M10) 몸 크기 배율"
+ },
+ "ELITE_KNOCKBACK_MULT": {
+  "value": 0.5,
+  "note": "거센 혼(처음 10분 M10) 넉백 배율"
+ },
+ "ELITE_JUDGE_WAIT": {
+  "value": 7,
+  "note": "거센 혼(처음 10분 M10) 처결 대기(초)"
+ },
+ "ELITE_SLAM_TELE": {
+  "value": 1.2,
+  "note": "거센 혼(처음 10분 M10) 내려치기 예고(초)"
+ },
+ "ELITE_SLAM_R": {
+  "value": 2.5,
+  "note": "거센 혼(처음 10분 M10) 내려치기 반경(m)"
+ },
+ "ELITE_SLAM_DMG": {
+  "value": 18,
+  "note": "거센 혼(처음 10분 M10) 내려치기 피해"
+ },
+ "ELITE_POUNCE_TELE": {
+  "value": 1.0,
+  "note": "거센 혼(처음 10분 M10) 덮치기 예고(초)"
+ },
+ "ELITE_POUNCE_LEN": {
+  "value": 6,
+  "note": "거센 혼(처음 10분 M10) 덮치기 띠 길이(m)"
+ },
+ "ELITE_POUNCE_W": {
+  "value": 1.6,
+  "note": "거센 혼(처음 10분 M10) 덮치기 띠 폭(m)"
+ },
+ "ELITE_POUNCE_DMG": {
+  "value": 12,
+  "note": "거센 혼(처음 10분 M10) 덮치기 피해"
+ },
+ "ELITE_POUNCE_HOLD": {
+  "value": 1.0,
+  "note": "거센 혼(처음 10분 M10) 덮치기 붙잡힘(초)"
+ },
+ "ELITE_CALL_AT": {
+  "value": 0.5,
+  "note": "거센 혼(처음 10분 M10) 부르기가 나오는 맺힘 비율"
+ },
+ "ELITE_MOTES": {
+  "value": 3,
+  "note": "거센 혼(처음 10분 M10) 부르는 잔넋 수"
+ },
+ "ELITE_MOTE_MAEDHIM": {
+  "value": 30,
+  "note": "거센 혼(처음 10분 M10) 잔넋 맺힘"
+ },
+ "ELITE_MOTE_DMG": {
+  "value": 4,
+  "note": "거센 혼(처음 10분 M10) 잔넋 공격력"
+ },
+ "ELITE_MOTE_INTERVAL": {
+  "value": 2.6,
+  "note": "거센 혼(처음 10분 M10) 잔넋 공격 주기(초)"
+ },
+ "ELITE_PATTERN_GAP": {
+  "value": 4,
+  "note": "거센 혼(처음 10분 M10) 패턴 사이 간격(초)"
+ },
+ "ELITE_TENDO_NEOK_MULT": {
+  "value": 3,
+  "note": "거센 혼(처음 10분 M10) 천도 넋 배수"
+ },
+ "ELITE_PAHON_COIN_MULT": {
+  "value": 3,
+  "note": "거센 혼(처음 10분 M10) 파혼 엽전 배수"
+ },
+ "ELITE_PAHON_RADIUS": {
+  "value": 4.5,
+  "note": "거센 혼(처음 10분 M10) 파혼 폭발 반경(m)"
+ },
+ "ELITE_MOTE_COIN": {
+  "value": 2,
+  "note": "거센 혼(처음 10분 M10) 파혼 폭발에 터진 잔넋마다 엽전"
+ },
+ "ELITE_STAIN_SCALE": {
+  "value": 1.5,
+  "note": "거센 혼(처음 10분 M10) 파혼 뒤 큰 얼룩 배율(아직 미연결)"
+ },
+ "ELITE_NIGHT_CHANCE": {
+  "value": 0.3,
+  "note": "거센 혼(처음 10분 M10) 첫 만남 뒤 구역마다 밤 출현 확률(아직 미연결)"
+ },
+ "ELITE_FIRST_SEC": {
+  "value": 420,
+  "note": "거센 혼(처음 10분 M10) 첫 거센 혼이 늦어도 나오는 시각(초)"
+ },
+ "ELITE_FIRST_AWAY": {
+  "value": 60,
+  "note": "거센 혼(처음 10분 M10) 첫 거센 혼: 이름혼 자리에서 이만큼 멀어지면 나온다(m)"
+ },
+ "BELL_PAHON_SLOW_PCT": {
+  "value": 0.4,
+  "note": "(기획 weapon-choice-skew) 요령 파혼 폭발에 맞은 적 둔화 비율. 적 둔화 합계 상한 40% 안"
+ },
+ "BELL_PAHON_SLOW_TIME": {
+  "value": 2.0,
+  "note": "(기획 weapon-choice-skew) 요령 파혼 둔화 지속(초)"
+ },
+ "BELL_PAHON_SLOW_RADIUS": {
+  "value": 4.0,
+  "note": "요령 파혼 둔화 반경(m). 기획서에 반경 지정 없어 붓 파혼 튐(4m)과 같게 둠(임시)"
+ },
+ "BRUSH_NAMED_JUDGE_RANGE": {
+  "value": 6.0,
+  "note": "(기획 weapon-choice-skew) 이름 쓰기를 한 혼만 처결 거리를 이만큼(m)으로 늘린다"
+ },
+ "NIGHT_MOON_MULT": {
+  "value": 1.23,
+  "note": "(아트 ROUTE10-STILLS) 밤 달빛 보강 배율. 달빛 1.3→1.6"
+ },
+ "NIGHT_RIM_INTENSITY": {
+  "value": 1.2,
+  "note": "(아트) 밤 주인공 청록 테두리빛 세기. 임시값, PC에서 보고 조절"
+ },
+ "NIGHT_RIM_RANGE": {
+  "value": 4.0,
+  "note": "밤 주인공 청록 테두리빛 반경(m)"
+ },
+ "KARMA_MAX": {
+  "value": 99,
+  "note": "(기획 10-26) 업 상한. 넘친 몫은 버린다. 60+「빛 없는 길」에서 천도로 돌아올 길을 남기려고"
+ },
+ "B03_KNEEL_WAVE_GAP": {
+  "value": 4.0,
+  "note": "(기획 boss-final-moment-act1-2) 서 의원이 꿇은 동안 파동 간격(초). 평소 1.2"
+ },
+ "B03_KNEEL_CELLS": {
+  "value": 12,
+  "note": "(기획) 서 의원이 꿇은 동안 한 파동 칸 수. 평소 16"
+ },
+ "KNEEL_PRESS_GAP": {
+  "value": 4.5,
+  "note": "(기획 boss-final-moment) 보스가 꿇은 동안 약한 압박 하나를 보내는 간격(초). 4~5초"
+ },
+ "KNEEL_PRESS_WARN": {
+  "value": 1.2,
+  "note": "꿇은 동안 압박의 예고 시간(초). 임시값"
+ },
+ "B05_KNEEL_KEEP_NUMBERED": {
+  "value": 2,
+  "note": "(기획) 대돌이 꿇을 때 남기는 번호 병사 수(이름 불린 병사 구분은 아직 없어 앞에서부터 남김)"
+ },
+ "PAHON_KNOCKDOWN_BELOW": {
+  "value": 0.25,
+  "note": "(기획 field-judge-skew N1) 파혼 폭발 뒤 맺힘이 최대의 이 비율 아래로 남은 일반 혼은 그 자리에서 꿇는다"
+ },
+ "DAY_STAIN_SEC": {
+  "value": 8.0,
+  "note": "(기획 field-judge-skew FK3) 낮 얼룩 지속(초). 밤 15초. 낮엔 소환 없음"
+ },
+ "BOSS_DRAGGABLE": {
+  "value": 0,
+  "note": "(기획 b01-naru-final-check) 1이면 보스도 철삭으로 끌 수 있다. 0 = 불가(기본)"
+ },
+ "PAHON_KNOCKED_COIN_MULT": {
+  "value": 0.5,
+  "note": "(기획 n1-season-check) N1로 꿇은 혼을 천도하지 않고 파혼하면 엽전 배율"
+ },
+ "GROWTH_SKILLPOWER_PER_MIND": {
+  "value": 0.01,
+  "note": "(기획 code-plan-diff C) 마음 1점당 도술 위력 +1%"
+ },
+ "GROWTH_SKILLCD_PER_MIND": {
+  "value": 0.003,
+  "note": "(기획 C) 마음 1점당 도술 재사용 −0.3%(상한 35% 안)"
+ },
+ "B01_KNEEL_ADD_COUNT": {
+  "value": 2,
+  "note": "(기획 b01-naru-final-check) 나루 영감이 꿇은 동안 한 물결에 올라오는 물 혼 수"
+ },
+ "B01_KNEEL_ADD_SECOND_AT": {
+  "value": 5.0,
+  "note": "꿇은 뒤 두 번째 물결까지(초)"
+ },
+ "B01_DRIFT_STOP_R": {
+  "value": 4.0,
+  "note": "얼룩이 영감 쪽으로 흘러가다 멈추는 거리(m)"
+ },
+ "NOJAT_PER_DAY": {
+  "value": 8,
+  "note": "(기획 r6-scattered-coins) 하루에 남는 흩어진 노잣돈 자리 상한"
+ },
+ "NOJAT_COIN": {
+  "value": 3,
+  "note": "한 자리 엽전"
+ },
+ "NOJAT_MIN_GAP_M": {
+  "value": 25.0,
+  "note": "자리끼리 최소 거리(m)"
+ },
+ "NOJAT_PICK_TIME": {
+  "value": 0.4,
+  "note": "줍기 누름(초). 줍기는 톡이라 지금은 안 씀"
+ }
+}

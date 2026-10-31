@@ -1,0 +1,160 @@
+{
+ "note": "act3_soul_spots.py가 만든다. kneel_xy=이름혼 무릎 자리(필드 절대), faces_gate=대문을 향해 앉음. 집 모델은 막·좌판이 아직 없어 코드팀이 충돌과 맞춰 확인",
+ "spots": [
+  {
+   "soul": "S-085",
+   "name": "갯골댁",
+   "gate": [
+    986,
+    468
+   ],
+   "kneel_xy": [
+    986.0,
+    465.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.25,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-086",
+   "name": "헛묘지기 영감",
+   "gate": [
+    1103,
+    623
+   ],
+   "kneel_xy": [
+    1102.1,
+    620.7
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.75,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-087",
+   "name": "소금장수 덕보",
+   "gate": [
+    913,
+    303
+   ],
+   "kneel_xy": [
+    913.0,
+    300.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.4,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-088",
+   "name": "순덕",
+   "gate": [
+    1068,
+    402
+   ],
+   "kneel_xy": [
+    1068.0,
+    399.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.24,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-089",
+   "name": "등대지기",
+   "gate": [
+    1141.0,
+    440.0
+   ],
+   "gate_planned": [
+    1130,
+    450
+   ],
+   "kneel_xy": [
+    1137.0,
+    440.0
+   ],
+   "dist_to_gate_m": 4.0,
+   "z": 1.5,
+   "faces_gate": true,
+   "note": "선창 널판 위. 이름혼은 막(동쪽)을 향해 앉음"
+  },
+  {
+   "soul": "S-103",
+   "name": "떡장수 할미",
+   "gate": [
+    -225,
+    458
+   ],
+   "kneel_xy": [
+    -225.0,
+    455.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.01,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-104",
+   "name": "짐꾼 곰",
+   "gate": [
+    -262,
+    426
+   ],
+   "kneel_xy": [
+    -262.0,
+    423.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.01,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-105",
+   "name": "움막촌 어미",
+   "gate": [
+    -493,
+    468
+   ],
+   "kneel_xy": [
+    -493.0,
+    465.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 2.12,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-106",
+   "name": "쥐똥이",
+   "gate": [
+    -403,
+    364
+   ],
+   "kneel_xy": [
+    -401.4,
+    362.1
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 0.58,
+   "faces_gate": true
+  },
+  {
+   "soul": "S-107",
+   "name": "성문 문지기",
+   "gate": [
+    -546,
+    250
+   ],
+   "kneel_xy": [
+    -546.0,
+    247.5
+   ],
+   "dist_to_gate_m": 2.5,
+   "z": 1.0,
+   "faces_gate": true
+  }
+ ]
+}

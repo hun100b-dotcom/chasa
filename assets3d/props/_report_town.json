@@ -1,0 +1,132 @@
+[
+ {
+  "name": "prop_anvil",
+  "tris": 74,
+  "size_m": [
+   0.85,
+   0.54,
+   0.78
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_forge",
+  "tris": 120,
+  "size_m": [
+   2.1,
+   1.32,
+   2.3
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_quench_trough",
+  "tris": 48,
+  "size_m": [
+   1.3,
+   0.5,
+   0.41
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_tool_rack",
+  "tris": 140,
+  "size_m": [
+   1.6,
+   0.14,
+   1.5
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_pyeongsang",
+  "tris": 144,
+  "size_m": [
+   1.9,
+   1.2,
+   0.7
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_market_stall",
+  "tris": 286,
+  "size_m": [
+   2.2,
+   1.49,
+   2.01
+  ],
+  "min_z": -0.005
+ },
+ {
+  "name": "prop_candy_stand",
+  "tris": 180,
+  "size_m": [
+   1.14,
+   0.64,
+   0.96
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_charred_pillar",
+  "tris": 88,
+  "size_m": [
+   1.17,
+   1.14,
+   2.58
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_burnt_desk",
+  "tris": 108,
+  "size_m": [
+   1.56,
+   1.52,
+   0.44
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_burnt_cabinet",
+  "tris": 120,
+  "size_m": [
+   1.66,
+   1.62,
+   0.87
+  ],
+  "min_z": -0.05
+ },
+ {
+  "name": "prop_ash_heap",
+  "tris": 136,
+  "size_m": [
+   3.0,
+   3.0,
+   0.98
+  ],
+  "min_z": -0.103
+ },
+ {
+  "name": "prop_prison_wall",
+  "tris": 596,
+  "size_m": [
+   11.72,
+   11.32,
+   2.56
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_prison_gate",
+  "tris": 234,
+  "size_m": [
+   4.04,
+   0.6,
+   2.8
+  ],
+  "min_z": 0.0
+ }
+]

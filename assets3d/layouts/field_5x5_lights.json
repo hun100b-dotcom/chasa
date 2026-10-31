@@ -1,0 +1,707 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북, z=위(블렌더 좌표. 유니티는 (x, z, y))",
+ "note": "field_scene.py가 조립하며 놓은 점광원. intensity 1.0 = 블렌더 900W 기준 보통 밝기",
+ "lights": [
+  {
+   "x": 202.2,
+   "y": 49.5,
+   "z": 0.9,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 324.0,
+   "y": 144.0,
+   "z": 0.89,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 580.0,
+   "y": 536.8,
+   "z": 3.6,
+   "color": "#B58CFF",
+   "intensity": 1.0,
+   "range_m": 10.0,
+   "flicker": true,
+   "tag": "prop_ruined_shrine"
+  },
+  {
+   "x": 440.0,
+   "y": 509.0,
+   "z": 1.48,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 484.0,
+   "y": 509.0,
+   "z": 1.56,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 528.0,
+   "y": 509.0,
+   "z": 1.43,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 550.0,
+   "y": 491.0,
+   "z": 1.56,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 574.5,
+   "y": 488.0,
+   "z": 1.57,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 585.5,
+   "y": 488.0,
+   "z": 1.58,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 585.5,
+   "y": 502.0,
+   "z": 1.6,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 574.5,
+   "y": 516.0,
+   "z": 3.52,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 585.5,
+   "y": 516.0,
+   "z": 3.58,
+   "color": "#9FDCFF",
+   "intensity": 0.8,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "prop_soulfire_lantern"
+  },
+  {
+   "x": 47.0,
+   "y": 478.0,
+   "z": 1.34,
+   "color": "#A8E6B8",
+   "intensity": 0.7,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "prop_herb_pot"
+  },
+  {
+   "x": 58.5,
+   "y": 460.0,
+   "z": 1.3,
+   "color": "#A8E6B8",
+   "intensity": 0.7,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "prop_herb_pot"
+  },
+  {
+   "x": 108.0,
+   "y": 446.0,
+   "z": 1.31,
+   "color": "#A8E6B8",
+   "intensity": 0.7,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "prop_herb_pot"
+  },
+  {
+   "x": 104.2,
+   "y": 438.0,
+   "z": 1.53,
+   "color": "#7FB89C",
+   "intensity": 0.5,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "prop_mist_pillar"
+  },
+  {
+   "x": 48.2,
+   "y": 479.0,
+   "z": 1.55,
+   "color": "#7FB89C",
+   "intensity": 0.5,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "prop_mist_pillar"
+  },
+  {
+   "x": 109.2,
+   "y": 447.0,
+   "z": 1.5,
+   "color": "#7FB89C",
+   "intensity": 0.5,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "prop_mist_pillar"
+  },
+  {
+   "x": 59.7,
+   "y": 461.0,
+   "z": 1.5,
+   "color": "#7FB89C",
+   "intensity": 0.5,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "prop_mist_pillar"
+  },
+  {
+   "x": 97.52,
+   "y": 440.0,
+   "z": 1.9,
+   "color": "#8FE0A8",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_sick_lantern"
+  },
+  {
+   "x": 97.52,
+   "y": 466.0,
+   "z": 1.93,
+   "color": "#8FE0A8",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_sick_lantern"
+  },
+  {
+   "x": 112.48,
+   "y": 462.0,
+   "z": 1.93,
+   "color": "#8FE0A8",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_sick_lantern"
+  },
+  {
+   "x": 65.52,
+   "y": 456.0,
+   "z": 1.91,
+   "color": "#8FE0A8",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_sick_lantern"
+  },
+  {
+   "x": 51.52,
+   "y": 466.0,
+   "z": 1.9,
+   "color": "#8FE0A8",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_sick_lantern"
+  },
+  {
+   "x": 34.48,
+   "y": 466.0,
+   "z": 1.97,
+   "color": "#8FE0A8",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_sick_lantern"
+  },
+  {
+   "x": 103.52,
+   "y": 520.0,
+   "z": 2.01,
+   "color": "#8FE0A8",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_sick_lantern"
+  },
+  {
+   "x": 104.48,
+   "y": 560.0,
+   "z": 1.91,
+   "color": "#8FE0A8",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_sick_lantern"
+  },
+  {
+   "x": 416.0,
+   "y": 321.3,
+   "z": 2.31,
+   "color": "#FFC878",
+   "intensity": 1.0,
+   "range_m": 10.0,
+   "flicker": true,
+   "tag": "prop_post_lamp"
+  },
+  {
+   "x": 44.0,
+   "y": 396.0,
+   "z": 2.34,
+   "color": "#FFC878",
+   "intensity": 1.0,
+   "range_m": 10.0,
+   "flicker": true,
+   "tag": "prop_post_lamp"
+  },
+  {
+   "x": 33.75,
+   "y": 330.12,
+   "z": 0.9,
+   "color": "#F3E7D3",
+   "intensity": 0.35,
+   "range_m": 3.0,
+   "flicker": false,
+   "tag": "prop_burnt_cabinet"
+  },
+  {
+   "x": 363.1,
+   "y": 154.3,
+   "z": 1.91,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 8.0,
+   "flicker": true,
+   "tag": "prop_small_shrine"
+  },
+  {
+   "x": 395.1,
+   "y": 410.3,
+   "z": 1.93,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 8.0,
+   "flicker": true,
+   "tag": "prop_small_shrine"
+  },
+  {
+   "x": 299.1,
+   "y": 122.3,
+   "z": 1.96,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 8.0,
+   "flicker": true,
+   "tag": "prop_small_shrine"
+  },
+  {
+   "x": 226.1,
+   "y": 299.3,
+   "z": 1.93,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 8.0,
+   "flicker": true,
+   "tag": "prop_small_shrine"
+  },
+  {
+   "x": 98.1,
+   "y": 459.3,
+   "z": 1.97,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 8.0,
+   "flicker": true,
+   "tag": "prop_small_shrine"
+  },
+  {
+   "x": 326.6,
+   "y": 486.2,
+   "z": 0.95,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 235.7,
+   "y": 356.7,
+   "z": 0.85,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 348.9,
+   "y": 412.4,
+   "z": 0.91,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 417.8,
+   "y": 241.8,
+   "z": 0.96,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 99.5,
+   "y": 548.0,
+   "z": 0.91,
+   "color": "#FFB066",
+   "intensity": 1.1,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_campfire"
+  },
+  {
+   "x": 91.8,
+   "y": 548.6,
+   "z": 2.1,
+   "color": "#FFB066",
+   "intensity": 1.0,
+   "range_m": 8.0,
+   "flicker": true,
+   "tag": "br_ferry_dock"
+  },
+  {
+   "x": 38.1,
+   "y": 339.2,
+   "z": 2.2,
+   "color": "#FFC878",
+   "intensity": 1.0,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "prop_prison_gate"
+  },
+  {
+   "x": 222.7,
+   "y": 62.2,
+   "z": 1.3,
+   "color": "#FF9A4A",
+   "intensity": 1.4,
+   "range_m": 10.0,
+   "flicker": true,
+   "tag": "prop_forge"
+  },
+  {
+   "x": 85.1,
+   "y": 555.7,
+   "z": 1.45,
+   "color": "#FFB066",
+   "intensity": 0.7,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "br_ferry_boat"
+  },
+  {
+   "x": 411.0,
+   "y": 290.7,
+   "z": 1.45,
+   "color": "#FFB066",
+   "intensity": 0.7,
+   "range_m": 6.0,
+   "flicker": true,
+   "tag": "br_ferry_boat"
+  },
+  {
+   "x": 105.4,
+   "y": 450.8,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 110.6,
+   "y": 450.8,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 185.4,
+   "y": 34.8,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 190.6,
+   "y": 34.8,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 157.4,
+   "y": 178.8,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 162.6,
+   "y": 178.8,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 353.4,
+   "y": 322.8,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 358.6,
+   "y": 322.8,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 194.2,
+   "y": 42.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 194.2,
+   "y": 51.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 194.2,
+   "y": 60.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 194.2,
+   "y": 69.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 194.2,
+   "y": 78.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 197.8,
+   "y": 46.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 197.8,
+   "y": 55.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 197.8,
+   "y": 64.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 197.8,
+   "y": 73.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 197.8,
+   "y": 82.0,
+   "z": 2.35,
+   "color": "#FFB066",
+   "intensity": 0.9,
+   "range_m": 7.0,
+   "flicker": true,
+   "tag": "night_lantern_pole"
+  },
+  {
+   "x": 191.8,
+   "y": 38.0,
+   "z": 1.61,
+   "color": "#FFB066",
+   "intensity": 1.0,
+   "range_m": 7.0,
+   "flicker": false,
+   "tag": "night_stone_lantern"
+  },
+  {
+   "x": 200.2,
+   "y": 38.0,
+   "z": 1.61,
+   "color": "#FFB066",
+   "intensity": 1.0,
+   "range_m": 7.0,
+   "flicker": false,
+   "tag": "night_stone_lantern"
+  },
+  {
+   "x": 188.0,
+   "y": 41.0,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 202.6,
+   "y": 51.8,
+   "z": 1.55,
+   "color": "#5FE3C0",
+   "intensity": 1.1,
+   "range_m": 8.0,
+   "flicker": false,
+   "tag": "night_soulfire_pedestal"
+  },
+  {
+   "x": 76.5,
+   "y": 447.5,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 91.5,
+   "y": 456.5,
+   "z": 2.25,
+   "color": "#FF9A3A",
+   "intensity": 1.3,
+   "range_m": 9.0,
+   "flicker": true,
+   "tag": "night_torch_stand"
+  },
+  {
+   "x": 398.0,
+   "y": 293.0,
+   "z": 2.17,
+   "color": "#5FE3C0",
+   "intensity": 1.1,
+   "range_m": 8.0,
+   "flicker": false,
+   "tag": "night_soulfire_pedestal"
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+; Godot 프로젝트 설정 파일 (사람이 읽을 수 있는 텍스트 → AI가 직접 고칠 수 있다)
+config_version=5
+
+[application]
+config/name="차사 단계 0 (Godot)"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7")
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/aspect="expand"
+
+[input_devices]
+; 폰에서 손가락 탭을 마우스 좌클릭처럼 받는다 (Three.js판과 같은 조작)
+pointing/emulate_mouse_from_touch=true
+
+[rendering]
+; 웹·저사양 폰에서도 도는 호환(Compatibility) 렌더러. 웹 내보내기는 이 렌더러만 지원한다.
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/msaa_3d=2

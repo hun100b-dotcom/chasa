@@ -1,0 +1,1692 @@
+{
+ "_설명": "3막 장례 10개(⑤ 갯마을 5 + ⑥ 도성 아랫마을 5). tools/funerals_act3.py로 생성. 틀과 규칙은 funerals_act1.json과 같다. 서사 2026-10-25",
+ "rules": {
+  "same_as_act1": "천도·파혼 대사 0, 천도 48초(두 박자만 깊게), 파혼 조등만, 처결 못 함 20초·산 사람 한 줄·혼마다 한 번, 하루 한 번, condition 박자",
+  "harbor": "⑤ 몸이 있는 장례는 귀해서 포구 사람들이 다 나온다. 조등 연기는 바다 쪽으로 흐른다(대사 없이 보이는 이 마을의 상처)",
+  "city": "⑥ 상주가 없어 이웃이 상주. 만장 대신 헝겊 장대. 장례를 치른 무덤에만 다음 새벽부터 팻말이 선다(장면 밖 풍경. 자리: act3_map.json, 구덩이 무덤 남쪽 줄 다섯 자리)",
+  "mujeok": "mujeok=true 장례는 B-11 천도 다음 낮부터 열린다. B-11 파혼이면 열리지 않는다(기획 funeral_rules_act3와 같음)",
+  "one_cut_jump": "S-089 variant·S-107 moving의 \"해 질 녘 한 컷\"은 화면 빛만 저녁으로 바꾼 짧은 컷이다. 월드 시계는 흐르지 않게 연출만",
+  "numbers": "헛묘 수·별명을 화면 글로 세거나 읽히게 하지 않는다(보스 단서와 겹침)",
+  "cold": "추위 말·몸 움츠림 없음",
+  "names": "3막 산 사람은 이름 없이 역할로(npc_act3.json)",
+  "positions": "노제·나감 자리는 기획 act3_map.json funerals. S-105 노제 움막촌 우물, S-106 노제 다리 밑(기획 반영 10-25)"
+ },
+ "funerals": [
+  {
+   "id": "FUN-S085",
+   "soul": "S-085",
+   "name": "갯골댁 장례",
+   "region": 5,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "그물코 하나가 내내 비어 있었다. 남편이 거기로 빠져나간 것 같아서 못 기웠다.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S085-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 갯마을 포구. 갯골댁 집 앞에 조등. 빈 배들이 선창에 묶여 흔들린다. 차사는 그물 너는 마당 끝에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[파도] [갈매기] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.harbor"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.harbor(파도·갈매기·배 삐걱임)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "마당에 그물이 펼쳐져 있다. 그물코 하나가 비어 있다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[파도 소리만]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "상여가 집을 나선다. 몸이 있는 장례는 귀해서 포구 사람들이 다 나와 뒤를 따른다. 만장이 차사의 몸을 스친다. 아무도 차사를 피하지 않는다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "며느리가 그 그물코를 깁는다. 다 깁고 나서 그물을 바다 쪽으로 한 번 턴다",
+       "camera": {
+        "mode": "low_move",
+        "to": "net"
+       },
+       "caption": "[그물 터는 소리]",
+       "sfx_request": [
+        "cut.net.shake(그물 터는 소리)"
+       ],
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(그물 삼베빛)"
+      },
+      {
+       "t": 38.0,
+       "action": "포구 어귀에서 노제를 지낸 행렬이 곶 길로 올라가 사라진 뒤. 조등 연기가 하늘이 아니라 바다 쪽으로 흐른다, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "갯골댁 집 대문에 조등만 걸려 있다. 문은 닫혀 있다. 포구는 여느 날처럼 그물을 넌다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S085-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "갯골댁 집. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[파도]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "며느리가 그물 앞에 앉았다가 바늘을 그물에 꽂아 두고 일어난다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "갯골댁 며느리, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "갯골댁 며느리",
+        "text": "어머님 날은 아직이래요. 그물은 펴 둘게요.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S085-PENDING"
+    }
+   ]
+  },
+  {
+   "id": "FUN-S086",
+   "soul": "S-086",
+   "name": "헛묘지기 영감 장례",
+   "region": 5,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "옷만 묻은 무덤이 마흔둘. 옷은 썩는데, 이름 부를 데가 없다.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S086-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 갯마을 포구. 헛묘지기 집 앞에 조등. 빈 배들이 선창에 묶여 흔들린다. 차사는 그물 너는 마당 끝에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[파도] [갈매기] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.harbor"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.harbor(파도·갈매기·배 삐걱임)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "곶 아래 헛묘 곁에 삽 한 자루가 꽂혀 있다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[파도 소리만]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "상여가 집을 나선다. 몸이 있는 장례는 귀해서 포구 사람들이 다 나와 뒤를 따른다. 만장이 차사의 몸을 스친다. 아무도 차사를 피하지 않는다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "손자가 삽을 든다. 옷만 묻은 무덤들 옆에, 처음으로 몸이 든 무덤 하나를 짓는다",
+       "camera": {
+        "mode": "side_track",
+        "to": "new_grave"
+       },
+       "caption": "[삽질 소리]",
+       "sfx_request": [
+        "cut.shovel.dig(삽으로 흙 퍼는 소리)"
+       ],
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(젖은 흙빛). 헛묘 수를 화면 글로 세지 않는다(보스 단서 B09-D1과 겹침)"
+      },
+      {
+       "t": 38.0,
+       "action": "포구 어귀에서 노제를 지낸 행렬이 곶 길을 올라 헛묘 옆 새 무덤에서 멈춘 뒤. 조등 연기가 바다 쪽으로 흐른다, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "헛묘지기 집 대문에 조등만 걸려 있다. 문은 닫혀 있다. 포구는 여느 날처럼 그물을 넌다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S086-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "헛묘지기 집. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[파도]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "손자가 삽 앞에 섰다가 손을 대지 않고 돌아선다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "헛묘지기 손자, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "헛묘지기 손자",
+        "text": "할아버지 날을 못 받았대. 삽은 그대로 둬.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S086-PENDING"
+    }
+   ]
+  },
+  {
+   "id": "FUN-S087",
+   "soul": "S-087",
+   "name": "소금장수 덕보 장례",
+   "region": 5,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "소금은 바닷물을 말려야 나온다. 우리 형은 마르지도 못하고 바다에 있다.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S087-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 갯마을 포구. 덕보 집 앞에 조등. 빈 배들이 선창에 묶여 흔들린다. 차사는 그물 너는 마당 끝에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[파도] [갈매기] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.harbor"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.harbor(파도·갈매기·배 삐걱임)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "소금 창고 앞에 반쯤 진 소금 지게가 내려져 있다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[파도 소리만]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "상여가 집을 나선다. 몸이 있는 장례는 귀해서 포구 사람들이 다 나와 뒤를 따른다. 만장이 차사의 몸을 스친다. 아무도 차사를 피하지 않는다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "이웃 염부가 지게를 대신 진다. 바닷가에 이르러 소금 한 줌을 바다에 뿌린다",
+       "camera": {
+        "mode": "side_track",
+        "to": "shore"
+       },
+       "caption": "[소금 흩는 소리] [파도]",
+       "sfx_request": [
+        "cut.salt.scatter(소금 한 줌 흩는 소리)"
+       ],
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(소금 흰빛). 누구 몫인지는 글로 쓰지 않는다(기억 \"형은 바다에 있다\"를 본 사람만 안다)"
+      },
+      {
+       "t": 38.0,
+       "action": "포구 어귀에서 노제를 지낸 행렬이 곶 길로 올라가 사라진 뒤. 조등 연기가 하늘이 아니라 바다 쪽으로 흐른다, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "덕보 집 대문에 조등만 걸려 있다. 문은 닫혀 있다. 포구는 여느 날처럼 그물을 넌다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S087-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "덕보 집. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[파도]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "지게가 내려진 그대로다. 이웃 염부가 멜빵을 한 번 만져 보고 간다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "이웃 염부, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "이웃 염부",
+        "text": "덕보 지게는 아직 못 지겠네.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S087-PENDING"
+    }
+   ]
+  },
+  {
+   "id": "FUN-S088",
+   "soul": "S-088",
+   "name": "순덕 장례",
+   "region": 5,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "아버지 배가 돌아오는 날 시집간다고 했는데. 배가 안 왔다.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S088-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 갯마을 포구. 순덕 집 앞에 조등. 빈 배들이 선창에 묶여 흔들린다. 차사는 그물 너는 마당 끝에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[파도] [갈매기] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.harbor"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.harbor(파도·갈매기·배 삐걱임)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "방 안에 혼례 저고리가 개어져 있다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[파도 소리만]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "상여가 집을 나선다. 상여 위에 혼례 저고리가 덮여 있다(어머니가 덮었다). 포구 사람들이 다 나와 뒤를 따른다. 만장이 차사의 몸을 스친다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "노제 자리에서 포구로 배 한 척이 들어온다. 그 집 배는 아니다. 그래도 사람들이 다 같이 손을 흔든다",
+       "camera": {
+        "mode": "tilt_up",
+        "to": "harbor_mouth"
+       },
+       "caption": "[노 젓는 소리] [파도]",
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(저고리 다홍). 배 이름·깃발을 보이지 않는다(만선호와 헷갈리지 않게)",
+       "sfx": [
+        "cut.oar.row"
+       ],
+       "sfx_note": [
+        "cut.oar.row(노 젓는 소리)"
+       ]
+      },
+      {
+       "t": 38.0,
+       "action": "포구 어귀에서 노제를 지낸 행렬이 곶 길로 올라가 사라진 뒤. 조등 연기가 하늘이 아니라 바다 쪽으로 흐른다, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "순덕 집 대문에 조등만 걸려 있다. 문은 닫혀 있다. 포구는 여느 날처럼 그물을 넌다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S088-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "순덕 집. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[파도]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "어머니가 저고리를 펼쳤다가 도로 갠다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "순덕 어머니, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "순덕 어머니",
+        "text": "저고리는 다시 개어 둬야지.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S088-PENDING"
+    }
+   ]
+  },
+  {
+   "id": "FUN-S089",
+   "soul": "S-089",
+   "name": "등대지기 장례",
+   "region": 5,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "불을 끄면 돌아올 배가 길을 잃는다. 그래서 못 껐다. 아침인 줄 몰랐다.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S089-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 갯마을 포구. 등대지기 막 앞에 조등. 빈 배들이 선창에 묶여 흔들린다. 차사는 그물 너는 마당 끝에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[파도] [갈매기] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.harbor"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.harbor(파도·갈매기·배 삐걱임)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "등대지기 막 창가에 등잔이 아직 타고 있다. 아침이다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[파도 소리만]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "상여가 집을 나선다. 몸이 있는 장례는 귀해서 포구 사람들이 다 나와 뒤를 따른다. 만장이 차사의 몸을 스친다. 아무도 차사를 피하지 않는다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "딸이 등잔을 끈다. 아침이니까",
+       "camera": {
+        "mode": "low_move",
+        "to": "lamp"
+       },
+       "caption": "[심지 끄는 소리]",
+       "sfx_request": [
+        "cut.lamp.snuff(등잔 심지 끄는 소리)"
+       ],
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(등잔 노란빛)"
+      },
+      {
+       "t": 31.0,
+       "action": "(망부석 아낙을 천도한 뒤라면) 해 질 녘 한 컷: 딸이 등잔을 다시 켜 곶 끝 높은 자리에 건다. 포구 등대가 된다",
+       "control": "walk",
+       "note": "SCENARIO-ACT3 ⑤의 장례 표. 화면을 저녁빛으로 잠깐 바꾼 한 컷(시계는 그대로)",
+       "condition": "B-09 천도함"
+      },
+      {
+       "t": 38.0,
+       "action": "포구 어귀에서 노제를 지낸 행렬이 곶 길로 올라가 사라진 뒤. 조등 연기가 하늘이 아니라 바다 쪽으로 흐른다, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "등대지기 막 대문에 조등만 걸려 있다. 문은 닫혀 있다. 포구는 여느 날처럼 그물을 넌다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S089-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "등대지기 막. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[파도]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "낮인데 창가 등잔이 그대로 타고 있다. 딸이 그 앞을 지나간다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "등대지기 딸, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "등대지기 딸",
+        "text": "아버지 등잔은 아직 못 끄겠어.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S089-PENDING"
+    }
+   ]
+  },
+  {
+   "id": "FUN-S103",
+   "soul": "S-103",
+   "name": "떡장수 할미 장례",
+   "region": 6,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "떡 하나 더 얹어 주던 아이들 이름을 몰랐다. 물어볼걸.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S103-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 도성 아랫마을. 떡장수 좌판 앞에 조등. 상주 자리에 이웃들이 서 있다. 차사는 길가에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[먼 장터 웅성거림] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.market"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.market(장터 웅성거림, 말이 알아들리지 않게)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "좌판 위에 빈 떡판이 놓여 있다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[장터 소리가 멀어진다]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "다리 밑 아이들이 상여를 멘다. 넷이서 멨다. 만장 대신 헝겊 장대 몇 개가 차사의 몸을 스친다. 아무도 차사를 피하지 않는다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "상여가 너무 무거워 아이들이 비틀거린다. 다리 밑에서 아이들이 더 달려와 넷이 여덟이 된다. 발을 맞춘다",
+       "camera": {
+        "mode": "side_track",
+        "to": "procession"
+       },
+       "caption": "[아이들 발소리]",
+       "sfx_request": [
+        "cut.kids.steps(아이들 맨발 발소리)"
+       ],
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(콩고물 노란빛)"
+      },
+      {
+       "t": 31.0,
+       "action": "(다리 밑 왕초를 천도한 뒤라면) 아이들이 서로를 보며 입 모양으로 별명을 부르고 발을 맞춘다(소리 없음)",
+       "control": "walk",
+       "note": "대사 0 원칙 — 입 모양만. 어느 별명인지 글로 쓰지 않는다",
+       "condition": "B-11 천도함"
+      },
+      {
+       "t": 38.0,
+       "action": "저잣거리 한가운데에서 노제를 지낸 행렬이 큰길을 따라 성문 밖으로 나간 뒤, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "떡장수 좌판 대문에 조등만 걸려 있다. 문은 닫혀 있다. 저잣거리는 여느 날처럼 붐빈다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S103-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "떡장수 좌판. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[먼 장터 웅성거림]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "아이 하나가 빈 떡판 앞에 쪼그려 앉았다가 일어난다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "다리 밑 아이들, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "다리 밑 아이들",
+        "text": "떡장수 할매, 아직 날을 못 받았대.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S103-PENDING"
+    }
+   ]
+  },
+  {
+   "id": "FUN-S104",
+   "soul": "S-104",
+   "name": "짐꾼 곰 장례",
+   "region": 6,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "곰아, 곰아. 그게 다였다. 그래도 불러 주긴 했지.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S104-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 도성 아랫마을. 짐꾼 지게 자리 앞에 조등. 상주 자리에 이웃들이 서 있다. 차사는 길가에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[먼 장터 웅성거림] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.market"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.market(장터 웅성거림, 말이 알아들리지 않게)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "저잣거리 기둥에 빈 지게가 기대 서 있다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[장터 소리가 멀어진다]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "상여 대신 지게다. 저잣거리 상인들이 지게에 그의 짚신을 얹어 메고 장터를 한 바퀴 돈다. 지게가 차사의 몸을 스친다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [장터가 조용해진다]",
+       "sfx": [
+        "cut.yoryeong.ring"
+       ],
+       "sfx_request": [
+        "amb.market.hush(웅성거림이 잦아드는 장터)"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다"
+      },
+      {
+       "t": 25.0,
+       "action": "한 바퀴를 다 돈 상인들이 지게를 장터 어귀에 세운다. 상인 하나가 지게 위 짚신을 가지런히 고쳐 놓는다",
+       "camera": {
+        "mode": "low_move",
+        "to": "jige"
+       },
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(지게 나무빛)"
+      },
+      {
+       "t": 38.0,
+       "action": "장터를 한 바퀴 돈 행렬이 큰길을 따라 성문 밖으로 나간 뒤, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "짐꾼 지게 자리 대문에 조등만 걸려 있다. 문은 닫혀 있다. 저잣거리는 여느 날처럼 붐빈다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S104-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "짐꾼 지게 자리. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[먼 장터 웅성거림]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "지게가 기둥에 기댄 그대로다. 상인 하나가 그 옆에 짐을 내려놓았다가 도로 든다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "저잣거리 상인, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "저잣거리 상인",
+        "text": "그 지게는 그냥 둬. 아직 날이 안 났대.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S104-PENDING"
+    }
+   ],
+   "mujeok": true,
+   "opens": "B-11(다리 밑 왕초) 천도 다음 낮부터, 하루 하나씩. B-11을 파혼하면 이 장례는 열리지 않는다(천도한 넋·기억은 그대로)"
+  },
+  {
+   "id": "FUN-S105",
+   "soul": "S-105",
+   "name": "움막촌 어미 장례",
+   "region": 6,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "아이 이름을 지었는데 관아에 올릴 데가 없었다. 호적이 없으니.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S105-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 도성 아랫마을. 움막촌 어미 판잣집 앞에 조등. 상주 자리에 이웃들이 서 있다. 차사는 길가에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[먼 장터 웅성거림] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.market"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.market(장터 웅성거림, 말이 알아들리지 않게)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "판잣집 문턱에 아이 배냇저고리가 개어져 있다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[장터 소리가 멀어진다]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "상여가 나선다. 상주가 없어 이웃들이 상여를 멘다. 만장 대신 헝겊 조각을 단 장대 몇 개. 장대가 차사의 몸을 스친다. 아무도 차사를 피하지 않는다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "이웃 아낙이 배냇저고리 안쪽에 실로 아이 이름을 바느질한다. 관아 대신 옷에 적는 호적이다",
+       "camera": {
+        "mode": "low_move",
+        "to": "baby_jacket"
+       },
+       "caption": "[바늘 소리]",
+       "sfx_request": [
+        "cut.needle.sew(천에 바늘 꿰는 소리)"
+       ],
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(배냇저고리 흰빛). 수놓은 글자는 읽히지 않게"
+      },
+      {
+       "t": 38.0,
+       "action": "움막촌 우물가에서 노제를 지낸 행렬이 성벽 밑 비탈을 따라 성문 밖으로 나간 뒤, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "움막촌 어미 판잣집 대문에 조등만 걸려 있다. 문은 닫혀 있다. 저잣거리는 여느 날처럼 붐빈다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S105-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "움막촌 어미 판잣집. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[먼 장터 웅성거림]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "이웃 아낙이 아이를 업고 판잣집 문턱 앞을 서성인다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "움막촌 이웃 아낙, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "움막촌 이웃 아낙",
+        "text": "저 애 어미 날은 아직이래.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S105-PENDING"
+    }
+   ],
+   "mujeok": true,
+   "opens": "B-11(다리 밑 왕초) 천도 다음 낮부터, 하루 하나씩. B-11을 파혼하면 이 장례는 열리지 않는다(천도한 넋·기억은 그대로)"
+  },
+  {
+   "id": "FUN-S106",
+   "soul": "S-106",
+   "name": "쥐똥이 장례",
+   "region": 6,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "왕초가 지어 준 이름이다. 나쁜 이름이어도 내 거다.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S106-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 도성 아랫마을. 쥐똥이 거적 앞에 조등. 상주 자리에 이웃들이 서 있다. 차사는 길가에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[먼 장터 웅성거림] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.market"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.market(장터 웅성거림, 말이 알아들리지 않게)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "다리 밑에 거적 한 장이 덮인 채다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[장터 소리가 멀어진다]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "다리 밑 아이들이 작은 상여를 멘다. 헝겊 장대 하나가 차사의 몸을 스친다. 아무도 차사를 피하지 않는다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "아이들이 거적을 걷는다. 다리 기둥의 별명 목록 가운데 하나 옆에 숯으로 꽃 하나를 그린다",
+       "camera": {
+        "mode": "tilt_up",
+        "to": "bridge_pillar"
+       },
+       "caption": "[숯 긋는 소리]",
+       "sfx_request": [
+        "cut.charcoal.draw(숯으로 돌에 긋는 소리)"
+       ],
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(숯 검정). 꽃은 \"쥐똥이\" 옆. 맨 아래 빈칸(B11-D1 단서)은 건드리지 않는다"
+      },
+      {
+       "t": 38.0,
+       "action": "다리 밑에서 노제를 지낸 행렬이 큰길로 올라 성문 밖으로 나간 뒤, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "쥐똥이 거적 대문에 조등만 걸려 있다. 문은 닫혀 있다. 저잣거리는 여느 날처럼 붐빈다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S106-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "쥐똥이 거적. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[먼 장터 웅성거림]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "거적이 덮인 그대로다. 아이들이 그 둘레를 비켜 앉는다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "다리 밑 아이들, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "다리 밑 아이들",
+        "text": "그 거적 걷지 마. 아직이래.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S106-PENDING"
+    }
+   ],
+   "mujeok": true,
+   "opens": "B-11(다리 밑 왕초) 천도 다음 낮부터, 하루 하나씩. B-11을 파혼하면 이 장례는 열리지 않는다(천도한 넋·기억은 그대로)"
+  },
+  {
+   "id": "FUN-S107",
+   "soul": "S-107",
+   "name": "성문 문지기 장례",
+   "region": 6,
+   "when": "그 혼을 처결한 다음 낮, 그 집 앞에 처음 다가갈 때",
+   "memory_link": "아버지 때, 그 겨울 성문 밖에서 붓 쥔 채 언 서생이 있었다지. 문을 늦게 닫았으면.",
+   "branches": [
+    {
+     "branch": "천도",
+     "id": "FUN-S107-TENDO",
+     "duration": 48.0,
+     "skippable": true,
+     "clock": "running",
+     "reward": null,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "아침의 도성 아랫마을. 문지기 막 앞에 조등. 상주 자리에 이웃들이 서 있다. 차사는 길가에 서 있다",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 5.0
+       },
+       "caption": "[먼 장터 웅성거림] [요령 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "amb.market"
+       ],
+       "control": "none",
+       "sfx_note": [
+        "amb.market(장터 웅성거림, 말이 알아들리지 않게)"
+       ]
+      },
+      {
+       "t": 5.0,
+       "action": "문지기 막 벽에 아버지가 쓰던 빗장 막대가 기대 서 있다",
+       "camera": {
+        "mode": "low_move",
+        "to": "stopped_thing",
+        "time": 7.0
+       },
+       "caption": "[장터 소리가 멀어진다]",
+       "control": "none",
+       "note": "깊은 박자 ①: 어젯밤 기억 속 사물이 멈춰 있다. 플레이어가 혼자 알아차리게 한다"
+      },
+      {
+       "t": 12.0,
+       "action": "상여가 나선다. 상주가 없어 이웃들이 상여를 멘다. 만장 대신 헝겊 조각을 단 장대 몇 개. 장대가 차사의 몸을 스친다. 아무도 차사를 피하지 않는다",
+       "camera": {
+        "mode": "quarter",
+        "height": "low"
+       },
+       "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "vo.wail",
+        "mus.sangyeo.far"
+       ],
+       "control": "walk",
+       "note": "업 10 미만이면 개 한 마리가 차사가 선 쪽을 잠깐 보다 만다(모호하게). 업 10 이상이면 짖고 달아난다",
+       "sfx_note": [
+        "vo.wail(곡소리, 말 없음)",
+        "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+       ]
+      },
+      {
+       "t": 25.0,
+       "action": "해 질 녘 한 컷: 아들 문지기가 성문을 닫다가 빗장을 쥔 채 잠깐 멈춘다. 문을 조금 늦게 닫는다. 그 틈으로 밖에서 누가 뛰어 들어온다",
+       "camera": {
+        "mode": "move",
+        "to": "city_gate"
+       },
+       "caption": "[성문 삐걱임] [뛰어오는 발소리]",
+       "sfx_request": [
+        "cut.gate.creak(큰 나무 성문 삐걱임)"
+       ],
+       "control": "walk",
+       "note": "깊은 박자 ②. 기억 색(빗장 쇠빛). 화면을 저녁빛으로 잠깐 바꾼 한 컷(시계는 그대로). 뛰어 들어온 사람의 얼굴은 보이지 않는다"
+      },
+      {
+       "t": 38.0,
+       "action": "저잣거리 한가운데에서 노제를 지낸 행렬이 큰길을 따라 성문 밖으로 나간 뒤, 그 집 대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+       "camera": {
+        "mode": "pull_out",
+        "to": "gate",
+        "then": "quarter"
+       },
+       "caption": "[바람] [멀리서 요령 마지막 한 번]",
+       "sfx": [
+        "cut.yoryeong.ring",
+        "cut.coins.few"
+       ],
+       "control": "none",
+       "note": "집을 수 없다. 수치 변화 없음"
+      },
+      {
+       "t": 46.0,
+       "action": "페이드 없이 평소 낮 화면",
+       "control": "restore"
+      }
+     ]
+    },
+    {
+     "branch": "파혼",
+     "duration": 0.0,
+     "skippable": false,
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "문지기 막 대문에 조등만 걸려 있다. 문은 닫혀 있다. 저잣거리는 여느 날처럼 붐빈다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+       "control": "walk",
+       "note": "트리거 없음. 조등 소품 하나만. 사잣밥도 없다. 안내 문구 없음"
+      }
+     ],
+     "id": "FUN-S107-PAHON"
+    },
+    {
+     "branch": "처결 못 함",
+     "duration": 20.0,
+     "skippable": true,
+     "once_per_soul": true,
+     "note": "혼마다 처음 한 번만. 두 번째부터는 빗장만(장면 없음). 그날 저녁 명부 맨 아래 줄에 같은 종류로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다(이미 붙은 날이면 쪽지는 생략)",
+     "steps": [
+      {
+       "t": 0.0,
+       "action": "문지기 막. 상은 아직 차려지지 않았다. 대문에 빗장",
+       "camera": {
+        "mode": "quarter",
+        "then": "slow_zoom_in",
+        "time": 4.0
+       },
+       "caption": "[먼 장터 웅성거림]",
+       "control": "walk"
+      },
+      {
+       "t": 4.0,
+       "action": "아들 문지기가 빗장 막대를 집었다가 도로 벽에 기대 놓는다",
+       "control": "walk"
+      },
+      {
+       "t": 8.0,
+       "action": "아들 문지기, 혼잣말",
+       "control": "walk",
+       "line": {
+        "speaker": "아들 문지기",
+        "text": "아버지 날은 아직이오. 문은 내가 닫소.",
+        "style": "bubble",
+        "duration": 2.5
+       }
+      },
+      {
+       "t": 12.0,
+       "action": "사람이 자리를 뜬다. 빗장 지른 문만 남는다",
+       "control": "walk"
+      },
+      {
+       "t": 20.0,
+       "action": "조작 복귀",
+       "control": "restore"
+      }
+     ],
+     "id": "FUN-S107-PENDING"
+    }
+   ]
+  }
+ ]
+}

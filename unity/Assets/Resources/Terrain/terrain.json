@@ -1,0 +1,61 @@
+{
+ "size": 640,
+ "height_res": 641,
+ "splat_res": 640,
+ "height_min_m": -1.0,
+ "height_max_m": 8.0,
+ "layer_tile_m": [
+  6,
+  6,
+  6,
+  6,
+  6
+ ],
+ "detail": {
+  "tile_m": 1.5,
+  "files": [
+   "detail_dirt.png",
+   "detail_grass.png",
+   "detail_gravel.png",
+   "detail_paddy.png",
+   "detail_leaf.png"
+  ],
+  "normals": "detail_<층>_n.png (OpenGL, 초록=위)",
+  "use": "층 색에 곱하거나 가까울 때(~25m 안) 섞고, 노멀은 층 노멀로 쓴다. 층 평균 명도는 layer_*와 비슷하다"
+ },
+ "water": {
+  "surface_z_m": 0.18,
+  "flow_dir_xy": [
+   0,
+   -1
+  ],
+  "flow_speed_mps": 0.7,
+  "tile_m": 4,
+  "albedo": "water_albedo.png (RGBA, 알파=투명도)",
+  "normal": "water_normal.png",
+  "scroll_uv_per_s": "flow_dir 방향으로 flow_speed/tile_m 만큼 uv 이동. 노멀은 반대 방향으로 한 겹 더 느리게 겹치면 흐름이 살아난다",
+  "roughness": 0.06,
+  "foam": "splat_b.png G채널 = 물가 거품(물높이와 땅이 만나는 선), B채널 = 젖은 땅. 알베도에도 구워져 있다"
+ },
+ "note": "아트(Blender) 쪽 같은 규칙에서 뽑은 자료. 행 0 = y 0(남쪽). 큰 강(검은여울)은 칸 경계 없이 연속 물길로 파 두었다(river 항목).",
+ "river": {
+  "axis_x_m": 84.0,
+  "water_x_m": [
+   76,
+   92
+  ],
+  "y_m": [
+   272,
+   640
+  ],
+  "surface_z_m": 0.18,
+  "bed_center_z_m": -0.3,
+  "bed_edge_z_m": -0.1,
+  "bank_top_z_m": 0.3,
+  "waterline_halfwidth_m": "7.2~7.75 (길이 방향으로 구불거림)",
+  "south_end": "둥글게 닫힘(반지름 8m, 중심 y=280)",
+  "north_end": "지도 끝(y=640)까지 이어짐",
+  "water_mesh": "river_water.glb — 한 장짜리 연속 물판(x 76~92, y 272~640, z 0.18, 4m 반복 uv, 흐름 +남쪽). br_* 조각의 물판 46×3장을 대신한다",
+  "note": "높이맵에 칸 경계와 무관한 연속 물길을 팠다(옛: br_ 칸마다 안쪽만 −0.1이라 8m 둑이 남음). br_* 조각 모델을 계속 놓으면 바닥 상자(윗면 0.12)가 물길 위로 얹힌다 — 지형+river_water.glb만 쓰길 권장"
+ }
+}

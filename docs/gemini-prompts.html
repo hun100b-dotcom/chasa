@@ -1,0 +1,246 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>차사 음악 지시문</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Noto+Serif+KR:wght@700&display=swap">
+<style>
+/* 레이아웃: 쓰는 법 3줄 → 층별 카드(번호·이름·언제·지시문·복사 버튼) → 지킬 것 */
+:root{--bg:#EEF1F6;--panel:#FFFFFF;--fg:#16213E;--muted:#4A5675;--line:#CBD3E2;--accent:#1B7A70;--chip:#E3E8F1;--onaccent:#FFFFFF;
+--serif:"Noto Serif KR",serif;--sans:"Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1729;--panel:#16213E;--fg:#F3E7D3;--muted:#A9B3CC;--line:#2B3A66;--accent:#5FE3C0;--chip:#1E2B50;--onaccent:#0F1729;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1729;--panel:#16213E;--fg:#F3E7D3;--muted:#A9B3CC;--line:#2B3A66;--accent:#5FE3C0;--chip:#1E2B50;--onaccent:#0F1729;color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.65;padding-block:20px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto;display:grid;gap:18px}
+h1,h2{font-family:var(--serif);margin:0;line-height:1.3} h1{font-size:clamp(24px,6vw,32px)} h2{font-size:18px}
+p{margin:0} .sub{color:var(--muted);font-size:14px} .eyebrow{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.how{background:var(--panel);border:2px solid var(--accent);border-radius:6px;padding:14px 16px} .how ol{margin:0;padding-left:1.3em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.head{display:flex;gap:12px;align-items:center} .no{font-family:var(--serif);font-size:22px;color:var(--accent);font-variant-numeric:tabular-nums}
+.prompt{background:var(--chip);border-radius:6px;padding:10px 12px;font-size:14px;user-select:all;overflow-wrap:anywhere}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{font:700 15px var(--sans);min-height:44px;padding:8px 22px;border-radius:6px;border:0;background:var(--accent);color:var(--onaccent);cursor:pointer}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px} .msg{font-size:13px;color:var(--muted)}
+.region{margin-top:18px;border-top:2px solid var(--line);padding-top:16px;display:grid;gap:4px} .rh{font-size:22px}
+.note{font-size:14px;color:var(--muted)} .note ul{margin:4px 0 0;padding-left:1.2em}
+</style></head><body><div class="wrap">
+<header style="display:grid;gap:6px"><p class="eyebrow">[기획] 2026-10-25 · 지역마다 네 곡(낮·밤·전투·처결)</p><h1>차사 음악 지시문</h1>
+<p class="sub">Gemini에 그대로 붙여 넣는 문장입니다. 한 지역의 네 곡은 빠르기·음 높이를 같게 맞춰 두어서, 게임 안에서 자연스럽게 넘어갑니다.</p>
+<p class="sub">1막 솔고개(1~4)는 받아서 게임에 넣었습니다. <b>지금 필요한 것은 2막 붉은재(5~8)·쇳골(9~12), 3막 갯마을(13~16)·도성(17~20)</b>입니다.</p></header>
+<section class="how"><ol><li>복사 버튼을 누르고 Gemini 채팅에 붙여 넣기</li><li>같은 문장으로 3~4번 뽑아서 제일 좋은 것 하나를 MP3로 받기</li><li>받은 파일을 채팅에 올려 주시면 자르기·반복 맞추기·기록은 팀이 합니다</li></ol></section>
+<section class="region"><p class="eyebrow">완료 · 72 BPM · D음 · 대금·가야금 — 고요하고 쓸쓸한 산골</p><h1 class="rh">1막 · 솔고개</h1></section>
+<section class="card"><div class="head"><span class="no">1</span><div><h2>탐색-낮</h2><p class="sub">기본으로 깔리는 곡</p></div></div>
+<p class="prompt" id="p1">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 대금(숨소리가 섞인 대나무 가로피리, daegeum) 독주가 띄엄띄엄 느린 선율을 불고, 가야금(gayageum)이 몇 음씩 대답하듯 뜯고, 그 아래에 아쟁(ajaeng) 낮은 음이 아주 작게 깔려. 산골 마을의 한낮, 고요하지만 쓸쓸한 분위기. 음과 음 사이에 바람 같은 여백을 많이 둬. 빠르기 72 BPM, 계면조(슬픈 국악 음계), D음 중심. 타악기 없음. 전자음, 피아노, 서양 오케스트라, 드럼 비트 없음. 가까이서 녹음한 작은 편성. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p1">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">2</span><div><h2>탐색-밤</h2><p class="sub">해가 진 뒤</p></div></div>
+<p class="prompt" id="p2">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 아쟁(활로 긁는 저음 현악기, ajaeng)이 낮고 길게 끄는 음으로 바닥을 깔고, 대금(daegeum)이 낮은 음역에서 숨소리 섞인 짧은 선율을 가끔 불어. 한밤중 산길, 어둡고 서늘하며 무언가 숨어 있는 듯한 불안한 분위기. 소리는 작고 가깝게, 여백을 길게. 빠르기 72 BPM, 계면조, D음 중심. 타악기 없음. 전자음, 피아노, 서양 오케스트라, 신시사이저 패드 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p2">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">3</span><div><h2>전투</h2><p class="sub">적이 가까이 오면</p></div></div>
+<p class="prompt" id="p3">한국 전통 굿 음악 느낌의 긴박한 국악 합주곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 장구(janggu)가 자진모리 장단(빠르게 몰아치는 국악 리듬)을 치고, 북이 강박을 받쳐 주고, 거문고(geomungo)가 술대로 내려치는 강한 음을 넣고, 해금(haegeum)이 울부짖듯 선율을 끌고, 아쟁이 낮게 긴장을 깔아. 악기들이 서로 엇갈리며 즉흥처럼 몰아붙이는 시나위 느낌. 빠르기 144 BPM, 계면조, D음 중심. 작은 편성, 가까이서 녹음한 거친 소리. 전자음, 록 드럼, 서양 오케스트라, 영화 예고편 같은 웅장함 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 전투 음악.</p>
+<div class="row"><button type="button" data-t="p3">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">4</span><div><h2>처결</h2><p class="sub">적이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p4">한국 전통 굿의 한 장면 같은 짧은 국악 소리를 만들어 줘. 노래와 가사 없이, 리듬 없이. 시작하자마자 징(jing, 큰 놋쇠 징)을 한 번 크게 울리고 그 여운이 길게 퍼지는 동안, 아쟁이 아주 낮게 길게 끄는 음 하나를 이어 가. 중간에 무당 방울(요령, 작은 놋쇠 방울)이 몇 번 짤랑이고 다시 고요해져. 엄숙하고 숨죽인, 혼을 떠나보내기 직전의 정적. D음 중심, 계면조. 장구·북 없음, 전자음 없음. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p4">복사</button><span class="msg" aria-live="polite"></span></div></section>
+
+<section class="region"><p class="eyebrow">66 BPM · G음 · 피리·나각·큰 북 — 오래 참아 온 슬픔, 이름 없이 묻힌 병사들</p><h1 class="rh">2막 · 붉은재 싸움터 (산성 아랫마을)</h1></section>
+<section class="card"><div class="head"><span class="no">5</span><div><h2>탐색-낮</h2><p class="sub">산성 아랫마을·화살골, 기본</p></div></div>
+<p class="prompt" id="p5">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 피리(piri, 겹서로 부는 작은 대나무 관악기)가 낮은 음역에서 목이 메듯 느린 선율을 길게 끌고, 대금(daegeum)이 멀리서 가끔 짧게 대답해. 그 아래에 큰 북(buk)이 아주 멀리서 느리게 한 번씩 울리고, 아쟁(ajaeng)이 낮게 깔려. 오래전 싸움이 끝난 산 위 무너진 성터의 한낮, 바람이 세고 쓸쓸하며, 슬픔을 오래 참아 온 듯한 분위기. 음과 음 사이에 여백을 길게 둬. 빠르기 66 BPM, 계면조(슬픈 국악 음계), G음 중심. 전자음, 피아노, 서양 오케스트라, 드럼 비트, 행진곡 느낌 없음. 가까이서 녹음한 작은 편성. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p5">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">6</span><div><h2>탐색-밤</h2><p class="sub">해가 진 뒤의 싸움터</p></div></div>
+<p class="prompt" id="p6">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 아쟁(ajaeng)이 아주 낮게 길게 끄는 음으로 바닥을 깔고, 먼 산 너머에서 나각(nagak, 소라 껍데기 나팔)이 낮게 한 번씩 길게 울리고 사라져. 해금(haegeum)이 높은 음에서 아주 작게 떨듯 이어 가. 큰 북이 심장 소리처럼 아주 느리고 작게. 한밤의 옛 싸움터, 서늘하고 무겁고, 이름 없이 묻힌 사람들이 아직 남아 있는 듯한 분위기. 빠르기 66 BPM, 계면조, G음 중심. 전자음, 피아노, 서양 오케스트라, 신시사이저 패드 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p6">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">7</span><div><h2>전투</h2><p class="sub">싸움터에서 적이 가까이 오면</p></div></div>
+<p class="prompt" id="p7">한국 전통 군악과 굿 음악이 섞인 긴박한 국악 합주곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 큰 북(buk)과 장구(janggu)가 휘모리 장단(아주 빠르게 몰아치는 국악 리듬)으로 강하게 몰고, 징(jing)이 마디 첫 박마다 크게 울리고, 태평소(taepyeongso, 날카로운 겹서 관악기)가 울부짖듯 선율을 끌고, 아쟁이 낮게 긁어 긴장을 깔아. 앞으로 밀고 나가는 싸움의 소리지만 이기는 기쁨이 아니라 처절함. 빠르기 152 BPM, 계면조, G음 중심. 작은 편성, 가까이서 녹음한 거친 소리. 전자음, 록 드럼, 서양 오케스트라, 영화 예고편 같은 웅장함 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 전투 음악.</p>
+<div class="row"><button type="button" data-t="p7">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">8</span><div><h2>처결</h2><p class="sub">적이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p8">한국 전통 굿의 한 장면 같은 짧은 국악 소리를 만들어 줘. 노래와 가사 없이, 리듬 없이. 시작하자마자 징(jing)을 한 번 크게 울리고, 그 여운 위로 나각(소라 나팔)이 낮게 한 번 길게 불고 사라져. 아쟁이 아주 낮게 긴 음 하나를 이어 가고, 끝에 요령(작은 놋쇠 방울)이 두 번 짤랑이고 고요해져. 엄숙하고 숨죽인, 싸우다 쓰러진 이를 떠나보내기 직전의 정적. G음 중심, 계면조. 장구·북 없음, 전자음 없음. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p8">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">80 BPM · C음 · 거문고·박·꽹과리 — 반복되는 고된 하루, 차갑고 메마른 분노</p><h1 class="rh">2막 · 쇳골 광산</h1></section>
+<section class="card"><div class="head"><span class="no">9</span><div><h2>탐색-낮</h2><p class="sub">광부촌·선탄장, 기본</p></div></div>
+<p class="prompt" id="p9">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 거문고(geomungo, 술대로 튕기는 낮은 현악기)가 같은 몇 음을 일정하게 되풀이하며 무겁게 걷고, 그 사이사이에 박(bak, 나무판을 묶은 딱딱이)이 곡괭이질처럼 일정하게 딱 딱 끊어 쳐. 해금(haegeum)이 메마르고 건조한 선율을 띄엄띄엄 얹어. 산속 광산 마을의 한낮, 고되고 무표정하게 반복되는 하루, 차갑고 먼지 낀 분위기. 빠르기 80 BPM, 계면조, C음 중심. 전자음, 피아노, 서양 오케스트라, 드럼 비트 없음. 가까이서 녹음한 작은 편성. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p9">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">10</span><div><h2>탐색-밤</h2><p class="sub">해가 진 뒤의 광산</p></div></div>
+<p class="prompt" id="p10">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 아쟁(ajaeng)이 아주 낮은 음을 길게 끌고, 거문고가 가장 낮은 줄을 가끔 한 번씩 무겁게 튕겨 그 울림이 길게 남아. 해금이 아주 높고 가늘게 바람 소리처럼 스치고, 박(bak)이 아주 멀리서 느리게 숫자를 세듯 딱 딱 울려. 한밤의 깊은 갱도, 끝없는 어둠과 갇힌 공기, 숨 막히고 서늘한 분위기. 빠르기 80 BPM, 계면조, C음 중심. 전자음, 피아노, 서양 오케스트라, 신시사이저 패드 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p10">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">11</span><div><h2>전투</h2><p class="sub">광산에서 적이 가까이 오면</p></div></div>
+<p class="prompt" id="p11">한국 전통 굿 음악 느낌의 긴박하고 차가운 국악 합주곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 장구(janggu)가 휘모리 장단을 몰아치고, 꽹과리(kkwaenggwari, 작은 놋쇠 타악기)가 쇠를 두드리듯 날카롭게 엇박을 넣고, 박(bak)이 기계처럼 정확하게 박을 끊어. 거문고가 술대로 낮은 줄을 거칠게 내려치고, 해금이 화난 듯 긁어 올리는 선율을 끌어. 쇠와 돌이 부딪히는 듯한 딱딱하고 건조한 소리. 빠르기 152 BPM, 계면조, C음 중심. 작은 편성, 가까이서 녹음한 거친 소리. 전자음, 록 드럼, 서양 오케스트라, 영화 예고편 같은 웅장함 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 전투 음악.</p>
+<div class="row"><button type="button" data-t="p11">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">12</span><div><h2>처결</h2><p class="sub">적이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p12">한국 전통 굿의 한 장면 같은 짧은 국악 소리를 만들어 줘. 노래와 가사 없이, 리듬 없이. 시작하자마자 징(jing)을 한 번 크게 울리고, 그 여운 속에서 박(bak)이 천천히 세 번 딱, 딱, 딱 울려(숫자를 세다 멈추듯). 아쟁이 아주 낮게 긴 음 하나를 이어 가고, 거문고 낮은 줄 하나가 마지막으로 한 번 튕겨져 길게 사라져. 엄숙하고 숨죽인, 번호로 불리던 이를 떠나보내기 직전의 정적. C음 중심, 계면조. 장구·꽹과리 없음, 전자음 없음. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p12">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">70 BPM · A음 · 피리·해금·징·거문고 — 돌아오지 않는 배를 기다리는 먹먹함</p><h1 class="rh">3막 · 갯마을 포구</h1></section>
+<section class="card"><div class="head"><span class="no">13</span><div><h2>탐색-낮</h2><p class="sub">포구·소금밭·망부석 곶, 기본</p></div></div>
+<p class="prompt" id="p13">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 피리(piri)가 바닷가 굿에서처럼 길고 구슬프게 선율을 끌고, 해금(haegeum)이 한 박 늦게 따라가며 엇갈려. 그 아래에 거문고(geomungo)가 파도처럼 느리게 밀려왔다 빠지는 낮은 음을 튕기고, 징(jing)이 아주 멀리서 작게 한 번씩 울려. 바닷가 마을의 한낮, 돌아오지 않는 배를 기다리는 먹먹하고 넓은 쓸쓸함. 음과 음 사이에 파도 같은 여백. 빠르기 70 BPM, 계면조, A음 중심. 전자음, 피아노, 서양 오케스트라, 드럼 비트 없음. 가까이서 녹음한 작은 편성. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p13">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">14</span><div><h2>탐색-밤</h2><p class="sub">해가 진 뒤의 바닷가</p></div></div>
+<p class="prompt" id="p14">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 아쟁(ajaeng)이 아주 낮게 길게 끄는 음이 밀물처럼 천천히 커졌다 작아지기를 되풀이하고, 징(jing)을 채로 아주 작게 굴려 바다 물결 같은 웅웅거림을 만들어. 대금(daegeum)이 낮은 음역에서 가끔 한 마디씩 불다 끊겨. 한밤의 갯벌과 줄에 묶여 흔들리는 빈 배들, 물 밑에 무언가 누워 있는 듯한 깊고 서늘한 분위기. 빠르기 70 BPM, 계면조, A음 중심. 전자음, 피아노, 서양 오케스트라, 신시사이저 패드 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p14">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">15</span><div><h2>전투</h2><p class="sub">바닷가에서 적이 가까이 오면</p></div></div>
+<p class="prompt" id="p15">한국 바닷가 마을 굿 음악 느낌의 긴박한 국악 합주곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 장구(janggu)와 꽹과리(kkwaenggwari)가 엇모리 장단(셋과 둘이 엇갈리며 출렁이는 국악 리듬)을 빠르게 몰고, 징이 파도가 부서지듯 크게 울리고, 피리와 해금이 높은 음에서 서로 다투듯 몰아쳐. 아쟁이 낮게 거칠게 긁어. 거센 물살에 휩쓸리는 듯한 출렁이는 긴박감. 빠르기 150 BPM, 계면조, A음 중심. 작은 편성, 가까이서 녹음한 거친 소리. 전자음, 록 드럼, 서양 오케스트라, 영화 예고편 같은 웅장함 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 전투 음악.</p>
+<div class="row"><button type="button" data-t="p15">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">16</span><div><h2>처결</h2><p class="sub">적이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p16">한국 바닷가 굿의 한 장면 같은 짧은 국악 소리를 만들어 줘. 노래와 가사 없이, 리듬 없이. 시작하자마자 징(jing)을 한 번 크게 울리고, 그 여운 위로 바라(bara, 놋쇠 심벌즈)를 아주 작게 문질러 파도가 빠지는 듯한 사르르 소리를 내. 아쟁이 아주 낮게 긴 음 하나를 이어 가고, 끝에 피리가 아주 짧게 한 음을 불고 사라져. 엄숙하고 숨죽인, 바다에서 돌아오지 못한 이를 떠나보내기 직전의 정적. A음 중심, 계면조. 장구·꽹과리 없음, 전자음 없음. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p16">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">92 BPM · F음 · 평조 · 단소·양금·굿거리 장구 — 북적이지만 이름 없는 외로움</p><h1 class="rh">3막 · 도성 아랫마을</h1></section>
+<section class="card"><div class="head"><span class="no">17</span><div><h2>탐색-낮</h2><p class="sub">저잣거리·다리 밑·움막촌, 기본</p></div></div>
+<p class="prompt" id="p17">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 장구(janggu)가 굿거리 장단(넘실넘실 흥겨운 느린 국악 리듬)을 가볍게 치고, 양금(yanggeum, 쇠줄을 채로 두드리는 현악기)이 잘게 반짝이는 음을 굴리고, 단소(danso, 작은 세로 피리)가 밝고 경쾌한 선율을 불어. 그런데 선율 끝마다 한 음씩 쓸쓸하게 내려앉아. 사람이 많고 북적이는 큰 고을 장터의 한낮, 흥겹지만 그 속에서 아무도 내 이름을 모르는 외로움. 빠르기 92 BPM, 평조(밝은 국악 음계), F음 중심. 전자음, 피아노, 서양 오케스트라, 드럼 비트 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p17">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">18</span><div><h2>탐색-밤</h2><p class="sub">해가 진 뒤의 도성 아랫마을</p></div></div>
+<p class="prompt" id="p18">한국 전통 국악 기악곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 단소(danso)가 혼자 낮고 여린 소리로 느린 선율을 불고, 거문고(geomungo)가 몇 음씩 띄엄띄엄 대답해. 양금이 아주 작게 한두 음씩 반짝이다 사라져. 장이 파한 뒤 등불만 남은 큰 고을 뒷골목, 다리 밑에서 몸을 웅크린 사람들, 쓸쓸하지만 어딘가 따뜻한 분위기. 빠르기 92 BPM, 평조, F음 중심. 타악기 없음. 전자음, 피아노, 서양 오케스트라, 신시사이저 패드 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 배경음악.</p>
+<div class="row"><button type="button" data-t="p18">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">19</span><div><h2>전투</h2><p class="sub">도성에서 적이 가까이 오면</p></div></div>
+<p class="prompt" id="p19">한국 전통 풍물 사물놀이 느낌의 긴박한 국악 합주곡을 만들어 줘. 노래와 가사 없이 악기 소리만. 꽹과리(kkwaenggwari)가 날카롭게 앞을 끌고, 장구(janggu)와 북(buk)이 자진모리 장단으로 몰아치고, 징이 큰 박을 받쳐. 태평소(taepyeongso)가 높고 거칠게 울부짖어. 사람으로 북적이는 거리 한복판에서 벌어지는 혼란스럽고 시끄러운 싸움. 빠르기 150 BPM, 평조와 계면조가 섞인, F음 중심. 작은 편성, 가까이서 녹음한 거친 소리. 전자음, 록 드럼, 서양 오케스트라, 영화 예고편 같은 웅장함 없음. 처음과 끝이 자연스럽게 이어져 계속 반복할 수 있는 게임 전투 음악.</p>
+<div class="row"><button type="button" data-t="p19">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">20</span><div><h2>처결</h2><p class="sub">적이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p20">한국 전통 굿의 한 장면 같은 짧은 국악 소리를 만들어 줘. 노래와 가사 없이, 리듬 없이. 시작하자마자 징(jing)을 한 번 크게 울리고, 그 여운 속에서 단소(danso)가 아주 여리게 짧은 선율 한 마디를 불어(이름 없이 살다 간 이를 별명으로라도 불러 주듯). 양금이 마지막으로 한 음 맑게 울리고 고요해져. 엄숙하지만 조금 따뜻한 정적. F음 중심, 평조. 장구·꽹과리 없음, 전자음 없음. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p20">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">시즌1 끝 컷신용 — 흑월 결전 · A판 · B판 · 마지막 새벽 · 크레딧 (10-25 밤 추가)</p><h1 class="rh">시즌1 끝</h1></section>
+<section class="card"><div class="head"><span class="no">21</span><div><h2>흑월 결전</h2><p class="sub">성문 밖 눈밭, 시즌1 마지막 보스전 (bgm_s1_heukwol)</p></div></div>
+<p class="prompt" id="p21">한국 전통 국악기로 된 무거운 전투 음악을 만들어 줘. 노래와 가사 없이. 눈 내리는 겨울밤, 닫힌 성문 밖 빈 들판에서 두 저승사자가 맞서는 느낌. 느린 진양조로 시작해 점점 빨라지는 장단(약 60에서 100 BPM으로). 큰 북(jeolgo)이 낮게 이끌고, 아쟁(ajaeng)이 활로 길게 긁어 우는 선율을 맡아. 대금(daegeum)이 바람처럼 숨을 섞어 한 번씩 길게 불어. 중간에 징(jing)이 세 번 울릴 때마다 한 단계씩 더 거세져. 슬픔과 위엄이 같이 있는 소리, 화려하지 않게. D음 중심. 전자음·드럼세트·합창 없음. 약 2분 30초, 끝과 처음이 자연스럽게 이어져 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p21">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">22</span><div><h2>천도 끝 — 큰물 밤의 기억</h2><p class="sub">시즌1 끝 A판, 이 게임에서 가장 중요한 곡 (bgm_s1_finale_a)</p></div></div>
+<p class="prompt" id="p22">한국 전통 국악기로 된 아주 느리고 슬픈 음악을 만들어 줘. 노래와 가사 없이, 장단 없이 시작해. 비가 쏟아지는 밤 불어난 강물, 횃불을 든 젊은이가 사람들을 하나씩 건져 올리다 끝내 돌아오지 못한 기억. 처음 30초는 해금(haegeum)이 혼자 낮게 한 선율을 몇 번이고 되풀이해(건지러 다시 들어가는 걸음처럼). 그 뒤 거문고(geomungo)가 무겁게 받치고, 피리(piri)가 높고 가늘게 울음을 얹어. 1분쯤에서 모든 소리가 한 번 뚝 멈췄다가, 대금(daegeum) 한 음만 길게 남아. 마지막 1분은 같은 첫 선율이 이번엔 따뜻하게, 아주 조용히 끝나(알아보는 순간). G음 중심. 전자음·드럼·합창 없음. 약 3분, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p22">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">23</span><div><h2>파혼 끝 — 빈 눈밭</h2><p class="sub">시즌1 끝 B판 (bgm_s1_finale_b)</p></div></div>
+<p class="prompt" id="p23">한국 전통 국악기로 된 차갑고 텅 빈 음악을 만들어 줘. 노래와 가사 없이, 장단 없이. 모든 게 흩어지고 눈만 내리는 빈 들판. 아쟁(ajaeng)이 아주 낮게 한 음을 오래 끌고, 그 위에 가야금(gayageum)이 드문드문 한 음씩, 대답 없는 질문처럼 뜯어. 선율이 끝까지 마무리되지 않고 중간에서 멈춰. 따뜻함 없이, 그러나 무섭지 않게 — 무언가를 영영 잃었다는 고요. D음 중심. 전자음·드럼·합창 없음. 약 1분 30초, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p23">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">24</span><div><h2>시즌1 마지막 새벽</h2><p class="sub">솔고개 서낭당, 사잣밥을 차리는 새벽 (bgm_s1_dawn)</p></div></div>
+<p class="prompt" id="p24">한국 전통 국악기로 된 고요한 새벽 음악을 만들어 줘. 노래와 가사 없이, 장단 없이. 산고개 서낭나무 아래 할머니가 저승사자를 위한 밥상을 차리는 동트기 직전. 대금(daegeum)이 아주 여리게, 숨이 많이 섞인 소리로 느린 선율을 불어. 가야금(gayageum)이 한 음씩 이슬처럼 떨어져. 중간쯤 바람이 지나가듯 한 번 잦아들었다가 다시 이어져. 슬픔이 다 지나간 뒤의 담담함과 약간의 따뜻함. A음 중심, 평조. 전자음·드럼·합창 없음. 약 1분 30초, 끝이 아주 길게 사라지는 곡.</p>
+<div class="row"><button type="button" data-t="p24">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">25</span><div><h2>끝 글씨·크레딧</h2><p class="sub">시즌1 끝 화면과 크레딧 (bgm_s1_credits)</p></div></div>
+<p class="prompt" id="p25">한국 전통 국악 합주로 된 끝맺음 음악을 만들어 줘. 노래와 가사 없이. 긴 이야기가 끝나고 이름들을 하나씩 불러 주는 느낌. 느린 중모리 장단(약 70 BPM)의 장구가 부드럽게 받치고, 해금(haegeum)과 대금(daegeum)이 번갈아 한 선율을 주고받아. 중간에 거문고가 한 번 깊게 울리고, 끝에서 작은 방울(요령) 소리 한 번과 함께 맺어. 슬프지만 위로가 되는, 다음 이야기를 기다리게 하는 소리. G음 중심. 전자음·드럼세트·합창 없음. 약 3분, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p25">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">54 BPM 안팎(박이 흐릿함) · E음 계면조 · 대금·아쟁·생황 — 산 사람이 없는 강가, 끝없는 줄의 기다림</p><h1 class="rh">시즌2 · ⑦ 삼도천 기슭</h1></section>
+<section class="card"><div class="head"><span class="no">26</span><div><h2>탐색-새벽 틈·낮</h2><p class="sub">갈대늪·빈 나루 마을·먹물 여울·물안개 둑, 기본</p></div></div>
+<p class="prompt" id="p26">한국 전통 국악기로 된 아주 느리고 고요한 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 살아 있는 것이 하나도 없는 검은 강가, 은빛 갈대 사이로 끝이 보이지 않는 줄에 혼들이 서서 배를 기다리는 곳. 박자는 거의 느껴지지 않게(약 54 BPM, 아주 느슨하게). 생황(saenghwang)이 낮고 넓은 화음을 길게 깔고, 대금(daegeum)이 숨이 많이 섞인 소리로 짧은 선율을 불었다가 오래 쉬어. 아쟁(ajaeng)이 아주 가끔 낮게 한 번 긁어. 슬프다기보다 오래 기다려 지친 담담함. E음 중심, 계면조. 새소리·물소리 효과 넣지 않기. 약 2분 30초, 끝과 처음이 자연스럽게 이어져 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p26">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">27</span><div><h2>탐색-밤</h2><p class="sub">해가 진 뒤의 삼도천</p></div></div>
+<p class="prompt" id="p27">한국 전통 국악기로 된 어둡고 느린 밤 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 저승 강가의 밤, 안개가 강을 덮고 줄 선 혼들의 숨만 들리는 시간. 아쟁(ajaeng)이 아주 낮은 음을 길게 끌고, 그 위로 대금(daegeum)이 낮은 음역에서 드문드문 한 마디씩. 생황(saenghwang)은 아주 작게 한 화음만 숨 쉬듯 커졌다 작아져. 중간에 멀리서 작은 방울 한 번. E음 중심, 계면조, 약 50 BPM. 약 2분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p27">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">28</span><div><h2>전투</h2><p class="sub">삼도천에서 혼이 덤빌 때</p></div></div>
+<p class="prompt" id="p28">한국 전통 국악기로 된 긴장된 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 저승 강가, 돌아선 혼들이 파도처럼 밀려오는 싸움. 약 116 BPM. 좌북(jwabuk, 앉아서 치는 큰 북)이 낮고 단단하게 박을 이끌고, 아쟁(ajaeng)이 빠른 활로 거칠게 긁어. 대금(daegeum)이 높은 음역에서 날카롭게 울어. 징(jing)이 여덟 마디마다 한 번. 무겁고 차갑게, 화려하지 않게. E음 중심, 계면조. 약 2분, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p28">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">29</span><div><h2>처결</h2><p class="sub">혼이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p29">한국 전통 국악 소리로 짧은 장면 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 리듬 없이. 시작하자마자 멀리서 작은 배 방울이 두 번 울리고, 대금(daegeum)이 한 음을 길게 불며 아주 천천히 내려와. 생황(saenghwang)이 마지막에 한 화음을 조용히 깔고 사라져. 고요하고 엄숙하게. E음 중심. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p29">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">60 BPM · B♭음 평조 · 편종·편경·피리·해금·박 — 악하지 않고 바쁜 관아, 정갈하지만 쉼 없는 일</p><h1 class="rh">시즌2 · ⑧ 명부전 담장 밖</h1></section>
+<section class="card"><div class="head"><span class="no">30</span><div><h2>탐색-낮</h2><p class="sub">서리 숙사·먹방·문서 창고·숫자 마당, 기본</p></div></div>
+<p class="prompt" id="p30">한국 전통 궁중 의식 음악의 결을 가진 느린 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 저승 관아의 담장 밖, 서리들이 쉬지 않고 붓을 놀리는 바쁜 작업장. 약 60 BPM. 박(bak, 나무 딱딱이)이 마디의 시작을 또렷하게 알리고, 편경(pyeongyeong, 돌 악기)과 편종(pyeonjong, 쇠 종)이 정갈하게 한 음씩 짚어. 피리(piri)와 해금(haegeum)이 같은 선율을 길게, 끝없이 되풀이해(일이 끝나지 않는 느낌). 엄숙하지만 차갑지 않게, 조금 지쳐 있게. B♭음 중심, 평조. 약 2분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p30">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">31</span><div><h2>탐색-밤</h2><p class="sub">해가 진 뒤의 명부전 담장 밖</p></div></div>
+<p class="prompt" id="p31">한국 전통 궁중 음악의 결을 가진 밤 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 일을 마친 관아, 등불 몇 개만 남은 행랑. 약 54 BPM. 편경(pyeongyeong)이 아주 작게 한 음씩, 해금(haegeum)이 혼자 낮게 낮의 선율을 느리게 되뇌어. 박(bak)은 처음과 끝에 한 번씩만. 고요하고 쓸쓸하게. B♭음 중심, 평조. 약 2분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p31">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">32</span><div><h2>전투</h2><p class="sub">명부전 담장 밖에서 싸울 때</p></div></div>
+<p class="prompt" id="p32">한국 전통 궁중 악기로 된 빠른 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 번호로 불린 혼들이 줄 맞춰 덤비는 싸움. 약 108 BPM. 박(bak)이 매 마디 날카롭게 치고, 좌고(jwago, 큰 북)가 낮게 몰아쳐. 피리(piri)가 높고 빠르게 같은 짧은 선율을 반복하고, 편종(pyeonjong)이 강박마다 쨍하게 울려. 질서 있게, 그러나 숨 막히게. B♭음 중심, 평조. 약 2분, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p32">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">33</span><div><h2>처결</h2><p class="sub">혼이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p33">한국 전통 궁중 음악 소리로 짧은 장면 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 리듬 없이. 박(bak)이 한 번 크게 딱 울리고, 그 여운 속에서 편경(pyeongyeong)이 한 음 맑게, 해금(haegeum)이 아주 여리게 한 마디. 그리고 고요. 이름 대신 번호로 불리던 이가 처음 이름으로 불리는 순간의 정적. B♭음 중심. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p33">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">박 없음 · 으뜸음 없이 떠돎 · 가야금 하모닉스·생황·아쟁 — 인을 잃은 고을들이 겹친 곳, 새벽이 오지 않는다</p><h1 class="rh">시즌2 · ⑨ 빈 관할</h1></section>
+<section class="card"><div class="head"><span class="no">34</span><div><h2>탐색-안개 낮</h2><p class="sub">빈 고을·아홉째 문·도장 없는 장터·인장 굴, 기본(⑨는 새벽 대신 짙은 안개)</p></div></div>
+<p class="prompt" id="p34">한국 전통 국악기로 된 낯설고 텅 빈 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 낯익은 고을과 똑같이 생겼는데 문패도 이름도 없는 곳, 짙은 안개 속. 박자 없이, 중심이 되는 음도 정하지 말고 떠돌게. 가야금(gayageum)이 줄을 살짝 눌러 내는 맑고 가는 배음(하모닉스)을 드문드문 하나씩 떨어뜨리고, 생황(saenghwang)이 여러 음이 살짝 어긋난 화음을 아주 작게 길게 깔아. 아쟁(ajaeng)은 들릴 듯 말 듯 아주 낮게. 무섭지 않게, 뭔가가 빠진 듯 허전하게. 약 2분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p34">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">35</span><div><h2>탐색-밤</h2><p class="sub">빈 관할의 밤</p></div></div>
+<p class="prompt" id="p35">한국 전통 국악기로 된 아주 조용한 밤 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 박자 없이. 이름 없는 고을의 밤, 기다리다 늙은 혼들이 서 있다. 아쟁(ajaeng)이 아주 낮은 한 음을 오래 끌고, 가야금(gayageum) 배음이 열 초에 한 번쯤 맑게 울려. 생황(saenghwang)이 중간에 한 번만 화음을 숨 쉬듯. 중심 음 없이. 약 2분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p35">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">36</span><div><h2>전투</h2><p class="sub">빈 관할에서 싸울 때</p></div></div>
+<p class="prompt" id="p36">한국 전통 국악기로 된 불안한 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 일곱 박이 한 묶음인 고르지 않은 장단(약 94 BPM, 3+2+2로 나눠). 장구(janggu)를 북편만 둔탁하게 치고, 아쟁(ajaeng)이 짧게 끊어 긁어. 가야금(gayageum)이 낮은 줄을 세게 튕겨 장단을 받쳐. 피리(piri)가 높은 음 하나를 길게 떨며 불안을 더해. 중심 음이 흔들리게. 약 2분, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p36">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">37</span><div><h2>처결</h2><p class="sub">혼이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p37">한국 전통 국악 소리로 짧은 장면 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 리듬 없이. 나무 박이 도장을 찍듯 한 번 톡, 그리고 긴 고요. 가야금(gayageum) 배음 하나가 맑게 울리고, 생황(saenghwang)이 처음으로 어긋나지 않은 맑은 화음 하나를 조용히 들려주고 끝나. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p37">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">66 BPM · C음 평조 · 해금·거문고·대금 — 고장의 처음, 늘 같은 새벽빛 아래의 오래된 슬픔</p><h1 class="rh">시즌2 · ⑩ 열째 관할</h1></section>
+<section class="card"><div class="head"><span class="no">38</span><div><h2>탐색-새벽</h2><p class="sub">처음 마을·사슬 무덤·우물터·물막이 바닥, 기본(늘 같은 새벽)</p></div></div>
+<p class="prompt" id="p38">한국 전통 국악기로 된 따뜻하지만 슬픈 새벽 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 초가 몇 채와 우물 하나, 언제나 같은 새벽빛인 오래된 마을. 약 66 BPM, 느린 중모리 느낌으로 아주 부드럽게. 해금(haegeum)이 혼자 소박한 선율을 노래하듯 이끌고, 거문고(geomungo)가 낮게 한 음씩 받쳐. 대금(daegeum)이 중간에 한 번 들어와 해금과 같은 선율을 이어 받아. 어린 날의 기억 같은 따뜻함 밑에 오래된 슬픔. C음 중심, 평조. 약 2분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p38">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">39</span><div><h2>탐색-밤</h2><p class="sub">열째 관할의 밤</p></div></div>
+<p class="prompt" id="p39">한국 전통 국악기로 된 느린 밤 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 녹슨 사슬이 비석처럼 선 들판의 밤. 약 56 BPM. 거문고(geomungo)가 낮고 무겁게 한 음씩, 해금(haegeum)이 새벽 선율을 아주 느리게 조각조각 떠올려. 아쟁(ajaeng)이 가끔 아주 낮게. C음 중심, 평조. 약 2분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p39">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">40</span><div><h2>전투</h2><p class="sub">열째 관할에서 싸울 때</p></div></div>
+<p class="prompt" id="p40">한국 전통 국악기로 된 강렬한 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 모든 깨진 이름이 고인 물막이 앞의 싸움. 약 132 BPM, 빠른 자진모리 느낌. 큰 북(buk)이 힘차게 몰아치고, 아쟁(ajaeng)과 해금(haegeum)이 같은 선율을 빠르게 주고받아. 거문고(geomungo)가 낮은 줄을 세게 튕겨 무게를 실어. 징(jing)이 열여섯 박마다. 슬픔이 분노로 바뀐 듯, 그러나 끝까지 한국적인 소리로. C음 중심. 약 2분, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p40">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">41</span><div><h2>처결</h2><p class="sub">혼이 무릎 꿇는 순간</p></div></div>
+<p class="prompt" id="p41">한국 전통 국악 소리로 짧은 장면 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 리듬 없이. 아주 작은 징(jing)이 깊은 우물 속에서 울리듯 한 번, 그 여운 속에서 해금(haegeum)이 새벽 선율의 첫 마디만 아주 여리게 켜고 멈춰. 거문고가 마지막에 한 음 낮게 맺어. 따뜻한 정적. C음 중심. 약 30초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p41">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">시즌2 컷신용 — 여는 장면 · 물막이 결전 · 끝 두 판 (10-25 밤 추가)</p><h1 class="rh">시즌2 컷신</h1></section>
+<section class="card"><div class="head"><span class="no">42</span><div><h2>시즌2 여는 장면</h2><p class="sub">강을 따라 내려가며 물빛이 먹처럼 검어짐, 끝없는 줄 (bgm_s2_open)</p></div></div>
+<p class="prompt" id="p42">한국 전통 국악기로 된 아주 느리고 서늘한 음악을 만들어 줘. 노래와 가사 없이, 장단 없이. 전자음·드럼세트·합창 없음. 새벽 산고개를 넘어 강을 따라 내려가는데, 걸을수록 물빛이 먹처럼 검어지고 꺼진 나룻불들만 지나가. 생황(saenghwang)이 낮은 화음을 길게 깔고, 대금(daegeum)이 숨이 많이 섞인 소리로 드문드문 한 소절씩 불어. 중간에 물안개에 들어서면 모든 소리가 흐려졌다가, 안개가 걷히며 아쟁(ajaeng)이 아주 낮게 한 음을 길게 끌어 — 끝이 보이지 않는 줄을 처음 보는 순간. 무섭지 않게, 그러나 산 사람이 하나도 없는 곳. E음 중심, 계면조. 약 1분, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p42">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">43</span><div><h2>물막이 바닥 결전</h2><p class="sub">시즌2 마지막 보스 — 수천 개 이름이 엉긴 덩어리 (bgm_s2_bigdam)</p></div></div>
+<p class="prompt" id="p43">한국 전통 국악기로 된 무겁고 거대한 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 막힌 강바닥에서 수천 개의 깨진 이름이 엉겨 산처럼 솟은 덩어리와 싸운다. 약 96 BPM의 느리고 무거운 자진모리 장단. 큰 북(buk)이 바닥을 울리고, 징(jing)이 네 장단마다 한 번 길게 운다. 아쟁(ajaeng)이 활로 거칠게 긁어 낮은 선율을 끌고, 그 밑에 웅웅거리는 저음이 계속 짓누른다. 슬픔이 분노보다 큰 싸움, 화려하지 않게. E음 중심, 계면조. 약 2분, 끝과 처음이 자연스럽게 이어져 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p43">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">44</span><div><h2>시즌2 끝 — 풀어내기판</h2><p class="sub">덩어리가 이름으로 풀려 강이 흐르고 배가 늘어남, 그러나 돌아옴 (bgm_s2_finale_a)</p></div></div>
+<p class="prompt" id="p44">한국 전통 국악기로 된 맑고 슬픈 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 막혔던 강이 처음으로 흐르고, 먹빛 물이 맑아지고, 기다리던 혼들을 태운 배가 두 척, 세 척 늘어난다. 가야금(gayageum)이 물처럼 잘게 흐르는 가락을 짜고, 해금(haegeum)이 그 위로 길게 노래해. 장단은 아주 느슨하게. 1분쯤에서 모든 소리가 뚝 멈춰(배들이 저편에 닿지 못하고 돌아온다) 5초 동안 비우고, 그 뒤 대금(daegeum) 한 음만 길게. 마지막은 맺지 않고 4도 음에서 멈춘다. E음 중심, 평조. 약 1분 45초, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p44">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">45</span><div><h2>시즌2 끝 — 파혼판</h2><p class="sub">사나운 강이 지나간 빈 기슭 (bgm_s2_finale_b)</p></div></div>
+<p class="prompt" id="p45">한국 전통 국악기로 된 차갑고 텅 빈 음악을 만들어 줘. 노래와 가사 없이, 장단 없이. 전자음·드럼세트·합창 없음. 거센 물살이 모든 걸 쓸어 간 뒤의 빈 강기슭, 흩어진 혼들이 다시 떠돈다. 아쟁(ajaeng)이 아주 낮은 한 음을 오래 끌고, 거문고(geomungo)가 드문드문 무겁게 한 음씩 술대로 내려쳐. 따뜻함 없이, 그러나 무섭지 않게 — 무언가를 다시 놓쳤다는 고요. E음 중심, 계면조. 약 50초, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p45">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">60 BPM · D음 계면조 · 대금·가야금·징 — 밤에만 물이 빠지는 강바닥, 말 없는 몸들</p><h1 class="rh">시즌3 · 6막 물 밑 (①⑤⑦ 아래층)</h1></section>
+<section class="card"><div class="head"><span class="no">46</span><div><h2>탐색-밤</h2><p class="sub">둑 밑·소 밑·난파 여울 바닥·바다굴·줄 밑·닻 여울 (bgm_below_water_night)</p></div></div>
+<p class="prompt" id="p46">한국 전통 국악기로 된 아주 느리고 깊은 밤 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 밤이 되면 강물이 빠지고, 드러난 젖은 강바닥을 혼자 걷는다. 머리 위 저 멀리 물소리만 먹먹하게 들리고, 바닥에는 말 없는 사람의 형체가 누워 있다. 약 45 BPM, 진양처럼 아주 느린 장단을 흐릿하게. 아쟁(ajaeng)이 낮은 음을 길게 깔고, 가야금(gayageum)이 물방울 떨어지듯 드문드문 한 음씩 퉁기고, 대금(daegeum)이 두 장단에 한 번 숨 섞인 긴 소리를 불어. 징(jing)은 아주 멀리서 장단마다 한 번. 무섭지 않게, 슬프고 고요하게. D음 중심, 계면조. 약 1분 30초, 끝과 처음이 자연스럽게 이어져 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p46">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">47</span><div><h2>전투</h2><p class="sub">물 밑에서 싸울 때 (bgm_below_water_combat)</p></div></div>
+<p class="prompt" id="p47">한국 전통 국악기로 된 무겁고 긴장된 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 물이 빠진 강바닥에서 진흙에 묶인 몸과 싸운다. 약 100 BPM 자진모리 장단. 큰 북(buk)이 진흙을 밟듯 둔하게 몰아치고, 징(jing)이 네 장단마다. 거문고(geomungo)가 낮은 줄을 세게 튕기고, 대금이 아니라 피리(piri)가 거칠게 선율을 끌어. 화려하지 않게, 젖고 무거운 소리. D음 중심, 계면조. 약 1분, 끝과 처음이 자연스럽게 이어져 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p47">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">48</span><div><h2>처결</h2><p class="sub">몸이 무릎 꿇는 순간 (bgm_below_water_finish)</p></div></div>
+<p class="prompt" id="p48">한국 전통 국악기로 된 짧은 장면 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 리듬 없이. 징(jing) 한 번이 물 빠진 바닥에 깊게 울리고, 그 여운 속에서 대금(daegeum)이 두 음만 여리게 불고 멈춰. 거문고가 마지막에 한 음 낮게 꺾어 내려. D음 중심. 약 7초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p48">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">66 BPM · G음 계면조 · 피리·거문고·나각 — 무덤 속, 막힌 막장, 석회 구덩이, 언 성문 밖</p><h1 class="rh">시즌3 · 7막 흙 밑 (③④②⑥ 아래층)</h1></section>
+<section class="card"><div class="head"><span class="no">49</span><div><h2>탐색-밤</h2><p class="sub">큰 무덤 속·화살골 뿌리·물 찬 갱도·막힌 막장·석회 구덩이·성문 밖 구덩이 (bgm_below_earth_night)</p></div></div>
+<p class="prompt" id="p49">한국 전통 국악기로 된 갇히고 메마른 밤 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 흙 속, 무덤 안쪽과 막힌 갱도와 마른 석회 구덩이를 걷는다. 공기가 갇혀 있고 물기가 없다. 약 50 BPM, 아주 느린 장단을 흐릿하게. 거문고(geomungo)가 장단 첫머리마다 낮은 줄을 무겁게 내려치고, 가야금이 드문드문 한 음씩. 두 장단에 한 번 아주 먼 곳에서 나각(소라 나팔, nagak)이 낮게 길게 울려 — 오래전 싸움의 부름. 피리(piri)가 낮은 음역에서 짧게 한 소절. G음 중심, 계면조. 약 1분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p49">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">50</span><div><h2>전투</h2><p class="sub">흙 밑에서 싸울 때 (bgm_below_earth_combat)</p></div></div>
+<p class="prompt" id="p50">한국 전통 국악기로 된 거칠고 숨 막히는 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 무너지는 흙과 쓰러진 군사의 몸들과 싸운다. 약 112 BPM 자진모리 장단. 큰 북(buk)이 땅을 울리고, 여덟 장단마다 나각(nagak)이 짧게 두 번 부르짖어. 피리(piri)가 거칠게 선율을 몰고, 거문고가 낮은 줄로 받친다. G음 중심, 계면조. 약 1분, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p50">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">51</span><div><h2>처결</h2><p class="sub">몸이 무릎 꿇는 순간 (bgm_below_earth_finish)</p></div></div>
+<p class="prompt" id="p51">한국 전통 국악기로 된 짧은 장면 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 리듬 없이. 징(jing) 한 번과 큰 북 한 번이 흙 속에 먹먹하게 울리고, 대금(daegeum)이 두 음 여리게, 거문고가 마지막에 한 음 낮게. G음 중심. 약 7초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p51">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">56 BPM · E♭음 평조 · 해금·거문고·먼 쇠 — 먹 앙금, 아랫목, 첫 우물 밑</p><h1 class="rh">시즌3 · 8막 먹 밑 (⑧⑨⑩ 아래층)</h1></section>
+<section class="card"><div class="head"><span class="no">52</span><div><h2>탐색-밤</h2><p class="sub">먹 앙금·숙사 밑·아랫목·인장 굴 바닥·사슬 무덤 밑·첫 우물 밑 (bgm_below_ink_night)</p></div></div>
+<p class="prompt" id="p52">한국 전통 국악기로 된 아주 고요하고 오래된 밤 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 수백 년 가라앉은 먹 앙금, 식은 구들, 우물 밑바닥. 모든 것의 처음이 잠든 곳. 약 42 BPM, 거의 들리지 않는 느린 장단. 해금(haegeum)이 낮고 길게 한 소절씩, 거문고(geomungo)가 장단마다 한 음. 아주 멀리서 쇠를 한 번 두드리는 소리가 가끔. 슬프지만 따뜻한 쪽으로 기울게. E♭음 중심, 평조. 약 1분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p52">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">53</span><div><h2>전투</h2><p class="sub">먹 밑에서 싸울 때 (bgm_below_ink_combat)</p></div></div>
+<p class="prompt" id="p53">한국 전통 국악기로 된 묵직하고 단단한 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 먹 앙금과 구들과 우물 속에서 오래된 몸과 싸운다. 약 104 BPM 자진모리 장단. 큰 북(buk)이 끌고, 꽹과리(kkwaenggwari)가 앞에서 잘게 몰아쳐. 해금(haegeum)이 빠르게 선율을 켜고 거문고가 낮게 받친다. E♭음 중심, 평조이지만 날카롭게. 약 1분, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p53">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">54</span><div><h2>처결</h2><p class="sub">몸이 무릎 꿇는 순간 (bgm_below_ink_finish)</p></div></div>
+<p class="prompt" id="p54">한국 전통 국악기로 된 짧은 장면 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 리듬 없이. 징(jing) 한 번, 큰 북 한 번, 그 여운 속에서 대금(daegeum)이 두 음 여리게 올라가 맺어. E♭음 중심. 약 7초, 반복하지 않고 끝나는 소리.</p>
+<div class="row"><button type="button" data-t="p54">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="region"><p class="eyebrow">물 차오름 · B-23 · B-27 · B-31 · 결말 셋 · 여는 장면</p><h1 class="rh">시즌3 장치·보스·컷신</h1></section>
+<section class="card"><div class="head"><span class="no">55</span><div><h2>새벽 물 차오름</h2><p class="sub">새벽 2분 동안 아래층에 물이 다시 들어올 때 (bgm_s3_rising)</p></div></div>
+<p class="prompt" id="p55">한국 전통 국악기로 된 불안하게 차오르는 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 장단 없이. 새벽이 오기 전, 빠졌던 강물이 사방에서 다시 밀려 들어온다. 큰 북(buk)이 심장 박동처럼 처음엔 느리게, 점점 잦아지게 울려. 아쟁(ajaeng)이 반음 차이 나는 두 낮은 음을 함께 길게 끌어 불안하게 부딪친다. 거문고가 드문드문 한 음씩 꺾어 내려. 무섭게가 아니라 '이제 올라가야 한다'는 재촉으로. D음 중심. 약 30초, 끝과 처음이 이어져 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p55">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">56</span><div><h2>B-23 매듭</h2><p class="sub">수천 가닥 원념의 실이 엉킨 덩어리와의 싸움 (bgm_s3_knot)</p></div></div>
+<p class="prompt" id="p56">한국 전통 국악기로 된 엉키고 조여드는 전투 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 수천 가닥의 검은 실이 한 덩어리로 엉켜 강 여울을 막고 있다. 약 84 BPM 중중모리 장단. 큰 북(buk)과 징(jing, 네 장단마다). 해금(haegeum)이 선율을 켜면 아쟁(ajaeng)이 한 옥타브 아래에서 조금 늦게 같은 선율을 따라가 실처럼 겹쳐 엉킨다. 낮은 음이 반음 위로 끌려 올라가는 긴장. D음 중심, 계면조. 약 1분, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p56">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">57</span><div><h2>B-27 이명 / 흑월의 몸</h2><p class="sub">성문 밖 언 땅, 120초 동안 성문이 닫혀 감 (bgm_s3_imyeong)</p></div></div>
+<p class="prompt" id="p57">한국 전통 국악기로 된 차갑고 무거운 결전 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 성문 밖 얼어붙은 구덩이. 오래전 사슬에 묶인 몸과 싸우는 동안 커다란 성문이 천천히 닫혀 간다. 약 92 BPM 자진모리 장단. 큰 북(buk)이 크고 느리게, 장단 사이사이 높은 쇠종(bell) 소리가 언 땅처럼 차갑게 한 번씩. 피리(piri)가 낮은 음역에서 굵게 선율을 끌어. 화려하지 않게, 무겁고 시리게. D음 중심, 계면조. 약 1분, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p57">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">58</span><div><h2>B-31 나의 백</h2><p class="sub">물이 빠지지 않는 가장 깊은 소, 물속의 마지막 싸움 (bgm_s3_mybaek)</p></div></div>
+<p class="prompt" id="p58">한국 전통 국악기로 된 물속처럼 먹먹하고 깊은 마지막 결전 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 강의 가장 깊은 곳, 물속에서 꺼지지 않는 횃불을 쥔 내 몸과 마주한다. 싸움이지만 미움이 없다. 약 52 BPM 진양 장단을 흐릿하게. 생황(saenghwang)이 낮은 화음을 길게 깔고, 큰 북은 장단마다 한 번 둥, 징(jing)이 장단 가운데 한 번. 대금(daegeum)이 숨 섞인 소리로 처음 그 산고개의 곡과 같은 음에서 노래해. A음 중심, 계면조. 약 1분 30초, 반복할 수 있게.</p>
+<div class="row"><button type="button" data-t="p58">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">59</span><div><h2>결말 A — 이름을 부르다</h2><p class="sub">이름을 불러 몸이 눕고, 상여가 나간다 (bgm_s3_end_a)</p></div></div>
+<p class="prompt" id="p59">한국 전통 국악기로 된 따뜻하고 맑게 맺는 마지막 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 오래 비어 있던 자리에 상여가 나가고, 누군가 지붕 위에서 이름을 부른다. 약 60 BPM 중모리 장단을 느슨하게. 대금(daegeum)이 길게 노래하고 해금(haegeum)이 사이사이 대답해. 생황이 밝은 화음을 얇게. 마지막에 가야금(gayageum)이 으뜸음으로 또렷이 맺는다. 슬픔이 다 풀린 뒤의 고요한 기쁨. A음 중심, 평조. 약 2분 30초, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p59">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">60</span><div><h2>결말 B — 번진 명부</h2><p class="sub">몸은 눕지만 이름은 끝내 번져 읽히지 않음 (bgm_s3_end_b)</p></div></div>
+<p class="prompt" id="p60">한국 전통 국악기로 된 아련하고 번지는 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 장단 없이. 이름을 끝내 부르지 못했지만, 소리 없는 기도로 몸이 눕는다. 해금(haegeum)이 선율을 켜되 음 끝마다 먹이 번지듯 아래로 흘러내려. 거문고(geomungo)가 드문드문 한 음씩 꺾어 내리고, 생황이 낮게. 마지막은 맺지 않고 5도 음에서 멈춘다. A음 중심, 계면조. 약 1분 50초, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p60">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">61</span><div><h2>결말 C — 다음 검은 갓</h2><p class="sub">깨뜨린 끝, 내가 다음 회차의 검은 갓이 됨 (bgm_s3_end_c)</p></div></div>
+<p class="prompt" id="p61">한국 전통 국악기로 된 가락 없이 차갑게 이어지는 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 선율 없이. 아쟁(ajaeng)이 아주 낮은 한 음을 오래오래 끌고, 아주 먼 곳에서 큰 북(buk)이 여덟 번, 조금씩 가까워지며 울린다 — 다음 이야기의 첫 북으로 이어지는 문턱. 따뜻함 없이, 그러나 무섭지 않게. D음 중심. 약 1분 20초, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p61">복사</button><span class="msg" aria-live="polite"></span></div></section>
+<section class="card"><div class="head"><span class="no">62</span><div><h2>시즌3 여는 장면</h2><p class="sub">물 빠진 강바닥, 누운 그림자들, 사슬이 처음 바닥에 닿음 (bgm_s3_open)</p></div></div>
+<p class="prompt" id="p62">한국 전통 국악기로 된 아주 느리고 고요한 여는 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 장단 없이. 줄 선 혼들의 발목에서 검은 실이 아래로 늘어져 있고, 물이 빠진 강바닥에는 그림자들이 누워 있다. 아쟁(ajaeng)이 낮게 깔리고, 가야금(gayageum)이 물방울 떨어지듯 드문드문 한 음씩, 중간부터 대금(daegeum)이 짧게 세 소절. 마지막에 징(jing) 한 번이 크게 — 사슬이 처음으로 바닥에 닿는 순간. D음 중심, 계면조. 약 1분 10초, 반복하지 않고 끝나는 곡.</p>
+<div class="row"><button type="button" data-t="p62">복사</button><span class="msg" aria-live="polite"></span></div></section>
+
+<section class="card"><div class="head"><span class="no">63</span><div><h2>타이틀 화면</h2><p class="sub">밤 서낭당 고개, 천천히 흐르는 안개, 「차사」 로고 (bgm_title)</p></div></div>
+<p class="prompt" id="p63">한국 전통 국악기로 된 아주 느리고 조용한 타이틀 화면 음악을 만들어 줘. 노래와 가사 없이. 전자음·드럼세트·합창 없음. 장단 없이. 밤의 서낭당 고개, 오색천이 걸린 고목 아래로 안개가 천천히 흐른다. 아쟁(ajaeng)이 낮게 길게 깔리고, 대금(daegeum)이 숨을 길게 쉬며 한 가락을 아주 천천히 부르고, 거문고(geomungo)가 깊게 한 음씩 드문드문. 한 바퀴에 한 번 아주 먼 요령(무당 방울) 소리. 무섭지 않고 쓸쓸하며 오래 들어도 지치지 않게. D음 중심, 계면조. 약 1분, 끝과 처음이 자연스럽게 이어져 반복되는 곡.</p>
+<div class="row"><button type="button" data-t="p63">복사</button><span class="msg" aria-live="polite"></span></div></section>
+
+<section class="note"><b>지킬 것</b><ul><li>문장에 다른 게임·드라마·영화 음악이나 작곡가·가수 이름을 넣지 않기</li><li>게임에 쓸 수 있습니다. 대신 크레딧에 "음악 일부 AI 생성"을 표기합니다(팀이 처리)</li></ul></section>
+</div>
+<script>
+// 복사 버튼: 누르는 순간 클립보드에 쓰고, 막히면 글자를 선택해 둔다(폰에서 길게 눌러 복사)
+document.querySelectorAll('button[data-t]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.dataset.t), m=b.parentNode.querySelector('.msg');
+    function sel(){var r=document.createRange();r.selectNodeContents(t);var s=getSelection();s.removeAllRanges();s.addRange(r);m.textContent='선택해 두었어요. 길게 눌러 복사하세요.';}
+    try{navigator.clipboard.writeText(t.textContent).then(function(){m.textContent='복사했어요.';},sel);}catch(e){sel();}
+  });
+});
+</script></body></html>

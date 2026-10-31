@@ -1,0 +1,59 @@
+# 2막 지역 키트 밑작업 (③ 붉은재 산성 아랫마을 · ④ 쇳골 광산)
+
+지도·배치 자료가 오기 전에 만든 **조각 키트 40종(기획 지도 요청분 포함)**이다. 지도가 정해지면 이 조각을 그대로 놓는다. 폴더 `assets3d/act2/`, 이름 접두 `sanseong_` / `soegol_`. 다시 만들기: `python3 tools/art3d/act2_kit.py`.
+
+- 규약은 다른 소품과 같다: 1단위=1m, 원점=바닥 한가운데, 정면=-Y(내보내면 +Z), 재질은 색만, 불빛은 발광 면 + `Light_*` 빈 오브젝트.
+- 바위·봉분·쇠찌꺼기 더미는 아래쪽이 땅에 반쯤 묻히게 만들었다(그래서 min_z가 음수). 땅 위에 그대로 놓으면 된다.
+- 설정 근거: 붉은재=산성 싸움터·큰 무덤(술잔 서른일곱)·화살골 바위틈 부러진 깃대·산성 쉼터(planning/combat/appendix-E), 쇳골=광산·갱도 지름길·광부(등불 모자+곡괭이)(planning/day/appendix-B·C). **지역 분위기는 서사 확인 전**이라 이름·모양은 바뀔 수 있다.
+
+| 이름 | 무엇 | 삼각형 | 크기 m (가로·세로·높이) |
+|---|---|---|---|
+| sanseong_wall_straight | 성벽 한 칸 | 636 | 4.0×1.08×3.19 |
+| sanseong_wall_ruin | 무너진 성벽 | 516 | 3.94×2.21×2.68 |
+| sanseong_gate | 산성 문(홍예+문루) | 768 | 6.6×2.8×5.88 |
+| sanseong_tower | 망루 | 630 | 4.2×4.2×8.29 |
+| sanseong_palisade | 목책 | 384 | 3.16×0.43×2.46 |
+| sanseong_banner_torn | 부러진 깃대·찢긴 붉은 깃 | 120 | 1.5×1.0×3.81 |
+| sanseong_big_mound | 큰 무덤+술잔 37 | 784 | 5.2×7.54×2.6 |
+| sanseong_arrow_field | 화살 꽂힌 땅 | 264 | 1.96×1.73×0.77 |
+| sanseong_arrow_rock | 화살골 바위(깃대 조각 단서 자리) | 284 | 4.35×2.93×3.3 |
+| sanseong_spear_rack | 창꽂이 | 164 | 1.81×2.26×2.75 |
+| sanseong_tent | 군막 | 80 | 3.88×4.97×2.21 |
+| sanseong_sul_vat | 술도가 술독 밭 | 474 | 2.63×1.81×1.32 |
+| sanseong_stairs | 산길 돌계단 | 144 | 2.8×4.05×2.28 |
+| sanseong_beacon | 봉수대(불빛) | 204 | 2.28×2.4×2.75 |
+| soegol_mine_entrance | 갱도 입구(등불) | 524 | 8.84×6.21×6.08 |
+| soegol_timber_frame | 갱목 문틀 | 88 | 2.4×0.29×2.33 |
+| soegol_rail | 광차 레일 3m | 96 | 0.95×3.0×0.14 |
+| soegol_cart | 광차 | 380 | 1.06×1.73×1.09 |
+| soegol_ore_pile | 광석 더미 | 680 | 1.88×1.59×0.78 |
+| soegol_slag_heap | 쇠찌꺼기 더미 | 872 | 3.99×2.98×2.28 |
+| soegol_windlass | 도르래 틀 | 180 | 2.16×1.16×3.13 |
+| soegol_miner_hut | 광부 움막(등불) | 116 | 3.4×2.96×2.25 |
+| soegol_lantern_post | 광부 등불 기둥 | 64 | 0.89×0.5×2.6 |
+| soegol_ore_basket | 광석 바구니+곡괭이 | 184 | 0.9×0.76×1.16 |
+| soegol_wash_flume | 선광 물길 | 156 | 0.76×4.0×1.0 |
+| soegol_smelter | 용광로(불빛) | 392 | 3.63×3.58×4.08 |
+| soegol_ingot_stack | 쇳덩이 더미 | 132 | 1.65×0.2×0.36 |
+| soegol_rope_fence | 갱 입구 밧줄 울타리 | 148 | 3.23×0.09×1.1 |
+| soegol_scree | 붉은 자갈 비탈 | 408 | 3.15×2.84×0.34 |
+| sanseong_shrine | 사당(위패 상, 등불) | 220 | 4.2×3.8×3.8 |
+| sanseong_wipae | 위패 상(이름 칸 빈 위패) | 68 | 0.26×0.34×0.5 |
+| sanseong_wall_unfinished | 쌓다 만 성벽(비계·돌무더기) | 516 | 3.89×2.32×2.71 |
+| sanseong_jinbeop_map | 진법도(동그라미 열둘, 이름 없음) | 728 | 1.88×0.14×1.7 |
+| sanseong_flag_shard | 깃대 조각(칼금 이름, 단서 B05-D3) | 160 | 0.14×1.25×0.72 |
+| sanseong_geumjul_jangseung_pair | 금줄 장승 한 쌍(R2-1·R2-2) | 388 | 3.78×0.57×2.96 |
+| soegol_mokpae_board | 목패 걸이 판(열넷, 일곱째만 닳음) | 560 | 2.7×0.7×2.11 |
+| soegol_sorting_bench | 선탄 평상 | 532 | 2.8×1.4×0.95 |
+| soegol_chalk_rock | 분필 바위(막대 열셋, 단서 B07-D3) | 388 | 3.41×2.2×2.2 |
+| prop_dry_inkstone | 마른 벼루(1막 서당, props 폴더) | 76 | 0.45×0.38×0.07 |
+| prop_market_drum_frame | 장터 북틀(1막, props 폴더) | 260 | 1.33×0.54×1.25 |
+| soegol_canyon_wall | 갱도 골 벼랑 벽 6m(지붕 없는 골) | 240 | 6.12×2.25×5.07 |
+| soegol_gol_module | 갱도 골 한 마디 7m(아치 둘·레일·등, 지붕 없음) | 380 | 3.1×7.0×2.54 |
+불빛 마커: `Light_beacon`(봉수대), `Light_mine_lamp`(갱도 입구), `Light_soegol_post`(등불 기둥), `Light_smelter`(용광로, #FF9A4A), `Light_miner_hut`(움막). 색은 따뜻한 등불색 #FFB066(주황은 파혼 전용).
+
+**갱도 골(기획 요청)**: 큰 갱도는 지붕 없는 협곡 길이다. `soegol_canyon_wall`(벼랑 벽 6m)을 길 양옆에 마주 세우고 사이에 `soegol_gol_module`(7m: 레일·버팀목 아치·등)을 이어 놓는다. 쿼터뷰 카메라가 위에서 볼 수 있다.
+
+## 다음에 필요한 것
+- 땅 색: 붉은재=붉은 흙(#9A5A3E)·젖은 성돌, 쇳골=쇠찌꺼기(#2E2C30)·녹슨 광석·누런 흙(#A8864E). 땅 무늬(detail 타일)·지형 청크는 act2_map.json(x 0~768, y 640~1280)을 보고 만든다.
+- 배치 좌표는 아직 없다. 지도의 구역·보스 자리에 맞춰 레이아웃을 만들 차례다(코드팀 연결은 그 뒤).

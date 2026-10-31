@@ -1,0 +1,114 @@
+[
+ {
+  "name": "prop_seonangdang_solgogae",
+  "zone": "솔고개 마을",
+  "tris": 1562,
+  "size_m": [
+   5.7,
+   5.27,
+   6.52
+  ],
+  "min_z": 0.0,
+  "lights": [
+   "Light_seonang_a"
+  ]
+ },
+ {
+  "name": "prop_seonangdang_boritdeul",
+  "zone": "보릿들",
+  "tris": 1440,
+  "size_m": [
+   6.65,
+   5.07,
+   6.52
+  ],
+  "min_z": 0.0,
+  "lights": []
+ },
+ {
+  "name": "prop_seonangdang_mulmagi",
+  "zone": "물막이 골 어귀",
+  "tris": 1450,
+  "size_m": [
+   6.43,
+   5.28,
+   6.57
+  ],
+  "min_z": -0.051,
+  "lights": []
+ },
+ {
+  "name": "prop_seonangdang_geomeun",
+  "zone": "검은여울 어귀",
+  "tris": 1280,
+  "size_m": [
+   5.47,
+   5.06,
+   5.9
+  ],
+  "min_z": -0.014,
+  "lights": []
+ },
+ {
+  "name": "prop_seonangdang_pyedang",
+  "zone": "폐당집 어귀",
+  "tris": 1116,
+  "size_m": [
+   4.76,
+   5.19,
+   5.41
+  ],
+  "min_z": 0.0,
+  "lights": [
+   "Light_hon_fire"
+  ]
+ },
+ {
+  "name": "prop_soulpath_gate",
+  "zone": "넋길",
+  "tris": 734,
+  "size_m": [
+   3.68,
+   5.09,
+   2.2
+  ],
+  "min_z": -0.001,
+  "lit": true
+ },
+ {
+  "name": "prop_soulpath_gate_off",
+  "zone": "넋길",
+  "tris": 734,
+  "size_m": [
+   3.68,
+   5.09,
+   2.2
+  ],
+  "min_z": -0.001,
+  "lit": false
+ },
+ {
+  "name": "prop_soulpath_lamp",
+  "zone": "넋길",
+  "tris": 114,
+  "size_m": [
+   0.48,
+   0.56,
+   1.2
+  ],
+  "min_z": 0.0,
+  "lit": true
+ },
+ {
+  "name": "prop_soulpath_lamp_off",
+  "zone": "넋길",
+  "tris": 114,
+  "size_m": [
+   0.48,
+   0.56,
+   1.2
+  ],
+  "min_z": 0.0,
+  "lit": false
+ }
+]

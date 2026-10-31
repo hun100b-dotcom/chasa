@@ -1,0 +1,5 @@
+<!-- 웹 빌드의 '코드 줄이기(stripping)'가 물리 모듈을 지워 버려 콘솔에 오류 26개가 났다.
+     CreatePrimitive 가 내부에서 충돌체를 붙이려다 실패하기 때문. 물리 모듈은 작아서 그대로 남긴다. -->
+<linker>
+  <assembly fullname="UnityEngine.PhysicsModule" preserve="all"/>
+</linker>

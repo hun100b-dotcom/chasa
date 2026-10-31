@@ -1,0 +1,342 @@
+[
+ {
+  "name": "s3_lying_shadow",
+  "tris": 36,
+  "size_m": [
+   0.46,
+   1.72,
+   0.08
+  ],
+  "min_z": -0.04
+ },
+ {
+  "name": "s3_lying_shadow_pair",
+  "tris": 72,
+  "size_m": [
+   1.05,
+   1.72,
+   0.08
+  ],
+  "min_z": -0.04
+ },
+ {
+  "name": "s3_linked_arms_eleven",
+  "tris": 288,
+  "size_m": [
+   5.04,
+   4.96,
+   0.12
+  ],
+  "min_z": -0.025
+ },
+ {
+  "name": "s3_half_stake",
+  "tris": 72,
+  "size_m": [
+   2.58,
+   0.64,
+   1.12
+  ],
+  "min_z": -0.018
+ },
+ {
+  "name": "s3_mud_pool",
+  "tris": 80,
+  "size_m": [
+   3.0,
+   3.0,
+   0.04
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_capsized_boat",
+  "tris": 72,
+  "size_m": [
+   2.41,
+   4.2,
+   0.94
+  ],
+  "min_z": 0.005
+ },
+ {
+  "name": "s3_wreck_ribs",
+  "tris": 396,
+  "size_m": [
+   2.13,
+   5.0,
+   2.19
+  ],
+  "min_z": 0.025
+ },
+ {
+  "name": "s3_sea_cave_rock",
+  "tris": 228,
+  "size_m": [
+   2.72,
+   1.98,
+   1.56
+  ],
+  "min_z": -0.78
+ },
+ {
+  "name": "s3_hanging_threads",
+  "tris": 140,
+  "size_m": [
+   0.57,
+   0.65,
+   3.31
+  ],
+  "min_z": 0.099
+ },
+ {
+  "name": "s3_name_tag_thread",
+  "tris": 32,
+  "size_m": [
+   0.28,
+   0.05,
+   1.38
+  ],
+  "min_z": -0.001
+ },
+ {
+  "name": "s3_tomb_wall",
+  "tris": 312,
+  "size_m": [
+   6.0,
+   2.48,
+   3.96
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_fallen_standards",
+  "tris": 64,
+  "size_m": [
+   2.69,
+   2.57,
+   0.09
+  ],
+  "min_z": 0.007
+ },
+ {
+  "name": "s3_rusty_cart",
+  "tris": 136,
+  "size_m": [
+   2.0,
+   1.12,
+   0.83
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_mine_beam",
+  "tris": 116,
+  "size_m": [
+   3.94,
+   4.0,
+   2.66
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_mine_beam_broken",
+  "tris": 60,
+  "size_m": [
+   1.97,
+   0.29,
+   1.61
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_rubble_pile",
+  "tris": 162,
+  "size_m": [
+   2.34,
+   2.09,
+   1.39
+  ],
+  "min_z": -0.66
+ },
+ {
+  "name": "s3_lime_band",
+  "tris": 96,
+  "size_m": [
+   8.0,
+   1.2,
+   0.07
+  ],
+  "min_z": -0.02
+ },
+ {
+  "name": "s3_fallen_medicine_chest",
+  "tris": 144,
+  "size_m": [
+   3.09,
+   1.82,
+   1.36
+  ],
+  "min_z": -0.031
+ },
+ {
+  "name": "s3_blank_stones_row",
+  "tris": 60,
+  "size_m": [
+   2.74,
+   0.14,
+   0.5
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_unmarked_mound",
+  "tris": 60,
+  "size_m": [
+   2.0,
+   2.0,
+   1.0
+  ],
+  "min_z": -0.5
+ },
+ {
+  "name": "s3_bridge_footing",
+  "tris": 60,
+  "size_m": [
+   3.1,
+   2.9,
+   1.67
+  ],
+  "min_z": -0.02
+ },
+ {
+  "name": "s3_floor_strokes",
+  "tris": 324,
+  "size_m": [
+   4.0,
+   4.0,
+   0.02
+  ],
+  "min_z": -0.006
+ },
+ {
+  "name": "s3_ink_silt_islet",
+  "tris": 86,
+  "size_m": [
+   2.95,
+   2.91,
+   0.48
+  ],
+  "min_z": -0.24
+ },
+ {
+  "name": "s3_quarters_bunk",
+  "tris": 48,
+  "size_m": [
+   2.2,
+   1.0,
+   0.96
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_ondol_tile",
+  "tris": 24,
+  "size_m": [
+   1.96,
+   1.96,
+   0.09
+  ],
+  "min_z": -0.043
+ },
+ {
+  "name": "s3_ondol_hot_tile",
+  "tris": 60,
+  "size_m": [
+   1.96,
+   1.96,
+   0.09
+  ],
+  "min_z": -0.045
+ },
+ {
+  "name": "s3_offering_set",
+  "tris": 164,
+  "size_m": [
+   0.9,
+   0.5,
+   0.47
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_seal_floor_mark",
+  "tris": 24,
+  "size_m": [
+   3.3,
+   0.8,
+   0.02
+  ],
+  "min_z": -0.01
+ },
+ {
+  "name": "s3_chain_root",
+  "tris": 182,
+  "size_m": [
+   1.75,
+   1.71,
+   1.88
+  ],
+  "min_z": -0.405
+ },
+ {
+  "name": "s3_well_wall",
+  "tris": 96,
+  "size_m": [
+   5.2,
+   1.0,
+   1.4
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_well_rope",
+  "tris": 56,
+  "size_m": [
+   0.44,
+   0.44,
+   5.8
+  ],
+  "min_z": 0.2
+ },
+ {
+  "name": "s3_torch_in_water",
+  "tris": 92,
+  "size_m": [
+   0.26,
+   0.3,
+   2.05
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "s3_barley_sheaf",
+  "tris": 88,
+  "size_m": [
+   0.43,
+   0.44,
+   0.76
+  ],
+  "min_z": -0.058
+ },
+ {
+  "name": "s3_dawn_flood_line",
+  "tris": 24,
+  "size_m": [
+   6.0,
+   0.3,
+   0.03
+  ],
+  "min_z": -0.015
+ }
+]

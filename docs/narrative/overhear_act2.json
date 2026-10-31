@@ -1,0 +1,372 @@
+{
+ "_설명": "2막 엿듣기 밀도 보강(마을 소문 15). tools/overhear_act2.py로 생성. 서사 2026-10-26. 자리 · 좌표는 기획 act2_map.json places",
+ "rule": {
+  "record": "단서 아님(clue null). 기록 탭 \"들은 말\". 업 10 이상 line_half, 업 60 이상 닫힘(npc_act1 rules.karma와 같음)",
+  "unlock": "그 구역에 밤에 처음 들어간 다음 낮부터(보스 단서와 같은 열림). 각 자리 하루 한 번",
+  "through_wall": "true = 담 너머 목소리(사람 모델 없음, 귀 아이콘은 벽에). 밤 자리는 모두 담 너머",
+  "echo": "echoes_soul의 혼을 천도해 장례를 봤으면 다음 낮부터 이 자리는 닫는다(그 집 이야기가 장례로 끝났으므로)",
+  "density": "③ 8 · ④ 7. 1막(소문 13)과 같은 수준. 보스 단서 말 9와 겹치는 자리는 피했다"
+ },
+ "spots": [
+  {
+   "id": "R2-01",
+   "time": "낮",
+   "zone": "FortressVillage",
+   "place": "아랫마을 마당",
+   "x": 110,
+   "y": 862,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "빨래하는 아낙",
+     "text": "이장 어른 가시고는 관아 서찰 읽어 줄 사람이 없어."
+    },
+    {
+     "speaker": "그 동무",
+     "text": "읽어 봐야 숫자뿐이라던데."
+    }
+   ],
+   "line_half": "이장 어른 가시고는…",
+   "clue": null,
+   "echoes_soul": "S-058",
+   "echoes_name": "마을 이장"
+  },
+  {
+   "id": "R2-02",
+   "time": "저녁",
+   "zone": "FortressVillage",
+   "place": "아랫마을 우물",
+   "x": 115,
+   "y": 858,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "석수 제자",
+     "text": "성돌 밑에서 썩은 목패가 또 나왔어요."
+    },
+    {
+     "speaker": "물 긷는 노인",
+     "text": "도로 묻어라. 읽지 말고."
+    }
+   ],
+   "line_half": "성돌 밑에서…",
+   "clue": null,
+   "echoes_soul": "S-051",
+   "echoes_name": "석수 판돌"
+  },
+  {
+   "id": "R2-03",
+   "time": "저녁",
+   "zone": "FortressVillage",
+   "place": "벌초꾼 집",
+   "x": 125,
+   "y": 840,
+   "verb": "엿듣기",
+   "through_wall": true,
+   "lines": [
+    {
+     "speaker": "벌초꾼 아들",
+     "text": "큰 무덤은 아무리 베도 어디가 끝인지 모르겠어요."
+    },
+    {
+     "speaker": "그 어미",
+     "text": "그러니 다 베라. 다 누구 자리다."
+    }
+   ],
+   "line_half": "큰 무덤은 아무리 베도…",
+   "clue": null,
+   "echoes_soul": "S-052",
+   "echoes_name": "벌초꾼 만석"
+  },
+  {
+   "id": "R2-04",
+   "time": "낮",
+   "zone": "ArrowValley",
+   "place": "화살골 어귀",
+   "x": 215,
+   "y": 920,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "약초 캐는 이웃",
+     "text": "바위틈엔 손 넣지 마. 녹슨 촉에 벤다."
+    },
+    {
+     "speaker": "그 딸",
+     "text": "분녀 아지매는 맨손으로도 잘 캤는데."
+    }
+   ],
+   "line_half": "바위틈엔 손 넣지…",
+   "clue": null,
+   "echoes_soul": "S-050",
+   "echoes_name": "약초 아낙 분녀"
+  },
+  {
+   "id": "R2-05",
+   "time": "낮",
+   "zone": "Fortress",
+   "place": "산성 문",
+   "x": 118,
+   "y": 962,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "나무꾼",
+     "text": "해 지면 성안에서 수 세는 소리가 난대."
+    },
+    {
+     "speaker": "나무꾼 동무",
+     "text": "세다가 끊기는 게 더 무섭지."
+    }
+   ],
+   "line_half": "해 지면 성안에서…",
+   "clue": null,
+   "echoes_soul": "S-053",
+   "echoes_name": "화살골 나무꾼"
+  },
+  {
+   "id": "R2-06",
+   "time": "밤",
+   "zone": "FortressVillage",
+   "place": "이장 집",
+   "x": 104,
+   "y": 850,
+   "verb": "엿듣기",
+   "through_wall": true,
+   "lines": [
+    {
+     "speaker": "이장네 아들",
+     "text": "아버님이 받아 둔 관아 명단, 태울까요."
+    },
+    {
+     "speaker": "이장네 안사람",
+     "text": "두어라. 거기엔 태울 이름도 없다."
+    }
+   ],
+   "line_half": "관아 명단, 태울까요…",
+   "clue": null,
+   "echoes_soul": "S-058",
+   "echoes_name": "마을 이장"
+  },
+  {
+   "id": "R2-07",
+   "time": "낮",
+   "zone": "FortressVillage",
+   "place": "아랫마을 남쪽 어귀",
+   "x": 110,
+   "y": 812,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "지나가는 장꾼",
+     "text": "건넛골 사람들도 그 골짜기에 묻혔다더구먼."
+    },
+    {
+     "speaker": "장꾼 동무",
+     "text": "죽고 나면 이쪽 저쪽이 어디 있나."
+    }
+   ],
+   "line_half": "건넛골 사람들도…",
+   "clue": null,
+   "echoes_soul": "S-063",
+   "echoes_name": "건너편 병사"
+  },
+  {
+   "id": "R2-08",
+   "time": "낮",
+   "zone": "BigTomb",
+   "place": "작은 무덤 떼",
+   "x": 60,
+   "y": 1205,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "무덤 돌보는 아낙",
+     "text": "설이가 큰 무덤 굿을 하다 말았대."
+    },
+    {
+     "speaker": "그 시누이",
+     "text": "부를 이름을 못 받아서 그랬다지."
+    }
+   ],
+   "line_half": "설이가 큰 무덤 굿을…",
+   "clue": null,
+   "echoes_soul": "S-057",
+   "echoes_name": "무당 손녀 설이"
+  },
+  {
+   "id": "R2-09",
+   "time": "새벽",
+   "zone": "MinerTown",
+   "place": "광부촌 어귀",
+   "x": 458,
+   "y": 805,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "교대 광부",
+     "text": "산신각에 막걸리 붓던 영감이 요새 안 보여."
+    },
+    {
+     "speaker": "교대 광부 동무",
+     "text": "그 양반 가고는 아무도 안 붓지."
+    }
+   ],
+   "line_half": "산신각에 막걸리…",
+   "clue": null,
+   "echoes_soul": "S-083",
+   "echoes_name": "산신 모시던 광부"
+  },
+  {
+   "id": "R2-10",
+   "time": "저녁",
+   "zone": "MinerTown",
+   "place": "국밥집",
+   "x": 462,
+   "y": 875,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "국밥집 아들",
+     "text": "외상은 번호 말고 이름으로 적어 주시오."
+    },
+    {
+     "speaker": "늙은 광부",
+     "text": "…이름이 뭐였더라. 다들 번호로만 불러서."
+    }
+   ],
+   "line_half": "외상은 번호 말고…",
+   "clue": null,
+   "echoes_soul": "S-069",
+   "echoes_name": "국밥집 주인 장씨"
+  },
+  {
+   "id": "R2-11",
+   "time": "낮",
+   "zone": "MinerTown",
+   "place": "노새 마구간",
+   "x": 492,
+   "y": 842,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "마부",
+     "text": "갑돌이 없으니 노새가 말을 안 들어."
+    },
+    {
+     "speaker": "마부 동무",
+     "text": "제 이름 불러 주던 사람은 노새도 아는 게지."
+    }
+   ],
+   "line_half": "갑돌이 없으니…",
+   "clue": null,
+   "echoes_soul": "S-070",
+   "echoes_name": "노새 몰이 갑돌"
+  },
+  {
+   "id": "R2-12",
+   "time": "저녁",
+   "zone": "MinerTown",
+   "place": "광부촌 우물가",
+   "x": 470,
+   "y": 836,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "선탄장 아낙",
+     "text": "복례 딸이 어미 자리에 앉았더라."
+    },
+    {
+     "speaker": "다른 아낙",
+     "text": "손톱 까매지는 거 보면 속상해서 원."
+    }
+   ],
+   "line_half": "복례 딸이…",
+   "clue": null,
+   "echoes_soul": "S-068",
+   "echoes_name": "선탄장 아낙 복례"
+  },
+  {
+   "id": "R2-13",
+   "time": "낮",
+   "zone": "MainShaft",
+   "place": "갱 입구",
+   "x": 560,
+   "y": 980,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "교대 광부",
+     "text": "버팀목 또 아끼래. 나무값이 비싸다고."
+    },
+    {
+     "speaker": "교대 광부 동무",
+     "text": "그 나무값보다 싼 게 누군데."
+    }
+   ],
+   "line_half": "버팀목 또 아끼래…",
+   "clue": null,
+   "echoes_soul": "S-073",
+   "echoes_name": "갱도 목수"
+  },
+  {
+   "id": "R2-14",
+   "time": "밤",
+   "zone": "MinerTown",
+   "place": "순돌 집",
+   "x": 445,
+   "y": 890,
+   "verb": "엿듣기",
+   "through_wall": true,
+   "lines": [
+    {
+     "speaker": "순돌네 아이",
+     "text": "아버지 목패는 언제 돌려준대요?"
+    },
+    {
+     "speaker": "순돌네 안사람",
+     "text": "떼어 온 사람이 있대. 내일 갖다준다더라."
+    }
+   ],
+   "line_half": "아버지 목패는…",
+   "clue": null,
+   "echoes_soul": "S-067",
+   "echoes_name": "광부 순돌"
+  },
+  {
+   "id": "R2-15",
+   "time": "낮",
+   "zone": "MainShaft",
+   "place": "갱도 골 중간 버팀목",
+   "x": 640,
+   "y": 1090,
+   "verb": "엿듣기",
+   "through_wall": false,
+   "lines": [
+    {
+     "speaker": "목수 제자",
+     "text": "이 버팀목, 목수 어른이 세운 거야. 아직 안 휘었어."
+    },
+    {
+     "speaker": "짐꾼",
+     "text": "사람은 갔는데 나무는 버티네."
+    }
+   ],
+   "line_half": "이 버팀목…",
+   "clue": null,
+   "echoes_soul": "S-073",
+   "echoes_name": "갱도 목수"
+  }
+ ]
+}

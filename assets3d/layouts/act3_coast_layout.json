@@ -1,0 +1,3283 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(필드 절대)",
+ "note": "terrain_act3_coast.py가 만든다",
+ "props": [
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -558,
+   "y": 1.5,
+   "rot": 0,
+   "z": 2.91,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -554,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -550,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -546,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -542,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -538,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -534,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -530,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.2,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -526,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -522,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -518,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -514,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.16,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -510,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.16,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -506,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -502,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.16,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -498,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.16,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -494,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -490,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.16,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -486,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -482,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -478,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.16,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -474,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.16,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -470,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -466,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -462,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -458,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -454,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.19,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -450,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.19,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -446,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.2,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -442,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -438,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -434,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -430,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -410,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -406,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -402,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -398,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -394,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.19,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -390,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -386,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.59,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -382,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.59,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -378,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.59,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -374,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.59,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -370,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.19,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -366,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -362,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -358,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -354,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -350,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -346,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -342,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -338,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -334,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -330,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -326,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -322,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -318,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -314,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -310,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -306,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -302,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -298,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -294,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -290,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -286,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -282,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -278,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -274,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -270,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.32,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -266,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.32,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -262,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -258,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -254,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -250,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -246,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -242,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -238,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -234,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -230,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -226,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -222,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -218,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -214,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -210,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -206,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -202,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -198,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -194,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -190,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -186,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.2,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -182,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.19,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -178,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -174,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -170,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -166,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.16,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -162,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -158,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -154,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.13,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -150,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.13,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -146,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.13,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -142,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.13,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -138,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -134,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -130,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -126,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -122,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -118,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -114,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -110,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -106,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -102,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -98,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -94,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -90,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -86,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -82,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.13,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -78,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.13,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -74,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.12,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -70,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.11,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -66,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.08,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -62,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.06,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -58,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.04,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -54,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.02,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -50,
+   "y": 1.5,
+   "rot": 0,
+   "z": 1.0,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -46,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.97,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -42,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.95,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -38,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.93,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -34,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.92,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -30,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.89,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -26,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.85,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -22,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.8,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -18,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.76,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -14,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.73,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -10,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.72,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -6,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.71,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": -2,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.71,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 2,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.43,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 6,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.39,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 10,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.36,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 14,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.33,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 18,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 22,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 26,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 30,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 34,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 38,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 42,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 46,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 50,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 54,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 58,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 62,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 66,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 70,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 74,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 78,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 82,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 86,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 90,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.2,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 94,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.2,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 98,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 102,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 106,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 110,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 114,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 118,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 122,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 126,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 130,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 134,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 138,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 142,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 146,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 150,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 154,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 158,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 162,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 166,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.15,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 170,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.14,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 174,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 178,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 182,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.18,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 186,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.2,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 190,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 194,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 198,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 202,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.34,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 206,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 210,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.36,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 214,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.37,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 218,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 222,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.32,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 226,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 230,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 234,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 238,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 242,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 246,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 250,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 254,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 258,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 262,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 266,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 270,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 274,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.33,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 278,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.32,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 282,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.33,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 286,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 290,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.36,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 294,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.37,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 298,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.37,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 302,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.37,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 306,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 310,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.32,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 314,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 318,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 322,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 326,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 330,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 334,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 338,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 342,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 346,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 350,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 354,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 358,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 362,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 366,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 370,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 374,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 378,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 382,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 386,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 390,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 394,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 398,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 402,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 406,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 410,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 414,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 418,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 422,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 426,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 430,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 434,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 438,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 442,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 446,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 450,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 454,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 458,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 462,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 466,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 470,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.23,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 474,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 478,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.2,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 482,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.2,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 486,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 490,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 494,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.24,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 498,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.25,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 502,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 506,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 510,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 514,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 518,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 522,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 526,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 530,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 534,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 538,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 542,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.34,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 546,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.36,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 550,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 554,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 558,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.34,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 562,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.34,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 566,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 570,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 574,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.33,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 578,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.32,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 582,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 586,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 590,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 594,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.31,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 598,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 602,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.3,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 606,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 610,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 614,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.28,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 618,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.29,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 622,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 626,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 630,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.27,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 634,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.26,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 638,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.22,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 642,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.21,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 646,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 650,
+   "y": 1.5,
+   "rot": 0,
+   "z": 0.09,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 654,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.02,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 658,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.17,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 662,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.35,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 666,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.56,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "cliff_edge_wall",
+   "file": "assets3d/act3/cliff_edge_wall.glb",
+   "x": 670,
+   "y": 1.5,
+   "rot": 0,
+   "z": -0.78,
+   "note": "벼랑 가장자리 돌담 0.8m(걸어 내려가지 못하게)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -608,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -608,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -544,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -544,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -480,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -480,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -416,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -416,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -352,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -352,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -288,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -288,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -224,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -224,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -160,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -160,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -96,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -96,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -32,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": -32,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 32,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 32,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 96,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 96,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 160,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 160,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 224,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 224,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 288,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 288,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 352,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 352,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 416,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 416,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 480,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 480,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 544,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 544,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 608,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 608,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 672,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 672,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 736,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 736,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 800,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 800,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 864,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 864,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 928,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 928,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 992,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 992,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1056,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1056,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1120,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1184,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": -96,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  },
+  {
+   "prop": "tide_water",
+   "file": "assets3d/act3/tide_water.glb",
+   "x": 1248,
+   "y": -32,
+   "rot": 0,
+   "z": -7.5,
+   "note": "해안 물판(기준 z 썰물 -7.5, 코드가 밀물 -6.0까지 올림)"
+  }
+ ]
+}

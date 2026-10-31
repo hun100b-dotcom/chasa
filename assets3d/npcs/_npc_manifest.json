@@ -1,0 +1,3494 @@
+{
+ "fps": 60,
+ "note": "화면에 주인공 이름은 쓰지 않는다. 같은 틀(뼈 16개·동작 4개)이라 유니티에서 한 컨트롤러를 공유할 수 있다.",
+ "npcs": [
+  {
+   "id": "N101",
+   "name": "당할미",
+   "file": "assets3d/npcs/npc_N101.glb",
+   "template": "노인 여자(무녀)",
+   "height_m": 1.61,
+   "tris": 862,
+   "props": [
+    "fan_broken",
+    "cross_cloth",
+    "cane_l"
+   ],
+   "note": "서낭당 무녀. 오방색 천과 부러진 부채",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 77,
+     "length_sec": 1.267,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       38
+      ]
+     },
+     "walk_speed_mps": 0.587,
+     "stride_m": 0.372,
+     "foot_slide": {
+      "max_mm_per_frame": 0.64,
+      "mean_mm_per_frame": 0.263,
+      "contact_pairs": 92
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Ritual",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "bow": 30
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    },
+    {
+     "name": "OpenFan",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": true,
+     "events": {
+      "count": [
+       30,
+       50,
+       70,
+       90
+      ]
+     }
+    },
+    {
+     "name": "ReachUp",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": false,
+     "events": {
+      "tie": 46
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N101.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Ritual",
+     "Bow",
+     "OpenFan",
+     "ReachUp"
+    ],
+    "size_kb": 429
+   }
+  },
+  {
+   "id": "N102",
+   "name": "순임",
+   "file": "assets3d/npcs/npc_N102.glb",
+   "template": "처녀(일하는 차림)",
+   "height_m": 1.56,
+   "tris": 950,
+   "props": [
+    "rope_coil"
+   ],
+   "note": "나루 영감 손녀. 줄배 줄 타래",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 65,
+     "length_sec": 1.067,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       32
+      ]
+     },
+     "walk_speed_mps": 1.046,
+     "stride_m": 0.558,
+     "foot_slide": {
+      "max_mm_per_frame": 2.65,
+      "mean_mm_per_frame": 0.416,
+      "contact_pairs": 76
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "RopeCoil",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {
+      "pull": 15
+     }
+    },
+    {
+     "name": "ReachUp",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": false,
+     "events": {
+      "tie": 46
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N102.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "RopeCoil",
+     "ReachUp"
+    ],
+    "size_kb": 369
+   }
+  },
+  {
+   "id": "N103",
+   "name": "윤 소사네 아들",
+   "file": "assets3d/npcs/npc_N103.glb",
+   "template": "청년(도포)",
+   "height_m": 1.88,
+   "tris": 816,
+   "props": [
+    "incense"
+   ],
+   "note": "제사 지내는 아들. 흰 도포·갓·향로",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 63,
+     "length_sec": 1.033,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       31
+      ]
+     },
+     "walk_speed_mps": 0.873,
+     "stride_m": 0.451,
+     "foot_slide": {
+      "max_mm_per_frame": 0.64,
+      "mean_mm_per_frame": 0.355,
+      "contact_pairs": 74
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Offer",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N103.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Offer",
+     "Bow"
+    ],
+    "size_kb": 377
+   }
+  },
+  {
+   "id": "N104a",
+   "name": "복남",
+   "file": "assets3d/npcs/npc_N104a.glb",
+   "template": "사내아이",
+   "height_m": 1.34,
+   "tris": 800,
+   "props": [
+    "candy_stick"
+   ],
+   "note": "노래놀이 아이 1",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 47,
+     "length_sec": 0.767,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       23
+      ]
+     },
+     "walk_speed_mps": 1.076,
+     "stride_m": 0.413,
+     "foot_slide": {
+      "max_mm_per_frame": 1.9,
+      "mean_mm_per_frame": 0.463,
+      "contact_pairs": 56
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Play",
+     "frames": 49,
+     "length_sec": 0.8,
+     "loop": true,
+     "events": {
+      "clap": [
+       10,
+       34
+      ],
+      "jump": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N104a.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Play"
+    ],
+    "size_kb": 333
+   }
+  },
+  {
+   "id": "N104b",
+   "name": "언년이",
+   "file": "assets3d/npcs/npc_N104b.glb",
+   "template": "계집아이",
+   "height_m": 1.22,
+   "tris": 606,
+   "props": [],
+   "note": "노래놀이 아이 2",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 47,
+     "length_sec": 0.767,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       23
+      ]
+     },
+     "walk_speed_mps": 1.004,
+     "stride_m": 0.385,
+     "foot_slide": {
+      "max_mm_per_frame": 1.78,
+      "mean_mm_per_frame": 0.432,
+      "contact_pairs": 56
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Play",
+     "frames": 49,
+     "length_sec": 0.8,
+     "loop": true,
+     "events": {
+      "clap": [
+       10,
+       34
+      ],
+      "jump": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N104b.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Play"
+    ],
+    "size_kb": 315
+   }
+  },
+  {
+   "id": "N104c",
+   "name": "삼돌이",
+   "file": "assets3d/npcs/npc_N104c.glb",
+   "template": "어린 사내아이",
+   "height_m": 1.05,
+   "tris": 690,
+   "props": [],
+   "note": "노래놀이 아이 3(가장 어림)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 47,
+     "length_sec": 0.767,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       23
+      ]
+     },
+     "walk_speed_mps": 0.861,
+     "stride_m": 0.33,
+     "foot_slide": {
+      "max_mm_per_frame": 1.52,
+      "mean_mm_per_frame": 0.371,
+      "contact_pairs": 56
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Play",
+     "frames": 49,
+     "length_sec": 0.8,
+     "loop": true,
+     "events": {
+      "clap": [
+       10,
+       34
+      ],
+      "jump": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N104c.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Play"
+    ],
+    "size_kb": 316
+   }
+  },
+  {
+   "id": "N105",
+   "name": "갑술 영감",
+   "file": "assets3d/npcs/npc_N105.glb",
+   "template": "노인 남자(삼베)",
+   "height_m": 1.63,
+   "tris": 740,
+   "props": [
+    "bell"
+   ],
+   "note": "상여 선소리꾼. 삼베옷·흰 수염·요령",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 77,
+     "length_sec": 1.267,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       38
+      ]
+     },
+     "walk_speed_mps": 0.6,
+     "stride_m": 0.38,
+     "foot_slide": {
+      "max_mm_per_frame": 0.66,
+      "mean_mm_per_frame": 0.268,
+      "contact_pairs": 92
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Chant",
+     "frames": 73,
+     "length_sec": 1.2,
+     "loop": true,
+     "events": {
+      "ring": [
+       0,
+       12,
+       24,
+       36,
+       48,
+       60
+      ]
+     }
+    },
+    {
+     "name": "TapPipe",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "tap": [
+       44,
+       52
+      ]
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N105.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Chant",
+     "TapPipe"
+    ],
+    "size_kb": 356
+   }
+  },
+  {
+   "id": "N106",
+   "name": "곱단네",
+   "file": "assets3d/npcs/npc_N106.glb",
+   "template": "아낙(중년)",
+   "height_m": 2.13,
+   "tris": 802,
+   "props": [
+    "jar_on_head",
+    "apron"
+   ],
+   "note": "우물가 아낙. 물동이",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 71,
+     "length_sec": 1.167,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       35
+      ]
+     },
+     "walk_speed_mps": 0.749,
+     "stride_m": 0.437,
+     "foot_slide": {
+      "max_mm_per_frame": 0.61,
+      "mean_mm_per_frame": 0.318,
+      "contact_pairs": 84
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Haggle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "point": 60,
+      "shrug": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N106.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Haggle"
+    ],
+    "size_kb": 344
+   }
+  },
+  {
+   "id": "N107",
+   "name": "간난이",
+   "file": "assets3d/npcs/npc_N107.glb",
+   "template": "아낙(젊음)",
+   "height_m": 1.61,
+   "tris": 722,
+   "props": [
+    "bucket",
+    "apron"
+   ],
+   "note": "우물가 아낙. 두레박",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 63,
+     "length_sec": 1.033,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       31
+      ]
+     },
+     "walk_speed_mps": 0.828,
+     "stride_m": 0.428,
+     "foot_slide": {
+      "max_mm_per_frame": 0.61,
+      "mean_mm_per_frame": 0.337,
+      "contact_pairs": 74
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "DrawWater",
+     "frames": 73,
+     "length_sec": 1.2,
+     "loop": true,
+     "events": {
+      "pull": 18
+     }
+    },
+    {
+     "name": "Laundry",
+     "frames": 49,
+     "length_sec": 0.8,
+     "loop": true,
+     "events": {
+      "scrub": [
+       6,
+       18,
+       30,
+       42
+      ]
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N107.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "DrawWater",
+     "Laundry"
+    ],
+    "size_kb": 354
+   }
+  },
+  {
+   "id": "N108",
+   "name": "덕만",
+   "file": "assets3d/npcs/npc_N108.glb",
+   "template": "청년(소장수 아들)",
+   "height_m": 1.82,
+   "tris": 996,
+   "props": [
+    "scar",
+    "straw_bundle"
+   ],
+   "note": "왼 눈썹 흉터(+X쪽)와 고삐",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 65,
+     "length_sec": 1.067,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       32
+      ]
+     },
+     "walk_speed_mps": 1.163,
+     "stride_m": 0.62,
+     "foot_slide": {
+      "max_mm_per_frame": 2.94,
+      "mean_mm_per_frame": 0.462,
+      "contact_pairs": 76
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "HoldReins",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "SquatCoil",
+     "frames": 73,
+     "length_sec": 1.2,
+     "loop": true,
+     "events": {
+      "pull": 18
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N108.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "HoldReins",
+     "SquatCoil"
+    ],
+    "size_kb": 371
+   }
+  },
+  {
+   "id": "N109",
+   "name": "용득",
+   "file": "assets3d/npcs/npc_N109.glb",
+   "template": "대장장이(건장)",
+   "height_m": 1.8,
+   "tris": 908,
+   "props": [
+    "smith"
+   ],
+   "note": "가죽 앞치마·망치·검댕",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 65,
+     "length_sec": 1.067,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       32
+      ]
+     },
+     "walk_speed_mps": 1.163,
+     "stride_m": 0.62,
+     "foot_slide": {
+      "max_mm_per_frame": 2.94,
+      "mean_mm_per_frame": 0.462,
+      "contact_pairs": 76
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Hammer",
+     "frames": 55,
+     "length_sec": 0.9,
+     "loop": true,
+     "events": {
+      "hit": 20,
+      "lift": 14
+     }
+    },
+    {
+     "name": "Bellows",
+     "frames": 73,
+     "length_sec": 1.2,
+     "loop": true,
+     "events": {
+      "push": [
+       18,
+       54
+      ]
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N109.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Hammer",
+     "Bellows"
+    ],
+    "size_kb": 366
+   }
+  },
+  {
+   "id": "N110a",
+   "name": "등짐장수(득보)",
+   "file": "assets3d/npcs/npc_N110a.glb",
+   "template": "등짐장수",
+   "height_m": 1.81,
+   "tris": 932,
+   "props": [
+    "jige"
+   ],
+   "note": "지게와 보따리 둘, 패랭이",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 69,
+     "length_sec": 1.133,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       34
+      ]
+     },
+     "walk_speed_mps": 0.882,
+     "stride_m": 0.5,
+     "foot_slide": {
+      "max_mm_per_frame": 0.67,
+      "mean_mm_per_frame": 0.392,
+      "contact_pairs": 82
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Haggle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "point": 60,
+      "shrug": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N110a.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Haggle"
+    ],
+    "size_kb": 351
+   }
+  },
+  {
+   "id": "N110b",
+   "name": "등짐장수(동무)",
+   "file": "assets3d/npcs/npc_N110b.glb",
+   "template": "등짐장수",
+   "height_m": 1.76,
+   "tris": 910,
+   "props": [
+    "bundle"
+   ],
+   "note": "봇짐과 지팡이, 패랭이",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 65,
+     "length_sec": 1.067,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       32
+      ]
+     },
+     "walk_speed_mps": 1.0,
+     "stride_m": 0.533,
+     "foot_slide": {
+      "max_mm_per_frame": 1.0,
+      "mean_mm_per_frame": 0.409,
+      "contact_pairs": 76
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Haggle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "point": 60,
+      "shrug": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N110b.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Haggle"
+    ],
+    "size_kb": 346
+   }
+  },
+  {
+   "id": "N201",
+   "name": "득보",
+   "file": "assets3d/npcs/npc_N201.glb",
+   "template": "등짐장수",
+   "height_m": 1.81,
+   "tris": 932,
+   "props": [
+    "jige"
+   ],
+   "note": "N-110 등짐장수(득보)와 같은 사람·같은 모양",
+   "same_as": "N110a",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 69,
+     "length_sec": 1.133,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       34
+      ]
+     },
+     "walk_speed_mps": 0.882,
+     "stride_m": 0.5,
+     "foot_slide": {
+      "max_mm_per_frame": 0.67,
+      "mean_mm_per_frame": 0.392,
+      "contact_pairs": 82
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Haggle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "point": 60,
+      "shrug": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N201.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Haggle"
+    ],
+    "size_kb": 351
+   }
+  },
+  {
+   "id": "N202",
+   "name": "은실",
+   "file": "assets3d/npcs/npc_N202.glb",
+   "template": "처녀(약방)",
+   "height_m": 1.61,
+   "tris": 766,
+   "props": [
+    "medicine",
+    "herb_basket"
+   ],
+   "note": "약봉지와 약주머니",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 63,
+     "length_sec": 1.033,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       31
+      ]
+     },
+     "walk_speed_mps": 0.828,
+     "stride_m": 0.428,
+     "foot_slide": {
+      "max_mm_per_frame": 0.61,
+      "mean_mm_per_frame": 0.337,
+      "contact_pairs": 74
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Mix",
+     "frames": 73,
+     "length_sec": 1.2,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Haggle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "point": 60,
+      "shrug": 24
+     }
+    },
+    {
+     "name": "PlaceBowl",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "set_down": 40
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N202.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Mix",
+     "Haggle",
+     "PlaceBowl"
+    ],
+    "size_kb": 378
+   }
+  },
+  {
+   "id": "N203",
+   "name": "섭섭이",
+   "file": "assets3d/npcs/npc_N203.glb",
+   "template": "처녀(주막)",
+   "height_m": 1.61,
+   "tris": 714,
+   "props": [
+    "tray"
+   ],
+   "note": "주막 쟁반(사발·주전자)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 65,
+     "length_sec": 1.067,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       32
+      ]
+     },
+     "walk_speed_mps": 0.802,
+     "stride_m": 0.428,
+     "foot_slide": {
+      "max_mm_per_frame": 0.59,
+      "mean_mm_per_frame": 0.326,
+      "contact_pairs": 76
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Serve",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Haggle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "point": 60,
+      "shrug": 24
+     }
+    },
+    {
+     "name": "ReachUp",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": false,
+     "events": {
+      "tie": 46
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N203.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Serve",
+     "Haggle",
+     "ReachUp"
+    ],
+    "size_kb": 370
+   }
+  },
+  {
+   "id": "N204a",
+   "name": "꼭지",
+   "file": "assets3d/npcs/npc_N204a.glb",
+   "template": "사내아이(장터)",
+   "height_m": 1.29,
+   "tris": 800,
+   "props": [
+    "candy_stick"
+   ],
+   "note": "엿 막대",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 47,
+     "length_sec": 0.767,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       23
+      ]
+     },
+     "walk_speed_mps": 1.033,
+     "stride_m": 0.396,
+     "foot_slide": {
+      "max_mm_per_frame": 1.83,
+      "mean_mm_per_frame": 0.445,
+      "contact_pairs": 56
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "WaveStick",
+     "frames": 49,
+     "length_sec": 0.8,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Haggle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "point": 60,
+      "shrug": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N204a.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "WaveStick",
+     "Haggle"
+    ],
+    "size_kb": 343
+   }
+  },
+  {
+   "id": "N204b",
+   "name": "차돌이",
+   "file": "assets3d/npcs/npc_N204b.glb",
+   "template": "사내아이(장터)",
+   "height_m": 1.22,
+   "tris": 814,
+   "props": [
+    "candy_tray"
+   ],
+   "note": "목에 건 엿판",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 47,
+     "length_sec": 0.767,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       23
+      ]
+     },
+     "walk_speed_mps": 1.004,
+     "stride_m": 0.385,
+     "foot_slide": {
+      "max_mm_per_frame": 1.78,
+      "mean_mm_per_frame": 0.432,
+      "contact_pairs": 56
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Hawk",
+     "frames": 73,
+     "length_sec": 1.2,
+     "loop": true,
+     "events": {
+      "shout": [
+       12,
+       24
+      ]
+     }
+    },
+    {
+     "name": "Haggle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "point": 60,
+      "shrug": 24
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N204b.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Hawk",
+     "Haggle"
+    ],
+    "size_kb": 349
+   }
+  },
+  {
+   "id": "N205",
+   "name": "노경수 손주",
+   "file": "assets3d/npcs/npc_N205.glb",
+   "template": "도령(아이)",
+   "height_m": 1.27,
+   "tris": 770,
+   "props": [
+    "book"
+   ],
+   "note": "아전 집 도령. 복건과 책",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 47,
+     "length_sec": 0.767,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       23
+      ]
+     },
+     "walk_speed_mps": 1.004,
+     "stride_m": 0.385,
+     "foot_slide": {
+      "max_mm_per_frame": 1.78,
+      "mean_mm_per_frame": 0.432,
+      "contact_pairs": 56
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Read",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "page_turn": 60
+     }
+    },
+    {
+     "name": "Scribble",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {
+      "stroke": [
+       10,
+       42,
+       74
+      ]
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N205.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Read",
+     "Scribble"
+    ],
+    "size_kb": 342
+   }
+  },
+  {
+   "id": "N206",
+   "name": "옥지기",
+   "file": "assets3d/npcs/npc_N206.glb",
+   "template": "관아 하인(옥)",
+   "height_m": 1.8,
+   "tris": 996,
+   "props": [
+    "keys"
+   ],
+   "note": "허리 열쇠 뭉치, 어두운 옷",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 65,
+     "length_sec": 1.067,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       32
+      ]
+     },
+     "walk_speed_mps": 1.163,
+     "stride_m": 0.62,
+     "foot_slide": {
+      "max_mm_per_frame": 2.94,
+      "mean_mm_per_frame": 0.462,
+      "contact_pairs": 76
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Guard",
+     "frames": 241,
+     "length_sec": 4.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Doze",
+     "frames": 241,
+     "length_sec": 4.0,
+     "loop": true,
+     "events": {
+      "jerk": 140
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N206.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Guard",
+     "Doze"
+    ],
+    "size_kb": 371
+   }
+  },
+  {
+   "id": "N207",
+   "name": "사령",
+   "file": "assets3d/npcs/npc_N207.glb",
+   "template": "관아 사령(군복)",
+   "height_m": 2.14,
+   "tris": 1012,
+   "props": [
+    "gonjang"
+   ],
+   "note": "붉은 군복·전립·곤장",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Talk",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Work",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": true,
+     "events": {
+      "hit": 8
+     }
+    },
+    {
+     "name": "Walk",
+     "frames": 65,
+     "length_sec": 1.067,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       32
+      ]
+     },
+     "walk_speed_mps": 1.186,
+     "stride_m": 0.632,
+     "foot_slide": {
+      "max_mm_per_frame": 3.0,
+      "mean_mm_per_frame": 0.471,
+      "contact_pairs": 76
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Startle",
+     "frames": 23,
+     "length_sec": 0.367,
+     "loop": false,
+     "events": {
+      "flinch": 4,
+      "end_pose_held": true
+     }
+    },
+    {
+     "name": "StartleHold",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StartleRecover",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "sigh": 18
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Guard",
+     "frames": 241,
+     "length_sec": 4.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Stamp",
+     "frames": 43,
+     "length_sec": 0.7,
+     "loop": false,
+     "events": {
+      "hit": 24
+     }
+    },
+    {
+     "name": "ReadNotice",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "read": [
+       0,
+       60
+      ]
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_N207.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Talk",
+     "Work",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Startle",
+     "StartleHold",
+     "StartleRecover",
+     "Weep",
+     "MournStand",
+     "Guard",
+     "Stamp",
+     "ReadNotice"
+    ],
+    "size_kb": 393
+   }
+  }
+ ]
+}

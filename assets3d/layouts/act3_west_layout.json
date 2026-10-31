@@ -1,0 +1,4734 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(필드 절대)",
+ "note": "place_act3_west.py가 만든다. z=땅 높이(terrain_act3_west). 다리 축 y=400, 상판 z 둔치 0.3 기준",
+ "props": [
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 4,
+   "rot": 270,
+   "z": 1.0,
+   "note": "도성 서쪽 성벽(높이 8m)",
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 12,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 20,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 28,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 36,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 44,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 52,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 60,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 68,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 76,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 84,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 92,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 100,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 108,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 116,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 124,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 132,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 140,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 148,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 156,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 164,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 172,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 180,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 188,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 196,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 204,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 228,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 236,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 244,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 252,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 260,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 268,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 276,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 284,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 292,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 300,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 308,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 316,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 324,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 332,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 340,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 348,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 356,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 364,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 372,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 380,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 388,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 396,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 404,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 412,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 420,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 428,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 436,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 444,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 452,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 460,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 468,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 476,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 484,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 492,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 500,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 508,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 516,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 524,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 532,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 540,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 548,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 556,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 564,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 572,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 580,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 588,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 596,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 604,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 612,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 620,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 628,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_wall",
+   "file": "assets3d/act3/city_wall.glb",
+   "x": -560,
+   "y": 636,
+   "rot": 270,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_gate",
+   "file": "assets3d/act3/city_gate.glb",
+   "x": -560,
+   "y": 215,
+   "rot": 270,
+   "z": 1.0,
+   "note": "닫힌 성문+문루(N-602 문지기 자리)",
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 8,
+   "rot": 90,
+   "z": 1.0,
+   "note": "성벽 너머 기와지붕 실루엣 띠(깊이 30m, 낮은 디테일)",
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 28,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 48,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 68,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 88,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 108,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 128,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 148,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 168,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 188,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 208,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 228,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 248,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 268,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 288,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 308,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 328,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 348,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 368,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 388,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 408,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 428,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 448,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 468,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 488,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 508,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 528,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 548,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 568,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 588,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 608,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "city_skyline",
+   "file": "assets3d/act3/city_skyline.glb",
+   "x": -568,
+   "y": 628,
+   "rot": 90,
+   "z": 1.0,
+   "by_design": true
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -322,
+   "y": 450,
+   "rot": 180,
+   "z": 0.83,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -317.43,
+   "y": 428.54,
+   "rot": 0,
+   "z": 0.6,
+   "note": "저잣 좌판(남쪽 줄)",
+   "walk_snap": {
+    "from": [
+     -317,
+     431
+    ],
+    "to": [
+     -317.43,
+     428.54
+    ]
+   }
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -307,
+   "y": 450,
+   "rot": 180,
+   "z": 0.91,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -302,
+   "y": 431,
+   "rot": 0,
+   "z": 0.7,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -292,
+   "y": 450,
+   "rot": 180,
+   "z": 1.0,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -287,
+   "y": 431,
+   "rot": 0,
+   "z": 0.95,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -277,
+   "y": 450,
+   "rot": 180,
+   "z": 1.0,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -272,
+   "y": 431,
+   "rot": 0,
+   "z": 1.0,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -262,
+   "y": 450,
+   "rot": 180,
+   "z": 1.0,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -257,
+   "y": 431,
+   "rot": 0,
+   "z": 1.01,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -247,
+   "y": 450,
+   "rot": 180,
+   "z": 1.0,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -242,
+   "y": 431,
+   "rot": 0,
+   "z": 1.01,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -232,
+   "y": 450,
+   "rot": 180,
+   "z": 1.01,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -227,
+   "y": 431,
+   "rot": 0,
+   "z": 1.01,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -217,
+   "y": 450,
+   "rot": 180,
+   "z": 1.01,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -212,
+   "y": 431,
+   "rot": 0,
+   "z": 1.01,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -202,
+   "y": 450,
+   "rot": 180,
+   "z": 1.01,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -197,
+   "y": 431,
+   "rot": 0,
+   "z": 1.0,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -187,
+   "y": 450,
+   "rot": 180,
+   "z": 1.0,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -182,
+   "y": 431,
+   "rot": 0,
+   "z": 1.0,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -172,
+   "y": 450,
+   "rot": 180,
+   "z": 1.0,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -167,
+   "y": 431,
+   "rot": 0,
+   "z": 0.97,
+   "note": "저잣 좌판(남쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -157,
+   "y": 450,
+   "rot": 180,
+   "z": 1.0,
+   "note": "저잣 좌판(북쪽 줄)"
+  },
+  {
+   "prop": "market_stall",
+   "file": "assets3d/act3/market_stall.glb",
+   "x": -152.5,
+   "y": 430.13,
+   "rot": 0,
+   "z": 0.95,
+   "note": "저잣 좌판(남쪽 줄)",
+   "walk_snap": {
+    "from": [
+     -152,
+     431
+    ],
+    "to": [
+     -152.5,
+     430.13
+    ]
+   }
+  },
+  {
+   "prop": "market_ricecake_stall",
+   "file": "assets3d/act3/market_ricecake_stall.glb",
+   "x": -225,
+   "y": 460,
+   "rot": 180,
+   "z": 1.01,
+   "note": "떡장수 좌판(K-003 떡시루)",
+   "by_design": true
+  },
+  {
+   "prop": "market_jige",
+   "file": "assets3d/act3/market_jige.glb",
+   "x": -262,
+   "y": 428,
+   "rot": 0,
+   "z": 1.0,
+   "note": "짐꾼 지게 자리(S-104)",
+   "by_design": true
+  },
+  {
+   "prop": "market_lantern_string",
+   "file": "assets3d/act3/market_lantern_string.glb",
+   "x": -312,
+   "y": 441,
+   "rot": 90,
+   "z": 0.79,
+   "note": "저잣 등불 줄(길 건너)",
+   "by_design": true
+  },
+  {
+   "prop": "market_lantern_string",
+   "file": "assets3d/act3/market_lantern_string.glb",
+   "x": -284,
+   "y": 441,
+   "rot": 90,
+   "z": 0.79,
+   "note": "저잣 등불 줄(길 건너)",
+   "by_design": true
+  },
+  {
+   "prop": "market_lantern_string",
+   "file": "assets3d/act3/market_lantern_string.glb",
+   "x": -256,
+   "y": 441,
+   "rot": 90,
+   "z": 0.92,
+   "note": "저잣 등불 줄(길 건너)",
+   "by_design": true
+  },
+  {
+   "prop": "market_lantern_string",
+   "file": "assets3d/act3/market_lantern_string.glb",
+   "x": -228,
+   "y": 441,
+   "rot": 90,
+   "z": 1.0,
+   "note": "저잣 등불 줄(길 건너)",
+   "by_design": true
+  },
+  {
+   "prop": "market_lantern_string",
+   "file": "assets3d/act3/market_lantern_string.glb",
+   "x": -200,
+   "y": 441,
+   "rot": 90,
+   "z": 0.98,
+   "note": "저잣 등불 줄(길 건너)",
+   "by_design": true
+  },
+  {
+   "prop": "market_lantern_string",
+   "file": "assets3d/act3/market_lantern_string.glb",
+   "x": -172,
+   "y": 441,
+   "rot": 90,
+   "z": 0.98,
+   "note": "저잣 등불 줄(길 건너)",
+   "by_design": true
+  },
+  {
+   "prop": "market_tile_house",
+   "file": "assets3d/act3/market_tile_house.glb",
+   "x": -300,
+   "y": 482,
+   "rot": 180,
+   "z": 1.0,
+   "note": "저잣 기와집(북쪽)"
+  },
+  {
+   "prop": "market_tile_house",
+   "file": "assets3d/act3/market_tile_house.glb",
+   "x": -308,
+   "y": 403,
+   "rot": 0,
+   "z": 0.62,
+   "note": "저잣 기와집(남쪽)"
+  },
+  {
+   "prop": "market_tile_house",
+   "file": "assets3d/act3/market_tile_house.glb",
+   "x": -266,
+   "y": 482,
+   "rot": 180,
+   "z": 1.01,
+   "note": "저잣 기와집(북쪽)"
+  },
+  {
+   "prop": "market_tile_house",
+   "file": "assets3d/act3/market_tile_house.glb",
+   "x": -274,
+   "y": 403,
+   "rot": 0,
+   "z": 1.01,
+   "note": "저잣 기와집(남쪽)"
+  },
+  {
+   "prop": "market_tile_house",
+   "file": "assets3d/act3/market_tile_house.glb",
+   "x": -226,
+   "y": 482,
+   "rot": 180,
+   "z": 1.01,
+   "note": "저잣 기와집(북쪽)"
+  },
+  {
+   "prop": "market_tile_house",
+   "file": "assets3d/act3/market_tile_house.glb",
+   "x": -234,
+   "y": 403,
+   "rot": 0,
+   "z": 1.0,
+   "note": "저잣 기와집(남쪽)"
+  },
+  {
+   "prop": "market_tile_house",
+   "file": "assets3d/act3/market_tile_house.glb",
+   "x": -190,
+   "y": 482,
+   "rot": 180,
+   "z": 1.01,
+   "note": "저잣 기와집(북쪽)"
+  },
+  {
+   "prop": "market_tile_house",
+   "file": "assets3d/act3/market_tile_house.glb",
+   "x": -198,
+   "y": 403,
+   "rot": 0,
+   "z": 1.0,
+   "note": "저잣 기와집(남쪽)"
+  },
+  {
+   "prop": "bridge_pier",
+   "file": "assets3d/act3/bridge_pier.glb",
+   "x": -396,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "note": "큰 다리 기둥·바닥",
+   "by_design": true
+  },
+  {
+   "prop": "bridge_deck",
+   "file": "assets3d/act3/bridge_deck.glb",
+   "x": -396,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "note": "큰 다리 상판·난간(재질 M_bridge_deck, B-11 반투명)",
+   "by_design": true
+  },
+  {
+   "prop": "bridge_pier",
+   "file": "assets3d/act3/bridge_pier.glb",
+   "x": -388,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "by_design": true
+  },
+  {
+   "prop": "bridge_deck",
+   "file": "assets3d/act3/bridge_deck.glb",
+   "x": -388,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "by_design": true
+  },
+  {
+   "prop": "bridge_pier",
+   "file": "assets3d/act3/bridge_pier.glb",
+   "x": -380,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "by_design": true
+  },
+  {
+   "prop": "bridge_deck",
+   "file": "assets3d/act3/bridge_deck.glb",
+   "x": -380,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "by_design": true
+  },
+  {
+   "prop": "bridge_pier",
+   "file": "assets3d/act3/bridge_pier.glb",
+   "x": -372,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "by_design": true
+  },
+  {
+   "prop": "bridge_deck",
+   "file": "assets3d/act3/bridge_deck.glb",
+   "x": -372,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "by_design": true
+  },
+  {
+   "prop": "bridge_pier",
+   "file": "assets3d/act3/bridge_pier.glb",
+   "x": -364,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "by_design": true
+  },
+  {
+   "prop": "bridge_deck",
+   "file": "assets3d/act3/bridge_deck.glb",
+   "x": -364,
+   "y": 400,
+   "rot": 0,
+   "z": 0.3,
+   "by_design": true
+  },
+  {
+   "prop": "river_hut_mat",
+   "file": "assets3d/act3/river_hut_mat.glb",
+   "x": -405,
+   "y": 362,
+   "rot": 0,
+   "z": 0.58,
+   "note": "쥐똥이 거적(B11-D2)",
+   "by_design": true
+  },
+  {
+   "prop": "river_hut_mat",
+   "file": "assets3d/act3/river_hut_mat.glb",
+   "x": -392,
+   "y": 372,
+   "rot": 20,
+   "z": 0.26,
+   "note": "다리 밑 거적 앞",
+   "by_design": true
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -520,
+   "y": 420,
+   "rot": 0,
+   "z": 2.67,
+   "note": "움막촌 판잣집"
+  },
+  {
+   "prop": "shack_b",
+   "file": "assets3d/act3/shack_b.glb",
+   "x": -505,
+   "y": 450,
+   "rot": 90,
+   "z": 2.31,
+   "note": "움막촌 판잣집"
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -490,
+   "y": 480,
+   "rot": 0,
+   "z": 2.05,
+   "note": "움막촌 판잣집"
+  },
+  {
+   "prop": "shack_b",
+   "file": "assets3d/act3/shack_b.glb",
+   "x": -530,
+   "y": 500,
+   "rot": 90,
+   "z": 2.89,
+   "note": "움막촌 판잣집"
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -470,
+   "y": 510,
+   "rot": 90,
+   "z": 1.64,
+   "note": "움막촌 판잣집"
+  },
+  {
+   "prop": "shack_b",
+   "file": "assets3d/act3/shack_b.glb",
+   "x": -515,
+   "y": 395,
+   "rot": 90,
+   "z": 2.57,
+   "note": "움막촌 판잣집"
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -475,
+   "y": 420,
+   "rot": 90,
+   "z": 1.74,
+   "note": "움막촌 판잣집"
+  },
+  {
+   "prop": "shack_a",
+   "file": "assets3d/act3/shack_a.glb",
+   "x": -495,
+   "y": 470,
+   "rot": 0,
+   "z": 2.16,
+   "note": "움막촌 어미 판잣집(S-105 어미)",
+   "by_design": true
+  },
+  {
+   "prop": "shack_well",
+   "file": "assets3d/act3/shack_well.glb",
+   "x": -480,
+   "y": 440,
+   "rot": 0,
+   "z": 1.85,
+   "note": "움막촌 우물",
+   "by_design": true
+  },
+  {
+   "prop": "city_gatekeeper_hut",
+   "file": "assets3d/act3/city_gatekeeper_hut.glb",
+   "x": -546,
+   "y": 252,
+   "rot": 270,
+   "z": 1.0,
+   "note": "문지기 막(N-602)",
+   "by_design": true
+  },
+  {
+   "prop": "city_gate_inn",
+   "file": "assets3d/act3/city_gate_inn.glb",
+   "x": -470,
+   "y": 265,
+   "rot": 0,
+   "z": 1.0,
+   "note": "성문 밖 주막(N-603, B12-D2)",
+   "by_design": true
+  },
+  {
+   "prop": "city_pit_grave",
+   "file": "assets3d/act3/city_pit_grave.glb",
+   "x": -508,
+   "y": 160,
+   "rot": 0,
+   "z": 1.0,
+   "note": "팻말 없는 구덩이 무덤(B-12 마당)",
+   "by_design": true
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 146,
+   "rot": 163,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 152,
+   "rot": 204,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 158,
+   "rot": 254,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 164,
+   "rot": 139,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 170,
+   "rot": 115,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 176,
+   "rot": 87,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 182,
+   "rot": 94,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 188,
+   "rot": 279,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 194,
+   "rot": 216,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 200,
+   "rot": 130,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 206,
+   "rot": 159,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 212,
+   "rot": 169,
+   "z": 1.1
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 218,
+   "rot": 339,
+   "z": 2.64
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 224,
+   "rot": 67,
+   "z": 2.44
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 230,
+   "rot": 93,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 236,
+   "rot": 1,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 242,
+   "rot": 267,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 248,
+   "rot": 194,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 254,
+   "rot": 162,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 260,
+   "rot": 263,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 266,
+   "rot": 170,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 272,
+   "rot": 259,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 278,
+   "rot": 359,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -548,
+   "y": 284,
+   "rot": 8,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 146,
+   "rot": 265,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 152,
+   "rot": 287,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 158,
+   "rot": 80,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 164,
+   "rot": 157,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 170,
+   "rot": 93,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 176,
+   "rot": 56,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 182,
+   "rot": 288,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 188,
+   "rot": 130,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 194,
+   "rot": 267,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 200,
+   "rot": 276,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 206,
+   "rot": 44,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 212,
+   "rot": 192,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 218,
+   "rot": 196,
+   "z": 1.83
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 224,
+   "rot": 314,
+   "z": 2.4
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 230,
+   "rot": 229,
+   "z": 1.55
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 236,
+   "rot": 220,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 242,
+   "rot": 58,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 248,
+   "rot": 198,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 254,
+   "rot": 301,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 260,
+   "rot": 44,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 266,
+   "rot": 245,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 272,
+   "rot": 4,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 278,
+   "rot": 322,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -542,
+   "y": 284,
+   "rot": 297,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 146,
+   "rot": 36,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 152,
+   "rot": 187,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 158,
+   "rot": 176,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 164,
+   "rot": 237,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 170,
+   "rot": 190,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 176,
+   "rot": 291,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 182,
+   "rot": 115,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 188,
+   "rot": 338,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 194,
+   "rot": 261,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 200,
+   "rot": 346,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 206,
+   "rot": 123,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 212,
+   "rot": 118,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 218,
+   "rot": 277,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 224,
+   "rot": 306,
+   "z": 2.24
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 230,
+   "rot": 264,
+   "z": 2.17
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 236,
+   "rot": 236,
+   "z": 1.01
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 242,
+   "rot": 89,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 248,
+   "rot": 218,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 254,
+   "rot": 358,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 260,
+   "rot": 199,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 266,
+   "rot": 207,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 272,
+   "rot": 202,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 278,
+   "rot": 50,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -536,
+   "y": 284,
+   "rot": 46,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 146,
+   "rot": 190,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 152,
+   "rot": 148,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 158,
+   "rot": 250,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 164,
+   "rot": 38,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 170,
+   "rot": 266,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 176,
+   "rot": 235,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 182,
+   "rot": 69,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 188,
+   "rot": 179,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 194,
+   "rot": 197,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 200,
+   "rot": 71,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 206,
+   "rot": 64,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 212,
+   "rot": 62,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 218,
+   "rot": 327,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 224,
+   "rot": 25,
+   "z": 1.2
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 230,
+   "rot": 331,
+   "z": 2.02
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 236,
+   "rot": 170,
+   "z": 1.74
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 242,
+   "rot": 51,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 248,
+   "rot": 17,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 254,
+   "rot": 1,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 260,
+   "rot": 187,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 266,
+   "rot": 221,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 272,
+   "rot": 90,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 278,
+   "rot": 133,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -530,
+   "y": 284,
+   "rot": 321,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 146,
+   "rot": 309,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 152,
+   "rot": 128,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 158,
+   "rot": 316,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 164,
+   "rot": 234,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 170,
+   "rot": 33,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 176,
+   "rot": 252,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 182,
+   "rot": 272,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 188,
+   "rot": 44,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 194,
+   "rot": 308,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 200,
+   "rot": 95,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 206,
+   "rot": 138,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 212,
+   "rot": 95,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 218,
+   "rot": 117,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 224,
+   "rot": 129,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 230,
+   "rot": 221,
+   "z": 1.65
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 236,
+   "rot": 221,
+   "z": 1.78
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 242,
+   "rot": 314,
+   "z": 1.16
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 248,
+   "rot": 94,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 254,
+   "rot": 122,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 260,
+   "rot": 12,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 266,
+   "rot": 261,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 272,
+   "rot": 129,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 278,
+   "rot": 235,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -524,
+   "y": 284,
+   "rot": 70,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 146,
+   "rot": 96,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 152,
+   "rot": 270,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 158,
+   "rot": 243,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 164,
+   "rot": 353,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 170,
+   "rot": 349,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 176,
+   "rot": 110,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 182,
+   "rot": 55,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 188,
+   "rot": 65,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 194,
+   "rot": 333,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 200,
+   "rot": 310,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 206,
+   "rot": 177,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 212,
+   "rot": 218,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 218,
+   "rot": 346,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 224,
+   "rot": 237,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 230,
+   "rot": 166,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 236,
+   "rot": 247,
+   "z": 1.64
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 242,
+   "rot": 26,
+   "z": 1.55
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 248,
+   "rot": 161,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 254,
+   "rot": 260,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 260,
+   "rot": 31,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 266,
+   "rot": 63,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 272,
+   "rot": 57,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 278,
+   "rot": 23,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -518,
+   "y": 284,
+   "rot": 180,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 146,
+   "rot": 18,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 152,
+   "rot": 212,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 158,
+   "rot": 88,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 164,
+   "rot": 238,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 170,
+   "rot": 175,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 176,
+   "rot": 127,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 182,
+   "rot": 11,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 188,
+   "rot": 321,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 194,
+   "rot": 303,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 200,
+   "rot": 126,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 206,
+   "rot": 176,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 212,
+   "rot": 322,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 218,
+   "rot": 128,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 224,
+   "rot": 282,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 230,
+   "rot": 247,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 236,
+   "rot": 21,
+   "z": 1.17
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 242,
+   "rot": 57,
+   "z": 1.4
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 248,
+   "rot": 355,
+   "z": 1.19
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 254,
+   "rot": 97,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 260,
+   "rot": 120,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 266,
+   "rot": 2,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 272,
+   "rot": 136,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 278,
+   "rot": 275,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -512,
+   "y": 284,
+   "rot": 168,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 146,
+   "rot": 290,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 152,
+   "rot": 134,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 158,
+   "rot": 326,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 164,
+   "rot": 156,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 170,
+   "rot": 17,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 176,
+   "rot": 139,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 182,
+   "rot": 97,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 188,
+   "rot": 17,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 194,
+   "rot": 101,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 200,
+   "rot": 139,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 206,
+   "rot": 126,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 212,
+   "rot": 74,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 218,
+   "rot": 125,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 224,
+   "rot": 206,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 230,
+   "rot": 239,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 236,
+   "rot": 271,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 242,
+   "rot": 131,
+   "z": 1.23
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 248,
+   "rot": 139,
+   "z": 1.17
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 254,
+   "rot": 300,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 260,
+   "rot": 42,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 266,
+   "rot": 175,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 272,
+   "rot": 352,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 278,
+   "rot": 225,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -506,
+   "y": 284,
+   "rot": 160,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 146,
+   "rot": 168,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 152,
+   "rot": 111,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 158,
+   "rot": 247,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 164,
+   "rot": 170,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 170,
+   "rot": 45,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 176,
+   "rot": 134,
+   "z": 0.97
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 182,
+   "rot": 250,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 188,
+   "rot": 64,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 194,
+   "rot": 119,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 200,
+   "rot": 319,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 206,
+   "rot": 33,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 212,
+   "rot": 135,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 218,
+   "rot": 345,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 224,
+   "rot": 292,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 230,
+   "rot": 109,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 236,
+   "rot": 121,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 242,
+   "rot": 133,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 248,
+   "rot": 69,
+   "z": 1.02
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 254,
+   "rot": 0,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 260,
+   "rot": 261,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 266,
+   "rot": 297,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 272,
+   "rot": 353,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 278,
+   "rot": 237,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -500,
+   "y": 284,
+   "rot": 321,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 146,
+   "rot": 139,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 152,
+   "rot": 8,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 158,
+   "rot": 98,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 164,
+   "rot": 68,
+   "z": 0.9
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 170,
+   "rot": 238,
+   "z": 0.87
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 176,
+   "rot": 86,
+   "z": 0.93
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 182,
+   "rot": 9,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 188,
+   "rot": 157,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 194,
+   "rot": 67,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 200,
+   "rot": 325,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 206,
+   "rot": 345,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 212,
+   "rot": 46,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 218,
+   "rot": 94,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 224,
+   "rot": 42,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 230,
+   "rot": 155,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 236,
+   "rot": 87,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 242,
+   "rot": 207,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 248,
+   "rot": 118,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 254,
+   "rot": 199,
+   "z": 0.98
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 260,
+   "rot": 248,
+   "z": 0.98
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 266,
+   "rot": 70,
+   "z": 0.98
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 272,
+   "rot": 105,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 278,
+   "rot": 49,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -494,
+   "y": 284,
+   "rot": 107,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 146,
+   "rot": 48,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 152,
+   "rot": 327,
+   "z": 0.97
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 158,
+   "rot": 199,
+   "z": 0.62
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 164,
+   "rot": 224,
+   "z": 0.7
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 170,
+   "rot": 153,
+   "z": 0.81
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 176,
+   "rot": 162,
+   "z": 0.9
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 182,
+   "rot": 39,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 188,
+   "rot": 132,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 194,
+   "rot": 206,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 200,
+   "rot": 151,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 206,
+   "rot": 260,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 212,
+   "rot": 269,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 218,
+   "rot": 358,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 224,
+   "rot": 209,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 230,
+   "rot": 305,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 236,
+   "rot": 78,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 242,
+   "rot": 341,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 248,
+   "rot": 214,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 254,
+   "rot": 255,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 260,
+   "rot": 187,
+   "z": 0.98
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 266,
+   "rot": 131,
+   "z": 0.97
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 272,
+   "rot": 70,
+   "z": 0.96
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 278,
+   "rot": 327,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -488,
+   "y": 284,
+   "rot": 284,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 146,
+   "rot": 16,
+   "z": 0.61
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 152,
+   "rot": 126,
+   "z": 0.32
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 158,
+   "rot": 249,
+   "z": 0.48
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 164,
+   "rot": 61,
+   "z": 0.62
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 170,
+   "rot": 219,
+   "z": 0.88
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 176,
+   "rot": 134,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 182,
+   "rot": 116,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 188,
+   "rot": 3,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 194,
+   "rot": 323,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 200,
+   "rot": 234,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 206,
+   "rot": 75,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 212,
+   "rot": 201,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 218,
+   "rot": 247,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 224,
+   "rot": 330,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 230,
+   "rot": 99,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 236,
+   "rot": 234,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 242,
+   "rot": 153,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 248,
+   "rot": 320,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 254,
+   "rot": 129,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 278,
+   "rot": 49,
+   "z": 0.94
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -482,
+   "y": 284,
+   "rot": 235,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 146,
+   "rot": 283,
+   "z": 0.02
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 152,
+   "rot": 68,
+   "z": 0.21
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 158,
+   "rot": 290,
+   "z": 0.44
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 164,
+   "rot": 350,
+   "z": 0.97
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 170,
+   "rot": 190,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 176,
+   "rot": 190,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 182,
+   "rot": 327,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 188,
+   "rot": 262,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 194,
+   "rot": 210,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 200,
+   "rot": 201,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 206,
+   "rot": 64,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 212,
+   "rot": 109,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 218,
+   "rot": 113,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 224,
+   "rot": 258,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 230,
+   "rot": 183,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 236,
+   "rot": 222,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 242,
+   "rot": 333,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 248,
+   "rot": 352,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 278,
+   "rot": 283,
+   "z": 0.94
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -476,
+   "y": 284,
+   "rot": 157,
+   "z": 0.93
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 146,
+   "rot": 147,
+   "z": -0.11
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 152,
+   "rot": 148,
+   "z": 0.58
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 158,
+   "rot": 218,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 164,
+   "rot": 150,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 170,
+   "rot": 104,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 176,
+   "rot": 358,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 182,
+   "rot": 142,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 188,
+   "rot": 232,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 194,
+   "rot": 94,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 200,
+   "rot": 303,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 206,
+   "rot": 22,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 212,
+   "rot": 84,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 218,
+   "rot": 240,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 224,
+   "rot": 350,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 230,
+   "rot": 27,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 236,
+   "rot": 62,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 242,
+   "rot": 122,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 248,
+   "rot": 96,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -470,
+   "y": 284,
+   "rot": 29,
+   "z": 0.93
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 146,
+   "rot": 183,
+   "z": 0.93
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 152,
+   "rot": 164,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 158,
+   "rot": 171,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 164,
+   "rot": 37,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 170,
+   "rot": 165,
+   "z": 0.99
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 176,
+   "rot": 61,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 182,
+   "rot": 354,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 188,
+   "rot": 340,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 194,
+   "rot": 340,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 200,
+   "rot": 123,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 206,
+   "rot": 90,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 212,
+   "rot": 27,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 218,
+   "rot": 276,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 224,
+   "rot": 339,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 230,
+   "rot": 242,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 236,
+   "rot": 94,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 242,
+   "rot": 158,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 248,
+   "rot": 263,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 278,
+   "rot": 263,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -464,
+   "y": 284,
+   "rot": 256,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 146,
+   "rot": 45,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 152,
+   "rot": 216,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 158,
+   "rot": 334,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 164,
+   "rot": 294,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 170,
+   "rot": 161,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 176,
+   "rot": 225,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 182,
+   "rot": 114,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 188,
+   "rot": 2,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 194,
+   "rot": 70,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 200,
+   "rot": 154,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 206,
+   "rot": 78,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 212,
+   "rot": 243,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 218,
+   "rot": 34,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 224,
+   "rot": 351,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 230,
+   "rot": 242,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 236,
+   "rot": 208,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 242,
+   "rot": 326,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 248,
+   "rot": 228,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 254,
+   "rot": 283,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 278,
+   "rot": 10,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -458,
+   "y": 284,
+   "rot": 334,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 146,
+   "rot": 272,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 152,
+   "rot": 238,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 158,
+   "rot": 9,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 164,
+   "rot": 359,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 170,
+   "rot": 68,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 176,
+   "rot": 158,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 182,
+   "rot": 185,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 188,
+   "rot": 239,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 194,
+   "rot": 301,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 200,
+   "rot": 40,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 206,
+   "rot": 145,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 212,
+   "rot": 187,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 218,
+   "rot": 60,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 224,
+   "rot": 133,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 230,
+   "rot": 129,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 236,
+   "rot": 239,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 242,
+   "rot": 148,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 248,
+   "rot": 30,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 254,
+   "rot": 141,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 260,
+   "rot": 281,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 266,
+   "rot": 264,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 272,
+   "rot": 129,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 278,
+   "rot": 112,
+   "z": 1.0
+  },
+  {
+   "prop": "snow_patch",
+   "file": "assets3d/act3/snow_patch.glb",
+   "x": -452,
+   "y": 284,
+   "rot": 13,
+   "z": 1.0
+  }
+ ]
+}

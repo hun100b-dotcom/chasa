@@ -1,0 +1,153 @@
+{
+ "_설명": "1막 손맛 이펙트 그림. 띠 PNG를 frame_px 정사각으로 잘라 life_s 동안 차례로. 앞쪽=+X(코드가 회전). 글자 없음.",
+ "sprites": {
+  "hit_chain": {
+   "file": "hit_chain.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.2,
+   "fps": 30,
+   "weapon": "철삭",
+   "use": "보통 타"
+  },
+  "hit_chain_big": {
+   "file": "hit_chain_big.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.3,
+   "fps": 20,
+   "weapon": "철삭",
+   "use": "3타 마무리·견인 명중"
+  },
+  "hit_mace": {
+   "file": "hit_mace.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.2,
+   "fps": 30,
+   "weapon": "육모방망이",
+   "use": "보통 타"
+  },
+  "hit_mace_big": {
+   "file": "hit_mace_big.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.3,
+   "fps": 20,
+   "weapon": "육모방망이",
+   "use": "3타 내려찍기"
+  },
+  "hit_bell": {
+   "file": "hit_bell.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.2,
+   "fps": 30,
+   "weapon": "요령방울",
+   "use": "보통 타"
+  },
+  "hit_bell_big": {
+   "file": "hit_bell_big.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.3,
+   "fps": 20,
+   "weapon": "요령방울",
+   "use": "3타 종"
+  },
+  "hit_trident": {
+   "file": "hit_trident.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.2,
+   "fps": 30,
+   "weapon": "삼지창",
+   "use": "보통 타"
+  },
+  "hit_trident_big": {
+   "file": "hit_trident_big.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.3,
+   "fps": 20,
+   "weapon": "삼지창",
+   "use": "3타 찌르기"
+  },
+  "hit_brush": {
+   "file": "hit_brush.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.2,
+   "fps": 30,
+   "weapon": "명부 붓",
+   "use": "보통 타"
+  },
+  "hit_brush_big": {
+   "file": "hit_brush_big.png",
+   "frames": 6,
+   "frame_px": 256,
+   "life_s": 0.3,
+   "fps": 20,
+   "weapon": "명부 붓",
+   "use": "3타 먹 뿌리기"
+  },
+  "hit_flash": {
+   "file": "hit_flash.png",
+   "frames": 4,
+   "frame_px": 256,
+   "life_s": 0.12,
+   "fps": 33,
+   "use": "모든 명중 위에 겹치는 흰 점광. 적 재질 번쩍(0.09초)과 같이"
+  },
+  "tendo_motes": {
+   "file": "tendo_motes.png",
+   "frames": 8,
+   "frame_px": 256,
+   "life_s": 0.8,
+   "fps": 10,
+   "use": "천도 완료 슬로모(0.35초) 동안 시작해 0.8초 위로 오르며 사라짐. 흔들림·번쩍 없음(보냄)"
+  },
+  "pahon_ring": {
+   "file": "pahon_ring.png",
+   "frames": 8,
+   "frame_px": 256,
+   "life_s": 0.4,
+   "fps": 20,
+   "use": "파혼 폭발: 히트스톱 8프레임 동안 첫 프레임에 붙들었다가 풀리며 반경 끝(3.55m)까지 퍼짐. 주황은 파혼 전용"
+  },
+  "wait_pulse_fresh": {
+   "file": "wait_pulse_fresh.png",
+   "frames": 4,
+   "frame_px": 256,
+   "life_s": 0.5,
+   "fps": 8,
+   "use": "처결 대기 남은 2초부터 0.5초마다 맥박(고리 지름 1.8m 기준). 소리 예고와 같이"
+  },
+  "wait_pulse_day": {
+   "file": "wait_pulse_day.png",
+   "frames": 4,
+   "frame_px": 256,
+   "life_s": 0.5,
+   "fps": 8,
+   "use": "처결 대기 남은 2초부터 0.5초마다 맥박(고리 지름 1.8m 기준). 소리 예고와 같이"
+  },
+  "wait_pulse_old": {
+   "file": "wait_pulse_old.png",
+   "frames": 4,
+   "frame_px": 256,
+   "life_s": 0.5,
+   "fps": 8,
+   "use": "처결 대기 남은 2초부터 0.5초마다 맥박(고리 지름 1.8m 기준). 소리 예고와 같이"
+  },
+  "hit_player_vignette": {
+   "file": "hit_player_vignette.png",
+   "frames": 1,
+   "frame_px": [
+    512,
+    288
+   ],
+   "life_s": 0.15,
+   "note": "화면 전체에 늘려 덮고 알파를 0.15초 안에 1→0. 가장자리만 붉고 가운데는 비어 시야를 안 가린다"
+  }
+ }
+}

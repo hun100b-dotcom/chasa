@@ -1,0 +1,480 @@
+{
+ "_설명": "서낭당 5곳 문구(처음 만져 볼 때 · 쉬기) + 첫 밤 솔고개 엿듣기 보강. tools/seonang_texts.py로 생성. 서사 2026-10-26",
+ "seonang": {
+  "rule": {
+   "first_touch": "그 서낭당에서 F(쉬기·넋길·만져 보기 무엇이든)를 처음 누를 때 한 번. 화면 하단 월드 안내 자리, 두 줄 3초. 저장(seonangTouched)",
+   "rest": "쉬기를 마친 뒤 기존 줄 \"서낭당에 이름을 걸어 두었다\" 다음 0.6초 뒤에 한 줄 2.5초. 낮이면 rest_day, 밤이면 rest_night에서 하나(직전과 다른 줄)",
+   "after_boss": "그 관할 보스 처결 뒤 첫 낮 쉬기 한 번만 rest_day 대신. 천도·파혼 둘 다 같은 길이 · 같은 자리",
+   "death_wake": "첫 죽음(M13): 가장 가까운 서낭당에서 깨어날 때 한 줄 — 서사 확인"
+  },
+  "death_wake": "아직 보낼 이름이 남았다",
+  "shrines": [
+   {
+    "model": "prop_seonangdang_solgogae",
+    "zone": "① 솔고개 마을",
+    "first_touch": [
+     "금줄에 손이 그대로 지나간다",
+     "서낭나무 껍질만 손바닥에 닿는다"
+    ],
+    "rest_day": [
+     "볕이 드는데 발밑이 비어 있다",
+     "오방색 헝겊 다섯이 바람에 논다"
+    ],
+    "rest_night": [
+     "제물상 촛불이 이쪽으로 눕는다",
+     "떡 냄새가 아직 남아 있다"
+    ],
+    "rest_halmi": "할미가 문득 이쪽을 돌아본다",
+    "note": "rest_halmi는 당할미가 서낭당에 있을 때(새벽·저녁)만 rest_* 대신. 찬 기운을 아는 산 사람은 할미뿐(WORLD-BIBLE §5-1)"
+   },
+   {
+    "model": "prop_seonangdang_boritdeul",
+    "zone": "② 보릿들",
+    "first_touch": [
+     "솟대 장대에 손이 지나간다",
+     "발밑 흙만 축축하게 닿는다"
+    ],
+    "rest_day": [
+     "보리 이삭 단지가 가득하다",
+     "솟대 새가 마을 쪽을 본다"
+    ],
+    "rest_night": [
+     "짚단 냄새가 난다",
+     "멀리 물꼬 소리가 들린다"
+    ]
+   },
+   {
+    "model": "prop_seonangdang_mulmagi",
+    "zone": "③ 물막이 골 어귀",
+    "first_touch": [
+     "소금이 물 쪽으로만 뿌려져 있다",
+     "푸른 헝겊이 젖어 늘어졌다"
+    ],
+    "rest_day": [
+     "물독 둘이 가득 차 있다",
+     "젖은 마당에 발자국이 없다"
+    ],
+    "rest_night": [
+     "골 아래서 물소리가 올라온다",
+     "기운 장승이 물 쪽을 본다"
+    ],
+    "after_boss": {
+     "boss": "B-01",
+     "tendo": "소금 무더기를 누가 쓸어 냈다",
+     "pahon": "물 쪽 소금 선이 한 줄 늘었다"
+    }
+   },
+   {
+    "model": "prop_seonangdang_geomeun",
+    "zone": "④ 검은여울 어귀",
+    "first_touch": [
+     "금줄이 가운데서 끊겨 있다",
+     "당집 문에 널을 엇대어 박았다"
+    ],
+    "rest_day": [
+     "장꾼들이 이 앞을 돌아서 간다",
+     "재 원 밖에 발자국이 많다"
+    ],
+    "rest_night": [
+     "촛불 심지가 젖은 채 있다",
+     "재 원 안이 고요하다"
+    ],
+    "after_boss": {
+     "boss": "B-03",
+     "tendo": "문에 박힌 널 하나가 빠져 있다",
+     "pahon": "재 원이 한 겹 더 둘러졌다"
+    }
+   },
+   {
+    "model": "prop_seonangdang_pyedang",
+    "zone": "⑤ 폐당집 어귀",
+    "first_touch": [
+     "깨진 그릇 조각이 손에 닿는다",
+     "누가 쓰던 것인지 모른다"
+    ],
+    "rest_day": [
+     "내려앉은 지붕에 볕이 든다",
+     "고사목에 걸 가지가 마땅찮다"
+    ],
+    "rest_night": [
+     "혼불 하나가 꺼지지 않는다",
+     "꺼진 향 냄새가 오래 남았다"
+    ],
+    "after_boss": {
+     "boss": "B-02",
+     "tendo": "그릇 조각이 한데 모여 있다",
+     "pahon": "그릇 조각이 더 잘게 깨져 있다"
+    },
+    "note": "⑤는 아직 배치 자리 없음(SEONANG-SET). 깨진 그릇이 닿는 것은 죽은 이의 물건이라서(세계 이치) — 풀어 말하지 않는다"
+   }
+  ]
+ },
+ "first_night_overhear": {
+  "rule": {
+   "when": "세이브의 첫 밤에만(깨어남 → 그 밤 새벽까지). 다음 밤부터는 npc_act1 일정대로. 각 자리 한 번",
+   "through": "true = 담·창호지 너머 목소리. 사람 모델 없이 그 자리에서 소리만 나고 머리 위 귀 아이콘은 벽에 붙는다. 엿듣기 원 3 m · 6초는 같다",
+   "record": "단서 아님(clue null, 소문). 기록 탭 \"들은 말\". 업 10 이상이면 half, 업 60 이상이면 닫힘(마을 소문 규칙)",
+   "pace": "깨어남(0:20)부터 박돌쇠(5:00)까지 걷는 길에 귀 아이콘이 약 40초마다 하나씩 보이게 놓았다. 기존 둘(순임 B01-D3, 윤 소사네 제사 B01-D1)과 겹치지 않음",
+   "speaker": "대화창 이름 탭 = lines[].speaker. 두 줄이 차례로 뜬다(30자/초)"
+  },
+  "spots": [
+   {
+    "id": "FN-01",
+    "near": "서낭당 고개 고갯마루",
+    "pos": {
+     "zone": "Hub",
+     "x": 196,
+     "y": 21.5
+    },
+    "through_wall": false,
+    "cond": "any",
+    "lines": [
+     {
+      "speaker": "늦은 장꾼",
+      "text": "해 지고는 이 고개 안 넘는 법인데."
+     },
+     {
+      "speaker": "장꾼 동무",
+      "text": "서낭당 앞에서 침이나 세 번 뱉고 가세."
+     }
+    ],
+    "line_half": "해 지고는 이 고개…",
+    "clue": null,
+    "note": "등불 든 장꾼 둘이 마을 쪽으로 내려간다(이동 중 엿듣기, 6초 따라 걷기)"
+   },
+   {
+    "id": "FN-02",
+    "near": "마을 어귀 정자",
+    "pos": {
+     "zone": "Village",
+     "x": 188.5,
+     "y": 42.5
+    },
+    "through_wall": false,
+    "cond": "before:S-001",
+    "lines": [
+     {
+      "speaker": "정자 사내",
+      "text": "대장간 날은 받았나."
+     },
+     {
+      "speaker": "담뱃대 노인",
+      "text": "아직. 자꾸 걸리는 게 있다더구먼."
+     }
+    ],
+    "line_half": "대장간 날은…",
+    "clue": null,
+    "note": "날 받기(소설 2·3장): 보내지 못한 혼이 있는 집은 날을 못 받는다. 풀어 말하지 않는다"
+   },
+   {
+    "id": "FN-02b",
+    "near": "마을 어귀 정자",
+    "pos": {
+     "zone": "Village",
+     "x": 188.5,
+     "y": 42.5
+    },
+    "through_wall": false,
+    "cond": "tendo:S-001",
+    "lines": [
+     {
+      "speaker": "정자 사내",
+      "text": "대장간 날 받았다네. 내일 아침이래."
+     },
+     {
+      "speaker": "담뱃대 노인",
+      "text": "그래. 걸리던 게 풀렸구먼."
+     }
+    ],
+    "line_half": "대장간 날 받았다네…",
+    "clue": null
+   },
+   {
+    "id": "FN-02c",
+    "near": "마을 어귀 정자",
+    "pos": {
+     "zone": "Village",
+     "x": 188.5,
+     "y": 42.5
+    },
+    "through_wall": false,
+    "cond": "pahon:S-001",
+    "lines": [
+     {
+      "speaker": "정자 사내",
+      "text": "대장간은 날 안 받고 그냥 묻는다네."
+     },
+     {
+      "speaker": "담뱃대 노인",
+      "text": "…조등만 걸어 두라 그래."
+     }
+    ],
+    "line_half": "대장간은 날 안 받고…",
+    "clue": null,
+    "note": "파혼한 이름혼 = 장례 없이 대문에 조등만(첫 세션 정본)"
+   },
+   {
+    "id": "FN-03",
+    "near": "당할미 집",
+    "pos": {
+     "zone": "Village",
+     "x": 196.0,
+     "y": 48.0
+    },
+    "through_wall": true,
+    "cond": "any",
+    "lines": [
+     {
+      "speaker": "옆집 아낙",
+      "text": "할미는 오늘도 안 들어오셨네."
+     },
+     {
+      "speaker": "옆집 사내",
+      "text": "그 양반은 밤엔 서낭당이 집이여."
+     }
+    ],
+    "line_half": "할미는 오늘도…",
+    "clue": null
+   },
+   {
+    "id": "FN-04",
+    "near": "우물가",
+    "pos": {
+     "zone": "Village",
+     "x": 198.5,
+     "y": 52.5
+    },
+    "through_wall": false,
+    "cond": "first_judge",
+    "lines": [
+     {
+      "speaker": "밤물 긷는 아낙",
+      "text": "아까 물독 물이 혼자 일렁였어."
+     },
+     {
+      "speaker": "그 딸",
+      "text": "바람도 없는데요."
+     }
+    ],
+    "line_half": "아까 물독 물이…",
+    "clue": null,
+    "note": "첫 혼을 처결한 그 우물가. 그가 남긴 흔적은 물만 흔들린다(세계 이치)"
+   },
+   {
+    "id": "FN-05",
+    "near": "우물가",
+    "pos": {
+     "zone": "Village",
+     "x": 193.5,
+     "y": 55.5
+    },
+    "through_wall": true,
+    "cond": "any",
+    "lines": [
+     {
+      "speaker": "창호지 너머 아낙",
+      "text": "오늘 밤엔 문고리 꼭 걸어요."
+     },
+     {
+      "speaker": "창호지 너머 사내",
+      "text": "대장간 양반 가고는 밤마다 그 소리네."
+     }
+    ],
+    "line_half": "오늘 밤엔 문고리…",
+    "clue": null
+   },
+   {
+    "id": "FN-06",
+    "near": "우물가",
+    "pos": {
+     "zone": "Village",
+     "x": 204.5,
+     "y": 50.5
+    },
+    "through_wall": true,
+    "cond": "before:S-001",
+    "lines": [
+     {
+      "speaker": "잠 못 든 아이",
+      "text": "엄마, 대장간 할아버지 이제 망치 안 쳐?"
+     },
+     {
+      "speaker": "아이 어미",
+      "text": "…그래. 이제 자."
+     }
+    ],
+    "line_half": "엄마, 대장간 할아버지…",
+    "clue": null
+   },
+   {
+    "id": "FN-07",
+    "near": "윤 소사네 마당",
+    "pos": {
+     "zone": "Village",
+     "x": 192.0,
+     "y": 61.5
+    },
+    "through_wall": false,
+    "cond": "any",
+    "lines": [
+     {
+      "speaker": "윤 소사네 아들",
+      "text": "어머니가 늘 차리던 상이다."
+     },
+     {
+      "speaker": "윤 소사네 며느리",
+      "text": "올해는 제가 메를 지을게요."
+     }
+    ],
+    "line_half": "어머니가 늘 차리던…",
+    "clue": null,
+    "note": "자시 제사(B01-D1 지켜보기) 앞 준비. 제사가 시작되면 닫힌다"
+   },
+   {
+    "id": "FN-08",
+    "near": "도씨네 집",
+    "pos": {
+     "zone": "Village",
+     "x": 195.0,
+     "y": 67.0
+    },
+    "through_wall": true,
+    "cond": "any",
+    "lines": [
+     {
+      "speaker": "도씨네 아낙",
+      "text": "줄배 줄이 또 풀렸대. 아무도 안 만졌는데."
+     },
+     {
+      "speaker": "도씨네 사내",
+      "text": "그 얘긴 할미 앞에서 하지 마라."
+     }
+    ],
+    "line_half": "줄배 줄이 또…",
+    "clue": null,
+    "note": "나루 영감(B-01) 쪽으로 눈을 돌리는 소문. 단서 아님"
+   },
+   {
+    "id": "FN-09",
+    "near": "보릿들 둑",
+    "pos": {
+     "zone": "Field",
+     "x": 284,
+     "y": 113.2
+    },
+    "through_wall": false,
+    "cond": "any",
+    "lines": [
+     {
+      "speaker": "물꼬 보는 아비",
+      "text": "둑 위로는 올라가지 마라. 해 지면 거긴 우리 자리가 아니다."
+     },
+     {
+      "speaker": "그 아들",
+      "text": "…누구 자린데요?"
+     }
+    ],
+    "line_half": "둑 위로는 올라가지…",
+    "clue": null,
+    "note": "둑길 싸움(2:30) 전에 들으면 좋다. 등불 하나, 물꼬만 보고 돌아간다"
+   },
+   {
+    "id": "FN-10",
+    "near": "대장간",
+    "pos": {
+     "zone": "Village",
+     "x": 215.0,
+     "y": 65.0
+    },
+    "through_wall": true,
+    "cond": "before:S-001",
+    "lines": [
+     {
+      "speaker": "용득",
+      "text": "풀무 불은 꺼뜨리지 마라."
+     },
+     {
+      "speaker": "금순",
+      "text": "아버지 오시면 쇠 달구신다고요?"
+     }
+    ],
+    "line_half": "풀무 불은 꺼뜨리지…",
+    "clue": null,
+    "note": "대장간 뒤 담 너머. 문 앞의 박돌쇠와 싸우기 전에 들을 수 있게 뒤쪽에 둔다"
+   },
+   {
+    "id": "FN-11",
+    "near": "대장간",
+    "pos": {
+     "zone": "Village",
+     "x": 215.0,
+     "y": 59.0
+    },
+    "through_wall": true,
+    "cond": "before:S-001",
+    "lines": [
+     {
+      "speaker": "박돌쇠 아내",
+      "text": "그 양반 쓰러질 때 나는 우물에 가 있었다."
+     },
+     {
+      "speaker": "용득",
+      "text": "어머니 탓 아니에요."
+     }
+    ],
+    "line_half": "그 양반 쓰러질 때…",
+    "clue": null,
+    "fact_hint": "F1",
+    "note": "박돌쇠 기억(\"아무도 오지 않았다\")의 그림자. 기억 문장을 미리 말하지 않는다"
+   },
+   {
+    "id": "FN-12",
+    "near": "대장간",
+    "pos": {
+     "zone": "Village",
+     "x": 215.0,
+     "y": 65.0
+    },
+    "through_wall": true,
+    "cond": "tendo:S-001",
+    "lines": [
+     {
+      "speaker": "금순",
+      "text": "오라버니, 화로 불이 방금 한 번 일었어."
+     },
+     {
+      "speaker": "용득",
+      "text": "…날 받으러 가자. 아침에."
+     }
+    ],
+    "line_half": "화로 불이 방금…",
+    "clue": null,
+    "note": "FN-10 자리를 대신한다. 불만 흔들린다(세계 이치)"
+   },
+   {
+    "id": "FN-13",
+    "near": "대장간",
+    "pos": {
+     "zone": "Village",
+     "x": 215.0,
+     "y": 65.0
+    },
+    "through_wall": true,
+    "cond": "pahon:S-001",
+    "lines": [
+     {
+      "speaker": "금순",
+      "text": "오라버니, 문풍지가 한 번 크게 울었어."
+     },
+     {
+      "speaker": "용득",
+      "text": "…문고리 걸어라."
+     }
+    ],
+    "line_half": "문풍지가 한 번…",
+    "clue": null,
+    "note": "FN-10 자리를 대신한다. 종이만 흔들린다(세계 이치). FN-12와 같은 길이"
+   }
+  ]
+ }
+}

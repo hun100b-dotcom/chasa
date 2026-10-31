@@ -1,0 +1,14 @@
+[
+ {
+  "name": "prop_seonangdang",
+  "label": "서낭당",
+  "tris": 700,
+  "size_m": [
+   5.7,
+   3.74,
+   6.52
+  ],
+  "min_z": 0.0,
+  "materials": 13
+ }
+]

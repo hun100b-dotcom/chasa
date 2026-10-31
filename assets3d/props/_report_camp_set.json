@@ -1,0 +1,218 @@
+[
+ {
+  "name": "prop_camp_fire_scar",
+  "label": "꺼진 모닥불 자국",
+  "group": "야영지",
+  "tris": 412,
+  "size_m": [
+   1.82,
+   1.76,
+   0.22
+  ],
+  "min_z": -0.038
+ },
+ {
+  "name": "prop_camp_mat",
+  "label": "거적 잠자리",
+  "group": "야영지",
+  "tris": 120,
+  "size_m": [
+   1.8,
+   0.9,
+   0.24
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_camp_bundle",
+  "label": "낡은 봇짐",
+  "group": "야영지",
+  "tris": 124,
+  "size_m": [
+   0.59,
+   0.5,
+   0.57
+  ],
+  "min_z": -0.018
+ },
+ {
+  "name": "prop_camp_lean_to",
+  "label": "거적 가리개",
+  "group": "야영지",
+  "tris": 104,
+  "size_m": [
+   1.8,
+   1.4,
+   1.32
+  ],
+  "min_z": -0.003
+ },
+ {
+  "name": "prop_camp_pot",
+  "label": "식은 솥",
+  "group": "야영지",
+  "tris": 150,
+  "size_m": [
+   0.94,
+   0.64,
+   0.66
+  ],
+  "min_z": -0.033
+ },
+ {
+  "name": "prop_camp_shoes",
+  "label": "벗어 둔 짚신+바가지",
+  "group": "야영지",
+  "tris": 104,
+  "size_m": [
+   0.7,
+   0.6,
+   0.2
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_camp_staff",
+  "label": "기댄 지팡이",
+  "group": "야영지",
+  "tris": 84,
+  "size_m": [
+   0.5,
+   0.28,
+   1.46
+  ],
+  "min_z": -0.012
+ },
+ {
+  "name": "prop_camp_log_seat",
+  "label": "앉던 통나무",
+  "group": "야영지",
+  "tris": 104,
+  "size_m": [
+   2.45,
+   0.9,
+   0.45
+  ],
+  "min_z": -0.0
+ },
+ {
+  "name": "prop_camp_trace",
+  "label": "먹은 흔적",
+  "group": "야영지",
+  "tris": 244,
+  "size_m": [
+   0.86,
+   0.9,
+   0.07
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_camp_pole_cloth",
+  "label": "헝겊 말뚝",
+  "group": "야영지",
+  "tris": 60,
+  "size_m": [
+   0.32,
+   0.24,
+   1.6
+  ],
+  "min_z": -0.001
+ },
+ {
+  "name": "prop_life_clothesline",
+  "label": "빨랫줄",
+  "group": "솔고개 길",
+  "tris": 144,
+  "size_m": [
+   3.54,
+   0.11,
+   1.9
+  ],
+  "min_z": -0.001
+ },
+ {
+  "name": "prop_life_water_yoke",
+  "label": "물지게",
+  "group": "솔고개 길",
+  "tris": 192,
+  "size_m": [
+   2.04,
+   0.95,
+   1.3
+  ],
+  "min_z": -0.011
+ },
+ {
+  "name": "prop_life_chili_mat",
+  "label": "고추 멍석",
+  "group": "솔고개 길",
+  "tris": 480,
+  "size_m": [
+   1.8,
+   1.2,
+   0.09
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_life_chicken_coop",
+  "label": "닭장",
+  "group": "솔고개 길",
+  "tris": 300,
+  "size_m": [
+   1.5,
+   1.1,
+   1.23
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_life_pumpkin_fence",
+  "label": "호박 넝쿨 울타리",
+  "group": "솔고개 길",
+  "tris": 540,
+  "size_m": [
+   2.48,
+   0.65,
+   1.15
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_life_meju_rack",
+  "label": "메주 시렁",
+  "group": "솔고개 길",
+  "tris": 168,
+  "size_m": [
+   2.1,
+   0.3,
+   1.8
+  ],
+  "min_z": 0.0
+ },
+ {
+  "name": "prop_life_jige",
+  "label": "지게+땔나무",
+  "group": "솔고개 길",
+  "tris": 172,
+  "size_m": [
+   0.64,
+   0.42,
+   1.71
+  ],
+  "min_z": -0.006
+ },
+ {
+  "name": "prop_life_straw_cover",
+  "label": "짚 덮은 장작",
+  "group": "솔고개 길",
+  "tris": 80,
+  "size_m": [
+   1.6,
+   1.0,
+   0.85
+  ],
+  "min_z": -0.005
+ }
+]

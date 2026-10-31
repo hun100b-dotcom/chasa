@@ -1,0 +1,214 @@
+{
+ "count": 441,
+ "dropped": [],
+ "overlaps": [],
+ "moved": [
+  {
+   "prop": "harbor_net_frame",
+   "file": "assets3d/act3/harbor_net_frame.glb",
+   "x": 1003.0,
+   "y": 455.0,
+   "rot": 0,
+   "z": 1.25,
+   "note": "그물 너는 마당(B09-D2 엿듣기 자리)",
+   "walk_snap": {
+    "from": [
+     1000,
+     455
+    ],
+    "to": [
+     1003.0,
+     455.0
+    ]
+   }
+  },
+  {
+   "prop": "harbor_net_pile",
+   "file": "assets3d/act3/harbor_net_pile.glb",
+   "x": 1019.0,
+   "y": 461.0,
+   "rot": 210,
+   "z": 1.83,
+   "walk_snap": {
+    "from": [
+     1018,
+     461
+    ],
+    "to": [
+     1019.0,
+     461.0
+    ]
+   }
+  },
+  {
+   "prop": "harbor_net_pile",
+   "file": "assets3d/act3/harbor_net_pile.glb",
+   "x": 1021.62,
+   "y": 447.32,
+   "rot": 240,
+   "z": 1.61,
+   "walk_snap": {
+    "from": [
+     1022,
+     447
+    ],
+    "to": [
+     1021.62,
+     447.32
+    ]
+   }
+  },
+  {
+   "prop": "harbor_gaekju_house",
+   "file": "assets3d/act3/harbor_gaekju_house.glb",
+   "x": 1048.55,
+   "y": 480.89,
+   "rot": 180,
+   "z": 1.26,
+   "note": "객주 집(마루 앞 (1048,466), B10-D1 장부)",
+   "walk_snap": {
+    "from": [
+     1052,
+     478
+    ],
+    "to": [
+     1048.55,
+     480.89
+    ]
+   }
+  },
+  {
+   "prop": "harbor_inn",
+   "file": "assets3d/act3/harbor_inn.glb",
+   "x": 1017.32,
+   "y": 405.75,
+   "rot": 180,
+   "z": 1.25,
+   "note": "포구 주막(B10-D2)",
+   "walk_snap": {
+    "from": [
+     1020,
+     408
+    ],
+    "to": [
+     1017.32,
+     405.75
+    ]
+   }
+  },
+  {
+   "prop": "salt_warehouse",
+   "file": "assets3d/act3/salt_warehouse.glb",
+   "x": 905.0,
+   "y": 300.0,
+   "rot": 0,
+   "z": 1.4,
+   "note": "소금 창고",
+   "walk_snap": {
+    "from": [
+     900,
+     300
+    ],
+    "to": [
+     905.0,
+     300.0
+    ]
+   }
+  },
+  {
+   "prop": "harbor_lamp_hut",
+   "file": "assets3d/act3/harbor_lamp_hut.glb",
+   "x": 911.94,
+   "y": 307.57,
+   "rot": 90,
+   "z": 0.38,
+   "note": "덕보 집",
+   "walk_snap": {
+    "from": [
+     915,
+     305
+    ],
+    "to": [
+     911.94,
+     307.57
+    ]
+   }
+  },
+  {
+   "prop": "shoal_rock",
+   "file": "assets3d/act3/shoal_rock.glb",
+   "x": 1101.5,
+   "y": 124.0,
+   "rot": 210,
+   "z": 0.0,
+   "note": "여울 바위(B10-D3)",
+   "walk_snap": {
+    "from": [
+     1098,
+     124
+    ],
+    "to": [
+     1101.5,
+     124.0
+    ]
+   }
+  },
+  {
+   "prop": "shoal_rock",
+   "file": "assets3d/act3/shoal_rock.glb",
+   "x": 1113.5,
+   "y": 160.0,
+   "rot": 172,
+   "z": 0.0,
+   "walk_snap": {
+    "from": [
+     1110,
+     160
+    ],
+    "to": [
+     1113.5,
+     160.0
+    ]
+   }
+  },
+  {
+   "prop": "shoal_rock",
+   "file": "assets3d/act3/shoal_rock.glb",
+   "x": 1163.5,
+   "y": 132.0,
+   "rot": 216,
+   "z": 0.0,
+   "walk_snap": {
+    "from": [
+     1160,
+     132
+    ],
+    "to": [
+     1163.5,
+     132.0
+    ]
+   }
+  }
+ ],
+ "per_model": {
+  "cape_hutmyo": 42,
+  "cape_new_grave": 1,
+  "cape_waiting_rock": 1,
+  "harbor_boat": 4,
+  "harbor_gaekju_house": 1,
+  "harbor_gauge_post": 2,
+  "harbor_inn": 1,
+  "harbor_jar": 4,
+  "harbor_lamp_hut": 5,
+  "harbor_net_frame": 3,
+  "harbor_net_pile": 3,
+  "harbor_pier": 10,
+  "salt_dike": 8,
+  "salt_pan": 288,
+  "salt_pile": 5,
+  "salt_warehouse": 1,
+  "shoal_rock": 4,
+  "shoal_wreck": 1,
+  "tide_water": 57
+ }
+}

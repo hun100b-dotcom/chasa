@@ -1,0 +1,31 @@
+{
+ "origin_m": [
+  -640,
+  -128
+ ],
+ "size_x_m": 1920,
+ "size_z_m": 128,
+ "size": 1920,
+ "height_res_x": 1921,
+ "height_res_z": 129,
+ "splat_res_x": 1920,
+ "splat_res_z": 128,
+ "height_min_m": -13.0,
+ "height_max_m": 8.0,
+ "coast_floor_m": -6.5,
+ "tide_low_m": -7.5,
+ "tide_high_m": -6.0,
+ "gaetgol_floor_m": -7.2,
+ "gaetgol_x": [
+  900,
+  420,
+  -200
+ ],
+ "layers": {
+  "dirt": "해안 모랫길",
+  "gravel": "벼랑 바위",
+  "splat_b.G": "물거품(썰물선)",
+  "splat_b.B": "젖은 바닥(밀물에 잠기는 높이)"
+ },
+ "note": "아트 terrain_act3_coast.py가 만든다. 행 0=남쪽(월드 y −128). 북쪽 가장자리는 이웃 땅과 같은 높이. 이 띠의 물판은 z −7.5(썰물)↔−6.0(밀물)로 오르내림(⑤ 항구의 −0.5↔+0.6과는 다른 물높이)."
+}

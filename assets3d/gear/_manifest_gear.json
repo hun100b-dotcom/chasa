@@ -1,0 +1,532 @@
+{
+ "_설명": "장비 5등급 조각. 같은 뼈대 이름(characters.BONES)·주인공과 같은 자리라 뼈 이름으로 바꿔 끼운다. 기본 모양의 해당 부분(갓·도포·띠·신·노리개)을 숨긴 뒤 이 조각을 쓴다.",
+ "tiers": {
+  "1": {
+   "name": "흔한",
+   "color": "#F3E7D3"
+  },
+  "2": {
+   "name": "손본",
+   "color": "#4FA8A0"
+  },
+  "3": {
+   "name": "귀한",
+   "color": "#D4A94E"
+  },
+  "4": {
+   "name": "이름 있는",
+   "color": "#E85C41"
+  },
+  "5": {
+   "name": "한 벌",
+   "color": "#5FE3C0"
+  }
+ },
+ "pieces": [
+  {
+   "name": "gear_gat_t1",
+   "slot": "gat",
+   "tier": 1,
+   "tier_name": "흔한",
+   "tier_color": "#F3E7D3",
+   "tris": 598,
+   "size_m": [
+    0.86,
+    0.76,
+    0.83
+   ],
+   "bones": [
+    "Head"
+   ]
+  },
+  {
+   "name": "gear_gat_t2",
+   "slot": "gat",
+   "tier": 2,
+   "tier_name": "손본",
+   "tier_color": "#4FA8A0",
+   "tris": 778,
+   "size_m": [
+    0.86,
+    0.76,
+    0.83
+   ],
+   "bones": [
+    "Head"
+   ]
+  },
+  {
+   "name": "gear_gat_t3",
+   "slot": "gat",
+   "tier": 3,
+   "tier_name": "귀한",
+   "tier_color": "#D4A94E",
+   "tris": 826,
+   "size_m": [
+    0.86,
+    0.76,
+    0.83
+   ],
+   "bones": [
+    "Head"
+   ]
+  },
+  {
+   "name": "gear_gat_t4",
+   "slot": "gat",
+   "tier": 4,
+   "tier_name": "이름 있는",
+   "tier_color": "#E85C41",
+   "tris": 1030,
+   "size_m": [
+    0.86,
+    0.76,
+    1.09
+   ],
+   "bones": [
+    "Head"
+   ]
+  },
+  {
+   "name": "gear_gat_t5",
+   "slot": "gat",
+   "tier": 5,
+   "tier_name": "한 벌",
+   "tier_color": "#5FE3C0",
+   "tris": 1042,
+   "size_m": [
+    0.86,
+    0.76,
+    1.19
+   ],
+   "bones": [
+    "Head"
+   ]
+  },
+  {
+   "name": "gear_dopo_t1",
+   "slot": "dopo",
+   "tier": 1,
+   "tier_name": "흔한",
+   "tier_color": "#F3E7D3",
+   "tris": 864,
+   "size_m": [
+    1.42,
+    0.91,
+    1.48
+   ],
+   "bones": [
+    "Chest",
+    "Hips",
+    "Spine",
+    "UpperArm.L",
+    "UpperArm.R"
+   ]
+  },
+  {
+   "name": "gear_dopo_t2",
+   "slot": "dopo",
+   "tier": 2,
+   "tier_name": "손본",
+   "tier_color": "#4FA8A0",
+   "tris": 864,
+   "size_m": [
+    1.42,
+    0.91,
+    1.48
+   ],
+   "bones": [
+    "Chest",
+    "Hips",
+    "Spine",
+    "UpperArm.L",
+    "UpperArm.R"
+   ]
+  },
+  {
+   "name": "gear_dopo_t3",
+   "slot": "dopo",
+   "tier": 3,
+   "tier_name": "귀한",
+   "tier_color": "#D4A94E",
+   "tris": 900,
+   "size_m": [
+    1.42,
+    0.91,
+    1.48
+   ],
+   "bones": [
+    "Chest",
+    "Hips",
+    "Spine",
+    "UpperArm.L",
+    "UpperArm.R"
+   ]
+  },
+  {
+   "name": "gear_dopo_t4",
+   "slot": "dopo",
+   "tier": 4,
+   "tier_name": "이름 있는",
+   "tier_color": "#E85C41",
+   "tris": 900,
+   "size_m": [
+    1.42,
+    0.91,
+    1.48
+   ],
+   "bones": [
+    "Chest",
+    "Hips",
+    "Spine",
+    "UpperArm.L",
+    "UpperArm.R"
+   ]
+  },
+  {
+   "name": "gear_dopo_t5",
+   "slot": "dopo",
+   "tier": 5,
+   "tier_name": "한 벌",
+   "tier_color": "#5FE3C0",
+   "tris": 912,
+   "size_m": [
+    1.42,
+    0.91,
+    1.49
+   ],
+   "bones": [
+    "Chest",
+    "Hips",
+    "Spine",
+    "UpperArm.L",
+    "UpperArm.R"
+   ]
+  },
+  {
+   "name": "gear_tti_t1",
+   "slot": "tti",
+   "tier": 1,
+   "tier_name": "흔한",
+   "tier_color": "#F3E7D3",
+   "tris": 84,
+   "size_m": [
+    0.47,
+    0.62,
+    0.4
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_tti_t2",
+   "slot": "tti",
+   "tier": 2,
+   "tier_name": "손본",
+   "tier_color": "#4FA8A0",
+   "tris": 108,
+   "size_m": [
+    0.56,
+    0.64,
+    0.56
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_tti_t3",
+   "slot": "tti",
+   "tier": 3,
+   "tier_name": "귀한",
+   "tier_color": "#D4A94E",
+   "tris": 144,
+   "size_m": [
+    0.57,
+    0.67,
+    0.87
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_tti_t4",
+   "slot": "tti",
+   "tier": 4,
+   "tier_name": "이름 있는",
+   "tier_color": "#E85C41",
+   "tris": 198,
+   "size_m": [
+    0.57,
+    0.67,
+    1.0
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_tti_t5",
+   "slot": "tti",
+   "tier": 5,
+   "tier_name": "한 벌",
+   "tier_color": "#5FE3C0",
+   "tris": 246,
+   "size_m": [
+    0.57,
+    0.67,
+    1.0
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_sin_t1",
+   "slot": "sin",
+   "tier": 1,
+   "tier_name": "흔한",
+   "tier_color": "#F3E7D3",
+   "tris": 96,
+   "size_m": [
+    0.39,
+    0.28,
+    0.09
+   ],
+   "bones": [
+    "Foot.L",
+    "Foot.R"
+   ]
+  },
+  {
+   "name": "gear_sin_t2",
+   "slot": "sin",
+   "tier": 2,
+   "tier_name": "손본",
+   "tier_color": "#4FA8A0",
+   "tris": 72,
+   "size_m": [
+    0.38,
+    0.28,
+    0.13
+   ],
+   "bones": [
+    "Foot.L",
+    "Foot.R"
+   ]
+  },
+  {
+   "name": "gear_sin_t3",
+   "slot": "sin",
+   "tier": 3,
+   "tier_name": "귀한",
+   "tier_color": "#D4A94E",
+   "tris": 72,
+   "size_m": [
+    0.38,
+    0.28,
+    0.13
+   ],
+   "bones": [
+    "Foot.L",
+    "Foot.R"
+   ]
+  },
+  {
+   "name": "gear_sin_t4",
+   "slot": "sin",
+   "tier": 4,
+   "tier_name": "이름 있는",
+   "tier_color": "#E85C41",
+   "tris": 96,
+   "size_m": [
+    0.38,
+    0.31,
+    0.15
+   ],
+   "bones": [
+    "Foot.L",
+    "Foot.R"
+   ]
+  },
+  {
+   "name": "gear_sin_t5",
+   "slot": "sin",
+   "tier": 5,
+   "tier_name": "한 벌",
+   "tier_color": "#5FE3C0",
+   "tris": 96,
+   "size_m": [
+    0.38,
+    0.29,
+    0.15
+   ],
+   "bones": [
+    "Foot.L",
+    "Foot.R"
+   ]
+  },
+  {
+   "name": "gear_norigae_t1_R",
+   "slot": "norigae",
+   "tier": 1,
+   "tier_name": "흔한",
+   "tier_color": "#F3E7D3",
+   "tris": 66,
+   "size_m": [
+    0.06,
+    0.06,
+    0.28
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t1_L",
+   "slot": "norigae",
+   "tier": 1,
+   "tier_name": "흔한",
+   "tier_color": "#F3E7D3",
+   "tris": 66,
+   "size_m": [
+    0.06,
+    0.06,
+    0.28
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t2_R",
+   "slot": "norigae",
+   "tier": 2,
+   "tier_name": "손본",
+   "tier_color": "#4FA8A0",
+   "tris": 72,
+   "size_m": [
+    0.08,
+    0.09,
+    0.34
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t2_L",
+   "slot": "norigae",
+   "tier": 2,
+   "tier_name": "손본",
+   "tier_color": "#4FA8A0",
+   "tris": 72,
+   "size_m": [
+    0.08,
+    0.09,
+    0.34
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t3_R",
+   "slot": "norigae",
+   "tier": 3,
+   "tier_name": "귀한",
+   "tier_color": "#D4A94E",
+   "tris": 78,
+   "size_m": [
+    0.07,
+    0.06,
+    0.44
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t3_L",
+   "slot": "norigae",
+   "tier": 3,
+   "tier_name": "귀한",
+   "tier_color": "#D4A94E",
+   "tris": 78,
+   "size_m": [
+    0.07,
+    0.06,
+    0.44
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t4_R",
+   "slot": "norigae",
+   "tier": 4,
+   "tier_name": "이름 있는",
+   "tier_color": "#E85C41",
+   "tris": 116,
+   "size_m": [
+    0.12,
+    0.11,
+    0.44
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t4_L",
+   "slot": "norigae",
+   "tier": 4,
+   "tier_name": "이름 있는",
+   "tier_color": "#E85C41",
+   "tris": 116,
+   "size_m": [
+    0.12,
+    0.11,
+    0.44
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t5_R",
+   "slot": "norigae",
+   "tier": 5,
+   "tier_name": "한 벌",
+   "tier_color": "#5FE3C0",
+   "tris": 128,
+   "size_m": [
+    0.11,
+    0.11,
+    0.42
+   ],
+   "bones": [
+    "Hips"
+   ]
+  },
+  {
+   "name": "gear_norigae_t5_L",
+   "slot": "norigae",
+   "tier": 5,
+   "tier_name": "한 벌",
+   "tier_color": "#5FE3C0",
+   "tris": 128,
+   "size_m": [
+    0.11,
+    0.11,
+    0.42
+   ],
+   "bones": [
+    "Hips"
+   ]
+  }
+ ]
+}

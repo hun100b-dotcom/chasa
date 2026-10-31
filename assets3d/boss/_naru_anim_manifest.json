@@ -1,0 +1,161 @@
+{
+ "fps": 60,
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 97,
+   "length_sec": 1.6,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "WindupLong",
+   "frames": 67,
+   "length_sec": 1.1,
+   "loop": false,
+   "events": {
+    "flash": 54,
+    "end_pose_held": true
+   }
+  },
+  {
+   "name": "Swing",
+   "frames": 43,
+   "length_sec": 0.7,
+   "loop": false,
+   "events": {
+    "hit": 8,
+    "swing_end": 14
+   }
+  },
+  {
+   "name": "Windup",
+   "frames": 34,
+   "length_sec": 0.55,
+   "loop": false,
+   "events": {
+    "tell": 0,
+    "loaded": 22,
+    "flash": 22,
+    "hit": 33,
+    "windup_end": 33,
+    "note": "코드 예비동작 0.55초(33f)에 맞춤. 33f의 자세에서 SwingRecover로 이어 붙인다"
+   }
+  },
+  {
+   "name": "WindupFirst",
+   "frames": 51,
+   "length_sec": 0.833,
+   "loop": false,
+   "events": {
+    "tell": 0,
+    "loaded": 33,
+    "flash": 33,
+    "hit": 50,
+    "windup_end": 50,
+    "note": "첫 예고(×1.5=0.83초, 50f)용. 같은 모양을 천천히"
+   }
+  },
+  {
+   "name": "SwingRecover",
+   "frames": 31,
+   "length_sec": 0.5,
+   "loop": false,
+   "events": {
+    "swing_end": 0
+   }
+  },
+  {
+   "name": "Hit1",
+   "frames": 11,
+   "length_sec": 0.167,
+   "loop": false,
+   "events": {
+    "peak": 2
+   }
+  },
+  {
+   "name": "Hit2",
+   "frames": 19,
+   "length_sec": 0.3,
+   "loop": false,
+   "events": {
+    "peak": 3,
+    "rebound": 8
+   }
+  },
+  {
+   "name": "Stagger",
+   "frames": 37,
+   "length_sec": 0.6,
+   "loop": false,
+   "events": {
+    "peak": 5,
+    "sway_peaks": [
+     12,
+     20,
+     28
+    ]
+   }
+  },
+  {
+   "name": "Kneel",
+   "frames": 61,
+   "length_sec": 1.0,
+   "loop": false,
+   "events": {
+    "thud": 26,
+    "end_pose_held": true
+   }
+  },
+  {
+   "name": "KneelHold",
+   "frames": 121,
+   "length_sec": 2.0,
+   "loop": true,
+   "events": {}
+  },
+  {
+   "name": "Tendo",
+   "frames": 211,
+   "length_sec": 3.5,
+   "loop": false,
+   "events": {
+    "stand_up": 60,
+    "pole_set": 110,
+    "bow": 170,
+    "dissolve": 210
+   }
+  },
+  {
+   "name": "Pahon",
+   "frames": 121,
+   "length_sec": 2.0,
+   "loop": false,
+   "events": {
+    "blast": 6
+   }
+  }
+ ],
+ "verify": {
+  "file": "boss_naru.glb",
+  "skins": 1,
+  "joints": 8,
+  "animations": [
+   "Idle",
+   "WindupLong",
+   "Swing",
+   "Windup",
+   "WindupFirst",
+   "SwingRecover",
+   "Hit1",
+   "Hit2",
+   "Stagger",
+   "Kneel",
+   "KneelHold",
+   "Tendo",
+   "Pahon"
+  ],
+  "size_kb": 215
+ }
+}

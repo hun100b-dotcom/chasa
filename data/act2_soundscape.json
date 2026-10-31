@@ -1,0 +1,379 @@
+{
+ "_설명": "2막 ③④ 주변 소리 배치(기획·사운드 10-26). 좌표는 act2_map.json 의 x, y(=유니티 z). 1막 data/act1_soundscape.json 과 같은 규칙. ZoneAmbient 의 지금 구역 소리는 그대로 두고 그 위에 얹는다",
+ "beds": {
+  "_설명": "구역 바탕(2D). 구역이 바뀌면 3초 교차. 값이 [밤, 낮]. null 이면 지금 ZoneAmbient 소리 그대로",
+  "FortressVillage": [
+   "amb.fv.night",
+   "amb.fv.day"
+  ],
+  "BigTomb": [
+   "amb.bigtomb",
+   "amb.bigtomb"
+  ],
+  "Sorting": [
+   "amb.sorting.night",
+   "amb.sorting.day"
+  ],
+  "Collapse": [
+   "amb.collapse",
+   "amb.collapse"
+  ],
+  "Fortress": [
+   null,
+   null
+  ],
+  "ArrowValley": [
+   null,
+   null
+  ],
+  "Camp": [
+   null,
+   null
+  ],
+  "MinerTown": [
+   null,
+   null
+  ],
+  "MainShaft": [
+   null,
+   null
+  ]
+ },
+ "points": [
+  {
+   "id": "amb.seonang.bulgeunjae",
+   "x": 112,
+   "z": 790,
+   "min": 2,
+   "max": 14,
+   "when": "always",
+   "note": "SH2-1 붉은재 서낭당"
+  },
+  {
+   "id": "amb.seonang.sanshin",
+   "x": 455,
+   "z": 790,
+   "min": 2,
+   "max": 12,
+   "when": "always",
+   "note": "SH2-2 산신각"
+  },
+  {
+   "id": "amb.sooldoga",
+   "x": 95,
+   "z": 875,
+   "min": 1.5,
+   "max": 10,
+   "when": "always",
+   "note": "술도가",
+   "art_prop": "a2v_house_sul (98,899)"
+  },
+  {
+   "id": "amb.stonemason",
+   "x": 148,
+   "z": 915,
+   "min": 2,
+   "max": 16,
+   "when": "day",
+   "note": "석수 일터. S-051 장례 뒤 볼륨 0.6",
+   "art_prop": "a2v_stone_cutter (143,921)"
+  },
+  {
+   "id": "amb.village.shrine",
+   "x": 132,
+   "z": 900,
+   "min": 1.5,
+   "max": 9,
+   "when": "always",
+   "note": "마을 사당"
+  },
+  {
+   "id": "amb.well.village",
+   "x": 115,
+   "z": 858,
+   "min": 1,
+   "max": 8,
+   "when": "day",
+   "note": "아랫마을 우물(낮·저녁)"
+  },
+  {
+   "id": "amb.well.village",
+   "x": 470,
+   "z": 836,
+   "min": 1,
+   "max": 8,
+   "when": "day",
+   "note": "광부촌 우물가(낮·저녁)"
+  },
+  {
+   "id": "amb.mokpae.board",
+   "x": 520,
+   "z": 935,
+   "min": 1,
+   "max": 9,
+   "when": "always",
+   "note": "목패 걸이 판"
+  },
+  {
+   "id": "amb.shaft.timber",
+   "x": 560,
+   "z": 980,
+   "min": 1.5,
+   "max": 10,
+   "when": "always",
+   "note": "갱 입구 버팀목 문"
+  },
+  {
+   "id": "amb.shaft.timber",
+   "x": 640,
+   "z": 1090,
+   "min": 1.5,
+   "max": 10,
+   "when": "always",
+   "note": "갱도 골 중간 버팀목"
+  },
+  {
+   "id": "amb.gukbap",
+   "x": 462,
+   "z": 875,
+   "min": 1.5,
+   "max": 10,
+   "when": "evening_night",
+   "note": "국밥집. S-069 장례 뒤엔 0.5배",
+   "art_prop": "a2m_soup_house (462,882)"
+  },
+  {
+   "id": "amb.mule.stable",
+   "x": 492,
+   "z": 842,
+   "min": 1,
+   "max": 8,
+   "when": "day",
+   "note": "노새 마구간",
+   "art_prop": "a2m_stable (492,851)"
+  }
+ ],
+ "overhear": {
+  "_설명": "엿듣기 자리 생활 소리(docs/narrative/overhear_act2.json spots). 그 자리가 열려 있고 그 시각일 때만, 자리 반경 안에서 3D 반복. 엿듣기 문구가 뜨는 동안 같은 자리 소리는 0.6배로 낮춰 글을 읽게 한다. 자리가 닫히면(장례·업) 소리도 끈다",
+  "R2-01": {
+   "id": "amb.laundry",
+   "note": "아랫마을 마당 낮 — 빨래하는 아낙"
+  },
+  "R2-02": {
+   "id": "amb.well.village",
+   "note": "아랫마을 우물 저녁 — points 와 같은 소리, 겹치면 하나만"
+  },
+  "R2-03": {
+   "id": "amb.whetstone",
+   "note": "벌초꾼 집 저녁, 담 너머 — 낫 가는 소리"
+  },
+  "R2-04": {
+   "id": "amb.herb.dig",
+   "note": "화살골 어귀 낮 — 약초 캐기"
+  },
+  "R2-05": {
+   "id": "amb.woodcutter",
+   "note": "산성 문 낮 — 나무꾼"
+  },
+  "R2-06": {
+   "id": "amb.lamp.room",
+   "note": "이장 집 밤, 담 너머 — 등잔·명단 종이"
+  },
+  "R2-07": {
+   "id": "amb.peddler",
+   "note": "아랫마을 남쪽 어귀 낮 — 장꾼"
+  },
+  "R2-08": {
+   "id": "amb.grave.tending",
+   "note": "작은 무덤 떼 낮 — 무덤 돌보는 아낙"
+  },
+  "R2-09": {
+   "id": "amb.shift.change",
+   "note": "광부촌 어귀 새벽 — 교대 광부"
+  },
+  "R2-10": {
+   "id": "amb.gukbap",
+   "note": "국밥집 저녁 — points 와 같은 소리"
+  },
+  "R2-11": {
+   "id": "amb.mule.stable",
+   "note": "노새 마구간 낮 — points 와 같은 소리"
+  },
+  "R2-12": {
+   "id": "amb.laundry",
+   "note": "광부촌 우물가 저녁 — 우물 소리와 함께(0.7배)"
+  },
+  "R2-13": {
+   "id": "amb.shaft.timber",
+   "note": "갱 입구 낮 — points 와 같은 소리"
+  },
+  "R2-14": {
+   "id": "amb.lamp.room",
+   "note": "순돌 집 밤, 담 너머"
+  },
+  "R2-15": {
+   "id": "amb.shaft.timber",
+   "note": "갱도 골 버팀목 낮 — points 와 같은 소리"
+  },
+  "radius_m": 10
+ },
+ "sprinkles": {
+  "_설명": "[id, 최소초, 최대초, (night|day)]. 무작위 방향·크기 0.5~1.0. 같은 소리 연달아 두 번 금지. 천도 시전 중 멈춤",
+  "FortressVillage": [
+   [
+    "sfx.fv.jar.lid",
+    30,
+    70,
+    "day"
+   ],
+   [
+    "sfx.fv.rooster.near",
+    40,
+    90,
+    "day"
+   ],
+   [
+    "sfx.night.dog.far",
+    50,
+    110
+   ],
+   [
+    "sfx.village.shutter",
+    40,
+    90,
+    "night"
+   ]
+  ],
+  "Fortress": [
+   [
+    "sfx.fortress.stone",
+    40,
+    100
+   ],
+   [
+    "sfx.hawk.far",
+    60,
+    120,
+    "day"
+   ],
+   [
+    "sfx.fortress.count",
+    90,
+    180,
+    "night"
+   ]
+  ],
+  "ArrowValley": [
+   [
+    "sfx.arrow.rattle",
+    30,
+    70
+   ],
+   [
+    "sfx.hawk.far",
+    60,
+    120,
+    "day"
+   ]
+  ],
+  "Camp": [
+   [
+    "sfx.camp.pole",
+    30,
+    70
+   ],
+   [
+    "sfx.geomeun.crow",
+    50,
+    110
+   ]
+  ],
+  "BigTomb": [
+   [
+    "sfx.geomeun.crow",
+    40,
+    90,
+    "day"
+   ],
+   [
+    "sfx.tomb.cup",
+    80,
+    160,
+    "night"
+   ]
+  ],
+  "MinerTown": [
+   [
+    "sfx.mine.pick.far",
+    20,
+    50
+   ],
+   [
+    "sfx.mine.cart.far",
+    40,
+    90
+   ]
+  ],
+  "Sorting": [
+   [
+    "sfx.sorting.basket",
+    15,
+    40,
+    "day"
+   ],
+   [
+    "sfx.mine.cart.far",
+    40,
+    90
+   ]
+  ],
+  "MainShaft": [
+   [
+    "sfx.mine.pick.far",
+    20,
+    50
+   ],
+   [
+    "sfx.mine.cart.far",
+    40,
+    90
+   ],
+   [
+    "sfx.mine.rockfall",
+    60,
+    140
+   ]
+  ],
+  "Collapse": [
+   [
+    "sfx.mine.rockfall",
+    60,
+    140
+   ]
+  ]
+ },
+ "timed": {
+  "_설명": "시각에 맞춰 한 번",
+  "sfx.mine.gong": {
+   "zones": [
+    "MinerTown",
+    "Sorting",
+    "MainShaft"
+   ],
+   "at": [
+    "새벽 교대",
+    "저녁 교대"
+   ]
+  }
+ },
+ "by_prop": {
+  "_설명": "아트 배치표 assets3d/layouts/act2_extra.json(10-26) 소품마다. 가까운 순 nearest 개",
+  "a2f_persimmon_tree": {
+   "id": "amb.tree.old",
+   "min": 2,
+   "max": 10,
+   "nearest": 2,
+   "note": "감나무: 1막 고목 소리를 작게(0.7배)"
+  }
+ }
+}

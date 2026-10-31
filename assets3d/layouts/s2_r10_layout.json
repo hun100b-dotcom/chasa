@@ -1,0 +1,6852 @@
+{
+ "units": "m",
+ "axes": "x=동, y=북(저승 좌표계)",
+ "region": 10,
+ "note": "place_s2.py가 만든다. 직접 고치지 말고 스크립트를 고친다",
+ "props": [
+  {
+   "prop": "s2_nabulbul",
+   "file": "assets3d/s2/s2_nabulbul.glb",
+   "x": 360,
+   "y": -180,
+   "rot": 0,
+   "z": 0.29,
+   "note": "처음 마을 우물 나룻불 NB10-1",
+   "by_design": true
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 310,
+   "y": -250,
+   "rot": 0,
+   "z": 0.29,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 330,
+   "y": -240,
+   "rot": 20,
+   "z": 0.3,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 350,
+   "y": -250,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 372,
+   "y": -238,
+   "rot": 330,
+   "z": 0.29,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 394,
+   "y": -250,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 312,
+   "y": -222,
+   "rot": 90,
+   "z": 0.29,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 336,
+   "y": -214,
+   "rot": 0,
+   "z": 0.29,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 390,
+   "y": -214,
+   "rot": 180,
+   "z": 0.3,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 316,
+   "y": -190,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 344,
+   "y": -160,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 376,
+   "y": -160,
+   "rot": 20,
+   "z": 0.3,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_first_hut",
+   "file": "assets3d/s2/s2_first_hut.glb",
+   "x": 405,
+   "y": -176,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 집"
+  },
+  {
+   "prop": "s2_old_well",
+   "file": "assets3d/s2/s2_old_well.glb",
+   "x": 398,
+   "y": -300,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 우물(B19-D2 우물가, 마당 원 바깥 북동)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_old_charcoal_mark",
+   "file": "assets3d/s2/s2_old_charcoal_mark.glb",
+   "x": 370.0,
+   "y": -200.0,
+   "rot": 0,
+   "z": 0.29,
+   "note": "마당 그을림"
+  },
+  {
+   "prop": "s2_old_charcoal_mark",
+   "file": "assets3d/s2/s2_old_charcoal_mark.glb",
+   "x": 365.0,
+   "y": -191.34,
+   "rot": 59,
+   "z": 0.29,
+   "note": "마당 그을림"
+  },
+  {
+   "prop": "s2_old_charcoal_mark",
+   "file": "assets3d/s2/s2_old_charcoal_mark.glb",
+   "x": 355.0,
+   "y": -191.34,
+   "rot": 119,
+   "z": 0.29,
+   "note": "마당 그을림"
+  },
+  {
+   "prop": "s2_old_charcoal_mark",
+   "file": "assets3d/s2/s2_old_charcoal_mark.glb",
+   "x": 350.0,
+   "y": -200.0,
+   "rot": 180,
+   "z": 0.29,
+   "note": "마당 그을림"
+  },
+  {
+   "prop": "s2_old_charcoal_mark",
+   "file": "assets3d/s2/s2_old_charcoal_mark.glb",
+   "x": 355.0,
+   "y": -208.66,
+   "rot": 239,
+   "z": 0.29,
+   "note": "마당 그을림"
+  },
+  {
+   "prop": "s2_old_charcoal_mark",
+   "file": "assets3d/s2/s2_old_charcoal_mark.glb",
+   "x": 365.0,
+   "y": -208.66,
+   "rot": 300,
+   "z": 0.29,
+   "note": "마당 그을림"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 401.16,
+   "y": -205.59,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 333.23,
+   "y": -250.57,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 371.22,
+   "y": -258.51,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 330.31,
+   "y": -185.01,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 322.57,
+   "y": -238.13,
+   "rot": 0,
+   "z": 0.29,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 314.25,
+   "y": -186.05,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 346.37,
+   "y": -150.87,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 310.87,
+   "y": -172.47,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 315.84,
+   "y": -171.69,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_first_lantern",
+   "file": "assets3d/s2/s2_first_lantern.glb",
+   "x": 418.25,
+   "y": -187.6,
+   "rot": 0,
+   "z": 0.3,
+   "note": "처음 마을 새벽 등"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 542.94,
+   "y": -291.69,
+   "rot": 228,
+   "z": 0.26,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 557.87,
+   "y": -289.46,
+   "rot": 342,
+   "z": 0.29,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 578.98,
+   "y": -289.72,
+   "rot": 17,
+   "z": 0.28,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 595.34,
+   "y": -288.49,
+   "rot": 127,
+   "z": 0.3,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 614.06,
+   "y": -287.69,
+   "rot": 261,
+   "z": 0.26,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 631.9,
+   "y": -291.82,
+   "rot": 293,
+   "z": 0.27,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 648.06,
+   "y": -288.75,
+   "rot": 137,
+   "z": 0.31,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 538.2,
+   "y": -268.01,
+   "rot": 203,
+   "z": 0.29,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 557.46,
+   "y": -266.92,
+   "rot": 314,
+   "z": 0.29,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 578.12,
+   "y": -263.59,
+   "rot": 70,
+   "z": 0.34,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 594.81,
+   "y": -267.34,
+   "rot": 171,
+   "z": 0.32,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 611.44,
+   "y": -267.8,
+   "rot": 261,
+   "z": 0.31,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 628.26,
+   "y": -266.12,
+   "rot": 325,
+   "z": 0.3,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 650.27,
+   "y": -268.25,
+   "rot": 131,
+   "z": 0.31,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 541.97,
+   "y": -244.71,
+   "rot": 95,
+   "z": 0.29,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 558.28,
+   "y": -240.44,
+   "rot": 284,
+   "z": 0.28,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 575.41,
+   "y": -241.8,
+   "rot": 285,
+   "z": 0.33,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 596.52,
+   "y": -243.59,
+   "rot": 45,
+   "z": 0.32,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 614.61,
+   "y": -244.02,
+   "rot": 70,
+   "z": 0.3,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 629.54,
+   "y": -243.97,
+   "rot": 202,
+   "z": 0.29,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 647.6,
+   "y": -242.2,
+   "rot": 281,
+   "z": 0.29,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 540.24,
+   "y": -216.5,
+   "rot": 37,
+   "z": 0.3,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 560.83,
+   "y": -219.86,
+   "rot": 126,
+   "z": 0.32,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 573.69,
+   "y": -218.61,
+   "rot": 177,
+   "z": 0.29,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 593.6,
+   "y": -217.66,
+   "rot": 111,
+   "z": 0.3,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 614.59,
+   "y": -216.13,
+   "rot": 302,
+   "z": 0.3,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 628.51,
+   "y": -217.84,
+   "rot": 205,
+   "z": 0.32,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_grave",
+   "file": "assets3d/s2/s2_chain_grave.glb",
+   "x": 645.51,
+   "y": -217.22,
+   "rot": 211,
+   "z": 0.3,
+   "note": "사슬 무덤"
+  },
+  {
+   "prop": "s2_chain_stake",
+   "file": "assets3d/s2/s2_chain_stake.glb",
+   "x": 540,
+   "y": -200,
+   "rot": 0,
+   "z": 0.27,
+   "note": "사슬 무덤 맨 앞 말뚝(B19-D3)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 664.0,
+   "y": -520.0,
+   "rot": 90,
+   "z": 0.08,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 662.42,
+   "y": -501.94,
+   "rot": 100,
+   "z": 0.01,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 657.73,
+   "y": -484.43,
+   "rot": 110,
+   "z": -0.05,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 650.07,
+   "y": -468.0,
+   "rot": 120,
+   "z": -0.08,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 639.67,
+   "y": -453.15,
+   "rot": 130,
+   "z": -0.08,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 626.85,
+   "y": -440.33,
+   "rot": 140,
+   "z": -0.11,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 612.0,
+   "y": -429.93,
+   "rot": 150,
+   "z": -0.12,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 493.15,
+   "y": -440.33,
+   "rot": 220,
+   "z": 0.1,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 480.33,
+   "y": -453.15,
+   "rot": 230,
+   "z": 0.08,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 469.93,
+   "y": -468.0,
+   "rot": 239,
+   "z": 0.01,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 462.27,
+   "y": -484.43,
+   "rot": 250,
+   "z": -0.04,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 457.58,
+   "y": -501.94,
+   "rot": 260,
+   "z": -0.07,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 456.0,
+   "y": -520.0,
+   "rot": 270,
+   "z": -0.13,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 457.58,
+   "y": -538.06,
+   "rot": 280,
+   "z": -0.12,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 462.27,
+   "y": -555.57,
+   "rot": 290,
+   "z": -0.01,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 469.93,
+   "y": -572.0,
+   "rot": 300,
+   "z": 0.05,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 480.33,
+   "y": -586.85,
+   "rot": 310,
+   "z": 0.1,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 493.15,
+   "y": -599.67,
+   "rot": 320,
+   "z": 0.12,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 508.0,
+   "y": -610.07,
+   "rot": 330,
+   "z": 0.13,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 524.43,
+   "y": -617.73,
+   "rot": 340,
+   "z": 0.14,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 541.94,
+   "y": -622.42,
+   "rot": 350,
+   "z": 0.15,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 560.0,
+   "y": -624.0,
+   "rot": 0,
+   "z": 0.18,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 578.06,
+   "y": -622.42,
+   "rot": 10,
+   "z": 0.27,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 595.57,
+   "y": -617.73,
+   "rot": 20,
+   "z": 0.39,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 612.0,
+   "y": -610.07,
+   "rot": 29,
+   "z": 0.5,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 626.85,
+   "y": -599.67,
+   "rot": 40,
+   "z": 0.51,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 639.67,
+   "y": -586.85,
+   "rot": 50,
+   "z": 0.44,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 650.07,
+   "y": -572.0,
+   "rot": 60,
+   "z": 0.36,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 657.73,
+   "y": -555.57,
+   "rot": 70,
+   "z": 0.25,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_big_dam_wall",
+   "file": "assets3d/s2/s2_big_dam_wall.glb",
+   "x": 662.42,
+   "y": -538.06,
+   "rot": 80,
+   "z": 0.16,
+   "note": "큰 물막이 벽(바닥을 둘러쌈)",
+   "by_design": true
+  },
+  {
+   "prop": "s2_dam_stone_step",
+   "file": "assets3d/s2/s2_dam_stone_step.glb",
+   "x": 560,
+   "y": -420.0,
+   "rot": 0,
+   "z": -0.14,
+   "note": "물막이 바닥으로 내려가는 돌계단",
+   "by_design": true
+  },
+  {
+   "prop": "s2_dam_stone_step",
+   "file": "assets3d/s2/s2_dam_stone_step.glb",
+   "x": 560,
+   "y": -422.0,
+   "rot": 0,
+   "z": -0.17,
+   "note": "물막이 바닥으로 내려가는 돌계단",
+   "by_design": true
+  },
+  {
+   "prop": "s2_dam_stone_step",
+   "file": "assets3d/s2/s2_dam_stone_step.glb",
+   "x": 560,
+   "y": -424.0,
+   "rot": 0,
+   "z": -0.2,
+   "note": "물막이 바닥으로 내려가는 돌계단",
+   "by_design": true
+  },
+  {
+   "prop": "s2_dam_stone_step",
+   "file": "assets3d/s2/s2_dam_stone_step.glb",
+   "x": 560,
+   "y": -426.0,
+   "rot": 0,
+   "z": -0.23,
+   "note": "물막이 바닥으로 내려가는 돌계단",
+   "by_design": true
+  },
+  {
+   "prop": "s2_dam_stone_step",
+   "file": "assets3d/s2/s2_dam_stone_step.glb",
+   "x": 560,
+   "y": -428.0,
+   "rot": 0,
+   "z": -0.27,
+   "note": "물막이 바닥으로 내려가는 돌계단",
+   "by_design": true
+  },
+  {
+   "prop": "s2_dam_stone_step",
+   "file": "assets3d/s2/s2_dam_stone_step.glb",
+   "x": 560,
+   "y": -430.0,
+   "rot": 0,
+   "z": -0.32,
+   "note": "물막이 바닥으로 내려가는 돌계단",
+   "by_design": true
+  },
+  {
+   "prop": "s2_ink_rock",
+   "file": "assets3d/s2/s2_ink_rock.glb",
+   "x": 470,
+   "y": -8,
+   "rot": 0,
+   "z": 0.34,
+   "note": "먹지기 붓 표시 바위(⑦ 안개 벽이 걷힐 때 표시, 기획 (470,-8))",
+   "by_design": true
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 612.7,
+   "y": -227.05,
+   "rot": 88,
+   "z": 0.26,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 597.43,
+   "y": -310.93,
+   "rot": 72,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 346.92,
+   "y": -207.56,
+   "rot": 129,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 681.81,
+   "y": -117.2,
+   "rot": 193,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 595.21,
+   "y": -223.63,
+   "rot": 280,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 574.36,
+   "y": -267.08,
+   "rot": 70,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 265.04,
+   "y": -413.34,
+   "rot": 297,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 222.0,
+   "y": -65.17,
+   "rot": 0,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 747.05,
+   "y": -151.9,
+   "rot": 195,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 593.43,
+   "y": -222.91,
+   "rot": 271,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 355.79,
+   "y": -64.36,
+   "rot": 61,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 271.75,
+   "y": -119.7,
+   "rot": 299,
+   "z": 0.14,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 647.74,
+   "y": -201.58,
+   "rot": 88,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 320.53,
+   "y": -514.86,
+   "rot": 166,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 510.5,
+   "y": -391.84,
+   "rot": 85,
+   "z": 0.2,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 367.64,
+   "y": -175.79,
+   "rot": 297,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 372.88,
+   "y": -424.27,
+   "rot": 309,
+   "z": 0.59,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 393.74,
+   "y": -408.71,
+   "rot": 202,
+   "z": 0.64,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 636.64,
+   "y": -279.38,
+   "rot": 117,
+   "z": 0.26,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 372.69,
+   "y": -29.32,
+   "rot": 86,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 545.92,
+   "y": -101.92,
+   "rot": 154,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 688.51,
+   "y": -543.77,
+   "rot": 264,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 507.23,
+   "y": -398.56,
+   "rot": 352,
+   "z": 0.19,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 218.7,
+   "y": -63.96,
+   "rot": 255,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 747.37,
+   "y": -73.03,
+   "rot": 233,
+   "z": 0.25,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 474.74,
+   "y": -152.2,
+   "rot": 226,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 498.02,
+   "y": -227.99,
+   "rot": 247,
+   "z": 0.74,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 372.77,
+   "y": -40.81,
+   "rot": 72,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 699.32,
+   "y": -454.72,
+   "rot": 196,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 342.05,
+   "y": -143.3,
+   "rot": 184,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 778.97,
+   "y": -554.12,
+   "rot": 49,
+   "z": 0.79,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 784.53,
+   "y": -204.0,
+   "rot": 286,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 632.42,
+   "y": -287.06,
+   "rot": 27,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 563.48,
+   "y": -139.79,
+   "rot": 235,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 558.49,
+   "y": -44.78,
+   "rot": 353,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 253.15,
+   "y": -459.48,
+   "rot": 113,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 532.96,
+   "y": -271.04,
+   "rot": 202,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 397.02,
+   "y": -296.68,
+   "rot": 268,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 827.29,
+   "y": -18.24,
+   "rot": 232,
+   "z": 0.1,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 446.41,
+   "y": -584.89,
+   "rot": 94,
+   "z": 0.12,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 388.53,
+   "y": -459.17,
+   "rot": 352,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 520.77,
+   "y": -25.62,
+   "rot": 250,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 796.58,
+   "y": -201.22,
+   "rot": 241,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 470.92,
+   "y": -97.26,
+   "rot": 13,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 778.25,
+   "y": -64.8,
+   "rot": 178,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 499.03,
+   "y": -64.23,
+   "rot": 55,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 299.36,
+   "y": -326.99,
+   "rot": 280,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 688.93,
+   "y": -304.88,
+   "rot": 333,
+   "z": 0.21,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 604.05,
+   "y": -612.39,
+   "rot": 57,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 788.43,
+   "y": -591.07,
+   "rot": 34,
+   "z": 0.64,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 367.97,
+   "y": -417.39,
+   "rot": 271,
+   "z": 0.63,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 762.02,
+   "y": -476.28,
+   "rot": 167,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 623.95,
+   "y": -124.76,
+   "rot": 165,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 333.44,
+   "y": -326.44,
+   "rot": 135,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 554.39,
+   "y": -211.86,
+   "rot": 340,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 604.96,
+   "y": -78.84,
+   "rot": 308,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 252.68,
+   "y": -54.98,
+   "rot": 249,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 598.92,
+   "y": -196.17,
+   "rot": 255,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 237.42,
+   "y": -96.85,
+   "rot": 83,
+   "z": 0.08,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 562.68,
+   "y": -193.36,
+   "rot": 290,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 232.85,
+   "y": -626.17,
+   "rot": 41,
+   "z": 0.15,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 769.31,
+   "y": -95.34,
+   "rot": 218,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 230.81,
+   "y": -569.29,
+   "rot": 326,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 634.77,
+   "y": -82.24,
+   "rot": 70,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 511.58,
+   "y": -37.44,
+   "rot": 103,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 722.37,
+   "y": -136.98,
+   "rot": 60,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 436.54,
+   "y": -148.26,
+   "rot": 22,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 342.7,
+   "y": -90.93,
+   "rot": 3,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 656.25,
+   "y": -193.05,
+   "rot": 351,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 737.01,
+   "y": -311.24,
+   "rot": 232,
+   "z": 0.06,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 476.82,
+   "y": -108.46,
+   "rot": 196,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 402.6,
+   "y": -263.26,
+   "rot": 39,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 459.23,
+   "y": -459.7,
+   "rot": 252,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 428.77,
+   "y": -102.78,
+   "rot": 348,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 440.25,
+   "y": -219.46,
+   "rot": 78,
+   "z": 0.63,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 557.01,
+   "y": -254.11,
+   "rot": 61,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 814.32,
+   "y": -327.2,
+   "rot": 252,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 349.88,
+   "y": -63.96,
+   "rot": 50,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 483.9,
+   "y": -397.73,
+   "rot": 147,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 351.34,
+   "y": -375.15,
+   "rot": 90,
+   "z": 0.63,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 605.13,
+   "y": -272.28,
+   "rot": 69,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 496.64,
+   "y": -121.5,
+   "rot": 54,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 410.27,
+   "y": -447.59,
+   "rot": 82,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 380.92,
+   "y": -211.26,
+   "rot": 227,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 266.66,
+   "y": -88.27,
+   "rot": 245,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 467.89,
+   "y": -320.69,
+   "rot": 193,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 825.43,
+   "y": -475.74,
+   "rot": 278,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 256.69,
+   "y": -269.89,
+   "rot": 99,
+   "z": 0.11,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 471.56,
+   "y": -187.97,
+   "rot": 61,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 400.43,
+   "y": -482.22,
+   "rot": 171,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 750.51,
+   "y": -130.48,
+   "rot": 223,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 482.8,
+   "y": -443.95,
+   "rot": 48,
+   "z": 0.18,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 340.32,
+   "y": -496.68,
+   "rot": 38,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 343.4,
+   "y": -201.21,
+   "rot": 350,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 658.31,
+   "y": -350.54,
+   "rot": 231,
+   "z": 0.14,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 706.44,
+   "y": -297.31,
+   "rot": 123,
+   "z": 0.14,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 795.94,
+   "y": -78.27,
+   "rot": 348,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 368.28,
+   "y": -74.24,
+   "rot": 213,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 504.98,
+   "y": -191.35,
+   "rot": 35,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 772.71,
+   "y": -73.55,
+   "rot": 164,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 786.77,
+   "y": -596.07,
+   "rot": 124,
+   "z": 0.61,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 794.63,
+   "y": -236.55,
+   "rot": 321,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 348.71,
+   "y": -37.66,
+   "rot": 122,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 623.6,
+   "y": -272.96,
+   "rot": 122,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 571.05,
+   "y": -340.11,
+   "rot": 34,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 731.57,
+   "y": -424.17,
+   "rot": 161,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 270.97,
+   "y": -235.81,
+   "rot": 291,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 679.77,
+   "y": -88.82,
+   "rot": 106,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 498.13,
+   "y": -280.27,
+   "rot": 8,
+   "z": 0.62,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_a",
+   "file": "assets3d/nature/nature_dead_a.glb",
+   "x": 675.69,
+   "y": -22.47,
+   "rot": 280,
+   "z": 0.36,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 592.74,
+   "y": -98.34,
+   "rot": 72,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 315.26,
+   "y": -136.42,
+   "rot": 128,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 239.71,
+   "y": -584.82,
+   "rot": 138,
+   "z": 0.2,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 792.74,
+   "y": -575.12,
+   "rot": 355,
+   "z": 0.73,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 597.81,
+   "y": -66.33,
+   "rot": 61,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 224.36,
+   "y": -386.14,
+   "rot": 218,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 811.86,
+   "y": -494.16,
+   "rot": 172,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 565.49,
+   "y": -321.53,
+   "rot": 91,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 297.66,
+   "y": -594.05,
+   "rot": 104,
+   "z": 0.2,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 765.98,
+   "y": -572.92,
+   "rot": 155,
+   "z": 0.74,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 703.09,
+   "y": -506.27,
+   "rot": 188,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 748.55,
+   "y": -427.47,
+   "rot": 70,
+   "z": 0.17,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 770.65,
+   "y": -261.32,
+   "rot": 124,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 794.65,
+   "y": -213.79,
+   "rot": 12,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 258.91,
+   "y": -112.55,
+   "rot": 133,
+   "z": 0.08,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 299.11,
+   "y": -314.61,
+   "rot": 94,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 361.85,
+   "y": -471.84,
+   "rot": 343,
+   "z": 0.35,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 541.18,
+   "y": -98.33,
+   "rot": 265,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 258.34,
+   "y": -421.97,
+   "rot": 288,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 271.97,
+   "y": -317.97,
+   "rot": 42,
+   "z": 0.18,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 458.4,
+   "y": -333.74,
+   "rot": 225,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 325.41,
+   "y": -267.55,
+   "rot": 118,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 391.52,
+   "y": -233.05,
+   "rot": 56,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 828.52,
+   "y": -503.48,
+   "rot": 345,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 279.47,
+   "y": -549.29,
+   "rot": 170,
+   "z": 0.2,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 472.45,
+   "y": -604.18,
+   "rot": 323,
+   "z": 0.15,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 317.68,
+   "y": -222.75,
+   "rot": 289,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 314.65,
+   "y": -358.7,
+   "rot": 109,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 398.51,
+   "y": -225.46,
+   "rot": 191,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 254.31,
+   "y": -501.16,
+   "rot": 112,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 778.15,
+   "y": -612.36,
+   "rot": 305,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 641.91,
+   "y": -583.27,
+   "rot": 204,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 263.67,
+   "y": -215.21,
+   "rot": 145,
+   "z": 0.1,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 230.39,
+   "y": -29.76,
+   "rot": 323,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 290.67,
+   "y": -182.59,
+   "rot": 83,
+   "z": 0.11,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 498.86,
+   "y": -42.08,
+   "rot": 78,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 505.25,
+   "y": -24.36,
+   "rot": 8,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 743.19,
+   "y": -458.82,
+   "rot": 7,
+   "z": 0.34,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 395.74,
+   "y": -133.4,
+   "rot": 344,
+   "z": 0.36,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 813.06,
+   "y": -138.92,
+   "rot": 92,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 667.57,
+   "y": -154.08,
+   "rot": 191,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 531.41,
+   "y": -320.83,
+   "rot": 343,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 761.8,
+   "y": -545.97,
+   "rot": 330,
+   "z": 0.73,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 338.62,
+   "y": -156.19,
+   "rot": 181,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 535.48,
+   "y": -361.48,
+   "rot": 303,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 742.46,
+   "y": -394.88,
+   "rot": 215,
+   "z": 0.17,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 320.2,
+   "y": -437.0,
+   "rot": 225,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 635.83,
+   "y": -207.91,
+   "rot": 270,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 713.23,
+   "y": -203.74,
+   "rot": 345,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 269.18,
+   "y": -446.19,
+   "rot": 202,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 473.47,
+   "y": -401.0,
+   "rot": 74,
+   "z": 0.36,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 297.47,
+   "y": -435.97,
+   "rot": 280,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 686.44,
+   "y": -57.45,
+   "rot": 307,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 452.67,
+   "y": -143.88,
+   "rot": 249,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 801.2,
+   "y": -126.05,
+   "rot": 219,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 663.38,
+   "y": -588.29,
+   "rot": 135,
+   "z": 0.63,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 442.45,
+   "y": -317.21,
+   "rot": 2,
+   "z": 0.62,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 679.95,
+   "y": -338.53,
+   "rot": 350,
+   "z": 0.12,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 464.87,
+   "y": -382.19,
+   "rot": 264,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 331.1,
+   "y": -170.33,
+   "rot": 156,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 759.29,
+   "y": -407.65,
+   "rot": 323,
+   "z": 0.06,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 448.94,
+   "y": -75.96,
+   "rot": 279,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 574.02,
+   "y": -113.2,
+   "rot": 149,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 817.92,
+   "y": -120.91,
+   "rot": 5,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 490.73,
+   "y": -198.95,
+   "rot": 38,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 460.59,
+   "y": -228.74,
+   "rot": 119,
+   "z": 0.73,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 253.27,
+   "y": -543.92,
+   "rot": 226,
+   "z": 0.26,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 726.93,
+   "y": -419.09,
+   "rot": 148,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 612.5,
+   "y": -63.08,
+   "rot": 330,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 313.16,
+   "y": -309.75,
+   "rot": 353,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 814.48,
+   "y": -453.67,
+   "rot": 75,
+   "z": 0.25,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 484.82,
+   "y": -117.95,
+   "rot": 96,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 761.39,
+   "y": -543.64,
+   "rot": 277,
+   "z": 0.72,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 404.25,
+   "y": -287.05,
+   "rot": 128,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 673.75,
+   "y": -58.59,
+   "rot": 329,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 671.01,
+   "y": -490.33,
+   "rot": 234,
+   "z": 0.21,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 463.83,
+   "y": -73.24,
+   "rot": 30,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 624.09,
+   "y": -109.49,
+   "rot": 11,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 282.43,
+   "y": -260.68,
+   "rot": 317,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 791.07,
+   "y": -299.37,
+   "rot": 208,
+   "z": 0.26,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 368.42,
+   "y": -124.17,
+   "rot": 171,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 762.88,
+   "y": -417.1,
+   "rot": 22,
+   "z": 0.06,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 727.77,
+   "y": -311.8,
+   "rot": 199,
+   "z": 0.05,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 433.11,
+   "y": -422.58,
+   "rot": 186,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 262.83,
+   "y": -367.95,
+   "rot": 47,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 769.11,
+   "y": -505.85,
+   "rot": 48,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 520.23,
+   "y": -284.53,
+   "rot": 60,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 636.56,
+   "y": -224.64,
+   "rot": 187,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 793.78,
+   "y": -559.05,
+   "rot": 339,
+   "z": 0.77,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 281.06,
+   "y": -53.94,
+   "rot": 351,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 297.4,
+   "y": -588.78,
+   "rot": 60,
+   "z": 0.18,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 378.48,
+   "y": -146.22,
+   "rot": 102,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 309.59,
+   "y": -518.04,
+   "rot": 7,
+   "z": 0.26,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 764.31,
+   "y": -625.6,
+   "rot": 30,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 616.17,
+   "y": -282.73,
+   "rot": 76,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 696.35,
+   "y": -507.03,
+   "rot": 58,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 736.46,
+   "y": -14.61,
+   "rot": 192,
+   "z": 0.15,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 666.43,
+   "y": -167.9,
+   "rot": 210,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 805.24,
+   "y": -131.43,
+   "rot": 56,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 351.46,
+   "y": -357.86,
+   "rot": 289,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 349.02,
+   "y": -300.58,
+   "rot": 120,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 685.37,
+   "y": -550.75,
+   "rot": 204,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 351.7,
+   "y": -223.63,
+   "rot": 175,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 268.24,
+   "y": -98.0,
+   "rot": 242,
+   "z": 0.25,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 515.3,
+   "y": -272.55,
+   "rot": 32,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 407.44,
+   "y": -74.9,
+   "rot": 119,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 229.66,
+   "y": -388.3,
+   "rot": 292,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 781.54,
+   "y": -27.11,
+   "rot": 139,
+   "z": 0.06,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 754.99,
+   "y": -541.18,
+   "rot": 349,
+   "z": 0.72,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_b",
+   "file": "assets3d/nature/nature_dead_b.glb",
+   "x": 727.0,
+   "y": -184.75,
+   "rot": 240,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 417.5,
+   "y": -26.59,
+   "rot": 149,
+   "z": 0.59,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 419.99,
+   "y": -502.95,
+   "rot": 137,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 449.18,
+   "y": -315.24,
+   "rot": 12,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 269.41,
+   "y": -471.3,
+   "rot": 259,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 379.98,
+   "y": -92.29,
+   "rot": 87,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 437.43,
+   "y": -120.71,
+   "rot": 144,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 769.32,
+   "y": -56.49,
+   "rot": 126,
+   "z": 0.22,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 397.72,
+   "y": -41.15,
+   "rot": 14,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 516.24,
+   "y": -622.81,
+   "rot": 283,
+   "z": 0.15,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 420.31,
+   "y": -271.94,
+   "rot": 247,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 351.1,
+   "y": -191.01,
+   "rot": 52,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 443.58,
+   "y": -471.85,
+   "rot": 107,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 730.23,
+   "y": -183.64,
+   "rot": 253,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 669.22,
+   "y": -58.81,
+   "rot": 94,
+   "z": 0.35,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 754.26,
+   "y": -230.72,
+   "rot": 170,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 757.18,
+   "y": -337.31,
+   "rot": 358,
+   "z": 0.07,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 601.38,
+   "y": -213.45,
+   "rot": 140,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 531.14,
+   "y": -25.63,
+   "rot": 311,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 527.54,
+   "y": -121.72,
+   "rot": 308,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 278.27,
+   "y": -463.56,
+   "rot": 60,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 687.69,
+   "y": -302.85,
+   "rot": 47,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 677.17,
+   "y": -434.18,
+   "rot": 263,
+   "z": 0.16,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 606.29,
+   "y": -119.93,
+   "rot": 294,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 796.91,
+   "y": -500.45,
+   "rot": 304,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 473.46,
+   "y": -224.16,
+   "rot": 285,
+   "z": 0.73,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 713.64,
+   "y": -127.95,
+   "rot": 250,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 386.12,
+   "y": -72.85,
+   "rot": 357,
+   "z": 0.59,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 395.82,
+   "y": -176.27,
+   "rot": 222,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 557.33,
+   "y": -246.27,
+   "rot": 246,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 305.95,
+   "y": -142.77,
+   "rot": 200,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 662.84,
+   "y": -327.98,
+   "rot": 304,
+   "z": 0.18,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 429.08,
+   "y": -344.28,
+   "rot": 297,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 585.75,
+   "y": -228.08,
+   "rot": 267,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 749.35,
+   "y": -458.17,
+   "rot": 121,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 260.56,
+   "y": -69.23,
+   "rot": 164,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 280.87,
+   "y": -368.88,
+   "rot": 11,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 634.81,
+   "y": -278.48,
+   "rot": 321,
+   "z": 0.26,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 490.5,
+   "y": -105.91,
+   "rot": 210,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 594.19,
+   "y": -53.37,
+   "rot": 298,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 313.87,
+   "y": -102.11,
+   "rot": 167,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 824.86,
+   "y": -296.16,
+   "rot": 165,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 273.6,
+   "y": -451.6,
+   "rot": 133,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 596.81,
+   "y": -342.97,
+   "rot": 260,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 267.24,
+   "y": -215.37,
+   "rot": 176,
+   "z": 0.11,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 541.69,
+   "y": -73.01,
+   "rot": 224,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 356.82,
+   "y": -368.77,
+   "rot": 72,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 247.45,
+   "y": -530.04,
+   "rot": 19,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 483.72,
+   "y": -359.15,
+   "rot": 257,
+   "z": 0.34,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 578.71,
+   "y": -338.25,
+   "rot": 113,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 545.83,
+   "y": -273.26,
+   "rot": 233,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 213.54,
+   "y": -517.28,
+   "rot": 80,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 475.13,
+   "y": -64.1,
+   "rot": 350,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 697.72,
+   "y": -452.43,
+   "rot": 109,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 401.74,
+   "y": -20.33,
+   "rot": 346,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 780.1,
+   "y": -326.79,
+   "rot": 288,
+   "z": 0.17,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 614.15,
+   "y": -75.63,
+   "rot": 236,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 812.83,
+   "y": -514.25,
+   "rot": 268,
+   "z": 0.63,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 359.75,
+   "y": -360.05,
+   "rot": 137,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 223.32,
+   "y": -263.35,
+   "rot": 244,
+   "z": 0.05,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 742.57,
+   "y": -549.1,
+   "rot": 22,
+   "z": 0.72,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 362.09,
+   "y": -105.13,
+   "rot": 182,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 402.04,
+   "y": -460.89,
+   "rot": 176,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 298.7,
+   "y": -50.51,
+   "rot": 142,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 712.32,
+   "y": -450.15,
+   "rot": 106,
+   "z": 0.35,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 780.12,
+   "y": -139.89,
+   "rot": 79,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 483.53,
+   "y": -363.37,
+   "rot": 68,
+   "z": 0.34,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 386.41,
+   "y": -63.42,
+   "rot": 269,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 297.7,
+   "y": -274.55,
+   "rot": 306,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 589.56,
+   "y": -233.71,
+   "rot": 288,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 681.36,
+   "y": -130.12,
+   "rot": 232,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 507.82,
+   "y": -99.7,
+   "rot": 91,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 402.71,
+   "y": -115.18,
+   "rot": 114,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 677.05,
+   "y": -576.63,
+   "rot": 267,
+   "z": 0.64,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 259.71,
+   "y": -508.05,
+   "rot": 133,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 500.33,
+   "y": -121.94,
+   "rot": 143,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 265.27,
+   "y": -328.75,
+   "rot": 82,
+   "z": 0.12,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 621.68,
+   "y": -247.12,
+   "rot": 225,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 553.56,
+   "y": -266.77,
+   "rot": 134,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 292.74,
+   "y": -49.08,
+   "rot": 260,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 824.13,
+   "y": -66.45,
+   "rot": 243,
+   "z": 0.35,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 632.06,
+   "y": -116.87,
+   "rot": 19,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 693.93,
+   "y": -522.49,
+   "rot": 207,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 303.83,
+   "y": -457.37,
+   "rot": 275,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 634.26,
+   "y": -308.37,
+   "rot": 22,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 624.46,
+   "y": -34.73,
+   "rot": 88,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 463.34,
+   "y": -287.48,
+   "rot": 35,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 439.79,
+   "y": -120.8,
+   "rot": 99,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 302.72,
+   "y": -348.53,
+   "rot": 262,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 559.26,
+   "y": -296.36,
+   "rot": 54,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 610.02,
+   "y": -252.48,
+   "rot": 102,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 605.94,
+   "y": -607.9,
+   "rot": 24,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 511.12,
+   "y": -21.46,
+   "rot": 315,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 328.67,
+   "y": -349.53,
+   "rot": 120,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 296.81,
+   "y": -73.98,
+   "rot": 190,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 414.88,
+   "y": -30.49,
+   "rot": 318,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 269.29,
+   "y": -515.11,
+   "rot": 284,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 484.35,
+   "y": -166.96,
+   "rot": 112,
+   "z": 0.36,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 421.98,
+   "y": -355.82,
+   "rot": 166,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 817.02,
+   "y": -208.84,
+   "rot": 87,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 547.98,
+   "y": -101.5,
+   "rot": 329,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 250.98,
+   "y": -488.64,
+   "rot": 133,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 324.45,
+   "y": -178.51,
+   "rot": 206,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 239.47,
+   "y": -250.75,
+   "rot": 311,
+   "z": 0.08,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 543.93,
+   "y": -210.99,
+   "rot": 229,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 825.72,
+   "y": -366.05,
+   "rot": 126,
+   "z": 0.08,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 455.39,
+   "y": -102.05,
+   "rot": 292,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 560.8,
+   "y": -369.88,
+   "rot": 306,
+   "z": 0.09,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 728.29,
+   "y": -176.85,
+   "rot": 233,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 280.49,
+   "y": -350.62,
+   "rot": 35,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_dead_c",
+   "file": "assets3d/nature/nature_dead_c.glb",
+   "x": 282.68,
+   "y": -240.92,
+   "rot": 230,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 543.1,
+   "y": -308.18,
+   "rot": 237,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 417.08,
+   "y": -288.56,
+   "rot": 330,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 799.54,
+   "y": -216.39,
+   "rot": 326,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 619.59,
+   "y": -202.38,
+   "rot": 140,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 326.98,
+   "y": -394.08,
+   "rot": 154,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 496.08,
+   "y": -32.91,
+   "rot": 201,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 403.48,
+   "y": -257.29,
+   "rot": 159,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 783.18,
+   "y": -105.05,
+   "rot": 295,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 303.23,
+   "y": -431.75,
+   "rot": 244,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 818.36,
+   "y": -505.35,
+   "rot": 209,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 636.23,
+   "y": -179.07,
+   "rot": 317,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 282.87,
+   "y": -79.39,
+   "rot": 297,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 379.28,
+   "y": -219.85,
+   "rot": 111,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 307.88,
+   "y": -362.5,
+   "rot": 43,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 566.39,
+   "y": -206.01,
+   "rot": 114,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 720.54,
+   "y": -19.73,
+   "rot": 180,
+   "z": 0.21,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 821.8,
+   "y": -621.84,
+   "rot": 29,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 637.13,
+   "y": -242.03,
+   "rot": 45,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 626.73,
+   "y": -72.07,
+   "rot": 291,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 793.37,
+   "y": -232.91,
+   "rot": 179,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 541.69,
+   "y": -117.91,
+   "rot": 251,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 269.59,
+   "y": -108.16,
+   "rot": 137,
+   "z": 0.19,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 752.05,
+   "y": -520.11,
+   "rot": 196,
+   "z": 0.64,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 540.88,
+   "y": -371.04,
+   "rot": 149,
+   "z": 0.17,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 423.4,
+   "y": -232.99,
+   "rot": 321,
+   "z": 0.34,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 513.86,
+   "y": -607.06,
+   "rot": 168,
+   "z": 0.05,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 792.78,
+   "y": -210.63,
+   "rot": 88,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 310.25,
+   "y": -489.48,
+   "rot": 13,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 779.98,
+   "y": -283.48,
+   "rot": 207,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 518.12,
+   "y": -419.16,
+   "rot": 282,
+   "z": 0.08,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 668.84,
+   "y": -107.55,
+   "rot": 184,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 824.18,
+   "y": -302.58,
+   "rot": 251,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 761.16,
+   "y": -476.41,
+   "rot": 2,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 666.07,
+   "y": -191.25,
+   "rot": 89,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 797.46,
+   "y": -469.69,
+   "rot": 134,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 725.94,
+   "y": -280.97,
+   "rot": 206,
+   "z": 0.17,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 389.05,
+   "y": -205.76,
+   "rot": 112,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 277.94,
+   "y": -82.45,
+   "rot": 332,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 487.55,
+   "y": -367.69,
+   "rot": 177,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 771.24,
+   "y": -95.72,
+   "rot": 142,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 789.1,
+   "y": -601.56,
+   "rot": 73,
+   "z": 0.59,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 589.64,
+   "y": -346.53,
+   "rot": 226,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 687.96,
+   "y": -437.33,
+   "rot": 203,
+   "z": 0.25,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 805.93,
+   "y": -594.27,
+   "rot": 245,
+   "z": 0.63,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 315.89,
+   "y": -200.96,
+   "rot": 25,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 418.36,
+   "y": -331.6,
+   "rot": 78,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 752.3,
+   "y": -228.87,
+   "rot": 214,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 399.89,
+   "y": -423.18,
+   "rot": 196,
+   "z": 0.61,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 768.17,
+   "y": -212.2,
+   "rot": 240,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 473.82,
+   "y": -375.43,
+   "rot": 146,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 231.85,
+   "y": -480.06,
+   "rot": 72,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 448.43,
+   "y": -339.89,
+   "rot": 114,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 328.0,
+   "y": -424.19,
+   "rot": 233,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 637.83,
+   "y": -337.27,
+   "rot": 77,
+   "z": 0.17,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 425.35,
+   "y": -371.27,
+   "rot": 141,
+   "z": 0.64,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 524.7,
+   "y": -348.95,
+   "rot": 32,
+   "z": 0.35,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 513.41,
+   "y": -336.47,
+   "rot": 79,
+   "z": 0.35,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 426.87,
+   "y": -182.26,
+   "rot": 19,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 819.88,
+   "y": -82.96,
+   "rot": 354,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 465.41,
+   "y": -48.65,
+   "rot": 98,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 696.03,
+   "y": -178.88,
+   "rot": 282,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 649.0,
+   "y": -311.47,
+   "rot": 189,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 572.65,
+   "y": -12.79,
+   "rot": 120,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 317.94,
+   "y": -299.6,
+   "rot": 8,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 598.41,
+   "y": -74.92,
+   "rot": 278,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 730.44,
+   "y": -425.6,
+   "rot": 265,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 543.55,
+   "y": -22.89,
+   "rot": 16,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 562.64,
+   "y": -12.99,
+   "rot": 107,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 270.26,
+   "y": -81.02,
+   "rot": 66,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 319.49,
+   "y": -71.47,
+   "rot": 115,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 692.88,
+   "y": -140.95,
+   "rot": 341,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 694.47,
+   "y": -236.18,
+   "rot": 350,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 234.04,
+   "y": -575.58,
+   "rot": 42,
+   "z": 0.25,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 777.86,
+   "y": -627.31,
+   "rot": 265,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 224.84,
+   "y": -88.9,
+   "rot": 37,
+   "z": 0.13,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 438.28,
+   "y": -370.15,
+   "rot": 15,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 248.96,
+   "y": -419.52,
+   "rot": 285,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 477.02,
+   "y": -13.37,
+   "rot": 16,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 681.93,
+   "y": -37.47,
+   "rot": 134,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 629.08,
+   "y": -24.77,
+   "rot": 143,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 802.72,
+   "y": -57.48,
+   "rot": 42,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 419.99,
+   "y": -312.82,
+   "rot": 80,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 460.91,
+   "y": -112.81,
+   "rot": 304,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 764.34,
+   "y": -451.09,
+   "rot": 170,
+   "z": 0.22,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 286.35,
+   "y": -438.05,
+   "rot": 1,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 683.38,
+   "y": -153.18,
+   "rot": 333,
+   "z": 0.35,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 552.97,
+   "y": -358.96,
+   "rot": 292,
+   "z": 0.25,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 776.42,
+   "y": -32.65,
+   "rot": 73,
+   "z": 0.1,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 765.95,
+   "y": -614.56,
+   "rot": 35,
+   "z": 0.61,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 738.95,
+   "y": -505.34,
+   "rot": 346,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 338.29,
+   "y": -103.5,
+   "rot": 347,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 600.28,
+   "y": -185.26,
+   "rot": 194,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 256.1,
+   "y": -246.79,
+   "rot": 44,
+   "z": 0.16,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 454.84,
+   "y": -413.06,
+   "rot": 37,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 445.2,
+   "y": -44.83,
+   "rot": 316,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 315.66,
+   "y": -131.24,
+   "rot": 226,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 311.23,
+   "y": -597.9,
+   "rot": 200,
+   "z": 0.22,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 475.2,
+   "y": -331.82,
+   "rot": 251,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 447.79,
+   "y": -298.33,
+   "rot": 120,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 330.5,
+   "y": -141.93,
+   "rot": 137,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 768.68,
+   "y": -58.19,
+   "rot": 195,
+   "z": 0.23,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 332.87,
+   "y": -228.69,
+   "rot": 296,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 726.61,
+   "y": -112.18,
+   "rot": 167,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 265.97,
+   "y": -405.39,
+   "rot": 124,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 314.87,
+   "y": -362.74,
+   "rot": 66,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 522.08,
+   "y": -191.71,
+   "rot": 354,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 742.17,
+   "y": -199.06,
+   "rot": 9,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 737.52,
+   "y": -124.79,
+   "rot": 64,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 714.77,
+   "y": -410.88,
+   "rot": 350,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_a",
+   "file": "assets3d/nature/nature_silvergrass_a.glb",
+   "x": 749.05,
+   "y": -520.97,
+   "rot": 346,
+   "z": 0.65,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 711.68,
+   "y": -387.18,
+   "rot": 321,
+   "z": 0.23,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 560.93,
+   "y": -119.01,
+   "rot": 219,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 333.53,
+   "y": -340.14,
+   "rot": 198,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 263.87,
+   "y": -592.11,
+   "rot": 165,
+   "z": 0.18,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 528.15,
+   "y": -87.3,
+   "rot": 196,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 242.49,
+   "y": -478.57,
+   "rot": 269,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 599.31,
+   "y": -24.61,
+   "rot": 133,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 357.43,
+   "y": -401.55,
+   "rot": 63,
+   "z": 0.67,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 657.22,
+   "y": -252.16,
+   "rot": 258,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 683.26,
+   "y": -523.7,
+   "rot": 92,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 827.94,
+   "y": -211.55,
+   "rot": 260,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 224.73,
+   "y": -44.71,
+   "rot": 266,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 777.71,
+   "y": -252.29,
+   "rot": 281,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 766.76,
+   "y": -112.94,
+   "rot": 31,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 567.44,
+   "y": -261.04,
+   "rot": 311,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 428.51,
+   "y": -529.53,
+   "rot": 350,
+   "z": 0.07,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 397.85,
+   "y": -316.33,
+   "rot": 113,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 673.42,
+   "y": -423.7,
+   "rot": 338,
+   "z": 0.06,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 549.56,
+   "y": -76.24,
+   "rot": 251,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 494.74,
+   "y": -292.9,
+   "rot": 234,
+   "z": 0.5,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 313.96,
+   "y": -72.27,
+   "rot": 175,
+   "z": 0.61,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 260.82,
+   "y": -90.35,
+   "rot": 19,
+   "z": 0.23,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 590.63,
+   "y": -346.11,
+   "rot": 148,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 821.61,
+   "y": -142.35,
+   "rot": 69,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 648.96,
+   "y": -566.28,
+   "rot": 237,
+   "z": 0.24,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 707.72,
+   "y": -171.05,
+   "rot": 146,
+   "z": 0.56,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 507.44,
+   "y": -34.28,
+   "rot": 243,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 256.72,
+   "y": -606.74,
+   "rot": 128,
+   "z": 0.12,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 369.62,
+   "y": -410.67,
+   "rot": 246,
+   "z": 0.65,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 717.73,
+   "y": -17.18,
+   "rot": 330,
+   "z": 0.21,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 497.88,
+   "y": -174.58,
+   "rot": 192,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 416.18,
+   "y": -62.3,
+   "rot": 136,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 306.52,
+   "y": -386.84,
+   "rot": 261,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 411.52,
+   "y": -318.68,
+   "rot": 342,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 601.07,
+   "y": -313.38,
+   "rot": 195,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 619.97,
+   "y": -238.84,
+   "rot": 20,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 773.46,
+   "y": -108.83,
+   "rot": 123,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 377.42,
+   "y": -261.2,
+   "rot": 107,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 387.5,
+   "y": -177.19,
+   "rot": 310,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 367.83,
+   "y": -342.32,
+   "rot": 134,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 713.47,
+   "y": -247.77,
+   "rot": 30,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 673.47,
+   "y": -569.34,
+   "rot": 12,
+   "z": 0.64,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 250.29,
+   "y": -342.84,
+   "rot": 294,
+   "z": 0.09,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 829.69,
+   "y": -578.74,
+   "rot": 24,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 726.8,
+   "y": -249.37,
+   "rot": 150,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 638.79,
+   "y": -595.89,
+   "rot": 179,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 495.87,
+   "y": -410.18,
+   "rot": 68,
+   "z": 0.22,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 545.23,
+   "y": -95.75,
+   "rot": 186,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 296.44,
+   "y": -132.05,
+   "rot": 83,
+   "z": 0.2,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 700.94,
+   "y": -187.08,
+   "rot": 259,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 781.19,
+   "y": -108.29,
+   "rot": 181,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 438.82,
+   "y": -64.82,
+   "rot": 85,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 708.82,
+   "y": -211.16,
+   "rot": 305,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 686.58,
+   "y": -341.3,
+   "rot": 37,
+   "z": 0.11,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 258.73,
+   "y": -462.56,
+   "rot": 328,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 699.21,
+   "y": -546.43,
+   "rot": 105,
+   "z": 0.64,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 571.95,
+   "y": -76.54,
+   "rot": 246,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 412.37,
+   "y": -197.57,
+   "rot": 182,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 765.12,
+   "y": -333.07,
+   "rot": 320,
+   "z": 0.12,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 397.6,
+   "y": -263.95,
+   "rot": 148,
+   "z": 0.34,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 432.58,
+   "y": -199.13,
+   "rot": 57,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 269.96,
+   "y": -58.24,
+   "rot": 287,
+   "z": 0.36,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 273.08,
+   "y": -331.56,
+   "rot": 154,
+   "z": 0.19,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 676.58,
+   "y": -255.34,
+   "rot": 311,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 782.9,
+   "y": -287.72,
+   "rot": 149,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 622.31,
+   "y": -316.42,
+   "rot": 173,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 760.54,
+   "y": -217.57,
+   "rot": 175,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 750.02,
+   "y": -252.61,
+   "rot": 302,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 416.28,
+   "y": -58.22,
+   "rot": 162,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 490.15,
+   "y": -62.3,
+   "rot": 187,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 294.71,
+   "y": -546.73,
+   "rot": 35,
+   "z": 0.16,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 251.86,
+   "y": -39.36,
+   "rot": 212,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 299.9,
+   "y": -389.55,
+   "rot": 42,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 786.96,
+   "y": -452.99,
+   "rot": 175,
+   "z": 0.25,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 677.61,
+   "y": -99.2,
+   "rot": 278,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 678.97,
+   "y": -342.8,
+   "rot": 291,
+   "z": 0.13,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 757.37,
+   "y": -533.1,
+   "rot": 160,
+   "z": 0.7,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 249.24,
+   "y": -622.92,
+   "rot": 89,
+   "z": 0.13,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 507.39,
+   "y": -293.46,
+   "rot": 166,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 441.06,
+   "y": -90.69,
+   "rot": 108,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 782.1,
+   "y": -330.58,
+   "rot": 183,
+   "z": 0.17,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 258.1,
+   "y": -52.9,
+   "rot": 102,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 318.17,
+   "y": -345.04,
+   "rot": 316,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 740.22,
+   "y": -569.79,
+   "rot": 217,
+   "z": 0.68,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 653.68,
+   "y": -18.87,
+   "rot": 66,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 765.46,
+   "y": -81.68,
+   "rot": 314,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 338.18,
+   "y": -209.57,
+   "rot": 215,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 279.93,
+   "y": -278.33,
+   "rot": 279,
+   "z": 0.19,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 357.46,
+   "y": -175.08,
+   "rot": 106,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 233.08,
+   "y": -437.37,
+   "rot": 211,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 819.44,
+   "y": -543.75,
+   "rot": 199,
+   "z": 0.7,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 670.27,
+   "y": -266.19,
+   "rot": 37,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 557.36,
+   "y": -240.22,
+   "rot": 238,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 215.58,
+   "y": -400.03,
+   "rot": 227,
+   "z": 0.34,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 573.24,
+   "y": -336.85,
+   "rot": 106,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 306.06,
+   "y": -514.99,
+   "rot": 148,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 510.63,
+   "y": -397.56,
+   "rot": 192,
+   "z": 0.18,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 665.32,
+   "y": -276.22,
+   "rot": 23,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 509.26,
+   "y": -312.13,
+   "rot": 315,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 376.18,
+   "y": -183.44,
+   "rot": 40,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 321.2,
+   "y": -579.7,
+   "rot": 288,
+   "z": 0.15,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 481.02,
+   "y": -49.2,
+   "rot": 132,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 626.26,
+   "y": -287.55,
+   "rot": 132,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 744.58,
+   "y": -101.76,
+   "rot": 265,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 554.38,
+   "y": -250.32,
+   "rot": 108,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 664.44,
+   "y": -334.2,
+   "rot": 153,
+   "z": 0.16,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 814.86,
+   "y": -560.26,
+   "rot": 154,
+   "z": 0.74,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 706.32,
+   "y": -538.23,
+   "rot": 52,
+   "z": 0.65,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 800.45,
+   "y": -515.91,
+   "rot": 287,
+   "z": 0.65,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "nature_silvergrass_b",
+   "file": "assets3d/nature/nature_silvergrass_b.glb",
+   "x": 777.92,
+   "y": -492.31,
+   "rot": 223,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 671.14,
+   "y": -207.7,
+   "rot": 319,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 342.62,
+   "y": -55.24,
+   "rot": 163,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 548.96,
+   "y": -369.9,
+   "rot": 48,
+   "z": 0.13,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 331.36,
+   "y": -416.21,
+   "rot": 37,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 584.25,
+   "y": -80.56,
+   "rot": 75,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 341.92,
+   "y": -34.42,
+   "rot": 145,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 793.92,
+   "y": -170.09,
+   "rot": 6,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 748.89,
+   "y": -201.24,
+   "rot": 44,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 260.38,
+   "y": -227.14,
+   "rot": 134,
+   "z": 0.16,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 780.99,
+   "y": -190.17,
+   "rot": 27,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 683.0,
+   "y": -129.77,
+   "rot": 47,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 287.37,
+   "y": -524.7,
+   "rot": 70,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 712.64,
+   "y": -548.48,
+   "rot": 204,
+   "z": 0.7,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 772.66,
+   "y": -473.6,
+   "rot": 94,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 560.67,
+   "y": -332.01,
+   "rot": 280,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 489.51,
+   "y": -155.05,
+   "rot": 240,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 800.52,
+   "y": -623.77,
+   "rot": 338,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 334.14,
+   "y": -110.27,
+   "rot": 173,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 288.76,
+   "y": -18.81,
+   "rot": 277,
+   "z": 0.43,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 674.21,
+   "y": -527.83,
+   "rot": 261,
+   "z": 0.36,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 251.68,
+   "y": -423.42,
+   "rot": 129,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 738.04,
+   "y": -286.44,
+   "rot": 272,
+   "z": 0.19,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 504.79,
+   "y": -302.86,
+   "rot": 110,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 685.39,
+   "y": -387.01,
+   "rot": 250,
+   "z": 0.12,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 253.52,
+   "y": -261.34,
+   "rot": 88,
+   "z": 0.11,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 245.51,
+   "y": -228.34,
+   "rot": 84,
+   "z": 0.07,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 252.29,
+   "y": -384.16,
+   "rot": 122,
+   "z": 0.36,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 719.95,
+   "y": -394.24,
+   "rot": 306,
+   "z": 0.26,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 753.42,
+   "y": -90.53,
+   "rot": 147,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 398.01,
+   "y": -437.5,
+   "rot": 16,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 826.09,
+   "y": -126.1,
+   "rot": 134,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 618.93,
+   "y": -61.37,
+   "rot": 311,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 361.69,
+   "y": -296.05,
+   "rot": 76,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 315.7,
+   "y": -363.14,
+   "rot": 50,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 344.45,
+   "y": -139.16,
+   "rot": 86,
+   "z": 0.3,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 266.24,
+   "y": -513.42,
+   "rot": 146,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 507.05,
+   "y": -146.26,
+   "rot": 55,
+   "z": 0.42,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 249.03,
+   "y": -533.8,
+   "rot": 21,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 760.33,
+   "y": -520.05,
+   "rot": 124,
+   "z": 0.64,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 753.09,
+   "y": -521.68,
+   "rot": 334,
+   "z": 0.65,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 394.92,
+   "y": -490.26,
+   "rot": 162,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 290.89,
+   "y": -52.41,
+   "rot": 187,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 685.05,
+   "y": -435.17,
+   "rot": 266,
+   "z": 0.22,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 624.26,
+   "y": -62.43,
+   "rot": 318,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 313.66,
+   "y": -590.98,
+   "rot": 323,
+   "z": 0.2,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 703.72,
+   "y": -306.32,
+   "rot": 9,
+   "z": 0.1,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 378.75,
+   "y": -519.38,
+   "rot": 236,
+   "z": 0.07,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 424.47,
+   "y": -491.37,
+   "rot": 266,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 222.64,
+   "y": -392.97,
+   "rot": 257,
+   "z": 0.32,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 685.87,
+   "y": -605.52,
+   "rot": 138,
+   "z": 0.63,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 461.51,
+   "y": -53.41,
+   "rot": 326,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 261.08,
+   "y": -238.91,
+   "rot": 65,
+   "z": 0.2,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 492.66,
+   "y": -306.39,
+   "rot": 70,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 755.51,
+   "y": -559.24,
+   "rot": 181,
+   "z": 0.73,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 365.9,
+   "y": -175.72,
+   "rot": 198,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 291.56,
+   "y": -473.0,
+   "rot": 159,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 239.17,
+   "y": -393.02,
+   "rot": 56,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 511.51,
+   "y": -377.87,
+   "rot": 259,
+   "z": 0.2,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 372.34,
+   "y": -80.66,
+   "rot": 2,
+   "z": 0.59,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 250.65,
+   "y": -225.24,
+   "rot": 254,
+   "z": 0.09,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 695.19,
+   "y": -166.26,
+   "rot": 341,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 684.1,
+   "y": -245.26,
+   "rot": 200,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 371.31,
+   "y": -439.93,
+   "rot": 214,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 818.78,
+   "y": -48.2,
+   "rot": 3,
+   "z": 0.28,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 720.24,
+   "y": -499.76,
+   "rot": 196,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 684.36,
+   "y": -367.65,
+   "rot": 198,
+   "z": 0.12,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 301.11,
+   "y": -469.44,
+   "rot": 197,
+   "z": 0.45,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 472.44,
+   "y": -257.68,
+   "rot": 249,
+   "z": 0.73,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 732.29,
+   "y": -250.64,
+   "rot": 139,
+   "z": 0.38,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 435.37,
+   "y": -287.57,
+   "rot": 12,
+   "z": 0.62,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 588.39,
+   "y": -93.2,
+   "rot": 79,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 749.83,
+   "y": -234.92,
+   "rot": 66,
+   "z": 0.41,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 808.59,
+   "y": -82.91,
+   "rot": 194,
+   "z": 0.46,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 811.89,
+   "y": -496.65,
+   "rot": 134,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 244.93,
+   "y": -239.05,
+   "rot": 340,
+   "z": 0.1,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 311.23,
+   "y": -72.96,
+   "rot": 100,
+   "z": 0.59,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 816.49,
+   "y": -236.74,
+   "rot": 242,
+   "z": 0.49,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 239.31,
+   "y": -555.16,
+   "rot": 206,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 459.9,
+   "y": -25.04,
+   "rot": 226,
+   "z": 0.4,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 351.18,
+   "y": -184.0,
+   "rot": 143,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 506.24,
+   "y": -159.48,
+   "rot": 48,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 447.53,
+   "y": -293.56,
+   "rot": 48,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 250.64,
+   "y": -367.51,
+   "rot": 214,
+   "z": 0.25,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 715.42,
+   "y": -310.96,
+   "rot": 80,
+   "z": 0.06,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 435.38,
+   "y": -247.16,
+   "rot": 354,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 328.78,
+   "y": -361.41,
+   "rot": 98,
+   "z": 0.61,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 363.28,
+   "y": -113.02,
+   "rot": 117,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 279.87,
+   "y": -496.29,
+   "rot": 70,
+   "z": 0.47,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 359.13,
+   "y": -406.49,
+   "rot": 313,
+   "z": 0.67,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 612.15,
+   "y": -17.85,
+   "rot": 66,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 552.37,
+   "y": -198.92,
+   "rot": 280,
+   "z": 0.33,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 485.82,
+   "y": -198.1,
+   "rot": 349,
+   "z": 0.57,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 278.93,
+   "y": -303.35,
+   "rot": 98,
+   "z": 0.23,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 394.74,
+   "y": -11.27,
+   "rot": 143,
+   "z": 0.58,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 731.01,
+   "y": -168.86,
+   "rot": 179,
+   "z": 0.51,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 432.61,
+   "y": -281.53,
+   "rot": 309,
+   "z": 0.6,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 770.71,
+   "y": -28.94,
+   "rot": 71,
+   "z": 0.08,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 220.86,
+   "y": -552.22,
+   "rot": 193,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 316.64,
+   "y": -462.86,
+   "rot": 236,
+   "z": 0.44,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 364.79,
+   "y": -494.12,
+   "rot": 4,
+   "z": 0.27,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 691.11,
+   "y": -230.57,
+   "rot": 214,
+   "z": 0.48,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 513.77,
+   "y": -294.93,
+   "rot": 339,
+   "z": 0.39,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 631.08,
+   "y": -209.24,
+   "rot": 35,
+   "z": 0.29,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 762.86,
+   "y": -198.44,
+   "rot": 168,
+   "z": 0.52,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 415.18,
+   "y": -61.8,
+   "rot": 118,
+   "z": 0.55,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 715.37,
+   "y": -193.66,
+   "rot": 12,
+   "z": 0.54,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 823.18,
+   "y": -140.4,
+   "rot": 258,
+   "z": 0.37,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 249.44,
+   "y": -494.86,
+   "rot": 8,
+   "z": 0.53,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 640.58,
+   "y": -164.68,
+   "rot": 9,
+   "z": 0.31,
+   "note": "저승 풀·마른 나무"
+  },
+  {
+   "prop": "cover_stones_a",
+   "file": "assets3d/nature/cover_stones_a.glb",
+   "x": 333.37,
+   "y": -474.91,
+   "rot": 186,
+   "z": 0.35,
+   "note": "저승 풀·마른 나무"
+  }
+ ]
+}

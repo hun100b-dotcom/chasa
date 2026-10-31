@@ -1,0 +1,254 @@
+[
+ {
+  "name": "nature_pine_a",
+  "tris": 228,
+  "size_m": [
+   5.12,
+   4.27,
+   6.16
+  ],
+  "min_z": -0.012,
+  "lights": []
+ },
+ {
+  "name": "nature_pine_b",
+  "tris": 124,
+  "size_m": [
+   2.99,
+   2.85,
+   3.45
+  ],
+  "min_z": 0.0,
+  "lights": []
+ },
+ {
+  "name": "nature_pine_c",
+  "tris": 186,
+  "size_m": [
+   4.4,
+   3.42,
+   4.07
+  ],
+  "min_z": -0.071,
+  "lights": []
+ },
+ {
+  "name": "nature_zelkova_a",
+  "tris": 392,
+  "size_m": [
+   6.93,
+   6.05,
+   7.34
+  ],
+  "min_z": 0.0,
+  "lights": []
+ },
+ {
+  "name": "nature_zelkova_b",
+  "tris": 166,
+  "size_m": [
+   4.05,
+   2.85,
+   4.68
+  ],
+  "min_z": 0.0,
+  "lights": []
+ },
+ {
+  "name": "nature_bamboo_a",
+  "tris": 876,
+  "size_m": [
+   2.88,
+   2.18,
+   5.41
+  ],
+  "min_z": -0.004,
+  "lights": []
+ },
+ {
+  "name": "nature_bamboo_b",
+  "tris": 424,
+  "size_m": [
+   2.65,
+   1.58,
+   4.08
+  ],
+  "min_z": -0.005,
+  "lights": []
+ },
+ {
+  "name": "nature_reed_a",
+  "tris": 300,
+  "size_m": [
+   1.89,
+   1.84,
+   2.34
+  ],
+  "min_z": 0.031,
+  "lights": []
+ },
+ {
+  "name": "nature_reed_b",
+  "tris": 456,
+  "size_m": [
+   3.14,
+   2.69,
+   3.27
+  ],
+  "min_z": 0.029,
+  "lights": []
+ },
+ {
+  "name": "nature_silvergrass_a",
+  "tris": 260,
+  "size_m": [
+   1.97,
+   2.21,
+   1.88
+  ],
+  "min_z": 0.021,
+  "lights": []
+ },
+ {
+  "name": "nature_silvergrass_b",
+  "tris": 400,
+  "size_m": [
+   2.72,
+   2.7,
+   2.39
+  ],
+  "min_z": 0.02,
+  "lights": []
+ },
+ {
+  "name": "nature_bush_a",
+  "tris": 180,
+  "size_m": [
+   2.06,
+   1.95,
+   1.2
+  ],
+  "min_z": 0.023,
+  "lights": []
+ },
+ {
+  "name": "nature_bush_b",
+  "tris": 236,
+  "size_m": [
+   2.06,
+   1.95,
+   1.19
+  ],
+  "min_z": -0.0,
+  "lights": []
+ },
+ {
+  "name": "nature_bush_c",
+  "tris": 340,
+  "size_m": [
+   2.06,
+   1.95,
+   1.19
+  ],
+  "min_z": -0.0,
+  "lights": []
+ },
+ {
+  "name": "nature_dead_a",
+  "tris": 88,
+  "size_m": [
+   1.68,
+   1.93,
+   3.82
+  ],
+  "min_z": -0.006,
+  "lights": []
+ },
+ {
+  "name": "nature_dead_b",
+  "tris": 96,
+  "size_m": [
+   1.82,
+   1.81,
+   0.64
+  ],
+  "min_z": -0.028,
+  "lights": []
+ },
+ {
+  "name": "nature_dead_c",
+  "tris": 76,
+  "size_m": [
+   2.42,
+   1.03,
+   2.76
+  ],
+  "min_z": -0.053,
+  "lights": []
+ },
+ {
+  "name": "night_stone_lantern",
+  "tris": 160,
+  "size_m": [
+   1.05,
+   1.05,
+   2.14
+  ],
+  "min_z": 0.0,
+  "lights": [
+   "Light_stone_lantern"
+  ]
+ },
+ {
+  "name": "night_lantern_stand",
+  "tris": 120,
+  "size_m": [
+   0.6,
+   0.6,
+   1.56
+  ],
+  "min_z": 0.0,
+  "lights": [
+   "Light_lantern_stand"
+  ]
+ },
+ {
+  "name": "night_lantern_pole",
+  "tris": 160,
+  "size_m": [
+   1.2,
+   0.5,
+   2.6
+  ],
+  "min_z": 0.0,
+  "lights": [
+   "Light_lantern_pole"
+  ]
+ },
+ {
+  "name": "night_torch_stand",
+  "tris": 88,
+  "size_m": [
+   0.48,
+   0.56,
+   2.25
+  ],
+  "min_z": 0.0,
+  "lights": [
+   "Light_torch_stand"
+  ]
+ },
+ {
+  "name": "night_soulfire_pedestal",
+  "tris": 188,
+  "size_m": [
+   0.9,
+   0.9,
+   1.42
+  ],
+  "min_z": 0.0,
+  "lights": [
+   "Light_soulfire"
+  ]
+ }
+]

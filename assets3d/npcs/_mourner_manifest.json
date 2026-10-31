@@ -1,0 +1,1257 @@
+{
+ "fps": 60,
+ "note": "장례·제사 애도객. 마을 사람과 같은 16뼈 틀. 놀람·말하기·일하기 동작은 없다(차사를 보지 못한다).",
+ "mourners": [
+  {
+   "id": "M01",
+   "name": "맏상주(지팡이)",
+   "file": "assets3d/npcs/npc_M01.glb",
+   "template": "상주(남, 굴건제복)",
+   "height_m": 1.88,
+   "tris": 764,
+   "props": [
+    "gulgeon",
+    "sangjang",
+    "hemp_waist"
+   ],
+   "note": "행렬 앞의 상주. 굴건·베옷·상장(지팡이)·허리 새끼띠",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.571,
+     "stride_m": 0.4,
+     "foot_slide": {
+      "max_mm_per_frame": 0.7,
+      "mean_mm_per_frame": 0.255,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    },
+    {
+     "name": "Wail",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": true,
+     "events": {
+      "pound": 14
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M01.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow",
+     "Wail"
+    ],
+    "size_kb": 285
+   }
+  },
+  {
+   "id": "M01b",
+   "name": "맏상주(노제 술잔)",
+   "file": "assets3d/npcs/npc_M01b.glb",
+   "template": "상주(남, 굴건제복)",
+   "height_m": 1.88,
+   "tris": 748,
+   "props": [
+    "gulgeon",
+    "hemp_waist",
+    "cup"
+   ],
+   "note": "노제에서 술잔을 올리는 상주(지팡이는 내려놓음)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.571,
+     "stride_m": 0.4,
+     "foot_slide": {
+      "max_mm_per_frame": 0.7,
+      "mean_mm_per_frame": 0.255,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "PourCup",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "raise": 50,
+      "pour": 82
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    },
+    {
+     "name": "Wail",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": true,
+     "events": {
+      "pound": 14
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M01b.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "PourCup",
+     "Bow",
+     "Wail"
+    ],
+    "size_kb": 319
+   }
+  },
+  {
+   "id": "M02",
+   "name": "상주 아내",
+   "file": "assets3d/npcs/npc_M02.glb",
+   "template": "미망인(소복)",
+   "height_m": 1.59,
+   "tris": 670,
+   "props": [
+    "loose_hair",
+    "white_headband"
+   ],
+   "note": "풀어헤친 머리에 흰 수건. 상여 끝을 붙잡고 따라 나온다",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.526,
+     "stride_m": 0.368,
+     "foot_slide": {
+      "max_mm_per_frame": 0.64,
+      "mean_mm_per_frame": 0.234,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Wail",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": true,
+     "events": {
+      "pound": 14
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M02.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Wail",
+     "Bow"
+    ],
+    "size_kb": 275
+   }
+  },
+  {
+   "id": "M03",
+   "name": "막내딸",
+   "file": "assets3d/npcs/npc_M03.glb",
+   "template": "10대 딸(소복)",
+   "height_m": 1.42,
+   "tris": 642,
+   "props": [
+    "shoes_bundle"
+   ],
+   "note": "울지 않고 아버지 짚신을 품에 안는다",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.445,
+     "stride_m": 0.312,
+     "foot_slide": {
+      "max_mm_per_frame": 0.58,
+      "mean_mm_per_frame": 0.202,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    },
+    {
+     "name": "HugShoes",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    }
+   ],
+   "verify": {
+    "file": "npc_M03.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow",
+     "HugShoes"
+    ],
+    "size_kb": 267
+   }
+  },
+  {
+   "id": "M04a",
+   "name": "상여꾼 A",
+   "file": "assets3d/npcs/npc_M04a.glb",
+   "template": "상여꾼(건장)",
+   "height_m": 1.8,
+   "tris": 840,
+   "props": [
+    "bier_pole_r"
+   ],
+   "note": "상여 채를 오른 어깨에 멘 상여꾼(여덟 명 중 짝수 자리)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.571,
+     "stride_m": 0.4,
+     "foot_slide": {
+      "max_mm_per_frame": 0.81,
+      "mean_mm_per_frame": 0.311,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M04a.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow"
+    ],
+    "size_kb": 272
+   }
+  },
+  {
+   "id": "M04b",
+   "name": "상여꾼 B",
+   "file": "assets3d/npcs/npc_M04b.glb",
+   "template": "상여꾼(젊음)",
+   "height_m": 1.75,
+   "tris": 840,
+   "props": [
+    "bier_pole_l"
+   ],
+   "note": "왼 어깨에 멘 상여꾼(여덟 명 중 홀수 자리)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.554,
+     "stride_m": 0.388,
+     "foot_slide": {
+      "max_mm_per_frame": 0.79,
+      "mean_mm_per_frame": 0.301,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M04b.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow"
+    ],
+    "size_kb": 272
+   }
+  },
+  {
+   "id": "M05",
+   "name": "만장잡이",
+   "file": "assets3d/npcs/npc_M05.glb",
+   "template": "청년(만장)",
+   "height_m": 2.94,
+   "tris": 904,
+   "props": [
+    "manjang"
+   ],
+   "note": "상여 뒤를 따르며 만장을 든다",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.543,
+     "stride_m": 0.38,
+     "foot_slide": {
+      "max_mm_per_frame": 0.66,
+      "mean_mm_per_frame": 0.242,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    },
+    {
+     "name": "HoldFlag",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    }
+   ],
+   "verify": {
+    "file": "npc_M05.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow",
+     "HoldFlag"
+    ],
+    "size_kb": 292
+   }
+  },
+  {
+   "id": "M06",
+   "name": "이웃 아낙",
+   "file": "assets3d/npcs/npc_M06.glb",
+   "template": "아낙(중년, 소복 차림)",
+   "height_m": 1.63,
+   "tris": 738,
+   "props": [
+    "white_headband",
+    "tteok_basket"
+   ],
+   "note": "상여꾼에게 떡을 나르는 이웃 아낙",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.537,
+     "stride_m": 0.376,
+     "foot_slide": {
+      "max_mm_per_frame": 0.65,
+      "mean_mm_per_frame": 0.239,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M06.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow"
+    ],
+    "size_kb": 266
+   }
+  },
+  {
+   "id": "M07",
+   "name": "조문 노인",
+   "file": "assets3d/npcs/npc_M07.glb",
+   "template": "노인(흰 도포)",
+   "height_m": 1.79,
+   "tris": 822,
+   "props": [
+    "cane"
+   ],
+   "note": "행렬을 따라 걷는 마을 어른. 흰 도포·검은 갓·지팡이",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       45
+      ]
+     },
+     "walk_speed_mps": 0.422,
+     "stride_m": 0.316,
+     "foot_slide": {
+      "max_mm_per_frame": 0.68,
+      "mean_mm_per_frame": 0.203,
+      "contact_pairs": 108
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M07.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow"
+    ],
+    "size_kb": 273
+   }
+  },
+  {
+   "id": "M08",
+   "name": "어린 상제",
+   "file": "assets3d/npcs/npc_M08.glb",
+   "template": "아이(상복)",
+   "height_m": 1.28,
+   "tris": 760,
+   "props": [
+    "gulgeon"
+   ],
+   "note": "굴건이 큰 어린 상제(죽음을 직접 그리지 않고 상복으로만 보인다)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 61,
+     "length_sec": 1.0,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       30
+      ]
+     },
+     "walk_speed_mps": 0.462,
+     "stride_m": 0.231,
+     "foot_slide": {
+      "max_mm_per_frame": 0.46,
+      "mean_mm_per_frame": 0.208,
+      "contact_pairs": 72
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M08.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow"
+    ],
+    "size_kb": 259
+   }
+  },
+  {
+   "id": "M09",
+   "name": "무명 올리는 사람",
+   "file": "assets3d/npcs/npc_M09.glb",
+   "template": "장터 사람(문상)",
+   "height_m": 1.8,
+   "tris": 844,
+   "props": [
+    "cloth_roll"
+   ],
+   "note": "외상을 지워 준 포목전 문 앞에 무명 한 필을 놓는 사람(S-020 변주)",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Walk",
+     "frames": 85,
+     "length_sec": 1.4,
+     "loop": true,
+     "events": {
+      "step": [
+       0,
+       42
+      ]
+     },
+     "walk_speed_mps": 0.571,
+     "stride_m": 0.4,
+     "foot_slide": {
+      "max_mm_per_frame": 0.7,
+      "mean_mm_per_frame": 0.255,
+      "contact_pairs": 100
+     }
+    },
+    {
+     "name": "SitDown",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "settle": 30
+     }
+    },
+    {
+     "name": "SquatRest",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "StandUp",
+     "frames": 31,
+     "length_sec": 0.5,
+     "loop": false,
+     "events": {
+      "up": 30
+     }
+    },
+    {
+     "name": "Weep",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {
+      "sob": 22
+     }
+    },
+    {
+     "name": "MournStand",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": true,
+     "events": {
+      "wipe": 100
+     }
+    },
+    {
+     "name": "Bow",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "deepest": 30
+     }
+    }
+   ],
+   "verify": {
+    "file": "npc_M09.glb",
+    "skins": 1,
+    "joints": 20,
+    "animations": [
+     "Idle",
+     "Walk",
+     "SitDown",
+     "SquatRest",
+     "StandUp",
+     "Weep",
+     "MournStand",
+     "Bow"
+    ],
+    "size_kb": 272
+   }
+  }
+ ]
+}

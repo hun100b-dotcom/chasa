@@ -1,0 +1,410 @@
+{
+ "min_width_m": 2.0,
+ "pairs": [
+  {
+   "from": "시작 위치",
+   "to": "서낭당·넋길 이동 지점 ①(마을)",
+   "to_xy": [
+    188,
+    36
+   ],
+   "bottleneck_m": 6.2,
+   "ok": true,
+   "point_clearance_m": -2.2,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "솔고개 마을(원점, 마을 배치표 참조)",
+   "to_xy": [
+    196,
+    62
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 5.4,
+   "straight_line_blocked": false
+  },
+  {
+   "from": "시작 위치",
+   "to": "시작 위치(마을 남쪽 입구)",
+   "to_xy": [
+    196,
+    30
+   ],
+   "bottleneck_m": 6.46,
+   "ok": true,
+   "point_clearance_m": 5.15,
+   "straight_line_blocked": false
+  },
+  {
+   "from": "시작 위치",
+   "to": "이름혼 S-001 박돌쇠",
+   "to_xy": [
+    215.6,
+    62.2
+   ],
+   "bottleneck_m": 3.01,
+   "ok": true,
+   "point_clearance_m": 4.0,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "이름혼 S-002 윤 소사",
+   "to_xy": [
+    192.0,
+    61.0
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 1.4,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "이름혼 S-003 연이",
+   "to_xy": [
+    202.5,
+    55.5
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 1.21,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 당할미 집",
+   "to_xy": [
+    192.0,
+    48.0
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 1.3,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 대장간",
+   "to_xy": [
+    219.0,
+    62.0
+   ],
+   "bottleneck_m": 3.01,
+   "ok": true,
+   "point_clearance_m": 1.9,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 도씨네 집",
+   "to_xy": [
+    192.0,
+    67.0
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 1.4,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 마을 어귀 정자",
+   "to_xy": [
+    187.5,
+    42.5
+   ],
+   "bottleneck_m": 2.9,
+   "ok": true,
+   "point_clearance_m": 1.4,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 박돌쇠네 대장간",
+   "to_xy": [
+    219.0,
+    62.0
+   ],
+   "bottleneck_m": 3.01,
+   "ok": true,
+   "point_clearance_m": 1.9,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 서낭당 가지(명부가 걸림)",
+   "to_xy": [
+    187.2,
+    36.8
+   ],
+   "bottleneck_m": 4.89,
+   "ok": true,
+   "point_clearance_m": -0.79,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 서낭당 고개 고갯마루",
+   "to_xy": [
+    196,
+    25.5
+   ],
+   "bottleneck_m": 6.46,
+   "ok": true,
+   "point_clearance_m": 2.32,
+   "straight_line_blocked": false
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 서낭당 나무",
+   "to_xy": [
+    189,
+    36.5
+   ],
+   "bottleneck_m": 6.13,
+   "ok": true,
+   "point_clearance_m": -1.08,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 서낭당 나무 아래",
+   "to_xy": [
+    188,
+    36
+   ],
+   "bottleneck_m": 6.2,
+   "ok": true,
+   "point_clearance_m": -2.2,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 서낭당 나무(천을 묶는다)",
+   "to_xy": [
+    189,
+    36.5
+   ],
+   "bottleneck_m": 6.13,
+   "ok": true,
+   "point_clearance_m": -1.08,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 서낭당 돌무더기 곁",
+   "to_xy": [
+    191.0,
+    33.0
+   ],
+   "bottleneck_m": 6.46,
+   "ok": true,
+   "point_clearance_m": 1.54,
+   "straight_line_blocked": false
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 우물가",
+   "to_xy": [
+    198.5,
+    52.5
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 1.32,
+   "straight_line_blocked": false
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 윤 소사네 마당",
+   "to_xy": [
+    192.0,
+    59.5
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 1.45,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 윤 소사네 마당 제사상",
+   "to_xy": [
+    192.0,
+    58.0
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 1.59,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 윤 소사네 제사상",
+   "to_xy": [
+    192.0,
+    58.0
+   ],
+   "bottleneck_m": 3.14,
+   "ok": true,
+   "point_clearance_m": 1.59,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "시작 위치",
+   "to": "자리 정자",
+   "to_xy": [
+    187.5,
+    42.5
+   ],
+   "bottleneck_m": 2.9,
+   "ok": true,
+   "point_clearance_m": 1.4,
+   "straight_line_blocked": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "1호 보스 나루 영감 자리(개울 위 나룻배)",
+   "to_xy": [
+    404.0,
+    288
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "넋길 끝(폐당집)",
+   "to_xy": [
+    576,
+    496
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "넋길 시작(마을 → 보릿들, 밤에만)",
+   "to_xy": [
+    292,
+    144
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "넋길 중간",
+   "to_xy": [
+    368,
+    352
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "보스 ② 월화 마당",
+   "to_xy": [
+    580.0,
+    521.0
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "보스 ③ 서 의원 마당",
+   "to_xy": [
+    46.0,
+    453.0
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "서낭당 ②(보릿들 한가운데)",
+   "to_xy": [
+    160.0,
+    180
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "서낭당 ③(물막이 골 어귀)",
+   "to_xy": [
+    356,
+    324
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "서낭당 ④(검은여울 어귀)",
+   "to_xy": [
+    108,
+    452
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "의원 집(서 의원 집, 보스 ③ 서 의원 무대 후보)",
+   "to_xy": [
+    52.0,
+    468.0
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "이름혼 S-006 장 둑지기",
+   "to_xy": [
+    302.0,
+    112.6
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "이름혼 S-010 곽 뱃꾼",
+   "to_xy": [
+    381.5,
+    293.5
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "이름혼 S-011 방물장수 막례",
+   "to_xy": [
+    397.8,
+    304.0
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  },
+  {
+   "from": "서낭당 ①(마을)",
+   "to": "폐당집 입구(터 위, 보스 ①: 나루 영감은 개울 물가로 따로)",
+   "to_xy": [
+    580,
+    552
+   ],
+   "bottleneck_m": 4.59,
+   "ok": true
+  }
+ ],
+ "points": {}
+}

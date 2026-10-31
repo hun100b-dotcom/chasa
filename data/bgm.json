@@ -1,0 +1,142 @@
+{
+ "_설명": "솔고개 필드 BGM 층 배정(기획·사운드, 2026-10-25). 층은 겹쳐 틀지 않고 crossfade_sec 동안 교차로 넘긴다. 파일은 Resources.Load('Audio/BGM/<id>')로 읽음. 음량은 파일에 이미 맞춰 둠(탐색 -20 LUFS, 전투·처결 -16 LUFS) → 재생 볼륨 1.0 기준.",
+ "region": "solgogae",
+ "crossfade_sec": {
+  "day_to_night": 8.0,
+  "explore_to_combat": 1.0,
+  "combat_to_explore": 3.0,
+  "to_finish": 0.3,
+  "finish_to_explore": 2.0
+ },
+ "combat_exit_delay_sec": 4.0,
+ "layers": {
+  "explore_day": {
+   "clips": [
+    "bgm_solgogae_day_a",
+    "bgm_solgogae_day_b"
+   ],
+   "loop": true,
+   "pick": "번갈아(한 곡 끝나면 다른 곡으로 2초 교차)",
+   "when": "월드 시계 낮"
+  },
+  "explore_night": {
+   "clips": [
+    "bgm_solgogae_night"
+   ],
+   "loop": true,
+   "when": "월드 시계 해 진 뒤(어두운 저음 곡)"
+  },
+  "combat": {
+   "clips": [
+    "bgm_solgogae_combat"
+   ],
+   "loop": true,
+   "when": "적이 8m 안. 마지막 적이 멀어지거나 처치되고 combat_exit_delay_sec 지나면 탐색으로"
+  },
+  "finish": {
+   "clips": [
+    "bgm_solgogae_finish"
+   ],
+   "loop": false,
+   "when": "적이 무릎 꿇는 순간 1회(종 한 번 울리고 길게 사라짐). 천도·파혼 끝날 때까지 BGM 쉼"
+  }
+ },
+ "clips": {
+  "bgm_solgogae_day_a": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_day_a.ogg",
+   "length_sec": 132.25,
+   "source": "Wind_Over_the_Ridge",
+   "source_range_sec": [
+    16.2,
+    148.45
+   ]
+  },
+  "bgm_solgogae_day_b": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_day_b.ogg",
+   "length_sec": 133.55,
+   "source": "Where_the_Pine_Meets_Sky",
+   "source_range_sec": [
+    26.6,
+    160.15
+   ]
+  },
+  "bgm_solgogae_night": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_night.ogg",
+   "length_sec": 147.5,
+   "source": "Sleepless_Mountain",
+   "source_range_sec": [
+    13.2,
+    160.7
+   ]
+  },
+  "bgm_solgogae_combat": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_combat.ogg",
+   "length_sec": 41.85,
+   "source": "Storm_on_the_High_Ridge",
+   "source_range_sec": [
+    91.35,
+    133.2
+   ]
+  },
+  "bgm_solgogae_finish": {
+   "file": "unity/Assets/Resources/Audio/BGM/bgm_solgogae_finish.ogg",
+   "length_sec": 8.45,
+   "source": "Bells_of_the_Crossing",
+   "source_range_sec": [
+    0.0,
+    8.45
+   ]
+  }
+ },
+ "naming": {
+  "_설명": "지역별 곡 이름 규칙(2026-10-25, 기획·사운드). bgm_<지역>_<층>. 층 = day_a·day_b(선택)·night·combat·finish. 진짜 곡은 Audio/BGM/<id>, 임시 대역은 Audio/BGM/Temp/<id>. 진짜 곡이 있으면 그것을 먼저 쓴다.",
+  "regions": {
+   "1": "solgogae",
+   "2": "solgogae",
+   "3": "bulgeunjae",
+   "4": "soegol",
+   "5": "gaetmaeul",
+   "6": "doseong"
+  },
+  "region_names": {
+   "solgogae": "솔고개(1막)",
+   "bulgeunjae": "붉은재 싸움터(2막 ③)",
+   "soegol": "쇳골 광산(2막 ④)",
+   "gaetmaeul": "갯마을 포구(3막 ⑤)",
+   "doseong": "도성 아랫마을(3막 ⑥)",
+   "below_water": "6막 물 밑(①⑤⑦ 아래층)",
+   "below_earth": "7막 흙 밑(③④②⑥ 아래층)",
+   "below_ink": "8막 먹 밑(⑧⑨⑩ 아래층)"
+  },
+  "region_crossfade_sec": 4.0,
+  "temp_list": "data/bgm_temp.json",
+  "below": {
+   "_설명": "시즌3 아래층(백의 밤, 밤에만 열림). 관할 번호 → 곡 이름 앞부분. day_a 는 없음: 찾으면 _night 를 쓴다.",
+   "1": "below_water",
+   "5": "below_water",
+   "7": "below_water",
+   "3": "below_earth",
+   "4": "below_earth",
+   "2": "below_earth",
+   "6": "below_earth",
+   "8": "below_ink",
+   "9": "below_ink",
+   "10": "below_ink"
+  },
+  "s3_special": {
+   "bgm_s3_rising": "새벽 물 차오름 2분(반복, 크기 0.5→1.0)",
+   "bgm_s3_knot": "B-23 매듭 전투",
+   "bgm_s3_imyeong": "B-27 이명/흑월의 몸 전투",
+   "bgm_s3_mybaek": "B-31 나의 백 전투",
+   "bgm_s3_open": "C-21 여는 장면",
+   "bgm_s3_end_a": "C-31A",
+   "bgm_s3_end_b": "C-31B",
+   "bgm_s3_end_c": "C-31C"
+  },
+  "title": {
+   "_설명": "타이틀 화면 곡(M1). 진짜 곡 Audio/BGM/bgm_title → 없으면 Temp/bgm_title. 반복. 밑에 amb.title.fog 를 깔고, '새로 시작'을 누르면 2초에 걸쳐 내리며 sfx.title.start",
+   "id": "bgm_title",
+   "gemini_prompt": 63
+  }
+ }
+}

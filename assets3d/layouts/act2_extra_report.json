@@ -1,0 +1,43 @@
+{
+ "count": 650,
+ "dropped": [],
+ "field_counts": {
+  "dry_grass": 260,
+  "red_rock": 70,
+  "thorn_bush": 70,
+  "dead_tree": 45,
+  "boundary_stone": 22,
+  "persimmon_tree": 28,
+  "ore_vein_rock": 30,
+  "cairn_red": 12,
+  "dry_plot": 5
+ },
+ "per_model": {
+  "a2v_house_sul": 1,
+  "a2v_house_small": 7,
+  "a2v_house_herb": 1,
+  "a2v_stone_cutter": 1,
+  "a2v_persimmon_line": 2,
+  "a2v_red_wall_low": 44,
+  "a2f_persimmon_tree": 34,
+  "a2f_dry_grass": 274,
+  "a2f_boundary_stone": 25,
+  "a2m_soup_house": 1,
+  "a2m_stable": 1,
+  "a2m_mule": 1,
+  "a2m_owner_house": 1,
+  "a2m_coal_stack": 7,
+  "a2m_dusty_clothes": 2,
+  "a2m_pick_rack": 2,
+  "a2m_water_barrel": 3,
+  "a2m_lamp_string": 4,
+  "soegol_miner_hut": 4,
+  "a2f_ore_vein_rock": 33,
+  "a2f_red_rock": 70,
+  "a2f_thorn_bush": 70,
+  "a2f_dead_tree": 45,
+  "a2f_cairn_red": 12,
+  "a2f_dry_plot": 5
+ },
+ "moved": 17
+}

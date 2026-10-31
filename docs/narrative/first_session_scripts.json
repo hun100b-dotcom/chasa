@@ -1,0 +1,342 @@
+{
+ "_설명": "첫 세션 대본 — 오프닝 C-01(20초) + 박돌쇠 장례 3갈래. tools/first_session_scripts.py로 생성. 서사 확정 2026-10-25.",
+ "rules": {
+  "dialogue": "오프닝과 장례(천도)는 대사·자막·내레이션 0. 화면에 글로 주제를 쓰지 않는다",
+  "sfx": "sfx = 재생할 효과음 id(사운드팀 data/sfx_files.json). sfx_request = 아직 없는 소리(사운드팀 요청). caption = 소리 자막 글(접근성 설정에서만 표시)",
+  "control": "none = 조작 없음 / walk = 걷기만 / restore = 조작 복귀",
+  "names": "맏아들 용득, 막내딸 금순, 요령잡이 갑술 영감(소설 1부와 같음)"
+ },
+ "opening": {
+  "id": "C-01",
+  "name": "오프닝 — 물",
+  "duration": 20.0,
+  "input_lock": true,
+  "clock": "paused",
+  "skippable": false,
+  "note": "처음 한 번만. 건너뛸 수 없다(20초). 누구의 기억인지 알려 주지 않는다 — 결말(B-31 나의 백, 물막이 골 소)에서 같은 물로 돌아온다",
+  "lines": [],
+  "steps": [
+   {
+    "t": 0.0,
+    "camera": {
+     "mode": "black"
+    },
+    "note": "검은 화면. 3초 동안 소리 자막만",
+    "caption": "[물소리]",
+    "sfx": [
+     "amb.river.mist"
+    ]
+   },
+   {
+    "t": 3.0,
+    "camera": {
+     "mode": "fade_in",
+     "time": 1.5,
+     "framing": "둑 위에서 내려다봄, 아주 어둡게"
+    },
+    "action": "횃불 하나가 둑 아래로 내려간다. 횃불을 든 사람은 보이지 않는다(불빛만)",
+    "caption": "[빗소리]",
+    "sfx": [
+     "amb.rain"
+    ],
+    "sfx_note": [
+     "amb.rain(빗소리)"
+    ]
+   },
+   {
+    "t": 7.0,
+    "action": "불빛이 물가에 닿는다. 물이 불어 있다. 불빛이 잠시 멈췄다가, 물로 들어간다"
+   },
+   {
+    "t": 10.0,
+    "camera": {
+     "mode": "follow",
+     "to": "torch",
+     "time": 2.0
+    },
+    "action": "횃불이 물에 잠긴다. 불이 꺼지기 전 물속이 주황으로 한 번 밝아진다",
+    "caption": "[물에 잠기는 소리]",
+    "sfx": [
+     "cut.torch.sink"
+    ],
+    "sfx_note": [
+     "cut.torch.sink(횃불이 물에 잠김: 치익 + 꼬르륵)"
+    ]
+   },
+   {
+    "t": 13.0,
+    "camera": {
+     "mode": "black",
+     "time": 0.5
+    },
+    "action": "어둠",
+    "caption": "[물소리가 멀어진다]",
+    "sfx": [
+     "amb.river.mist"
+    ]
+   },
+   {
+    "t": 15.0,
+    "camera": {
+     "mode": "close",
+     "framing": "손 하나(얼굴 없음)"
+    },
+    "action": "어둠 속에서 쇠사슬이 손목에 한 바퀴, 두 바퀴 감긴다",
+    "caption": "[쇠사슬 소리]",
+    "sfx": [
+     "cut.chain.wrap"
+    ],
+    "sfx_note": [
+     "cut.chain.wrap(쇠사슬이 손목에 감김)"
+    ]
+   },
+   {
+    "t": 18.0,
+    "camera": {
+     "mode": "fade_out",
+     "time": 1.0
+    },
+    "action": "사슬이 조여지는 순간 컷"
+   },
+   {
+    "t": 19.0,
+    "camera": {
+     "mode": "black"
+    },
+    "note": "다음: 서낭당 고개에서 깨어남(first_session.json 0:20). 시계가 흐르기 시작한다",
+    "caption": "[바람 소리]",
+    "sfx": [
+     "amb.field"
+    ]
+   }
+  ]
+ },
+ "funeral": {
+  "id": "FUN-S001",
+  "soul": "S-001",
+  "name": "박돌쇠 장례(기본형)",
+  "when": "박돌쇠를 처결한 다음 낮, 그 집(대장간) 앞에 처음 다가갈 때",
+  "rule": "하루에 장례 한 번. 첫 이름혼 박돌쇠가 우선(FUNERAL-SEQUENCE §1)",
+  "branches": [
+   {
+    "branch": "천도",
+    "id": "FUN-S001-TENDO",
+    "duration": 70.0,
+    "skippable": true,
+    "clock": "running",
+    "reward": null,
+    "note": "대사·자막·내레이션 0. 상여소리는 가사가 들리지 않게 웅얼거림. 사람들은 차사를 피하지 않고 지나간다(충돌 없음)",
+    "lines": [],
+    "steps": [
+     {
+      "t": 0.0,
+      "camera": {
+       "mode": "quarter",
+       "then": "slow_zoom_in",
+       "time": 6.0
+      },
+      "action": "아침의 솔고개 마을. 대장간 문이 닫혀 있고 대문에 조등. 차사는 길 건너",
+      "control": "none",
+      "caption": "[바람] [먼 닭울음]",
+      "sfx": [
+       "amb.field",
+       "amb.rooster"
+      ],
+      "sfx_note": [
+       "amb.rooster(먼 닭울음)"
+      ]
+     },
+     {
+      "t": 6.0,
+      "camera": {
+       "mode": "low_move",
+       "to": "forge_inside",
+       "time": 8.0
+      },
+      "action": "불 꺼진 화로, 식은 쇳덩이, 풀무 손잡이에 걸린 낡은 수건",
+      "control": "none",
+      "note": "어젯밤 기억 \"풀무질을 멈추자 쇳물이 식었다\"의 멈춘 것",
+      "caption": "[요령 소리 한 번]",
+      "sfx": [
+       "cut.yoryeong.ring"
+      ]
+     },
+     {
+      "t": 14.0,
+      "camera": {
+       "mode": "quarter",
+       "height": "low"
+      },
+      "action": "상여가 집을 나선다. 앞에 요령잡이(갑술 영감), 상여꾼 여덟, 뒤로 만장. 아내가 상여 끝을 붙잡고 따라 나온다",
+      "control": "walk",
+      "note": "만장이 차사의 몸을 스치고 지나간다",
+      "caption": "[요령] [곡소리] [멀리 웅얼거리는 상여소리]",
+      "sfx": [
+       "cut.yoryeong.ring",
+       "vo.wail",
+       "mus.sangyeo.far"
+      ],
+      "sfx_note": [
+       "vo.wail(곡소리, 말 없음)",
+       "mus.sangyeo.far(가사가 안 들리는 먼 상여소리)"
+      ]
+     },
+     {
+      "t": 26.0,
+      "camera": {
+       "mode": "side_track",
+       "to": "procession"
+      },
+      "action": "마을 어귀 장승 앞(금줄 밑) 노제. 맏아들 용득이 술잔을 올린다. 막내딸 금순은 울지 않고 아버지 짚신을 품에 안고 있다",
+      "control": "walk",
+      "note": "아무도 고개를 돌리지 않는다. 업 10 미만이면 마을 개 한 마리가 한쪽 귀를 세워 차사가 선 쪽을 잠깐 보다 만다(정말 보았는지는 모호하게). 업 10 이상이면 개가 짖고 달아난다",
+      "caption": "[곡소리가 커졌다가 잦아든다]",
+      "sfx": [
+       "vo.wail"
+      ],
+      "sfx_note": [
+       "vo.wail(곡소리, 커졌다 잦아듦)"
+      ]
+     },
+     {
+      "t": 40.0,
+      "camera": {
+       "mode": "tilt_up",
+       "to": "sky"
+      },
+      "action": "행렬이 고개 너머로 사라진다. 만장 끝자락 하나가 뜯겨 차사 발밑에 떨어진다",
+      "control": "walk",
+      "note": "고개에 투명한 경계(따라갈 수 없다)",
+      "caption": "[상여소리가 멀어진다]",
+      "sfx": [
+       "mus.sangyeo.far"
+      ],
+      "sfx_note": [
+       "mus.sangyeo.far(멀어짐)"
+      ]
+     },
+     {
+      "t": 52.0,
+      "camera": {
+       "mode": "move",
+       "to": "forge_inside"
+      },
+      "action": "먼저 돌아온 용득이 화로에 불을 붙인다. 서툴게 풀무를 밟는다. 불이 오른다. 화면 가장자리에 쇳물 주황이 한 번 번졌다 사라진다",
+      "control": "none",
+      "caption": "[풀무 소리] [불꽃 튀는 소리]",
+      "sfx": [
+       "cut.bellows"
+      ],
+      "sfx_note": [
+       "cut.bellows(풀무 + 불꽃 튐)"
+      ]
+     },
+     {
+      "t": 62.0,
+      "camera": {
+       "mode": "pull_out",
+       "to": "gate",
+       "then": "quarter"
+      },
+      "action": "대문 밖 사잣밥: 밥 세 그릇, 짚신 세 켤레, 엽전 몇 닢. 차사가 그 앞에 잠깐 선다(자동)",
+      "control": "none",
+      "note": "집을 수 없다. 수치 변화 없음",
+      "caption": "[바람] [멀리서 요령 마지막 한 번]",
+      "sfx": [
+       "amb.field",
+       "cut.yoryeong.ring"
+      ]
+     },
+     {
+      "t": 70.0,
+      "action": "페이드 없이 평소 낮 화면",
+      "control": "restore"
+     }
+    ]
+   },
+   {
+    "branch": "파혼",
+    "id": "FUN-S001-PAHON",
+    "duration": 0.0,
+    "skippable": false,
+    "clock": "running",
+    "reward": null,
+    "note": "장면이 없다는 것 자체가 장면. 안내 문구도 띄우지 않는다",
+    "lines": [],
+    "steps": [
+     {
+      "t": 0.0,
+      "action": "대장간 대문에 조등만 걸려 있다. 문은 닫혀 있다. 다가가도, 오래 서 있어도 아무 일도 일어나지 않는다",
+      "control": "walk",
+      "note": "트리거 없음. 조등 소품 하나만 둔다. 사잣밥도 없다"
+     }
+    ]
+   },
+   {
+    "branch": "처결 못 함",
+    "id": "FUN-S001-PENDING",
+    "duration": 20.0,
+    "skippable": true,
+    "clock": "running",
+    "reward": null,
+    "note": "대기 시간 초과·귀환 실패 등으로 박돌쇠를 처결하지 못했을 때. 장례가 아니므로 대사 0 원칙의 예외로 한 줄만 둔다",
+    "lines": [
+     {
+      "speaker": "박돌쇠 아내",
+      "text": "……여기는 어째 이리 차누.",
+      "style": "bubble",
+      "duration": 2.0
+     }
+    ],
+    "steps": [
+     {
+      "t": 0.0,
+      "camera": {
+       "mode": "quarter",
+       "then": "slow_zoom_in",
+       "time": 4.0
+      },
+      "action": "같은 마당. 상은 아직 차려지지 않았다. 대장간 문에 빗장",
+      "control": "walk",
+      "caption": "[바람]",
+      "sfx": [
+       "amb.field"
+      ]
+     },
+     {
+      "t": 4.0,
+      "action": "아내가 대장간 문 앞에 서서 문을 두드리려다 손을 내린다"
+     },
+     {
+      "t": 8.0,
+      "action": "아내가 남편이 서 있던 대장간 문 앞에서 제 팔을 감싼다",
+      "line": {
+       "speaker": "박돌쇠 아내",
+       "text": "……여기는 어째 이리 차누.",
+       "style": "bubble",
+       "duration": 2.0
+      },
+      "note": "차사 위치와 상관없이 늘 나온다. 찬 기운은 차사가 아니라 아직 보내지 못한 남편 혼이 머물던 자리에 남은 것(서사 10-25 기준: 지나가는 차사의 한기는 당할미만 느낀다). 소설 1장과 같은 대사"
+     },
+     {
+      "t": 12.0,
+      "action": "아내가 부엌으로 들어간다. 마당이 비고, 빗장 지른 문만 남는다",
+      "caption": "[개가 한 번 낑낑대는 소리]",
+      "sfx": [
+       "sfx.dog.whine"
+      ],
+      "sfx_note": [
+       "sfx.dog.whine(개 낑낑)"
+      ]
+     },
+     {
+      "t": 20.0,
+      "action": "조작 복귀",
+      "control": "restore",
+      "note": "이날 저녁 명부 맨 아래 줄에 박돌쇠가 같은 종류(갓 죽은 혼)로 다시 적히고, 먹지기 쪽지 \"어제 이름을 오늘 또 적었다.\"가 붙는다"
+     }
+    ]
+   }
+  ]
+ }
+}

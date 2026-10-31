@@ -1,0 +1,61 @@
+{
+ "origin_m": [
+  -640,
+  0
+ ],
+ "size_x_m": 640,
+ "size_z_m": 640,
+ "size": 640,
+ "height_res_x": 641,
+ "height_res_z": 641,
+ "splat_res_x": 640,
+ "splat_res_z": 640,
+ "height_min_m": -7.0,
+ "height_max_m": 9.0,
+ "layer_tile_m": [
+  6,
+  6,
+  6,
+  6,
+  6
+ ],
+ "river_floor_m": -0.6,
+ "coast_ramp_points": [
+  [
+   -420,
+   0
+  ],
+  [
+   -446,
+   70
+  ],
+  [
+   -470,
+   140
+  ],
+  [
+   -500,
+   185
+  ]
+ ],
+ "bridge_axis_y_m": 400,
+ "bridge_deck_top_m": 3.9,
+ "dry_bank_under_bridge_m": 0.3,
+ "wall_x_m": -560,
+ "layers": {
+  "dirt": "흙길·마른 흙",
+  "grass": "마른 풀",
+  "gravel": "자갈·성벽 돌",
+  "paddy": "장터 다진 마당(splat_a A)",
+  "leaf": "눈(splat_b R, 성문 밖)",
+  "splat_b.G": "물가 거품",
+  "splat_b.B": "젖은 둔치"
+ },
+ "note": "아트 terrain_act3_west.py가 만든다. 행 0=남쪽(월드 y 0). 큰내 물판은 tide_water 말고 1막 river_water 같은 물을 x≈-380 따라 폭 14m로 깐다(물높이 -0.1).",
+ "slope_at_shrines_and_arenas": {
+  "SH3-2": 0.0,
+  "SH3-3": 0.0,
+  "B-11": 0.0,
+  "B-12": 0.0
+ }
+}

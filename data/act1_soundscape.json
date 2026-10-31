@@ -1,0 +1,354 @@
+{
+ "_설명": "1막 솔고개 주변 소리 배치표 (기획·사운드, 2026-10-26). 좌표는 field.json·field_camps.json 과 같은 m 단위(x, z). 코드는 이 표만 읽어 소리를 깔면 된다. 연결법 docs/act1-soundscape.md",
+ "beds": {
+  "_설명": "구역 바탕(2D, 구역 직사각형은 field_camps.json zones). 구역이 바뀌면 3초 교차(ZoneAmbient 와 같은 규칙). 밤에만 — 낮은 지금처럼 amb.field",
+  "솔고개 마을": "amb.village.night",
+  "보릿들": "amb.boritdeul.night",
+  "물막이 골": "amb.mulmagi.night",
+  "검은여울": "amb.geomeun.night",
+  "폐당집": "amb.dawn.still"
+ },
+ "points": [
+  {
+   "id": "amb.seonang.solgogae",
+   "x": 188,
+   "z": 36,
+   "min": 2,
+   "max": 14,
+   "when": "always",
+   "note": "서낭당 ① — 깨어나는 자리(0:20)"
+  },
+  {
+   "id": "amb.seonang.boritdeul",
+   "x": 160,
+   "z": 180,
+   "min": 2,
+   "max": 14,
+   "when": "always",
+   "note": "서낭당 ②"
+  },
+  {
+   "id": "amb.seonang.mulmagi",
+   "x": 356,
+   "z": 324,
+   "min": 2,
+   "max": 14,
+   "when": "always",
+   "note": "서낭당 ③"
+  },
+  {
+   "id": "amb.seonang.geomeun",
+   "x": 108,
+   "z": 452,
+   "min": 2,
+   "max": 12,
+   "when": "always",
+   "note": "서낭당 ④"
+  },
+  {
+   "id": "amb.seonang.pyedang",
+   "x": 574,
+   "z": 552,
+   "min": 2,
+   "max": 14,
+   "when": "always",
+   "note": "서낭당 ⑤ — field.json prop_seonangdang_pyedang 자리(폐당집 입구 서쪽 6m)"
+  },
+  {
+   "id": "amb.soulpath.gate",
+   "x": 292,
+   "z": 144,
+   "min": 1.5,
+   "max": 10,
+   "when": "night",
+   "note": "넋길 시작"
+  },
+  {
+   "id": "amb.soulpath.gate",
+   "x": 368,
+   "z": 352,
+   "min": 1.5,
+   "max": 10,
+   "when": "night",
+   "note": "넋길 중간"
+  },
+  {
+   "id": "amb.soulpath.gate",
+   "x": 576,
+   "z": 496,
+   "min": 1.5,
+   "max": 10,
+   "when": "night",
+   "note": "넋길 끝(폐당집)"
+  },
+  {
+   "id": "amb.forge.idle",
+   "x": 222.9,
+   "z": 62.2,
+   "min": 1.5,
+   "max": 10,
+   "when": "night",
+   "note": "대장간 화덕 — 박돌쇠(4:40)"
+  },
+  {
+   "id": "amb.geomeun.bridge",
+   "x": 84,
+   "z": 452,
+   "min": 2,
+   "max": 16,
+   "when": "always",
+   "note": "검은여울 돌다리 밑 물살"
+  },
+  {
+   "id": "amb.ferry.idle",
+   "x": 88.4,
+   "z": 548,
+   "min": 2,
+   "max": 12,
+   "when": "always",
+   "note": "빈 나룻배(2막 뱃사공 오면 교체)"
+  },
+  {
+   "id": "amb.doctor.house",
+   "x": 52,
+   "z": 468,
+   "min": 1.5,
+   "max": 10,
+   "when": "always",
+   "note": "서 의원 집. 보스 ③ 날엔 끔"
+  },
+  {
+   "id": "amb.graves",
+   "x": 101,
+   "z": 499,
+   "min": 1,
+   "max": 8,
+   "when": "night",
+   "note": "무덤 다섯"
+  }
+ ],
+ "by_prop": {
+  "_설명": "field.json items 의 소품 이름마다 그 자리에 3D 반복. 'nearest' 개만 켠다(가까운 순). 같은 group 은 합쳐서 nearest 개. when=night 이면 밤에만",
+  "prop_campfire": {
+   "id": "amb.campfire.small",
+   "min": 1,
+   "max": 8,
+   "nearest": 2
+  },
+  "prop_old_tree": {
+   "id": "amb.tree.old",
+   "min": 2,
+   "max": 12,
+   "nearest": 2
+  },
+  "prop_scarecrow": {
+   "id": "amb.scarecrow",
+   "min": 1,
+   "max": 7,
+   "nearest": 2
+  },
+  "terrain_tile_stream": {
+   "id": "amb.stream.small",
+   "min": 1,
+   "max": 9,
+   "nearest": 4,
+   "every_m": 12
+  },
+  "prop_foul_pool": {
+   "id": "amb.foul.pool",
+   "min": 1,
+   "max": 6,
+   "nearest": 3
+  },
+  "prop_sick_lantern": {
+   "id": "amb.sick.lantern",
+   "min": 1,
+   "max": 6,
+   "nearest": 3,
+   "when": "night"
+  },
+  "prop_plague_banner": {
+   "id": "amb.plague.banner",
+   "min": 1,
+   "max": 8,
+   "nearest": 2
+  },
+  "prop_quarantine_hut": {
+   "id": "amb.quarantine.hut",
+   "min": 1,
+   "max": 7,
+   "nearest": 2,
+   "day_gain": 0.7
+  },
+  "br_willow_a": {
+   "id": "amb.willow",
+   "min": 2,
+   "max": 9,
+   "nearest": 2,
+   "group": "willow"
+  },
+  "br_willow_b": {
+   "id": "amb.willow",
+   "min": 2,
+   "max": 9,
+   "nearest": 2,
+   "group": "willow"
+  },
+  "br_reed_field": {
+   "id": "amb.reed.wet",
+   "min": 2,
+   "max": 10,
+   "nearest": 2
+  },
+  "prop_mist_bank": {
+   "id": "amb.mist.bank",
+   "min": 0.5,
+   "max": 4,
+   "nearest": 1,
+   "group": "mist",
+   "inside_lowpass_hz": 2500
+  },
+  "prop_mist_pillar": {
+   "id": "amb.mist.bank",
+   "min": 0.5,
+   "max": 4,
+   "nearest": 1,
+   "group": "mist",
+   "inside_lowpass_hz": 2500
+  }
+ },
+ "loner": {
+  "loop": "amb.loner",
+  "min": 1,
+  "max": 9,
+  "notice": "sfx.loner.notice",
+  "notice_m": 8,
+  "_설명": "외톨이 야영지(field_camps loner:true)의 무릎 꿇은 혼마다. 처결하면 0.5초에 끔. 싸움 중 0.5배"
+ },
+ "sprinkles": {
+  "_설명": "한 번짜리를 무작위 간격·무작위 방향(panStereo −0.8~0.8)·크기 0.5~1.0으로. 같은 소리가 연달아 두 번 나오지 않게. 천도 시전 중엔 멈춤. 네 번째 값 night 이면 밤에만. sfx.geomeun.groan 은 업 30 이상이면 간격 절반",
+  "솔고개 마을": [
+   [
+    "sfx.village.shutter",
+    30,
+    80
+   ],
+   [
+    "sfx.night.dog.far",
+    40,
+    90
+   ],
+   [
+    "sfx.night.gust",
+    30,
+    70
+   ]
+  ],
+  "보릿들": [
+   [
+    "sfx.barley.wave",
+    20,
+    45
+   ],
+   [
+    "sfx.night.frog",
+    15,
+    35
+   ],
+   [
+    "sfx.night.owl",
+    25,
+    60
+   ],
+   [
+    "sfx.night.dog.far",
+    60,
+    120
+   ],
+   [
+    "sfx.night.gust",
+    30,
+    70
+   ]
+  ],
+  "물막이 골": [
+   [
+    "sfx.night.owl",
+    25,
+    60
+   ],
+   [
+    "sfx.night.frog",
+    20,
+    40
+   ],
+   [
+    "sfx.night.gust",
+    30,
+    70
+   ]
+  ],
+  "검은여울": [
+   [
+    "sfx.geomeun.cough.far",
+    40,
+    90
+   ],
+   [
+    "sfx.geomeun.crow",
+    35,
+    80
+   ],
+   [
+    "sfx.geomeun.plop",
+    25,
+    60
+   ],
+   [
+    "sfx.geomeun.clapper",
+    70,
+    140,
+    "night"
+   ],
+   [
+    "sfx.geomeun.door",
+    50,
+    110
+   ],
+   [
+    "sfx.geomeun.groan",
+    90,
+    180,
+    "night"
+   ],
+   [
+    "sfx.night.gust",
+    40,
+    90
+   ]
+  ],
+  "폐당집": []
+ },
+ "barley_wave_pan": "sfx.barley.wave 는 2.6초 동안 panStereo 를 −0.7→+0.7(또는 반대)로 옮긴다",
+ "beds_day": {
+  "_설명": "낮 바탕. 여기 없는 구역은 지금처럼 amb.field",
+  "검은여울": "amb.geomeun.day"
+ },
+ "lines": {
+  "_설명": "물줄기 같은 긴 소리: 선분 위에서 플레이어와 가장 가까운 점 하나에 3D 소리를 두고 매 프레임 옮긴다(점 여러 개를 까는 것보다 싸고 끊김 없음)",
+  "검은여울 물줄기": {
+   "id": "amb.geomeun.river",
+   "from": [
+    84,
+    280
+   ],
+   "to": [
+    84,
+    640
+   ],
+   "min": 3,
+   "max": 22,
+   "when": "always"
+  }
+ }
+}

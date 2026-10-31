@@ -1,0 +1,409 @@
+{
+ "fps": 60,
+ "note": "6원형 뼈 규칙 + Hand.L/R. 서 의원은 Case(약장)·Drawer(서랍) 추가. 약점 청록판(dGlow)은 Drawer 뼈에 붙은 발광 재질(코드가 켜고 끈다)",
+ "bosses": [
+  {
+   "name": "boss_b02_wolhwa",
+   "tris": 1252,
+   "height_m": 2.04,
+   "bones": [
+    "Root",
+    "Hips",
+    "Chest",
+    "Head",
+    "UpperArm.L",
+    "Hand.L",
+    "UpperArm.R",
+    "Hand.R",
+    "Prop"
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Intro",
+     "frames": 217,
+     "length_sec": 3.6,
+     "loop": false,
+     "events": {
+      "bell_ring": 36,
+      "head_turn": 132
+     }
+    },
+    {
+     "name": "Open",
+     "frames": 105,
+     "length_sec": 1.733,
+     "loop": false,
+     "events": {
+      "windup_end": 60,
+      "hit": 60,
+      "tell": 0,
+      "shake": [
+       8,
+       44
+      ],
+      "loaded": 48,
+      "flash": 48,
+      "ring_bell": [
+       14,
+       22,
+       29,
+       35,
+       40,
+       44
+      ]
+     }
+    },
+    {
+     "name": "Open_P2",
+     "frames": 105,
+     "length_sec": 1.733,
+     "loop": false,
+     "events": {
+      "windup_end": 60,
+      "hit": 60,
+      "tell": 0,
+      "spin": [
+       8,
+       52
+      ],
+      "loaded": 52,
+      "flash": 52
+     }
+    },
+    {
+     "name": "Whip",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "windup_end": 42,
+      "hit": 46
+     }
+    },
+    {
+     "name": "Phase2",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": false,
+     "events": {
+      "spin_start": 0
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "bell_drop": 8
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 391,
+     "length_sec": 6.5,
+     "loop": false,
+     "events": {
+      "stand_up": 90,
+      "cup_set": 150,
+      "cup_offer": 210,
+      "fan_lay": 300,
+      "dissolve": 390
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "blast": 6
+     }
+    },
+    {
+     "name": "Hurt",
+     "frames": 21,
+     "length_sec": 0.333,
+     "loop": false,
+     "events": {}
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5,
+      "sway_peaks": [
+       12,
+       20,
+       28
+      ]
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b02_wolhwa.glb",
+    "skins": 1,
+    "joints": 9,
+    "animations": [
+     "Idle",
+     "Intro",
+     "Open",
+     "Open_P2",
+     "Whip",
+     "Phase2",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon",
+     "Hurt",
+     "Hit1",
+     "Hit2",
+     "Stagger"
+    ],
+    "size_kb": 329
+   }
+  },
+  {
+   "name": "boss_b03_seo",
+   "tris": 780,
+   "height_m": 2.01,
+   "bones": [
+    "Root",
+    "Hips",
+    "Chest",
+    "Head",
+    "UpperArm.L",
+    "Hand.L",
+    "UpperArm.R",
+    "Hand.R",
+    "Prop",
+    "Case",
+    "Drawer"
+   ],
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Intro",
+     "frames": 211,
+     "length_sec": 3.5,
+     "loop": false,
+     "events": {
+      "cough": 42,
+      "drawer_out": 42,
+      "drawer_in": 66
+     }
+    },
+    {
+     "name": "Call",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": false,
+     "events": {
+      "windup_end": 48,
+      "hit": 48,
+      "tell": 0,
+      "call": [
+       12,
+       24,
+       36
+      ],
+      "loaded": 40,
+      "flash": 40
+     }
+    },
+    {
+     "name": "CallNext",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": false,
+     "events": {
+      "windup_end": 48,
+      "hit": 48,
+      "tell": 0,
+      "call": [
+       10,
+       20,
+       30
+      ],
+      "loaded": 40,
+      "flash": 40,
+      "starts_from": "Call 끝 자세"
+     }
+    },
+    {
+     "name": "Stamp",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "windup_end": 42,
+      "hit": 46
+     }
+    },
+    {
+     "name": "Phase2",
+     "frames": 97,
+     "length_sec": 1.6,
+     "loop": false,
+     "events": {
+      "book_flip": 18
+     }
+    },
+    {
+     "name": "Cough",
+     "frames": 181,
+     "length_sec": 3.0,
+     "loop": false,
+     "events": {
+      "drawer_out": 30,
+      "drawer_in": 165,
+      "turn_back_done": 45
+     }
+    },
+    {
+     "name": "Kneel",
+     "frames": 91,
+     "length_sec": 1.5,
+     "loop": false,
+     "events": {
+      "case_down": 30
+     }
+    },
+    {
+     "name": "KneelHold",
+     "frames": 121,
+     "length_sec": 2.0,
+     "loop": true,
+     "events": {}
+    },
+    {
+     "name": "Tendo",
+     "frames": 391,
+     "length_sec": 6.5,
+     "loop": false,
+     "events": {
+      "drawer_open": 90,
+      "brush_place": 140,
+      "drawer_close": 170,
+      "hat_fix": 300,
+      "look_back": 330,
+      "dissolve": 390
+     }
+    },
+    {
+     "name": "Pahon",
+     "frames": 151,
+     "length_sec": 2.5,
+     "loop": false,
+     "events": {
+      "burst": 6
+     }
+    },
+    {
+     "name": "Hurt",
+     "frames": 21,
+     "length_sec": 0.333,
+     "loop": false,
+     "events": {}
+    },
+    {
+     "name": "Hit1",
+     "frames": 11,
+     "length_sec": 0.167,
+     "loop": false,
+     "events": {
+      "peak": 2
+     }
+    },
+    {
+     "name": "Hit2",
+     "frames": 19,
+     "length_sec": 0.3,
+     "loop": false,
+     "events": {
+      "peak": 3,
+      "rebound": 8
+     }
+    },
+    {
+     "name": "Stagger",
+     "frames": 37,
+     "length_sec": 0.6,
+     "loop": false,
+     "events": {
+      "peak": 5,
+      "sway_peaks": [
+       12,
+       20,
+       28
+      ]
+     }
+    }
+   ],
+   "verify": {
+    "file": "boss_b03_seo.glb",
+    "skins": 1,
+    "joints": 11,
+    "animations": [
+     "Idle",
+     "Intro",
+     "Call",
+     "CallNext",
+     "Stamp",
+     "Phase2",
+     "Cough",
+     "Kneel",
+     "KneelHold",
+     "Tendo",
+     "Pahon",
+     "Hurt",
+     "Hit1",
+     "Hit2",
+     "Stagger"
+    ],
+    "size_kb": 345
+   }
+  }
+ ]
+}
