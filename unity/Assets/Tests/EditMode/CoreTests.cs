@@ -1235,6 +1235,35 @@ public class CoreTests
         Assert.IsFalse(CoreRules.PahonInterruptsCharge(false, 1f, Balance.PAHON_RADIUS, 0.5f));    // 모으는 중이 아니면(이미 터짐/쉬는 중) 해당 없음
     }
 
+    [Test]
+    public void 처결_대상은_조이스틱을_안_밀면_가장_가까운_혼이다()
+    {
+        var xs = new[] { 2f, -1f }; var zs = new[] { 0f, 0.5f };
+        Assert.AreEqual(1, CoreRules.PickKneelIndex(0f, 0f, 0f, 0f, xs, zs));         // 방향 없음 → 더 가까운 1번
+        Assert.AreEqual(1, CoreRules.PickKneelIndex(0f, 0f, 0.1f, 0f, xs, zs));       // 데드존(KNEEL_AIM_MIN) 아래로 살짝 밀기 → 그대로 가장 가까운 혼
+        Assert.AreEqual(-1, CoreRules.PickKneelIndex(0f, 0f, 1f, 0f, new float[0], new float[0]));   // 후보가 없으면 -1
+    }
+
+    [Test]
+    public void 처결_대상은_조이스틱_방향_60도_안에서_가장_가까운_혼이다()
+    {
+        var xs = new[] { 2f, -1f, 2.5f }; var zs = new[] { 0f, 0.5f, 1.0f };
+        Assert.AreEqual(0, CoreRules.PickKneelIndex(0f, 0f, 1f, 0f, xs, zs));          // 오른쪽으로 밀면 오른쪽 혼 중 가까운 0번(더 가까운 1번은 반대편)
+        Assert.AreEqual(1, CoreRules.PickKneelIndex(0f, 0f, -1f, 0f, xs, zs));         // 왼쪽으로 밀면 1번
+        Assert.AreEqual(1, CoreRules.PickKneelIndex(0f, 0f, 0f, 1f, new[] { 2f, -1f }, new[] { 0f, 0.5f }));   // 위로 밀었는데 60도 안에 혼이 없으면 가장 가까운 혼으로(대상이 사라지지 않는다)
+    }
+
+    [Test]
+    public void 보스_등장_카메라_세기는_처음과_끝에서_0이고_가운데서_1이다()
+    {
+        Assert.AreEqual(0f, CoreRules.RevealWeight(0f, 2f), 1e-5f);
+        Assert.AreEqual(0f, CoreRules.RevealWeight(2f, 2f), 1e-5f);
+        Assert.AreEqual(1f, CoreRules.RevealWeight(1f, 2f), 1e-5f);
+        Assert.Greater(CoreRules.RevealWeight(0.25f, 2f), 0f);
+        Assert.Less(CoreRules.RevealWeight(0.25f, 2f), 1f);                            // 앞 25%는 오르는 중
+        Assert.AreEqual(CoreRules.RevealWeight(0.3f, 2f), CoreRules.RevealWeight(1.7f, 2f), 1e-5f);   // 올라갈 때와 내려올 때가 대칭
+    }
+
     // ---------- 화면 가장자리 경고 (2단계) ----------
     [Test]
     public void EdgeWarn_InsideView_NoMark()

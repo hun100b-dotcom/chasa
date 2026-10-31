@@ -8,6 +8,8 @@
 //   무기 기술 Q — (-83,-335), 지름 104. 무기마다 하나뿐인 기술(끌기·땅울림·불러 세우기·꽂아 버티기·이름 쓰기). 개편 P1-5: 예전 '끌기' 버튼을 이 자리로 합쳤다
 //   천도 ▲(-241,-268)·파혼 ✕(-350,-114) — 지름 136, 처결할 혼이 있을 때만(그리기는 JudgeSystem). 위치는 아래 상수 한 곳에서만 정한다
 //   상호작용(넋길·등잔 등) — (+64,-466), 대상이 있을 때만(급하지 않은 일이라 멀리)
+//   물약 — 왼쪽 위 초상 아래 (150,260), 지름 96, 남은 수 표시. 급할 때 왼손 엄지(개편 P1-5)
+//   메뉴 — 왼쪽 위 초상을 톡(눈에 안 보이는 판정만, 그림은 UiRoot 의 초상). 무기 바꾸기 — 공격 버튼을 위로 끌어올리기(따로 버튼 없음, 엄지 자리가 모자라서)
 // 왜 Input.touches 로 직접 판정하나? 조이스틱을 잡은 채 다른 손가락으로 공격을 눌러야 해서(멀티터치),
 //   한 손가락만 다루는 GUI.Button 으로는 안 된다. 그리기만 OnGUI 에 맡긴다.
 // 모든 버튼은 눈에 보이는 크기보다 1.2배 넓게, 최소 96px(9mm) 로 눌린다.
@@ -48,11 +50,16 @@ public class TouchControls : MonoBehaviour
     public Func<int, string> skillLabel;             // 도술 i 의 이름(없으면 null)
     public Func<int, float> skillLeft;               // 도술 i 의 남은 대기(초). 0 = 쓸 수 있음
     public Func<bool> canInteract, hasPull; public Func<string> interactLabel;
+    public Action onHeal, onMenu, onSwap;            // 물약 · 초상 탭(메뉴) · 공격 버튼 끌어올리기(무기 바꾸기)
+    public Func<int> potionCount;                    // 남은 회복약 수
+    public Func<bool> canSwap;                       // 무기 바꾸기를 쓸 수 있나(안 되면 안내 글자도 없다)
+    public Func<bool> suspended;                     // 낮 화면·창이 떠 있어 폰 버튼을 접어야 하나
 
-    struct Btn { public string id; public Vector2 center; public float r, visual; public string text; public Color color; }   // 좌표는 GUI 좌표(위가 0)
+    struct Btn { public string id; public Vector2 center; public float r, visual; public string text; public Color color; public bool hidden; }   // hidden = 눌림 판정만 있고 그리지 않는다(초상 탭)   // 좌표는 GUI 좌표(위가 0)
     readonly System.Collections.Generic.List<Btn> btns = new System.Collections.Generic.List<Btn>();
     Texture2D disc, ring;
     bool attackHeld; readonly bool[] prevDown = new bool[16];
+    int swapFinger = -1; float swapStartY; bool swapDone;   // 공격 버튼에서 시작한 손가락(무기 바꾸기 끌어올리기 판정용)
     GUIStyle label;
 
     void Awake() { inst = this; }
@@ -68,10 +75,21 @@ public class TouchControls : MonoBehaviour
         return false;
     }
 
+    // 개편 P1-5: 왼쪽 위 기준 자리(1080p). 초상 가운데는 UiRoot 의 초상(지름 약 132)과 맞춘다
+    public static readonly Vector2 PotionPos = new Vector2(150f, 260f);
+    public static readonly Vector2 MenuPos = new Vector2(66f, 66f);
+
     void Layout()
     {
         btns.Clear();
+        if (suspended != null && suspended()) return;   // 낮 화면 등이 떠 있으면 버튼이 없다 → 눌러도 아무 일도 안 일어난다
         float s = Screen.height / 1080f;
+        var sa = Screen.safeArea;
+        float left = sa.width > 0f ? sa.xMin : 0f, top = sa.width > 0f ? Screen.height - sa.yMax : 0f;   // 노치·상태줄을 피한 왼쪽 위
+        var tl = new Vector2(left, top);
+        Add("menu", tl + MenuPos * s, 132f * s, "", Color.clear, s, true);
+        int pots = potionCount != null ? potionCount() : 0;
+        Add("potion", tl + PotionPos * s, 96f * s, "약 " + pots, pots > 0 ? new Color(0.20f, 0.50f, 0.28f) : new Color(0.25f, 0.28f, 0.27f), s);
         Vector2 ac = AttackCenter();   // 공격 버튼 중심
         Add("atk", ac, 160f * s, "공격", new Color(0.62f, 0.22f, 0.18f), s);
         for (int i = 0; i < 4; i++)
@@ -84,10 +102,10 @@ public class TouchControls : MonoBehaviour
         if (canInteract != null && canInteract()) Add("use", ac + UseOff * s, 104f * s, interactLabel != null ? interactLabel() : "상호작용", new Color(0.85f, 0.78f, 0.62f), s);
     }
 
-    void Add(string id, Vector2 c, float diameter, string text, Color col, float s)
+    void Add(string id, Vector2 c, float diameter, string text, Color col, float s, bool hidden = false)
     {
         float vis = diameter * 0.5f;
-        btns.Add(new Btn { id = id, center = c, visual = vis, r = Mathf.Max(vis * 1.2f, 48f * s * 2f / 2f), text = text, color = col });   // 눌림 반지름: 1.2배, 최소 지름 96px
+        btns.Add(new Btn { id = id, center = c, visual = vis, r = Mathf.Max(vis * 1.2f, 48f * s * 2f / 2f), text = text, color = col, hidden = hidden });   // 눌림 반지름: 1.2배, 최소 지름 96px
     }
 
     void Update()
@@ -111,6 +129,23 @@ public class TouchControls : MonoBehaviour
             }
             if (best >= 0) { down[best] = true; if (btns[best].id == "atk") atk = true; if (btns[best].id == "use") UseHeld = true; }
         }
+        // 공격 버튼을 위로 끌어올리면 무기 바꾸기(명세 §5: 따로 버튼 없이 공격 버튼 위쪽 테두리). 끈 손가락은 그동안 연속 공격이 아니다
+        if (canSwap != null && canSwap() && onSwap != null && btns.Count > 0)
+        {
+            var atkBtn = btns.Find(b => b.id == "atk");
+            for (int t = 0; t < Input.touchCount; t++)
+            {
+                var tc = Input.GetTouch(t);
+                var p = new Vector2(tc.position.x, Screen.height - tc.position.y);
+                if (tc.phase == TouchPhase.Began) { swapFinger = (p - atkBtn.center).magnitude <= atkBtn.r ? tc.fingerId : swapFinger == tc.fingerId ? -1 : swapFinger; swapStartY = p.y; swapDone = false; }
+                else if (tc.fingerId == swapFinger && !swapDone && tc.phase == TouchPhase.Moved && swapStartY - p.y > 70f * (Screen.height / 1080f))
+                {
+                    swapDone = true; onSwap();   // 위로(화면 y 는 위가 작다) 70px(1080p 기준) 이상
+                }
+                if (tc.fingerId == swapFinger && (tc.phase == TouchPhase.Ended || tc.phase == TouchPhase.Canceled)) { swapFinger = -1; swapDone = false; }
+            }
+            if (swapDone) atk = false;   // 바꾼 뒤 손을 뗄 때까지 연속 공격으로 새지 않는다
+        }
         attackHeld = atk;
         if (atk && onAttackHold != null) onAttackHold();   // 누르고 있는 동안 계속(콤보 예약이 알아서 이어 준다)
         for (int i = 0; i < btns.Count && i < prevDown.Length; i++)
@@ -123,6 +158,8 @@ public class TouchControls : MonoBehaviour
                 else if (id == "dodge") { if (onDodge != null) onDodge(); }
                 else if (id == "q") { if (onQ != null) onQ(); }
                 else if (id == "use") { if (onInteract != null) onInteract(); }
+                else if (id == "potion") { if (onHeal != null) onHeal(); }
+                else if (id == "menu") { if (onMenu != null) onMenu(); }
             }
         }
         for (int i = 0; i < prevDown.Length; i++) prevDown[i] = i < down.Length && down[i];
@@ -136,7 +173,9 @@ public class TouchControls : MonoBehaviour
         if (label == null) { label = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold }; label.normal.textColor = Color.white; }
         foreach (var b in btns)
         {
+            if (b.hidden) continue;   // 초상 탭 판정은 그림이 따로 있다
             string text = b.text; float left = 0f; bool dim = false;
+            if (b.id == "potion") dim = potionCount == null || potionCount() <= 0;   // 약이 없으면 어둡게(눌러도 '회복약이 없다' 안내만)
             if (b.id.StartsWith("sk"))
             {
                 int i = int.Parse(b.id.Substring(2)); string nm = skillLabel != null ? skillLabel(i) : null;
@@ -153,6 +192,13 @@ public class TouchControls : MonoBehaviour
             GUI.color = Color.white;
             label.fontSize = Mathf.Max(12, Mathf.RoundToInt(b.visual * (b.id == "atk" ? 0.36f : 0.28f)));
             GUI.Label(rect, left > 0f ? Mathf.CeilToInt(left).ToString() : text, label);
+            if (b.id == "atk" && canSwap != null && canSwap())   // 끌어올리기 단서: 공격 버튼 바로 위에 작은 안내(숨은 동작이라 한 번은 보여야 한다)
+            {
+                label.fontSize = Mathf.Max(11, Mathf.RoundToInt(b.visual * 0.17f));
+                GUI.color = new Color(1f, 1f, 1f, 0.55f);
+                GUI.Label(new Rect(rect.x, rect.y - b.visual * 0.38f, rect.width, b.visual * 0.34f), "↑ 무기", label);
+                GUI.color = Color.white;
+            }
         }
     }
 

@@ -270,6 +270,13 @@ public class GameMain : MonoBehaviour
             focus = Vector3.Lerp(focus, goal, 1f - Mathf.Exp(-3f / Mathf.Max(0.15f, judge.cuts.CamTime) * dt));
             goal = focus;
         }
+        // 개편 P1-3 보스 등장 카메라: 등장 컷이 없는 보스는 가까이 갔을 때 2초 동안 카메라가 보스 쪽으로 갔다가 돌아온다. 플레이어 조작은 그대로
+        float reveal = judge.cuts.Active ? 0f : judge.RevealWeight;
+        if (reveal > 0f)
+        {
+            var rp = new Vector3(judge.RevealPos.x, GroundTerrain.HeightAt(judge.RevealPos.x, judge.RevealPos.z), judge.RevealPos.z);
+            goal = Vector3.Lerp(goal, rp, reveal);   // 가운데에서 거의 보스 위치(플레이어는 화면 가장자리로 밀릴 수 있다 — 보스까지 최대 40m 라 거리 제한은 컷 쪽 기준)
+        }
         // 데드존: 목표가 카메라 중심에서 이 반경 안이면 움직이지 않는다 (작은 흔들림에 화면이 같이 떨리지 않게)
         var d = goal - focus; d.y = 0f;
         if (d.magnitude > Balance.CAMERA_DEADZONE_M) goal = focus + d.normalized * (d.magnitude - Balance.CAMERA_DEADZONE_M);
@@ -281,7 +288,7 @@ public class GameMain : MonoBehaviour
         int crowd = 0;
         foreach (var en in judge.enemies.list) if (en != null && en.alive && !en.passive && new Vector2(en.Pos.x - player.Pos.x, en.Pos.z - player.Pos.z).magnitude <= Balance.CAMERA_CROWD_RANGE_M) crowd++;
         crowdPull = Mathf.Lerp(crowdPull, crowd >= Balance.CAMERA_CROWD_MIN ? Balance.CAMERA_CROWD_PULLBACK : 0f, 1f - Mathf.Exp(-2f * dt));   // 천천히 오가야 화면이 출렁이지 않는다
-        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f - crowdPull + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
+        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f - crowdPull + reveal * Balance.BOSS_REVEAL_ZOOM + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
         wheel = Mathf.Lerp(wheel, wheelTarget, 1f - Mathf.Exp(-Balance.CAMERA_WHEEL_SMOOTH * Time.unscaledDeltaTime));   // 휠 줌은 부드럽게 따라간다
         if (judge.clock != null) ClockSky.Apply(sun, cam, judge.clock, player.Pos, dt);   // 하늘·햇빛이 시계를 따른다
         // 줌하면 카메라 각도도 함께 바뀐다: 확대(wheel<1)하면 눕고(몰입), 축소하면 일어선다(지도처럼). 기준 각도는 wheel=1
@@ -381,16 +388,19 @@ public class GameMain : MonoBehaviour
         if (!Ko.TouchUI) return false;
         if (TouchControls.Over(screenPos)) return false;   // 버튼 판정이 조이스틱보다 먼저(기획 §5)
         float py = Screen.height - screenPos.y;   // GUI 좌표(위가 0)
-        return screenPos.x < Screen.width * Balance.JOY_ZONE_WIDTH_FRAC && py > 60f && py < Screen.height - 215f;   // 아래쪽은 천도·파혼·도술 버튼 줄
+        // 명세 §5: 화면 왼쪽 45% 어디든(아래 끝까지). 예전엔 아래 215px 를 비웠는데 그건 왼쪽 아래 IMGUI 버튼(교체·메뉴·땅울림) 때문이었고,
+        // 그 버튼들을 치웠으니(교체 = 공격 버튼 끌어올리기, 메뉴 = 초상 탭, 땅울림 = Q 버튼) 기본 자리(200, 880)에서도 조이스틱이 생긴다
+        return screenPos.x < Screen.width * Balance.JOY_ZONE_WIDTH_FRAC && py > 60f;
     }
 
+    float joyDownAt; Vector2 joyStartPos;   // 누른 시각·자리(짧게 톡 친 것을 '탭'으로 알아보려고)
     void UpdateJoystick()
     {
         if (Input.touchCount == 0) { joyActive = false; joyFinger = -1; joyAxes = Vector2.zero; return; }
         if (!joyActive)
         {
             foreach (var t in Input.touches)
-                if (t.phase == TouchPhase.Began && InJoyZone(t.position)) { joyActive = true; joyFinger = t.fingerId; joyOrigin = joyPos = t.position; break; }
+                if (t.phase == TouchPhase.Began && InJoyZone(t.position)) { joyActive = true; joyFinger = t.fingerId; joyOrigin = joyPos = joyStartPos = t.position; joyDownAt = Time.unscaledTime; break; }
             if (!joyActive) return;
         }
         bool found = false;
@@ -398,9 +408,18 @@ public class GameMain : MonoBehaviour
         {
             if (t.fingerId != joyFinger) continue;
             found = true;
-            if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled) { joyActive = false; joyFinger = -1; joyAxes = Vector2.zero; return; }
+            if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
+            {
+                // 짧게 톡 쳤고 거의 안 움직였으면 '탭' — 꿇은 혼 위였다면 그 혼을 처결 대상으로 고른다(조이스틱 영역이 탭을 먹어서 여기서 따로 본다)
+                if (t.phase == TouchPhase.Ended && Time.unscaledTime - joyDownAt < 0.3f && (t.position - joyStartPos).magnitude < Balance.JOY_DEADZONE_PX * 1.5f) judge.TryTapPickKneel(t.position);
+                joyActive = false; joyFinger = -1; joyAxes = Vector2.zero; return;
+            }
             var v = t.position - joyOrigin;
-            if (v.magnitude > Balance.JOY_RADIUS_PX) v = v.normalized * Balance.JOY_RADIUS_PX;   // 손잡이는 반지름 안에서만
+            if (v.magnitude > Balance.JOY_RADIUS_PX)
+            {
+                joyOrigin += v.normalized * (v.magnitude - Balance.JOY_RADIUS_PX);   // 원 밖으로 나가면 원이 손가락을 따라온다(명세 §5) — 손이 밀려도 방향이 안 막힌다
+                v = t.position - joyOrigin;
+            }
             joyPos = joyOrigin + v;
             joyAxes = v.magnitude < Balance.JOY_DEADZONE_PX ? Vector2.zero : v / Balance.JOY_RADIUS_PX;
         }
@@ -409,7 +428,6 @@ public class GameMain : MonoBehaviour
 
     void DrawJoystick()
     {
-        if (!joyActive) return;
         if (joyTex == null)
         {
             joyTex = new Texture2D(64, 64) { filterMode = FilterMode.Bilinear };   // 속이 찬 동그라미(알파 가장자리)
@@ -417,6 +435,16 @@ public class GameMain : MonoBehaviour
             joyTex.Apply();
         }
         float R = Balance.JOY_RADIUS_PX;
+        if (!joyActive)
+        {
+            // 안 누르고 있을 땐 기본 자리(명세 (200, 880), 1080p 기준)에 아주 흐린 원만 둔다 — "여기 왼쪽 아래를 누르면 조이스틱" 이라는 단서
+            float sc = Screen.height / 1080f; var sa = Screen.safeArea; float left = sa.width > 0f ? sa.xMin : 0f;
+            var rest = new Vector2(left + 200f * sc, 880f * sc);
+            GUI.color = new Color(1, 1, 1, 0.08f); GUI.DrawTexture(new Rect(rest.x - R, rest.y - R, R * 2, R * 2), joyTex);
+            GUI.color = new Color(1, 1, 1, 0.14f); GUI.DrawTexture(new Rect(rest.x - 32, rest.y - 32, 64, 64), joyTex);
+            GUI.color = Color.white;
+            return;
+        }
         var o = new Vector2(joyOrigin.x, Screen.height - joyOrigin.y); var p = new Vector2(joyPos.x, Screen.height - joyPos.y);
         GUI.color = new Color(1, 1, 1, 0.18f); GUI.DrawTexture(new Rect(o.x - R, o.y - R, R * 2, R * 2), joyTex);
         GUI.color = new Color(1, 1, 1, 0.45f); GUI.DrawTexture(new Rect(p.x - 32, p.y - 32, 64, 64), joyTex);
@@ -453,6 +481,14 @@ public class GameMain : MonoBehaviour
         float x = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ? 1f : 0f) - (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) ? 1f : 0f);
         float z = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) ? 1f : 0f) - (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ? 1f : 0f);
         if (joyActive) { x = joyAxes.x; z = joyAxes.y; }   // 폰 조이스틱이 눌려 있으면 그 값을 쓴다
+        judge.AimDir = Vector2.zero;   // 처결 대상 고르기(개편 P1-5)는 폰 조이스틱 방향만 쓴다. 키보드로 걸을 땐 가장 가까운 혼이 기본이다
+        if (joyActive && joyAxes.sqrMagnitude > 0.0001f)
+        {
+            var cf = cam.transform.forward; cf.y = 0f; cf = cf.sqrMagnitude < 1e-4f ? Vector3.forward : cf.normalized;
+            var cr = new Vector3(cf.z, 0f, -cf.x);
+            var wd = cf * joyAxes.y + cr * joyAxes.x;   // 걷는 방향과 같은 변환(카메라 위 = 앞)
+            judge.AimDir = new Vector2(wd.x, wd.z);
+        }
         if (Mathf.Abs(x) < 0.01f && Mathf.Abs(z) < 0.01f)
         {
             if (kbMove) { kbMove = false; player.CommandMove(player.Pos + kbDir * Balance.MOVE_STOP_SLIDE_M); }   // 키를 떼면 걷던 방향으로 0.18 m 미끄러지며 멈춘다(한 프레임에 0 이면 뚝 멈춰 보인다. 클릭 이동 중이었다면 건드리지 않음)
@@ -469,7 +505,7 @@ public class GameMain : MonoBehaviour
     void HandleInput()
     {
         HandleZoom();
-        if (judge.cuts.InputLocked) { kbMove = false; return; }   // 잠금 컷신 중엔 입력이 먹지 않는다
+        if (judge.cuts.InputLocked) { kbMove = false; judge.AimDir = Vector2.zero; return; }   // 잠금 컷신 중엔 입력이 먹지 않는다
         HandleKeyboardMove();
         Vector3 mouse = Input.mousePosition;
         if (!Ko.TouchUI)   // 적 위에 커서를 올리면 칼 모양(손이 '누르면 때린다'를 미리 안다). 클릭 판정은 1.3배 넓게
@@ -483,7 +519,9 @@ public class GameMain : MonoBehaviour
         // 개편 P0-4: 오른쪽 클릭 = 끌기(Q 와 같은 기술). 이동(WASD)과 공격·끌기(마우스)를 두 손으로 나누려는 것
         if (Input.GetMouseButtonDown(1) && !OverTouchButtons(mouse)) UseQ(mouse);
 
-        if (Input.GetMouseButtonDown(0) && !OverTouchButtons(mouse))
+        // 폰: 꿇은 혼을 탭하면 그 혼이 처결 대상(개편 P1-5). 탭이 이동·공격으로 새지 않게 여기서 먹는다
+        bool tapPicked = Ko.TouchUI && Input.GetMouseButtonDown(0) && !OverTouchButtons(mouse) && judge.TryTapPickKneel(mouse);
+        if (Input.GetMouseButtonDown(0) && !tapPicked && !OverTouchButtons(mouse))
         {
             var ray = cam.ScreenPointToRay(mouse);
             var ground = Ground(ray);
@@ -616,6 +654,13 @@ public class GameMain : MonoBehaviour
         tc.qLabel = () => { var d = player.loadout.Def; return d.HasQuake ? "땅울림" : d.HasPull ? "끌기" : d.HasCall ? "부르기" : d.HasFence ? "꽂기" : d.HasInkName ? "이름" : "베기"; };
         tc.qLeft = () => { var d = player.loadout.Def; return d.HasPull ? player.PullCooldown : (d.HasQuake || d.HasInkName) ? Mathf.Max(0f, player.loadout.quakeCd) : 0f; };
         tc.onQ = UseQTouch;
+        tc.onHeal = judge.CommandHeal;                       // 물약 버튼: H 키와 같은 함수(개편 P1-5, 명세 §5 왼쪽 위 초상 아래)
+        tc.potionCount = () => judge.PotionCount;
+        tc.onMenu = judge.ToggleMenu;                        // 초상 탭 = 메뉴(예전 왼쪽 아래 '메뉴' 버튼 대신)
+        tc.onSwap = () => { if (Demo.Weapons) player.CommandSwap(); };   // 공격 버튼을 위로 끌면 무기 바꾸기(예전 '교체' 버튼 대신)
+        tc.canSwap = () => Demo.Weapons;
+        // 낮 화면·창·타이틀 등이 떠 있을 땐 폰 버튼을 접는다(물약·메뉴를 낮 화면 위에서 잘못 누르지 않게)
+        tc.suspended = () => TitleScreen.Open || DosulCards.Open || CharacterPanel.Open || SettingsPanel.Open || MiniMap.BigOpen || judge.InDay || judge.NightOver;
         tc.onAttackHold = () =>   // 누르고 있으면 6m 안 가장 가까운 적을 자동 조준해 연속 공격
         {
             Enemy best = null; float bd = 6f;

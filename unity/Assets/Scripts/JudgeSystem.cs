@@ -129,20 +129,62 @@ public class JudgeSystem : MonoBehaviour
         return best;
     }
 
-    /// <summary>
-    /// 처결 대상 찾기. 명부 붓으로 이름을 쓴 혼은 6m 밖에서도 처결할 수 있다
-    /// (왜: 원거리 무기가 붙어서 1.5초를 시전하다 끊기면 무리 속에서 파혼만 정답이 되기 때문 — 기획 weapon-choice-skew)
-    /// </summary>
-    Enemy FindKneeling(System.Func<Enemy, bool> accept = null)
+    // ---- 처결 대상 고르기(개편 P1-5, 폰 명세 §5-1) ----------------------------------
+    // 꿇은 혼이 여럿일 때 ▲·✕가 어느 혼을 겨누나. 기본은 가장 가까운 혼, 조이스틱을 밀고 있으면 그 방향 60도 안에서 가장 가까운 혼,
+    // 화면에서 꿇은 혼을 탭하면 잠깐(KNEEL_TAP_PICK_SEC) 그 혼. 키보드(PC)는 AimDir 이 늘 0 이라 예전처럼 가장 가까운 혼이다.
+    // 천도와 파혼이 같은 혼을 겨누므로 한쪽만 다른 혼을 고르는 일은 없다(선택은 '어느 혼에게'가 아니라 '천도냐 파혼이냐')
+    public Vector2 AimDir;                  // 조이스틱 방향(월드 바닥 좌표, 길이 0~1). GameMain 이 매 프레임 채운다
+    Enemy tapPick; float tapPickT;          // 탭으로 고른 혼과 남은 시간
+    readonly List<Enemy> kneelBuf = new List<Enemy>();
+
+    /// <summary>처결할 수 있는 거리 안의 꿇은 혼을 모은다. 명부 붓으로 이름을 쓴 혼은 6m 밖에서도 처결할 수 있다
+    /// (왜: 원거리 무기가 붙어서 1.5초를 시전하다 끊기면 무리 속에서 파혼만 정답이 되기 때문 — 기획 weapon-choice-skew)</summary>
+    void KneelCandidates(System.Func<Enemy, bool> accept, List<Enemy> into)
     {
+        into.Clear();
         bool brush = lo.weapon == WeaponId.Brush;
         float far = brush ? Mathf.Max(Balance.JUDGE_RANGE, Balance.BRUSH_NAMED_JUDGE_RANGE) : Balance.JUDGE_RANGE;
-        return enemies.NearestKneeling(player.Pos, far, x =>
+        foreach (var x in enemies.list)
         {
+            if (!x.kneeling) continue;
             float d = new Vector2(x.Pos.x - player.Pos.x, x.Pos.z - player.Pos.z).magnitude;
-            if (d > Balance.JUDGE_RANGE && !(brush && x.nameWritten)) return false;   // 보통 혼은 2.8m, 이름 쓴 혼만 6m
-            return accept == null || accept(x);
-        });
+            if (d > far) continue;
+            if (d > Balance.JUDGE_RANGE && !(brush && x.nameWritten)) continue;   // 보통 혼은 2.8m, 이름 쓴 혼만 6m
+            if (accept != null && !accept(x)) continue;
+            into.Add(x);
+        }
+    }
+
+    /// <summary>처결 대상 찾기: 탭으로 고른 혼 → 조이스틱 방향의 혼 → 가장 가까운 혼 순서</summary>
+    Enemy FindKneeling(System.Func<Enemy, bool> accept = null)
+    {
+        KneelCandidates(accept, kneelBuf);
+        if (kneelBuf.Count == 0) return null;
+        if (tapPick != null && tapPickT > 0f && kneelBuf.Contains(tapPick)) return tapPick;
+        if (kneelBuf.Count == 1) return kneelBuf[0];
+        var xs = new float[kneelBuf.Count]; var zs = new float[kneelBuf.Count];
+        for (int i = 0; i < xs.Length; i++) { xs[i] = kneelBuf[i].Pos.x; zs[i] = kneelBuf[i].Pos.z; }
+        int k = CoreRules.PickKneelIndex(player.Pos.x, player.Pos.z, AimDir.x, AimDir.y, xs, zs);
+        return k >= 0 ? kneelBuf[k] : null;
+    }
+
+    /// <summary>폰: 화면의 이 자리를 탭했을 때 꿇은 혼 위였으면 그 혼을 처결 대상으로 고른다. 썼으면 true(탭이 이동·공격으로 새지 않게)</summary>
+    public bool TryTapPickKneel(Vector2 screenPos)
+    {
+        if (cam == null) return false;
+        var list = new List<Enemy>(); KneelCandidates(null, list);
+        if (list.Count < 2) return false;   // 고를 것이 없으면 탭을 가로채지 않는다
+        float s = Screen.height / 1080f, maxD = Balance.KNEEL_TAP_RADIUS_PX * s, bestD = maxD; Enemy best = null;
+        foreach (var e in list)
+        {
+            var sp = cam.WorldToScreenPoint(e.Pos + Vector3.up * 1.0f);   // 몸 가운데쯤
+            if (sp.z < 0f) continue;
+            float d = Vector2.Distance(new Vector2(sp.x, sp.y), screenPos);   // 둘 다 아래가 0인 화면 좌표
+            if (d <= bestD) { bestD = d; best = e; }
+        }
+        if (best == null) return false;
+        tapPick = best; tapPickT = Balance.KNEEL_TAP_PICK_SEC;
+        return true;
     }
 
     /// <summary>목적격 조사: 받침이 있으면 "을", 없으면 "를"(한글이 아니면 "을"). 왜: "을(를)" 같은 괄호 표기는 첫 이름혼부터 보여 어색하다</summary>
@@ -1245,6 +1287,7 @@ public class JudgeSystem : MonoBehaviour
     public void Tick(float dt, float realDt)
     {
         toastT -= realDt;   // 안내 글자는 창이 열려 있어도 사라진다(QA B3)
+        if (tapPickT > 0f) tapPickT -= realDt;   // 탭으로 고른 처결 대상은 잠깐만 유효하다
         if (CharacterPanel.Open || SettingsPanel.Open) return;   // 캐릭터 창·설정이 열려 있으면 세계가 멈춘다
         if (inDay)
         {
@@ -1597,6 +1640,7 @@ public class JudgeSystem : MonoBehaviour
                 if (!b.soul.Boss || b.soul.BossId < 1 || bossIntroDone.Contains(b.soul.BossId)) continue;
                 if (new Vector2(b.Pos.x - player.Pos.x, b.Pos.z - player.Pos.z).magnitude >= 40f) continue;
                 bossIntroDone.Add(b.soul.BossId);
+                if (!cuts.Has(BossCut(b.soul, "INTRO"))) { StartBossReveal(b); continue; }   // 등장 컷 대본이 없는 보스: 짧은 카메라 이동만(개편 P1-3)
                 if (cuts.Play(BossCut(b.soul, "INTRO"), true))
                 {
                     player.CommandStop();
@@ -1604,6 +1648,12 @@ public class JudgeSystem : MonoBehaviour
                     if (b.soul.BossId == 1) { for (int i = 0; i < 2; i++) enemies.SpawnCamp(b.Pos + new Vector3(i == 0 ? -3f : 3f, 0f, -2.5f), i == 0); Sfx.Play("sfx.boss.naru.rise"); }
                 }
             }
+        if (RevealT > 0f)   // 보스 등장 카메라 진행. 보스가 바로 덤비지 않게 그동안 적 공격 시계를 되감는다
+        {
+            RevealT += Mathf.Min(0.05f, Time.unscaledDeltaTime);   // 진짜 시간으로 센다(히트스톱·느려짐에 늘어지지 않게)
+            if (RevealT >= Balance.BOSS_REVEAL_SEC) RevealT = 0f;
+            else enemies.graceT = Mathf.Max(enemies.graceT, 0.5f);
+        }
         cuts.Tick(dt);
         if (cuts.PauseEnemies) enemies.graceT = Mathf.Max(enemies.graceT, 0.5f);   // 컷 동안 적 공격 시계를 계속 되감는다
         float sh = cuts.TakeShake(); if (sh > 0f) feel.AddShake(sh);
@@ -1877,7 +1927,16 @@ public class JudgeSystem : MonoBehaviour
     }
 
     /// <summary>H: 회복약 마시기(봇도 부른다)</summary>
-    public void CommandHeal() { if (Shrine.UseHeal(ledger, dayScreen.Pack)) Say("회복약을 마셨다"); }
+    public void CommandHeal()
+    {
+        if (dayScreen.Pack.Heal <= 0) { Say("회복약이 없다"); return; }
+        if (ledger.Hp >= ledger.MaxHp) { Say("체력이 가득하다"); return; }   // 폰에서 톡 잘못 눌러 약을 낭비하지 않게(PC 도 같다)
+        if (Shrine.UseHeal(ledger, dayScreen.Pack)) Say("회복약을 마셨다");
+    }
+    /// <summary>폰 초상 탭 = 캐릭터 창(C 키와 같다)</summary>
+    public void ToggleMenu() { if (Demo.Panel || FieldRules.On) panel.Toggle(); }
+    /// <summary>폰 약 버튼 글자에 쓰는 남은 회복약 수</summary>
+    public int PotionCount { get { return dayScreen.Pack.Heal; } }
 
     void HandleKeys()
     {
@@ -2137,6 +2196,14 @@ public class JudgeSystem : MonoBehaviour
     }
     void Hint(HintEvent e) { var t = hints.On(e, Ko.TouchUI); if (t != null) ui?.Hud.Toasts.Add(t); }
     public readonly CutscenePlayer cuts = new CutscenePlayer();   // 나루 영감 실시간 컷신
+    // ---- 보스 등장 카메라(개편 P1-3 '보스 등장 2초') ----
+    // 등장 컷(대본)이 있는 보스는 그 컷이 카메라를 맡는다. 대본이 없는 보스(2·3막 대부분)는 가까이 갔을 때 한 번,
+    // 카메라가 보스 쪽으로 천천히 갔다가(앞 25%) 머물고(50%) 돌아온다(뒤 25%). 조작은 막지 않는다 — 시간 멈춤 같은 강제 장치 대신 눈만 이끈다.
+    public float RevealT;                 // 0 = 꺼짐, 그 밖엔 지나간 시간(초)
+    public Vector3 RevealPos;             // 비출 보스 자리
+    void StartBossReveal(Enemy b) { RevealT = 0.001f; RevealPos = b.Pos; }  // 새 소리 파일은 만들지 않는다(에셋은 아트·사운드 팀 몫)
+    /// <summary>카메라가 보스 쪽으로 간 정도(0~1)</summary>
+    public float RevealWeight { get { return RevealT > 0f ? CoreRules.RevealWeight(RevealT, Balance.BOSS_REVEAL_SEC) : 0f; } }
     readonly HashSet<int> bossIntroDone = new HashSet<int>();   // 등장 컷을 본 보스 번호
     public NamedSoulSpawns named;               // 첫 세션 이름혼들
     public NpcWorld npcs;                       // 필드의 산 사람(엿듣기·지켜보기)
@@ -2283,6 +2350,35 @@ public class JudgeSystem : MonoBehaviour
         else GUI.Label(new Rect(r.x + 110f * k - 20f, cy - 14f, 40f, 28f), "R", ks);
     }
 
+    Texture2D arrowTex;
+    /// <summary>
+    /// 폰 처결 대상 표식 ▼ (명세 §5-1). 꿇은 혼이 둘 이상일 때만, ▲·✕가 겨누는 그 혼의 머리 위에 작게 띄운다(하나뿐이면 고를 게 없다).
+    /// 글꼴에 ▼ 글자가 없을 수 있어 삼각형을 직접 그린 그림으로 쓴다. 색은 뼈색 — 천도 청록·파혼 주황 어느 쪽도 정답처럼 보이지 않게
+    /// </summary>
+    void DrawPickArrow()
+    {
+        KneelCandidates(null, kneelBuf);
+        if (kneelBuf.Count < 2) return;
+        var t = FindKneeling(x => CanTendoNow(x)) ?? FindKneeling();
+        if (t == null || t.gone) return;
+        if (arrowTex == null)
+        {
+            arrowTex = new Texture2D(32, 32) { filterMode = FilterMode.Bilinear };   // 아래를 가리키는 삼각형(가장자리 알파)
+            for (int y = 0; y < 32; y++) for (int x = 0; x < 32; x++)
+            {
+                float half = (y / 31f) * 15f;   // 위(y 큼)에서 넓고 아래(y=0)에서 뾰족
+                arrowTex.SetPixel(x, y, new Color(1, 1, 1, Mathf.Abs(x - 15.5f) <= half + 0.5f ? 1f : 0f));
+            }
+            arrowTex.Apply();
+        }
+        var sp = cam.WorldToScreenPoint(t.HeadPosition + Vector3.up * 0.35f);
+        if (sp.z < 0f) return;
+        float sz = Mathf.Max(24f, Screen.height / 1080f * 36f), bob = Mathf.Sin(Time.unscaledTime * 6f) * sz * 0.12f;   // 살짝 까딱여 눈에 띄게
+        GUI.color = new Color(0.96f, 0.92f, 0.78f, 0.95f);
+        GUI.DrawTexture(new Rect(sp.x - sz * 0.5f, Screen.height - sp.y - sz + bob, sz, sz), arrowTex);
+        GUI.color = Color.white;
+    }
+
     void OnGUI()
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
@@ -2336,6 +2432,7 @@ public class JudgeSystem : MonoBehaviour
         // (1-3) 처결 표식(개편 P0-2): 지금 E 가 겨눌 무릎 꿇은 혼 하나의 머리 위에만 ▲E ✕R 을 띄운다. 덩어리·단서 모자란 보스는 ✕R 만.
         //       화면 구석의 큰 판 대신 '그 혼 위'에서 고르게 하려는 것(선택이 장소의 선택이 된다). 폰은 처결 버튼이 이 역할을 한다
         if (cam != null && !Ko.TouchUI && !Casting) DrawExecMark();
+        else if (cam != null && Ko.TouchUI && !Casting) DrawPickArrow();   // 폰: 겨눈 혼 머리 위 작은 ▼(꿇은 혼이 둘 이상일 때)
         // (2) 머리 위 '맺힘' 막대 = 남은 맺힘(체력 대신 깎이는 수치). 처결 대기 시간은 발밑 고리(SoulMarkers)가 맡는다.
         //     보스·이름혼·맞아서 깎인 혼에게만 보인다(전부 띄우면 화면이 막대 숲이 된다). 덩어리는 두 줄(= 두 배 질기다는 표시)
         if (cam != null)
@@ -2596,9 +2693,14 @@ public class JudgeSystem : MonoBehaviour
                     }
                     else if (GUI.Button(rs, (i + 1) + "\n" + an + (rdy ? "" : "\n" + Mathf.CeilToInt(lo.active.Left(an)) + "s"), sbs)) UseSkill(i);
                 }
-            if (Demo.Weapons && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "교체", bs)) player.CommandSwap();
-            if ((Demo.Panel || FieldRules.On) && GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "메뉴", bs)) panel.Toggle();
-            if (Demo.Weapons && lo.Def.HasQuake && GUI.Button(new Rect(24 + 6 * 94, Screen.height - 206, 86, 80), "땅울림", bs)) player.CommandQuake();
+            // 교체·메뉴·땅울림 버튼은 왼쪽 아래를 조이스틱에 비워 주려고 TouchControls 로 옮겼다(교체 = 공격 버튼 끌어올리기, 메뉴 = 초상 탭, 땅울림 = Q 버튼).
+            // TouchControls 가 꺼져 있을 때만(이론상) 예전 버튼을 둔다
+            if (!TouchControls.Active)
+            {
+                if (Demo.Weapons && GUI.Button(new Rect(24 + 4 * 94, Screen.height - 206, 86, 80), "교체", bs)) player.CommandSwap();
+                if ((Demo.Panel || FieldRules.On) && GUI.Button(new Rect(24 + 5 * 94, Screen.height - 206, 86, 80), "메뉴", bs)) panel.Toggle();
+                if (Demo.Weapons && lo.Def.HasQuake && GUI.Button(new Rect(24 + 6 * 94, Screen.height - 206, 86, 80), "땅울림", bs)) player.CommandQuake();
+            }
         }
     }
 
