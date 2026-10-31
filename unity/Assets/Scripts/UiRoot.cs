@@ -130,6 +130,25 @@ public class UiRoot : MonoBehaviour
         v.style.width = w; v.style.height = h; SetImg(v, n); return v;
     }
 
+    // ---- 개편 도술 그림(Resources/Sprites/overhaul/skill, btn). 기술 칸·도술 카드가 같은 그림을 쓴다 ----
+    // 왜 캐시: 기술 칸은 매 프레임 그림을 물어보는데 Resources.Load 를 매번 부르면 낭비다. 없는 그림(null)도 기억해 둔다.
+    static readonly System.Collections.Generic.Dictionary<string, Texture2D> artCache = new System.Collections.Generic.Dictionary<string, Texture2D>();
+    static Texture2D OArt(string folder, string id)
+    {
+        if (id == null) return null;
+        string key = folder + "/" + id; Texture2D t;
+        if (artCache.TryGetValue(key, out t)) return t;
+        t = OTex(key + "@2x"); if (t == null) t = OTex(key);   // 폰 화면처럼 촘촘해서 @2x 우선
+        artCache[key] = t; return t;
+    }
+    /// <summary>도술 이름 → 개편 도술 그림. 표에 없으면(패시브 등) 갈래 쪽지, 그것도 없으면 null(부르는 쪽이 옛 그림·글자로 대신)</summary>
+    public static Texture2D DosulArt(string skillName)
+    {
+        var t = OArt("skill", DosulIcons.SkillIcon(skillName)); if (t != null) return t;
+        var n = SkillTree.Find(skillName);
+        return n != null ? OArt("skill", DosulIcons.BranchIcon(n.Branch)) : null;
+    }
+
     /// <summary>도술 이름 → 아이콘 이름. 갈래별 액티브 순서(부름 청록·줄 사슬·얼룩 보라)가 아트 파일 번호 1~5와 같다</summary>
     public static string SkillIcon(string name)
     {
@@ -209,7 +228,7 @@ public class UiRoot : MonoBehaviour
 
     // ---- 첫 도술 카드: 한지 빛깔 카드 세 장 중 하나를 고른다(처음 10분 M9). 추천·별점 없음, 같은 크기 ----
     VisualElement cardsBox, cardsRow, rerollBtn; Label cardsTitle, rerollLabel; string lastCards;
-    VisualElement[] cardEl = new VisualElement[3], cardBadge = new VisualElement[3], cardArt = new VisualElement[3]; Label[] cardMark = new Label[3], cardName = new Label[3], cardDesc = new Label[3], cardKey = new Label[3];
+    VisualElement[] cardEl = new VisualElement[3], cardBadge = new VisualElement[3], cardArt = new VisualElement[3], cardIcon = new VisualElement[3]; Label[] cardMark = new Label[3], cardName = new Label[3], cardDesc = new Label[3], cardKey = new Label[3];
     void BuildDosulCards()
     {
         cardsBox = new VisualElement { name = "dosul-cards", pickingMode = PickingMode.Position };   // 화면 전체를 덮어 뒤 클릭을 막는다
@@ -244,6 +263,10 @@ public class UiRoot : MonoBehaviour
             // 삽화 창(16,66, 288x130)
             cardArt[i] = new VisualElement { pickingMode = PickingMode.Ignore }; cardArt[i].style.position = Position.Absolute;
             cardArt[i].style.left = 16 * k; cardArt[i].style.top = 66 * k; cardArt[i].style.width = 288 * k; cardArt[i].style.height = 130 * k; c.Add(cardArt[i]);
+            // 삽화 창 한가운데: 이 도술 자신의 그림(갈래 그림 위에 얹는다). 창 높이 130 에 맞춰 정사각 112
+            cardIcon[i] = new VisualElement { pickingMode = PickingMode.Ignore }; cardIcon[i].style.position = Position.Absolute;
+            cardIcon[i].style.left = (288 - 112) / 2f * k; cardIcon[i].style.top = (130 - 112) / 2f * k; cardIcon[i].style.width = 112 * k; cardIcon[i].style.height = 112 * k;
+            cardIcon[i].style.display = DisplayStyle.None; cardArt[i].Add(cardIcon[i]);
             // 이름 띠(16,208, 288x44)
             cardName[i] = Line(c, 22); cardName[i].style.color = ink; cardName[i].style.position = Position.Absolute; cardName[i].style.left = 16 * k; cardName[i].style.top = 208 * k;
             cardName[i].style.width = 288 * k; cardName[i].style.height = 44 * k; cardName[i].style.unityTextAlign = TextAnchor.MiddleCenter; cardName[i].style.unityFontStyleAndWeight = FontStyle.Bold;
@@ -280,6 +303,9 @@ public class UiRoot : MonoBehaviour
             cardBadge[i].style.backgroundImage = big != null ? new StyleBackground(big) : new StyleBackground();
             cardArt[i].style.backgroundImage = artImg != null ? new StyleBackground(artImg) : new StyleBackground();
             cardMark[i].text = big != null ? "" : Hud.CardMarks[i];   // 그림이 없을 때만 글자 기호
+            var ico = DosulArt(Hud.CardNames[i]);   // 도술 그림이 없으면 칸을 숨겨 옛 카드 모양 그대로
+            cardIcon[i].style.display = ico != null ? DisplayStyle.Flex : DisplayStyle.None;
+            cardIcon[i].style.backgroundImage = ico != null ? new StyleBackground(ico) : new StyleBackground();
         }
         rerollBtn.style.display = string.IsNullOrEmpty(Hud.CardReroll) ? DisplayStyle.None : DisplayStyle.Flex;
         rerollLabel.text = Hud.CardReroll ?? "";
@@ -605,15 +631,17 @@ public class UiRoot : MonoBehaviour
         bBg[i] = name; SetOImg(bSlot[i], "hud/" + name);
     }
 
-    void SetSlot(int i, bool enabled, float cd, float sec, string iconName)
+    void SetSlot(int i, bool enabled, float cd, float sec, Texture2D t)
     {
-        var t = iconName != null ? UiTex(iconName) : null;
         bIcon[i].style.backgroundImage = t != null ? new StyleBackground(Background.FromTexture2D(t)) : new StyleBackground(StyleKeyword.None);
-        bTxt[i].style.display = t == null ? DisplayStyle.Flex : DisplayStyle.None;   // 아이콘이 없는 칸(견인·천도·파혼·약)은 글자로
+        bTxt[i].style.display = t == null ? DisplayStyle.Flex : DisplayStyle.None;   // 그림이 없는 칸(천도·파혼·약, 그림 없는 도술)은 글자로
         bSlot[i].style.opacity = enabled ? 1f : 0.4f;
         bShade[i].style.height = cd > 0f ? U(56) * Mathf.Clamp01(cd) : 0f;
         bSec[i].text = sec > 0.05f ? Mathf.CeilToInt(sec).ToString() : "";
     }
+
+    /// <summary>옛 아트팀 도술 그림(ui/icon_skill_*). 개편 그림이 없을 때만 쓰는 안전장치</summary>
+    static Texture2D OldSkillArt(string name) { string id = SkillIcon(name); return id != null ? UiTex(id) : null; }
 
     void RefreshSlots()
     {
@@ -621,12 +649,12 @@ public class UiRoot : MonoBehaviour
         slotBar.style.display = Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 폰은 터치 버튼이 맡는다
         if (Ko.TouchUI) return;
         pullMax = Mathf.Max(pullMax, Hud.PullCd);
-        SetSlot(0, true, Hud.PullCd > 0.05f ? Hud.PullCd / pullMax : 0f, Hud.PullCd, null);
+        SetSlot(0, true, Hud.PullCd > 0.05f ? Hud.PullCd / pullMax : 0f, Hud.PullCd, newSlots ? OArt("btn", DosulIcons.QIcon(Hud.QName)) : null);   // Q 칸: 무기별 그림(없으면 옛 글자)
         if (!string.IsNullOrEmpty(Hud.QName)) bTxt[0].text = Hud.QName;   // 무기마다 Q 이름이 다르다(끌기·땅울림·세우기·꽂기·이름)
         for (int i = 0; i < 4; i++)
         {
             var sv = Hud.Slots[i]; bool has = sv.Name != null;
-            SetSlot(1 + i, has, has ? sv.Cd : 0f, has ? sv.CdSec : 0f, has ? SkillIcon(sv.Name) : null);
+            SetSlot(1 + i, has, has ? sv.Cd : 0f, has ? sv.CdSec : 0f, has ? (DosulArt(sv.Name) ?? OldSkillArt(sv.Name)) : null);   // 개편 그림 → 옛 그림 → 글자 순
             bTxt[1 + i].text = "";
         }
         SetSlot(5, true, 0f, 0f, null); SetSlot(6, true, 0f, 0f, null);

@@ -34,7 +34,7 @@ namespace Chasa.Core
             {
                 case "끌기": return "q_chain";
                 case "땅울림": return "q_mace";
-                case "부르기": return "q_bell";
+                case "부르기": case "세우기": return "q_bell";   // PC 칸 글자(세우기)와 폰 글자(부르기)가 다르다
                 case "꽂기": return "q_trident";
                 case "이름": return "q_brush";
                 default: return "q_slash";
