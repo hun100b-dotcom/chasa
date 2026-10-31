@@ -181,6 +181,7 @@ public class Enemy : MonoBehaviour
         soul.Finish();
         if (leader && group != null) foreach (var m in group) if (m != null && m != this && m.alive) { m.stun = Mathf.Max(m.stun, Balance.SOULTYPE_MOTE_RATTLE_S); m.flash = 1f; }   // 무리 대장이 떠나면 나머지가 혼란
         if (teleLine != null) teleLine.SetActive(false);
+        HideMeleeTele();
         deathT = 0f; respawnReady = false; vel = Vector3.zero;
     }
 
@@ -376,6 +377,7 @@ public class Enemy : MonoBehaviour
             // 신호: 예비동작이 진행될수록 붉게 달아오른다
             mat.color = atk.Winding ? Color.Lerp(baseColor, new Color(1f, 0.25f, 0.2f), atk.WindupRatio)
                                     : baseColor;
+            UpdateMeleeTele();
             }
         }
         ClampToArena();
@@ -418,7 +420,41 @@ public class Enemy : MonoBehaviour
         teleLine.transform.localScale = new Vector3(0.12f + 0.25f * wail.WindupRatio, 0.02f, len);   // 선딜이 찰수록 굵어진다
     }
 
-    void OnDestroy() { if (teleLine != null) Destroy(teleLine); }
+    void OnDestroy() { if (teleLine != null) Destroy(teleLine); if (meleeBorder != null) Destroy(meleeBorder.gameObject); if (meleeFill != null) Destroy(meleeFill.gameObject); }
+
+    // ---- 근접 공격 예고 장판(개편 P0-5): 모든 적 공격은 같은 문법 = 몸이 붉게 차오름 + 바닥 원이 안으로 차오름 ----
+    // 판정이 '거리 안이면 맞는 원'이라 원 장판을 쓴다(부채꼴을 쓰면 뒤쪽 판정과 어긋나 거짓말이 된다). 반지름은 공격 거리 이상 중 가장 작은 아트 크기.
+    // 테두리는 늘 보이고(색 말고 모양으로도 읽힘: 접근성), 채움이 0→1 로 자란다. 파혼 주황(점선·채움 없음)과 모양이 다르다.
+    SpriteRenderer meleeBorder, meleeFill; float meleeR;
+    static readonly float[] TeleRadii = { 1.6f, 2.0f, 2.5f, 3.0f, 3.5f };
+    static Sprite TeleSprite(string name)
+    {
+        var t = SpriteLib.Texture("overhaul/tele/" + name); if (t == null) return null;
+        return Sprite.Create(t, new Rect(0, 0, t.width, t.height), new Vector2(0.5f, 0.5f), 128f);   // 1 m = 128 px(아트 명세)
+    }
+    void UpdateMeleeTele()
+    {
+        bool show = atk != null && atk.Winding && !soul.Boss && !elite && alive;
+        if (!show) { HideMeleeTele(); return; }
+        if (meleeBorder == null)
+        {
+            float need = atk.Range; meleeR = TeleRadii[TeleRadii.Length - 1];
+            foreach (var r in TeleRadii) if (r >= need) { meleeR = r; break; }
+            string key = meleeR.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture).Replace('.', '_');
+            var bs = TeleSprite("tele2_circle_r" + key + "_border"); var fs = TeleSprite("tele2_circle_r" + key + "_fill");
+            if (bs == null || fs == null) { meleeR = -1f; return; }   // 그림이 없으면 몸 붉어짐만(그림 없이도 돈다)
+            meleeBorder = new GameObject("MeleeTeleBorder").AddComponent<SpriteRenderer>(); meleeBorder.sprite = bs; meleeBorder.sortingOrder = 30;
+            meleeFill = new GameObject("MeleeTeleFill").AddComponent<SpriteRenderer>(); meleeFill.sprite = fs; meleeFill.sortingOrder = 29;
+            meleeBorder.transform.rotation = meleeFill.transform.rotation = Quaternion.Euler(90f, 0f, 0f);   // 땅에 눕힌다
+        }
+        if (meleeR < 0f) return;
+        var p = new Vector3(Pos.x, 0.04f + GroundTerrain.HeightAt(Pos.x, Pos.z), Pos.z);
+        meleeBorder.transform.position = meleeFill.transform.position = p;
+        float k = Mathf.Clamp01(atk.WindupRatio);
+        meleeFill.transform.localScale = new Vector3(k, k, 1f);   // 가운데서 바깥으로 차오른다
+        meleeBorder.gameObject.SetActive(true); meleeFill.gameObject.SetActive(true);
+    }
+    void HideMeleeTele() { if (meleeBorder != null) { meleeBorder.gameObject.SetActive(false); meleeFill.gameObject.SetActive(false); } }
 
     /// <summary>묻힌 혼: 땅속 → (4.5m 안) 갈라짐 예고 → 솟음 → 붙잡기(범위 2m) → 묻힘 → 6초 뒤 재매복. 이동 없음</summary>
     void TickBuried(float dt, bool canAct, float dist)

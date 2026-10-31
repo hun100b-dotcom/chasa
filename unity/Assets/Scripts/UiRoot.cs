@@ -571,7 +571,8 @@ public class UiRoot : MonoBehaviour
         if (!visible) return;
         var a = Hud.LedgerLine(); if (a != lastLedger) { ledger.text = lastLedger = a; }
         var b = Hud.VitalLine(); if (b != lastVital) { vital.text = lastVital = b; }
-        var c = Hud.NightLine(); if (c != lastNight) { night.text = lastNight = c; }
+        // 개편 P0-1: 좌상단 '밤 N초 · 천도 · 단서' 상태 줄은 지운다(시각은 미니맵 둘레 시계가, 흐름은 퀘스트 추적이 맡는다)
+        night.style.display = DisplayStyle.None;
         // 시계 고리는 미니맵 바로 아래(화면 px → 패널 단위로 환산: 패널은 1280×720 기준, 가로·세로 비율을 절반씩 섞는다)
         float refW = Ko.TouchUI ? 960f : 1280f, refH = Ko.TouchUI ? 540f : 720f; float pscale = Mathf.Sqrt((Screen.width / refW) * (Screen.height / refH));
         if (questBox != null) questBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + ringSize + U(16);   // 명세: 지역명(시계 고리) 아래 16px
@@ -579,7 +580,7 @@ public class UiRoot : MonoBehaviour
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshGuide(); RefreshBossArea();
         if (rimIcon != null) rimIcon.style.display = Hud.JudgeNamed ? DisplayStyle.Flex : DisplayStyle.None;
-        if (cardRow != null) cardRow.style.display = Hud.JudgeCard && !Ko.TouchUI ? DisplayStyle.Flex : DisplayStyle.None;   // 폰은 처결 버튼 자체가 카드 역할
+        if (cardRow != null) cardRow.style.display = DisplayStyle.None;   // 개편 P0-1·2: 화면 아래 큰 처결 카드는 지운다. 선택은 혼 머리 위 ▲E ✕R 표식(JudgeSystem.DrawExecMark)이 보여 준다
         RefreshSkillBar(); RefreshSlots(); RefreshToasts(); RefreshStamp(); RefreshDosulCards(); RefreshEdges(); RefreshTimeRing(); RefreshPeace();
         if (hpFill != null)
         {
