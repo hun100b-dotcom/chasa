@@ -2562,6 +2562,31 @@ public class CoreTests
     }
 
     [Test]
+    public void GrowthReveal_도술_나무는_카드_다섯_번과_여섯째_점수_뒤에_열린다()
+    {
+        var g = new GrowthState();
+        Assert.IsTrue(GrowthReveal.SkillTreeOpen(g, false, 0), "카드 방식이 아니면(시연판) 처음부터 열림");
+        Assert.IsFalse(GrowthReveal.SkillTreeOpen(g, true, 0), "카드 방식: 처음엔 닫힘");
+        g.SkillPointsEarned = DosulCards.Rounds;
+        Assert.IsFalse(GrowthReveal.SkillTreeOpen(g, true, DosulCards.Rounds), "점수 다섯 개를 카드로 다 써도 아직 닫힘");
+        g.SkillPointsEarned = DosulCards.Rounds + 1;
+        Assert.IsFalse(GrowthReveal.SkillTreeOpen(g, true, DosulCards.Rounds - 1), "카드가 남아 있으면 여섯째 점수가 먼저 와도 닫힘");
+        Assert.IsTrue(GrowthReveal.SkillTreeOpen(g, true, DosulCards.Rounds), "카드 끝 + 여섯째 점수 = 열림");
+    }
+
+    [Test]
+    public void GrowthReveal_인_탭과_장비_자리_수()
+    {
+        Assert.IsFalse(GrowthReveal.SealsTabOpen(false, false, 0));
+        Assert.IsTrue(GrowthReveal.SealsTabOpen(true, false, 0));
+        Assert.IsTrue(GrowthReveal.SealsTabOpen(false, true, 0));
+        Assert.IsTrue(GrowthReveal.SealsTabOpen(false, false, 1), "만들어 둔 인이 있으면(옛 저장) 보인다");
+        Assert.AreEqual(4, GrowthReveal.OpenEquipCount(false, false));
+        Assert.AreEqual(6, GrowthReveal.OpenEquipCount(true, false));
+        Assert.AreEqual(8, GrowthReveal.OpenEquipCount(true, true));
+    }
+
+    [Test]
     public void SaveGame_장비_8자리_왕복과_옛_3칸_저장_옮겨담기()
     {
         var g = new GrowthState(); var l = new Ledger(); var eq = new Equipment(); var cb = new ClueBook();

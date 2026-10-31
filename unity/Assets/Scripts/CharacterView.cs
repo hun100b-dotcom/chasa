@@ -60,6 +60,7 @@ public partial class CharacterPanel
     void BuildView()
     {
         view.Clear();
+        if (tab == 5 && !judge.SealsTabOpen) tab = 3;   // 닫힌 탭에 머물러 있으면 기록으로
         var book = SpriteLib.Texture("ui/ui_book_spread");
         bool bm = tab == 3 && book != null;
         var box = new VisualElement(); box.style.width = Length.Percent(96); box.style.maxWidth = 940; box.style.height = Length.Percent(92); box.style.maxHeight = 600;
@@ -69,7 +70,8 @@ public partial class CharacterPanel
         // 탭 줄
         var tabs = new VisualElement { pickingMode = PickingMode.Position }; tabs.style.flexDirection = FlexDirection.Row; tabs.style.justifyContent = Justify.SpaceBetween;
         var left = new VisualElement { pickingMode = PickingMode.Position }; left.style.flexDirection = FlexDirection.Row;
-        for (int i = 3; i < 6; i++) { int ti = i; var t = VBtn(left, TabNames[i] + (tab == i ? " *" : ""), () => { if (tab != ti) Sfx.Play("sfx.ui.tab"); tab = ti; }, tab == i ? hi : txt, 16); t.style.marginRight = 14; }
+        for (int i = 3; i < 6; i++) { if (i == 5 && !judge.SealsTabOpen) continue; int ti = i;   // 인 탭은 인을 만들 수 있게 된 뒤에만 보인다(성장 단계 공개)
+             var t = VBtn(left, TabNames[i] + (tab == i ? " *" : ""), () => { if (tab != ti) Sfx.Play("sfx.ui.tab"); tab = ti; }, tab == i ? hi : txt, 16); t.style.marginRight = 14; }
         tabs.Add(left); VBtn(tabs, "닫기", () => Open = false, txt, 16);
         box.Add(tabs);
         var body = new ScrollView(ScrollViewMode.Vertical); body.style.flexGrow = 1; body.style.marginTop = 8;
@@ -119,6 +121,7 @@ public partial class CharacterPanel
         // 3) 도술 세 갈래(세 열). 설명은 아래 한 줄에 마우스를 올린 것을 보여 준다
         var desc = new Label(); desc.pickingMode = PickingMode.Ignore;
         string idle = "도술을 누르면 점수 1을 써서 배운다(배운 쓰는 도술은 누르면 칸에 올리고 내림). [쓰는] 눌러 쓰는 도술 · [늘] 늘 켜진 도술(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)";
+        bool treeOpen = judge.SkillTreeOpen;
         var cols = new VisualElement { pickingMode = PickingMode.Position }; cols.style.flexDirection = FlexDirection.Row;
         for (int b = 0; b < 3; b++)
         {
@@ -127,6 +130,7 @@ public partial class CharacterPanel
             foreach (var n in SkillTree.All)
             {
                 if (n.Branch != br) continue;
+                if (!treeOpen && g.LevelOf(n.Name) == 0) continue;   // 나무가 닫혀 있는 동안은 배운 도술만 보인다(성장 단계 공개)
                 var node = n; int lv = g.LevelOf(n.Name); bool can = g.CanLearn(n.Name); bool locked = n.Deep && g.BranchPoints(br) < SkillTree.DeepNeeds;
                 int barAt = n.Active ? g.ActiveBar.IndexOf(n.Name) : -1;
                 string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[쓰는] ") : "[늘] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
@@ -148,6 +152,7 @@ public partial class CharacterPanel
                 var bt = VBtn(btParent, label, () =>
                 {
                     if (node.Active && g.LevelOf(node.Name) > 0) g.ToggleBar(node.Name);   // 배운 액티브는 칸에 올렸다 내렸다
+                    else if (!treeOpen) { }                                                   // 나무가 닫혀 있으면 점수는 카드로만 쓴다
                     else { g.Learn(node.Name); judge.RefreshGrowth(); }                     // 배우면 패시브 효과가 바로 붙는다
                 }, c, 13, barAt >= 0);
                 bt.RegisterCallback<PointerEnterEvent>(e => { string fl = ItemTexts.Skill(node.Name); desc.text = node.Name + ": " + node.Desc + (fl.Length > 0 ? "\n" + fl : ""); });
@@ -156,6 +161,12 @@ public partial class CharacterPanel
             cols.Add(col);
         }
         p.Add(cols);
+        if (!treeOpen)
+        {
+            // 닫힌 동안의 안내: 왜 안 보이는지, 언제 열리는지(막막함 대신 다음 목표를 준다)
+            int picked = Mathf.Min(DosulCards.Rounds, g.SkillPointsSpent);
+            VTxt(p, "도술 갈래 나무는 아직 접혀 있다. 도술 카드를 " + DosulCards.Rounds + "번 고르고 여섯째 점수를 얻으면 펼쳐진다 (지금 " + picked + "/" + DosulCards.Rounds + ")", 13, txt).style.marginTop = 6;
+        }
         // 4) 설명 한 줄 + 액티브 칸 + 무기 두 자루
         desc.text = idle; desc.style.color = txt; desc.style.fontSize = 13; desc.style.whiteSpace = WhiteSpace.Normal; desc.style.marginTop = 8;
         var kf = Ko.GetFont(); if (kf != null) desc.style.unityFontDefinition = FontDefinition.FromFont(kf);
