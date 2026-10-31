@@ -131,7 +131,21 @@ public partial class CharacterPanel
                 int barAt = n.Active ? g.ActiveBar.IndexOf(n.Name) : -1;
                 string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[쓰는] ") : "[늘] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
                 var c = lv > 0 ? txt : new Color(txt.r, txt.g, txt.b, can ? 0.9f : 0.45f);
-                var bt = VBtn(col, label, () =>
+                // 도술 그림 자리: 그림이 있으면 [그림 24px][글자 칸]을 한 줄(가로 배치)로 묶어 줄 간격이 흐트러지지 않게 한다.
+                // 그림이 없으면(null) 줄을 만들지 않고 옛 모양 그대로 글자만 갈래 열에 바로 붙인다(안전장치)
+                VisualElement btParent = col;
+                var ico = UiRoot.DosulArt(n.Name);
+                if (ico != null)
+                {
+                    var row = new VisualElement { pickingMode = PickingMode.Ignore };
+                    row.style.flexDirection = FlexDirection.Row; row.style.alignItems = Align.Center; row.style.minHeight = 26;
+                    var img = new VisualElement { pickingMode = PickingMode.Ignore };
+                    img.style.width = 24; img.style.height = 24; img.style.flexShrink = 0; img.style.marginRight = 4;   // 크기 고정: 줄어들어 찌그러지지 않게
+                    img.style.backgroundImage = new StyleBackground(ico);
+                    img.style.opacity = lv > 0 ? 1f : (can ? 0.8f : 0.4f);   // 안 배운 도술은 흐리게(글자 색과 같은 규칙)
+                    row.Add(img); col.Add(row); btParent = row;
+                }
+                var bt = VBtn(btParent, label, () =>
                 {
                     if (node.Active && g.LevelOf(node.Name) > 0) g.ToggleBar(node.Name);   // 배운 액티브는 칸에 올렸다 내렸다
                     else { g.Learn(node.Name); judge.RefreshGrowth(); }                     // 배우면 패시브 효과가 바로 붙는다

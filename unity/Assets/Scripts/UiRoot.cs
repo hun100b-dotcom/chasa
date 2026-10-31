@@ -714,7 +714,7 @@ public class UiRoot : MonoBehaviour
             questBox.style.right = StyleKeyword.Auto; questBox.style.left = 24f * sPx; questBox.style.top = 440f * sPx;
         }
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
-        skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
+        skillBar.style.display = Ko.TouchUI || slotBar != null ? DisplayStyle.None : DisplayStyle.Flex;   // 폰: 키 안내줄(E 천도·R 파혼)은 버튼과 겹치고 키보드가 없어 항상 숨김. PC: 새 8칸 스킬바가 있으면 숨기고, 그림이 없을 때만 옛 줄로 돌아감
         RefreshGuide(); RefreshBossArea();
         if (rimIcon != null) rimIcon.style.display = Hud.JudgeNamed ? DisplayStyle.Flex : DisplayStyle.None;
         if (cardRow != null) cardRow.style.display = DisplayStyle.None;   // 개편 P0-1·2: 화면 아래 큰 처결 카드는 지운다. 선택은 혼 머리 위 ▲E ✕R 표식(JudgeSystem.DrawExecMark)이 보여 준다
