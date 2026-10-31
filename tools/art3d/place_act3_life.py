@@ -44,7 +44,7 @@ put(E, "a3h_seaweed_line", 1060, 445, 0, "미역 줄", 0.1, maxslope=1.5, force=
 put(E, "a3h_tar_barrel", 1092, 455, 20, "배 칠하는 타르 통(Light_ 하나)", 0.1, maxslope=1.5)
 tally("harbor", sum(scatter(E, n, HARBOR, c, 0.1, 3.0, 1.5) for n, c in (("a3h_crate_stack", 6), ("a3h_clam_basket", 5), ("a3h_firewood_stack", 4), ("a3c_seagrass", 10), ("a3c_driftwood", 2))))
 # 소금밭: 소금막·가마니·지게·구유(밭 가장자리와 둑 곁)
-put(E, "a3h_salt_shed", 845, 308, 0, "소금막(가마솥에 졸이는 곳, Light_ 하나)", 0.1, maxslope=1.5); put(E, "a3h_salt_shed", 935, 200, 0, "소금막", 0.1, maxslope=1.5)
+next((1 for dx, dy in ((0, 0), (-12, 8), (12, -8), (-20, -10), (20, 10), (0, 18), (0, -18), (-30, 0), (30, 0)) if put(E, "a3h_salt_shed", 845 + dx, 308 + dy, 0, "소금막(가마솥에 졸이는 곳, Light_ 하나)", 0.1, maxslope=2.0)), None); next((1 for dx, dy in ((0, 0), (-14, 8), (14, -8), (-20, -10), (20, 10), (0, 18), (0, -18), (-30, 0), (30, 0), (-24, 22), (24, -22), (0, 34), (0, -34)) if put(E, "a3h_salt_shed", 935 + dx, 200 + dy, 0, "소금막(둘째, 갈 곳 막혀 가까운 빈 자리로 옮김)" if (dx, dy) != (0, 0) else "소금막", 0.1, maxslope=2.0)), None)   # 첫 자리가 비탈·겹침으로 빠지던 것을 가까운 자리로 옮겨 반드시 놓는다
 tally("salt", sum(scatter(E, n, SALT, c, 0.1, 3.0, 1.5) for n, c in (("a3h_salt_sack_stack", 7), ("a3h_salt_yoke", 6), ("a3h_brine_trough", 5), ("a3h_firewood_stack", 3), ("a3c_seagrass", 12))))
 # 난파 여울: 바닷물이 드나드는 갯벌·모래턱
 for x, y, r in ((1120, 90, 20), (1070, 120, 160), (1165, 150, 70)): put(E, "a3c_hull_ribs", x, y, r, "묻힌 난파선 뼈대" if x == 1120 else "", -0.7, 1.4, 2.0)

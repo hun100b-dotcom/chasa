@@ -1727,3 +1727,6 @@
 - 밤 파혼 자리 → 낮이 되면 최대 8곳(25m 간격)에 잿빛 틈+엽전 3, 줍기 F(라벨 '노잣돈 줍기'), 해질녘 소멸, 미니맵 잿빛 점. R5: 제사 갈래에서 단서는 업과 무관하게 붙임.
 - 미구현: 저장(nojatDay), 반짝임 연출·실제 에셋, 마을 안/서낭당 12m/물 위 밀어내기(벽만 PushOut). PC 확인 RW5·RW6.
 - 2026-10-26 오너 지시로 새 일 중단: UI·UX·게임성 전면 점검(플랜 모드 컨펌) 대기.
+## 2026-10-31 [아트] 개편 HUD·맺힘 금·처결 표식·예고 장판
+- 새 도구 tools/art3d/overhaul_{lib,ui,tele,tele_check}.py, 그림 assets3d/ui/overhaul/ (+ Unity Resources/Sprites/overhaul/). 설명 OVERHAUL-ART.md.
+- 천도·파혼 칸 밝기 차 0.05%, 예고 장판 흑백·색약 확인판 통과. Unity 실기·피격 자세 앞모습 측정은 미완.

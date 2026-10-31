@@ -9,7 +9,7 @@ import bpy
 from mathutils import Vector, Euler
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 A3 = os.path.join(REPO, "assets3d")
-DIRS = [("terrain_", "terrain"), ("chunk_", "terrain"), ("nature_", "nature"), ("cover_", "nature"), ("br_", "blackrapids"), ("prop_", "props"), ("hanok_", "hanok"), ("night_", "night"), ("fx_", "fx"), ("weapon_", "weapons"), ("boss_", "boss"), ("soul_", "souls"), ("hero_", "characters")]
+DIRS = [("a1r_", "props"), ("terrain_", "terrain"), ("chunk_", "terrain"), ("nature_", "nature"), ("cover_", "nature"), ("br_", "blackrapids"), ("prop_", "props"), ("hanok_", "hanok"), ("night_", "night"), ("fx_", "fx"), ("weapon_", "weapons"), ("boss_", "boss"), ("soul_", "souls"), ("hero_", "characters")]
 FIELD = json.load(open(os.path.join(A3, "layouts", "field_5x5.json"), encoding="utf-8"))
 VIL = json.load(open(os.path.join(A3, "layouts", "solgogae_village.json"), encoding="utf-8"))
 VX, VY = FIELD["village_offset_m"]
@@ -66,6 +66,9 @@ COVER = json.load(open(os.path.join(A3, "layouts", "field_cover.json"), encoding
 LIFE_ON = os.environ.get("FS_LIFE", "1") == "1"
 LIFE = json.load(open(os.path.join(A3, "layouts", "act1_life.json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", "act1_life.json")) else []
 
+ROUTE_ON = os.environ.get("FS_ROUTE", "1") == "1"   # 처음 10분 길 소품(act1_route.json)·1막 추가 소품(act1_extra.json). 게임에는 build_field_data.py가 field.json에 합쳐 넣는다
+ROUTE = [p for n in ("act1_route", "act1_extra", "act1_pyedang") for p in (json.load(open(os.path.join(A3, "layouts", n + ".json"), encoding="utf-8"))["props"] if os.path.exists(os.path.join(A3, "layouts", n + ".json")) else [])]
+
 def build(win):
     """win=(x0,y0,x1,y1) m. 창 안 타일·장식·구조물·마을·밤 소품을 조립한다."""
     x0, y0, x1, y1 = win
@@ -85,6 +88,9 @@ def build(win):
     if LIFE_ON:   # 1막 생활 소품(act1_life.json): 전후 비교용으로 FS_LIFE=0 이면 끈다
         for p in LIFE:
             if inwin(p["x"], p["y"], win, 1): put(p["prop"], p["x"], p["y"], 0.3, p["rot"], lights=False)
+    if ROUTE_ON:
+        for p in ROUTE:
+            if inwin(p["x"], p["y"], win, 1): put(p["prop"], p["x"], p["y"], 0.3 + p.get("z", 0.0), p.get("rot", 0), lights=False)
     for s in FIELD.get("structures", []):
         if "pieces" in s:
             for q in s["pieces"]:
@@ -278,6 +284,7 @@ def run(key):
         pose("hero_chasa", 189.2, 34.6, 0.3, 215, "Idle", 20)
         orbs(((184.4, 33.6, 1.3), (191.0, 37.2, 1.9), (183.0, 40.0, 2.4), (187.6, 31.6, 0.9), (190.6, 41.5, 2.8)))
     if key == "load_b": put("night_soulfire_pedestal", 400.5, 276.0, 0.62 + 0.3, 0)
+    for ex in cfg.get("extras", []): ex()      # 처음 10분 길 스틸(field_route_stills.py)이 주인공·혼을 얹는 자리
     if key == "tendo":
         # 마을 길 한가운데(집 지붕이 기둥을 가리지 않게 길 폭 안쪽에 모은다)
         pose("hero_chasa", 195.8, 49.5, 0, 0, "Cast", 30)

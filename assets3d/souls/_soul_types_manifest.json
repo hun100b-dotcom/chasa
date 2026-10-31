@@ -567,152 +567,88 @@
    ]
   },
   {
-   "file": "soul_mote_fresh.glb",
-   "skins": 1,
-   "joints": 2,
-   "animations": [
-    "Float",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Hit1",
-    "Hit2",
-    "Stagger",
-    "KneelHold",
-    "Tendo",
-    "Pahon"
-   ],
-   "size_kb": 62
-  },
-  {
-   "file": "soul_mote_day.glb",
-   "skins": 1,
-   "joints": 2,
-   "animations": [
-    "Float",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Hit1",
-    "Hit2",
-    "Stagger",
-    "KneelHold",
-    "Tendo",
-    "Pahon"
-   ],
-   "size_kb": 62
-  },
-  {
-   "file": "soul_mote_old.glb",
-   "skins": 1,
-   "joints": 2,
-   "animations": [
-    "Float",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Hit1",
-    "Hit2",
-    "Stagger",
-    "KneelHold",
-    "Tendo",
-    "Pahon"
-   ],
-   "size_kb": 62
-  },
-  {
-   "file": "soul_mote_lump.glb",
-   "skins": 1,
-   "joints": 2,
-   "animations": [
-    "Float",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Hit1",
-    "Hit2",
-    "Stagger",
-    "KneelHold",
-    "Tendo",
-    "Pahon"
-   ],
-   "size_kb": 62
-  },
-  {
-   "file": "soul_buried_fresh.glb",
+   "file": "soul_elite_fresh.glb",
    "skins": 1,
    "joints": 4,
    "animations": [
-    "Hidden",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Sink",
+    "Float",
+    "SlamWindup",
+    "Slam",
+    "PounceWindup",
+    "Pounce",
+    "Call",
     "Hit1",
     "Hit2",
     "Stagger",
+    "Kneel",
     "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 163
+   "size_kb": 188
   },
   {
-   "file": "soul_buried_day.glb",
+   "file": "soul_elite_day.glb",
    "skins": 1,
    "joints": 4,
    "animations": [
-    "Hidden",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Sink",
+    "Float",
+    "SlamWindup",
+    "Slam",
+    "PounceWindup",
+    "Pounce",
+    "Call",
     "Hit1",
     "Hit2",
     "Stagger",
+    "Kneel",
     "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 162
+   "size_kb": 188
   },
   {
-   "file": "soul_buried_old.glb",
+   "file": "soul_elite_old.glb",
    "skins": 1,
    "joints": 4,
    "animations": [
-    "Hidden",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Sink",
+    "Float",
+    "SlamWindup",
+    "Slam",
+    "PounceWindup",
+    "Pounce",
+    "Call",
     "Hit1",
     "Hit2",
     "Stagger",
+    "Kneel",
     "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 162
+   "size_kb": 188
   },
   {
-   "file": "soul_buried_lump.glb",
+   "file": "soul_elite_lump.glb",
    "skins": 1,
    "joints": 4,
    "animations": [
-    "Hidden",
-    "Windup",
-    "Attack",
-    "Kneel",
-    "Sink",
+    "Float",
+    "SlamWindup",
+    "Slam",
+    "PounceWindup",
+    "Pounce",
+    "Call",
     "Hit1",
     "Hit2",
     "Stagger",
+    "Kneel",
     "KneelHold",
     "Tendo",
     "Pahon"
    ],
-   "size_kb": 163
+   "size_kb": 188
   }
  ]
 }

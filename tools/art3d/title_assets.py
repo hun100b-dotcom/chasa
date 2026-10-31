@@ -6,7 +6,7 @@ IP 규칙: 기존 작품의 로고·캐릭터·고유 이름을 쓰지 않는다
 실행: python3 title_assets.py [logo|icon|compose|all]  (compose는 field_scene.py가 렌더한 scene_title/load_*.png가 먼저 있어야 한다)"""
 import os, sys, json, math, urllib.request
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops, ImageOps
 
 HERE = os.path.dirname(os.path.abspath(__file__)); A3 = os.path.join(HERE, "..", "..", "assets3d"); OUT = os.path.join(A3, "title"); PRE = os.path.join(A3, "previews")
 os.makedirs(OUT, exist_ok=True)
@@ -50,7 +50,10 @@ def seal(size=260, text="差使", seed=3):
     rgba = np.dstack([col, shape * 255]).astype(np.uint8); return Image.fromarray(rgba, "RGBA").resize((size, size), Image.LANCZOS)
 
 def make_logo():
-    m = brush_text("차사", 900); w, h = m.size
+    # 점검(타이틀): 한 줄로 쓰면 ㅊ·ㅏ·ㅅ·ㅏ 네 덩이가 같은 간격으로 놓여 'ネトイト'(가타카나)처럼 보였다. 글자(음절)마다 따로 그려 음절 사이만 넓힌다 → 자음+모음이 한 글자로 묶여 보임.
+    ma, mb = brush_text("차", 900, pad=30), brush_text("사", 900, pad=30); GAP = 120
+    w, h = ma.width + mb.width + GAP, max(ma.height, mb.height); m = Image.new("L", (w, h), 0)
+    m.paste(ma, (0, (h - ma.height) // 2)); m.paste(mb, (ma.width + GAP, (h - mb.height) // 2), mb); m = m.crop(m.getbbox()); m = ImageOps.expand(m, 60, 0); w, h = m.size
     for name, col in (("logo_chasa.png", HANJI), ("logo_chasa_ink.png", INK)):
         c = Image.new("RGBA", (w, h), col + (0,)); c.putalpha(m)
         sh = Image.new("RGBA", (w, h), (0, 0, 0, 0)); s = Image.new("RGBA", (w, h), (10, 8, 14, 140)); s.putalpha(m.filter(ImageFilter.GaussianBlur(10))); sh.alpha_composite(s, (8, 12))

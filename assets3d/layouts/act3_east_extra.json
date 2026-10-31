@@ -371,6 +371,25 @@
   {
    "prop": "a3h_salt_shed",
    "file": "assets3d/act3/a3h_salt_shed.glb",
+   "x": 833.61,
+   "y": 319.45,
+   "rot": 0,
+   "z": 1.11,
+   "note": "소금막(가마솥에 졸이는 곳, Light_ 하나)",
+   "walk_snap": {
+    "from": [
+     833,
+     316
+    ],
+    "to": [
+     833.61,
+     319.45
+    ]
+   }
+  },
+  {
+   "prop": "a3h_salt_shed",
+   "file": "assets3d/act3/a3h_salt_shed.glb",
    "x": 935,
    "y": 200,
    "rot": 0,
