@@ -12,7 +12,7 @@ public partial class CharacterPanel : MonoBehaviour
     public JudgeSystem judge;
     public Texture2D white;
     int tab = 3;                             // 0 장비 1 도술 2 능력치 3 명부(책). 기본은 명부
-    static readonly string[] TabNames = { "장비", "도술", "능력치", "기록", "들은 말", "인" };
+    static readonly string[] TabNames = { "장비", "도술", "능력치", "기록", "들은 말", "인", "도술", "장비" };   // 앞 6개는 옛 번호 그대로, 6·7 은 명부(UI Toolkit 판) 전용 새 탭
     string hoverDesc = "";
     // 명부 책 색(코디 결정 10-25): 글자는 먹색, 강조는 붉은 인. 책 그림(한지 바탕)이 있을 때만 쓴다
     static readonly Color Ink = new Color32(0x1E, 0x1A, 0x17, 255), Seal = new Color32(0xB5, 0x47, 0x3F, 255);

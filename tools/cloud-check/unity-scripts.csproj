@@ -1,7 +1,7 @@
 <!-- 클라우드 검증용: Unity 화면 스크립트 전체를 UnityEngine 2021.3 참조 DLL(NuGet)로 컴파일해 문법·타입 오류를 잡는다.
      Unity 6 와 API 가 아주 조금 다를 수 있어 최종 확인은 PC 의 Unity 가 한다. 에디터 스크립트(UnityEditor)는 제외. -->
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup><TargetFramework>netstandard2.1</TargetFramework><LangVersion>9.0</LangVersion><Nullable>disable</Nullable></PropertyGroup>
+  <PropertyGroup><TargetFramework>netstandard2.1</TargetFramework><LangVersion>9.0</LangVersion><Nullable>disable</Nullable><DefineConstants>$(DefineConstants);CHASA_CLOUD_CHECK</DefineConstants></PropertyGroup>
   <ItemGroup>
     <Compile Include="../../unity/Assets/Scripts/**/*.cs" />
     <PackageReference Include="UnityEngine.Modules" Version="2021.3.33" />

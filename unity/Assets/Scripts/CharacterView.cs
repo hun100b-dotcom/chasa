@@ -62,20 +62,28 @@ public partial class CharacterPanel
         view.Clear();
         if (tab == 5 && !judge.SealsTabOpen) tab = 3;   // 닫힌 탭에 머물러 있으면 기록으로
         var book = SpriteLib.Texture("ui/ui_book_spread");
-        bool bm = tab == 3 && book != null;
-        var box = new VisualElement(); box.style.width = Length.Percent(96); box.style.maxWidth = 940; box.style.height = Length.Percent(92); box.style.maxHeight = 600;
-        if (bm) { box.style.backgroundImage = new StyleBackground(book); box.style.paddingLeft = 52; box.style.paddingRight = 52; box.style.paddingTop = 44; box.style.paddingBottom = 40; }
+        bool bm = book != null;   // 세로 책 한 권: 모든 탭이 같은 한지 바탕을 쓴다
+        var box = new VisualElement(); box.style.width = Length.Percent(96); box.style.maxWidth = 620; box.style.height = Length.Percent(94); box.style.maxHeight = 660;   // 가로 펼침 → 세로 한 권(좁고 길게). 폰 세로 화면에도 맞는다
+#if !CHASA_CLOUD_CHECK   // 클라우드 검증용 구버전(2021.3) 참조에는 background-size 가 없어 이 줄만 뺀다. 실제 Unity 6 에서는 항상 켜진다
+        if (bm) { box.style.backgroundSize = new BackgroundSize(Length.Percent(200), Length.Percent(100)); box.style.backgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Left); }
+#endif
+        if (bm) { box.style.backgroundImage = new StyleBackground(book); box.style.paddingLeft = 52; box.style.paddingRight = 76;   // 펼침 그림의 왼쪽 쪽만 써서 책등 매듭선이 글자를 가르지 않게(오른쪽 여백은 책등 그림자 피함)
+            box.style.paddingTop = 44; box.style.paddingBottom = 40; }
         else { box.style.backgroundColor = new Color(0.05f, 0.06f, 0.1f, 0.94f); box.style.paddingLeft = 16; box.style.paddingRight = 16; box.style.paddingTop = 12; box.style.paddingBottom = 12; }
         Color txt = bm ? VInk : VPaper, hi = bm ? VSeal : VPaper;
         // 탭 줄
         var tabs = new VisualElement { pickingMode = PickingMode.Position }; tabs.style.flexDirection = FlexDirection.Row; tabs.style.justifyContent = Justify.SpaceBetween;
         var left = new VisualElement { pickingMode = PickingMode.Position }; left.style.flexDirection = FlexDirection.Row;
-        for (int i = 3; i < 6; i++) { if (i == 5 && !judge.SealsTabOpen) continue; int ti = i;   // 인 탭은 인을 만들 수 있게 된 뒤에만 보인다(성장 단계 공개)
-             var t = VBtn(left, TabNames[i] + (tab == i ? " *" : ""), () => { if (tab != ti) Sfx.Play("sfx.ui.tab"); tab = ti; }, tab == i ? hi : txt, 16); t.style.marginRight = 14; }
+        // 탭 다섯: 기록 · 도술 · 장비 · 들은 말 · 인(인은 만들 수 있게 된 뒤에만). 번호는 옛 탭과 겹치지 않게 6·7 을 새로 썼다
+        foreach (int ti0 in new[] { 3, 6, 7, 4, 5 })
+        {
+            int ti = ti0; if (ti == 5 && !judge.SealsTabOpen) continue;   // 인 탭은 인을 만들 수 있게 된 뒤에만 보인다(성장 단계 공개)
+            var t = VBtn(left, TabNames[ti] + (tab == ti ? " *" : ""), () => { if (tab != ti) Sfx.Play("sfx.ui.tab"); tab = ti; }, tab == ti ? hi : txt, 16); t.style.marginRight = 12;
+        }
         tabs.Add(left); VBtn(tabs, "닫기", () => Open = false, txt, 16);
         box.Add(tabs);
         var body = new ScrollView(ScrollViewMode.Vertical); body.style.flexGrow = 1; body.style.marginTop = 8;
-        if (tab == 3) BuildBook(body, txt, hi, bm); else if (tab == 5) BuildSeals(body, txt, hi, bm); else BuildHeard(body, txt, bm);
+        if (tab == 3) BuildBook(body, txt, hi, bm, 0); else if (tab == 6) BuildBook(body, txt, hi, bm, 1); else if (tab == 7) BuildEquip(body, txt, hi); else if (tab == 5) BuildSeals(body, txt, hi, bm); else BuildHeard(body, txt, bm);
         box.Add(body);
         view.Add(box);
     }
@@ -95,9 +103,11 @@ public partial class CharacterPanel
         }
     }
 
-    void BuildBook(VisualElement p, Color txt, Color hi, bool bm)
+    /// <summary>part 0 = 기록 탭(품계·능력치·무기), part 1 = 도술 탭(갈래 나무·도술 칸)</summary>
+    void BuildBook(VisualElement p, Color txt, Color hi, bool bm, int part)
     {
         var g = judge.growth;
+        if (part == 0) {
         // 1) 품계 줄과 진행 막대
         int next = g.Rank >= GrowthState.MaxRank ? g.JudgeTally : GrowthState.TallyForRank(g.Rank + 1), cur = GrowthState.TallyForRank(g.Rank);
         float frac = g.Rank >= GrowthState.MaxRank ? 1f : Mathf.Clamp01((g.JudgeTally - cur) / (float)Mathf.Max(1, next - cur));
@@ -118,14 +128,16 @@ public partial class CharacterPanel
             r2.Add(cell);
         }
         p.Add(r2);
+        }
+        if (part == 1) {
         // 3) 도술 세 갈래(세 열). 설명은 아래 한 줄에 마우스를 올린 것을 보여 준다
         var desc = new Label(); desc.pickingMode = PickingMode.Ignore;
         string idle = "도술을 누르면 점수 1을 써서 배운다(배운 쓰는 도술은 누르면 칸에 올리고 내림). [쓰는] 눌러 쓰는 도술 · [늘] 늘 켜진 도술(2단계) *=깊은 도술(그 갈래 " + SkillTree.DeepNeeds + "점 이상)";
         bool treeOpen = judge.SkillTreeOpen;
-        var cols = new VisualElement { pickingMode = PickingMode.Position }; cols.style.flexDirection = FlexDirection.Row;
+        var cols = new VisualElement { pickingMode = PickingMode.Position }; cols.style.flexDirection = FlexDirection.Column;   // 세로 책: 세 갈래를 위에서 아래로
         for (int b = 0; b < 3; b++)
         {
-            var br = (Branch)b; var col = new VisualElement { pickingMode = PickingMode.Position }; col.style.flexGrow = 1; col.style.flexBasis = 0; col.style.marginRight = b < 2 ? 12 : 0;
+            var br = (Branch)b; var col = new VisualElement { pickingMode = PickingMode.Position }; col.style.marginBottom = 10;
             VTxt(col, SkillTree.BranchName(br) + " 갈래  (" + g.BranchPoints(br) + "점)", 16, hi, true);
             foreach (var n in SkillTree.All)
             {
@@ -173,6 +185,8 @@ public partial class CharacterPanel
         p.Add(desc);
         string bar4 = ""; for (int i = 0; i < SkillTree.ActiveSlots; i++) bar4 += "[" + (i + 1) + ": " + (i < g.ActiveBar.Count ? g.ActiveBar[i] : "빈 칸") + "]  ";
         VTxt(p, "도술 칸  " + bar4, 13, txt).style.marginTop = 4;
+        }
+        if (part == 0) {
         var lo = judge.player.loadout;
         for (int row = 0; row < 2; row++)
         {
@@ -186,5 +200,30 @@ public partial class CharacterPanel
             p.Add(line);
         }
         VTxt(p, "지금 든 " + lo.Def.Name + " — " + lo.Def.Taste, 13, txt);
+        }
+    }
+
+    /// <summary>장비 탭: 여덟 자리를 위에서 아래로. 닫힌 자리는 흐리게 '잠김 — 언제 열리는지'를 보여 앞으로 늘어날 것을 알린다(성장 단계 공개)</summary>
+    void BuildEquip(VisualElement p, Color txt, Color hi)
+    {
+        var lo = judge.player.loadout;
+        VTxt(p, "열린 자리 " + GrowthReveal.OpenEquipCount(lo.gear.FirstRingBossDone, lo.gear.Act2Entered) + " / " + Ko.PosOrder.Length, 16, hi, true).style.marginBottom = 8;
+        foreach (var pos in Ko.PosOrder)
+        {
+            var it = lo.gear.GetAt(pos);
+            var row = new VisualElement { pickingMode = PickingMode.Ignore }; row.style.marginBottom = 8;
+            if (!lo.gear.IsOpen(pos))
+            {
+                var l = VTxt(row, Ko.PosName(pos) + ": 잠김 — " + GrowthReveal.EquipUnlockHint(pos), 15, txt); l.style.opacity = 0.5f;
+            }
+            else if (it == null) VTxt(row, Ko.PosName(pos) + ": (비어 있음)", 15, txt);
+            else
+            {
+                VTxt(row, Ko.PosName(pos) + ": " + Ko.ItemName(it, Ko.FamilyOf(pos, lo)) + (it.Gradient ? "  [기울기 " + Ko.TiltName(it) + "]" : ""), 15, txt, true);
+                string opts = ""; foreach (var o in it.Options) opts += OptText(o) + "   ";
+                if (opts.Length > 0) VTxt(row, opts, 13, txt);
+            }
+            p.Add(row);
+        }
     }
 }

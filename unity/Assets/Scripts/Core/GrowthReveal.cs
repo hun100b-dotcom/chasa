@@ -29,6 +29,17 @@ namespace Chasa.Core
             return firstRingBossDone || act2Entered || sealBagCount > 0;
         }
 
+        /// <summary>닫힌 장비 자리가 언제 열리는지 한 줄(명부 장비 탭의 '잠김' 옆 안내). 처음부터 열린 자리는 빈 글자</summary>
+        public static string EquipUnlockHint(EquipPos p)
+        {
+            switch (p)
+            {
+                case EquipPos.Hat: case EquipPos.Belt: return "1막 첫 보스를 보내면 열린다";
+                case EquipPos.Shoes: case EquipPos.Charm2: return "2막 땅에 들어서면 열린다";
+                default: return "";
+            }
+        }
+
         /// <summary>열린 장비 자리 수(전체 8자리: 무기 2·갓·도포·띠·신·노리개 2). 처음엔 무기 둘·도포·노리개 1 = 4자리</summary>
         public static int OpenEquipCount(bool firstRingBossDone, bool act2Entered)
         {
