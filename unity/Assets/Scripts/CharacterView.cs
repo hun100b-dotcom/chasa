@@ -64,7 +64,10 @@ public partial class CharacterPanel
         var book = SpriteLib.Texture("ui/ui_book_spread");
         bool bm = book != null;   // 세로 책 한 권: 모든 탭이 같은 한지 바탕을 쓴다
         var box = new VisualElement(); box.style.width = Length.Percent(96); box.style.maxWidth = 620; box.style.height = Length.Percent(94); box.style.maxHeight = 660;   // 가로 펼침 → 세로 한 권(좁고 길게). 폰 세로 화면에도 맞는다
-        if (bm) { box.style.backgroundImage = new StyleBackground(book); box.style.backgroundSize = new BackgroundSize(Length.Percent(200), Length.Percent(100)); box.style.backgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Left); box.style.paddingLeft = 52; box.style.paddingRight = 76;   // 펼침 그림의 왼쪽 쪽만 써서 책등 매듭선이 글자를 가르지 않게(오른쪽 여백은 책등 그림자 피함)
+#if !CHASA_CLOUD_CHECK   // 클라우드 검증용 구버전(2021.3) 참조에는 background-size 가 없어 이 줄만 뺀다. 실제 Unity 6 에서는 항상 켜진다
+        if (bm) { box.style.backgroundSize = new BackgroundSize(Length.Percent(200), Length.Percent(100)); box.style.backgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Left); }
+#endif
+        if (bm) { box.style.backgroundImage = new StyleBackground(book); box.style.paddingLeft = 52; box.style.paddingRight = 76;   // 펼침 그림의 왼쪽 쪽만 써서 책등 매듭선이 글자를 가르지 않게(오른쪽 여백은 책등 그림자 피함)
             box.style.paddingTop = 44; box.style.paddingBottom = 40; }
         else { box.style.backgroundColor = new Color(0.05f, 0.06f, 0.1f, 0.94f); box.style.paddingLeft = 16; box.style.paddingRight = 16; box.style.paddingTop = 12; box.style.paddingBottom = 12; }
         Color txt = bm ? VInk : VPaper, hi = bm ? VSeal : VPaper;
