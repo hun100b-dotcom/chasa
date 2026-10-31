@@ -1,0 +1,92 @@
+{
+ "shots": [
+  {
+   "file": "title.jpg",
+   "title": "타이틀",
+   "caption": "타이틀 화면과 새로 시작·설정 버튼",
+   "scene": "",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "first-hit.jpg",
+   "title": "조작권 직후",
+   "caption": "새로 시작 직후 첫 화면(첫 타격 실측은 로그 0.5초, 봇 기준)",
+   "scene": "bot",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "two-kneel.jpg",
+   "title": "꿇은 혼 둘",
+   "caption": "꿇은 혼이 둘일 때 장면(저해상도라 고리 굵기는 육안 확인 필요)",
+   "scene": "twoKneel",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "boss-crack.jpg",
+   "title": "보스 맺힘 깨짐",
+   "caption": "나루 영감 맺힘 줄이 깨지는 장면",
+   "scene": "bossCrack",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "dodge.jpg",
+   "title": "피하기 충전 ◆",
+   "caption": "폰 피하기 버튼 위 충전 ◆ 두 칸",
+   "scene": "dodge",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "book-record.jpg",
+   "title": "명부 기록 탭",
+   "caption": "세로 책 기록 탭, 책등 선이 글자를 가리지 않음",
+   "scene": "",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "book-dosul.jpg",
+   "title": "명부 도술 탭",
+   "caption": "도술 세 갈래 줄이 겹치지 않고 스크롤로 이어짐",
+   "scene": "tabScroll",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "book-equip.jpg",
+   "title": "명부 장비 탭",
+   "caption": "열린 자리 4/8과 잠김 문구",
+   "scene": "",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "reveal.jpg",
+   "title": "도술칸 열림",
+   "caption": "시작 5초 뒤 도술 칸이 늘어남",
+   "scene": "reveal",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "phone-portrait.jpg",
+   "title": "폰 세로 전투",
+   "caption": "390x844 세로: 조이스틱·물약·공격·피하기, 키 안내줄 없음",
+   "scene": "dodge",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  },
+  {
+   "file": "wolhwa-weak.jpg",
+   "title": "월화 약점",
+   "caption": "월화 보스 장면(청록 구슬은 이 해상도에서 확인 못 함)",
+   "scene": "wolhwaWeak",
+   "commit": "dab1399",
+   "takenAt": "2026-10-31T13:56:09Z"
+  }
+ ]
+}
