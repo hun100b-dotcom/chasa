@@ -285,7 +285,7 @@ public static class Balance
     public const float CAP_COIN_PCT = 0.5f;  // (시연판 임시) 기획서 6절 초안: 합계 상한: 엽전 +50%
     public const float DROP_RARITY_RARE = 0.08f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 귀한 확률
     public const float DROP_RARITY_CRAFTED = 0.3f;  // (시연판 임시) 기획서 6절 초안: 장비 드롭 손본 확률(귀한 제외). 나머지는 흔한
-    public const float DROP_CHANCE = 0.35f;  // (시연판 임시) 기획서 6절 초안: 맺힘 0 때 장비가 떨어질 확률(처결과 무관)
+    public const float DROP_CHANCE = 0.12f;  // (시연판 임시) 기획서 6절 초안: 맺힘 0 때 장비가 떨어질 확률(처결과 무관) [1막 균형 10-31: 0.35→0.12. 하루 약 30개가 쏟아져 장비 피해가 이틀 만에 +10%(기획은 1막 끝 +10%)였다. 하루 약 10개]
     public const float MOONFLOWER_BELL_PAHON_RADIUS = 0.5f;  // (시연판 임시) 기획서 6절 초안: 월화의 방울: 파혼 반경 +m. 정본은 +1m, 업 상한 초과라 QA 확인 전 임시 0.5
     public const int STAT_POINT_PER_NEOK = 30;  // (시연판 임시) 기획서 6절 초안: 능력치 점수 1점당 넋(시연판은 표시 전용)
     public const float B03_WARN_TIME = 0.8f;  // (QA 제안, 아트 시트 원문 미확인) B-03 서 의원: 바닥 칸 예고(초). 반응 0.25초여도 4.95m 이동 가능
@@ -509,11 +509,11 @@ public static class Balance
     public const float JOY_ZONE_WIDTH_FRAC = 0.45f;  // (폰 조작) 조이스틱이 생기는 화면 왼쪽 영역 너비 비율
     public const int ENHANCE_MAX = 5;  // (기획 4-4절 10-25, 임시) 장비 손보기 최대 단계(칸마다 +1~+5)
     public const float ENHANCE_PCT = 0.3f;  // (기획 4-4절 10-25 수정, 임시) 장비 손보기 한 단계마다 그 칸 주옵션(첫 옵션) 수치의 +30% (6%->30%)
-    public const int ENHANCE_COST_1 = 30;  // (기획 4-4절 10-25, 임시) 장비 손보기 1단계 엽전
-    public const int ENHANCE_COST_2 = 60;  // (기획 4-4절 10-25, 임시) 장비 손보기 2단계 엽전
-    public const int ENHANCE_COST_3 = 100;  // (기획 4-4절 10-25, 임시) 장비 손보기 3단계 엽전
-    public const int ENHANCE_COST_4 = 150;  // (기획 4-4절 10-25, 임시) 장비 손보기 4단계 엽전
-    public const int ENHANCE_COST_5 = 220;  // (기획 4-4절 10-25, 임시) 장비 손보기 5단계 엽전
+    public const int ENHANCE_COST_1 = 240;  // (기획 4-4절 10-25, 임시) 장비 손보기 1단계 엽전 [1막 균형 10-31: 옛 값의 8배. 엽전이 하루 500~650 들어와 15단계를 나흘 만에 다 찍었다]
+    public const int ENHANCE_COST_2 = 480;  // (기획 4-4절 10-25, 임시) 장비 손보기 2단계 엽전 [1막 균형 10-31: 옛 값의 8배. 엽전이 하루 500~650 들어와 15단계를 나흘 만에 다 찍었다]
+    public const int ENHANCE_COST_3 = 800;  // (기획 4-4절 10-25, 임시) 장비 손보기 3단계 엽전 [1막 균형 10-31: 옛 값의 8배. 엽전이 하루 500~650 들어와 15단계를 나흘 만에 다 찍었다]
+    public const int ENHANCE_COST_4 = 1200;  // (기획 4-4절 10-25, 임시) 장비 손보기 4단계 엽전 [1막 균형 10-31: 옛 값의 8배. 엽전이 하루 500~650 들어와 15단계를 나흘 만에 다 찍었다]
+    public const int ENHANCE_COST_5 = 1760;  // (기획 4-4절 10-25, 임시) 장비 손보기 5단계 엽전 [1막 균형 10-31: 옛 값의 8배. 엽전이 하루 500~650 들어와 15단계를 나흘 만에 다 찍었다]
     public const int PAHON_STAIN_POINT_EVERY = 15;  // (기획 4-4절 10-25, 임시) 파혼 이만큼마다 얼룩 갈래 전용 도술 점수 1
     public const float CHAIN_CHAIN_WINDOW_ADD = 0.5f;  // (무기 5계열 맛, 임시) 철삭: 연속 천도 창 +초 (이어 가는 맛)
     public const float BELL_CAST_MULT = 0.9f;  // (무기 5계열 맛, 임시) 요령방울: 천도 시전 시간 배율 (소리가 넋을 달랜다)

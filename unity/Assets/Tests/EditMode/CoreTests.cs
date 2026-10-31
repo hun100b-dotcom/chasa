@@ -1885,12 +1885,14 @@ public class CoreTests
     {
         var it = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Common, Name = "시험" };
         it.Options.Add(new OptionRoll(Opt.DamagePct, 0.10f));
-        var l = new Ledger { Coin = 1000 };
+        // 값은 Balance 에서 읽는다(1막 균형 10-31: 비용을 8배로 올렸다. 숫자를 박아 두면 조정할 때마다 시험이 깨진다)
+        int total = Balance.ENHANCE_COST_1 + Balance.ENHANCE_COST_2 + Balance.ENHANCE_COST_3 + Balance.ENHANCE_COST_4 + Balance.ENHANCE_COST_5;
+        var l = new Ledger { Coin = total + 100 };
         float before = GearStatsOf(it).DamagePct;
         int spent = 0;
         for (int i = 0; i < 5; i++) { Assert.IsTrue(Shrine.Enhance(it, l)); }
-        spent = 1000 - l.Coin;
-        Assert.AreEqual(30 + 60 + 100 + 150 + 220, spent, "한 칸 5단계 = 560");
+        spent = total + 100 - l.Coin;
+        Assert.AreEqual(total, spent, "한 칸 5단계 = 다섯 단계 비용의 합");
         Assert.IsFalse(Shrine.Enhance(it, l), "최대 +5");
         Assert.AreEqual(before * (1f + Balance.ENHANCE_PCT * 5), GearStatsOf(it).DamagePct, 0.0001f, "주옵션 단계마다 +ENHANCE_PCT");
         Assert.AreEqual(0, l.Neok, "넋은 건드리지 않는다");
