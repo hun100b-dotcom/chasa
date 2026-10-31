@@ -23,6 +23,7 @@ public class SoulMarkers
     readonly List<Enemy> dead = new List<Enemy>();
     readonly Transform root;
     Material mat;
+    public Enemy Aimed;               // 지금 천도·파혼이 겨누는 혼(JudgeSystem 이 매 프레임 알려 준다). 그 혼의 고리만 굵게 — 누구에게 쓸지 한눈에 보이게
 
     public SoulMarkers(Transform parent)
     {
@@ -44,6 +45,7 @@ public class SoulMarkers
                 lr = Make(e); rings[e] = lr;
             }
             lr.enabled = show;
+            lr.widthMultiplier = e == Aimed ? Balance.KNEEL_RING_WIDTH_AIMED : Balance.KNEEL_RING_WIDTH;   // 굵기는 data/balance.json
             GameObject pad; pads.TryGetValue(e, out pad);
             if (show && pad == null && !pads.ContainsKey(e))
             {
@@ -86,7 +88,7 @@ public class SoulMarkers
         var go = new GameObject("Ring"); go.transform.SetParent(root, false);
         var lr = go.AddComponent<LineRenderer>();
         lr.useWorldSpace = true;                      // 혼이 움직여도 매 프레임 좌표를 다시 준다
-        lr.widthMultiplier = 0.09f;
+        lr.widthMultiplier = Balance.KNEEL_RING_WIDTH;
         lr.sharedMaterial = mat;
         lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         lr.receiveShadows = false;

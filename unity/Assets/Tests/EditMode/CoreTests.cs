@@ -1264,6 +1264,66 @@ public class CoreTests
         Assert.AreEqual(CoreRules.RevealWeight(0.3f, 2f), CoreRules.RevealWeight(1.7f, 2f), 1e-5f);   // 올라갈 때와 내려올 때가 대칭
     }
 
+    [Test]
+    public void 맺힘_줄_수는_66퍼와_33퍼에서_한_줄씩_줄어든다()
+    {
+        Assert.AreEqual(3, CoreRules.LinesLeft(900, 900, 3));   // 가득
+        Assert.AreEqual(3, CoreRules.LinesLeft(601, 900, 3));   // 아직 첫 줄 안 깨짐
+        Assert.AreEqual(2, CoreRules.LinesLeft(600, 900, 3));   // 첫 줄 깨짐
+        Assert.AreEqual(2, CoreRules.LinesLeft(301, 900, 3));
+        Assert.AreEqual(1, CoreRules.LinesLeft(300, 900, 3));   // 둘째 줄 깨짐
+        Assert.AreEqual(1, CoreRules.LinesLeft(1, 900, 3));     // 1 이라도 남으면 마지막 줄
+        Assert.AreEqual(0, CoreRules.LinesLeft(0, 900, 3));     // 끝(무릎)
+        Assert.AreEqual(1, CoreRules.LinesLeft(50, 100, 1));    // 한 줄짜리는 늘 1
+    }
+
+    [Test]
+    public void 보스는_줄이_깨질_때마다_알리고_마지막_줄은_무릎으로만_센다()
+    {
+        var b = Soul.MakeBoss(1);                       // 맺힘 800, 3줄
+        Assert.AreEqual(3, b.LinesLeft);
+        Assert.IsFalse(b.TakeHit(100));                 // 700: 아직 첫 줄(>533)
+        Assert.AreEqual(0, b.TakeLineBreaks());
+        Assert.IsFalse(b.TakeHit(200));                 // 500: 첫 줄 깨짐
+        Assert.AreEqual(2, b.LinesLeft);
+        Assert.AreEqual(1, b.TakeLineBreaks());
+        Assert.AreEqual(0, b.TakeLineBreaks());         // 읽으면 비워진다
+        Assert.IsFalse(b.TakeHit(450));                 // 50: 둘째 줄 깨짐(마지막 줄만 남음)
+        Assert.AreEqual(1, b.LinesLeft);
+        Assert.AreEqual(1, b.TakeLineBreaks());
+        Assert.IsTrue(b.TakeHit(50));                   // 0: 무릎. 줄 깨짐으로는 세지 않는다
+        Assert.AreEqual(0, b.TakeLineBreaks());
+        Assert.AreEqual(Balance.BOSS_S1_MAEDHIM, b.MaedhimMax);   // 총 맺힘은 그대로 — 줄은 마디일 뿐
+    }
+
+    [Test]
+    public void 보스가_아닌_혼은_한_줄이라_줄_깨짐이_없다()
+    {
+        var s = new Soul(SoulKind.Fresh);
+        Assert.AreEqual(1, s.LinesLeft);
+        s.TakeHit(s.MaedhimMax - 1);
+        Assert.AreEqual(0, s.TakeLineBreaks());
+    }
+
+    [Test]
+    public void 첫_타격_시계는_조작할_수_있는_시간만_세고_한_번만_기록한다()
+    {
+        var t = new FirstHitTimer();
+        t.Tick(5f, false);                              // 컷신 중: 안 센다
+        t.Tick(12f, true);
+        Assert.AreEqual(12f, t.Elapsed, 1e-5f);
+        Assert.IsFalse(t.Hit);
+        Assert.IsTrue(t.OnHit());
+        Assert.AreEqual(12f, t.HitAt, 1e-5f);
+        t.Tick(20f, true);                              // 기록 뒤엔 멈춘다
+        Assert.IsFalse(t.OnHit());                      // 두 번째 타격은 기록하지 않는다
+        Assert.AreEqual(12f, t.HitAt, 1e-5f);
+        Assert.IsTrue(t.WithinGoal(Balance.FIRST_HIT_GOAL_SEC));
+        var late = new FirstHitTimer(); late.Tick(31f, true); late.OnHit();
+        Assert.IsFalse(late.WithinGoal(Balance.FIRST_HIT_GOAL_SEC));   // 31초는 초과
+        Assert.IsFalse(new FirstHitTimer().WithinGoal(30f));           // 아직 못 쳤으면 통과 아님
+    }
+
     // ---------- 화면 가장자리 경고 (2단계) ----------
     [Test]
     public void EdgeWarn_InsideView_NoMark()

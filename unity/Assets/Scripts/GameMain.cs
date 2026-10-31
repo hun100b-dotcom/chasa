@@ -113,7 +113,7 @@ public class GameMain : MonoBehaviour
             int ci = cu.IndexOf("clock=");
             float sp; if (ci >= 0 && float.TryParse(new string(cu.Substring(ci + 6).TakeWhile(char.IsDigit).ToArray()), out sp) && sp > 0f) judge.clock.Speed = sp;   // 주소 ?clock=10 이면 10배속(한 바퀴 검사용)
         }
-        player.onHitLanded = () => judge.guide.Complete("hit");   // 첫 타가 맞으면 '때리기' 안내가 닫힌다
+        player.onHitLanded = () => { judge.guide.Complete("hit"); judge.NoteHit(); };   // 첫 타가 맞으면 '때리기' 안내가 닫힌다
         judge.player = player; judge.enemies = enemies; judge.feel = feel; judge.numbers = numbers; judge.cam = cam;
         judge.reward = gameObject.AddComponent<RewardFx>(); judge.reward.Target = () => player.Pos;
         if (TitleScreen.Wanted(FieldRules.On)) gameObject.AddComponent<TitleScreen>();   // 타이틀 화면(이어하기·새로 시작·설정)
@@ -277,6 +277,13 @@ public class GameMain : MonoBehaviour
             var rp = new Vector3(judge.RevealPos.x, GroundTerrain.HeightAt(judge.RevealPos.x, judge.RevealPos.z), judge.RevealPos.z);
             goal = Vector3.Lerp(goal, rp, reveal);   // 가운데에서 거의 보스 위치(플레이어는 화면 가장자리로 밀릴 수 있다 — 보스까지 최대 40m 라 거리 제한은 컷 쪽 기준)
         }
+        // 개편 P1-3 잔여: 보스 맺힘 한 줄이 깨지면 카메라가 잠깐 보스 쪽으로 당겨졌다 돌아온다(등장 카메라보다 약하게). 조작은 그대로
+        float linePull = reveal > 0f ? 0f : judge.LinePullWeight;   // 등장 카메라와 겹치면 등장 쪽이 이긴다
+        if (linePull > 0f)
+        {
+            var lp = new Vector3(judge.LinePullPos.x, GroundTerrain.HeightAt(judge.LinePullPos.x, judge.LinePullPos.z), judge.LinePullPos.z);
+            goal = Vector3.Lerp(goal, lp, linePull * Balance.BOSS_LINE_PULL_FOCUS);
+        }
         // 데드존: 목표가 카메라 중심에서 이 반경 안이면 움직이지 않는다 (작은 흔들림에 화면이 같이 떨리지 않게)
         var d = goal - focus; d.y = 0f;
         if (d.magnitude > Balance.CAMERA_DEADZONE_M) goal = focus + d.normalized * (d.magnitude - Balance.CAMERA_DEADZONE_M);
@@ -288,7 +295,7 @@ public class GameMain : MonoBehaviour
         int crowd = 0;
         foreach (var en in judge.enemies.list) if (en != null && en.alive && !en.passive && new Vector2(en.Pos.x - player.Pos.x, en.Pos.z - player.Pos.z).magnitude <= Balance.CAMERA_CROWD_RANGE_M) crowd++;
         crowdPull = Mathf.Lerp(crowdPull, crowd >= Balance.CAMERA_CROWD_MIN ? Balance.CAMERA_CROWD_PULLBACK : 0f, 1f - Mathf.Exp(-2f * dt));   // 천천히 오가야 화면이 출렁이지 않는다
-        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f - crowdPull + reveal * Balance.BOSS_REVEAL_ZOOM + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
+        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f - crowdPull + reveal * Balance.BOSS_REVEAL_ZOOM + linePull * Balance.BOSS_LINE_PULL_ZOOM + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
         wheel = Mathf.Lerp(wheel, wheelTarget, 1f - Mathf.Exp(-Balance.CAMERA_WHEEL_SMOOTH * Time.unscaledDeltaTime));   // 휠 줌은 부드럽게 따라간다
         if (judge.clock != null) ClockSky.Apply(sun, cam, judge.clock, player.Pos, dt);   // 하늘·햇빛이 시계를 따른다
         // 줌하면 카메라 각도도 함께 바뀐다: 확대(wheel<1)하면 눕고(몰입), 축소하면 일어선다(지도처럼). 기준 각도는 wheel=1

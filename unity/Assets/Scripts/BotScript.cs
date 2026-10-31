@@ -257,6 +257,7 @@ public class BotScript : MonoBehaviour
         var sb = new StringBuilder();
         sb.Append("{\"결과\":\"").Append(why).Append("\",\"실제초\":").Append(t.ToString("0")).Append(",\"게임\":\"").Append(Stamp()).Append("\"");
         sb.Append(",\"단서\":").Append(ClueCount()).Append(",\"넋\":").Append(judge.ledger.Neok).Append(",\"기억\":").Append(judge.ledger.Memory).Append(",\"업\":").Append(judge.ledger.Karma);
+        sb.Append(",\"첫타격초\":").Append(judge.firstHit.Hit ? judge.firstHit.HitAt.ToString("0.0") : "null").Append(",\"첫타격목표통과\":").Append(judge.firstHit.WithinGoal(Balance.FIRST_HIT_GOAL_SEC) ? "true" : "false");   // 개편 P2 '30초 안 첫 타격' 실측
         sb.Append(",\"쓰러짐\":").Append(deaths).Append(",\"막힘순간이동\":").Append(unstucks).Append(",\"컷\":").Append(cutsSeen).Append(",\"최대동시적25m\":\"").Append(maxNear).Append(" @ ").Append(maxNearAt).Append("\"").Append(",\"문제\":[");
         for (int i = 0; i < issues.Count; i++) { if (i > 0) sb.Append(','); sb.Append('"').Append(issues[i].Replace("\"", "'")).Append('"'); }
         sb.Append("]}");

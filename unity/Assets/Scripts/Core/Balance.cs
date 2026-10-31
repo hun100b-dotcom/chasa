@@ -840,4 +840,11 @@ public static class Balance
     public const int NOJAT_COIN = 3;  // 한 자리 엽전
     public const float NOJAT_MIN_GAP_M = 25.0f;  // 자리끼리 최소 거리(m)
     public const float NOJAT_PICK_TIME = 0.4f;  // 줍기 누름(초). 줍기는 톡이라 지금은 안 씀
+    public const int BOSS_LINES = 3;  // 개편 P2 보스 여러 줄 맺힘: 보스 맺힘을 이 수만큼 줄로 나눠 센다(3 = 66%·33% 에서 한 줄씩 깨짐). 총 맺힘 값은 그대로 — 줄은 '화면 마디'일 뿐 수치 기둥과 무관
+    public const float BOSS_LINE_PULL_SEC = 0.8f;  // 개편 P1-3 잔여: 보스 맺힘 한 줄이 깨질 때 카메라가 당겨졌다 돌아오는 전체 길이(초)
+    public const float BOSS_LINE_PULL_ZOOM = 0.05f;  // 개편 P1-3 잔여: 맺힘 한 줄이 깨질 때 카메라가 당겨지는 비율(0.05 = 5%). 등장 카메라 8% 보다 작게
+    public const float BOSS_LINE_PULL_FOCUS = 0.3f;  // 개편 P1-3 잔여: 맺힘 한 줄이 깨질 때 카메라 가운데가 보스 쪽으로 가는 비율(0.3 = 30%)
+    public const float FIRST_HIT_GOAL_SEC = 30.0f;  // 개편 P2 '30초 안 첫 타격' 목표(초): 조작권을 받은 뒤 첫 타격이 맞기까지. 실측 로그가 이 값과 견준다
+    public const float KNEEL_RING_WIDTH = 0.09f;  // 처결 대기 고리 선 굵기(m) — 겨누지 않은 혼
+    public const float KNEEL_RING_WIDTH_AIMED = 0.24f;  // 개편 P1 잔여: 지금 ▲·✕가 겨누는 혼의 발밑 고리 굵기(m). 두 처결이 같은 혼을 겨누므로 한쪽으로 쏠리지 않는다
 }

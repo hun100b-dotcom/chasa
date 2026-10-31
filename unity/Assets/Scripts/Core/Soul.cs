@@ -63,6 +63,12 @@ namespace Chasa.Core
             return new Soul(SoulKind.Old) { Name = d.Name, Boss = true, BossId = id, MaedhimMax = (int)d.Maedhim, Maedhim = (int)d.Maedhim };
         }
 
+        /// <summary>남은 맺힘 줄 수(1~BOSS_LINES). 보스만 여러 줄이고, 그 밖의 혼은 늘 1 이다</summary>
+        public int LinesLeft { get { return Boss ? CoreRules.LinesLeft(Maedhim, MaedhimMax, Balance.BOSS_LINES) : 1; } }
+        public int PendingLineBreaks;   // 방금 깨진 줄 수(화면이 읽고 TakeLineBreaks 로 비운다 — 카메라 당김용)
+        /// <summary>깨진 줄 수를 돌려주고 비운다. 0 이면 깨진 줄이 없다</summary>
+        public int TakeLineBreaks() { int n = PendingLineBreaks; PendingLineBreaks = 0; return n; }
+
         public bool Alive { get { return State == SoulState.Active; } }
         public bool Kneeling { get { return State == SoulState.Kneel; } }
         /// <summary>덩어리는 천도 불가 → 파혼만 (W-004)</summary>
@@ -95,7 +101,11 @@ namespace Chasa.Core
         public bool TakeHit(int damage)
         {
             if (State != SoulState.Active) return false;   // 무릎 꿇은 혼은 더 못 때린다
+            int linesBefore = LinesLeft;
             Maedhim -= damage;
+            // 보스 여러 줄 맺힘(개편 P2): 총 맺힘은 그대로 두고, 줄 경계를 넘을 때마다 '깨진 줄'을 센다.
+            // 마지막 줄을 깨는 것은 무릎 꿇음(아래)이라 줄 깨짐으로 세지 않는다 — 그건 이미 가장 큰 장면이다
+            if (Boss && Maedhim > 0) PendingLineBreaks += System.Math.Max(0, linesBefore - LinesLeft);
             if (Maedhim <= 0)
             {
                 Maedhim = 0;
