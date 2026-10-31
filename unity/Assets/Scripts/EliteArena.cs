@@ -97,6 +97,7 @@ public class EliteArena : MonoBehaviour
     {
         var t = new Tele { c = new Vector3(e.Pos.x, 0f, e.Pos.z), r = Balance.ELITE_SLAM_R, warn = Warn(Balance.ELITE_SLAM_TELE), mult = 1f };
         e.atk.Interrupt(); Show(t); teles.Add(t); Sfx.Play("sfx.elite.slam.telegraph");
+        judge.HintEliteCharge();   // 처음 한 번만 뜬다(TutorialHints 가 중복을 막는다)
     }
 
     void Pounce()

@@ -2004,6 +2004,7 @@ public class JudgeSystem : MonoBehaviour
     public string memLine; public float memLineT;              // 지금 화면에 띄울 기억 줄(보랏빛 자막)
     public readonly TutorialHints hints = new TutorialHints();   // 처음 한 번만 뜨는 안내
     public void HintClue() { Hint(HintEvent.FirstClue); }
+    public void HintEliteCharge() { Hint(HintEvent.FirstEliteCharge); }   // 거센 혼이 처음 기를 모을 때(파혼 반격 안내)
 
     // ---- 처음 5분 안내 대기줄(기획 first-5-minutes.md): 행동을 하면 닫히고, 한 번에 하나만 뜬다 ----
     public readonly GuideQueue guide = new GuideQueue();
