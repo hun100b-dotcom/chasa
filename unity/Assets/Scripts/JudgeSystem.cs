@@ -424,6 +424,24 @@ public class JudgeSystem : MonoBehaviour
 
     // ---- 첫 도술 카드(처음 10분 M9): 점수가 생기고 싸움이 잠잠하면 카드 세 장이 뜬다. 1·2·3 또는 클릭, 다시 뽑기 R ----
     bool cardsMode, cardPicksLoaded, cardRerolled; int cardPicks; float cardDelay; List<string> cardList;
+    // ---- 성장 단계 공개(개편 P2-2): 도술 갈래 나무·인 탭이 '쓸 수 있게 된 때' 화면에도 나타난다. 규칙은 Core/GrowthReveal ----
+    /// <summary>명부에서 도술 갈래 나무 전체를 보여 줄 때인가(아니면 배운 도술만)</summary>
+    public bool SkillTreeOpen { get { return GrowthReveal.SkillTreeOpen(growth, cardsMode, cardPicks); } }
+    /// <summary>명부의 '인' 탭을 보여 줄 때인가</summary>
+    public bool SealsTabOpen { get { return GrowthReveal.SealsTabOpen(lo.gear.FirstRingBossDone, lo.gear.Act2Entered, lo.sealBag.Count); } }
+    bool revealSeen, treeWasOpen, sealsWasOpen;
+    /// <summary>열리는 순간 한 번만 알려 준다. 첫 호출(불러오기 직후)에는 이미 열린 것을 알리지 않고 기준만 잡는다</summary>
+    void TickReveal()
+    {
+        if (ui == null) return;
+        bool tree = SkillTreeOpen, seals = SealsTabOpen;
+        if (revealSeen)
+        {
+            if (tree && !treeWasOpen) ui.Hud.Toasts.Add("도술 갈래 나무가 펼쳐졌다 — 명부(C)");
+            if (seals && !sealsWasOpen) ui.Hud.Toasts.Add("명부에 '인' 쪽이 생겼다 — 명부(C)");
+        }
+        revealSeen = true; treeWasOpen = tree; sealsWasOpen = seals;
+    }
     readonly HashSet<string> cardSeen = new HashSet<string>();
     void TickCards(float dt)
     {
@@ -1316,6 +1334,7 @@ public class JudgeSystem : MonoBehaviour
         TickCutscenes(dt);
         firstHit.Tick(realDt, (clock == null || openingStarted) && !cuts.Active);   // 조작권을 받은 시간만 센다(컷·낮 화면·창이 열린 동안은 위에서 이미 돌아갔다)
         TickLinePull(realDt);
+        TickReveal();
         if (clock == null) night.Tick(dt);     // 옛 방식: 밤 타이머. 필드에선 시한이 없다(시계가 흐를 뿐)
         else TickClock(dt);
         TickClues();
