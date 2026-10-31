@@ -62,6 +62,8 @@ public class TouchControls : MonoBehaviour
     public Action onHeal, onMenu, onSwap;            // 물약 · 초상 탭(메뉴) · 공격 버튼 끌어올리기(무기 바꾸기)
     public Func<int> potionCount;                    // 남은 회복약 수
     public Func<bool> canSwap;                       // 무기 바꾸기를 쓸 수 있나(안 되면 안내 글자도 없다)
+    public Func<float> dodgeCharges;                 // 피하기 충전(2.0 = 가득, 소수 = 충전 중인 칸). 없으면 점을 안 그린다
+    public Func<int> dodgeMax;                       // 피하기 최대 충전 수
     public Func<bool> suspended;                     // 낮 화면·창이 떠 있어 폰 버튼을 접어야 하나
 
     struct Btn { public string id; public Vector2 center; public float r, visual; public string text; public Color color; public bool hidden; }   // hidden = 눌림 판정만 있고 그리지 않는다(초상 탭)   // 좌표는 GUI 좌표(위가 0)
@@ -256,6 +258,7 @@ public class TouchControls : MonoBehaviour
                 label.fontSize = Mathf.Max(12, Mathf.RoundToInt(b.visual * (b.id == "atk" ? 0.36f : 0.28f)));
                 GUI.Label(rect, left > 0f ? Mathf.CeilToInt(left).ToString() : text, label);
             }
+            if (b.id == "dodge") DrawDodgePips(rect, b.visual);   // 피하기 충전 ◆ 표시(폰에는 키보드 줄의 충전 점이 없다)
             if (b.id == "atk" && canSwap != null && canSwap())   // 끌어올리기 단서: 공격 버튼 바로 위에 작은 안내(숨은 동작이라 한 번은 보여야 한다)
             {
                 // 겹친 위쪽 화살표 그림(없으면 글자만) + "무기" 글자
@@ -267,6 +270,29 @@ public class TouchControls : MonoBehaviour
                 GUI.color = Color.white;
             }
         }
+    }
+
+    /// <summary>피하기 버튼 위쪽에 충전 ◆ 를 한 줄로 그린다. 찬 칸은 밝은 하늘색, 비면 어두운 회색, 충전 중인 칸은 차오른 만큼만 밝다.
+    /// 왜 글자 '◆' 가 아니라 도형인가: 폰 기본 글꼴에 ◆ 가 없으면 네모(깨짐)로 나온다. 흰 사각형을 45도 돌려 마름모를 만들면 글꼴과 무관하다(PC 충전 막대와 같은 방침)</summary>
+    void DrawDodgePips(Rect btn, float visual)
+    {
+        if (dodgeCharges == null || dodgeMax == null) return;
+        int n = Mathf.Max(0, dodgeMax()); if (n == 0) return;
+        float ch = dodgeCharges(), size = visual * 0.22f, gap = size * 0.55f;   // 마름모 한 변(회전 전)과 간격
+        float total = n * size * 1.414f + (n - 1) * gap;                       // 회전하면 대각선(약 1.414배)만큼 차지한다
+        float x0 = btn.center.x - total / 2f, cy = btn.y - size * 0.4f;         // 버튼 윗선 바로 위
+        var old = GUI.matrix;
+        for (int i = 0; i < n; i++)
+        {
+            float fill = Mathf.Clamp01(ch - i);
+            float cx = x0 + size * 0.707f + i * (size * 1.414f + gap);
+            var r = new Rect(cx - size / 2f, cy - size / 2f, size, size);
+            GUI.matrix = old; GUIUtility.RotateAroundPivot(45f, new Vector2(cx, cy));
+            GUI.color = new Color(0f, 0f, 0f, 0.6f); GUI.DrawTexture(new Rect(r.x - 2f, r.y - 2f, size + 4f, size + 4f), Texture2D.whiteTexture);   // 바탕 테두리(어두운 배경에서도 보이게)
+            GUI.color = Color.Lerp(new Color(0.35f, 0.38f, 0.45f, 0.9f), new Color(0.75f, 0.88f, 1f, 1f), fill);   // 충전 정도에 따라 어두운 회색 → 밝은 하늘색
+            GUI.DrawTexture(r, Texture2D.whiteTexture);
+        }
+        GUI.matrix = old; GUI.color = Color.white;   // 다른 버튼 그림이 돌아가거나 물들지 않게 원상 복구
     }
 
     /// <summary>메뉴 쪽지: 초상(지름 132) 오른쪽 아래 모서리에 56px 책 그림. 그림이 없으면 아무것도 안 그린다(옛 모습 = 초상만)</summary>
