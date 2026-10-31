@@ -782,6 +782,12 @@ public static class Balance
     public const int CAMERA_CROWD_MIN = 3;  // 개편 P1-3: 가까이(CAMERA_CROWD_RANGE_M) 싸우는 혼이 이만큼 이상이면 카메라가 살짝 물러난다
     public const float CAMERA_CROWD_RANGE_M = 10.0f;  // 개편 P1-3: 카메라가 무리 수를 세는 반경(m)
     public const float CAMERA_CROWD_PULLBACK = 0.08f;  // 개편 P1-3: 무리가 모였을 때 카메라 거리를 늘리는 비율(0.08 = 8%). 천도 시전 줌 최대 9%와 겹치면 서로 상쇄된다
+    public const float KNEEL_AIM_MIN = 0.3f;  // 개편 P1-5 처결 대상 고르기(폰): 조이스틱을 이만큼(0~1) 이상 밀고 있어야 '그 방향 혼'을 고른다. 아니면 가장 가까운 혼
+    public const float KNEEL_AIM_COS = 0.5f;  // 개편 P1-5 처결 대상 고르기(폰): 조이스틱 방향에서 이 각도(코사인 0.5 = 60도) 안의 꿇은 혼 중 가장 가까운 것. 없으면 가장 가까운 혼
+    public const float KNEEL_TAP_PICK_SEC = 4.0f;  // 개편 P1-5 처결 대상 고르기(폰): 꿇은 혼을 화면에서 탭해 고르면 이 시간(초) 동안 그 혼이 대상. 처결 대기 최단 4초와 같다
+    public const int KNEEL_TAP_RADIUS_PX = 110;  // 개편 P1-5 처결 대상 고르기(폰): 꿇은 혼 탭 판정 반지름(1080p 기준 px, 혼 몸 가운데 기준). 손가락이 굵으니 넉넉히
+    public const float BOSS_REVEAL_SEC = 2.0f;  // 개편 P1-3 보스 등장 카메라: 등장 컷이 없는 보스에게 쓰는 짧은 카메라 이동의 전체 길이(초). 기본 1.5초 이동·머무름·복귀
+    public const float BOSS_REVEAL_ZOOM = 0.08f;  // 개편 P1-3 보스 등장 카메라: 보스를 비출 때 카메라가 당겨지는 비율(0.08 = 8%)
     public const int ELITE_MAEDHIM = 300;  // 거센 혼(처음 10분 M10) 맺힘(보통 혼의 3배)
     public const float ELITE_SCALE = 1.3f;  // 거센 혼(처음 10분 M10) 몸 크기 배율
     public const float ELITE_KNOCKBACK_MULT = 0.5f;  // 거센 혼(처음 10분 M10) 넉백 배율

@@ -22,6 +22,43 @@ namespace Chasa.Core
             return charging && blastToTarget <= radius + targetRadius;
         }
 
+        /// <summary>
+        /// 폰 처결 대상 고르기(개편안 P1-5, 명세 §5-1): 꿇은 혼이 여럿일 때 어느 혼을 겨눌지.
+        /// 조이스틱을 밀고 있으면 '그 방향 60도 안에서 가장 가까운 혼', 아니면(또는 그 방향에 없으면) 그냥 가장 가까운 혼.
+        /// 왜 규칙으로 떼나: 천도와 파혼이 둘 다 '같은 혼'을 겨누므로 대상 고르기가 흔들리면 선택이 정답 입력이 된다 — 화면 없이 테스트로 지키려는 것.
+        /// <paramref name="px"/>,<paramref name="pz"/> 내 자리, <paramref name="aimX"/>,<paramref name="aimZ"/> 조이스틱 방향(월드 바닥 좌표, 길이 0~1),
+        /// <paramref name="xs"/>,<paramref name="zs"/> 후보 혼 자리. 반환 = 후보 번호, 후보가 없으면 -1
+        /// </summary>
+        public static int PickKneelIndex(float px, float pz, float aimX, float aimZ, float[] xs, float[] zs)
+        {
+            if (xs == null || xs.Length == 0) return -1;
+            float aimLen = (float)Math.Sqrt(aimX * aimX + aimZ * aimZ);
+            bool aimed = aimLen >= Balance.KNEEL_AIM_MIN;
+            int bestAim = -1, bestAny = -1; float dAim = float.MaxValue, dAny = float.MaxValue;
+            for (int i = 0; i < xs.Length; i++)
+            {
+                float dx = xs[i] - px, dz = zs[i] - pz;
+                float d = (float)Math.Sqrt(dx * dx + dz * dz);
+                if (d < dAny) { dAny = d; bestAny = i; }
+                if (!aimed || d < 1e-4f) continue;
+                float cos = (dx * aimX + dz * aimZ) / (d * aimLen);   // 방향이 얼마나 같은가(1 = 정확히 그 쪽)
+                if (cos >= Balance.KNEEL_AIM_COS && d < dAim) { dAim = d; bestAim = i; }
+            }
+            return bestAim >= 0 ? bestAim : bestAny;
+        }
+
+        /// <summary>
+        /// 보스 등장 카메라의 세기(0~1). 개편안 P1-3 '보스 등장 2초 카메라'.
+        /// 전체 길이의 앞 25%는 보스 쪽으로 서서히 움직이고, 가운데 50%는 머물고, 뒤 25%는 플레이어로 돌아온다. 처음·끝은 0 이라 화면이 튀지 않는다
+        /// </summary>
+        public static float RevealWeight(float elapsed, float total)
+        {
+            if (total <= 0f || elapsed <= 0f || elapsed >= total) return 0f;
+            float u = elapsed / total;
+            float w = u < 0.25f ? u / 0.25f : u > 0.75f ? (1f - u) / 0.25f : 1f;
+            return w * w * (3f - 2f * w);   // 부드러운 곡선(smoothstep): 시작과 끝에서 속도가 0
+        }
+
         /// <summary>업 단계. 0 = K-001(0~9), 1 = K-002, 2 = K-003, 3 = K-004</summary>
         public static int KarmaTier(int karma)
         {

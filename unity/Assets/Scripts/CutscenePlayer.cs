@@ -93,6 +93,9 @@ public class CutscenePlayer
     void Add(CutData d) { if (!byId.ContainsKey(d.id)) byId[d.id] = d; }
 
 
+    /// <summary>이 번호의 컷 대본이 있나(없으면 Play 는 늘 false)</summary>
+    public bool Has(string id) { return byId.ContainsKey(id); }
+
     /// <summary>컷 재생 시작. once 면 한 번만(이미 봤으면 false). 이미 다른 잠금 컷 중이면 시작하지 않는다</summary>
     public bool Play(string id, bool once = false)
     {
