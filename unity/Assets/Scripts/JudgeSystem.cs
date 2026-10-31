@@ -200,6 +200,14 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>혼 하나를 처결했다(두 번째 값: true=천도, false=파혼). 보스 약점(B-05 불린 병사 천도 등)이 듣는다</summary>
     public System.Action<Enemy, bool> OnJudged;
 
+    /// <summary>이 혼을 파혼할 때 폭발 반경(m). 거센 혼 4.5 / 보통 3 + 장비 / 얼룩 위 뱃삯. 파혼 반격(거센 혼 기 모음 끊기)도 같은 값을 쓴다</summary>
+    public float PahonRadiusOf(Enemy e)
+    {
+        float radius = e.elite ? Balance.ELITE_PAHON_RADIUS : lo.stats.PahonRadius(Balance.PAHON_RADIUS);   // 거센 혼 파혼: 반경 4.5m   // 업 쪽 장비: 파혼 반경 (상한 안)
+        if (HasKeepsake("도한수의 뱃삯") && stains.CountWithin(e.Pos.x, e.Pos.z, 1.5f) > 0) radius += Balance.BAETSAK_WATER_PAHON_RADIUS;   // 뱃삯: 얼룩 위 파혼 반경 +0.5m
+        return radius;
+    }
+
     void DoPahon(Enemy e)
     {
         var at = e.Pos;
@@ -292,8 +300,7 @@ public class JudgeSystem : MonoBehaviour
         }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
         float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult * lo.stats.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
-        float radius = e.elite ? Balance.ELITE_PAHON_RADIUS : lo.stats.PahonRadius(Balance.PAHON_RADIUS);   // 거센 혼 파혼: 반경 4.5m   // 업 쪽 장비: 파혼 반경 (상한 안)
-        if (HasKeepsake("도한수의 뱃삯") && stains.CountWithin(at.x, at.z, 1.5f) > 0) radius += Balance.BAETSAK_WATER_PAHON_RADIUS;   // 뱃삯: 얼룩 위 파혼 반경 +0.5m
+        float radius = PahonRadiusOf(e);
         if (e.elite) Sfx.Play("cut.jing.crack");
         if (e.elite)   // 거센 혼 파혼 폭발은 부른 잔넋까지 터뜨린다(마리당 엽전 +2)
             foreach (var o in new List<Enemy>(enemies.list))

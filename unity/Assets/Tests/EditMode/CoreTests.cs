@@ -1226,6 +1226,15 @@ public class CoreTests
         CollectionAssert.AreEqual(new[] { "천도 3/3 채움", "단서 3/3", "나루 영감 끝" }, q);
     }
 
+    [Test]
+    public void 파혼_반격은_기를_모으는_중이고_폭발_반경_안일_때만_끊는다()
+    {
+        Assert.IsTrue(CoreRules.PahonInterruptsCharge(true, 2.5f, Balance.PAHON_RADIUS, 0.5f));    // 반경 안 + 모으는 중 → 끊김
+        Assert.IsTrue(CoreRules.PahonInterruptsCharge(true, 3.4f, Balance.PAHON_RADIUS, 0.5f));    // 몸 반경만큼 걸쳐도 끊김
+        Assert.IsFalse(CoreRules.PahonInterruptsCharge(true, 3.6f, Balance.PAHON_RADIUS, 0.5f));   // 밖이면 못 끊음
+        Assert.IsFalse(CoreRules.PahonInterruptsCharge(false, 1f, Balance.PAHON_RADIUS, 0.5f));    // 모으는 중이 아니면(이미 터짐/쉬는 중) 해당 없음
+    }
+
     // ---------- 화면 가장자리 경고 (2단계) ----------
     [Test]
     public void EdgeWarn_InsideView_NoMark()
