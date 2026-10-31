@@ -11,6 +11,9 @@ namespace Chasa.Core
 {
     public static class CoreRules
     {
+        /// <summary>보스 맺힘 금 단계(개편안 §4): 남은 맺힘 66% 이하 1단계, 33% 이하 2단계, 10% 이하 3단계, 그 위는 0(금 없음). 화면 전용 규칙이라 수치 기둥과 무관</summary>
+        public static int GyeolCrackStage(float ratio) { return ratio <= 0.10f ? 3 : ratio <= 0.33f ? 2 : ratio <= 0.66f ? 1 : 0; }
+
         /// <summary>업 단계. 0 = K-001(0~9), 1 = K-002, 2 = K-003, 3 = K-004</summary>
         public static int KarmaTier(int karma)
         {
