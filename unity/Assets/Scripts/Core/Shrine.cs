@@ -108,7 +108,7 @@ namespace Chasa.Core
             return true;   // 호출한 쪽이 장비 칸에서 지운다
         }
 
-        /// <summary>장비 손보기 비용: 지금 단계(0~4)에서 다음 단계로. 30/60/100/150/220 (일곱 칸 모두 5단계면 약 3,900)</summary>
+        /// <summary>장비 손보기 비용: 지금 단계(0~4)에서 다음 단계로. 240/480/800/1200/1760 (1막 균형 10-31: 옛 30/60/100/150/220의 8배. 일곱 칸 모두 5단계면 약 31,000 ≈ 시즌 1 엽전 수입의 4분의 3)</summary>
         public static int EnhanceCost(int plusNow)
         {
             int[] c = { Balance.ENHANCE_COST_1, Balance.ENHANCE_COST_2, Balance.ENHANCE_COST_3, Balance.ENHANCE_COST_4, Balance.ENHANCE_COST_5 };

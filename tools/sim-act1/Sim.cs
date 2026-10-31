@@ -20,7 +20,8 @@ class RunResult
 
 static class Sim
 {
-    const double BaseDps = 34.0, HitMove = 0.30, HitBoss = 0.12, HitBossAdds = 0.20, HitCast = 0.75, TravelAvg = 8.0, Approach = 0.6;
+    static readonly double HitScale = Env("HIT_SCALE", 1.0);   // 신참 민감도 검사용: 맞을 확률을 이 배수만큼 키운다(기본 1)
+    static readonly double BaseDps = 34.0, HitMove = 0.30 * HitScale, HitBoss = 0.12 * HitScale, HitBossAdds = 0.20 * HitScale, HitCast = Math.Min(1.0, 0.75 * HitScale), TravelAvg = 8.0, Approach = 0.6;
     const int Nights = 3;
     static WeaponDef Wd = WeaponDef.Chain;   // 이번 판에 든 무기
     // 무기별 전투 가정(WeaponTable 콤보 합/시간에서): 단일 목표 초당 피해 비율 r(철삭 1.0 기준)과 주변 적 한 마리당 추가 비율 g(범위·관통), 받는 피해 배율(붓은 멀리서 쏴 덜 맞음)
@@ -60,6 +61,7 @@ static class Sim
         if (Array.IndexOf(args, "--act3") >= 0) return Act3Table(runs, args);
         if (Array.IndexOf(args, "--s2") >= 0) return S2Table(runs, args);
         if (Array.IndexOf(args, "--curve") >= 0) return CurveTable(runs, args);
+        if (Array.IndexOf(args, "--act1") >= 0) return Act1Table(runs, args);
         Console.WriteLine("1막 시뮬: 첫 밤 " + Nights + "개 + 1호 보스, 각 전략 " + runs + "판. 밤 " + Balance.NIGHT_DURATION + "초, 몫 " + Balance.NIGHT_QUOTA + ", 체력 " + Balance.PLAYER_MAX_HP);
         var results = new Dictionary<Strat, List<RunResult>>();
         foreach (Strat s in Enum.GetValues(typeof(Strat)))
@@ -428,6 +430,93 @@ static class Sim
         return 0;
     }
 
+
+    /// <summary>
+    /// 1막 균형 점검(--act1): 12일을 이어서 돌린다. 게임의 실제 규칙을 쓴다 —
+    /// 품계는 처결 셈(GrowthState.RankFor, 혼 하나 = 10 x 고리 보상 배율), 힘 품계당 +7%, 엽전으로 손보기(칸 셋 x 5단계),
+    /// 장비는 실제 Loot.Roll + Equipment.TryEquip 로 굴린다(드롭 35%, 고리별 등급 표). 날마다 품계·장비·손보기가 다음 날 싸움에 들어간다.
+    /// 한계: 보스는 맺힘 ÷ 초당 피해 모델이라 실제 3~4분보다 훨씬 짧게 나온다(약점 창·꿇은 동안 기다림 같은 연출 시간이 없음) → 보스는 PC 봇 몫.
+    /// </summary>
+    static int Act1Table(int runs, string[] args)
+    {
+        double eff = Env("CURVE_EFF", 0.8), nightMin = Env("NIGHT_MIN", 22);
+        int days = (int)Env("D1", 12), ringSwitch = (int)Env("RING2_DAY", 7);   // 7일째부터 검은여울(고리 2)
+        Environment.SetEnvironmentVariable("RANK_STR", Env("RANK_STR", 0.07).ToString(System.Globalization.CultureInfo.InvariantCulture));
+        A2CoinMult = Env("A2_COIN", Balance.RING_COIN_SHARE);
+        var ring = new Dictionary<int, double[]> { {1, new[]{1.0,1.0,1.0,0.05}}, {2, new[]{1.2,1.15,1.25,0.10}} };
+        MixMote = 20; MixWail = 15; MixBuried = 10; A2NumPct = 0; A2OrePct = 0; A3WaterPct = A3MujeokPct = 0;
+        int gearSeeds = (int)Env("GEAR_SEEDS", 400);
+        // 1차: 장비 없이 하루 처결 수를 어림 → 장비 궤적 → 2차에서 장비를 넣어 다시 잰다
+        double[] kills = new double[days]; for (int d = 0; d < days; d++) kills[d] = Env("KILLS0", 85);
+        double[] gDmg = new double[days + 1], gDef = new double[days + 1], gDrops = new double[days], gRareDrops = new double[days];
+        double tally = 0; int enh = 0; int[] slotLv = new int[5]; int spent = 0; double coinPool = 0;
+        var rows = new List<string>();
+        for (int pass = 0; pass < 3; pass++)
+        {
+            GearTrajectory(days, ringSwitch, kills, gearSeeds, gDmg, gDef, gDrops, gRareDrops);
+            tally = 0; enh = 0; slotLv = new int[5]; spent = 0; coinPool = 0; rows.Clear();
+            double potCoin = 0;
+            for (int d = 0; d < days; d++)
+            {
+                int rg = d + 1 < ringSwitch ? 1 : 2; var R = ring[rg];
+                int rank = GrowthState.RankFor((int)tally);
+                ForceRank = rank; Act2 = true; A2StartNeok = 0; A2StartEnh = enh; A2B08 = false;
+                A2Maed = R[0] / (1 + Math.Min(gDmg[d], Balance.CAP_DAMAGE_PCT)); A2Dmg = R[1] * (1 - Math.Min(gDef[d], Balance.CAP_DEFENSE_PCT)); A2Reward = R[2]; A2Lump = R[3];
+                A2BossMaed = (int)Balance.BOSS_S1_MAEDHIM; A2BossDmg = (int)Balance.BOSS_S1_DAMAGE;
+                PotionsUsed = 0; var L = RunMany(Strat.Adaptive, runs);
+                double min = 0, cnt = 0, dmg = 0, sv = 0, coin = 0; foreach (var r in L) { min += r.Seconds / 60; cnt += r.Tendo + r.Pahon; dmg += r.Damage; sv += r.Died ? 0 : 1; coin += r.Coin; }
+                double spm = cnt / min, dpm = dmg / min, cpm = coin / min, potPerNight = (double)PotionsUsed / (L.Count * Nights);
+                double dayKills = spm * nightMin * eff, dayCoin = cpm * nightMin * eff, dayTally = dayKills * Balance.TENDO_NEOK * R[2];
+                kills[d] = dayKills;
+                // 낮: 쓴 회복약 값을 먼저 빼고(밤마다 쓴 만큼 15엽전, 처음 두 개는 당할미가 줌), 남은 엽전으로 손보기
+                double potBuy = Math.Max(0, potPerNight - Balance.FIRST_NIGHT_HEAL) * Balance.SHOP_HEAL_PRICE; potCoin += potBuy;
+                coinPool += dayCoin - potBuy;
+                int enhBefore = enh;
+                while (true)
+                {
+                    int nSlots = d + 1 >= ringSwitch ? 5 : 3, best = -1; for (int k = 0; k < nSlots; k++) if (slotLv[k] < Balance.ENHANCE_MAX && (best < 0 || slotLv[k] < slotLv[best])) best = k;
+                    int cost = best < 0 ? 0 : EnhCostAt(slotLv[best]);
+                    if (best < 0 || coinPool < cost) break;
+                    coinPool -= cost; slotLv[best]++; enh++;
+                }
+                rows.Add("| " + (d + 1) + " | " + rg + " | " + rank + " | " + ((int)tally) + " | " + dayKills.ToString("0") + " | " + spm.ToString("0.00") + " | " + dpm.ToString("0.0") + " | " + (sv / L.Count).ToString("0.00") + " | " + dayCoin.ToString("0") + " | " + potPerNight.ToString("0.0") + " | " + enh + " (+" + (enh - enhBefore) + ") | " + coinPool.ToString("0") + " | " + (gDmg[d] * 100).ToString("0.0") + "% | " + (gDef[d] * 100).ToString("0.0") + "% | " + gDrops[d].ToString("0.0") + " |");
+                tally += dayTally;
+                if (d + 1 == ringSwitch - 1 || d + 1 == days) tally += 2 * (Balance.TENDO_NEOK * 5) * 1.0;   // 고리마다 보스 둘(보스 천도 넋 50, 처결 셈도 같은 값)
+            }
+        }
+        Console.WriteLine("1막 균형(--act1): 섞기(상황), 하루 밤 " + nightMin + "분 x 효율 " + eff + ", 하루 " + runs + "판 x 밤 3. 힘 품계당 +" + (Env("RANK_STR", 0.07) * 100) + "%, 엽전 몫 " + A2CoinMult + ", 장비 시드 " + gearSeeds);
+        Console.WriteLine("| 날 | 고리 | 품계(시작) | 처결 셈(시작) | 하루 처결 | 분당 처결 | 분당 피해 | 생존 | 하루 엽전 | 밤당 약 마심 | 손보기 단계 | 남은 엽전 | 장비 피해 | 장비 방어 | 하루 드롭 |");
+        Console.WriteLine("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|");
+        foreach (var r in rows) Console.WriteLine(r);
+        Console.WriteLine("1막 끝 처결 셈 " + ((int)tally) + " → 품계 " + GrowthState.RankFor((int)tally) + ", 손보기 " + enh + "단계");
+        ForceRank = 0; Act2 = false; A2Maed = A2Dmg = A2Reward = 1; A2Lump = -1; MixMote = MixWail = MixBuried = 0;
+        return 0;
+    }
+
+    static double DropOverride = Env("DROP", Balance.DROP_CHANCE);
+    static int EnhCostAt(int lv) { int[] c = { Balance.ENHANCE_COST_1, Balance.ENHANCE_COST_2, Balance.ENHANCE_COST_3, Balance.ENHANCE_COST_4, Balance.ENHANCE_COST_5 }; return (int)Math.Round(c[Math.Min(lv, 4)] * Env("ENH_K", 1)); }
+
+    /// <summary>실제 드롭 규칙(Loot.Roll)과 자리 규칙(Equipment.TryEquip)으로 12일 동안의 장비 피해·방어 평균을 구한다. d일째 "시작" 값이 [d]</summary>
+    static void GearTrajectory(int days, int ringSwitch, double[] kills, int seeds, double[] dmgOut, double[] defOut, double[] dropsOut, double[] rareOut)
+    {
+        var dsum = new double[days + 1]; var fsum = new double[days + 1]; Array.Clear(dropsOut, 0, dropsOut.Length); Array.Clear(rareOut, 0, rareOut.Length);
+        for (int sd = 0; sd < seeds; sd++)
+        {
+            var rng = new Random(7000 + sd); Func<float> rnd = () => (float)rng.NextDouble();
+            var eq = new Equipment();
+            for (int d = 0; d < days; d++)
+            {
+                var st = eq.Stats(); dsum[d] += st.DamagePct; fsum[d] += st.DefensePct;
+                int ringNo = d + 1 < ringSwitch ? 1 : 2; eq.FirstRingBossDone = d + 1 >= ringSwitch;
+                int n = (int)Math.Round(kills[d]); int got = 0, rare = 0;
+                for (int i = 0; i < n; i++) { if (rng.NextDouble() >= DropOverride) continue; bool first = true; Func<float> rnd2 = () => { if (first) { first = false; return 0f; } return rnd(); }; var it = Loot.Roll(rnd2, false, ringNo, eq.DropKinds()); if (it == null) continue; got++; if (it.Rarity == Rarity.Rare) rare++; eq.TryEquip(it); }
+                dropsOut[d] += (double)got / seeds; rareOut[d] += (double)rare / seeds;
+            }
+            var s2 = eq.Stats(); dsum[days] += s2.DamagePct; fsum[days] += s2.DefensePct;
+        }
+        for (int d = 0; d <= days; d++) { dmgOut[d] = dsum[d] / seeds; defOut[d] = fsum[d] / seeds; }
+    }
+
     static double Max(double[] a) { double m = a[0]; foreach (var x in a) if (x > m) m = x; return m; }
 
     static double Avg(List<RunResult> L, Func<RunResult, double> f) { double s = 0; foreach (var r in L) s += f(r); return s / L.Count; }
@@ -453,7 +542,7 @@ static class Sim
         int enhSteps = 0, stainPts = 0, pahonCnt = 0; var slotLv = new int[3]; int spent = 0; double coinAcc = 0;
         if (Act2) { led.Neok = A2StartNeok; enhSteps = A2StartEnh; for (int k = 0; k < A2StartEnh; k++) slotLv[k % 3]++; spent = 0; }   // 1막을 마친 차사로 시작
         // 지금 공격력: 품계가 오르면 능력치 5점을 전부 힘에(+1%/점), 손보기 한 단계 = 주옵션 +6%(=피해 약 +0.33%)
-        Func<double> dps = () => !Growth ? BaseDps : BaseDps * (1 + GrowthStr(RankOf(led.Neok))) * (1 + Balance.ENHANCE_PCT * MainOptDmg * enhSteps);
+        Func<double> dps = () => !Growth ? BaseDps : BaseDps * (1 + GrowthStr(ForceRank > 0 ? ForceRank : RankOf(led.Neok))) * (1 + Balance.ENHANCE_PCT * MainOptDmg * enhSteps);
         for (int night = 0; night < Nights && hp > 0; night++)
         {
             double t = 0, lastTendoAt = -99, sinceHit = 99; int sentTonight = 0; res.QuotaSeconds[night] = double.NaN;
@@ -596,5 +685,6 @@ static class Sim
     static double GrowthStr(int rank) { return Env("RANK_STR", 0.05) * Math.Max(0, rank - 1); }   // 품계당 힘 5점 x 1%
 
     static void Hit(ref double hp, ref double sinceHit, ref RunResult res, double dmg) { hp -= dmg; res.Damage += dmg; }
-    static double Heal(double hp, ref int potions) { if (hp > 0 && hp <= 35 && potions > 0) { potions--; return Math.Min(Balance.PLAYER_MAX_HP, hp + 40); } return hp; }
+    static int ForceRank = 0, PotionsUsed = 0;   // --act1 표 전용: 처결 셈으로 정한 품계를 강제로 쓰고, 회복약을 몇 번 마셨는지 센다
+    static double Heal(double hp, ref int potions) { if (hp > 0 && hp <= 35 && potions > 0) { potions--; PotionsUsed++; return Math.Min(Balance.PLAYER_MAX_HP, hp + 40); } return hp; }
 }
