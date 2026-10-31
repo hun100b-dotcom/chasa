@@ -15,6 +15,7 @@
 // 모든 버튼은 눈에 보이는 크기보다 1.2배 넓게, 최소 96px(9mm) 로 눌린다.
 // =============================================================================
 using System;
+using Chasa.Core;
 using UnityEngine;
 
 public class TouchControls : MonoBehaviour
@@ -199,6 +200,8 @@ public class TouchControls : MonoBehaviour
             else if (b.id == "atk") { baseArt = Art("atk"); hotArt = Art("atk_hot"); hotGrow = 180f / 160f; artLabelBelow = true; }
             else if (b.id == "dodge") { baseArt = Art("dodge"); artLabelBelow = true; }
             else if (b.id.StartsWith("sk")) { baseArt = Art(dim ? "skill_ring_cool" : "skill_ring_ready"); }
+            else if (b.id == "q") { baseArt = Art(DosulIcons.QIcon(text)); artLabelBelow = true; }                                       // 무기별 Q 그림(없으면 옛 원)
+            else if (b.id == "use") { baseArt = Art(DosulIcons.UseIcon); hotArt = Art(DosulIcons.UseIconHot); hotGrow = 120f / 104f; artLabelBelow = true; }   // 상호작용(F) 손 그림
             if (baseArt != null)
             {
                 if ((pressed || touched) && hotArt != null) DrawArt(hotArt, rect, hotGrow, 1f);
@@ -216,15 +219,23 @@ public class TouchControls : MonoBehaviour
                 }
                 else if (b.id.StartsWith("sk"))
                 {
-                    // 기술 칸: 고리 안쪽에 기술 이름(도술 아이콘이 생기면 여기에 얹는다), 재사용 중이면 남은 초
-                    GUI.Label(rect, left > 0f ? Mathf.CeilToInt(left).ToString() : text, label);
+                    // 기술 칸: 고리 안쪽 64/104 자리에 도술 그림. 그림이 없는 도술(패시브 등)은 갈래 쪽지, 그것도 없으면 옛처럼 이름 글자.
+                    // 재사용 중이면 그림을 어둡게 한 위에 남은 초를 얹는다
+                    var ic = SkillArt(text);
+                    if (ic != null)
+                    {
+                        float inner = rect.width * 64f / 104f;
+                        DrawArt(ic, new Rect(rect.center.x - inner / 2f, rect.center.y - inner / 2f, inner, inner), 1f, dim ? 0.45f : 1f);
+                        if (left > 0f) GUI.Label(rect, Mathf.CeilToInt(left).ToString(), label);
+                    }
+                    else GUI.Label(rect, left > 0f ? Mathf.CeilToInt(left).ToString() : text, label);
                 }
                 else if (artLabelBelow)
                 {
                     // 그림은 위쪽 78% 에 모았고 글자("공격"·"피하기")는 아래 22% 에 — 색약·처음 쓰는 사람도 글자로 읽는다(접근성 결정)
                     var lr = new Rect(rect.x, rect.y + rect.height * 0.70f, rect.width, rect.height * 0.24f);
                     label.fontSize = Mathf.Max(11, Mathf.RoundToInt(b.visual * 0.24f));
-                    GUI.Label(lr, text, label);
+                    GUI.Label(lr, b.id == "q" && left > 0f ? Mathf.CeilToInt(left).ToString() : text, label);   // Q 는 재사용 중 남은 초
                 }
             }
             else
@@ -264,12 +275,21 @@ public class TouchControls : MonoBehaviour
     // 개편 아트(Resources/Sprites/overhaul/btn). 그림이 없으면 null → 아래 OnGUI 가 옛 임시 원으로 대신 그린다(그림 없이도 게임은 돈다).
     // 왜 @2x 를 쓰나: 폰 화면은 촘촘해서 1배 그림을 늘리면 번진다. 이름만 바꾸면 붙게 한 곳에 모은다.
     readonly System.Collections.Generic.Dictionary<string, Texture2D> artCache = new System.Collections.Generic.Dictionary<string, Texture2D>();
-    Texture2D Art(string name)
+    Texture2D Art(string name, string folder = "btn")
     {
-        Texture2D t;
-        if (artCache.TryGetValue(name, out t)) return t;
-        t = SpriteLib.Texture("overhaul/btn/" + name + "@2x"); if (t == null) t = SpriteLib.Texture("overhaul/btn/" + name);
-        artCache[name] = t; return t;   // null 도 기억해 두어 매 프레임 찾지 않는다
+        Texture2D t; string key = folder + "/" + name;
+        if (artCache.TryGetValue(key, out t)) return t;
+        t = SpriteLib.Texture("overhaul/" + key + "@2x"); if (t == null) t = SpriteLib.Texture("overhaul/" + key);
+        artCache[key] = t; return t;   // null 도 기억해 두어 매 프레임 찾지 않는다
+    }
+
+    /// <summary>도술 이름 → 도술 그림. 표에 없으면(패시브 등) 그 도술의 갈래 쪽지, 그것도 없으면 null</summary>
+    Texture2D SkillArt(string skillName)
+    {
+        string id = DosulIcons.SkillIcon(skillName); Texture2D t = id != null ? Art(id, "skill") : null;
+        if (t != null) return t;
+        var n = SkillTree.Find(skillName);
+        return n != null ? Art(DosulIcons.BranchIcon(n.Branch), "skill") : null;
     }
 
     /// <summary>그림을 원 버튼 자리에 그린다. grow = 겉 빛 그림처럼 원보다 커진 비율(예 96→112 면 1.1667)</summary>
