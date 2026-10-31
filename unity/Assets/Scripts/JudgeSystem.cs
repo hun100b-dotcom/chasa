@@ -174,7 +174,7 @@ public class JudgeSystem : MonoBehaviour
         if (cam == null) return false;
         var list = new List<Enemy>(); KneelCandidates(null, list);
         if (list.Count < 2) return false;   // 고를 것이 없으면 탭을 가로채지 않는다
-        float s = Screen.height / 1080f, maxD = Balance.KNEEL_TAP_RADIUS_PX * s, bestD = maxD; Enemy best = null;
+        float s = TouchControls.Scale(), maxD = Balance.KNEEL_TAP_RADIUS_PX * s, bestD = maxD; Enemy best = null;
         foreach (var e in list)
         {
             var sp = cam.WorldToScreenPoint(e.Pos + Vector3.up * 1.0f);   // 몸 가운데쯤
@@ -2644,7 +2644,7 @@ public class JudgeSystem : MonoBehaviour
             artBs.normal.textColor = Color.white; artBs.fontSize = 18; artBs.alignment = TextAnchor.LowerCenter;
             // 폰 천도·파혼(기획 §5, 개편 P1-5): 공격 버튼 둘레 바깥 한 줄에 같은 크기(지름 136)로 둔다. 도술을 누르던 엄지가 한 칸 나가면 닿는다.
             // 예전엔 화면 아래 가운데라 오른 엄지가 공격에서 손을 떼야 닿았다. 무릎 꿇은 혼이 가까울 때만 나타난다
-            float bs1 = Screen.height / 1080f, bd = TouchControls.JudgeDiameter * bs1;
+            float bs1 = TouchControls.Scale(), bd = TouchControls.JudgeDiameter * bs1;
             Vector2 acn = TouchControls.AttackCenter();
             var cT = acn + TouchControls.TendoOff * bs1; var cP = acn + TouchControls.PahonOff * bs1;
             var rT = new Rect(cT.x - bd * 0.5f, cT.y - bd * 0.5f, bd, bd);

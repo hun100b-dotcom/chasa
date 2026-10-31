@@ -706,6 +706,13 @@ public class UiRoot : MonoBehaviour
         // 시계 고리는 미니맵 바로 아래(화면 px → 패널 단위로 환산: 패널은 1280×720 기준, 가로·세로 비율을 절반씩 섞는다)
         float refW = Ko.TouchUI ? 960f : 1280f, refH = Ko.TouchUI ? 540f : 720f; float pscale = Mathf.Sqrt((Screen.width / refW) * (Screen.height / refH));
         if (questBox != null) questBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + ringSize + U(16);   // 명세: 지역명(시계 고리) 아래 16px
+        if (questBox != null && Ko.TouchUI)
+        {
+            // 폰: 미니맵이 화면 높이에 비해 커서 퀘스트 칸이 천도·도술 버튼 자리까지 밀려 내려온다(PC 확인 2026-10-31).
+            // 버튼이 없는 왼쪽, 물약 버튼 아래로 옮긴다(가로 폰에서 330 은 물약 버튼과 겹쳐 440)
+            float sPx = Screen.height / 1080f / Mathf.Max(0.1f, pscale);
+            questBox.style.right = StyleKeyword.Auto; questBox.style.left = 24f * sPx; questBox.style.top = 440f * sPx;
+        }
         if (ringBox != null) { ringBox.style.top = MiniMap.BottomPx / Mathf.Max(0.1f, pscale) + 4f; ringBox.style.right = Mathf.Max(10f, 24f * Screen.height / 1080f) / Mathf.Max(0.1f, pscale); }
         skillBar.style.display = slotBar != null && !Ko.TouchUI ? DisplayStyle.None : DisplayStyle.Flex;   // 새 8칸 스킬바가 있으면 옛 줄은 폰에서만
         RefreshGuide(); RefreshBossArea();
