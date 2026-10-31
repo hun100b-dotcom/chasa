@@ -87,7 +87,7 @@ public partial class CharacterPanel
         box.Add(tabs);
         var body = new ScrollView(ScrollViewMode.Vertical); body.style.flexGrow = 1; body.style.marginTop = 8;
         if (tab == 3) BuildBook(body, txt, hi, bm, 0); else if (tab == 6) BuildBook(body, txt, hi, bm, 1); else if (tab == 7) BuildEquip(body, txt, hi); else if (tab == 5) BuildSeals(body, txt, hi, bm); else BuildHeard(body, txt, bm);
-        box.Add(body);
+        NoShrink(body.contentContainer); box.Add(body);   // 세로 책: 줄이 많아도 서로 겹쳐 눌리지 않고 스크롤로 넘치게(도술 탭 확인 장면에서 갈래가 겹쳐 보였다)
         view.Add(box);
     }
 
@@ -229,4 +229,7 @@ public partial class CharacterPanel
             p.Add(row);
         }
     }
+
+    /// <summary>스크롤 안 줄들이 칸이 모자라다고 찌그러져 겹치지 않게, 아래 모든 칸의 줄어듦을 끈다</summary>
+    static void NoShrink(VisualElement e) { foreach (var c in e.Children()) { c.style.flexShrink = 0; NoShrink(c); } }
 }
