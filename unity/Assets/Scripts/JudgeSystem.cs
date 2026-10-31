@@ -36,6 +36,7 @@ public class JudgeSystem : MonoBehaviour
     readonly List<Vector3> cluePos = new List<Vector3>();   // 아직 안 주운 단서 위치
     readonly List<GameObject> clueViews = new List<GameObject>();
     float castT, castTotal, chainLeft;
+    readonly ChainLink chainLink = new ChainLink(); Vector3 chainFrom;   // 연속 천도 사슬선(개편 P0-2): 방금 처결한 자리 → 다음 혼
     bool castGrit;   // castGrit: 이번 시전에서 오래된 혼의 '한 대 버팀'을 이미 썼나
     /// <summary>약점 점(깃발·옷·횃불)을 낚아챈 보스 번호. 그 보스는 천도 시전 -0.5초(하한 0.5), 파혼 엽전 x1.2 (기획 감사 보강)</summary>
     public readonly System.Collections.Generic.HashSet<int> snatched = new System.Collections.Generic.HashSet<int>();
@@ -206,6 +207,7 @@ public class JudgeSystem : MonoBehaviour
         if (OnJudged != null) OnJudged(e, false);
         NojatNote(e.Pos);   // 밤 파혼 자리는 다음 낮 '흩어진 노잣돈'이 된다
         lastPahonAt = Time.time;   // 깨진 이름 던지기가 '방금 파혼'을 알아본다
+        chainFrom = at;
         chainLeft = Mathf.Max(chainLeft, lo.stats.ChainWindow + lo.Def.ChainWindowAddS);   // FK1(기획): 파혼 뒤 5초 안 천도는 연속 0.8초 — 파혼으로 눕힌 혼들을 곧바로 보내는 손
         if (e.soul.Name == "박돌쇠") pahonOrTendo = 2;
         if (interactables != null) interactables.OnPahon(e.soul.Name);   // 이름혼의 유품은 재가 된다
@@ -550,6 +552,7 @@ public class JudgeSystem : MonoBehaviour
         if (castTarget.soul.Name == "곽 뱃꾼" && clueBook.Add("B01-D4")) Say("단서 — 곽 뱃꾼의 기억");   // 밤 대체 단서(서사 확정): 천도해야만 얻는다
         string fact; var ml = memories.Collect(castTarget.soul, out fact);
         if (ml != null) { memLine = ml; memLineT = 5f; if (fact != null && Demo.DebugUi) ui?.Hud.Toasts.Add("추리판 " + fact + " 켜짐"); }
+        chainFrom = tp;
         chainLeft = lo.stats.ChainWindow + lo.Def.ChainWindowAddS;   // 젖은 소매가 있으면 창이 길다
         feel.AddShake(0.15f);
         Sfx.Play("sfx.tendo.done." + Sfx.WeaponTag(lo.weapon));
@@ -1269,6 +1272,7 @@ public class JudgeSystem : MonoBehaviour
         float toShrine = new Vector2(player.Pos.x, player.Pos.z).magnitude;
         if (clock == null && night.QuotaDone && night.TryReturn(toShrine)) Say("귀환했다!");   // 필드엔 강제 귀환이 없다
         chainLeft = Mathf.Max(0f, chainLeft - dt);
+        TickChainLink();
         Enemy.CastVisionLimited = Casting;   // 천도 시전 중 시야 밖 적의 예고를 늘린다
         Sfx.NightNow = clock != null && clock.Phase == ClockPhase.Night;
         if (clock != null) Sfx.PhaseNow = (int)clock.Phase;
@@ -2020,6 +2024,7 @@ public class JudgeSystem : MonoBehaviour
     void FillBossArea(HudState h)
     {
         h.BossName = null;
+        h.PahonReady = FindKneeling() != null; h.TendoReady = FindKneeling(x => CanTendoNow(x)) != null;   // E·R 칸 켜짐(개편 P0-3). 천도는 단서·덩어리 규칙까지 본다
         h.CastRatio = Casting ? Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)) : -1f;   // 시전 막대·짧은 한마디는 UiRoot 가 그린다(예전 IMGUI 는 ui 가 없을 때만)
         h.SayText = toastT > 0f ? toast : null;
         // 고정 자막 넷도 UiRoot 가 그린다(말풍선만 월드 좌표라 IMGUI 에 남는다)
@@ -2050,6 +2055,21 @@ public class JudgeSystem : MonoBehaviour
         if (areaT >= 0f && !cuts.Active) { areaT += Time.unscaledDeltaTime; if (areaT > 3.5f) areaT = -1f; }   // 나타남 0.5 + 유지 2 + 사라짐 1
         h.AreaText = areaT >= 0f ? lastArea : null;
         h.AreaAlpha = areaT < 0f ? 0f : Mathf.Min(areaT / 0.5f, (3.5f - areaT) / 1f, 1f);
+    }
+
+    void OnDestroy() { chainLink.Destroy(); }
+
+    /// <summary>
+    /// 연속 천도 사슬선(개편 P0-2): 창이 열려 있고 이어서 보낼 혼이 있으면 '방금 처결한 자리 → 그 혼'에 사슬을 깐다.
+    /// 시전 중·창이 닫힌 뒤·보낼 혼이 없으면 숨긴다. 수치는 건드리지 않고 보이기만 한다
+    /// </summary>
+    void TickChainLink()
+    {
+        Enemy next = null;
+        if (chainLeft > 0f && !Casting)
+            next = enemies.NearestKneeling(chainFrom, 14f, x => CanTendoNow(x));   // 천도할 수 있는 무릎 혼만(덩어리는 사슬이 안 닿는다)
+        if (next == null) { chainLink.Hide(); return; }
+        chainLink.Show(chainFrom, next.Pos, chainLeft);
     }
 
     void GuideTick(HudState h)

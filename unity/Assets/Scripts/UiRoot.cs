@@ -76,12 +76,15 @@ public class UiRoot : MonoBehaviour
             var pr = Img("hud_portrait_frame", U(88), U(88)); pr.style.position = Position.Absolute; pr.style.left = 0; pr.style.top = 0;
             pf.Add(pc); pf.Add(pr); head.Add(pf);
             var col = new VisualElement { pickingMode = PickingMode.Ignore }; col.style.marginLeft = U(8); col.style.justifyContent = Justify.Center; head.Add(col);
-            var bar = Img("hud_hp_frame", U(288), U(26)); bar.name = "vitals";
-            hpFullW = U(280);
-            var ghost = Img("hud_hp_fill_loss", hpFullW, U(18)); ghost.style.position = Position.Absolute; ghost.style.left = U(4); ghost.style.top = U(4);
+            // 개편 P0-3: 새 한 벌(overhaul/hud/vital_*: 틀 320×24, 채움 312×16 이 (4,4))이 있으면 그것으로, 없으면 옛 그림으로
+            bool newVital = OTex("hud/vital_frame") != null && OTex("hud/vital_fill") != null && OTex("hud/vital_ghost") != null;
+            float vfw = newVital ? 312f : 280f, vfh = newVital ? 16f : 18f;
+            var bar = newVital ? OImg("hud/vital_frame", U(320), U(24)) : Img("hud_hp_frame", U(288), U(26)); bar.name = "vitals";
+            hpFullW = U(vfw);
+            var ghost = newVital ? OImg("hud/vital_ghost", hpFullW, U(vfh)) : Img("hud_hp_fill_loss", hpFullW, U(vfh)); ghost.style.position = Position.Absolute; ghost.style.left = U(4); ghost.style.top = U(4);
             vitalClip = new VisualElement { pickingMode = PickingMode.Ignore };
-            vitalClip.style.position = Position.Absolute; vitalClip.style.left = U(4); vitalClip.style.top = U(4); vitalClip.style.height = U(18); vitalClip.style.width = hpFullW; vitalClip.style.overflow = Overflow.Hidden;
-            vitalFillImg = Img("hud_hp_fill", hpFullW, U(18));
+            vitalClip.style.position = Position.Absolute; vitalClip.style.left = U(4); vitalClip.style.top = U(4); vitalClip.style.height = U(vfh); vitalClip.style.width = hpFullW; vitalClip.style.overflow = Overflow.Hidden;
+            vitalFillImg = newVital ? OImg("hud/vital_fill", hpFullW, U(vfh)) : Img("hud_hp_fill", hpFullW, U(vfh));
             vitalClip.Add(vitalFillImg); bar.Add(ghost); bar.Add(vitalClip);
             col.Add(bar);
             vital = Line(col, 15); vital.style.marginTop = 4;
@@ -104,6 +107,22 @@ public class UiRoot : MonoBehaviour
 
     // ---- 아트팀 UI 그림(Resources/Sprites/ui). 없으면 null 이라 부르는 쪽이 옛 색 도형으로 대신 그린다(그림 없이도 돈다)
     static Texture2D UiTex(string n) { return SpriteLib.Texture("ui/" + n); }
+    // 개편 아트 한 벌(Resources/Sprites/overhaul/...). 없으면 null
+    static Texture2D OTex(string n) { return SpriteLib.Texture("overhaul/" + n); }
+    static void SetOImg(VisualElement v, string n) { var t = OTex(n); if (t != null) v.style.backgroundImage = Background.FromTexture2D(t); }
+    static VisualElement OImg(string n, float w, float h) { var v = new VisualElement { pickingMode = PickingMode.Ignore }; v.style.width = w; v.style.height = h; SetOImg(v, n); return v; }
+    /// <summary>틀 안쪽 (4,4) 에 놓는 잘림 상자: 폭을 줄이면 안의 그림이 찌그러지지 않고 잘려 보인다</summary>
+    static VisualElement OClip(float w, float h)
+    {
+        var v = new VisualElement { pickingMode = PickingMode.Ignore };
+        v.style.position = Position.Absolute; v.style.left = U(4); v.style.top = U(4); v.style.width = w; v.style.height = h; v.style.overflow = Overflow.Hidden;
+        return v;
+    }
+    // 보스 맺힘 줄(개편): 채움 상자·잔상 상자·깨진 줄·금 10장
+    VisualElement bossFillClip, bossGhostClip, bossBroken; VisualElement[] bossCrack; float bossGhostRatio = 1f; int bossCrackStage = -1;
+    /// <summary>남은 맺힘 비율 → 금 단계(0 없음 / 1: 66% 이하 / 2: 33% 이하 / 3: 10% 이하). 개편안 §4 의 기준 그대로</summary>
+    public static int CrackStage(float ratio) { return CoreRules.GyeolCrackStage(ratio); }
+
     static void SetImg(VisualElement v, string n) { var t = UiTex(n); if (t != null) v.style.backgroundImage = Background.FromTexture2D(t); }
     static VisualElement Img(string n, float w, float h)
     {
@@ -342,7 +361,30 @@ public class UiRoot : MonoBehaviour
         frame.style.borderTopWidth = 2; frame.style.borderBottomWidth = 2; frame.style.borderLeftWidth = 2; frame.style.borderRightWidth = 2;
         var bc = new Color(0.78f, 0.66f, 0.45f); frame.style.borderTopColor = bc; frame.style.borderBottomColor = bc; frame.style.borderLeftColor = bc; frame.style.borderRightColor = bc;
         bossFill = new VisualElement { pickingMode = PickingMode.Ignore }; bossFill.style.height = Length.Percent(100); bossFill.style.backgroundColor = new Color(0.72f, 0.16f, 0.14f);
-        frame.Add(bossFill); bossBox.Add(frame); root.Add(bossBox);
+        frame.Add(bossFill);
+        // 개편 P0-2(보스 맺힘 금): 아트 틀·채움·금 그림이 다 있으면 그림으로 바꾼다. 없으면 위의 색 막대가 그대로 돈다(그림 없이도 돈다)
+        if (OTex("gyeol/boss_gyeol_row_frame") != null && OTex("gyeol/boss_gyeol_row_fill") != null && OTex("gyeol/gyeol_crack_stage1_L") != null)
+        {
+            frame.Clear(); bossFill = null;
+            frame.style.backgroundColor = Color.clear;
+            frame.style.borderTopWidth = 0; frame.style.borderBottomWidth = 0; frame.style.borderLeftWidth = 0; frame.style.borderRightWidth = 0;
+            frame.style.width = U(960); frame.style.height = U(28);
+            SetOImg(frame, "gyeol/boss_gyeol_row_frame");
+            // 줄어든 자리 잔상(한지색): 채움보다 천천히 따라 내려온다 → 방금 얼마나 깎였는지 보인다
+            bossGhostClip = OClip(U(952), U(20)); bossGhostClip.Add(OImg("gyeol/boss_gyeol_row_ghost", U(952), U(20))); frame.Add(bossGhostClip);
+            bossFillClip = OClip(U(952), U(20)); bossFillClip.Add(OImg("gyeol/boss_gyeol_row_fill", U(952), U(20))); frame.Add(bossFillClip);
+            // 맺힘 0(무릎 꿇음): 채움 대신 금 간 빈 줄
+            bossBroken = OImg("gyeol/boss_gyeol_row_broken", U(952), U(20)); bossBroken.style.position = Position.Absolute; bossBroken.style.left = U(4); bossBroken.style.top = U(4); bossBroken.style.display = DisplayStyle.None; frame.Add(bossBroken);
+            // 금: 아트는 96×22(일반 혼 막대 크기)라서 960×28 막대에는 10장을 이어 붙여 덮는다(가로는 그대로 96, 세로만 막대 높이에 맞춤)
+            bossCrack = new VisualElement[10];
+            for (int i = 0; i < bossCrack.Length; i++)
+            {
+                var c = new VisualElement { pickingMode = PickingMode.Ignore };
+                c.style.position = Position.Absolute; c.style.left = U(96) * i; c.style.top = 0; c.style.width = U(96); c.style.height = U(28);
+                c.style.display = DisplayStyle.None; frame.Add(c); bossCrack[i] = c;
+            }
+        }
+        bossBox.Add(frame); root.Add(bossBox);
         areaBox = new VisualElement { name = "area", pickingMode = PickingMode.Ignore };
         areaBox.style.position = Position.Absolute; areaBox.style.left = 0; areaBox.style.right = 0; areaBox.style.top = U(180);
         areaBox.style.alignItems = Align.Center; areaBox.style.display = DisplayStyle.None;
@@ -380,9 +422,34 @@ public class UiRoot : MonoBehaviour
         bool quest = Hud.QuestTitle != null; questBox.style.display = quest ? DisplayStyle.Flex : DisplayStyle.None;
         if (quest) { string qk = Hud.QuestTitle + "|" + string.Join("|", Hud.QuestLines ?? new string[0]); if (qk != lastQuest) { lastQuest = qk; questTitle.text = Hud.QuestTitle; questBody.text = string.Join("\n", Hud.QuestLines ?? new string[0]); } }
         bool boss = Hud.BossName != null; bossBox.style.display = boss ? DisplayStyle.Flex : DisplayStyle.None;
-        if (boss) { bossName.text = Hud.BossName + (Hud.BossKneel ? "  — 무릎 꿇음" : ""); bossFill.style.width = Length.Percent(Mathf.Clamp01(Hud.BossRatio) * 100f); }
+        if (boss) { bossName.text = Hud.BossName + (Hud.BossKneel ? "  — 무릎 꿇음" : ""); RefreshBossBar(); }
         bool area = Hud.AreaText != null && Hud.AreaAlpha > 0.01f; areaBox.style.display = area ? DisplayStyle.Flex : DisplayStyle.None;
         if (area) { areaLabel.text = Hud.AreaText; areaSub.text = Hud.ClockLabel ?? ""; areaBox.style.opacity = Hud.AreaAlpha; }
+    }
+
+    /// <summary>보스 맺힘 줄 갱신. 숫자 대신 '금'이 간다: 66%·33%·10% 이하에서 한 단계씩 금이 늘고, 0 이면 금 간 빈 줄이 된다</summary>
+    void RefreshBossBar()
+    {
+        float r = Mathf.Clamp01(Hud.BossRatio);
+        if (bossFillClip == null) { bossFill.style.width = Length.Percent(r * 100f); return; }   // 그림이 없으면 옛 색 막대
+        bossFillClip.style.width = U(952) * r;
+        // 잔상: 줄어들면 천천히(초당 40%) 따라 내려온다. 채워지면 즉시 맞춘다
+        bossGhostRatio = r >= bossGhostRatio ? r : Mathf.Max(r, bossGhostRatio - 0.4f * Time.unscaledDeltaTime);
+        bossGhostClip.style.width = U(952) * bossGhostRatio;
+        bool broken = r <= 0f;
+        bossFillClip.style.display = broken ? DisplayStyle.None : DisplayStyle.Flex;
+        bossBroken.style.display = broken ? DisplayStyle.Flex : DisplayStyle.None;
+        int st = broken ? 0 : CrackStage(r);   // 깨진 줄은 자기 그림에 금이 이미 있어 덧그리지 않는다
+        if (st != bossCrackStage)
+        {
+            bossCrackStage = st;
+            var t = st > 0 ? OTex("gyeol/gyeol_crack_stage" + st + "_L") : null;
+            foreach (var c in bossCrack)
+            {
+                c.style.display = t != null ? DisplayStyle.Flex : DisplayStyle.None;
+                if (t != null) c.style.backgroundImage = Background.FromTexture2D(t);
+            }
+        }
     }
 
     void BuildGuide()
@@ -481,6 +548,7 @@ public class UiRoot : MonoBehaviour
 
     // ---- 스킬바 8칸(기획 표준 v1.1): [Q 견인][1][2][3][4][E 천도][R 파혼][H 회복약], 칸 64px·간격 8px·아래 40px ------------
     const int BarN = 8;
+    bool newSlots; VisualElement[] bHot = new VisualElement[BarN]; string[] bBg = new string[BarN];   // 개편 칸 그림을 썼나 / 천도·파혼 겉 빛 / 칸마다 지금 깔린 바탕 이름(바뀔 때만 갈아 끼운다)
     VisualElement[] bSlot = new VisualElement[BarN], bIcon = new VisualElement[BarN], bShade = new VisualElement[BarN]; Label[] bKey = new Label[BarN], bTxt = new Label[BarN], bSec = new Label[BarN];
     VisualElement[] bPips = new VisualElement[0]; float pullMax = 1f; VisualElement bPipRow; Label bWeapon;
     static readonly string[] BarKeys = { "Q", "1", "2", "3", "4", "E", "R", "H" };
@@ -501,18 +569,40 @@ public class UiRoot : MonoBehaviour
         var sp = Line(bPipRow, 14); sp.text = "Space 피하기"; sp.style.marginLeft = 8; sp.style.opacity = 0.8f;
         slotBar.Add(bPipRow);
         var row = new VisualElement { pickingMode = PickingMode.Ignore }; row.style.flexDirection = FlexDirection.Row; slotBar.Add(row);
+        // 개편 P0-3: 기술·천도·파혼 칸이 한 덩어리 먹판(plate_cluster, 9조각 24) 위에 놓인다. 칸 크기는 전부 80²(천도·파혼도 같다 = 한쪽이 기본값처럼 안 보이게)
+        newSlots = OTex("hud/slot_skill_ready") != null && OTex("hud/slot_skill_empty") != null && OTex("hud/slot_skill_cool") != null
+                && OTex("hud/slot_tendo_on") != null && OTex("hud/slot_tendo_off") != null && OTex("hud/slot_pahon_on") != null && OTex("hud/slot_pahon_off") != null;
+        if (newSlots && OTex("hud/plate_cluster") != null)
+        {
+            row.style.backgroundImage = Background.FromTexture2D(OTex("hud/plate_cluster"));
+            row.style.unitySliceLeft = 24; row.style.unitySliceRight = 24; row.style.unitySliceTop = 24; row.style.unitySliceBottom = 24;
+            row.style.paddingLeft = U(14); row.style.paddingRight = U(14); row.style.paddingTop = U(10); row.style.paddingBottom = U(10);
+        }
+        float slotW = newSlots ? 80f : 72f, icoOff = 8f, icoW = newSlots ? 64f : 56f;
         for (int i = 0; i < BarN; i++)
         {
-            var b = Img("hud_slot_normal", U(72), U(72)); b.style.marginLeft = U(4); b.style.marginRight = U(4);   // 그림자 4px 포함 72 → 칸 64 + 간격 8
-            var ic = new VisualElement { pickingMode = PickingMode.Ignore }; ic.style.position = Position.Absolute; ic.style.left = U(8); ic.style.top = U(8); ic.style.width = U(56); ic.style.height = U(56);
+            var b = newSlots ? OImg("hud/slot_skill_ready", U(slotW), U(slotW)) : Img("hud_slot_normal", U(72), U(72)); b.style.marginLeft = U(4); b.style.marginRight = U(4);   // 옛 그림은 그림자 4px 포함 72 → 칸 64 + 간격 8
+            var ic = new VisualElement { pickingMode = PickingMode.Ignore }; ic.style.position = Position.Absolute; ic.style.left = U(icoOff); ic.style.top = U(icoOff); ic.style.width = U(icoW); ic.style.height = U(icoW);
             var shade = new VisualElement { pickingMode = PickingMode.Ignore };   // 쿨타임 어둠 판: 아래에서부터 남은 비율만큼 덮는다
             shade.style.position = Position.Absolute; shade.style.left = U(4); shade.style.right = U(8); shade.style.bottom = U(8); shade.style.height = 0; shade.style.backgroundColor = new Color(0f, 0f, 0.03f, 0.62f);
             var key = Line(b, 14); key.text = BarKeys[i]; key.style.position = Position.Absolute; key.style.left = U(8); key.style.top = U(4);
             var txt = Line(b, 17); txt.text = BarNames[i]; txt.style.position = Position.Absolute; txt.style.left = 0; txt.style.right = U(4); txt.style.top = U(24); txt.style.unityTextAlign = TextAnchor.MiddleCenter;
             var sec = Line(b, 20); sec.style.position = Position.Absolute; sec.style.left = 0; sec.style.right = U(4); sec.style.top = U(22); sec.style.unityTextAlign = TextAnchor.MiddleCenter;
             b.Insert(0, ic); b.Insert(1, shade);
+            if (newSlots && (i == 5 || i == 6))   // 천도·파혼 칸은 누르는 순간 겉으로 8px 번지는 빛(_hot 96²)을 가진다. 평소엔 숨김
+            {
+                var hot = OImg(i == 5 ? "hud/slot_tendo_hot" : "hud/slot_pahon_hot", U(96), U(96)); hot.style.position = Position.Absolute; hot.style.left = -U(8); hot.style.top = -U(8); hot.style.display = DisplayStyle.None;
+                b.Insert(0, hot); bHot[i] = hot;
+            }
             row.Add(b); bSlot[i] = b; bIcon[i] = ic; bShade[i] = shade; bKey[i] = key; bTxt[i] = txt; bSec[i] = sec;
         }
+    }
+
+    /// <summary>칸 바탕 그림 갈아 끼우기(같으면 건드리지 않는다)</summary>
+    void SetBg(int i, string name)
+    {
+        if (bBg[i] == name) return;
+        bBg[i] = name; SetOImg(bSlot[i], "hud/" + name);
     }
 
     void SetSlot(int i, bool enabled, float cd, float sec, string iconName)
@@ -541,6 +631,18 @@ public class UiRoot : MonoBehaviour
         }
         SetSlot(5, true, 0f, 0f, null); SetSlot(6, true, 0f, 0f, null);
         SetSlot(7, Hud.Heal > 0, 0f, 0f, null); bTxt[7].text = "약 " + Hud.Heal;
+        if (newSlots)
+        {
+            // 칸 바탕: 기술은 쓸 수 있음/빈 칸(점선)/재사용 대기, 천도·파혼은 켜짐/꺼짐(처결할 혼이 없을 때). 꺼진 칸도 자리·크기는 그대로
+            SetBg(0, Hud.PullCd > 0.05f ? "slot_skill_cool" : "slot_skill_ready");
+            for (int i = 0; i < 4; i++) { var sv = Hud.Slots[i]; SetBg(1 + i, sv.Name == null ? "slot_skill_empty" : sv.Cd > 0f ? "slot_skill_cool" : "slot_skill_ready"); bSlot[1 + i].style.opacity = 1f; }
+            bSlot[0].style.opacity = 1f;
+            SetBg(5, Hud.TendoReady || Hud.CastRatio >= 0f ? "slot_tendo_on" : "slot_tendo_off"); bSlot[5].style.opacity = 1f;
+            SetBg(6, Hud.PahonReady ? "slot_pahon_on" : "slot_pahon_off"); bSlot[6].style.opacity = 1f;
+            SetBg(7, Hud.Heal > 0 ? "slot_skill_ready" : "slot_skill_empty"); bSlot[7].style.opacity = 1f;
+            bHot[5].style.display = Hud.CastRatio >= 0f ? DisplayStyle.Flex : DisplayStyle.None;   // 천도 시전 중 겉 빛
+            bTxt[5].text = ""; bTxt[6].text = "";   // 천도·파혼 칸의 모양(▲·✕)은 그림이 말한다. E·R 글자는 왼쪽 위 키 글자
+        }
         bWeapon.text = "무기 " + Hud.WeaponName + " (Tab)";
         for (int i = 0; i < bPips.Length; i++) SetImg(bPips[i], Hud.DodgeCharges - i >= 0.999f ? "hud_dodge_pip_full" : "hud_dodge_pip_empty");
     }

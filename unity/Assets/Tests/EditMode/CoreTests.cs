@@ -2571,5 +2571,18 @@ public class CoreTests
         Assert.Greater(vEnd, 4f); Assert.Less(vEnd, 7f);                      // 끝도 달리기 속도로 이어진다(0 으로 멈추지 않는다)
     }
 
+    [Test]
+    public void GyeolCrackStage_단계경계()
+    {
+        Assert.AreEqual(0, CoreRules.GyeolCrackStage(1f));
+        Assert.AreEqual(0, CoreRules.GyeolCrackStage(0.67f));
+        Assert.AreEqual(1, CoreRules.GyeolCrackStage(0.66f));   // 66% 이하부터 1단계
+        Assert.AreEqual(1, CoreRules.GyeolCrackStage(0.34f));
+        Assert.AreEqual(2, CoreRules.GyeolCrackStage(0.33f));
+        Assert.AreEqual(2, CoreRules.GyeolCrackStage(0.11f));
+        Assert.AreEqual(3, CoreRules.GyeolCrackStage(0.10f));
+        Assert.AreEqual(3, CoreRules.GyeolCrackStage(0f));
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }
