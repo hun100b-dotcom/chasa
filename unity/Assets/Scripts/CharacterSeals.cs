@@ -89,26 +89,70 @@ public partial class CharacterPanel
             string fl = ItemTexts.Seal(SealEffects.Name(lo.sealBag[selBagSeal]));
             if (fl.Length > 0) VTxt(p, fl, 13, new Color(txt.r, txt.g, txt.b, 0.6f));
         }
-        // 4) 인 만들기: 서낭당 곁에서만
+        // 4) 인 조합표: 오방색(다섯 빛깔) 두 개를 짝지어 15종. 서낭당 밖에서도 볼 수 있고, 만들기는 서낭당 곁에서만 된다
         var gap2 = new VisualElement { pickingMode = PickingMode.Ignore }; gap2.style.height = 8; p.Add(gap2);
-        if (!atShrine) { VTxt(p, "인은 서낭당 곁에서 만든다", 14, txt); return; }
-        VTxt(p, "인 만들기 — 버튼을 0.6초 누르고 있는다", 18, txt, true);
-        foreach (var kind in CSeal.AllKinds(false))
+        BuildSealMatrix(p, lo, txt, hi, atShrine);
+    }
+
+    int selKind = -1;   // 조합표에서 고른 칸(0~14, 없으면 -1). 15종 = 빛깔 A<=B 쌍을 순서대로 센 번호
+
+    /// <summary>
+    /// 인 조합표(5x5 삼각형) + 고른 인의 설명/만들기.
+    /// 왜 표인가? 15종을 글자 줄로 늘어놓으면 "어느 빛깔 둘이 무슨 인이 되는지"가 한눈에 안 들어온다.
+    /// 행·열이 빛깔이라 짝이 곧 칸이고, 지금 넋으로 만들 수 있는 칸은 ● 표시로(색만 믿지 않게) 보여 준다.
+    /// </summary>
+    void BuildSealMatrix(VisualElement p, Loadout lo, Color txt, Color hi, bool atShrine)
+    {
+        var kinds = CSeal.AllKinds(false);   // 15종(작은 인 기준). 번호 = 줄 순서
+        int canMake = 0; foreach (var k0 in kinds) if (lo.wallet.CanAfford(k0)) canMake++;
+        VTxt(p, "인 조합표 — 칸을 누르면 설명이 나온다" + (atShrine ? "" : "  (만들기는 서낭당 곁에서)"), 18, txt, true);
+        VTxt(p, "● 지금 넋으로 만들 수 있다 (" + canMake + "/15)   ○ 넋이 모자란다", 13, new Color(txt.r, txt.g, txt.b, 0.7f));
+        // 5x5 표: 위 삼각형만(A<=B). 행=A, 열=B. 아래쪽은 같은 인이라 비운다
+        var grid = new VisualElement { pickingMode = PickingMode.Ignore }; grid.style.marginTop = 4; grid.style.marginBottom = 6;
+        var head = new VisualElement { pickingMode = PickingMode.Ignore }; head.style.flexDirection = FlexDirection.Row;
+        var corner = VTxt(head, "", 13, txt); corner.style.width = Length.Percent(12);
+        for (int j = 0; j < 5; j++) { var h = VTxt(head, ColorShort((SoulColor)j) + "(" + colorMark[j] + ")", 13, txt, true); h.style.width = Length.Percent(17.6f); h.style.unityTextAlign = TextAnchor.MiddleCenter; }
+        grid.Add(head);
+        int idx = 0;
+        for (int i = 0; i < 5; i++)
         {
-            var k = kind; var row = new VisualElement { pickingMode = PickingMode.Position }; row.style.flexDirection = FlexDirection.Row; row.style.flexWrap = Wrap.Wrap; row.style.alignItems = Align.Center;
-            var nm = VTxt(row, SealEffects.Name(k) + " (" + ColorShort(k.A) + (k.Mono ? "" : "+" + ColorShort(k.B)) + ")", 15, txt); nm.style.width = 170;
-            foreach (bool large in new[] { false, true })
+            var row = new VisualElement { pickingMode = PickingMode.Position }; row.style.flexDirection = FlexDirection.Row; row.style.alignItems = Align.Center;
+            var rh = VTxt(row, ColorShort((SoulColor)i) + "(" + colorMark[i] + ")", 13, txt, true); rh.style.width = Length.Percent(12);
+            for (int j = 0; j < 5; j++)
             {
-                var s2 = new CSeal(k.A, k.B, large); bool ok = lo.wallet.CanAfford(s2);
-                string need = ok ? "" : " 모자람";
-                string label = (large ? "큰 인 " : "작은 인 ") + (k.Mono ? ColorShort(k.A) + " " + s2.TotalCost : ColorShort(k.A) + " " + s2.CostOf(k.A) + " · " + ColorShort(k.B) + " " + s2.CostOf(k.B)) + need;
-                var b = VTxt(row, label, 13, ok ? txt : new Color(txt.r, txt.g, txt.b, 0.45f)); b.pickingMode = PickingMode.Position; b.style.marginRight = 10; b.style.paddingLeft = 4; b.style.paddingRight = 4; b.style.paddingTop = 3; b.style.paddingBottom = 3;
-                b.style.backgroundColor = new Color(VInk.r, VInk.g, VInk.b, ok ? 0.14f : 0.05f);
-                string key = k.A + "-" + k.B + "-" + large; string baseText = label;
-                if (ok) b.RegisterCallback<PointerDownEvent>(e => { holdKey = key; holdT = 0f; holdLabel = b; holdText = baseText; holdA = k.A; holdB = k.B; holdLarge = large; });
+                if (j < i) { var blank = VTxt(row, "", 13, txt); blank.style.width = Length.Percent(17.6f); continue; }
+                int my = idx++; var sk = kinds[my]; bool ok = lo.wallet.CanAfford(sk);
+                string nm = SealEffects.Name(sk).Replace(" 인", "");   // 칸이 좁아 "인" 글자는 뺀다
+                var cell = VTxt(row, (ok ? "● " : "○ ") + nm, 13, ok ? txt : new Color(txt.r, txt.g, txt.b, 0.5f));
+                cell.pickingMode = PickingMode.Position; cell.style.width = Length.Percent(17.6f); cell.style.unityTextAlign = TextAnchor.MiddleCenter;
+                cell.style.paddingTop = 6; cell.style.paddingBottom = 6;   // 손가락으로 누를 칸 높이를 넉넉히(폰)
+                cell.style.backgroundColor = new Color(VInk.r, VInk.g, VInk.b, selKind == my ? 0.30f : (ok ? 0.12f : 0.05f));
+                if (selKind == my) cell.style.borderBottomWidth = cell.style.borderTopWidth = cell.style.borderLeftWidth = cell.style.borderRightWidth = 2;   // 고른 칸은 테두리로도 표시
+                cell.style.borderBottomColor = cell.style.borderTopColor = cell.style.borderLeftColor = cell.style.borderRightColor = hi;
+                int pick = my; cell.RegisterCallback<ClickEvent>(e => { selKind = selKind == pick ? -1 : pick; Sfx.Play("sfx.ui.tab"); viewDirty = true; });
             }
-            p.Add(row);
+            grid.Add(row);
         }
+        p.Add(grid);
+        // 고른 인의 설명과 만들기(작은 인 / 큰 인)
+        if (selKind < 0 || selKind >= kinds.Count) { VTxt(p, "칸을 눌러 효과와 드는 넋을 본다", 14, txt); return; }
+        var k = kinds[selKind];
+        VTxt(p, SealLabel(k) + " — " + SealEffects.Describe(k) + " (큰 인은 효과 2배)", 15, txt, true);
+        string fl = ItemTexts.Seal(SealEffects.Name(k)); if (fl.Length > 0) VTxt(p, fl, 13, new Color(txt.r, txt.g, txt.b, 0.6f));
+        if (!atShrine) { VTxt(p, "인은 서낭당 곁에서 만든다 — 버튼을 0.6초 누르고 있는다", 14, txt); }
+        var brow = new VisualElement { pickingMode = PickingMode.Position }; brow.style.flexDirection = FlexDirection.Row; brow.style.flexWrap = Wrap.Wrap;
+        foreach (bool large in new[] { false, true })
+        {
+            var s2 = new CSeal(k.A, k.B, large); bool ok = lo.wallet.CanAfford(s2);
+            string cost = k.Mono ? ColorShort(k.A) + " " + s2.TotalCost : ColorShort(k.A) + " " + s2.CostOf(k.A) + " · " + ColorShort(k.B) + " " + s2.CostOf(k.B);
+            string label = (large ? "큰 인 " : "작은 인 ") + cost + (ok ? "" : " 모자람");
+            bool live = ok && atShrine;   // 만들 수 있는 때: 넋이 있고 서낭당 곁일 때
+            var b = VTxt(brow, label, 14, live ? txt : new Color(txt.r, txt.g, txt.b, 0.45f)); b.pickingMode = PickingMode.Position; b.style.marginRight = 10; b.style.paddingLeft = 6; b.style.paddingRight = 6; b.style.paddingTop = 8; b.style.paddingBottom = 8;
+            b.style.backgroundColor = new Color(VInk.r, VInk.g, VInk.b, live ? 0.18f : 0.05f);
+            string key = k.A + "-" + k.B + "-" + large; string baseText = label; var ka = k.A; var kb = k.B; bool lg = large;
+            if (live) b.RegisterCallback<PointerDownEvent>(e => { holdKey = key; holdT = 0f; holdLabel = b; holdText = baseText; holdA = ka; holdB = kb; holdLarge = lg; });
+        }
+        p.Add(brow);
     }
 
     SoulColor holdA, holdB; bool holdLarge;
