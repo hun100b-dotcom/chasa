@@ -170,7 +170,8 @@ def clips():
 def attach(arm, w):
     """무기 w(Chain·Mace·Bell·Trident·Brush)를 Hand.R 뼈 머리 위치에 소켓 회전(SOCKET_ROT_X)으로 붙이고 오브젝트를 돌려준다."""
     import weapons
-    fn = {"Chain": weapons.chain, "Mace": weapons.bangmang, "Bell": weapons.yoryeong, "Trident": weapons.samjichang, "Brush": weapons.myeongbu}[w]
+    import blade_weapons
+    fn = {"Chain": weapons.chain, "Mace": weapons.bangmang, "Bell": weapons.yoryeong, "Trident": weapons.samjichang, "Brush": weapons.myeongbu, "Sword": blade_weapons.hwando, "Glaive": blade_weapons.wolgeom}[w]
     import bpy
     from lib3d import join
     o = join("wpn_" + w, fn())
