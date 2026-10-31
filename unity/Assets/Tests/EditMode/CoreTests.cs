@@ -2499,6 +2499,15 @@ public class CoreTests
     }
 
     [Test]
+    public void GameSettings_클릭이동과_숫자보이기는_기본_꺼짐이고_저장_왕복한다()
+    {
+        var d = new GameSettings(); Assert.IsFalse(d.ClickMove); Assert.IsFalse(d.ShowNumbers);   // 개편 P0-4·5 기본값
+        var on = GameSettings.Parse(new GameSettings { ClickMove = true, ShowNumbers = true }.Serialize());
+        Assert.IsTrue(on.ClickMove); Assert.IsTrue(on.ShowNumbers);
+        var old = GameSettings.Parse("1,0.8,1,1,1"); Assert.IsTrue(old.ReduceFlash); Assert.IsFalse(old.ClickMove, "옛 5칸 저장은 새 칸이 꺼짐");
+    }
+
+    [Test]
     public void GameSettings_번쩍임_줄이기_저장_왕복과_옛_4칸_호환()
     {
         var on = GameSettings.Parse(new GameSettings { ReduceFlash = true }.Serialize()); Assert.IsTrue(on.ReduceFlash);

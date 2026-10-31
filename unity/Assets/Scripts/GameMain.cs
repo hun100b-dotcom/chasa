@@ -473,24 +473,46 @@ public class GameMain : MonoBehaviour
             bool over = !MiniMap.BigOpen && !CharacterPanel.Open && !SettingsPanel.Open && enemies.Pick(hray, Ground(hray), Config.ENEMY_PICK_RADIUS * 1.3f) != null;
             CursorFx.Set(over ? CursorFx.Kind.Attack : CursorFx.Kind.Default);
         }
-        if (Input.GetKeyDown(KeyCode.Q)) { if (player.loadout.Def.HasQuake) player.CommandQuake(); else if (player.loadout.Def.HasPull) SkillPull(mouse); else if (player.loadout.Def.HasCall) player.CommandCall(); else if (player.loadout.Def.HasFence) player.CommandFence(); else if (player.loadout.Def.HasInkName) player.CommandInkName(Ground(cam.ScreenPointToRay(mouse))); }   // Q: 철삭=견인 / 육모방망이=땅울림 / 그 외 무기는 없음
+        if (Input.GetKeyDown(KeyCode.Q)) UseQ(mouse);   // Q: 철삭=끌기 / 육모방망이=땅울림 / 그 외 무기 고유 기술
         if (Input.GetKeyDown(KeyCode.Space)) SkillDodge(mouse); // Space: 피하기(구르기). 휘두르기는 마우스 클릭으로 충분하다(기획 타격감 분석)
-        if (Input.GetMouseButtonDown(1) && !OverTouchButtons(mouse)) SkillSwing(mouse);   // 우클릭: 커서 방향으로 그 자리에서 즉시 공격(명세 v1.2). 견인은 Q 만
+        // 개편 P0-4: 오른쪽 클릭 = 끌기(Q 와 같은 기술). 이동(WASD)과 공격·끌기(마우스)를 두 손으로 나누려는 것
+        if (Input.GetMouseButtonDown(1) && !OverTouchButtons(mouse)) UseQ(mouse);
 
         if (Input.GetMouseButtonDown(0) && !OverTouchButtons(mouse))
         {
             var ray = cam.ScreenPointToRay(mouse);
             var ground = Ground(ray);
-            var e = enemies.Pick(ray, ground, Config.ENEMY_PICK_RADIUS * 1.3f);   // 클릭 판정 1.3배(명세 §3-3)
-            if (e != null) player.CommandAttack(e);
-            else if (ground.HasValue) { player.CommandMove(ground.Value); marker.Show(ground.Value); holdingMove = true; }
+            if (!SaveStore.Settings.ClickMove && !Ko.TouchUI)
+            {
+                // 기본(WASD 이동): 왼쪽 클릭은 걷지 않고 커서 방향으로 공격만 한다. 적 위를 눌렀으면 그 적 쪽으로 겨눈다
+                var te = enemies.Pick(ray, ground, Config.ENEMY_PICK_RADIUS * 1.3f);
+                SkillSwing(te != null ? cam.WorldToScreenPoint(te.HeadPosition) : mouse);
+            }
+            else
+            {
+                var e = enemies.Pick(ray, ground, Config.ENEMY_PICK_RADIUS * 1.3f);   // 클릭 판정 1.3배(명세 §3-3)
+                if (e != null) player.CommandAttack(e);
+                else if (ground.HasValue) { player.CommandMove(ground.Value); marker.Show(ground.Value); holdingMove = true; }
+            }
         }
         if (Input.GetMouseButtonUp(0)) holdingMove = false;
-        if (holdingMove && Input.GetMouseButton(0)) // 누른 채 움직이면 마우스를 따라 걷기
+        if (holdingMove && Input.GetMouseButton(0)) // (클릭 이동을 켰을 때) 누른 채 움직이면 마우스를 따라 걷기
         {
             var g = Ground(cam.ScreenPointToRay(mouse));
             if (g.HasValue) player.CommandMove(g.Value);
         }
+    }
+
+    /// <summary>Q·오른쪽 클릭: 무기마다 하나뿐인 고유 기술. 없는 무기는 커서 방향 즉시 공격(예전 오른쪽 클릭 동작)</summary>
+    void UseQ(Vector3 mouse)
+    {
+        var d = player.loadout.Def;
+        if (d.HasQuake) player.CommandQuake();
+        else if (d.HasPull) SkillPull(mouse);
+        else if (d.HasCall) player.CommandCall();
+        else if (d.HasFence) player.CommandFence();
+        else if (d.HasInkName) player.CommandInkName(Ground(cam.ScreenPointToRay(mouse)));
+        else SkillSwing(mouse);
     }
 
     void SkillPull(Vector3 screen)
