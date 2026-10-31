@@ -1314,6 +1314,8 @@ public class JudgeSystem : MonoBehaviour
             return;
         }
         TickCutscenes(dt);
+        firstHit.Tick(realDt, (clock == null || openingStarted) && !cuts.Active);   // 조작권을 받은 시간만 센다(컷·낮 화면·창이 열린 동안은 위에서 이미 돌아갔다)
+        TickLinePull(realDt);
         if (clock == null) night.Tick(dt);     // 옛 방식: 밤 타이머. 필드에선 시한이 없다(시계가 흐를 뿐)
         else TickClock(dt);
         TickClues();
@@ -2212,11 +2214,43 @@ public class JudgeSystem : MonoBehaviour
     public FieldCamps camps;   // 필드 모드에서만 있다
     Vector3? moveRef;      // 처음 선 자리(걷기 안내 판단용)
     SoulMarkers soulMarkers;
+
+    // ── 개편 P2 '30초 안 첫 타격' 실측 ──────────────────────────────────────────
+    public readonly FirstHitTimer firstHit = new FirstHitTimer();
+    /// <summary>내 타격이 처음 맞았을 때 GameMain 이 부른다. 처음 한 번만 로그를 남긴다(PC 숨김 창에서 [실측] 줄을 읽는다)</summary>
+    public void NoteHit()
+    {
+        if (!firstHit.OnHit()) return;
+        Debug.Log("[실측] 첫 타격 " + firstHit.HitAt.ToString("0.0") + "초 (목표 " + Balance.FIRST_HIT_GOAL_SEC + "초 → " + (firstHit.WithinGoal(Balance.FIRST_HIT_GOAL_SEC) ? "통과" : "초과") + ")");
+    }
+
+    // ── 개편 P1-3 잔여: 보스 맺힘 한 줄이 깨질 때 카메라 당김 ───────────────────
+    public float LinePullT;         // 0 = 꺼짐, 그 밖엔 지나간 시간(초)
+    public Vector3 LinePullPos;     // 당길 보스 자리
+    /// <summary>깨진 줄이 있는 보스를 찾아 짧은 당김을 시작한다. 컷신·천도 캐스팅 중엔 카메라를 건드리지 않는다</summary>
+    void TickLinePull(float realDt)
+    {
+        foreach (var b in enemies.list)
+        {
+            if (b == null || !b.soul.Boss) continue;
+            if (b.soul.TakeLineBreaks() > 0 && !cuts.Active && !Casting) { LinePullT = 0.001f; LinePullPos = b.Pos; }   // 한 번에 두 줄이 깨져도 당김은 한 번
+        }
+        if (LinePullT > 0f)
+        {
+            LinePullT += Mathf.Min(0.05f, realDt);   // 진짜 시간으로 센다(히트스톱에 늘어지지 않게)
+            if (LinePullT >= Balance.BOSS_LINE_PULL_SEC) LinePullT = 0f;
+        }
+    }
+    /// <summary>카메라 당김 세기 0~1 (등장 카메라와 같은 부드러운 곡선: 처음·끝은 0 이라 화면이 튀지 않는다)</summary>
+    public float LinePullWeight { get { return LinePullT > 0f && !cuts.Active ? CoreRules.RevealWeight(LinePullT, Balance.BOSS_LINE_PULL_SEC) : 0f; } }
+
     void LateUpdate()
     {
         if (!inDay)
         {
             if (soulMarkers == null) soulMarkers = new SoulMarkers(null);
+            // 지금 ▲·✕가 겨누는 혼의 발밑 고리를 굵게 한다(꿇은 혼이 하나뿐이어도 그 혼이 대상)
+            soulMarkers.Aimed = Casting ? castTarget : FindKneeling();
             soulMarkers.Refresh(enemies.list);          // 발밑 시간 고리
         }
         else if (soulMarkers != null) soulMarkers.Refresh(new List<Enemy>());   // 낮에는 모두 끈다

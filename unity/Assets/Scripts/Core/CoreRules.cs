@@ -14,6 +14,16 @@ namespace Chasa.Core
         /// <summary>보스 맺힘 금 단계(개편안 §4): 남은 맺힘 66% 이하 1단계, 33% 이하 2단계, 10% 이하 3단계, 그 위는 0(금 없음). 화면 전용 규칙이라 수치 기둥과 무관</summary>
         public static int GyeolCrackStage(float ratio) { return ratio <= 0.10f ? 3 : ratio <= 0.33f ? 2 : ratio <= 0.66f ? 1 : 0; }
 
+        /// <summary>남은 맺힘 줄 수(개편 P2): 맺힘을 lines 개 줄로 나눠 올림으로 센다. 가득이면 lines, 1 이라도 남으면 1, 0 이면 0.
+        /// 예) 최대 900 · 3줄: 900→3, 600→2, 601→3(아직 첫 줄 안 깨짐), 300→1. 줄 경계는 66%·33% 로 화면의 금 단계와 같다</summary>
+        public static int LinesLeft(int maedhim, int max, int lines)
+        {
+            if (max <= 0 || lines <= 1) return maedhim > 0 ? 1 : 0;
+            if (maedhim <= 0) return 0;
+            if (maedhim >= max) return lines;
+            return (int)System.Math.Ceiling((double)maedhim * lines / max - 1e-9);
+        }
+
         /// <summary>파혼 반격(개편안 P1-2): 거센 혼이 기를 모으는 중에, 그 혼이 파혼 폭발 반경 안에 들면 공격이 끊긴다.
         /// 왜 규칙으로 떼나: '파혼이 지금은 정답'인 순간을 화면 코드가 아니라 테스트로 지키려는 것. 반경·피해 수치는 건드리지 않는다.
         /// <paramref name="blastToTarget"/> 폭발 중심에서 거센 혼까지 거리, <paramref name="radius"/> 폭발 반경, <paramref name="targetRadius"/> 거센 혼 몸 반경</summary>
