@@ -1546,6 +1546,16 @@ public class CoreTests
     }
 
     [Test]
+    public void Hints_EliteChargeTeachesPahonInterrupt_OnceOnly()
+    {
+        var h = new TutorialHints();
+        var pc = h.On(HintEvent.FirstEliteCharge, false);
+        StringAssert.Contains("파혼", pc);                                      // 파혼 반격을 알려 준다
+        Assert.IsNull(h.On(HintEvent.FirstEliteCharge, false));                // 한 번만
+        StringAssert.DoesNotContain("R", new TutorialHints().On(HintEvent.FirstEliteCharge, true));   // 폰 문구에는 키보드 글자가 없다
+    }
+
+    [Test]
     public void Hints_DisabledShowsNothing()
     {
         var h = new TutorialHints { Enabled = false };

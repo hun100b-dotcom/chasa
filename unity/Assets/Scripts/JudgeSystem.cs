@@ -95,6 +95,7 @@ public class JudgeSystem : MonoBehaviour
     }
 
     public bool Casting => castTarget != null;
+    bool tendoHeldPrev;   // 폰 ▲ 를 누르고 있었나(누름·뗌 순간을 잡으려고)
     public Enemy CastTarget => castTarget;          // 화면 후처리(천도 시야 축소)가 대상 자리·보스 여부를 본다
     public float TendoSuccessAt = -99f;             // 마지막 천도 성공 시각(Time.time). 파혼에는 안 찍는다 — 성공 테두리용
     public int BossOutcomeNow => bossOutcome;   // 자동 플레이 테스트(BotScript)가 보는 값: 0 아직 · 1 천도 · 2 파혼
@@ -2003,6 +2004,7 @@ public class JudgeSystem : MonoBehaviour
     public string memLine; public float memLineT;              // 지금 화면에 띄울 기억 줄(보랏빛 자막)
     public readonly TutorialHints hints = new TutorialHints();   // 처음 한 번만 뜨는 안내
     public void HintClue() { Hint(HintEvent.FirstClue); }
+    public void HintEliteCharge() { Hint(HintEvent.FirstEliteCharge); }   // 거센 혼이 처음 기를 모을 때(파혼 반격 안내)
 
     // ---- 처음 5분 안내 대기줄(기획 first-5-minutes.md): 행동을 하면 닫히고, 한 번에 하나만 뜬다 ----
     public readonly GuideQueue guide = new GuideQueue();
@@ -2543,16 +2545,28 @@ public class JudgeSystem : MonoBehaviour
             var artBs = new GUIStyle(bs);
             artBs.normal.background = null; artBs.hover.background = null; artBs.active.background = null; artBs.focused.background = null;
             artBs.normal.textColor = Color.white; artBs.fontSize = 18; artBs.alignment = TextAnchor.LowerCenter;
-            // 폰 천도·파혼(기획 §5): 하단 가운데 지름 120px 둘을 같은 크기로 나란히(중심에서 ±110px, 아래 64px). 무릎 꿇은 혼이 가까울 때만 나타난다
-            float bs1 = Screen.height / 1080f, bd = 120f * bs1;
-            var rT = new Rect(Screen.width * 0.5f - 110f * bs1 - bd * 0.5f, Screen.height - 64f * bs1 - bd, bd, bd);
-            var rP = new Rect(Screen.width * 0.5f + 110f * bs1 - bd * 0.5f, Screen.height - 64f * bs1 - bd, bd, bd);
+            // 폰 천도·파혼(기획 §5, 개편 P1-5): 공격 버튼 둘레 바깥 한 줄에 같은 크기(지름 136)로 둔다. 도술을 누르던 엄지가 한 칸 나가면 닿는다.
+            // 예전엔 화면 아래 가운데라 오른 엄지가 공격에서 손을 떼야 닿았다. 무릎 꿇은 혼이 가까울 때만 나타난다
+            float bs1 = Screen.height / 1080f, bd = TouchControls.JudgeDiameter * bs1;
+            Vector2 acn = TouchControls.AttackCenter();
+            var cT = acn + TouchControls.TendoOff * bs1; var cP = acn + TouchControls.PahonOff * bs1;
+            var rT = new Rect(cT.x - bd * 0.5f, cT.y - bd * 0.5f, bd, bd);
+            var rP = new Rect(cP.x - bd * 0.5f, cP.y - bd * 0.5f, bd, bd);
             bool showJudge = nearKneel || nearTendo || Casting;
             TouchControls.JudgeRects = showJudge ? new[] { rT, rP } : null;   // 조이스틱보다 먼저 눌리게 GameMain 에 알린다
             if (showJudge)
             {
             bool artT = DrawArt(rT, TouchHeld(rT) && nearTendo ? "ui_btn_cheondo_pressed" : "ui_btn_cheondo", nearTendo);
-            if (GUI.Button(rT, "천도", artT ? artBs : bs)) CommandTendo();
+            // 천도는 누르고 있기 = 시전, 떼면 취소(명세 §5). 혼은 꿇은 채 그대로 남는다(피하기로 끊는 것과 같다). 한 프레임에 한 번만 보려고 그리는 이벤트에서만 센다
+            GUI.Box(rT, "천도", artT ? artBs : bs);   // 그림(또는 글자 상자)만 그린다. 눌림은 아래에서 직접 판정
+
+            if (Event.current.type == EventType.Repaint)
+            {
+                bool held = TouchHeld(rT);   // 시전 중엔 혼이 '보내는 중'이라 nearTendo 가 꺼질 수 있어 뗌 판정에는 쓰지 않는다
+                if (held && !tendoHeldPrev && nearTendo) CommandTendo();
+                else if (!held && tendoHeldPrev && Casting) { castTarget.soul.CancelSending(); EndCast(); Say("천도를 멈췄다"); }
+                tendoHeldPrev = held;
+            }
             if (Casting && artT)   // 길게 누르기 고리: 천도 시전이 진행될수록 버튼 둘레 고리가 진해지며 커진다(원형 채움은 못 써서 투명도+크기로 대신)
             {
                 float cp = Mathf.Clamp01(castT / Mathf.Max(0.01f, castTotal)), rs2 = bd * (0.9f + 0.2f * cp);

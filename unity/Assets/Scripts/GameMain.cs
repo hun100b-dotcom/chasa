@@ -520,6 +520,37 @@ public class GameMain : MonoBehaviour
         else SkillSwing(mouse);
     }
 
+    /// <summary>
+    /// 폰 Q 버튼: 커서가 없으니 자동 조준한다(명세 §5-2). 끌기는 가장 가까운 적, 이름 쓰기는 '표식 3인 꿇은 혼 먼저, 없으면 표식 3인 가장 가까운 적'.
+    /// 왜 따로 만드나: UseQ 는 마우스 위치로 겨누지만 손가락 버튼은 겨눌 곳이 없다. 기술 자체(Command*)는 키보드와 같은 함수라 규칙이 갈라지지 않는다.
+    /// </summary>
+    void UseQTouch()
+    {
+        var d = player.loadout.Def;
+        if (d.HasQuake) player.CommandQuake();
+        else if (d.HasPull) { judge.guide.Complete("pull"); var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos + U.Dir(player.facing) * 4f); }
+        else if (d.HasCall) player.CommandCall();
+        else if (d.HasFence) player.CommandFence();
+        else if (d.HasInkName)
+        {
+            Enemy pick = null; float bd = float.MaxValue;
+            foreach (var e in enemies.list)
+            {
+                if (e == null || e.soul.Boss || e.nameWritten || e.ink < Balance.BRUSH_MARK_MAX || (!e.alive && !e.kneeling)) continue;
+                float dd = Vector3.Distance(e.Pos, player.Pos); if (dd > Balance.BRUSH_NAME_RANGE) continue;
+                if (e.kneeling) dd -= 1000f;   // 꿇은 혼 먼저(6m 에서 바로 ▲·✕ 가 뜨니 걸어가지 않아도 된다)
+                if (dd < bd) { bd = dd; pick = e; }
+            }
+            player.CommandInkName(pick != null ? (Vector3?)pick.Pos : null);
+        }
+        else
+        {
+            Enemy best = null; float bdist = 6f;
+            foreach (var e in enemies.list) { if (!e.alive || !e.Targetable) continue; float dd = Vector3.Distance(e.Pos, player.Pos); if (dd <= bdist) { bdist = dd; best = e; } }
+            player.CommandSwing(best != null ? best.Pos : player.Pos + U.Dir(player.facing));
+        }
+    }
+
     void SkillPull(Vector3 screen)
     {
         judge.guide.Complete("pull");
@@ -581,6 +612,10 @@ public class GameMain : MonoBehaviour
         tc.onSkill = i => judge.UseSkill(i);
         tc.onDodge = () => { judge.guide.Complete("dodge"); player.CommandDodge(null); };   // 걷던 방향으로(가운데면 앞쪽)
         tc.onPull = () => { judge.guide.Complete("pull"); var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); };
+        // 무기 기술 Q 버튼(개편 P1-5, 명세 §5): 키보드 Q 와 같은 기술을 자동 조준으로 쓴다. 글자·남은 대기는 무기마다 다르다
+        tc.qLabel = () => { var d = player.loadout.Def; return d.HasQuake ? "땅울림" : d.HasPull ? "끌기" : d.HasCall ? "부르기" : d.HasFence ? "꽂기" : d.HasInkName ? "이름" : "베기"; };
+        tc.qLeft = () => { var d = player.loadout.Def; return d.HasPull ? player.PullCooldown : (d.HasQuake || d.HasInkName) ? Mathf.Max(0f, player.loadout.quakeCd) : 0f; };
+        tc.onQ = UseQTouch;
         tc.onAttackHold = () =>   // 누르고 있으면 6m 안 가장 가까운 적을 자동 조준해 연속 공격
         {
             Enemy best = null; float bd = 6f;

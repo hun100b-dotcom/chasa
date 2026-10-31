@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Chasa.Core
 {
-    public enum HintEvent { FirstMove, FirstKneel, FirstHurt, FirstEdgeWarn, FirstNightfall, FirstClue }
+    public enum HintEvent { FirstMove, FirstKneel, FirstHurt, FirstEdgeWarn, FirstNightfall, FirstClue, FirstEliteCharge }
 
     public class TutorialHints
     {
@@ -23,11 +23,13 @@ namespace Chasa.Core
             switch (e)
             {
                 case HintEvent.FirstMove: return touch ? "왼쪽 화면을 끌어 걷기 · 공격 버튼으로 때리기" : "왼쪽 버튼을 누르고 있으면 걷는다 · 혼을 눌러 때리기";
-                case HintEvent.FirstKneel: return touch ? "혼이 무릎 꿇었다 — 천도(보내기)·파혼(깨뜨리기)" : "혼이 무릎 꿇었다 — E 천도(보내기) · R 파혼(깨뜨리기). 고리가 닫히기 전에";
+                case HintEvent.FirstKneel: return touch ? "혼이 무릎 꿇었다 — 천도(오래 누르기)·파혼(톡)" : "혼이 무릎 꿇었다 — E 천도(보내기) · R 파혼(깨뜨리기). 고리가 닫히기 전에";
                 case HintEvent.FirstHurt: return touch ? "붉게 차오르면 곧 때린다 — 피하기 버튼" : "붉게 차오르면 곧 때린다 — Space 피하기";
                 case HintEvent.FirstEdgeWarn: return "화면 가장자리 화살표 = 보이지 않는 혼이 오는 쪽";
                 case HintEvent.FirstNightfall: return "밤에는 서낭당에서 F 넋길로 멀리 간다";
                 case HintEvent.FirstClue: return "산 사람 곁에 가만히 서 있으면 말이 들린다 · 보스는 단서 3개로 천도";
+                // 개편 P1-4(처음 10분 7분): 거센 혼을 처음 만났을 때 '파혼이 지금 정답'인 순간을 한 줄로 알려 준다. 강제 장치 없이 글 한 줄뿐
+                case HintEvent.FirstEliteCharge: return touch ? "기를 모으는 중 곁의 꿇은 혼을 파혼하면 공격이 끊긴다" : "기를 모으는 중 곁의 꿇은 혼을 R 파혼하면 공격이 끊긴다";
                 default: return null;
             }
         }
