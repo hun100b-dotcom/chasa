@@ -9,6 +9,7 @@
 //   ?new=1&scene=tabScroll  도술 점수·배운 도술을 잔뜩 채우고 명부 도술 탭(세로 스크롤)을 연다
 //   ?new=1&scene=oldSave    옛 저장처럼 이미 열린 상태로 시작 — 시작 때 '열렸다' 알림이 한꺼번에 뜨면 안 된다
 //   ?new=1&scene=wolhwaWeak 월화 굿판의 엎어진 열두째 잔 곁으로 데려다 놓는다 — 청록 구슬이 보이고 사슬로 잡으면 월화가 3초 멈추는지(맺힘 피해 ×1.5)
+//   ?new=1&scene=seals      인 탭을 바로 연다 — 5×5 조합표가 폰 세로에서 한 줄에 들어가는지
 //   ?new=1&scene=reveal     시작 5초 뒤에 도술 나무·인 탭이 새로 열린다 — 알림 두 줄이 한 번씩 뜨는지
 // =============================================================================
 using Chasa.Core;
@@ -74,6 +75,10 @@ public partial class JudgeSystem
             case "tabscroll":
                 if (sceneDone) return;
                 sceneDone = true; PreviewUnlockAll(); panel.PreviewOpen(6);
+                break;
+            case "seals":
+                if (sceneDone) return;
+                sceneDone = true; PreviewUnlockAll(); panel.PreviewOpen(5);   // 인 탭을 바로 연다(인 5×5 조합표 확인)
                 break;
             case "reveal":
                 if (sceneDone || sceneT < 5f) return;

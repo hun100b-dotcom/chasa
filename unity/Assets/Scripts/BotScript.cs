@@ -32,7 +32,7 @@ public class BotScript : MonoBehaviour
     float lastProgressT, lastMoveCheckT; Vector3 lastMovePos; float goalSince; int unstucks;
     int lastScore = -1; ClockPhase lastPhase = (ClockPhase)(-1); string lastCut = "";
     float cutStartT;
-    bool reported, bossSeen, bossTold, noClueWarned; int bossFightT0;
+    bool reported, bossSeen, bossTold, noClueWarned; int bossFightT0; float bossGameT0 = -1f; bool bossKneelLogged, bossEndLogged;   // 보스전 실측(게임 시계 기준)
     readonly List<KeyValuePair<Vector3, string>> pend = new List<KeyValuePair<Vector3, string>>();
     readonly HashSet<string> warnedClue = new HashSet<string>(); readonly Dictionary<string, float> clueNearT = new Dictionary<string, float>();
     readonly List<string> issues = new List<string>();
@@ -109,6 +109,7 @@ public class BotScript : MonoBehaviour
         clk.Speed = (night ? 1f : speed);   // 낮 대기는 빨리, 밤 싸움은 실제 속도
         if (judge.Casting) { player.CommandStop(); return; }   // 천도 시전 중엔 가만히
         var boss = FindBoss();
+        if (boss == null && bossGameT0 >= 0f && !bossEndLogged) { bossEndLogged = true; Debug.Log("[실측] 보스전 전체 " + (judge.GameSeconds - bossGameT0).ToString("0") + "초 (게임 시계, 목표 180~240초)"); }
         if (boss != null && ClueCount() >= Balance.BOSS_CLUES_REQUIRED && TickBoss(boss)) return;
         if (ClueCount() >= Balance.BOSS_CLUES_REQUIRED && boss != null) { /* 보스로 */ }
         if (TickFight()) return;
@@ -135,12 +136,14 @@ public class BotScript : MonoBehaviour
         if (!bossSeen) { bossSeen = true; Log("보스 나루 영감에게 간다. 단서 " + ClueCount()); }
         if (boss.kneeling)
         {
+            if (bossGameT0 >= 0f && !bossKneelLogged) { bossKneelLogged = true; Debug.Log("[실측] 보스 맺힘 깎기 " + (judge.GameSeconds - bossGameT0).ToString("0") + "초 (게임 시계, 시작 후 꿇을 때까지)"); }
             if (judge.CanTendoNow(boss)) { if (d > Balance.JUDGE_RANGE * 0.8f) { player.CommandMove(boss.Pos); return true; } player.CommandStop(); judge.CommandTendo(); return true; }
             if (!bossTold) { bossTold = true; Issue("보스가 무릎 꿇었는데 천도할 수 없음(단서 " + ClueCount() + "/" + Balance.BOSS_CLUES_REQUIRED + " 또는 인 부족) → 파혼으로 마무리"); }
             if (d > 3f) { player.CommandMove(boss.Pos); return true; }
             player.CommandStop(); judge.CommandPahon(); return true;
         }
         if (d > 40f) { GoTo(boss.Pos, "보스"); return true; }
+        if (bossGameT0 < 0f) { bossGameT0 = judge.GameSeconds; Debug.Log("[실측] 보스전 시작(40m 안, 게임 시계 " + bossGameT0.ToString("0") + "초)"); }
         if (Time.time >= nextAttack) { player.CommandAttack(boss); nextAttack = Time.time + 0.45f; }
         return true;
     }
