@@ -1851,6 +1851,20 @@ public class CoreTests
         w.Tick(Balance.B03_WEAK_TIME + 0.1f); Assert.IsFalse(w.Open); Assert.AreEqual(Balance.B03_CLOSED_DMG_MULT, w.DamageMult);
     }
 
+    [Test] public void CupWeak_OpensForThreeSecondsMaxThreeTimesWithCooldown()
+    {
+        var w = new CupWeak();
+        Assert.IsTrue(w.CanGrab); Assert.AreEqual(1f, w.DamageMult);          // 처음엔 잡을 수 있고 피해는 평소
+        Assert.IsTrue(w.Grab()); Assert.IsTrue(w.Open); Assert.AreEqual(Balance.B02_WEAK_DMG_MULT, w.DamageMult);
+        Assert.IsFalse(w.Grab());                                              // 열려 있는 동안 또 잡아도 소용없다
+        w.Tick(Balance.B02_WEAK_TIME + 0.01f); Assert.IsFalse(w.Open); Assert.AreEqual(1f, w.DamageMult);
+        Assert.IsFalse(w.CanGrab);                                             // 닫힌 직후엔 식는 중
+        w.Tick(Balance.B02_WEAK_COOLDOWN + 0.01f); Assert.IsTrue(w.CanGrab);
+        for (int i = 1; i < Balance.B02_WEAK_MAX; i++) { Assert.IsTrue(w.Grab()); w.Tick(Balance.B02_WEAK_TIME + 0.01f); w.Tick(Balance.B02_WEAK_COOLDOWN + 0.01f); }
+        Assert.AreEqual(Balance.B02_WEAK_MAX, w.Uses);
+        Assert.IsFalse(w.CanGrab); Assert.IsFalse(w.Grab());                   // 한 전투에 최대 횟수까지만
+    }
+
     [Test] public void Growth_StartingKitAndBarToggleAndCooldowns()
     {
         var g = new GrowthState();

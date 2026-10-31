@@ -462,6 +462,10 @@ public static class Balance
     public const float B02_WAVE_GAP = 4.5f;  // (2호 보스 임시) 방울 한 번(파동)과 다음 파동 사이(초)
     public const int B02_CUPS_PER_WAVE = 3;  // (2호 보스 임시) 1국면: 한 번에 열리는 잔 수
     public const int B02_CUPS_PER_WAVE_P2 = 5;  // (2호 보스 임시) 2국면(맺힘 50% 이하): 한 번에 열리는 잔 수
+    public const float B02_WEAK_TIME = 3.0f;  // (기획 appendix-E B-02 약점·임시) 월화: 엎어진 열두째 잔을 사슬로 세우면 굿이 멈추고 서 있는 시간(초). 이 동안 새 파동은 시작하지 않는다
+    public const float B02_WEAK_DMG_MULT = 1.5f;  // (기획 appendix-E B-02 약점·임시) 월화가 굿을 멈추고 서 있는 동안 받는 맺힘 피해 배율
+    public const int B02_WEAK_MAX = 3;  // (기획 appendix-E B-02 약점) 한 전투에서 잔을 세울 수 있는 횟수
+    public const float B02_WEAK_COOLDOWN = 6.0f;  // (임시) 월화 약점이 닫힌 뒤 열두째 잔이 다시 잡힐 때까지(초). 사슬을 연달아 던져 약점을 계속 여는 것을 막는다
     public const float B03_CELL_M = 2.0f;  // (2호 보스 임시) 서 의원 번호 칸 한 칸 한 변(m). 5×5 = 10m 마당
     public const int B03_WEAK_STREAK = 3;  // (2호 보스 임시) 연속으로 이만큼 피하면 약장 서랍이 열려 약점이 드러난다(서사: 낙인 세 번)
     public const float B03_WEAK_DMG_MULT = 1.5f;  // (2호 보스 임시) 약점이 열렸을 때 보스가 받는 피해 배율
