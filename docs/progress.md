@@ -1628,3 +1628,7 @@
 - 다리 밑 서낭 소리는 B-11 천도 뒤에만. `Sfx.PhaseNow`(0새벽 1낮 2저녁 3밤) 새로 생김.
 - `Act1Soundscape`: 음원마다 `AudioLowPassFilter`, 물안개(4 m) 안에서 2.5 kHz 로 1초에 걸쳐 먹먹, 안개 소리 자신은 제외.
 - PC 확인: 아랫마을 낮 소리가 솔고개보다 바쁜가, 광부촌 사람 소리가 멀게 들리나, 물안개 덩이(96,470) 안팎 먹먹함, 소리 개수 부담.
+
+## 2026-10-31 [아트] 개편 HUD·맺힘 금·처결 표식·예고 장판
+- 새 도구 tools/art3d/overhaul_{lib,ui,tele,tele_check}.py, 그림 assets3d/ui/overhaul/ (+ Unity Resources/Sprites/overhaul/). 설명 OVERHAUL-ART.md.
+- 천도·파혼 칸 밝기 차 0.05%, 예고 장판 흑백·색약 확인판 통과. Unity 실기·피격 자세 앞모습 측정은 미완.
