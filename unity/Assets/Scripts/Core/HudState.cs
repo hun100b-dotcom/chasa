@@ -93,6 +93,17 @@ namespace Chasa.Core
             return sb.ToString();
         }
 
+        /// <summary>퀘스트 추적 줄(개편 P1): 좌상단 '천도·단서' 줄을 지운 대신, 우상 퀘스트 칸이 몫과 단서 수를 맡는다.
+        /// 숫자 규칙을 화면 코드에서 떼어 두어야 테스트로 지킬 수 있다(몫을 채우면 \"채움\"으로, 단서가 모자라면 n/N 으로).</summary>
+        public static string[] QuestLinesFor(int sent, int quota, int clues, int cluesNeeded, bool bossDone)
+        {
+            var q = new System.Collections.Generic.List<string>();
+            q.Add("천도 " + System.Math.Min(sent, quota) + "/" + quota + (sent >= quota ? " 채움" : ""));   // 몫을 넘겨 보내도 분자는 몫에서 멈춘다
+            if (cluesNeeded > 0) q.Add("단서 " + System.Math.Min(clues, cluesNeeded) + "/" + cluesNeeded);
+            if (bossDone) q.Add("나루 영감 끝");
+            return q.ToArray();
+        }
+
         /// <summary>안내 한 줄 (키 설명)</summary>
         public static string KeyHint() { return "E: 천도(넋을 보냄)   R: 파혼(넋을 깸)"; }
     }

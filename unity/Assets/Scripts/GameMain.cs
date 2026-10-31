@@ -252,6 +252,7 @@ public class GameMain : MonoBehaviour
         if (groundArt) lines.SetActive(false);        // 그림 지형이 깔렸으면 임시 격자선은 끈다
     }
 
+    float crowdPull;   // 무리가 모였을 때 카메라가 물러난 정도(0~CAMERA_CROWD_PULLBACK)
     void UpdateCamera(float dt)
     {
         float k = 1f - Mathf.Exp(-Config.CAMERA_FOLLOW_SMOOTHNESS * dt); // 프레임레이트와 무관한 부드러운 추적
@@ -276,7 +277,11 @@ public class GameMain : MonoBehaviour
         focus = Vector3.Lerp(focus, goal, k);
         // 줌(타격 펀치·천도 캐스팅)은 직교에선 화면 크기, 원근에선 카메라 거리로 만든다
         wheelCut = Mathf.Lerp(wheelCut, judge.cuts.CamZoom, 1f - Mathf.Exp(-4f * dt));   // 컷신 확대 배율도 부드럽게
-        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
+        // 개편 P1-3: 싸우는 혼이 셋 이상 모이면 살짝 물러나 둘러싸임이 보이게 한다(천도 시전 줌 +9% 와는 서로 상쇄 — 시전 중 시야 60% 규칙은 그대로)
+        int crowd = 0;
+        foreach (var en in judge.enemies.list) if (en != null && en.alive && !en.passive && new Vector2(en.Pos.x - player.Pos.x, en.Pos.z - player.Pos.z).magnitude <= Balance.CAMERA_CROWD_RANGE_M) crowd++;
+        crowdPull = Mathf.Lerp(crowdPull, crowd >= Balance.CAMERA_CROWD_MIN ? Balance.CAMERA_CROWD_PULLBACK : 0f, 1f - Mathf.Exp(-2f * dt));   // 천천히 오가야 화면이 출렁이지 않는다
+        float zoomIn = feel.Zoom * 0.06f + judge.CastZoom * 0.09f - crowdPull + (1f - 1f / Mathf.Max(0.3f, wheelCut));   // 배율 1.25 → 20% 다가감
         wheel = Mathf.Lerp(wheel, wheelTarget, 1f - Mathf.Exp(-Balance.CAMERA_WHEEL_SMOOTH * Time.unscaledDeltaTime));   // 휠 줌은 부드럽게 따라간다
         if (judge.clock != null) ClockSky.Apply(sun, cam, judge.clock, player.Pos, dt);   // 하늘·햇빛이 시계를 따른다
         // 줌하면 카메라 각도도 함께 바뀐다: 확대(wheel<1)하면 눕고(몰입), 축소하면 일어선다(지도처럼). 기준 각도는 wheel=1

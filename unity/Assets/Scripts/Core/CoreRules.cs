@@ -14,6 +14,14 @@ namespace Chasa.Core
         /// <summary>보스 맺힘 금 단계(개편안 §4): 남은 맺힘 66% 이하 1단계, 33% 이하 2단계, 10% 이하 3단계, 그 위는 0(금 없음). 화면 전용 규칙이라 수치 기둥과 무관</summary>
         public static int GyeolCrackStage(float ratio) { return ratio <= 0.10f ? 3 : ratio <= 0.33f ? 2 : ratio <= 0.66f ? 1 : 0; }
 
+        /// <summary>파혼 반격(개편안 P1-2): 거센 혼이 기를 모으는 중에, 그 혼이 파혼 폭발 반경 안에 들면 공격이 끊긴다.
+        /// 왜 규칙으로 떼나: '파혼이 지금은 정답'인 순간을 화면 코드가 아니라 테스트로 지키려는 것. 반경·피해 수치는 건드리지 않는다.
+        /// <paramref name="blastToTarget"/> 폭발 중심에서 거센 혼까지 거리, <paramref name="radius"/> 폭발 반경, <paramref name="targetRadius"/> 거센 혼 몸 반경</summary>
+        public static bool PahonInterruptsCharge(bool charging, float blastToTarget, float radius, float targetRadius)
+        {
+            return charging && blastToTarget <= radius + targetRadius;
+        }
+
         /// <summary>업 단계. 0 = K-001(0~9), 1 = K-002, 2 = K-003, 3 = K-004</summary>
         public static int KarmaTier(int karma)
         {

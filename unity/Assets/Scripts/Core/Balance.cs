@@ -353,7 +353,7 @@ public static class Balance
     public const float ZONE_SIZE_M = 128.0f;  // 구역 한 칸 한 변(m). 기획 확정(10-24): 128×128m, 3×3 로딩. 마을(28×36m)은 0번 구역 안쪽에 들어간다
     public const float ZONE_HYSTERESIS_M = 6.0f;  // 구역 경계에서 '현재 구역'이 바뀌기 전 여유(m). 경계에서 켜졌다 꺼졌다 반복하지 않게
     public const int ZONE_LOAD_PROPS_PER_FRAME = 6;  // 구역을 불러올 때 한 프레임에 세우는 소품 수(웹은 쓰레드가 없어 나눠서 해야 끊기지 않음)
-    public const float CAMERA_LOOKAHEAD_M = 1.5f;  // (시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게 | 기획 표준 명세 hud-controls-spec v1(10-25)
+    public const float CAMERA_LOOKAHEAD_M = 2.0f;  // (시연판 임시) 걷는 방향 앞쪽을 이만큼(m) 더 보여 주는 카메라. 0이면 끔. 넓은 필드에서 앞이 보이게 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float CAMERA_DEADZONE_M = 0.3f;  // (시연판 임시) 카메라 중심에서 이 반경(m) 안에서는 카메라가 안 움직임. 0이면 끔. 잔떨림·멀미 감소 | 기획 표준 명세 hud-controls-spec v1(10-25)
     public const float SHAKE_MAX_ROLL_DEG = 1.2f;  // (기획 타격감 분석 10-24, 임시) 흔들림 최대 화면 기울기(도). 위치보다 덜 어지럽고 묵직함
     public const float SHAKE_NOISE_FREQ = 22.0f;  // (기획 타격감 분석 10-24, 임시) 흔들림 빈도(Hz). 매 프레임 무작위 대신 펄린 노이즈 → 지글거림 제거
@@ -776,6 +776,12 @@ public static class Balance
     public const float RANKUP_STAMP_SEC = 1.0f;  // 처음 10분 M6: 품계 승급 인 연출 길이(초)
     public const float FIGHT_END_SLOW_SEC = 0.25f;  // 처음 10분 M8: 싸움 마지막 처결 느리게 시간(초)
     public const float FIGHT_END_SLOW_SCALE = 0.5f;  // 처음 10분 M8: 느리게 배율
+    public const float KNEEL_MOMENT_SLOW_SEC = 0.15f;  // 개편 P1-1: 혼이 무릎 꿇는 순간 시간이 느려지는 길이(초). 기둥 수치(처결 대기·천도 시전)와 무관한 연출값
+    public const float KNEEL_MOMENT_SLOW_SCALE = 0.4f;  // 개편 P1-1: 무릎 꿇는 순간 느려짐 배율(0.4 = 40% 속도). 이미 느려지는 중(싸움 마지막 처결)이면 쓰지 않는다
+    public const float KNEEL_MOMENT_ZOOM = 0.35f;  // 개편 P1-1: 무릎 꿇는 순간 카메라가 살짝 당겨지는 세기(AddZoom, 파혼은 1.0)
+    public const int CAMERA_CROWD_MIN = 3;  // 개편 P1-3: 가까이(CAMERA_CROWD_RANGE_M) 싸우는 혼이 이만큼 이상이면 카메라가 살짝 물러난다
+    public const float CAMERA_CROWD_RANGE_M = 10.0f;  // 개편 P1-3: 카메라가 무리 수를 세는 반경(m)
+    public const float CAMERA_CROWD_PULLBACK = 0.08f;  // 개편 P1-3: 무리가 모였을 때 카메라 거리를 늘리는 비율(0.08 = 8%). 천도 시전 줌 최대 9%와 겹치면 서로 상쇄된다
     public const int ELITE_MAEDHIM = 300;  // 거센 혼(처음 10분 M10) 맺힘(보통 혼의 3배)
     public const float ELITE_SCALE = 1.3f;  // 거센 혼(처음 10분 M10) 몸 크기 배율
     public const float ELITE_KNOCKBACK_MULT = 0.5f;  // 거센 혼(처음 10분 M10) 넉백 배율

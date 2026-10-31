@@ -32,8 +32,26 @@ public class EliteArena : MonoBehaviour
     /// <summary>거센 혼이 처결되면 잔넋은 천도든 파혼이든 정리된다(파혼 보상은 JudgeSystem 이 계산)</summary>
     void OnJudged(Enemy who, bool tendo)
     {
+        if (who != e && !tendo) { TryInterruptByPahon(who); return; }   // 다른 혼의 파혼 → 반격 규칙
         if (who != e) return;
         if (tendo) foreach (var m in motes) if (m != null && !m.gone) { m.Finish(); }   // 천도: 잔넋도 조용히 흩어진다(보상 없음)
+    }
+
+    /// <summary>
+    /// 파혼 반격(개편안 P1-2, 오너 결정 5): 거센 혼이 기를 모으는 중에 곁의 처결 대기 혼을 파혼하면, 그 충격이 공격을 끊는다.
+    /// 왜: 천도가 늘 정답이던 판에 '지금은 파혼이 맞다'는 순간을 만든다. 천도하면 기억을 얻지만 공격을 맞을 각오를 해야 한다.
+    /// 폭발 반경·피해·업 대가는 그대로(3대 기둥 수치 변경 없음). 이미 터진 공격(fired)은 못 끊는다.
+    /// </summary>
+    void TryInterruptByPahon(Enemy who)
+    {
+        if (who == null || e == null || !e.alive || who.soul.Boss) return;
+        bool charging = false; foreach (var t in teles) if (!t.fired) { charging = true; break; }
+        float dist = new Vector2(who.Pos.x - e.Pos.x, who.Pos.z - e.Pos.z).magnitude;
+        if (!CoreRules.PahonInterruptsCharge(charging, dist, judge.PahonRadiusOf(who), e.radius)) return;
+        ClearTeles(); e.eliteAnim = ""; gapT = Balance.ELITE_PATTERN_GAP;   // 예고를 지우고 다음 패턴까지 평소 간격만큼 쉰다
+        e.atk.Interrupt();
+        judge.feel.AddShake(0.35f); Sfx.Play("cut.jing.crack");
+        judge.Say("파혼의 충격이 거센 혼의 공격을 끊었다");
     }
 
     void Update()

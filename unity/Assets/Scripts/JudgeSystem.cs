@@ -200,6 +200,14 @@ public class JudgeSystem : MonoBehaviour
     /// <summary>혼 하나를 처결했다(두 번째 값: true=천도, false=파혼). 보스 약점(B-05 불린 병사 천도 등)이 듣는다</summary>
     public System.Action<Enemy, bool> OnJudged;
 
+    /// <summary>이 혼을 파혼할 때 폭발 반경(m). 거센 혼 4.5 / 보통 3 + 장비 / 얼룩 위 뱃삯. 파혼 반격(거센 혼 기 모음 끊기)도 같은 값을 쓴다</summary>
+    public float PahonRadiusOf(Enemy e)
+    {
+        float radius = e.elite ? Balance.ELITE_PAHON_RADIUS : lo.stats.PahonRadius(Balance.PAHON_RADIUS);   // 거센 혼 파혼: 반경 4.5m   // 업 쪽 장비: 파혼 반경 (상한 안)
+        if (HasKeepsake("도한수의 뱃삯") && stains.CountWithin(e.Pos.x, e.Pos.z, 1.5f) > 0) radius += Balance.BAETSAK_WATER_PAHON_RADIUS;   // 뱃삯: 얼룩 위 파혼 반경 +0.5m
+        return radius;
+    }
+
     void DoPahon(Enemy e)
     {
         var at = e.Pos;
@@ -292,8 +300,7 @@ public class JudgeSystem : MonoBehaviour
         }
         // 폭발: 반경 안 싸우는 적에게 피해 + 바깥으로 넉백. 거리(2.5m)를 속도로 바꾸려면 마찰을 곱한다
         float kb = Balance.PAHON_KNOCKBACK_DIST * Config.ENEMY_KNOCKBACK_FRICTION * lo.Def.PahonKnockbackMult * lo.stats.PahonKnockbackMult;   // 육모방망이는 더 멀리 날린다
-        float radius = e.elite ? Balance.ELITE_PAHON_RADIUS : lo.stats.PahonRadius(Balance.PAHON_RADIUS);   // 거센 혼 파혼: 반경 4.5m   // 업 쪽 장비: 파혼 반경 (상한 안)
-        if (HasKeepsake("도한수의 뱃삯") && stains.CountWithin(at.x, at.z, 1.5f) > 0) radius += Balance.BAETSAK_WATER_PAHON_RADIUS;   // 뱃삯: 얼룩 위 파혼 반경 +0.5m
+        float radius = PahonRadiusOf(e);
         if (e.elite) Sfx.Play("cut.jing.crack");
         if (e.elite)   // 거센 혼 파혼 폭발은 부른 잔넋까지 터뜨린다(마리당 엽전 +2)
             foreach (var o in new List<Enemy>(enemies.list))
@@ -695,6 +702,9 @@ public class JudgeSystem : MonoBehaviour
     {
         KneelEvents++;   // BGM 재생기가 '무릎 꿇는 순간'을 알아채는 번호표
         Sfx.Play("sfx.kneel");   // 무릎 꿇는 소리 = '지금 고를 때'
+        // 개편 P1-1: 선택의 순간을 몸으로 알린다 — 0.15초 느려짐 + 카메라 살짝 당김(소리는 위 한 줄).
+        // 느려짐 동안 처결 대기 시계도 같이 느려져 실제로 약 0.09초 길어질 뿐이다(대기 10/7/4초 수치는 그대로). 이미 느려지는 중(싸움 마지막 처결)이면 덮어쓰지 않는다
+        if (!cuts.Active && feel.TimeScale >= 1f) { feel.SlowMo(Balance.KNEEL_MOMENT_SLOW_SEC, Balance.KNEEL_MOMENT_SLOW_SCALE); feel.AddZoom(Balance.KNEEL_MOMENT_ZOOM); }
         if (!e.soul.Boss && !firstKneelDone && FieldRules.On)
         {
             // 첫 처결: 안내 글 대신 화면 하단에 큰 카드 둘(천도·파혼 같은 크기·밝기). 시간 제한 없음(이 혼만 대기가 멈춘다)
@@ -2042,6 +2052,7 @@ public class JudgeSystem : MonoBehaviour
         { int lo0 = GrowthState.TallyForRank(growth.Rank), hi0 = GrowthState.TallyForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.JudgeTally - lo0) / (hi0 - lo0); }
         // 첫 5분 퀘스트 추적(기획): 명부 — 이름 없는 혼 n/2, 박돌쇠 n/1. 시계가 풀리면(첫 처결 끝) 사라진다
         if (introFrozen && FieldRules.On) { h.QuestTitle = "명부"; h.QuestLines = new[] { "이름 없는 혼 " + Mathf.Min(2, introPlainDone) + "/2", "박돌쇠 " + (pahonOrTendo != 0 ? 1 : 0) + "/1" }; }
+        else if (FieldRules.On) { h.QuestTitle = "명부"; h.QuestLines = HudState.QuestLinesFor(night.Sent, Balance.NIGHT_QUOTA, night.Clues, Balance.BOSS_CLUES_REQUIRED, night.BossDone); }   // 개편 P1: 첫 5분이 지나면 퀘스트 칸이 천도 몫·단서 수를 보여 준다(지운 좌상단 줄 대신)
         else { h.QuestTitle = null; h.QuestLines = null; }
         foreach (var e in enemies.list)
         {
