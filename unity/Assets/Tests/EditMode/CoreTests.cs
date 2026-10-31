@@ -2641,5 +2641,26 @@ public class CoreTests
         Assert.AreEqual(3, CoreRules.GyeolCrackStage(0f));
     }
 
+    [Test]
+    public void DosulIcons_액티브도술은모두그림이름이있고_이름이겹치지않는다()
+    {
+        // 도술을 새로 추가하고 그림 이름을 빠뜨리면 폰 기술 칸이 글자로만 나온다 → 여기서 바로 잡는다
+        var seen = new System.Collections.Generic.HashSet<string>();
+        foreach (var n in SkillTree.All)
+        {
+            if (!n.Active) continue;
+            string id = DosulIcons.SkillIcon(n.Name);
+            Assert.IsNotNull(id, n.Name + " 그림 이름 없음");
+            Assert.IsTrue(seen.Add(id), n.Name + " 그림 이름 겹침: " + id);
+            string prefix = n.Branch == Branch.Call ? "call_" : n.Branch == Branch.Chain ? "chain_" : "stain_";
+            Assert.IsTrue(id.StartsWith(prefix), n.Name + " 갈래와 그림 이름 접두어가 다름");
+        }
+        Assert.IsNull(DosulIcons.SkillIcon("없는도술"));
+        Assert.IsNull(DosulIcons.SkillIcon(null));
+        Assert.AreEqual("q_chain", DosulIcons.QIcon("끌기"));
+        Assert.AreEqual("q_slash", DosulIcons.QIcon("베기"));
+        Assert.AreEqual("q_slash", DosulIcons.QIcon("모르는글자"));
+    }
+
     struct UnityEngineFreeVec { public float X, Z; public UnityEngineFreeVec(float x, float z) { X = x; Z = z; } public float Len { get { return (float)System.Math.Sqrt(X * X + Z * Z); } } }
 }

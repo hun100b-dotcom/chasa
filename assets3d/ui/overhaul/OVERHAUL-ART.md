@@ -32,3 +32,11 @@
 - `swap_hint` 무기 바꾸기 단서 화살표(64×40).
 - 색 약속: 천도 청록·파혼 주황은 그 두 칸 전용. 물약은 한지 고리 + 붉은 인(체력과 같은 계열). 모양으로도 구분(호리병 / 벤 자국 / 바람).
 - 남음: 도술 아이콘 본체, Q 버튼 무기별 그림(기존 `assets3d/ui/phone/btn_q_*`가 있으나 Resources 에 안 옮겨짐 → 코드팀과 결정), 상호작용 버튼. Unity 실기 미확인.
+
+## skill/ · Q·F 버튼 (PR #57 에서 남은 것, 2026-10-31)
+재현: `python3 tools/art3d/overhaul_icons2.py` · 확인판 `assets3d/previews/overhaul_icons2_check.png`. 이름 연결표는 코드 `Core/DosulIcons.cs`(테스트가 "액티브 도술 15개 모두 그림 이름 있음·겹침 없음"을 지킨다).
+- 도술 `skill/`(64², 기술 칸 고리 안쪽에 얹음): 부름 `call_grab·wisp·light·path·seven` / 줄 `chain_coil·haul·dash·thread·fence` / 얼룩 `stain_burst·aura·ride·shard·shadow`. 패시브·그림 없는 도술은 `branch_call/chain/stain` 쪽지로 대신.
+- 갈래 구분(색약): 금 + ↑삼각 / 은청 + ●점 / 먹자주 + ×. 천도 청록·파혼 주황은 쓰지 않음.
+- Q 버튼 `btn/q_chain(끌기)·q_mace(땅울림)·q_bell(부르기)·q_trident(꽂기)·q_brush(이름)·q_slash(베기)` 104². 금 고리 + 무기 도상, 아래 22% 는 코드가 글자(재사용 중엔 남은 초).
+- 상호작용 `btn/use`·`use_hot`: 한지 고리 + 손바닥. 옛 `assets3d/ui/phone/btn_f_*` 는 청록 고리(천도 색과 같음)라 대체.
+- Unity 실기 미확인: 도술 그림 크기(고리 안 64/104), Q 아래 글자 겹침, F 글자(긴 대상 이름) 길이.
