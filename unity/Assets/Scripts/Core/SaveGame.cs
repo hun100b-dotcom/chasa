@@ -173,20 +173,26 @@ namespace Chasa.Core
         static float Pf(string t) { return float.Parse(t, CultureInfo.InvariantCulture); }
         public float Master = 1f, Bgm = 0.8f, Sfx = 1f, Shake = 1f;
         public bool ReduceFlash;   // 번쩍임 줄이기(접근성): 화면 번쩍임·피격 테두리·점광을 약하게/끈다
+        public bool ClickMove;     // 클릭 이동(개편 P0-4): 기본은 꺼짐 = WASD 이동 + 왼쪽 클릭은 공격만. 켜면 옛 방식(땅 클릭으로 걷기)
+        public bool ShowNumbers;   // 맞은 데미지 숫자(개편 P0-5): 기본은 꺼짐 = 숫자 대신 '맺힘 금'. 켜면 옛 숫자도 띄운다
         public static GameSettings Clamp(GameSettings s)
         {
             s.Master = Math.Max(0f, Math.Min(1f, s.Master)); s.Bgm = Math.Max(0f, Math.Min(1f, s.Bgm));
             s.Sfx = Math.Max(0f, Math.Min(1f, s.Sfx)); s.Shake = Math.Max(0f, Math.Min(1.5f, s.Shake));
             return s;
         }
-        public string Serialize() { return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3},{4}", Master, Bgm, Sfx, Shake, ReduceFlash ? 1 : 0); }
+        public string Serialize() { return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3},{4},{5},{6}", Master, Bgm, Sfx, Shake, ReduceFlash ? 1 : 0, ClickMove ? 1 : 0, ShowNumbers ? 1 : 0); }
         public static GameSettings Parse(string text)
         {
             var s = new GameSettings();
             try
             {
                 var p = (text ?? "").Split(',');
-                if (p.Length == 4 || p.Length == 5) { s.Master = Pf(p[0]); s.Bgm = Pf(p[1]); s.Sfx = Pf(p[2]); s.Shake = Pf(p[3]); s.ReduceFlash = p.Length == 5 && p[4] == "1"; }   // 4칸은 옛 저장
+                if (p.Length == 4 || p.Length == 5 || p.Length == 7)   // 4칸·5칸은 옛 저장(새 칸은 꺼짐)
+                {
+                    s.Master = Pf(p[0]); s.Bgm = Pf(p[1]); s.Sfx = Pf(p[2]); s.Shake = Pf(p[3]); s.ReduceFlash = p.Length >= 5 && p[4] == "1";
+                    s.ClickMove = p.Length == 7 && p[5] == "1"; s.ShowNumbers = p.Length == 7 && p[6] == "1";
+                }
             }
             catch (Exception) { s = new GameSettings(); }
             return Clamp(s);

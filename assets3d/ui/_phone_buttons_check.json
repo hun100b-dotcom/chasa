@@ -1,0 +1,7 @@
+{
+ "glyph_mean_luma_tendo": 212.3,
+ "glyph_mean_luma_pahon": 160.2,
+ "glyph_shape_IoU_tendo_vs_pahon": 0.137,
+ "border_luma_std_tendo(매끈할수록 작음)": 75.6,
+ "border_luma_std_pahon(톱니·점선이라 큼)": 49.2
+}

@@ -1,0 +1,90 @@
+{
+ "basic": {
+  "name": "일반 혼(해 넘긴)",
+  "h_px": 53,
+  "w_px": 46,
+  "area": 1286
+ },
+ "elite": {
+  "name": "거센 혼",
+  "h_px": 84,
+  "w_px": 84,
+  "area": 3593,
+  "iou_basic": 0.329,
+  "iou_basic_norm": 0.506,
+  "h_vs_basic": 1.58,
+  "area_vs_basic": 2.79
+ },
+ "b01": {
+  "name": "B-01 나루 영감",
+  "h_px": 244,
+  "w_px": 281,
+  "area": 18744,
+  "iou_basic": 0.069,
+  "iou_basic_norm": 0.465,
+  "iou_elite_norm": 0.339,
+  "h_vs_elite": 2.9,
+  "h_vs_basic": 4.6,
+  "area_vs_basic": 14.58
+ },
+ "b02": {
+  "name": "B-02 월화",
+  "h_px": 121,
+  "w_px": 134,
+  "area": 7391,
+  "iou_basic": 0.174,
+  "iou_basic_norm": 0.518,
+  "iou_elite_norm": 0.498,
+  "h_vs_elite": 1.44,
+  "h_vs_basic": 2.28,
+  "area_vs_basic": 5.75
+ },
+ "b03": {
+  "name": "B-03 서 의원",
+  "h_px": 110,
+  "w_px": 59,
+  "area": 4197,
+  "iou_basic": 0.292,
+  "iou_basic_norm": 0.543,
+  "iou_elite_norm": 0.435,
+  "h_vs_elite": 1.31,
+  "h_vs_basic": 2.08,
+  "area_vs_basic": 3.26
+ },
+ "b04": {
+  "name": "B-04 흑월",
+  "h_px": 109,
+  "w_px": 79,
+  "area": 3926,
+  "iou_basic": 0.316,
+  "iou_basic_norm": 0.578,
+  "iou_elite_norm": 0.404,
+  "h_vs_elite": 1.3,
+  "h_vs_basic": 2.06,
+  "area_vs_basic": 3.05
+ },
+ "b05": {
+  "name": "B-05 대돌",
+  "h_px": 138,
+  "w_px": 150,
+  "area": 8175,
+  "iou_basic": 0.154,
+  "iou_basic_norm": 0.441,
+  "iou_elite_norm": 0.45,
+  "h_vs_elite": 1.64,
+  "h_vs_basic": 2.6,
+  "area_vs_basic": 6.36
+ },
+ "b06": {
+  "name": "B-06 장수",
+  "h_px": 130,
+  "w_px": 122,
+  "area": 4559,
+  "iou_basic": 0.268,
+  "iou_basic_norm": 0.451,
+  "iou_elite_norm": 0.316,
+  "h_vs_elite": 1.55,
+  "h_vs_basic": 2.45,
+  "area_vs_basic": 3.55
+ }
+}

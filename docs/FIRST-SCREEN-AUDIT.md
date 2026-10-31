@@ -23,3 +23,9 @@
 - 맺힘 채움은 `bind_world_fill`을 폭으로 잘라 쓰고 덩어리는 두 줄에 각각 채운다.
 - 넋길 낮/밤: 낮에는 지도 아이콘을 `icon_soulpath_off`로.
 - Unity 복사: Sprites/first10/ (1배 8종), Sprites/ (미니맵 아이콘 1배·@2x), Models/Fx/fx_wait_ring_*.
+
+## 기획 답변 반영(화면 명세 v1.5, 아트)
+- **미니맵 아이콘**: 모든 아이콘 바깥 테두리를 `#1A1410` 80%로 통일(`map_ui.OUT`). NPC는 점 대신 **노란 마름모 ◆**(`icon_npc`, 명세 크기 10). 정예(`icon_elite`)·처결 대기(`icon_soul_wait`)는 그대로, 크기만 명세대로(적 8·혼 10·NPC 10). 아틀라스 `minimap_icons_atlas` 다시 뽑음.
+- **도술 갈래 모양 교체**(▲·✕는 천도·파혼 전용): 부름 **◎**(청록 겹원) · 줄 **∞**(청백 사슬 고리 둘) · 얼룩 **번진 먹점**(보라, 물결 가장자리). `branch_{bureum,jul,eolluk}`(40²)·`_big`(80²). 카드 틀·삽화는 그대로 두었고 코드는 파일 이름 그대로 쓰면 된다.
+- **기록 탭 16px 단순판**: `prompt_tendo_16`·`prompt_pahon_16`(1배 16px, @2x 32px). 안쪽 하이라이트·글로우·톱니 없음, 테두리 2px(천도 실선 / 파혼 점선), 모양 하나(▲ / ✕).
+- Unity 복사: Sprites/first10/(branch 6, prompt_*_16 2), Sprites/(icon_npc·icon_soul_wait·icon_soulpath_off 1배·@2x).

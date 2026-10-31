@@ -19,11 +19,11 @@ public class SettingsPanel : MonoBehaviour
     // 조작 키 보기(실제 입력 코드와 같은 키). 폰은 화면 버튼이 대신한다
     static readonly string[] Keys =
     {
-        "이동        WASD / 방향키 / 땅을 클릭   (폰: 왼쪽 화면을 눌러 떠다니는 조이스틱)",
-        "공격        마우스 왼쪽 클릭(적 쪽으로, 3타 콤보)   우클릭: 커서 방향 즉시 공격",
+        "이동        WASD / 방향키   (폰: 왼쪽 화면을 눌러 떠다니는 조이스틱)   땅 클릭 이동은 설정에서 켠다",
+        "공격        마우스 왼쪽 클릭(커서 방향, 3타 콤보)   오른쪽 클릭: 끌기(철삭) · 땅울림(육모방망이)",
         "피하기      Space",
         "천도        E                             파혼   R      (무릎 꿇은 혼 곁에서)",
-        "도술        1 2 3 4                      Q  끌기(철삭) · 땅울림(육모방망이)",
+        "도술        1 2 3 4                      Q  끌기(오른쪽 클릭과 같음)",
         "무기 바꾸기 Tab                           회복약  H     씻김 부적  X",
         "상호작용    F (줍기 · 만져 보기 · 넋길 · 쉬기)",
         "명부(캐릭터) C                            설정   O",
@@ -95,6 +95,8 @@ public class SettingsPanel : MonoBehaviour
             SliderRow(box, "화면 흔들림", s.Shake, 1.5f, v => s.Shake = v);
             Txt(box, "0 = 흔들림 없음 · 1 = 기본 (멀미가 나면 줄이기)", 13);
             Btn(box, "번쩍임 줄이기: " + (s.ReduceFlash ? "켜짐" : "꺼짐"), () => s.ReduceFlash = !s.ReduceFlash, true, 220);
+            Btn(box, "땅 클릭으로 이동: " + (s.ClickMove ? "켜짐" : "꺼짐"), () => { s.ClickMove = !s.ClickMove; dirty = true; }, true, 260);
+            Btn(box, "맞은 숫자 보이기: " + (s.ShowNumbers ? "켜짐" : "꺼짐(맺힘 금으로 표시)"), () => { s.ShowNumbers = !s.ShowNumbers; dirty = true; }, true, 320);
             var r1 = new VisualElement { pickingMode = PickingMode.Position }; r1.style.flexDirection = FlexDirection.Row; r1.style.marginTop = 10; box.Add(r1);
             bool field = judge.FieldMode;
             Btn(r1, "조작 키 보기", () => showKeys = true);

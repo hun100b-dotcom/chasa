@@ -1,0 +1,100 @@
+{
+ "1_wake_night": {
+  "title": "깨어남: 서낭당 고개(시작 위치)",
+  "burned_px": 0.0002,
+  "flat_grey_blocks": 0.01,
+  "flat_floor_blocks": 0.67,
+  "mean_lum": 0.235
+ },
+ "2_well_night": {
+  "title": "마을 길(우물가 쪽)",
+  "burned_px": 0.0002,
+  "flat_grey_blocks": 0.003,
+  "flat_floor_blocks": 0.655,
+  "mean_lum": 0.275
+ },
+ "3_west_night": {
+  "title": "마을 서쪽 길",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.013,
+  "flat_floor_blocks": 0.672,
+  "mean_lum": 0.186
+ },
+ "4_bank_night": {
+  "title": "보릿들 둑길",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.002,
+  "flat_floor_blocks": 0.786,
+  "mean_lum": 0.177
+ },
+ "5_field_night": {
+  "title": "보릿들 가운데→물막이",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.003,
+  "flat_floor_blocks": 0.725,
+  "mean_lum": 0.177
+ },
+ "6_weir_night": {
+  "title": "물막이 골 어귀",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.012,
+  "flat_floor_blocks": 0.764,
+  "mean_lum": 0.159
+ },
+ "7_naru_night": {
+  "title": "나루 영감(보스 자리 앞)",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.008,
+  "flat_floor_blocks": 0.699,
+  "mean_lum": 0.179
+ },
+ "1_wake_day": {
+  "title": "깨어남: 서낭당 고개(시작 위치)",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.001,
+  "flat_floor_blocks": 0.468,
+  "mean_lum": 0.437
+ },
+ "2_well_day": {
+  "title": "마을 길(우물가 쪽)",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.007,
+  "flat_floor_blocks": 0.583,
+  "mean_lum": 0.461
+ },
+ "3_west_day": {
+  "title": "마을 서쪽 길",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.004,
+  "flat_floor_blocks": 0.471,
+  "mean_lum": 0.443
+ },
+ "4_bank_day": {
+  "title": "보릿들 둑길",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.0,
+  "flat_floor_blocks": 0.502,
+  "mean_lum": 0.434
+ },
+ "5_field_day": {
+  "title": "보릿들 가운데→물막이",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.0,
+  "flat_floor_blocks": 0.491,
+  "mean_lum": 0.433
+ },
+ "6_weir_day": {
+  "title": "물막이 골 어귀",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.001,
+  "flat_floor_blocks": 0.515,
+  "mean_lum": 0.394
+ },
+ "7_naru_day": {
+  "title": "나루 영감(보스 자리 앞)",
+  "burned_px": 0.0,
+  "flat_grey_blocks": 0.003,
+  "flat_floor_blocks": 0.383,
+  "mean_lum": 0.403
+ }
+}

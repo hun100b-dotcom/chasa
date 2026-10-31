@@ -2222,6 +2222,34 @@ public class JudgeSystem : MonoBehaviour
         return any;
     }
 
+    /// <summary>
+    /// 처결 표식 그리기. 그림(overhaul/mark)의 꼬리 끝이 혼 머리 위 0.2m 에 오게 놓고, 빈 키캡에 E·R 글자를 코드로 얹는다.
+    /// 천도·파혼 키캡은 같은 크기·같은 밝기라 한쪽이 기본값처럼 보이지 않는다(기둥)
+    /// </summary>
+    void DrawExecMark()
+    {
+        var t = FindKneeling(x => CanTendoNow(x)) ?? FindKneeling();
+        if (t == null || t.gone) return;
+        bool pair = CanTendoNow(t);
+        var tex = SpriteLib.Texture("overhaul/mark/" + (pair ? "mark_exec_pair@2x" : "mark_exec_pahon_only@2x"));
+        if (tex == null) return;   // 그림이 없으면 표식을 안 띄운다(고리·버튼이 대신한다)
+        var sp = cam.WorldToScreenPoint(t.HeadPosition + Vector3.up * 0.2f);
+        if (sp.z < 0f) return;
+        float k = Mathf.Max(0.8f, Screen.height / 720f) * 0.5f;   // @2x 그림을 720p 기준 1배 크기(124×56)로, 큰 화면은 비례해 키운다
+        float w = tex.width * k, h = tex.height * k;
+        var r = new Rect(sp.x - w * 0.5f, Screen.height - sp.y - h, w, h);   // 아래 가운데(꼬리 끝)가 머리 위에 닿는다
+        GUI.color = Color.white; GUI.DrawTexture(r, tex);
+        var ks = new GUIStyle(GUI.skin.label) { fontSize = Mathf.RoundToInt(15f * Screen.height / 720f), alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold };
+        ks.normal.textColor = new Color(0.12f, 0.1f, 0.08f);   // 먹색 글자(밝은 키캡 위)
+        float cy = r.y + 23f * 2f * k;   // 키캡 가운데 높이(@2x 그림 기준 약 46px)
+        if (pair)
+        {
+            GUI.Label(new Rect(r.x + 103f * k - 20f, cy - 14f, 40f, 28f), "E", ks);
+            GUI.Label(new Rect(r.x + 216f * k - 20f, cy - 14f, 40f, 28f), "R", ks);
+        }
+        else GUI.Label(new Rect(r.x + 110f * k - 20f, cy - 14f, 40f, 28f), "R", ks);
+    }
+
     void OnGUI()
     {
         Ko.Apply(); // 한글 글꼴 적용(안 하면 한글이 네모로 깨짐)
@@ -2242,7 +2270,8 @@ public class JudgeSystem : MonoBehaviour
             float diag = Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
             float size = Mathf.Lerp(diag * 1.25f, diag * 1.25f * (LampOn ? 1f : Mathf.Min(1f, lo.stats.VisionRatio(Balance.TENDO_VISION_RATIO))), visionP);   // 반경 60%로
             var r = new Rect((Screen.width - size) / 2f, (Screen.height - size) / 2f, size, size);
-            GUI.color = new Color(tint.r * 0.35f, tint.g * 0.25f, tint.b * 0.5f, 0.95f * visionP);
+            // 개편 P0-1: 시야 가림막은 '가장자리 안개'로 — 가운데는 그대로 보이고(반경 60% 규칙은 그대로) 바깥만 어둡게. 알파 0.95→0.8
+            GUI.color = new Color(tint.r * 0.35f, tint.g * 0.25f, tint.b * 0.5f, 0.8f * visionP);
             GUI.DrawTexture(r, vignette);
             // 가림막 바깥 모서리는 같은 색으로 채운다
             GUI.DrawTexture(new Rect(0, 0, Screen.width, r.y), white);
@@ -2271,6 +2300,9 @@ public class JudgeSystem : MonoBehaviour
                 GUI.Label(new Rect(sp.x - 80, Screen.height - sp.y - 12, 160, 24), e.soul.Boss ? (e.label ?? "나루 영감") : e.label, nameStyle);
             }
         }
+        // (1-3) 처결 표식(개편 P0-2): 지금 E 가 겨눌 무릎 꿇은 혼 하나의 머리 위에만 ▲E ✕R 을 띄운다. 덩어리·단서 모자란 보스는 ✕R 만.
+        //       화면 구석의 큰 판 대신 '그 혼 위'에서 고르게 하려는 것(선택이 장소의 선택이 된다). 폰은 처결 버튼이 이 역할을 한다
+        if (cam != null && !Ko.TouchUI && !Casting) DrawExecMark();
         // (2) 머리 위 '맺힘' 막대 = 남은 맺힘(체력 대신 깎이는 수치). 처결 대기 시간은 발밑 고리(SoulMarkers)가 맡는다.
         //     보스·이름혼·맞아서 깎인 혼에게만 보인다(전부 띄우면 화면이 막대 숲이 된다). 덩어리는 두 줄(= 두 배 질기다는 표시)
         if (cam != null)
