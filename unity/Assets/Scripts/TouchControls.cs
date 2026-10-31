@@ -3,8 +3,11 @@
 //
 // 배치(1080p 기준 px, 화면 높이에 비례해 줄인다):
 //   공격 버튼 — 우하, 오른쪽·아래 여백 64, 지름 160. 누르고 있으면 연속 공격, 가까운 적(6m)을 자동 조준
-//   도술 4개 — 공격 버튼 둘레 부채꼴(9시→12시), 중심에서 230px, 지름 104. 탭=발동
-//   피하기 — 공격 버튼 왼쪽 아래, 지름 104 / 끌기(견인) — 왼쪽 위 / 상호작용(넋길) — 공격 버튼 위, 대상이 있을 때만
+//   도술 4개 — 공격 버튼 둘레 부채꼴(9시→12시), 중심에서 235px, 지름 104. 탭=발동
+//   피하기 — 공격 버튼에서 (-345,+61), 지름 104
+//   무기 기술 Q — (-83,-335), 지름 104. 무기마다 하나뿐인 기술(끌기·땅울림·불러 세우기·꽂아 버티기·이름 쓰기). 개편 P1-5: 예전 '끌기' 버튼을 이 자리로 합쳤다
+//   천도 ▲(-241,-268)·파혼 ✕(-350,-114) — 지름 136, 처결할 혼이 있을 때만(그리기는 JudgeSystem). 위치는 아래 상수 한 곳에서만 정한다
+//   상호작용(넋길·등잔 등) — (+64,-466), 대상이 있을 때만(급하지 않은 일이라 멀리)
 // 왜 Input.touches 로 직접 판정하나? 조이스틱을 잡은 채 다른 손가락으로 공격을 눌러야 해서(멀티터치),
 //   한 손가락만 다루는 GUI.Button 으로는 안 된다. 그리기만 OnGUI 에 맡긴다.
 // 모든 버튼은 눈에 보이는 크기보다 1.2배 넓게, 최소 96px(9mm) 로 눌린다.
@@ -19,8 +22,28 @@ public class TouchControls : MonoBehaviour
     static TouchControls inst;
     public static Rect[] JudgeRects;   // 천도·파혼 버튼(GUI 좌표). 보일 때만 채워지며, 조이스틱·이동 클릭보다 먼저 눌린다
 
+    // 개편 P1-5(폰 조작 명세 §5): 공격 버튼 중심에서의 거리(1080p 기준 px, 오른쪽이 +x, 아래가 +y). 엄지가 자주 누르는 순서대로 가깝게 둔다
+    public static readonly Vector2 DodgeOff = new Vector2(-345f, 61f);
+    public static readonly Vector2 QOff = new Vector2(-83f, -335f);
+    public static readonly Vector2 TendoOff = new Vector2(-241f, -268f);   // ▲ — 위쪽
+    public static readonly Vector2 PahonOff = new Vector2(-350f, -114f);   // ✕ — 아래(회피 쪽). 둘은 크기·밝기가 같다(정답 표시 금지)
+    public static readonly Vector2 UseOff = new Vector2(64f, -466f);
+    public const float JudgeDiameter = 136f;                               // 처결 둘의 지름(1080p 기준)
+    public const float SkillRadius = 235f;                                 // 도술 부채꼴 반지름
+
+    /// <summary>공격 버튼 중심(GUI 좌표, 위가 0). 노치·제스처 줄을 피해 Screen.safeArea 안쪽 기준. JudgeSystem 의 처결 버튼도 이 점에서 잰다</summary>
+    public static Vector2 AttackCenter()
+    {
+        float s = Screen.height / 1080f;
+        var sa = Screen.safeArea;
+        float rightEdge = sa.width > 0f ? sa.xMax : Screen.width, bottomEdge = sa.width > 0f ? Screen.height - sa.yMin : Screen.height;
+        return new Vector2(rightEdge - (64f + 80f) * s, bottomEdge - (64f + 80f) * s);
+    }
+
     public Func<Vector3?> nearestEnemyPos;           // 6m 안 가장 가까운 적 위치(없으면 null)
-    public Action onAttackHold, onDodge, onPull, onInteract;
+    public Action onAttackHold, onDodge, onPull, onInteract, onQ;
+    public Func<string> qLabel;                      // 무기 기술(Q) 버튼 글자(무기마다 다름)
+    public Func<float> qLeft;                        // 무기 기술 남은 대기(초). 0 = 쓸 수 있음
     public Action<int> onSkill;
     public Func<int, string> skillLabel;             // 도술 i 의 이름(없으면 null)
     public Func<int, float> skillLeft;               // 도술 i 의 남은 대기(초). 0 = 쓸 수 있음
@@ -49,19 +72,16 @@ public class TouchControls : MonoBehaviour
     {
         btns.Clear();
         float s = Screen.height / 1080f;
-        // 노치·제스처 줄을 피한다(명세 §9-4): 버튼은 Screen.safeArea 안쪽 기준으로 둔다. safeArea 는 아래가 0 이라 GUI 좌표(위가 0)로 바꾼다
-        var sa = Screen.safeArea;
-        float rightEdge = sa.width > 0f ? sa.xMax : Screen.width, bottomEdge = sa.width > 0f ? Screen.height - sa.yMin : Screen.height;
-        Vector2 ac = new Vector2(rightEdge - (64f + 80f) * s, bottomEdge - (64f + 80f) * s);   // 공격 버튼 중심
+        Vector2 ac = AttackCenter();   // 공격 버튼 중심
         Add("atk", ac, 160f * s, "공격", new Color(0.62f, 0.22f, 0.18f), s);
         for (int i = 0; i < 4; i++)
         {
             float ang = (180f - 30f * i) * Mathf.Deg2Rad;   // 9시 → 12시
-            Add("sk" + i, ac + new Vector2(Mathf.Cos(ang), -Mathf.Sin(ang)) * 245f * s, 104f * s, "", new Color(0.12f, 0.45f, 0.45f), s);   // 간격 16px 이상(부채꼴 반지름 230→245)
+            Add("sk" + i, ac + new Vector2(Mathf.Cos(ang), -Mathf.Sin(ang)) * SkillRadius * s, 104f * s, "", new Color(0.12f, 0.45f, 0.45f), s);   // 버튼 사이 간격 16px 이상(명세 §9-4)
         }
-        Add("dodge", ac + new Vector2(-136f * s, 63f * s), 104f * s, "피하기", new Color(0.30f, 0.34f, 0.46f), s);
-        if (hasPull != null && hasPull()) { float a = 135f * Mathf.Deg2Rad; Add("pull", ac + new Vector2(Mathf.Cos(a), -Mathf.Sin(a)) * 150f * s, 104f * s, "끌기", new Color(0.55f, 0.42f, 0.16f), s); }
-        if (canInteract != null && canInteract()) Add("use", ac + new Vector2(0f, -150f * s), 104f * s, interactLabel != null ? interactLabel() : "상호작용", new Color(0.85f, 0.78f, 0.62f), s);
+        Add("dodge", ac + DodgeOff * s, 104f * s, "피하기", new Color(0.30f, 0.34f, 0.46f), s);
+        Add("q", ac + QOff * s, 104f * s, qLabel != null ? qLabel() : "기술", new Color(0.55f, 0.42f, 0.16f), s);   // 무기 기술은 늘 있다(없는 무기는 베기)
+        if (canInteract != null && canInteract()) Add("use", ac + UseOff * s, 104f * s, interactLabel != null ? interactLabel() : "상호작용", new Color(0.85f, 0.78f, 0.62f), s);
     }
 
     void Add(string id, Vector2 c, float diameter, string text, Color col, float s)
@@ -101,7 +121,7 @@ public class TouchControls : MonoBehaviour
                 string id = btns[i].id;
                 if (id.StartsWith("sk")) { if (onSkill != null) onSkill(int.Parse(id.Substring(2))); }
                 else if (id == "dodge") { if (onDodge != null) onDodge(); }
-                else if (id == "pull") { if (onPull != null) onPull(); }
+                else if (id == "q") { if (onQ != null) onQ(); }
                 else if (id == "use") { if (onInteract != null) onInteract(); }
             }
         }
@@ -123,6 +143,7 @@ public class TouchControls : MonoBehaviour
                 if (nm == null) continue;   // 비어 있는 칸은 그리지 않는다
                 text = nm; left = skillLeft != null ? skillLeft(i) : 0f; dim = left > 0f;
             }
+            if (b.id == "q") { left = qLeft != null ? qLeft() : 0f; dim = left > 0f; }   // 재사용 중엔 어둡게 + 남은 초
             bool pressed = b.id == "atk" && attackHeld;
             var rect = new Rect(b.center.x - b.visual, b.center.y - b.visual, b.visual * 2f, b.visual * 2f);
             GUI.color = new Color(b.color.r, b.color.g, b.color.b, (dim ? 0.35f : 0.62f) + (pressed ? 0.25f : 0f));
