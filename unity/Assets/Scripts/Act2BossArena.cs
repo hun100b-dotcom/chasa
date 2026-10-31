@@ -230,6 +230,7 @@ public class Act2BossArena : MonoBehaviour
     /// <summary>처결 신호: B-05 에서 이름으로 불린 병사를 천도하면 대돌이 멈춘다(약점)</summary>
     void OnJudged(Enemy e, bool tendo)
     {
+        if (!tendo && e != boss) TryInterruptByPahon(e);   // 곁 혼의 파혼 → 보스 반격 규칙(개편안 P1-2)
         int hk;
         if (brain3 != null && helpers.TryGetValue(e, out hk))
         {
@@ -255,6 +256,32 @@ public class Act2BossArena : MonoBehaviour
         if (brain == null || def == null || def.Id != 5 || !tendo || !soldiers.Contains(e)) return;
         brain.OnCalledSoulTendo(); judge.Say("불린 병사를 보냈다 — 대돌이 주춤한다");
     }
+
+    /// <summary>
+    /// 파혼 반격 — 보스 판(개편안 P1-2, 오너 결정 5). 거센 혼(EliteArena)과 같은 규칙을 보스에도 건다:
+    /// 보스가 기를 모으는 중(터지기 전 예고)에 곁의 처결 대기 혼을 파혼해 그 폭발 반경 안에 보스가 들면 그 공격이 끊긴다.
+    /// 왜: 천도가 늘 정답인 판에 '지금은 파혼'이라는 순간을 보스전에도 만든다. 천도하면 기억을 얻지만 공격을 맞을 각오가 필요하다.
+    /// 끊지 않는 것(약점·압박 장치와 얽혀 있어 건드리면 판이 깨진다): 숫자 지뢰(mine)·이름 종이(paper)·명단 줄(drain)·줄 끊기(rope)·표식만 있는 예고(fired).
+    /// 보스가 꿇은 동안의 압박(KneelTick)도 그대로 둔다 — 천도 1.5초의 긴장은 기둥이다. 폭발 반경·피해·업 대가·보스 행동 간격은 변경 없음.
+    /// </summary>
+    void TryInterruptByPahon(Enemy who)
+    {
+        if (who == null || boss == null || who.soul.Boss || !boss.alive || boss.kneeling || boss.sending) return;
+        bool charging = false;
+        foreach (var t in teles) if (Interruptible(t)) { charging = true; break; }
+        float dist = new Vector2(who.Pos.x - boss.Pos.x, who.Pos.z - boss.Pos.z).magnitude;
+        if (!CoreRules.PahonInterruptsCharge(charging, dist, judge.PahonRadiusOf(who), boss.radius)) return;
+        for (int i = teles.Count - 1; i >= 0; i--)
+        {
+            if (!Interruptible(teles[i])) continue;
+            if (teles[i].view != null) Destroy(teles[i].view);
+            teles.RemoveAt(i);
+        }
+        judge.feel.AddShake(0.35f); Sfx.Play("cut.jing.crack");
+        judge.Say("파혼의 충격이 보스의 공격을 끊었다");
+    }
+    /// <summary>끊을 수 있는 예고인가: 아직 안 터졌고, 약점·압박 장치가 아닌 보통 공격 예고</summary>
+    static bool Interruptible(Tele t) { return !t.fired && !t.mine && !t.paper && !t.drain && !t.rope; }
 
     /// <summary>약점 점의 시간 관리: B-09 옷은 창(2초)이 닫히면 사라지고, B-12 횃불은 큰물 단계에 한 번만 나타난다</summary>
     void TickPoints()
