@@ -88,7 +88,9 @@ def build():
 if __name__ == "__main__":
     o, arm = build(); man = []
     import hero_weapon_anim as hwa, hero_locomotion as hl
-    NEW = hwa.clips()
+    import hero_blade_anim as hba
+    NEW = {**hwa.clips(), **hba.clips()}     # 무기별 동작 + 검·도 전용 동작(환도 Sword_*, 월도 Glaive_*, 공용 Dash_Attack·Counter)
+    wkey = lambda n: hba.SHARED.get(n, n.split("_")[0])
     LOC = hl.clips(idle_keys()[0][1], o, arm)      # 구르기가 몸 높이를 재므로, 다른 동작을 넣기 전에 먼저 만든다
     ALL = {**clips(), **NEW, **LOC}
     for name, c in ALL.items():
@@ -99,7 +101,7 @@ if __name__ == "__main__":
             if meta.get("contact"): rep["foot_slide"] = hl.measure_slide(arm_, act, meta, f0, f1)
             elif name in ("Walk",): rep["implied_speed_mps"] = hl.implied_speed(arm_, act, f0, f1)
         info = anim.clip(arm, name, keys, interp, post); info.update({"loop": loop, "events": ev or {}})
-        if name in NEW: info.update({"weapon": name.split("_")[0], "socket_rotate_deg_x": hwa.SOCKET_ROT_X[name.split("_")[0]]})
+        if name in NEW: info.update({"weapon": "Any" if name in hba.SHARED else wkey(name), "socket_rotate_deg_x": hwa.SOCKET_ROT_X[wkey(name)]})
         if meta:
             info["travel"] = {"speed_mps_per_frame": [round(x, 3) for x in meta["v"]], "distance_m": round(meta["S"][-1], 3)}
             if "yaw" in meta: info["travel"]["yaw_deg_per_sec"] = [round(x) for x in meta["yaw"]][:1] + ["..."]
@@ -118,7 +120,7 @@ if __name__ == "__main__":
         wobj = {}
         for c in man:
             if only and c["name"] not in only[0]: continue
-            wk = c["name"].split("_")[0] if c["name"] in NEW else "Chain"
+            wk = wkey(c["name"]) if c["name"] in NEW else "Chain"
             if wk not in wobj: wobj[wk] = hwa.attach(arm, wk)
             for k2, ob in wobj.items(): ob.hide_render = k2 != wk
             n = c["frames"]; fr = sorted({0, *[round(n * t) for t in (0.2, 0.4, 0.6, 0.8)], n - 1}) if c["name"] not in ("Attack", "Attack2") else [0, 5, 8, 10, 12, 14, 21]

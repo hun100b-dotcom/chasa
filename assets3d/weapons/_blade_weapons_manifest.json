@@ -1,0 +1,61 @@
+{
+ "note": "원점=쥐는 곳. socket 참고",
+ "weapons": [
+  {
+   "name": "weapon_hwando",
+   "label": "환도",
+   "tris": 288,
+   "length_m": 1.5,
+   "z_range_m": [
+    -0.36,
+    1.14
+   ],
+   "width_m": 0.16,
+   "socket": {
+    "bone": "Hand.R",
+    "position_in_bone_m": [
+     0,
+     0,
+     0
+    ],
+    "blade_axis_in_file": "+Y(glTF 위쪽)",
+    "aim_blade_to": "캐릭터 앞(+Z glTF)",
+    "rotate_deg_x": 90,
+    "hero_hand_R_rest_pos_m": [
+     -0.52,
+     0.87,
+     0.0
+    ]
+   },
+   "note": "검 계열. 빠른 4연타. 칼날 +X=날 선 쪽, 끝은 등 쪽(-X)으로 휨"
+  },
+  {
+   "name": "weapon_wolgeom",
+   "label": "월도",
+   "tris": 518,
+   "length_m": 2.66,
+   "z_range_m": [
+    -0.78,
+    1.88
+   ],
+   "width_m": 0.22,
+   "socket": {
+    "bone": "Hand.R",
+    "position_in_bone_m": [
+     0,
+     0,
+     0
+    ],
+    "blade_axis_in_file": "+Y(glTF 위쪽)",
+    "aim_blade_to": "캐릭터 앞(+Z glTF)",
+    "rotate_deg_x": 90,
+    "hero_hand_R_rest_pos_m": [
+     -0.52,
+     0.87,
+     0.0
+    ]
+   },
+   "note": "도 계열. 넓고 무거운 3연타. 쥐는 곳에서 날까지 1.1m"
+  }
+ ]
+}
