@@ -2042,6 +2042,7 @@ public class JudgeSystem : MonoBehaviour
         { int lo0 = GrowthState.TallyForRank(growth.Rank), hi0 = GrowthState.TallyForRank(growth.Rank + 1); h.ExpRatio = hi0 <= lo0 ? 1f : (float)(growth.JudgeTally - lo0) / (hi0 - lo0); }
         // 첫 5분 퀘스트 추적(기획): 명부 — 이름 없는 혼 n/2, 박돌쇠 n/1. 시계가 풀리면(첫 처결 끝) 사라진다
         if (introFrozen && FieldRules.On) { h.QuestTitle = "명부"; h.QuestLines = new[] { "이름 없는 혼 " + Mathf.Min(2, introPlainDone) + "/2", "박돌쇠 " + (pahonOrTendo != 0 ? 1 : 0) + "/1" }; }
+        else if (FieldRules.On) { h.QuestTitle = "명부"; h.QuestLines = HudState.QuestLinesFor(night.Sent, Balance.NIGHT_QUOTA, night.Clues, Balance.BOSS_CLUES_REQUIRED, night.BossDone); }   // 개편 P1: 첫 5분이 지나면 퀘스트 칸이 천도 몫·단서 수를 보여 준다(지운 좌상단 줄 대신)
         else { h.QuestTitle = null; h.QuestLines = null; }
         foreach (var e in enemies.list)
         {

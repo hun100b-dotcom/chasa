@@ -1217,6 +1217,15 @@ public class CoreTests
         h.Warning = true; StringAssert.Contains("날이 밝는다", h.NightLine());
     }
 
+    [Test]
+    public void 퀘스트_줄은_천도_몫과_단서_수를_보여_주고_넘쳐도_분자는_멈춘다()
+    {
+        var q = HudState.QuestLinesFor(1, 3, 2, 3, false);
+        CollectionAssert.AreEqual(new[] { "천도 1/3", "단서 2/3" }, q);
+        q = HudState.QuestLinesFor(5, 3, 9, 3, true);   // 몫·단서가 넘쳐도 n/N 의 n 은 N 까지
+        CollectionAssert.AreEqual(new[] { "천도 3/3 채움", "단서 3/3", "나루 영감 끝" }, q);
+    }
+
     // ---------- 화면 가장자리 경고 (2단계) ----------
     [Test]
     public void EdgeWarn_InsideView_NoMark()
