@@ -1,0 +1,44 @@
+{
+  "_설명": "작업 지도 '개발 현황' 탭의 원본. 고친 뒤 python3 tools/build_dashboard_status.py 로 게시용 폴더를 만든다. 화면 사진은 docs/screenshots/<칸 id>.jpg|png 로 넣으면 같은 id 칸이 자동으로 채워진다.",
+  "updatedAt": "2026-10-31T11:40:00Z",
+  "main": "162387b",
+  "tests": 225,
+  "headline": "화면·조작·전투 개편 P0·P1·P2 완료",
+  "note": "아래 '실제 화면'은 PC 숨김 창에서 찍은 사진이 올라오면 채워집니다. 그 전까지는 저장소의 렌더 미리보기(게임 안 화면 아님)를 보여 줍니다.",
+  "phases": [
+    {"name": "P0 화면 비우기·표식·조작", "state": "done", "prs": [52, 53], "items": ["WASD 기본 이동, 왼쪽 클릭 공격", "가운데 화면 비우기, 처결 표식 ▲E ✕R", "HUD 그림 교체, 연속 천도 사슬선", "보스 맺힘 금 단계"]},
+    {"name": "P1 전투 느낌·폰 조작", "state": "done", "prs": [54, 55, 56, 57, 58, 59, 60, 61], "items": ["꿇는 순간 연출, 카메라", "파혼 반격(거센 혼·보스 예고 끊기)", "폰 조이스틱·처결 대상 고르기·물약", "폰 버튼·도술 아이콘 그림", "보스 등장 카메라 2초"]},
+    {"name": "P2 보스 줄·성장 공개·명부", "state": "done", "prs": [62, 63, 64, 65], "items": ["겨눈 혼 고리 굵게", "보스 맺힘 3줄 + 줄 깰 때 카메라", "첫 타격 실측 0.5초(봇)", "성장 단계 공개(도술 나무·인 탭)", "명부 세로 책 + 탭 다섯", "확인용 장면 주소 ?scene="]},
+    {"name": "남은 일", "state": "todo", "prs": [], "items": ["PC·폰 눈확인(인 탭·도술 스크롤·겨눈 고리·보스 카메라)", "명부 오른쪽 금테 잘림 → 한 쪽 그림 아트 요청", "30초 영상 품질 관문(사람 눈)", "2·3막 새 기능 연결(미룸)"]}
+  ],
+  "prs": [
+    {"n": 65, "team": "코드·QA", "title": "확인용 장면 주소 ?scene="},
+    {"n": 64, "team": "코드·QA", "title": "명부 세로 책 + 탭 다섯"},
+    {"n": 63, "team": "코드·QA", "title": "성장 단계 공개"},
+    {"n": 62, "team": "코드·QA", "title": "겨눈 혼 고리·보스 여러 줄 맺힘·첫 타격 실측"},
+    {"n": 61, "team": "코드·QA", "title": "폰 피하기 버튼 충전 ◆"},
+    {"n": 60, "team": "코드·QA", "title": "쪽지 책 도술 그림 + 폰 안내줄 숨김"},
+    {"n": 59, "team": "아트", "title": "PC 도술 칸·카드·명부 그림 연결"},
+    {"n": 58, "team": "아트", "title": "도술 아이콘·Q 버튼·상호작용 버튼"},
+    {"n": 57, "team": "아트", "title": "폰 버튼 그림"},
+    {"n": 56, "team": "코드·QA", "title": "P1 3차 조이스틱·처결 대상·물약·보스 등장 카메라"},
+    {"n": 55, "team": "코드·QA", "title": "P1 2차 보스 파혼 반격·폰 조작"},
+    {"n": 54, "team": "코드·QA", "title": "P1 1차 퀘스트 줄·꿇는 순간·카메라"},
+    {"n": 53, "team": "코드·QA", "title": "P0 2차 HUD 그림·사슬선·보스 금"},
+    {"n": 52, "team": "코드·QA", "title": "P0 1차 WASD·처결 표식·예고 장판"}
+  ],
+  "slots": [
+    {"id": "title", "title": "타이틀", "scene": "", "caption": "처음 화면", "fallback": "assets3d/title/title_screen.png"},
+    {"id": "first-hit", "title": "첫 타격 전투", "scene": "?new=1", "caption": "새로 시작해 첫 혼을 때리는 장면"},
+    {"id": "two-kneel", "title": "꿇은 혼 둘", "scene": "?new=1&scene=twoKneel", "caption": "겨눈 쪽만 굵은 고리와 ▼"},
+    {"id": "boss-crack", "title": "보스 맺힘 줄 깨짐", "scene": "?new=1&scene=bossCrack", "caption": "3줄 중 줄이 깨질 때 카메라 당김"},
+    {"id": "dodge", "title": "피하기 ◆", "scene": "?new=1&scene=dodge", "caption": "충전 마름모"},
+    {"id": "book-record", "title": "명부 기록 탭", "scene": "", "caption": "세로 책 첫 탭"},
+    {"id": "book-dosul", "title": "명부 도술 탭", "scene": "?new=1&scene=tabScroll", "caption": "세 갈래 단, 세로 스크롤", "fallback": "assets3d/previews/overhaul_icons2_check.png"},
+    {"id": "book-equip", "title": "명부 장비 탭", "scene": "", "caption": "여덟 자리, 잠긴 자리 안내"},
+    {"id": "reveal", "title": "성장 공개", "scene": "?new=1&scene=reveal", "caption": "도술 나무·인 탭이 열리는 순간"},
+    {"id": "phone-portrait", "title": "폰 세로 전투", "scene": "390x844", "caption": "조이스틱·Q·피하기·처결 버튼"},
+    {"id": "hud-check", "title": "HUD 그림 확인판", "scene": "", "caption": "미니맵·처결 아이콘·고리 (렌더)", "fallback": "assets3d/previews/first_screen_audit.jpg"},
+    {"id": "act1-route", "title": "1막 솔고개 길", "scene": "", "caption": "50° 쿼터뷰 렌더", "fallback": "assets3d/previews/act1_route_50deg.png"}
+  ]
+}
