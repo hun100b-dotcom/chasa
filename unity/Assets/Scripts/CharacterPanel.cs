@@ -263,8 +263,12 @@ public partial class CharacterPanel : MonoBehaviour
                 bool locked = n.Deep && g.BranchPoints(br) < SkillTree.DeepNeeds;
                 int barAt = n.Active ? g.ActiveBar.IndexOf(n.Name) : -1;
                 string label = (n.Active ? (barAt >= 0 ? "[" + (barAt + 1) + "칸] " : "[쓰는] ") : "[늘] ") + (n.Deep ? "*" : "") + n.Name + "  " + lv + "/" + n.MaxLevel + (locked ? "  잠김" : "");
-                var r = new Rect(x, yy, colW, 26);
+                // 왼쪽 26px 는 도술 그림 자리(버튼은 그만큼 줄인다). 그림이 없으면(null) 옛 모양 그대로 칸 전체가 버튼
+                var ico = UiRoot.DosulArt(n.Name);
+                float icoW = ico != null ? 26f : 0f;
+                var r = new Rect(x + icoW, yy, colW - icoW, 26);
                 GUI.color = lv > 0 ? Color.white : (can ? new Color(1f, 1f, 1f, 0.9f) : new Color(1f, 1f, 1f, 0.45f));
+                if (ico != null) GUI.DrawTexture(new Rect(x + 1, yy + 1, 24, 24), ico, ScaleMode.ScaleToFit, true);   // 안 배운 도술은 위 GUI.color 로 흐리게
                 if (UiSfx.Btn(r, label, bookMode ? bookBtn : GUI.skin.button))
                 {
                     if (n.Active && lv > 0) g.ToggleBar(n.Name);   // 배운 액티브는 누르면 칸에 올렸다 내렸다

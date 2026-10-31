@@ -2658,6 +2658,7 @@ public class CoreTests
         Assert.IsNull(DosulIcons.SkillIcon("없는도술"));
         Assert.IsNull(DosulIcons.SkillIcon(null));
         Assert.AreEqual("q_chain", DosulIcons.QIcon("끌기"));
+        Assert.AreEqual("q_bell", DosulIcons.QIcon("세우기"));   // PC 칸 글자(세우기)도 요령방울 그림
         Assert.AreEqual("q_slash", DosulIcons.QIcon("베기"));
         Assert.AreEqual("q_slash", DosulIcons.QIcon("모르는글자"));
     }

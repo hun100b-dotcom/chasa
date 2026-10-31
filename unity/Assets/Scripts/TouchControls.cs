@@ -34,10 +34,18 @@ public class TouchControls : MonoBehaviour
     public const float JudgeDiameter = 136f;                               // 처결 둘의 지름(1080p 기준)
     public const float SkillRadius = 235f;                                 // 도술 부채꼴 반지름
 
+    /// <summary>버튼 배율. 세로로 세운 폰은 화면 높이 기준이면 왼쪽 버튼(파혼·피하기)이 화면 밖으로 나간다(PC 확인 2026-10-31).
+    /// 공격 중심 기준 왼쪽으로 약 590(1080p 기준 px)이 가로에 들어오도록 가로 폭으로도 제한한다</summary>
+    public static float Scale()
+    {
+        var sa = Screen.safeArea; float w = sa.width > 0f ? sa.width : Screen.width;
+        return Mathf.Min(Screen.height / 1080f, w / 590f);
+    }
+
     /// <summary>공격 버튼 중심(GUI 좌표, 위가 0). 노치·제스처 줄을 피해 Screen.safeArea 안쪽 기준. JudgeSystem 의 처결 버튼도 이 점에서 잰다</summary>
     public static Vector2 AttackCenter()
     {
-        float s = Screen.height / 1080f;
+        float s = Scale();
         var sa = Screen.safeArea;
         float rightEdge = sa.width > 0f ? sa.xMax : Screen.width, bottomEdge = sa.width > 0f ? Screen.height - sa.yMin : Screen.height;
         return new Vector2(rightEdge - (64f + 80f) * s, bottomEdge - (64f + 80f) * s);
@@ -84,7 +92,7 @@ public class TouchControls : MonoBehaviour
     {
         btns.Clear();
         if (suspended != null && suspended()) return;   // 낮 화면 등이 떠 있으면 버튼이 없다 → 눌러도 아무 일도 안 일어난다
-        float s = Screen.height / 1080f;
+        float s = Scale();
         var sa = Screen.safeArea;
         float left = sa.width > 0f ? sa.xMin : 0f, top = sa.width > 0f ? Screen.height - sa.yMax : 0f;   // 노치·상태줄을 피한 왼쪽 위
         var tl = new Vector2(left, top);
@@ -139,7 +147,7 @@ public class TouchControls : MonoBehaviour
                 var tc = Input.GetTouch(t);
                 var p = new Vector2(tc.position.x, Screen.height - tc.position.y);
                 if (tc.phase == TouchPhase.Began) { swapFinger = (p - atkBtn.center).magnitude <= atkBtn.r ? tc.fingerId : swapFinger == tc.fingerId ? -1 : swapFinger; swapStartY = p.y; swapDone = false; }
-                else if (tc.fingerId == swapFinger && !swapDone && tc.phase == TouchPhase.Moved && swapStartY - p.y > 70f * (Screen.height / 1080f))
+                else if (tc.fingerId == swapFinger && !swapDone && tc.phase == TouchPhase.Moved && swapStartY - p.y > 70f * Scale())
                 {
                     swapDone = true; onSwap();   // 위로(화면 y 는 위가 작다) 70px(1080p 기준) 이상
                 }
@@ -265,7 +273,7 @@ public class TouchControls : MonoBehaviour
     void DrawMenuBadge(Btn b, bool touched)
     {
         var t = Art("menu_badge"); if (t == null) return;
-        float s = Screen.height / 1080f, d = 56f * s;
+        float s = Scale(), d = 56f * s;
         var c = b.center + new Vector2(0.72f, 0.72f) * (b.visual - 8f * s);   // 초상 둘레 오른쪽 아래(45도)에 걸친다
         var rect = new Rect(c.x - d / 2f, c.y - d / 2f, d, d);
         var hot = touched ? Art("menu_badge_hot") : null;
