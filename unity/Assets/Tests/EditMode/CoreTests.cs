@@ -936,25 +936,25 @@ public class CoreTests
     }
 
     [Test]
-    public void 손보기_다시굴리기_비용은_40에서_20씩_오르고_200이_상한_기울기와_이름물건은_불가()
+    public void 손보기_다시굴리기_비용은_기본에서_단계씩_오르고_상한에서_멈춘다_기울기와_이름물건은_불가()
     {
-        Assert.AreEqual(40, Shrine.RerollCost(0));
-        Assert.AreEqual(60, Shrine.RerollCost(1));
-        Assert.AreEqual(200, Shrine.RerollCost(9));
-        Assert.AreEqual(200, Shrine.RerollCost(30));
+        Assert.AreEqual(Balance.REROLL_BASE, Shrine.RerollCost(0));                              // 값은 Balance에서 읽는다(조정해도 안 깨지게)
+        Assert.AreEqual(Balance.REROLL_BASE + Balance.REROLL_STEP, Shrine.RerollCost(1));
+        Assert.AreEqual(Balance.REROLL_MAX, Shrine.RerollCost(30));
+        Assert.Less(Shrine.RerollCost(0), Shrine.RerollCost(1));
         var rnd = new System.Random(3);
         var it = new ItemDef { Slot = Slot.Robe, Rarity = Rarity.Crafted };
         it.Options.Add(new OptionRoll(Opt.DamagePct, 0.05f)); it.Options.Add(new OptionRoll(Opt.HpFlat, 8f));
-        var l = new Ledger { Coin = 100 };
+        var l = new Ledger { Coin = Balance.REROLL_BASE + 20 };
         Assert.IsTrue(Shrine.Reroll(it, 0, l, () => (float)rnd.NextDouble()));
-        Assert.AreEqual(60, l.Coin); Assert.AreEqual(1, it.Rerolls);
+        Assert.AreEqual(20, l.Coin); Assert.AreEqual(1, it.Rerolls);
         Assert.AreNotEqual(Opt.DamagePct, it.Options[0].Kind, "다른 종류로 굴러야 한다");
         Assert.AreEqual(Opt.HpFlat, it.Options[1].Kind, "다른 옵션은 그대로");
         Assert.AreEqual(2, new System.Collections.Generic.HashSet<Opt> { it.Options[0].Kind, it.Options[1].Kind }.Count, "옵션 종류 중복 없음");
         Assert.IsFalse(Shrine.CanReroll(new ItemDef { Gradient = true, Options = { new OptionRoll(Opt.DamagePct, 0.2f) } }));
         Assert.IsFalse(Shrine.CanReroll(ItemDef.MoonflowerBell()));
-        l.Coin = 10;
-        Assert.IsFalse(Shrine.Reroll(it, 0, l, () => 0.5f), "엽전이 모자라면 안 된다");
+        l.Coin = Balance.REROLL_BASE + Balance.REROLL_STEP - 1;   // 두 번째 값보다 1 모자람
+        Assert.IsFalse(Shrine.Reroll(it, 1, l, () => 0.5f), "엽전이 모자라면 안 된다");
     }
 
     [Test]
@@ -963,22 +963,22 @@ public class CoreTests
         var rnd = new System.Random(5);
         var it = new ItemDef { Slot = Slot.Weapon, Rarity = Rarity.Common };
         it.Options.Add(new OptionRoll(Opt.DamagePct, 0.03f));
-        var l = new Ledger { Coin = 60 + 180, Ore = 3 + 10 };
+        var l = new Ledger { Coin = Balance.UPGRADE_COIN_1 + Balance.UPGRADE_COIN_2, Ore = Balance.UPGRADE_ORE_1 + Balance.UPGRADE_ORE_2 };
         Assert.IsTrue(Shrine.Upgrade(it, l, () => (float)rnd.NextDouble()));
         Assert.AreEqual(Rarity.Crafted, it.Rarity); Assert.AreEqual(2, it.Options.Count);
         Assert.AreEqual(0.03f * 0.8f / 0.5f, it.Options[0].Value, 1e-5f, "범위가 새 등급 것으로");
-        Assert.AreEqual(180, l.Coin); Assert.AreEqual(10, l.Ore);
+        Assert.AreEqual(Balance.UPGRADE_COIN_2, l.Coin); Assert.AreEqual(Balance.UPGRADE_ORE_2, l.Ore);
         Assert.IsTrue(Shrine.Upgrade(it, l, () => (float)rnd.NextDouble()));
         Assert.AreEqual(Rarity.Rare, it.Rarity); Assert.AreEqual(3, it.Options.Count);
         Assert.AreEqual(0, l.Coin); Assert.AreEqual(0, l.Ore);
         Assert.IsFalse(Shrine.CanUpgrade(it), "귀한 위로는 못 올린다");
         Assert.IsFalse(Shrine.CanUpgrade(ItemDef.MoonflowerBell()));
-        var poor = new Ledger { Coin = 59, Ore = 3 };
+        var poor = new Ledger { Coin = Balance.UPGRADE_COIN_1 - 1, Ore = Balance.UPGRADE_ORE_1 };
         Assert.IsFalse(Shrine.Upgrade(new ItemDef { Rarity = Rarity.Common }, poor, () => 0.1f));
     }
 
     [Test]
-    public void 손보기_풀기는_공짜_광석_1_3_8_홈뚫기_80_240_최대2()
+    public void 손보기_풀기는_공짜_광석_1_3_8_홈뚫기_Balance값_최대2()
     {
         var l = new Ledger();
         Assert.IsTrue(Shrine.Dismantle(new ItemDef { Rarity = Rarity.Common }, l)); Assert.AreEqual(1, l.Ore);
@@ -986,8 +986,8 @@ public class CoreTests
         Assert.IsTrue(Shrine.Dismantle(new ItemDef { Rarity = Rarity.Rare }, l)); Assert.AreEqual(12, l.Ore);
         Assert.IsFalse(Shrine.Dismantle(ItemDef.MoonflowerBell(), l), "이름 있는 물건은 못 푼다");
         var it = new ItemDef { Rarity = Rarity.Common };
-        l.Coin = 80 + 240 + 1000;
-        Assert.IsTrue(Shrine.Socket(it, l)); Assert.AreEqual(1000 + 240, l.Coin);
+        l.Coin = Balance.SOCKET_COST_1 + Balance.SOCKET_COST_2 + 1000;
+        Assert.IsTrue(Shrine.Socket(it, l)); Assert.AreEqual(1000 + Balance.SOCKET_COST_2, l.Coin);
         Assert.IsTrue(Shrine.Socket(it, l)); Assert.AreEqual(1000, l.Coin);
         Assert.IsFalse(Shrine.Socket(it, l), "최대 2개");
     }
