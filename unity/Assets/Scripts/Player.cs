@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
     public System.Action onDodgeCancelCast;         // 천도 캐스팅 중 피하면 JudgeSystem 이 캐스팅만 취소한다
     public bool judgeStance;                        // 무릎 꿇은 혼 앞에서 고르는 중: 서 있으면 Idle→Judge 자세(JudgeSystem 이 매 프레임 정한다)
     public float DodgeCharges => dodgeCharges;
+    public void PreviewSetDodge(float v) { dodgeCharges = Mathf.Clamp(v, 0f, Balance.DODGE_CHARGES); }   // 확인용 장면(?scene=dodge) 전용: 충전 표시를 일부러 중간에 붙든다. 규칙·수치는 안 바뀐다
     public void RefillDodge() { dodgeCharges = Balance.DODGE_CHARGES; }   // 서낭당 쉬기: 피하기 충전 가득
     public float PullCooldown => pullCooldown;
     public bool Dodging => state == State.Dodge;
