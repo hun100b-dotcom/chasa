@@ -649,6 +649,8 @@ public class GameMain : MonoBehaviour
         tc.skillLeft = i => judge.SkillLeft(i);
         tc.onSkill = i => judge.UseSkill(i);
         tc.onDodge = () => { judge.guide.Complete("dodge"); player.CommandDodge(null); };   // 걷던 방향으로(가운데면 앞쪽)
+        tc.dodgeCharges = () => player.DodgeCharges;          // 피하기 버튼 위 ◆ 충전 표시(폰은 키보드 줄의 충전 점이 안 보인다)
+        tc.dodgeMax = () => Balance.DODGE_CHARGES;
         tc.onPull = () => { judge.guide.Complete("pull"); var e = Nearest(); player.CommandPull(e, e != null ? e.Pos : player.Pos); };
         // 무기 기술 Q 버튼(개편 P1-5, 명세 §5): 키보드 Q 와 같은 기술을 자동 조준으로 쓴다. 글자·남은 대기는 무기마다 다르다
         tc.qLabel = () => { var d = player.loadout.Def; return d.HasQuake ? "땅울림" : d.HasPull ? "끌기" : d.HasCall ? "부르기" : d.HasFence ? "꽂기" : d.HasInkName ? "이름" : "베기"; };
