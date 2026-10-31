@@ -9,7 +9,7 @@
 //   천도 ▲(-241,-268)·파혼 ✕(-350,-114) — 지름 136, 처결할 혼이 있을 때만(그리기는 JudgeSystem). 위치는 아래 상수 한 곳에서만 정한다
 //   상호작용(넋길·등잔 등) — (+64,-466), 대상이 있을 때만(급하지 않은 일이라 멀리)
 //   물약 — 왼쪽 위 초상 아래 (150,260), 지름 96, 남은 수 표시. 급할 때 왼손 엄지(개편 P1-5)
-//   메뉴 — 왼쪽 위 초상을 톡(눈에 안 보이는 판정만, 그림은 UiRoot 의 초상). 무기 바꾸기 — 공격 버튼을 위로 끌어올리기(따로 버튼 없음, 엄지 자리가 모자라서)
+//   메뉴 — 왼쪽 위 초상을 톡(눈에 안 보이는 판정 + 초상 오른쪽 아래 책 쪽지 그림 overhaul/btn/menu_badge, 초상은 UiRoot). 무기 바꾸기 — 공격 버튼을 위로 끌어올리기(따로 버튼 없음, 엄지 자리가 모자라서)
 // 왜 Input.touches 로 직접 판정하나? 조이스틱을 잡은 채 다른 손가락으로 공격을 눌러야 해서(멀티터치),
 //   한 손가락만 다루는 GUI.Button 으로는 안 된다. 그리기만 OnGUI 에 맡긴다.
 // 모든 버튼은 눈에 보이는 크기보다 1.2배 넓게, 최소 96px(9mm) 로 눌린다.
@@ -171,9 +171,15 @@ public class TouchControls : MonoBehaviour
         Ko.Apply();
         if (disc == null) MakeTex();
         if (label == null) { label = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold }; label.normal.textColor = Color.white; }
-        foreach (var b in btns)
+        for (int bi = 0; bi < btns.Count; bi++)
         {
-            if (b.hidden) continue;   // 초상 탭 판정은 그림이 따로 있다
+            var b = btns[bi];
+            if (b.hidden)
+            {
+                // 초상 탭(메뉴): 눌림 판정은 눈에 안 보이지만, 초상 오른쪽 아래에 '책' 쪽지를 붙여 눌러도 된다는 단서를 준다
+                if (b.id == "menu") DrawMenuBadge(b, bi < prevDown.Length && prevDown[bi]);
+                continue;
+            }
             string text = b.text; float left = 0f; bool dim = false;
             if (b.id == "potion") dim = potionCount == null || potionCount() <= 0;   // 약이 없으면 어둡게(눌러도 '회복약이 없다' 안내만)
             if (b.id.StartsWith("sk"))
@@ -184,22 +190,93 @@ public class TouchControls : MonoBehaviour
             }
             if (b.id == "q") { left = qLeft != null ? qLeft() : 0f; dim = left > 0f; }   // 재사용 중엔 어둡게 + 남은 초
             bool pressed = b.id == "atk" && attackHeld;
+            bool touched = bi < prevDown.Length && prevDown[bi];   // 지금 눌려 있나(겉 빛용)
             var rect = new Rect(b.center.x - b.visual, b.center.y - b.visual, b.visual * 2f, b.visual * 2f);
-            GUI.color = new Color(b.color.r, b.color.g, b.color.b, (dim ? 0.35f : 0.62f) + (pressed ? 0.25f : 0f));
-            GUI.DrawTexture(rect, disc);
-            GUI.color = new Color(1f, 1f, 1f, dim ? 0.35f : 0.8f);
-            GUI.DrawTexture(rect, ring);
-            GUI.color = Color.white;
-            label.fontSize = Mathf.Max(12, Mathf.RoundToInt(b.visual * (b.id == "atk" ? 0.36f : 0.28f)));
-            GUI.Label(rect, left > 0f ? Mathf.CeilToInt(left).ToString() : text, label);
+
+            // --- 개편 그림이 있으면 그것으로 (potion / atk / dodge / 기술 칸 고리). 없으면 아래 옛 임시 원
+            Texture2D baseArt = null; float hotGrow = 1f; Texture2D hotArt = null; bool artLabelBelow = false;
+            if (b.id == "potion") { baseArt = Art(dim ? "potion_off" : "potion_on"); hotArt = dim ? null : Art("potion_hot"); hotGrow = 112f / 96f; }
+            else if (b.id == "atk") { baseArt = Art("atk"); hotArt = Art("atk_hot"); hotGrow = 180f / 160f; artLabelBelow = true; }
+            else if (b.id == "dodge") { baseArt = Art("dodge"); artLabelBelow = true; }
+            else if (b.id.StartsWith("sk")) { baseArt = Art(dim ? "skill_ring_cool" : "skill_ring_ready"); }
+            if (baseArt != null)
+            {
+                if ((pressed || touched) && hotArt != null) DrawArt(hotArt, rect, hotGrow, 1f);
+                else DrawArt(baseArt, rect, 1f, 1f);
+                if (dim && b.id != "potion") { GUI.color = new Color(0f, 0f, 0f, 0.25f); GUI.DrawTexture(rect, disc); GUI.color = Color.white; }   // 재사용 대기 어둡게(그림 위 얇은 막)
+                label.fontSize = Mathf.Max(12, Mathf.RoundToInt(b.visual * (b.id == "atk" ? 0.27f : 0.28f)));
+                if (b.id == "potion")
+                {
+                    // 남은 수: 오른쪽 아래에 걸친 알약 글자판(40×28 은 96 지름 기준)
+                    var chip = Art("potion_count"); float k = b.visual * 2f / 96f;
+                    var cr = new Rect(rect.center.x + 12f * k, rect.center.y + 16f * k, 40f * k, 28f * k);
+                    if (chip != null) { GUI.color = new Color(1f, 1f, 1f, dim ? 0.6f : 1f); GUI.DrawTexture(cr, chip); GUI.color = Color.white; }
+                    label.fontSize = Mathf.Max(12, Mathf.RoundToInt(20f * k));
+                    GUI.Label(cr, (potionCount != null ? potionCount() : 0).ToString(), label);
+                }
+                else if (b.id.StartsWith("sk"))
+                {
+                    // 기술 칸: 고리 안쪽에 기술 이름(도술 아이콘이 생기면 여기에 얹는다), 재사용 중이면 남은 초
+                    GUI.Label(rect, left > 0f ? Mathf.CeilToInt(left).ToString() : text, label);
+                }
+                else if (artLabelBelow)
+                {
+                    // 그림은 위쪽 78% 에 모았고 글자("공격"·"피하기")는 아래 22% 에 — 색약·처음 쓰는 사람도 글자로 읽는다(접근성 결정)
+                    var lr = new Rect(rect.x, rect.y + rect.height * 0.70f, rect.width, rect.height * 0.24f);
+                    label.fontSize = Mathf.Max(11, Mathf.RoundToInt(b.visual * 0.24f));
+                    GUI.Label(lr, text, label);
+                }
+            }
+            else
+            {
+                GUI.color = new Color(b.color.r, b.color.g, b.color.b, (dim ? 0.35f : 0.62f) + (pressed ? 0.25f : 0f));
+                GUI.DrawTexture(rect, disc);
+                GUI.color = new Color(1f, 1f, 1f, dim ? 0.35f : 0.8f);
+                GUI.DrawTexture(rect, ring);
+                GUI.color = Color.white;
+                label.fontSize = Mathf.Max(12, Mathf.RoundToInt(b.visual * (b.id == "atk" ? 0.36f : 0.28f)));
+                GUI.Label(rect, left > 0f ? Mathf.CeilToInt(left).ToString() : text, label);
+            }
             if (b.id == "atk" && canSwap != null && canSwap())   // 끌어올리기 단서: 공격 버튼 바로 위에 작은 안내(숨은 동작이라 한 번은 보여야 한다)
             {
+                // 겹친 위쪽 화살표 그림(없으면 글자만) + "무기" 글자
+                var sw = Art("swap_hint"); float sy = rect.y - b.visual * 0.50f;
+                if (sw != null) { GUI.color = new Color(1f, 1f, 1f, 0.8f); GUI.DrawTexture(new Rect(rect.center.x - b.visual * 0.2f, sy, b.visual * 0.4f, b.visual * 0.25f), sw); GUI.color = Color.white; }
                 label.fontSize = Mathf.Max(11, Mathf.RoundToInt(b.visual * 0.17f));
-                GUI.color = new Color(1f, 1f, 1f, 0.55f);
-                GUI.Label(new Rect(rect.x, rect.y - b.visual * 0.38f, rect.width, b.visual * 0.34f), "↑ 무기", label);
+                GUI.color = new Color(1f, 1f, 1f, 0.7f);
+                GUI.Label(new Rect(rect.x, rect.y - b.visual * (sw != null ? 0.26f : 0.38f), rect.width, b.visual * 0.34f), sw != null ? "무기" : "↑ 무기", label);
                 GUI.color = Color.white;
             }
         }
+    }
+
+    /// <summary>메뉴 쪽지: 초상(지름 132) 오른쪽 아래 모서리에 56px 책 그림. 그림이 없으면 아무것도 안 그린다(옛 모습 = 초상만)</summary>
+    void DrawMenuBadge(Btn b, bool touched)
+    {
+        var t = Art("menu_badge"); if (t == null) return;
+        float s = Screen.height / 1080f, d = 56f * s;
+        var c = b.center + new Vector2(0.72f, 0.72f) * (b.visual - 8f * s);   // 초상 둘레 오른쪽 아래(45도)에 걸친다
+        var rect = new Rect(c.x - d / 2f, c.y - d / 2f, d, d);
+        var hot = touched ? Art("menu_badge_hot") : null;
+        if (hot != null) DrawArt(hot, rect, (56f + 12f) / 56f, 1f); else DrawArt(t, rect, 1f, 0.95f);
+    }
+
+    // 개편 아트(Resources/Sprites/overhaul/btn). 그림이 없으면 null → 아래 OnGUI 가 옛 임시 원으로 대신 그린다(그림 없이도 게임은 돈다).
+    // 왜 @2x 를 쓰나: 폰 화면은 촘촘해서 1배 그림을 늘리면 번진다. 이름만 바꾸면 붙게 한 곳에 모은다.
+    readonly System.Collections.Generic.Dictionary<string, Texture2D> artCache = new System.Collections.Generic.Dictionary<string, Texture2D>();
+    Texture2D Art(string name)
+    {
+        Texture2D t;
+        if (artCache.TryGetValue(name, out t)) return t;
+        t = SpriteLib.Texture("overhaul/btn/" + name + "@2x"); if (t == null) t = SpriteLib.Texture("overhaul/btn/" + name);
+        artCache[name] = t; return t;   // null 도 기억해 두어 매 프레임 찾지 않는다
+    }
+
+    /// <summary>그림을 원 버튼 자리에 그린다. grow = 겉 빛 그림처럼 원보다 커진 비율(예 96→112 면 1.1667)</summary>
+    static void DrawArt(Texture2D t, Rect rect, float grow, float alpha)
+    {
+        var r = new Rect(rect.center.x - rect.width * grow * 0.5f, rect.center.y - rect.height * grow * 0.5f, rect.width * grow, rect.height * grow);
+        GUI.color = new Color(1f, 1f, 1f, alpha); GUI.DrawTexture(r, t, ScaleMode.StretchToFill, true); GUI.color = Color.white;
     }
 
     void MakeTex()
