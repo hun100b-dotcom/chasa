@@ -2584,6 +2584,9 @@ public class CoreTests
         Assert.AreEqual(4, GrowthReveal.OpenEquipCount(false, false));
         Assert.AreEqual(6, GrowthReveal.OpenEquipCount(true, false));
         Assert.AreEqual(8, GrowthReveal.OpenEquipCount(true, true));
+        // 닫힌 자리마다 안내가 있고, 처음부터 열린 자리는 비어 있다
+        foreach (EquipPos ep in System.Enum.GetValues(typeof(EquipPos)))
+            Assert.AreEqual(!EquipLayout.IsOpen(ep, false, false), GrowthReveal.EquipUnlockHint(ep).Length > 0, ep.ToString());
     }
 
     [Test]
