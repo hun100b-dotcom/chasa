@@ -776,6 +776,9 @@ public static class Balance
     public const float RANKUP_STAMP_SEC = 1.0f;  // 처음 10분 M6: 품계 승급 인 연출 길이(초)
     public const float FIGHT_END_SLOW_SEC = 0.25f;  // 처음 10분 M8: 싸움 마지막 처결 느리게 시간(초)
     public const float FIGHT_END_SLOW_SCALE = 0.5f;  // 처음 10분 M8: 느리게 배율
+    public const float KNEEL_MOMENT_SLOW_SEC = 0.15f;  // 개편 P1-1: 혼이 무릎 꿇는 순간 시간이 느려지는 길이(초). 기둥 수치(처결 대기·천도 시전)와 무관한 연출값
+    public const float KNEEL_MOMENT_SLOW_SCALE = 0.4f;  // 개편 P1-1: 무릎 꿇는 순간 느려짐 배율(0.4 = 40% 속도). 이미 느려지는 중(싸움 마지막 처결)이면 쓰지 않는다
+    public const float KNEEL_MOMENT_ZOOM = 0.35f;  // 개편 P1-1: 무릎 꿇는 순간 카메라가 살짝 당겨지는 세기(AddZoom, 파혼은 1.0)
     public const int ELITE_MAEDHIM = 300;  // 거센 혼(처음 10분 M10) 맺힘(보통 혼의 3배)
     public const float ELITE_SCALE = 1.3f;  // 거센 혼(처음 10분 M10) 몸 크기 배율
     public const float ELITE_KNOCKBACK_MULT = 0.5f;  // 거센 혼(처음 10분 M10) 넉백 배율

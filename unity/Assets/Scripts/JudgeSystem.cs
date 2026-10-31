@@ -702,6 +702,9 @@ public class JudgeSystem : MonoBehaviour
     {
         KneelEvents++;   // BGM 재생기가 '무릎 꿇는 순간'을 알아채는 번호표
         Sfx.Play("sfx.kneel");   // 무릎 꿇는 소리 = '지금 고를 때'
+        // 개편 P1-1: 선택의 순간을 몸으로 알린다 — 0.15초 느려짐 + 카메라 살짝 당김(소리는 위 한 줄).
+        // 느려짐 동안 처결 대기 시계도 같이 느려져 실제로 약 0.09초 길어질 뿐이다(대기 10/7/4초 수치는 그대로). 이미 느려지는 중(싸움 마지막 처결)이면 덮어쓰지 않는다
+        if (!cuts.Active && feel.TimeScale >= 1f) { feel.SlowMo(Balance.KNEEL_MOMENT_SLOW_SEC, Balance.KNEEL_MOMENT_SLOW_SCALE); feel.AddZoom(Balance.KNEEL_MOMENT_ZOOM); }
         if (!e.soul.Boss && !firstKneelDone && FieldRules.On)
         {
             // 첫 처결: 안내 글 대신 화면 하단에 큰 카드 둘(천도·파혼 같은 크기·밝기). 시간 제한 없음(이 혼만 대기가 멈춘다)
