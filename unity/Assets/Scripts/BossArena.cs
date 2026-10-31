@@ -18,6 +18,8 @@ public class BossArena : MonoBehaviour
     GameObject[] cups;                         // 월화: 잔 12개 / 서 의원: 5×5 칸 바닥(흐린 선)
     GameObject weakMark;                       // 서 의원: 약점이 열리면 머리 위에 켜지는 청록 표시
     readonly WeakWindow weak = new WeakWindow();
+    readonly CupWeak cupWeak = new CupWeak();   // 월화 약점: 엎어진 열두째 잔을 사슬로 세운다
+    PullPoint cupPt;                            // 열두째 잔 자리에 놓이는 '낚아챌 점'(잡을 수 있을 때만 존재)
     float waveT = 2f;                          // 다음 파동까지(전투 시작 직후 잠깐 여유)
     bool waveBurstSnd, frenzySnd; int seoStreak;   // 파동마다 터짐 소리 1번 / 월화 몰아침 소리 1번 / 서 의원 연속 피함
     bool waveHit; Tele lastOfWave;             // 이번 파동에서 맞았나 / 파동의 마지막 칸(끝났는지 보려고)
@@ -57,6 +59,42 @@ public class BossArena : MonoBehaviour
             weakMark = Flat(PrimitiveType.Sphere, new Color(0.25f, 0.9f, 0.85f), Vector3.zero, Vector3.one * 0.5f);
             weakMark.SetActive(false);
         }
+        if (def.Id == 2)   // 월화: 엎어진 열두째 잔 위에 켜지는 청록 구슬(약점 표시, 서 의원과 같은 색 = '약점은 청록')
+        {
+            weakMark = Flat(PrimitiveType.Sphere, new Color(0.25f, 0.9f, 0.85f), Vector3.zero, Vector3.one * 0.5f);
+            weakMark.SetActive(false);
+        }
+    }
+
+    // ---- 월화 약점(기획 appendix-E B-02): 엎어진 열두째 잔(늘 안전한 자리)에서 사슬로 잔을 세우면 굿이 멈춘다 ----
+    // 왜 이 자리? 열두째 잔 칸은 파동이 절대 안 열리는 곳이라, "안전한 자리에 서는 사람 = 설화를 읽은 사람"이 보상을 받는다.
+    void DropCupPoint()
+    {
+        if (cupPt != null) { PullPoints.Remove(cupPt); cupPt = null; }
+        if (def.Id == 2 && weakMark != null) weakMark.SetActive(false);
+    }
+    void TickCupWeak(float dt)
+    {
+        cupWeak.Tick(dt);
+        if (cupPt != null && !cupPt.active) cupPt = null;   // 다른 쪽에서 낚아챌 점 목록을 비웠다면 다시 놓을 수 있게
+        boss.damageTakenMult = cupWeak.DamageMult;   // 열려 있는 동안만 ×1.5
+        bool grabbable = cupWeak.CanGrab;
+        if (grabbable && cupPt == null)
+        {
+            cupPt = PullPoints.Add(CupPos(TwelveStreets.SafeCup), 2.5f, () =>
+            {
+                if (!cupWeak.Grab()) return;
+                DropCupPoint();
+                waveT = Mathf.Max(waveT, Balance.B02_WEAK_TIME);   // 서 있는 동안 새 파동을 시작하지 않는다(이미 열린 예고는 끝까지 간다)
+                judge.Say("엎어진 잔을 세웠다 — 월화가 굿을 멈춘다", 2.5f);
+            });
+        }
+        else if (!grabbable && cupPt != null) DropCupPoint();
+        if (weakMark != null)
+        {
+            weakMark.SetActive(cupPt != null);
+            if (cupPt != null) weakMark.transform.position = CupPos(TwelveStreets.SafeCup) + Vector3.up * 1.2f;
+        }
     }
 
     void SetCupsActive(bool on) { if (cups != null) foreach (var c in cups) if (c != null) c.SetActive(on); }
@@ -67,7 +105,7 @@ public class BossArena : MonoBehaviour
     {
         if (judge == null || boss == null || def == null) return;
         // 보스가 처결되어 사라지면 바닥도 거둔다
-        if (boss.soul.State == SoulState.Gone) { ClearTeles(); SetCupsActive(false); if (weakMark != null) weakMark.SetActive(false); return; }
+        if (boss.soul.State == SoulState.Gone) { ClearTeles(); SetCupsActive(false); DropCupPoint(); if (weakMark != null) weakMark.SetActive(false); return; }
         float dist = new Vector2(judge.player.Pos.x - def.X, judge.player.Pos.z - def.Z).magnitude;
         if (!built && dist < 60f) Build();
         if (!built) return;
@@ -86,11 +124,12 @@ public class BossArena : MonoBehaviour
             return;
         }
         wasKneel = false;
-        if (!fight) { ClearTeles(); boss.damageTakenMult = 1f; if (weakMark != null) weakMark.SetActive(false); return; }
+        if (!fight) { ClearTeles(); boss.damageTakenMult = 1f; DropCupPoint(); if (weakMark != null) weakMark.SetActive(false); return; }
 
         float dt = Time.deltaTime;
         TickTeles(dt);
         if (def.Id == 3) TickWeak(dt);
+        if (def.Id == 2) TickCupWeak(dt);
         waveT -= dt;
         if (waveT <= 0f && (def.Id != 3 || !weak.Open) && lastOfWave == null)   // 이전 파동이 끝나야 다음 파동
             StartWave();

@@ -8,6 +8,7 @@
 //   ?new=1&scene=dodge      피하기 ◆ 충전이 한 칸 가득 + 한 칸 차오르는 중에 멈춰 있음(폰 버튼 위 표시)
 //   ?new=1&scene=tabScroll  도술 점수·배운 도술을 잔뜩 채우고 명부 도술 탭(세로 스크롤)을 연다
 //   ?new=1&scene=oldSave    옛 저장처럼 이미 열린 상태로 시작 — 시작 때 '열렸다' 알림이 한꺼번에 뜨면 안 된다
+//   ?new=1&scene=wolhwaWeak 월화 굿판의 엎어진 열두째 잔 곁으로 데려다 놓는다 — 청록 구슬이 보이고 사슬로 잡으면 월화가 3초 멈추는지(맺힘 피해 ×1.5)
 //   ?new=1&scene=reveal     시작 5초 뒤에 도술 나무·인 탭이 새로 열린다 — 알림 두 줄이 한 번씩 뜨는지
 // =============================================================================
 using Chasa.Core;
@@ -59,6 +60,16 @@ public partial class JudgeSystem
                 }
                 if (bossPrev != null && sceneT >= 3f && !scene2) { scene2 = true; BossCrackTo(0.60f); }
                 if (bossPrev != null && sceneT >= 6f && scene2 && bossStep == 1) { bossStep = 2; BossCrackTo(0.30f); }
+                break;
+            case "wolhwaweak":
+                if (sceneDone || sceneT < 1f) return;
+                sceneDone = true;
+                var wd = Bosses.Get(2);   // 월화 굿판. 엎어진 열두째 잔(번호 11) 자리 = 굿판 중심에서 330°, 반지름 7m
+                float wa = TwelveStreets.SafeCup * Mathf.PI * 2f / Balance.B02_CUPS;
+                float wx = wd.X + Mathf.Cos(wa) * Balance.B02_RING_RADIUS_M, wz = wd.Z + Mathf.Sin(wa) * Balance.B02_RING_RADIUS_M;
+                player.CommandStop(); player.Pos = new Vector3(wx, GroundTerrain.HeightAt(wx, wz), wz);
+                if (onTeleport != null) onTeleport(player.Pos);
+                Say("확인 장면: 월화 굿판 열두째 잔 — 청록 구슬을 사슬로 잡아라", 4f);
                 break;
             case "tabscroll":
                 if (sceneDone) return;

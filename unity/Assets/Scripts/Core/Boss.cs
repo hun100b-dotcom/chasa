@@ -116,4 +116,31 @@ namespace Chasa.Core
         public void Tick(float dt) { if (OpenLeft > 0f) OpenLeft = Math.Max(0f, OpenLeft - dt); }
         public float DamageMult { get { return Open ? Balance.B03_WEAK_DMG_MULT : Balance.B03_CLOSED_DMG_MULT; } }
     }
+
+    /// <summary>
+    /// 월화 약점(기획 appendix-E B-02): 엎어진 열두째 잔(늘 안전한 자리)에서 사슬로 잔을 세우면 월화가 굿을 멈추고 3초 서 있는다.
+    /// 그동안 맺힘 피해 ×1.5. 한 전투에 3번까지, 닫힌 뒤 일정 시간은 다시 못 잡는다(연타로 약점을 계속 여는 것 방지).
+    /// 왜 Core? 화면(잔 위 표시·사슬 닿기)과 규칙(몇 번·몇 초·언제 다시)을 갈라 두면 테스트로 규칙만 확인할 수 있다.
+    /// </summary>
+    public class CupWeak
+    {
+        public int Uses;               // 지금까지 세운 횟수
+        public float OpenLeft;         // 월화가 멈춰 서 있는 남은 시간(초)
+        public float CooldownLeft;     // 닫힌 뒤 다시 잡히기까지 남은 시간(초)
+        public bool Open { get { return OpenLeft > 0f; } }
+        /// <summary>지금 사슬로 잔을 잡을 수 있나(열려 있지 않고, 식는 중이 아니고, 횟수가 남았을 때)</summary>
+        public bool CanGrab { get { return !Open && CooldownLeft <= 0f && Uses < Balance.B02_WEAK_MAX; } }
+        /// <summary>사슬이 잔에 닿았다. 잡을 수 있었으면 약점을 열고 true</summary>
+        public bool Grab()
+        {
+            if (!CanGrab) return false;
+            Uses++; OpenLeft = Balance.B02_WEAK_TIME; return true;
+        }
+        public void Tick(float dt)
+        {
+            if (OpenLeft > 0f) { OpenLeft = Math.Max(0f, OpenLeft - dt); if (OpenLeft <= 0f) CooldownLeft = Balance.B02_WEAK_COOLDOWN; }
+            else if (CooldownLeft > 0f) CooldownLeft = Math.Max(0f, CooldownLeft - dt);
+        }
+        public float DamageMult { get { return Open ? Balance.B02_WEAK_DMG_MULT : 1f; } }
+    }
 }
