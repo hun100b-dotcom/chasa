@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using Chasa.Core;
 using UnityEngine;
 
-public class JudgeSystem : MonoBehaviour
+public partial class JudgeSystem : MonoBehaviour
 {
     public Player player;
     public EnemyManager enemies;
@@ -1304,6 +1304,7 @@ public class JudgeSystem : MonoBehaviour
     // ===== 매 프레임 ===============================================================
     public void Tick(float dt, float realDt)
     {
+        TickScenePreview(realDt);   // 확인용 장면(?scene=…). 주소에 없으면 바로 돌아온다
         toastT -= realDt;   // 안내 글자는 창이 열려 있어도 사라진다(QA B3)
         if (tapPickT > 0f) tapPickT -= realDt;   // 탭으로 고른 처결 대상은 잠깐만 유효하다
         if (CharacterPanel.Open || SettingsPanel.Open) return;   // 캐릭터 창·설정이 열려 있으면 세계가 멈춘다

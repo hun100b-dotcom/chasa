@@ -16,6 +16,9 @@ public partial class CharacterPanel
     static readonly bool Ui2 = !(Application.absoluteURL ?? "").Contains("ui2=0");
     static readonly Color VInk = new Color32(0x1E, 0x1A, 0x17, 255), VSeal = new Color32(0xB5, 0x47, 0x3F, 255), VPaper = new Color(0.953f, 0.906f, 0.827f);
 
+    /// <summary>확인용 장면(?scene=…)이 명부를 그 탭으로 연다(6 도술 · 7 장비 · 3 기록)</summary>
+    public void PreviewOpen(int t) { if (!Open) Toggle(); tab = t; viewDirty = true; }   // Toggle 이 기록 탭으로 되돌리므로 탭은 그 뒤에 정한다
+
     /// <summary>이 판이 지금 그리는 중인가(그렇다면 IMGUI 는 건너뛴다)</summary>
     bool UseView { get { return Ui2 && view != null && tab >= 3; } }
 
